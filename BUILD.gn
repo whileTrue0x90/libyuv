@@ -302,3 +302,14 @@ if (libyuv_include_tests) {
     deps = [ ":libyuv" ]
   }
 }
+
+executable("test-jpeg") {
+  sources = [
+    # sources
+    "util/test-jpeg.cc"
+  ]
+  deps = [ ":libyuv" ]
+  if (!is_ios && !libyuv_disable_jpeg) {
+    defines = [ "HAVE_JPEG" ]
+  }
+}
