@@ -22,6 +22,24 @@
       "revId": "c33f2c948d7c7886b1faa0c41231cb37e53f780e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_1b6f61a3",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-01-20T01:51:28Z",
+      "side": 1,
+      "message": "Yes, no reason to deprive them of it. The codereview.settings still has all the necessary machinery for Rietveld, and will for a while, so this might as well too.",
+      "parentUuid": "0847de68_1bdac157",
+      "revId": "c33f2c948d7c7886b1faa0c41231cb37e53f780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
