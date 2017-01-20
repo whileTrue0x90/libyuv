@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0847de68_1e774f3e",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-01-20T02:04:54Z",
+      "side": 1,
+      "message": "rebase always",
+      "range": {
+        "startLine": 4,
+        "startChar": 10,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "324558570d374f6818724bc6a5c04f2f22719c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_de8097e5",
+        "filename": "project.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-01-20T02:04:54Z",
+      "side": 1,
+      "message": "since you\u0027ve added this, you might as well choose Rebase Always submit strategy",
+      "range": {
+        "startLine": 34,
+        "startChar": 28,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "324558570d374f6818724bc6a5c04f2f22719c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
