@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0847de68_b89bb3b7",
+        "filename": "codereview.settings",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-01-20T00:45:27Z",
+      "side": 0,
+      "message": "Note I wanted to use PolyGerrit to review, but in this CL only change should be the row_gcc.cc source code change.\nRemove the file from the CL before submitting.",
+      "range": {
+        "startLine": 1,
+        "startChar": 30,
+        "endLine": 1,
+        "endChar": 33
+      },
+      "revId": "09b8c971b305ed99a18e416df0845e23bf702565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
