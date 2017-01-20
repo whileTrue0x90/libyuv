@@ -43,6 +43,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_2168abf6",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-01-20T18:23:42Z",
+      "side": 1,
+      "message": "currenrtly mips is broken, and if we roll forward to head chromium, windows visual c breaks.\nThe windows issue appears to be tool chain used on the try bots.",
+      "parentUuid": "0847de68_e1505376",
+      "revId": "10f40e8dbf2370047a3cc4d954b85f998485568b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88a26db_c43d70fa",
         "filename": "infra/config/cq.cfg",
         "patchSetId": 4
