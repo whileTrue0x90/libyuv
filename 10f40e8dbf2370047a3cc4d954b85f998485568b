@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88902e0b_02bfcc6c",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-01-20T07:01:39Z",
+      "side": 1,
+      "message": "What\u0027s the point with the 100% experiment? I think these should be enabled always, like the other bots.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "10f40e8dbf2370047a3cc4d954b85f998485568b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c88a26db_c43d70fa",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-01-20T07:01:39Z",
+      "side": 1,
+      "message": "I suggest turning this on later. We still don\u0027t have it for WebRTC (I\u0027d like to but I think we were blocked on something and then it was dropped).",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 10
+      },
+      "revId": "10f40e8dbf2370047a3cc4d954b85f998485568b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
