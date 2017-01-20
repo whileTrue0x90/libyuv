@@ -61,6 +61,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_f726d183",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-01-20T19:37:39Z",
+      "side": 1,
+      "message": "The linux_gcc bot is also almost entirely red: https://build.chromium.org/p/tryserver.libyuv/builders/linux_gcc?numbuilds\u003d200\n\nI\u0027m going to mark android_mips and linux_gcc as experimental, so that they don\u0027t block the cq, and then you can make them blocking when they\u0027ve been cleaned up.",
+      "parentUuid": "0847de68_2168abf6",
+      "revId": "10f40e8dbf2370047a3cc4d954b85f998485568b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88a26db_c43d70fa",
         "filename": "infra/config/cq.cfg",
         "patchSetId": 4
