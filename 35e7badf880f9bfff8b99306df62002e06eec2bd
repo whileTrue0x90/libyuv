@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "027ac24c_79c9ff50",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-02-02T02:21:58Z",
+      "side": 1,
+      "message": "doh!",
+      "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3034bd_979ff18d",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-02-02T02:21:58Z",
+      "side": 1,
+      "message": "ok, was wrong but we should consider removing this code and/or doing MSA version.",
+      "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758a0427_7254062f",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-02-02T02:21:58Z",
+      "side": 1,
+      "message": "theres a lot of casting here.\nalpha channels are really unsigned char 8 bit values from 0 to 255.\nit ssems weird that you\u0027re using a signed -1 with and casting it to unsigned, and then below casting it back to signed for the intrinsic, and then back to unsigned to store the result in a register.\nCould we stick with unsigned for all steps?",
+      "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
