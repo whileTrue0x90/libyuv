@@ -50,6 +50,23 @@
       "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e69cc1_e0c40dbc",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1169844
+      },
+      "writtenOn": "2017-02-02T05:52:11Z",
+      "side": 1,
+      "message": "Agree. The -1 is a temporary fix/workaround for not to break chromium build for ToT clang (which is breaking for ldi.b(255) for now)\n\nAs per MSA spec, \nThe load immediate instruction accepts signed 10bit input value, and that immediate value is replicated across all destination elements.\nLDI.B wd,s10\nLDI.H wd,s10\nLDI.W wd,s10\nLDI.D wd,s10\nFor byte elements, only the least significant 8 bits of s10 will be used.\n\nSo we are expecting ldi.b to accept 255 as all 8 (11111111b) (w/o data range check) and should replicate these 8 bits across all 16 byte elements.\nHowever, with ToT clang, intrinsic is currently restricting immediate value within -128 to 127 and throws error for 255 (or 0xFF) in chromium build. Which is not the case with GCC.\n\nWe can change the ALPHA_VAL define back to 255 once clang issue gets resolved.",
+      "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
