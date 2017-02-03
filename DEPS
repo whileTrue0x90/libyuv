@@ -7,7 +7,7 @@ vars = {
 
   # Roll the Chromium Git hash to pick up newer versions of all the
   # dependencies and tools linked to in setup_links.py.
-  'chromium_revision': '941118827f5240dedb40082cffb1ead6c6d621cc',
+  'chromium_revision': '2fcb04a7eabd49c59a9b25edd7303973d01523b1',
 }
 
 # NOTE: Use http rather than https; the latter can cause problems for users
