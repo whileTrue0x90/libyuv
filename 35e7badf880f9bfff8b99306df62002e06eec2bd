@@ -67,6 +67,24 @@
       "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9d9de9_f08baff6",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-02-07T00:26:22Z",
+      "side": 1,
+      "message": "Can you add a TODO mentioning the clang issue and that we can go back to 255 once resolved?",
+      "parentUuid": "35e69cc1_e0c40dbc",
+      "revId": "35e7badf880f9bfff8b99306df62002e06eec2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
