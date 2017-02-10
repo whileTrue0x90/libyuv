@@ -22,50 +22,39 @@ LOCAL_SRC_FILES := \
     source/rotate_any.cc        \
     source/rotate_argb.cc       \
     source/rotate_common.cc     \
-    source/rotate_dspr2.cc      \
+    source/rotate_mips.cc       \
     source/rotate_neon64.cc     \
     source/rotate_gcc.cc        \
     source/row_any.cc           \
     source/row_common.cc        \
-    source/row_dspr2.cc         \
+    source/row_mips.cc          \
     source/row_neon64.cc        \
-    source/row_gcc.cc           \
+    source/row_gcc.cc	          \
     source/scale.cc             \
     source/scale_any.cc         \
     source/scale_argb.cc        \
     source/scale_common.cc      \
-    source/scale_dspr2.cc       \
+    source/scale_mips.cc        \
     source/scale_neon64.cc      \
     source/scale_gcc.cc         \
-    source/video_common.cc
+    source/video_common.cc      \
+    source/compare_neon.cc      \
+    source/rotate_neon.cc       \
+    source/row_neon.cc          \
+    source/scale_neon.cc        \
+    source/mjpeg_decoder.cc     \
+    source/convert_jpeg.cc      \
+    source/mjpeg_validate.cc
 
-# TODO(fbarchard): Enable mjpeg encoder.
-#   source/mjpeg_decoder.cc
-#   source/convert_jpeg.cc
-#   source/mjpeg_validate.cc
-
-ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-    LOCAL_CFLAGS += -DLIBYUV_NEON
-    LOCAL_SRC_FILES += \
-        source/compare_neon.cc.neon    \
-        source/rotate_neon.cc.neon     \
-        source/row_neon.cc.neon        \
-        source/scale_neon.cc.neon
-endif
-
-ifeq ($(TARGET_ARCH_ABI),mips)
-    LOCAL_CFLAGS += -DLIBYUV_MSA
-    LOCAL_SRC_FILES += \
-        source/row_msa.cc    \
-        source/scale_msa.cc  \
-        source/rotate_msa.cc
-endif
-
+# TODO(fbarchard): Remove -Wno-unused-parameter when code fixed.
+common_CFLAGS := -Wall -Wno-unused-parameter -fexceptions -DHAVE_JPEG
+LOCAL_CFLAGS += $(common_CFLAGS)
+LOCAL_SHARED_LIBRARIES := libjpeg
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
 
 LOCAL_MODULE := libyuv_static
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_STATIC_LIBRARY)
-
