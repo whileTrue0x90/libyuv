@@ -43,6 +43,9 @@ static void ScaleARGBDown2(int src_width,
                            int y,
                            int dy,
                            enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
+  (void)dx;
   int j;
   int row_stride = src_stride * (dy >> 16);
   void (*ScaleARGBRowDown2)(const uint8* src_argb, ptrdiff_t src_stride,
@@ -134,6 +137,9 @@ static void ScaleARGBDown4Box(int src_width,
                               int dx,
                               int y,
                               int dy) {
+  (void)src_width;
+  (void)src_height;
+  (void)dx;
   int j;
   // Allocate 2 rows of ARGB.
   const int kRowSize = (dst_width * 2 * 4 + 31) & ~31;

@@ -42,6 +42,8 @@ static void ScalePlaneDown2(int src_width,
                             const uint8* src_ptr,
                             uint8* dst_ptr,
                             enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown2)(const uint8* src_ptr, ptrdiff_t src_stride,
                         uint8* dst_ptr, int dst_width) =
@@ -144,6 +146,8 @@ static void ScalePlaneDown2_16(int src_width,
                                const uint16* src_ptr,
                                uint16* dst_ptr,
                                enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown2)(const uint16* src_ptr, ptrdiff_t src_stride,
                         uint16* dst_ptr, int dst_width) =
@@ -205,6 +209,8 @@ static void ScalePlaneDown4(int src_width,
                             const uint8* src_ptr,
                             uint8* dst_ptr,
                             enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown4)(const uint8* src_ptr, ptrdiff_t src_stride,
                         uint8* dst_ptr, int dst_width) =
@@ -277,6 +283,8 @@ static void ScalePlaneDown4_16(int src_width,
                                const uint16* src_ptr,
                                uint16* dst_ptr,
                                enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown4)(const uint16* src_ptr, ptrdiff_t src_stride,
                         uint16* dst_ptr, int dst_width) =
@@ -318,7 +326,6 @@ static void ScalePlaneDown4_16(int src_width,
 }
 
 // Scale plane down, 3/4
-
 static void ScalePlaneDown34(int src_width,
                              int src_height,
                              int dst_width,
@@ -328,6 +335,8 @@ static void ScalePlaneDown34(int src_width,
                              const uint8* src_ptr,
                              uint8* dst_ptr,
                              enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown34_0)(const uint8* src_ptr, ptrdiff_t src_stride,
                            uint8* dst_ptr, int dst_width);
@@ -428,6 +437,8 @@ static void ScalePlaneDown34_16(int src_width,
                                 const uint16* src_ptr,
                                 uint16* dst_ptr,
                                 enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown34_0)(const uint16* src_ptr, ptrdiff_t src_stride,
                            uint16* dst_ptr, int dst_width);
@@ -525,6 +536,8 @@ static void ScalePlaneDown38(int src_width,
                              const uint8* src_ptr,
                              uint8* dst_ptr,
                              enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown38_3)(const uint8* src_ptr, ptrdiff_t src_stride,
                            uint8* dst_ptr, int dst_width);
@@ -645,6 +658,8 @@ static void ScalePlaneDown38_16(int src_width,
                                 const uint16* src_ptr,
                                 uint16* dst_ptr,
                                 enum FilterMode filtering) {
+  (void)src_width;
+  (void)src_height;
   int y;
   void (*ScaleRowDown38_3)(const uint16* src_ptr, ptrdiff_t src_stride,
                            uint16* dst_ptr, int dst_width);
