@@ -16,6 +16,24 @@
       "revId": "32f72a90412fd8a8becf98e9d9371355a4c7ce79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77906065_c85e4fc4",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2663,
+      "author": {
+        "id": 1169844
+      },
+      "writtenOn": "2017-02-20T10:03:00Z",
+      "side": 1,
+      "message": "Done changes as appropriate",
+      "parentUuid": "db1edce9_701ac9c8",
+      "revId": "32f72a90412fd8a8becf98e9d9371355a4c7ce79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
