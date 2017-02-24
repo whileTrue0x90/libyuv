@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "800bd01e_975e1055",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-02-24T17:30:54Z",
+      "side": 1,
+      "message": "No, clang is now enabled by default after talking to thakis@ about this. \\o/",
+      "parentUuid": "c5258b4f_8414fce1",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05933bae_96b688bb",
         "filename": "BUILD.gn",
         "patchSetId": 6
