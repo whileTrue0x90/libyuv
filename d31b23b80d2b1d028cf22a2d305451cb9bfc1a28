@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5258b4f_8414fce1",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-02-24T11:14:59Z",
+      "side": 1,
+      "message": "Don\u0027t you have to add is_clang as a condition too? The only similar example I could find: https://cs.chromium.org/chromium/src/BUILD.gn?rcl\u003d99f41af9c02fabf7c960c6ebb770ec0a66d1ec2d\u0026l\u003d126\ndoes that.",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05933bae_96b688bb",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-02-24T11:14:59Z",
+      "side": 1,
+      "message": "Remove line 213-214",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 213,
+        "endChar": 15
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713b4cd9_383f5cb7",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-02-24T11:14:59Z",
+      "side": 1,
+      "message": "Let\u0027s remove the comments like this one as well (also below).",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 15
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
