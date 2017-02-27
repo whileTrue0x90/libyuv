@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0093a19c_abd26d84",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-02-27T16:22:10Z",
+      "side": 1,
+      "message": "Yup, looks like this needs an update: https://cs.chromium.org/chromium/src/third_party/libyuv/DEPS?q\u003d54fd165044db88eca930ab9d20a6340b76136d91+package:%5Echromium$\u0026l\u003d40",
+      "parentUuid": "e6761a98_629a5b08",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05933bae_96b688bb",
         "filename": "BUILD.gn",
         "patchSetId": 6
