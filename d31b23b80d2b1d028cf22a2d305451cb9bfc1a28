@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e6761a98_629a5b08",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-02-27T15:20:42Z",
+      "side": 1,
+      "message": "To clarify a bit: clang is _downloaded_ by default now. It\u0027s generally not enabled by default -- if it was, you wouldn\u0027t need this patch, which enables it for just one target.\n\nThis could use a comment explaining why this target is special enough to warrant its own toolchain.\n\nI think your try job is failing because the libyuv bots don\u0027t have https://codereview.chromium.org/2702113005/ yet. If you pin chromium_deps or something like that somewhere, you probably need to rev it.",
+      "parentUuid": "800bd01e_975e1055",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05933bae_96b688bb",
         "filename": "BUILD.gn",
         "patchSetId": 6
