@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "81b84839_8cf82a45",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-02-28T22:31:27Z",
+      "side": 1,
+      "message": "DEPS is now rolled in https://chromium-review.googlesource.com/c/447903/ so the latest Clang Chromium is using should be in.",
+      "parentUuid": "0093a19c_abd26d84",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05933bae_96b688bb",
         "filename": "BUILD.gn",
         "patchSetId": 6
