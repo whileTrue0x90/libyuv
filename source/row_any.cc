@@ -19,6 +19,9 @@ namespace libyuv {
 extern "C" {
 #endif
 
+// memset for temp is meant to clear the source buffer (not dest) so that
+// SIMD that reads full multiple of 16 bytes will not trigger msan errors.
+
 // Subsampled source needs to be increase by 1 of not even.
 #define SS(width, shift) (((width) + (1 << (shift)) - 1) >> (shift))
 
