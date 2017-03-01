@@ -3,7 +3,7 @@ vars = {
   # folder name.
   'root_dir': 'libyuv',
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '6557cd40deb894148068183e4489ca264043d214',
+  'chromium_revision': 'f4dc12111a0349f4b9ecb2ee43220044f4c401a8',
   'swarming_revision': 'ebc8dab6f8b8d79ec221c94de39a921145abd404',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
