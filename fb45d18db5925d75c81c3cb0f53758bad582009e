@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95fd2e7f_fcba0021",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-03-01T20:18:44Z",
+      "side": 1,
+      "message": "Yes, that\u0027s correct. It\u0027s just kept since it\u0027s been around before and it\u0027s nice to know the actual Chromium revision all the Git subtree mirrors were calculated from below.",
+      "parentUuid": "94aa56da_4062369e",
+      "revId": "fb45d18db5925d75c81c3cb0f53758bad582009e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e01685ea_0a8619d7",
         "filename": "DEPS",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fb45d18db5925d75c81c3cb0f53758bad582009e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e4116d_1e5c6c3e",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-03-01T20:18:44Z",
+      "side": 1,
+      "message": "Now that is odd. The very same script works perfectly for WebRTC (example: https://codereview.webrtc.org/2722223003) so I didn\u0027t check the actual diff for this DEPS. \nClearly there\u0027s some kind of bug that affects libyuv, so I filed https://bugs.chromium.org/p/libyuv/issues/detail?id\u003d690\n\nThanks for pointing this out. It was my mistake.",
+      "parentUuid": "e01685ea_0a8619d7",
+      "revId": "fb45d18db5925d75c81c3cb0f53758bad582009e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
