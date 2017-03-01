@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "65af90e8_2825cdd9",
+        "filename": "BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-03-01T16:57:33Z",
+      "side": 1,
+      "message": "kjellander: Looks like win_x64_rel failed again because clang-cl.exe doesn\u0027t exist. Your patch does look like the right roll, but linked from its (https://chromium-review.googlesource.com/c/447903/) trybots is https://build.chromium.org/p/tryserver.libyuv/builders/win_clang/builds/458/steps/gclient%20runhooks/logs/stdio which says \"Updating Clang to 289944-2...\" which is the old clang version (lhs on https://chromium.googlesource.com/chromium/src/+/222a3fe7a7..6557cd40de/tools/clang/scripts/update.py). Do you know why this might happen? Do the trybots use an older chromium rev?",
+      "parentUuid": "81b84839_8cf82a45",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d31b23b80d2b1d028cf22a2d305451cb9bfc1a28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05933bae_96b688bb",
         "filename": "BUILD.gn",
         "patchSetId": 6
