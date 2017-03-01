@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94aa56da_4062369e",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-03-01T17:04:36Z",
+      "side": 1,
+      "message": "As far as I can tell, this isn\u0027t read by anything below.",
+      "revId": "fb45d18db5925d75c81c3cb0f53758bad582009e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01685ea_0a8619d7",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-03-01T17:04:36Z",
+      "side": 1,
+      "message": "In particular, this is what syncs in tools/clang/scripts/update.py, and it\u0027s still being synced in at the same revision as before.",
+      "revId": "fb45d18db5925d75c81c3cb0f53758bad582009e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
