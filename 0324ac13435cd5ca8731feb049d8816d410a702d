@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "081533d3_e403f471",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-03T01:51:55Z",
+      "side": 1,
+      "message": "is --name src necessary because the repo is named libyuv/ ?",
+      "revId": "0324ac13435cd5ca8731feb049d8816d410a702d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
