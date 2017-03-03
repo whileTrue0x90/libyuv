@@ -16,6 +16,24 @@
       "revId": "0324ac13435cd5ca8731feb049d8816d410a702d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd88a76c_24c783f0",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-03-03T01:59:32Z",
+      "side": 1,
+      "message": "Yes. That\u0027s the reason why it ended up becoming called \u0027libyuv\u0027.",
+      "parentUuid": "081533d3_e403f471",
+      "revId": "0324ac13435cd5ca8731feb049d8816d410a702d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
