@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5888ec4e_1b237d7a",
+        "filename": "source/row_any.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-03-03T04:25:47Z",
+      "side": 1,
+      "message": "It\u0027s",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "924f8f3efe6206fbdb5a017d5b00c84c7764a836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
