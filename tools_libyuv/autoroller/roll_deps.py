@@ -392,20 +392,15 @@ def _LocalCommit(commit_msg, dry_run):
     _RunCommand(['git', 'commit', '-m', commit_msg])
 
 
-def _UploadCL(dry_run, rietveld_email=None):
+def _UploadCL(dry_run, skip_cq, rietveld_email=None):
   logging.info('Uploading CL...')
   if not dry_run:
     cmd = ['git', 'cl', 'upload', '-f']
     if rietveld_email:
       cmd.append('--email=%s' % rietveld_email)
+    if not skip_cq:
+      cmd.append('--use-commit-queue')
     _RunCommand(cmd, extra_env={'EDITOR': 'true'})
-
-
-def _SendToCQ(dry_run, skip_cq):
-  logging.info('Sending the CL to the CQ...')
-  if not dry_run and not skip_cq:
-    _RunCommand(['git', 'cl', 'set_commit'])
-    logging.info('Sent the CL to the CQ.')
 
 
 def main():
@@ -473,8 +468,7 @@ def main():
   _CreateRollBranch(opts.dry_run)
   UpdateDepsFile(deps_filename, current_cr_rev, new_cr_rev, changed_deps)
   _LocalCommit(commit_msg, opts.dry_run)
-  _UploadCL(opts.dry_run, opts.rietveld_email)
-  _SendToCQ(opts.dry_run, opts.skip_cq)
+  _UploadCL(opts.dry_run, opts.skip_cq, opts.rietveld_email)
   return 0
 
 
