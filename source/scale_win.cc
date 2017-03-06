@@ -1247,8 +1247,10 @@ __declspec(naked) void ScaleARGBCols_SSE2(uint8* dst_argb,
 
 // Shuffle table for arranging 2 pixels into pairs for pmaddubsw
 static uvec8 kShuffleColARGB = {
-    0u, 4u,  1u, 5u,  2u,  6u,  3u,  7u,  // bbggrraa 1st pixel
-    8u, 12u, 9u, 13u, 10u, 14u, 11u, 15u  // bbggrraa 2nd pixel
+    0u,  4u,  1u, 5u,  2u,
+    6u,  3u,  7u,  // bbggrraa 1st pixel
+    8u,  12u, 9u, 13u, 10u,
+    14u, 11u, 15u  // bbggrraa 2nd pixel
 };
 
 // Shuffle table for duplicating 2 fractions into 8 bytes each

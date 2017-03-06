@@ -38,7 +38,8 @@ enum { KERNEL = 3, KERNEL_SIZE = 2 * KERNEL + 1 };
 // The maximum value (11 x 11) must be less than 128 to avoid sign
 // problems during the calls to _mm_mullo_epi16().
 static const int K[KERNEL_SIZE] = {
-    1, 3, 7, 11, 7, 3, 1  // ~11 * exp(-0.3 * i * i)
+    1, 3, 7, 11,
+    7, 3, 1  // ~11 * exp(-0.3 * i * i)
 };
 static const double kiW[KERNEL + 1 + 1] = {
     1. / 1089.,  // 1 / sum(i:0..6, j..6) K[i]*K[j]

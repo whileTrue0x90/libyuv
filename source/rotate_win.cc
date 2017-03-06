@@ -63,7 +63,7 @@ __declspec(naked) void TransposeWx8_SSSE3(const uint8* src,
     mov       eax, ebp
     movdqa    xmm7, xmm6
     palignr   xmm7, xmm7, 8
-    // Second round of bit swap.
+            // Second round of bit swap.
     punpcklwd xmm0, xmm2
     punpcklwd xmm1, xmm3
     movdqa    xmm2, xmm0
@@ -76,8 +76,8 @@ __declspec(naked) void TransposeWx8_SSSE3(const uint8* src,
     movdqa    xmm7, xmm5
     palignr   xmm6, xmm6, 8
     palignr   xmm7, xmm7, 8
-    // Third round of bit swap.
-    // Write to the destination pointer.
+            // Third round of bit swap.
+            // Write to the destination pointer.
     punpckldq xmm0, xmm4
     movq      qword ptr [edx], xmm0
     movdqa    xmm4, xmm0
@@ -139,7 +139,7 @@ __declspec(naked) void TransposeUVWx8_SSE2(const uint8* src,
     align      4
  convertloop:
                      // Read in the data from the source pointer.
-        // First round of bit swap.
+                // First round of bit swap.
     movdqu    xmm0, [eax]
     movdqu    xmm1, [eax + edi]
     lea       eax, [eax + 2 * edi]
@@ -166,13 +166,13 @@ __declspec(naked) void TransposeUVWx8_SSE2(const uint8* src,
     lea       eax, [eax + 2 * edi]
     movdqu    [esp], xmm5  // backup xmm5
     neg       edi
-    movdqa    xmm5, xmm6             // use xmm5 as temp register.
+    movdqa    xmm5, xmm6     // use xmm5 as temp register.
     punpcklbw xmm6, xmm7
     punpckhbw xmm5, xmm7
     movdqa    xmm7, xmm5
     lea       eax, [eax + 8 * edi + 16]
     neg       edi
-    // Second round of bit swap.
+            // Second round of bit swap.
     movdqa    xmm5, xmm0
     punpcklwd xmm0, xmm2
     punpckhwd xmm5, xmm2
@@ -187,12 +187,12 @@ __declspec(naked) void TransposeUVWx8_SSE2(const uint8* src,
     movdqa    xmm6, xmm5
     movdqu    xmm5, [esp]  // restore xmm5
     movdqu    [esp], xmm6  // backup xmm6
-    movdqa    xmm6, xmm5             // use xmm6 as temp register.
+    movdqa    xmm6, xmm5     // use xmm6 as temp register.
     punpcklwd xmm5, xmm7
     punpckhwd xmm6, xmm7
     movdqa    xmm7, xmm6
-    // Third round of bit swap.
-    // Write to the destination pointer.
+            // Third round of bit swap.
+            // Write to the destination pointer.
     movdqa    xmm6, xmm0
     punpckldq xmm0, xmm4
     punpckhdq xmm6, xmm4
