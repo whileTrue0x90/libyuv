@@ -231,8 +231,11 @@ if (libyuv_include_tests) {
     deps = [
       ":libyuv",
       "//testing/gtest",
-      "//third_party/gflags",
     ]
+    if (use_gflags) {
+      defines += [ "LIBYUV_USE_GFLAGS" ]
+      deps += [ "//third_party/gflags" ]
+    }
 
     configs += [ ":libyuv_unittest_warnings_config" ]
 
