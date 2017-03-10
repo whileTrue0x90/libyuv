@@ -655,16 +655,16 @@ ANY11B(ARGBCopyYToAlphaRow_Any_SSE2, ARGBCopyYToAlphaRow_SSE2, 0, 1, 4, 7)
 
 // Any 1 to 1 with parameter.
 #define ANY11P(NAMEANY, ANY_SIMD, T, SBPP, BPP, MASK)                         \
-  void NAMEANY(const uint8* src_ptr, uint8* dst_ptr, T shuffler, int width) { \
+  void NAMEANY(const uint8* src_ptr, uint8* dst_ptr, T param, int width) {    \
     SIMD_ALIGNED(uint8 temp[64 * 2]);                                         \
     memset(temp, 0, 64); /* for msan */                                       \
     int r = width & MASK;                                                     \
     int n = width & ~MASK;                                                    \
     if (n > 0) {                                                              \
-      ANY_SIMD(src_ptr, dst_ptr, shuffler, n);                                \
+      ANY_SIMD(src_ptr, dst_ptr, param, n);                                   \
     }                                                                         \
     memcpy(temp, src_ptr + n * SBPP, r * SBPP);                               \
-    ANY_SIMD(temp, temp + 64, shuffler, MASK + 1);                            \
+    ANY_SIMD(temp, temp + 64, param, MASK + 1);                               \
     memcpy(dst_ptr + n * BPP, temp + 64, r * BPP);                            \
   }
 
@@ -719,17 +719,17 @@ ANY11P(ARGBShuffleRow_Any_MSA, ARGBShuffleRow_MSA, const uint8*, 4, 4, 7)
 
 // Any 1 to 1 with parameter and shorts.  BPP measures in shorts.
 #define ANY11P16(NAMEANY, ANY_SIMD, T, SBPP, BPP, MASK)            \
-  void NAMEANY(const uint16* src_ptr, uint16* dst_ptr, T shuffler, \
+  void NAMEANY(const uint16* src_ptr, uint16* dst_ptr, T param,    \
                int width) {                                        \
     SIMD_ALIGNED(uint16 temp[16 * 2]);                             \
     memset(temp, 0, 32); /* for msan */                            \
     int r = width & MASK;                                          \
     int n = width & ~MASK;                                         \
     if (n > 0) {                                                   \
-      ANY_SIMD(src_ptr, dst_ptr, shuffler, n);                     \
+      ANY_SIMD(src_ptr, dst_ptr, param, n);                        \
     }                                                              \
     memcpy(temp, src_ptr + n, r * SBPP);                           \
-    ANY_SIMD(temp, temp + 16, shuffler, MASK + 1);                 \
+    ANY_SIMD(temp, temp + 16, param, MASK + 1);                    \
     memcpy(dst_ptr + n, temp + 16, r * BPP);                       \
   }
 
