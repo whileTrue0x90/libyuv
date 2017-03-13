@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00cfcb53_2dbd87d3",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-03-13T07:23:02Z",
+      "side": 1,
+      "message": "You need to add a section like this, preferably at line 12:\ndeclare_args() {\n  # Set to false to disable building with gflags.\n  libyuv_use_gflags \u003d true\n}\n\nSince flags are global, Chromium wants all project specific flags to be prefixed.\n\nThen you\u0027ll build using this in a Chromium checkout:\ngn gen out/Release \"--args\u003dis_debug\u003dfalse target_cpu\u003d\\\"x64\\\" libyuv_include_tests\u003dtrue libyuv_use_gflags\u003dfalse\"",
+      "range": {
+        "startLine": 235,
+        "startChar": 8,
+        "endLine": 235,
+        "endChar": 18
+      },
+      "revId": "9b4f3b2b52d4ed69dcab5cfa0c2d0a68dd2e5187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
