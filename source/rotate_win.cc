@@ -191,7 +191,7 @@ __declspec(naked) void TransposeUVWx8_SSE2(const uint8* src,
     punpcklwd xmm5, xmm7
     punpckhwd xmm6, xmm7
     movdqa    xmm7, xmm6
-    // Third round of bit swap.
+                     // Third round of bit swap.
     // Write to the destination pointer.
     movdqa    xmm6, xmm0
     punpckldq xmm0, xmm4
@@ -222,7 +222,7 @@ __declspec(naked) void TransposeUVWx8_SSE2(const uint8* src,
     lea       edx, [edx + 2 * esi]
     movhpd    qword ptr [ebx + ebp], xmm0
     lea       ebx, [ebx + 2 * ebp]
-    movdqa    xmm0, xmm3  // use xmm0 as the temp register.
+    movdqa    xmm0, xmm3             // use xmm0 as the temp register.
     punpckldq xmm3, xmm7
     movlpd    qword ptr [edx], xmm3
     movhpd    qword ptr [ebx], xmm3
