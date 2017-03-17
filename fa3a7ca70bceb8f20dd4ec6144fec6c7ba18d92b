@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc37cbc_ed90b196",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-03-17T00:56:41Z",
+      "side": 1,
+      "message": "I\u0027d expect that you\u0027d have to keep the HAVE_JPEG define in the _internal target - something in libyuv probably checks for that define, so it needs to be set when libyuv is being built (yes: https://cs.chromium.org/search/?q\u003dhave_jpeg+file:libyuv+package:%5Echromium$+file:%5C.(cc%7Ch)\u0026type\u003dcs) As is, I\u0027d expect this to build yuv without jpeg support. (but if that works and builds fine, maybe we\u0027re not using libyuv\u0027s jpeg support at all?)\n\nYou only want to pull out the deps so that it only gets built with the default toolchain instead of with default toolchain and clang_x64. This is a bit of a hack but it probably works.",
+      "revId": "fa3a7ca70bceb8f20dd4ec6144fec6c7ba18d92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
