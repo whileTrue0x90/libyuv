@@ -53,6 +53,11 @@ group("libyuv") {
       ":libyuv_internal",
     ]
   }
+
+  deps = []
+  if (!is_ios) {
+    deps += [ "//third_party:jpeg" ]
+  }
 }
 
 static_library("libyuv_internal") {
@@ -122,7 +127,6 @@ static_library("libyuv_internal") {
 
   if (!is_ios) {
     defines += [ "HAVE_JPEG" ]
-    deps += [ "//third_party:jpeg" ]
   }
 
   if (libyuv_use_neon) {
@@ -140,6 +144,11 @@ static_library("libyuv_internal") {
 
     # Enable optimize for speed (-O2) over size (-Os).
     configs += [ "//build/config/compiler:optimize_max" ]
+  }
+
+  if (is_win && target_cpu == "x64") {
+    # We use clang-cl on Windows 64-bit builds and clang-cl does not support /analyze
+    configs -= [ "//build/config/win:vs_code_analysis" ]
   }
 
   # To enable AVX2 or other cpu optimization, pass flag here
