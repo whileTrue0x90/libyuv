@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ac65bb_d60171d7",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-03-29T21:59:29Z",
+      "side": 1,
+      "message": "Is there a comment describing why we do this? Right now it\u0027s pretty mysterious why we suddenly call out to Clang for this one component. I think a comment above this line would be very helpful.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f64fb11_846fefa0",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-03-29T21:59:29Z",
+      "side": 1,
+      "message": "This \"libyuv\" group doesn\u0027t have any code that uses libjpeg, so ideally it shouldn\u0027t depend on libjpeg. I can see why you did this, though and this seems to be the least complicated solution. But that means we should have a really clear comment about what\u0027s happening (we always want to link with the current toolchain\u0027s version of libjpeg).\n\npublic/private in this case would depend on whether you expose libjpeg in libyuv\u0027s public headers, and code that depends on this needs to get the defines and flags that libjpeg needs to compile. Here it looks like the answer is you don\u0027t do this, so this dependency can be private (\"deps\")",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce7b897_8dba6058",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-03-29T21:59:29Z",
+      "side": 1,
+      "message": "Can this target have:\n  visibility \u003d [ \":*\" ]\nto enforce it\u0027s actually internal?",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d32a2ec_37ca43bb",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-03-29T21:59:29Z",
+      "side": 1,
+      "message": "Will an \"is_win \u0026\u0026 is_clang\" work here? It would be nice if this was not dependent on the exact conditions for which this is compiled under clang.",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 34
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
