@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79b3ff26_82dfb00b",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-03-30T00:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ac65bb_d60171d7",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f64fb11_846fefa0",
         "filename": "BUILD.gn",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6eb02c_7a19ec72",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-03-30T00:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f64fb11_846fefa0",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ea8aa8d4_01e18b59",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-03-30T00:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce7b897_8dba6058",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d32a2ec_37ca43bb",
         "filename": "BUILD.gn",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-29T21:59:29Z",
       "side": 1,
       "message": "Will an \"is_win \u0026\u0026 is_clang\" work here? It would be nice if this was not dependent on the exact conditions for which this is compiled under clang.",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 34
+      },
+      "revId": "3c87bca5d56862a1730d3187379c2c2e79f18bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89afc39_c8119b65",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-03-30T00:03:02Z",
+      "side": 1,
+      "message": "That question made me realize that the is_clang check can be in the vs_code_analysis config, thus making this blog unnecessary.",
+      "parentUuid": "1d32a2ec_37ca43bb",
       "range": {
         "startLine": 153,
         "startChar": 31,
