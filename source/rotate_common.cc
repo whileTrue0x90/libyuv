@@ -20,7 +20,8 @@ void TransposeWx8_C(const uint8* src,
                     int src_stride,
                     uint8* dst,
                     int dst_stride,
-                    int width) {
+                    int width)
+{
   int i;
   for (i = 0; i < width; ++i) {
     dst[0] = src[0 * src_stride];
@@ -34,6 +35,50 @@ void TransposeWx8_C(const uint8* src,
     ++src;
     dst += dst_stride;
   }
+}
+
+void TransposeWx8_16_C(const uint8 *src,
+                       int src_stride,
+                       uint8 *dst,
+                       int dst_stride,
+                       int width) {
+    int i;
+    for (i = 0; i < width; ++i) {
+        dst[0] = src[0 * src_stride + 0];
+        dst[1] = src[0 * src_stride + 1];
+        dst[2] = src[1 * src_stride + 0];
+        dst[3] = src[1 * src_stride + 1];
+        dst[4] = src[2 * src_stride + 0];
+        dst[5] = src[2 * src_stride + 1];
+        dst[6] = src[3 * src_stride + 0];
+        dst[7] = src[3 * src_stride + 1];
+        dst[8] = src[4 * src_stride + 0];
+        dst[9] = src[4 * src_stride + 1];
+        dst[10] = src[5 * src_stride + 0];
+        dst[11] = src[5 * src_stride + 1];
+        dst[12] = src[6 * src_stride + 0];
+        dst[13] = src[6 * src_stride + 1];
+        dst[14] = src[7 * src_stride + 0];
+        dst[15] = src[7 * src_stride + 1];
+        src += 2;
+        dst += dst_stride;
+    }
+}
+
+void TransposeWxH_16_C(const uint8 *src,
+                       int src_stride,
+                       uint8 *dst,
+                       int dst_stride,
+                       int width,
+                       int height) {
+    int i;
+    for (i = 0; i < width * 2; i += 2) {
+        int j;
+        for (j = 0; j < height; ++j) {
+            dst[(j << 1) + ((i >> 1) * dst_stride) + 0] = src[i + (j * src_stride)];
+            dst[(j << 1) + ((i >> 1) * dst_stride) + 1] = src[i + (j * src_stride) + 1];
+        }
+    }
 }
 
 void TransposeUVWx8_C(const uint8* src,
