@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7ca77ee_017bd60d",
+        "filename": "include/libyuv/rotate_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca7c3e2e_c60e28fc",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d92f5e1_c73185be",
         "filename": "include/libyuv/rotate_row.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-31T01:11:45Z",
       "side": 1,
       "message": "This is misnamed.  For the original\nHAS_TRANSPOSEWX8_NEON\nWx8 refers to width x 8 pixels.  8 pixels tall.  not 8 bits.\nYour function still does 8 pixels tall? \nThe macro should be:\nHAS_TRANSPOSEWX8_16_NEON\n\nAlso the macro name should match the function name.  So the new function is TransposeWx8_16_NEON the macro should be the same with HAS_ prefix, and all upper case.\n\nSo if you change the function name, update the macro that indicates its presence.\n\nLooking in the code that uses the neon, you did the ifdef with the correct name, but the macro will never be set.\n#if defined(HAS_TRANSPOSEWX8_16_NEON)\nSo if you\u0027re always running C code, it will work, but slowly.\n1. introduce a bug in the neon and ensure the unittest fails.  There s a unittest?\n2. test neon vs C for performance.  Getting Started document should cover running benchmarks.\n3. run profiler, such perf record/perf report, to ensure the function you expect, it at the top of the profiles.\nTransposeWx8_16_NEON",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058e5cbf_107cfed3",
+        "filename": "include/libyuv/rotate_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Sorry about this. I changed the macro name just before sending it for review and forgot to add changes from this file to the commit.",
+      "parentUuid": "4d92f5e1_c73185be",
       "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "78fa02ce_3b821140",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Thanks for doing this. Will do it again before submitting the next revision.",
+      "parentUuid": "7ef69c91_c70ece3f",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a3be7dc_75e8f7ae",
         "filename": "source/rotate.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-03-31T01:11:45Z",
       "side": 1,
       "message": "this wont work?  you\u0027ll need a 16 bit mirror function.\nIt should be the same as ARGBMirrorRow_NEON in row_neon.cc but with vrev64.16  q0, q0",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd3d4e0_cd6898b8",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "You are right, my bad! Do you have any suggestions about changing the unit test to catch this?",
+      "parentUuid": "6a3be7dc_75e8f7ae",
       "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "decb187f_57f2d517",
+        "filename": "source/rotate_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6dc1ac19_226333eb",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e91f9974_221ce336",
         "filename": "source/rotate_neon.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b299c7a_eab1432c",
+        "filename": "source/rotate_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e91f9974_221ce336",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "65614dd8_9d17bef7",
+        "filename": "source/rotate_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31fdaf71_818c042c",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0612ea10_1b020db9",
         "filename": "unit_test/rotate_test.cc",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f5536d38_569d8387",
+        "filename": "unit_test/rotate_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0612ea10_1b020db9",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adc1b65_a56551a3",
         "filename": "unit_test/rotate_test.cc",
         "patchSetId": 1
@@ -152,6 +296,24 @@
       "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e1f7d5_719d7a2c",
+        "filename": "unit_test/rotate_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1193730
+      },
+      "writtenOn": "2017-03-31T20:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8adc1b65_a56551a3",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
