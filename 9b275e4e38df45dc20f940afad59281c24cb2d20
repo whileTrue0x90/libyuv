@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7c3e2e_c60e28fc",
+        "filename": "include/libyuv/rotate_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "you\u0027ve only done neon for 32 bit?\nthis block of macros applies to both 32 and 64 bit, due to \t || defined(__aarch64__))\ncreate a new ifdef for 32 bit only version of the function.\n#if !defined(LIBYUV_DISABLE_NEON) \u0026\u0026 !defined(__native_client__) \u0026\u0026 \\\n    (defined(__ARM_NEON__) || defined(LIBYUV_NEON)",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d92f5e1_c73185be",
+        "filename": "include/libyuv/rotate_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "This is misnamed.  For the original\nHAS_TRANSPOSEWX8_NEON\nWx8 refers to width x 8 pixels.  8 pixels tall.  not 8 bits.\nYour function still does 8 pixels tall? \nThe macro should be:\nHAS_TRANSPOSEWX8_16_NEON\n\nAlso the macro name should match the function name.  So the new function is TransposeWx8_16_NEON the macro should be the same with HAS_ prefix, and all upper case.\n\nSo if you change the function name, update the macro that indicates its presence.\n\nLooking in the code that uses the neon, you did the ifdef with the correct name, but the macro will never be set.\n#if defined(HAS_TRANSPOSEWX8_16_NEON)\nSo if you\u0027re always running C code, it will work, but slowly.\n1. introduce a bug in the neon and ensure the unittest fails.  There s a unittest?\n2. test neon vs C for performance.  Getting Started document should cover running benchmarks.\n3. run profiler, such perf record/perf report, to ensure the function you expect, it at the top of the profiles.\nTransposeWx8_16_NEON",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef69c91_c70ece3f",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "indent is wrong here and a few other places in this file.\nrun clang-format to fix:\nclang-format -style\u003dfile -i source/*.cc",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3be7dc_75e8f7ae",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "this wont work?  you\u0027ll need a 16 bit mirror function.\nIt should be the same as ARGBMirrorRow_NEON in row_neon.cc but with vrev64.16  q0, q0",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc1ac19_226333eb",
+        "filename": "source/rotate_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "consider using uint16 *src so you only need 1 short read/write per pixel.\nor examine the code to see if this was done for you by the compiler.",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91f9974_221ce336",
+        "filename": "source/rotate_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "clever... you\u0027ve deweaved the 16 bits (usually UV) into 2 registers and then transposed 2 blocks of 8x8\u0027s.  i like it.",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fdaf71_818c042c",
+        "filename": "source/rotate_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "add a todo - simplify this - the code above is really all we want.  everything below could be replaced by C code for remainder.",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0612ea10_1b020db9",
+        "filename": "unit_test/rotate_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "indents wrong",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adc1b65_a56551a3",
+        "filename": "unit_test/rotate_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-03-31T01:11:45Z",
+      "side": 1,
+      "message": "indent should be 2.",
+      "revId": "9b275e4e38df45dc20f940afad59281c24cb2d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
