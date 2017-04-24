@@ -1,7 +1,7 @@
 # UUID                                  	Group Name
 #
-6587b1260ca94e7f90c2985b650e1dc617520bed	libyuv-committers
 4d4288efd7d780ff5a35b8cc13fa6ff0f62c06cc	chrome-commit-bot
-global:Registered-Users                 	Registered Users
-mdb:chrome-git-admins                   	mdb/chrome-git-admins
+6587b1260ca94e7f90c2985b650e1dc617520bed	libyuv-committers
+global:Registered-Users                 	Logged-in Public Users
 ldap:eng                                	ldap/eng
+mdb:chrome-git-admins                   	mdb/chrome-git-admins
