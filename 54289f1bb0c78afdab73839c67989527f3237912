@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f8d137c9_c2f3dd37",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-04-26T09:33:44Z",
+      "side": 1,
+      "message": "Should this be \nifneq ($(findstring mips, $(TARGET_ARCH)),)",
+      "revId": "54289f1bb0c78afdab73839c67989527f3237912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85aed36c_38f10665",
         "filename": "Android.mk",
         "patchSetId": 2
