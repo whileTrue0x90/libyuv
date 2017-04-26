@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85aed36c_38f10665",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-04-26T08:55:09Z",
+      "side": 1,
+      "message": "This option is only available for clang, not gcc.  Is it still possible to build with gcc?\n\nShould add this option to LOCAL_CLANG_CFLAGS?",
+      "revId": "54289f1bb0c78afdab73839c67989527f3237912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
