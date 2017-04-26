@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca767f52_744a1c8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1151649
+      },
+      "writtenOn": "2017-04-26T08:08:09Z",
+      "side": 1,
+      "message": "The flag is actually a workaround for inline assembly that is supported by Gas (GNU assembler), but not by Clang\u0027s integrated assembler (which we use for most everything else). It is possible that MIPS doesn\u0027t want to support this mnemonic for their instruction anymore, or it could just be a bug in Clang (i.e. they didn\u0027t implement this op completely). We can pursue a proper fix there, but I did want to give you the chance to get things working again quickly, rather than waiting quite some time for a compiler update.",
+      "revId": "ad1f5727ad3a3187eb782c2e1191da9a72d443eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
