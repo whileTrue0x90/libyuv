@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0f7b78a_b04e0fb6",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002174
+      },
+      "writtenOn": "2017-04-26T17:32:48Z",
+      "side": 1,
+      "message": "I tried and TARGET_ARCH_ABI worked (i was writing this based on libvpx\u0027s Android.mk and that is the variable that libvpx uses). TARGET_ARCH might work too, but it does not really matter.",
+      "parentUuid": "f8d137c9_c2f3dd37",
+      "revId": "54289f1bb0c78afdab73839c67989527f3237912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85aed36c_38f10665",
         "filename": "Android.mk",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "GCC is still in the NDK right now, but will be removed in a future release. You can put this in a Clang-specific section, but we would really prefer that you continue building with Clang going forward (mostly so that any issues you encounter can be fixed ASAP, rather than when no other options are available).",
       "parentUuid": "85aed36c_38f10665",
+      "revId": "54289f1bb0c78afdab73839c67989527f3237912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "929759e9_12dfdcf7",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002174
+      },
+      "writtenOn": "2017-04-26T17:32:48Z",
+      "side": 1,
+      "message": "It seems like GCC fails with this flag set (i tried in NDK r10 and it failed).\n\nLOCAL_CLANG_CFLAGS does not seem to be honored by r14. Given that we are going to use only clang going forward, i think it is ok to leave this on (unless you know of a way to pass this option only to clang).",
+      "parentUuid": "0b0bfbd7_37619425",
       "revId": "54289f1bb0c78afdab73839c67989527f3237912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
