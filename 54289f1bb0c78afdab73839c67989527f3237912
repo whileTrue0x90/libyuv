@@ -16,6 +16,24 @@
       "revId": "54289f1bb0c78afdab73839c67989527f3237912",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b0bfbd7_37619425",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1151649
+      },
+      "writtenOn": "2017-04-26T08:58:30Z",
+      "side": 1,
+      "message": "GCC is still in the NDK right now, but will be removed in a future release. You can put this in a Clang-specific section, but we would really prefer that you continue building with Clang going forward (mostly so that any issues you encounter can be fixed ASAP, rather than when no other options are available).",
+      "parentUuid": "85aed36c_38f10665",
+      "revId": "54289f1bb0c78afdab73839c67989527f3237912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
