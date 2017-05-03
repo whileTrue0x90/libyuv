@@ -20,6 +20,34 @@ extern "C" {
 
 #if !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
 
+uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
+  volatile uint32 diff;
+  asm volatile (
+    "eor        v4.16b, v4.16b, v4.16b         \n"
+    "eor        v5.16b, v5.16b, v5.16b         \n"
+
+  "1:                                          \n"
+    MEMACCESS(0)
+    "ld1        {v0.16b}, [%0], #16            \n"
+    MEMACCESS(1)
+    "ld1        {v1.16b}, [%1], #16            \n"
+    "subs       %w2, %w2, #16                  \n"
+    "eor        v2.16b, v0.16b, v1.16b         \n"
+    "cnt        v3.16b, v2.16b                 \n"
+    "addv       b4, v3.16b                     \n"
+    "add        d5, d5, d4                     \n"
+    "b.gt       1b                             \n"
+
+    "fmov       %w3, s5                        \n"
+    : "+r"(src_a),
+      "+r"(src_b),
+      "+r"(count),
+      "=r"(diff)
+    :
+    : "cc", "v0", "v1", "v2", "v3", "v4", "v5");
+  return diff;
+}
+
 uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b, int count) {
   volatile uint32 sse;
   asm volatile (
