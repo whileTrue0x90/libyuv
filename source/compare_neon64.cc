@@ -53,31 +53,36 @@ uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
 uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
   uint32 diff;
   asm volatile (
-    "movi       d6, #0                         \n"
+    "movi       d9, #0                         \n"
 
   "1:                                          \n"
     MEMACCESS(0)
-    "ld1        {v0.16b, v1.16b}, [%0], #32    \n"
+    "ld1        {v0.16b, v1.16b, v2.16b, v3.16b}, [%0], #64    \n"
     MEMACCESS(1)
-    "ld1        {v2.16b, v3.16b}, [%1], #32    \n"
-    "subs       %w2, %w2, #32                  \n"
-    "eor        v0.16b, v0.16b, v2.16b         \n"
-    "eor        v1.16b, v1.16b, v3.16b         \n"
+    "ld1        {v4.16b, v5.16b, v6.16b, v7.16b}, [%1], #64    \n"
+    "subs       %w2, %w2, #64                  \n"
+    "eor        v0.16b, v0.16b, v4.16b         \n"
+    "eor        v1.16b, v1.16b, v5.16b         \n"
+    "eor        v2.16b, v2.16b, v6.16b         \n"
+    "eor        v3.16b, v3.16b, v7.16b         \n"
     "cnt        v0.16b, v0.16b                 \n"
     "cnt        v1.16b, v1.16b                 \n"
-    "addv       b4, v0.16b                     \n"
-    "addv       b5, v1.16b                     \n"
-    "add        d6, d6, d4                     \n"
-    "add        d6, d6, d5                     \n"
+    "cnt        v2.16b, v2.16b                 \n"
+    "cnt        v3.16b, v3.16b                 \n"
+    "add        v0.16b, v0.16b, v1.16b         \n"
+    "add        v2.16b, v2.16b, v3.16b         \n"
+    "add        v0.16b, v0.16b, v2.16b         \n"
+    "uaddlv     h8, v0.16b                     \n"
+    "add        d9, d9, d8                     \n"
     "b.gt       1b                             \n"
 
-    "fmov       %w3, s6                        \n"
+    "fmov       %w3, s9                        \n"
     : "+r"(src_a),
       "+r"(src_b),
       "+r"(count),
       "=r"(diff)
     :
-    : "cc", "v0", "v1", "v2", "v3", "v4", "v5", "v6");
+    : "cc", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9");
   return diff;
 }
 
