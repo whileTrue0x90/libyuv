@@ -13,6 +13,17 @@
 
 #include "libyuv/basic_types.h"
 
+// For tsan declare cpu_info_ as atomic.
+#if defined(__clang__) && !defined(_MSC_VER)
+#if __has_include(<stdatomic.h>)
+#include <stdatomic.h>
+#define LIBYUV_HAVE_STDATOMIC_H 1
+#endif
+#endif  // __clang__
+
+#ifdef LIBYUV_HAVE_STDATOMIC_H
+#endif
+
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
@@ -58,8 +69,14 @@ int ArmCpuCaps(const char* cpuinfo_name);
 // Test_flag parameter should be one of kCpuHas constants above.
 // returns non-zero if instruction set is detected
 static __inline int TestCpuFlag(int test_flag) {
+#ifdef LIBYUV_HAVE_STDATOMIC_H
+  LIBYUV_API extern atomic_int cpu_info_;
+  int cpu_info = atomic_load_explicit(&cpu_info_, memory_order_relaxed);
+#else
   LIBYUV_API extern int cpu_info_;
-  return (!cpu_info_ ? InitCpuFlags() : cpu_info_) & test_flag;
+  int cpu_info = cpu_info_;
+#endif  // LIBYUV_HAVE_STDATOMIC_H
+  return (!cpu_info ? InitCpuFlags() : cpu_info) & test_flag;
 }
 
 // For testing, allow CPU flags to be disabled.
