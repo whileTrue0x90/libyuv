@@ -8,10 +8,28 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef INCLUDE_LIBYUV_CPU_ID_H_
+#ifndef INCLUDE_LIBYUV_CPU_ID_H_  // NOLINT
 #define INCLUDE_LIBYUV_CPU_ID_H_
 
 #include "libyuv/basic_types.h"
+
+// Define LIBYUV_HAVE_STDATOMIC_H if the compiler supports C11 atomics.
+
+// GCC 4.9 has stdatomic.h. (See https://gcc.gnu.org/wiki/C11Status.)
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 9)
+#define LIBYUV_HAVE_STDATOMIC_H 1
+#endif
+
+#if defined(__clang__) && !defined(_MSC_VER)
+#if __has_include(<stdatomic.h>)
+//#define LIBYUV_HAVE_STDATOMIC_H 1
+#endif
+#endif  // __clang__
+
+#ifdef LIBYUV_HAVE_STDATOMIC_H
+#error oops
+#include <stdatomic.h>
+#endif
 
 #ifdef __cplusplus
 namespace libyuv {
@@ -31,20 +49,17 @@ static const int kCpuHasX86 = 0x10;
 static const int kCpuHasSSE2 = 0x20;
 static const int kCpuHasSSSE3 = 0x40;
 static const int kCpuHasSSE41 = 0x80;
-static const int kCpuHasSSE42 = 0x100;  // unused at this time.
+static const int kCpuHasSSE42 = 0x100;
 static const int kCpuHasAVX = 0x200;
 static const int kCpuHasAVX2 = 0x400;
 static const int kCpuHasERMS = 0x800;
 static const int kCpuHasFMA3 = 0x1000;
 static const int kCpuHasAVX3 = 0x2000;
-static const int kCpuHasF16C = 0x4000;
-
-// 0x8000 reserved for future X86 flags.
+// 0x2000, 0x4000, 0x8000 reserved for future X86 flags.
 
 // These flags are only valid on MIPS processors.
 static const int kCpuHasMIPS = 0x10000;
 static const int kCpuHasDSPR2 = 0x20000;
-static const int kCpuHasMSA = 0x40000;
 
 // Internal function used to auto-init.
 LIBYUV_API
@@ -58,8 +73,14 @@ int ArmCpuCaps(const char* cpuinfo_name);
 // Test_flag parameter should be one of kCpuHas constants above.
 // returns non-zero if instruction set is detected
 static __inline int TestCpuFlag(int test_flag) {
+#ifdef LIBYUV_HAVE_STDATOMIC_H
+  LIBYUV_API extern atomic_int cpu_info_;
+  int cpu_info = atomic_load_explicit(&cpu_info_, memory_order_relaxed);
+#else
   LIBYUV_API extern int cpu_info_;
-  return (!cpu_info_ ? InitCpuFlags() : cpu_info_) & test_flag;
+  int cpu_info = cpu_info_;
+#endif  // LIBYUV_HAVE_STDATOMIC_H
+  return (!cpu_info ? InitCpuFlags() : cpu_info) & test_flag;
 }
 
 // For testing, allow CPU flags to be disabled.
@@ -80,4 +101,4 @@ void CpuId(uint32 eax, uint32 ecx, uint32* cpu_info);
 }  // namespace libyuv
 #endif
 
-#endif  // INCLUDE_LIBYUV_CPU_ID_H_
+#endif  // INCLUDE_LIBYUV_CPU_ID_H_  NOLINT
