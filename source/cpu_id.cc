@@ -29,6 +29,18 @@
 
 #include "libyuv/basic_types.h"  // For CPU_X86
 
+// Define the LIBYUV_ATOMIC_xxx macros to use C11 atomics when available.
+#ifdef LIBYUV_HAVE_STDATOMIC_H
+#define LIBYUV_ATOMIC_INT atomic_int
+#define LIBYUV_ATOMIC_STORE_RELAXED(obj, desired) \
+  atomic_store_explicit((obj), (desired), memory_order_relaxed)
+#define LIBYUV_ATOMIC_INIT(obj, desired) atomic_init((obj), (desired))
+#else
+#define LIBYUV_ATOMIC_INT int
+#define LIBYUV_ATOMIC_STORE_RELAXED(obj, desired) *(obj) = (desired)
+#define LIBYUV_ATOMIC_INIT(obj, desired) *(obj) = (desired)
+#endif  // LIBYUV_HAVE_STDATOMIC_H
+
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
@@ -194,7 +206,7 @@ LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name,
 
 // CPU detect function for SIMD instruction sets.
 LIBYUV_API
-int cpu_info_ = 0;  // cpu_info is not initialized yet.
+LIBYUV_ATOMIC_INT cpu_info_ = 0;  // cpu_info is not initialized yet.
 
 // Test environment variable for disabling CPU features. Any non-zero value
 // to disable. Zero ignored to make it easy to set the variable on/off.
@@ -215,7 +227,8 @@ static LIBYUV_BOOL TestEnv(const char*) {
 }
 #endif
 
-LIBYUV_API SAFEBUFFERS int InitCpuFlags(void) {
+static SAFEBUFFERS
+int GetCpuFlags(void) {
   int cpu_info = 0;
 #if !defined(__pnacl__) && !defined(__CLR_VER) && defined(CPU_X86)
   uint32 cpu_info0[4] = {0, 0, 0, 0};
@@ -320,15 +333,21 @@ LIBYUV_API SAFEBUFFERS int InitCpuFlags(void) {
   if (TestEnv("LIBYUV_DISABLE_ASM")) {
     cpu_info = 0;
   }
-  cpu_info |= kCpuInitialized;
-  cpu_info_ = cpu_info;
+  cpu_info  |= kCpuInitialized;
+  return cpu_info;
+}
+
+LIBYUV_API
+int InitCpuFlags(void) {
+  int cpu_info = GetCpuFlags();
+  LIBYUV_ATOMIC_STORE_RELAXED(&cpu_info_, cpu_info);
   return cpu_info;
 }
 
 // Note that use of this function is not thread safe.
 LIBYUV_API
 void MaskCpuFlags(int enable_flags) {
-  cpu_info_ = InitCpuFlags() & enable_flags;
+  LIBYUV_ATOMIC_INIT(&cpu_info_, GetCpuFlags() & enable_flags);
 }
 
 #ifdef __cplusplus
