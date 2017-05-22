@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb30c780_e5fb7cbe",
+        "filename": "BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-22T17:38:19Z",
+      "side": 1,
+      "message": "Done\nIt had build errors as side effects of atomics, so I commented it out as a test.   Re-eanbled, thanks.",
+      "parentUuid": "c3e66695_b84ac901",
+      "range": {
+        "startLine": 241,
+        "startChar": 6,
+        "endLine": 241,
+        "endChar": 41
+      },
+      "revId": "d0a1528bb1298d80f42caf599bd6ca3a8d800dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "add8f47f_aab678f4",
         "filename": "include/libyuv/cpu_id.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-21T00:40:39Z",
       "side": 1,
       "message": "Please delete the __cplusplus \u003e 199711L test.\n\nAccording to GCC bug 60932:\n\nhttps://gcc.gnu.org/bugzilla/show_bug.cgi?id\u003d60932\n\nwhether C11 atomics (\u003cstdatomic.h\u003e) can be used in C++ code is compiler-dependent. GCC doesn\u0027t allow that, but clang does.\n\nSo clang\u0027s stdatomic.h header check does not need to test __cplusplus \u003e 199711L. In fact, it is wrong to test __cplusplus \u003e 199711L if cpu_id.h is ever included by a C file, because for that C file cpu_id.h will declare cpu_info_ as \u0027int\u0027, but cpu_id.cc (a C++ file) will define cpu_info_ as \u0027atomic_int\u0027.",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 69
+      },
+      "revId": "d0a1528bb1298d80f42caf599bd6ca3a8d800dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6445ae0f_4d02b0ad",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-22T17:38:19Z",
+      "side": 1,
+      "message": "without -std\u003dc++11 the header does not build?\nadding __cplusplus \u003e 199711L detects c+11 is enabled and the header will compile.\n\nRe c vs c++ yes thats a problem in theory  the cpuid util reproduces it.\nThe library is built as c++ and if -std\u003dc++11 is enabled atomics are used.  the cpuid util is c and the inline will refer to the variable as a simple int.  It works in practice, but in theory could cause a link error.",
+      "parentUuid": "add8f47f_aab678f4",
       "range": {
         "startLine": 17,
         "startChar": 45,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "edf73ba6_6b89a46f",
+        "filename": "libyuv_test.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-22T17:38:19Z",
+      "side": 1,
+      "message": "cpu_thread_test.cc initializes the cpu_info_ to 0.\nI tested it with both int, where the tsan race is detected (falsely), and with atomic_int where tsan passes.",
+      "parentUuid": "6898b10d_2727d9af",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 39
+      },
+      "revId": "d0a1528bb1298d80f42caf599bd6ca3a8d800dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc787779_e2f9cf38",
         "filename": "source/compare_win.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a405d625_1d1b9d88",
+        "filename": "source/compare_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-22T17:38:19Z",
+      "side": 1,
+      "message": "I ran clang-format on the code.",
+      "parentUuid": "fc787779_e2f9cf38",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "d0a1528bb1298d80f42caf599bd6ca3a8d800dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42f11baf_d3ea9706",
         "filename": "unit_test/cpu_thread_test.cc",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-05-21T00:40:39Z",
       "side": 1,
       "message": "Should we rename LibYUVCpuInfoTest to LibYUVCpuThreadTest, to match the new file name?",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "d0a1528bb1298d80f42caf599bd6ca3a8d800dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61af8f6b_9964fddf",
+        "filename": "unit_test/cpu_thread_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-22T17:38:19Z",
+      "side": 1,
+      "message": "Done.  Getting names right is hard :)\nas is, since it sets flags to 0 with MaskCpuFlags(0);\nit could be integrated back into the cpu_test.cc\nbut keeping it separate it can be built stand alone.\nThe purpose isnt really cpu threading, its testing cpu functions under various sanitizers.  So there could be more tsan thread tests for all components and/or sanitizers.\nThe test names are meant to line up more with the component of libyuv than the literal file name.  The major components being conversion, scaling, rotation, and planar functions.",
+      "parentUuid": "42f11baf_d3ea9706",
       "range": {
         "startLine": 36,
         "startChar": 5,
