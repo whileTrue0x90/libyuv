@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e363120_ad37ae50",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-05-23T22:15:21Z",
+      "side": 1,
+      "message": "Please comment: this should be declared as atomic, but hard to make it work with current compiler.",
+      "range": {
+        "startLine": 197,
+        "startChar": 26,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "1ff9a6f6adf25737b044c840c4fee34832e07c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
