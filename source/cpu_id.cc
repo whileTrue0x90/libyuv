@@ -193,8 +193,13 @@ LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name,
 }
 
 // CPU detect function for SIMD instruction sets.
-LIBYUV_API
-int cpu_info_ = 0;  // cpu_info is not initialized yet.
+// TODO(fbarchard): test thread local storage performance
+// TODO(fbarchard): port to Visual C
+#ifdef THREAD_SANITIZER
+LIBYUV_API __thread int cpu_info_ = 0;  // cpu_info is not initialized yet.
+#else
+LIBYUV_API int cpu_info_ = 0;
+#endif
 
 // Test environment variable for disabling CPU features. Any non-zero value
 // to disable. Zero ignored to make it easy to set the variable on/off.
@@ -215,7 +220,7 @@ static LIBYUV_BOOL TestEnv(const char*) {
 }
 #endif
 
-LIBYUV_API SAFEBUFFERS int InitCpuFlags(void) {
+static SAFEBUFFERS int GetCpuFlags(void) {
   int cpu_info = 0;
 #if !defined(__pnacl__) && !defined(__CLR_VER) && defined(CPU_X86)
   uint32 cpu_info0[4] = {0, 0, 0, 0};
@@ -321,6 +326,12 @@ LIBYUV_API SAFEBUFFERS int InitCpuFlags(void) {
     cpu_info = 0;
   }
   cpu_info |= kCpuInitialized;
+  return cpu_info;
+}
+
+LIBYUV_API
+int InitCpuFlags(void) {
+  int cpu_info = GetCpuFlags();
   cpu_info_ = cpu_info;
   return cpu_info;
 }
@@ -328,7 +339,7 @@ LIBYUV_API SAFEBUFFERS int InitCpuFlags(void) {
 // Note that use of this function is not thread safe.
 LIBYUV_API
 void MaskCpuFlags(int enable_flags) {
-  cpu_info_ = InitCpuFlags() & enable_flags;
+  cpu_info_ = GetCpuFlags() & enable_flags;
 }
 
 #ifdef __cplusplus

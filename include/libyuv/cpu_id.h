@@ -58,8 +58,13 @@ int ArmCpuCaps(const char* cpuinfo_name);
 // Test_flag parameter should be one of kCpuHas constants above.
 // returns non-zero if instruction set is detected
 static __inline int TestCpuFlag(int test_flag) {
-  LIBYUV_API extern int cpu_info_;
-  return (!cpu_info_ ? InitCpuFlags() : cpu_info_) & test_flag;
+#ifdef THREAD_SANITIZER
+LIBYUV_API extern  __thread int cpu_info_;
+#else
+LIBYUV_API extern  int cpu_info_;
+#endif
+  int cpu_info = cpu_info_;
+  return (!cpu_info ? InitCpuFlags() : cpu_info) & test_flag;
 }
 
 // For testing, allow CPU flags to be disabled.
