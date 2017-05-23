@@ -22,6 +22,30 @@
       "revId": "2bf1572b0eeb9f2a937afe72c39badafe4254d31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e9cc5a_2646be88",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-23T22:31:06Z",
+      "side": 1,
+      "message": "Ack.\nMy latest CL doesnt use __thread",
+      "parentUuid": "fd039a8e_d16885f2",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "2bf1572b0eeb9f2a937afe72c39badafe4254d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
