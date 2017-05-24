@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d298fa85_34e21676",
+        "filename": "unit_test/cpu_thread_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2017-05-24T18:28:24Z",
+      "side": 0,
+      "message": "This means all the platforms libyuv supports have pthread. Or is the unit test only built on platforms that have pthread?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "651ccc0c3a3f507b8ab0895e4ba018b9a6dedbfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
