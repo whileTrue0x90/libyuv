@@ -22,6 +22,30 @@
       "revId": "651ccc0c3a3f507b8ab0895e4ba018b9a6dedbfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21424583_b62c1d41",
+        "filename": "unit_test/cpu_thread_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-24T21:40:41Z",
+      "side": 1,
+      "message": "This is what I\u0027m trying:\n\n\n#if defined(__clang__)\n#if __has_include(\u003cpthread.h\u003e)\n#define LIBYUV_HAVE_PTHREAD 1\n#endif\n#elif defined(__linux__)\n#define LIBYUV_HAVE_PTHREAD 1\n#endif\n\n#ifdef LIBYUV_HAVE_PTHREAD\n#include \u003cpthread.h\u003e\n#endif",
+      "parentUuid": "610d7f72_0045b4a4",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "651ccc0c3a3f507b8ab0895e4ba018b9a6dedbfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
