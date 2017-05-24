@@ -22,6 +22,30 @@
       "revId": "651ccc0c3a3f507b8ab0895e4ba018b9a6dedbfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6aa356_60678554",
+        "filename": "unit_test/cpu_thread_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-24T18:31:46Z",
+      "side": 0,
+      "message": "yes, I\u0027m trying to expand the unittest test to work on all platforms that have pthreads.h\nMy first attempt failed on visual c __has_include(\u003cpthread.h\u003e))\n\nOn my current trybot run i\u0027ll unconditionally include pthreads.h to see which platforms are problematic.\nAnd on next version I\u0027ll nest the ifs.\n\n#if defined(__clang__)\n#if __has_include(\u003cpthread.h\u003e))\n#define LIBYUV_HAVE_PTHREAD 1\n#endif\n#elif defined(__linux__) \n#define LIBYUV_HAVE_PTHREAD 1\n#endif",
+      "parentUuid": "d298fa85_34e21676",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "651ccc0c3a3f507b8ab0895e4ba018b9a6dedbfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
