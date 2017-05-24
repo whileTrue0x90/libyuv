@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "610d7f72_0045b4a4",
+        "filename": "unit_test/cpu_thread_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2017-05-24T16:21:43Z",
+      "side": 1,
+      "message": "I don\u0027t know of a good way to detect pthread support without using an autoconf test. Perhaps we can test __unix__ instead of __linux__, or exhaustively list the Unix variants that libyuv supports?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "651ccc0c3a3f507b8ab0895e4ba018b9a6dedbfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
