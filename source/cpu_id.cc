@@ -325,22 +325,19 @@ static SAFEBUFFERS int GetCpuFlags(void) {
 
 // Note that use of this function is not thread safe.
 LIBYUV_API
-void MaskCpuFlags(int enable_flags) {
+int MaskCpuFlags(int enable_flags) {
+  int cpu_info = GetCpuFlags() & enable_flags;
 #ifdef __ATOMIC_RELAXED
-  __atomic_store_n(&cpu_info_, GetCpuFlags() & enable_flags, __ATOMIC_RELAXED);
+  __atomic_store_n(&cpu_info_, cpu_info, __ATOMIC_RELAXED);
 #else
-  cpu_info_ = GetCpuFlags() & enable_flags;
+  cpu_info_ = cpu_info;
 #endif
+  return cpu_info;
 }
 
 LIBYUV_API
 int InitCpuFlags(void) {
-  MaskCpuFlags(-1);
-#ifdef __ATOMIC_RELAXED
-  return __atomic_load_n(&cpu_info_, __ATOMIC_RELAXED);
-#else
-  return cpu_info_;
-#endif
+  return MaskCpuFlags(-1);
 }
 
 #ifdef __cplusplus
