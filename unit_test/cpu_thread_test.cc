@@ -12,8 +12,7 @@
 
 #include "libyuv/cpu_id.h"
 
-// TODO(fbarchard): Port to other platforms
-#if defined(__linux__)
+#if defined(__linux__) || (defined(__clang__) && __has_include(<pthread.h>))
 #define LIBYUV_HAVE_PTHREAD 1
 #endif
 
