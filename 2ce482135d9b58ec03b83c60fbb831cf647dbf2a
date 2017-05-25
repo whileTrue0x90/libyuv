@@ -45,6 +45,30 @@
       "revId": "2ce482135d9b58ec03b83c60fbb831cf647dbf2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35e1e76_933b9952",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2017-05-25T01:09:50Z",
+      "side": 1,
+      "message": "I am sorry, I didn\u0027t realize there is more code below. My mistake. Please ignore this comment.",
+      "parentUuid": "5e859047_9b5f949c",
+      "range": {
+        "startLine": 174,
+        "startChar": 9,
+        "endLine": 174,
+        "endChar": 12
+      },
+      "revId": "2ce482135d9b58ec03b83c60fbb831cf647dbf2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
