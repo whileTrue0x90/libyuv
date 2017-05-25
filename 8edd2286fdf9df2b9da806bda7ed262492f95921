@@ -22,6 +22,30 @@
       "revId": "8edd2286fdf9df2b9da806bda7ed262492f95921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bca7f06_5b078279",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-05-25T18:36:00Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "802a6aae_6cc51ed4",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 44
+      },
+      "revId": "8edd2286fdf9df2b9da806bda7ed262492f95921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
