@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5e8426b_7bad679c",
+        "filename": "source/compare_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-06-06T19:00:33Z",
+      "side": 1,
+      "message": "width",
+      "range": {
+        "startLine": 42,
+        "startChar": 54,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "73391eaa344539361579b864f85df28cfd2f7d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76021d4f_49c43227",
+        "filename": "source/compare_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-06-06T19:00:33Z",
+      "side": 1,
+      "message": "d2",
+      "range": {
+        "startLine": 50,
+        "startChar": 36,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "73391eaa344539361579b864f85df28cfd2f7d52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
