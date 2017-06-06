@@ -27,74 +27,34 @@ uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
   uint32 total_diff = 0;
 
   for (int i = 0; i < count; i += 32, src_a += 32, src_b += 32) {
-
-  __asm__ volatile(
+  asm volatile (
       // Load constants.
-      "vmov.u8             q12, #0x55          \n\t"  // m1.
-      "vmov.u8             q13, #0x33          \n\t"  // m2.
-      "vmov.u8             q14, #0x0f          \n\t"  // m4.
-      "vmov.u8             q15, #0x01          \n\t"  // h01.
+      "vmov.u8             q4, #0x01            \n"  // h01.
+      "vld1.8              {q0, q1}, [%1]        \n"  // load d1.
+      "vld1.8              {q2, q3}, [%2]        \n"  // load d2.
+      "veor.32             q0, q0, q2            \n"  // xor left side.
+      "veor.32             q1, q1, q3            \n"  // xor right side.
 
-      // Load d1
-      "vld1.32             {q0,q1}, [%1]       \n\t"  // load d1.
-
-      // Load d2
-      "vld1.32             {q2, q3}, [%2]      \n\t"  // load d2.
-
-      // xor
-      "veor.32             q0, q0, q2          \n\t"  // xor left side.
-      "veor.32             q3, q1, q3          \n\t"  // xor right side.
-
-      // x -= (x >> 1) & m1;
-      "vshr.u32            q1, q0, #1           \n\t"
-      "vshr.u32            q4, q3, #1           \n\t"
-      "vand.32             q1, q1, q12         \n\t"
-      "vand.32             q4, q4, q12         \n\t"
-      "vsub.u32            q0, q0, q1          \n\t"
-      "vsub.u32            q3, q3, q4          \n\t"
-
-      // x = (x & m2) + ((x >> 2) & m2);
-      "vand.32             q1, q0, q13         \n\t"
-      "vand.32             q4, q3, q13         \n\t"
-      "vshr.u32            q2, q0, #2           \n\t"
-      "vshr.u32            q5, q3, #2           \n\t"
-      "vand.32             q2, q2, q13         \n\t"
-      "vand.32             q5, q5, q13         \n\t"
-      "vadd.u32            q0, q1, q2          \n\t"
-      "vadd.u32            q3, q4, q5          \n\t"
-
-      // x = (x + (x >> 4)) & m4;
-      "vshr.u32            q1, q0, #4           \n\t"
-      "vshr.u32            q4, q3, #4           \n\t"
-      "vadd.u32            q0, q0, q1          \n\t"
-      "vadd.u32            q3, q3, q4          \n\t"
-      "vand.32             q0, q0, q14         \n\t"
-      "vand.32             q3, q3, q14         \n\t"
-
-      // (x * h01) >> 24;
-      "vmul.u32            q0, q0, q15         \n\t"
-      "vmul.u32            q3, q3, q15         \n\t"
-      "vshr.u32            q0, q0, #24          \n\t"
-      "vshr.u32            q3, q3, #24          \n\t"
+      "vcnt.i8             q0, q0                \n"
+      "vcnt.i8             q1, q1                \n"
 
       // sum distances
-      "vpadd.u32           d0, d0, d1          \n\t"
-      "vpadd.u32           d6, d6, d7          \n\t"
-      "vpadd.u32           d0, d0, d0          \n\t"
-      "vpadd.u32           d6, d6, d6          \n\t"
-
-      // add d0,d6.
-      "vadd.u32            d0, d0, d6          \n\t"
-
+      // vmul to add all bytes in each int with result in high byte.
+      "vmul.u32            q0, q0, q4            \n"
+      "vmul.u32            q1, q1, q4            \n"
+      "vshr.u32            q0, q0, #24           \n"
+      "vshr.u32            q1, q1, #24           \n"
+      "vpadd.u32           d0, d0, d1            \n"
+      "vpadd.u32           d2, d2, d3            \n"
+      "vpadd.u32           d0, d0, d0            \n"
+      "vpadd.u32           d2, d2, d2            \n"
+      "vadd.u32            d0, d0, d2            \n"
       // Move distance to return register.
-      "vmov.32             %0, d0[0]           \n\t"
-
+      "vmov.32             %0, d0[0]             \n"
       // Output.
       : "=r"(diff), "+r"(src_a), "+r"(src_b)
-        // input
       :
-      // Clobber list.
-      : "q0", "q1", "q2", "q3", "q4", "q5", "q12", "q13", "q14", "q15");
+      : "q0", "q1", "q2", "q3", "q4");
     total_diff += diff;
   }
   return total_diff;
