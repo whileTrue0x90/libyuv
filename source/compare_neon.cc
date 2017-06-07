@@ -21,13 +21,13 @@ extern "C" {
 #if !defined(LIBYUV_DISABLE_NEON) && defined(__ARM_NEON__) && \
     !defined(__aarch64__)
 
-// 256 bits at a time
+// 512 bits at a time
+// uses short accumulator which restricts count to 131 KB
 uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
   uint32 diff;
 
   asm volatile (
-    // Load constants.
-    "vmov.u8    q4, #0                         \n"  // accumulator
+    "vmov.u16   q6, #0                         \n"  // accumulator
 
   "1:                                          \n"
     "vld1.8     {q0, q1}, [%0]!                \n"
@@ -36,15 +36,22 @@ uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
     "veor.32    q1, q1, q3                     \n"
     "vcnt.i8    q0, q0                         \n"
     "vcnt.i8    q1, q1                         \n"
-    "subs       %2, %2, #32                    \n"
+    "vld1.8     {q2, q3}, [%0]!                \n"
+    "vld1.8     {q4, q5}, [%1]!                \n"
+    "veor.32    q2, q2, q4                     \n"
+    "veor.32    q3, q3, q5                     \n"
+    "vcnt.i8    q2, q2                         \n"
+    "vcnt.i8    q3, q3                         \n"
+    "subs       %2, %2, #64                    \n"
     "vadd.u8    q0, q0, q1                     \n"  // 16 byte counts
-    "vpaddl.u8  q0, q0                         \n"  // 8 shorts
-    "vpadal.u16 q4, q0                         \n"  // 4 ints
+    "vadd.u8    q2, q2, q3                     \n"
+    "vpadal.u8  q6, q0                         \n"  // 8 shorts
+    "vpadal.u8  q6, q2                         \n"
     "bgt        1b                             \n"
 
-    "vpadd.u32  d0, d8, d9                     \n"
+    "vpaddl.u16 q0, q6                         \n"  // 4 ints
+    "vpadd.u32  d0, d0, d1                     \n"
     "vpadd.u32  d0, d0, d0                     \n"
-    // Move distance to return register.
     "vmov.32    %3, d0[0]                      \n"
  
     : "+r"(src_a),
@@ -52,7 +59,7 @@ uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
       "+r"(count),
       "=r"(diff)
     :
-    :  "cc", "q0", "q1", "q2", "q3", "q4");
+    :  "cc", "q0", "q1", "q2", "q3", "q4", "q5", "q6");
   return diff;
 }
 
