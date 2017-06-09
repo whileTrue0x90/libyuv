@@ -58,10 +58,7 @@ uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
 uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b, int count) {
   uint32 sse;
   asm volatile (
-    "vmov.u8    q8, #0                         \n"
-    "vmov.u8    q10, #0                        \n"
-    "vmov.u8    q9, #0                         \n"
-    "vmov.u8    q11, #0                        \n"
+    "vmov.u8    q4, #0                         \n"
 
   "1:                                          \n"
     "vld1.8     {q0}, [%0]!                    \n"
@@ -69,16 +66,13 @@ uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b, int count) {
     "subs       %2, %2, #16                    \n"
     "vsubl.u8   q2, d0, d2                     \n"
     "vsubl.u8   q3, d1, d3                     \n"
-    "vmlal.s16  q8, d4, d4                     \n"
-    "vmlal.s16  q9, d6, d6                     \n"
-    "vmlal.s16  q10, d5, d5                    \n"
-    "vmlal.s16  q11, d7, d7                    \n"
+    "vmlal.s16  q4, d4, d4                     \n"
+    "vmlal.s16  q4, d6, d6                     \n"
+    "vmlal.s16  q4, d5, d5                     \n"
+    "vmlal.s16  q4, d7, d7                     \n"
     "bgt        1b                             \n"
 
-    "vadd.u32   q8, q8, q9                     \n"
-    "vadd.u32   q10, q10, q11                  \n"
-    "vadd.u32   q11, q8, q10                   \n"
-    "vpaddl.u32 q1, q11                        \n"
+    "vpaddl.u32 q1, q4                         \n"
     "vadd.u64   d0, d2, d3                     \n"
     "vmov.32    %3, d0[0]                      \n"
     : "+r"(src_a),
@@ -86,7 +80,7 @@ uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b, int count) {
       "+r"(count),
       "=r"(sse)
     :
-    : "memory", "cc", "q0", "q1", "q2", "q3", "q8", "q9", "q10", "q11");
+    : "memory", "cc", "q0", "q1", "q2", "q3", "q4");
   return sse;
 }
 

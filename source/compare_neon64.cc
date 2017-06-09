@@ -53,10 +53,7 @@ uint32 HammingDistance_NEON(const uint8* src_a, const uint8* src_b, int count) {
 uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b, int count) {
   uint32 sse;
   asm volatile (
-    "eor        v16.16b, v16.16b, v16.16b      \n"
-    "eor        v18.16b, v18.16b, v18.16b      \n"
-    "eor        v17.16b, v17.16b, v17.16b      \n"
-    "eor        v19.16b, v19.16b, v19.16b      \n"
+    "movi       v4.4s, #0                      \n"
 
   "1:                                          \n"
     "ld1        {v0.16b}, [%0], #16            \n"
@@ -64,23 +61,20 @@ uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b, int count) {
     "subs       %w2, %w2, #16                  \n"
     "usubl      v2.8h, v0.8b, v1.8b            \n"
     "usubl2     v3.8h, v0.16b, v1.16b          \n"
-    "smlal      v16.4s, v2.4h, v2.4h           \n"
-    "smlal      v17.4s, v3.4h, v3.4h           \n"
-    "smlal2     v18.4s, v2.8h, v2.8h           \n"
-    "smlal2     v19.4s, v3.8h, v3.8h           \n"
+    "smlal      v4.4s, v2.4h, v2.4h            \n"
+    "smlal      v4.4s, v3.4h, v3.4h            \n"
+    "smlal2     v4.4s, v2.8h, v2.8h            \n"
+    "smlal2     v4.4s, v3.8h, v3.8h            \n"
     "b.gt       1b                             \n"
 
-    "add        v16.4s, v16.4s, v17.4s         \n"
-    "add        v18.4s, v18.4s, v19.4s         \n"
-    "add        v19.4s, v16.4s, v18.4s         \n"
-    "addv       s0, v19.4s                     \n"
+    "addv       s0, v4.4s                      \n"
     "fmov       %w3, s0                        \n"
     : "+r"(src_a),
       "+r"(src_b),
       "+r"(count),
       "=r"(sse)
     :
-    : "cc", "v0", "v1", "v2", "v3", "v16", "v17", "v18", "v19");
+    : "cc", "v0", "v1", "v2", "v3", "v4");
   return sse;
 }
 
