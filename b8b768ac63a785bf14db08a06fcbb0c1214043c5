@@ -22,6 +22,30 @@
       "revId": "b8b768ac63a785bf14db08a06fcbb0c1214043c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e250a43_bec56c17",
+        "filename": "source/compare_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-06-09T17:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83a912b4_994aa47f",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "b8b768ac63a785bf14db08a06fcbb0c1214043c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
