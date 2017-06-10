@@ -211,7 +211,7 @@ def BuildDepsentryDict(deps_dict):
         result[path] = DepsEntry(path, url, revision)
 
   AddDepsEntries(deps_dict['deps'])
-  for deps_os in ['win', 'mac', 'unix', 'android', 'ios', 'unix']:
+  for deps_os in ['win', 'mac', 'unix', 'android', 'unix']:
     AddDepsEntries(deps_dict.get('deps_os', {}).get(deps_os, {}))
   return result
 
@@ -337,7 +337,7 @@ def UpdateDepsFile(deps_filename, old_cr_revision, new_cr_revision,
           'gclient sync --deps=all\n'
           'or make sure the .gclient file for your solution contains all '
           'platforms in the target_os list, i.e.\n'
-          'target_os = ["android", "unix", "mac", "ios", "win"];\n'
+          'target_os = ["android", "unix", "mac", "win"];\n'
           'Then run "gclient sync" again.' % local_dep_dir)
     _, stderr = _RunCommand(
       ['roll-dep-svn', '--no-verify-revision', dep.path, dep.new_rev],
