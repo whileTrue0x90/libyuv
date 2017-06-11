@@ -306,6 +306,7 @@ extern "C" {
 #define HAS_J400TOARGBROW_NEON
 #define HAS_MERGEUVROW_NEON
 #define HAS_MIRRORROW_NEON
+#define HAS_MIRRORROW_16_NEON
 #define HAS_MIRRORUVROW_NEON
 #define HAS_NV12TOARGBROW_NEON
 #define HAS_NV12TORGB565ROW_NEON
@@ -1332,6 +1333,9 @@ void MirrorRow_Any_SSSE3(const uint8* src, uint8* dst, int width);
 void MirrorRow_Any_SSE2(const uint8* src, uint8* dst, int width);
 void MirrorRow_Any_NEON(const uint8* src, uint8* dst, int width);
 void MirrorRow_Any_MSA(const uint8* src, uint8* dst, int width);
+
+void MirrorRow_16_C(const uint8* src, uint8* dst, int width);
+void MirrorRow_16_NEON(const uint8* src, uint8* dst, int width);
 
 void MirrorUVRow_SSSE3(const uint8* src_uv,
                        uint8* dst_u,
