@@ -75,6 +75,16 @@ int RotatePlane(const uint8* src,
                 int src_height,
                 enum RotationMode mode);
 
+// Rotate a 16-bit plane by 0, 90, 180, or 270.
+LIBYUV_API
+int RotatePlane_16(const uint8* src,
+                   int src_stride,
+                   uint8* dst,
+                   int dst_stride,
+                   int src_width,
+                   int src_height,
+                   enum RotationMode mode);
+
 // Rotate planes by 90, 180, 270. Deprecated.
 LIBYUV_API
 void RotatePlane90(const uint8* src,
@@ -155,6 +165,14 @@ void TransposeUV(const uint8* src,
                  int dst_stride_b,
                  int width,
                  int height);
+
+LIBYUV_API
+void TransposePlane_16(const uint8* src,
+                       int src_stride,
+                       uint8* dst,
+                       int dst_stride,
+                       int width,
+                       int height);
 
 #ifdef __cplusplus
 }  // extern "C"
