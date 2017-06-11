@@ -189,6 +189,175 @@ void TransposeWx8_NEON(const uint8* src,
       : "memory", "cc", "q0", "q1", "q2", "q3");
 }
 
+void TransposeWx8_16_NEON(const uint8* src,
+                          int src_stride,
+                          uint8* dst,
+                          int dst_stride,
+                          int width) {
+  const uint8* src_temp;
+  asm volatile (
+    // loops are on blocks of 8. loop will stop when
+    // counter gets to or below 0. starting the counter
+    // at w-8 allow for this
+    "sub         %5, #8                        \n"
+
+    // handle 8x8 blocks. this should be the majority of the plane
+    "1:                                        \n"
+      "mov         %0, %1                      \n"
+
+      "vld2.8      {d0,  d1},  [%0], %2        \n"
+      "vld2.8      {d2,  d3},  [%0], %2        \n"
+      "vld2.8      {d4,  d5},  [%0], %2        \n"
+      "vld2.8      {d6,  d7},  [%0], %2        \n"
+      "vld2.8      {d16, d17}, [%0], %2        \n"
+      "vld2.8      {d18, d19}, [%0], %2        \n"
+      "vld2.8      {d20, d21}, [%0], %2        \n"
+      "vld2.8      {d22, d23}, [%0]            \n"
+
+      "vtrn.8      q1, q0                      \n"
+      "vtrn.8      q3, q2                      \n"
+      "vtrn.8      q9, q8                      \n"
+      "vtrn.8      q11, q10                    \n"
+
+      "vtrn.16     q1, q3                      \n"
+      "vtrn.16     q0, q2                      \n"
+      "vtrn.16     q9, q11                     \n"
+      "vtrn.16     q8, q10                     \n"
+
+      "vtrn.32     q1, q9                      \n"
+      "vtrn.32     q0, q8                      \n"
+      "vtrn.32     q3, q11                     \n"
+      "vtrn.32     q2, q10                     \n"
+
+      "vrev16.8    q0, q0                      \n"
+      "vrev16.8    q1, q1                      \n"
+      "vrev16.8    q2, q2                      \n"
+      "vrev16.8    q3, q3                      \n"
+      "vrev16.8    q8, q8                      \n"
+      "vrev16.8    q9, q9                      \n"
+      "vrev16.8    q10, q10                    \n"
+      "vrev16.8    q11, q11                    \n"
+
+      "mov         %0, %3                      \n"
+
+      "vst2.8      {d2, d3},  [%0], %4         \n"
+      "vst2.8      {d0, d1},  [%0], %4         \n"
+      "vst2.8      {d6, d7},  [%0], %4         \n"
+      "vst2.8      {d4, d5},  [%0], %4         \n"
+      "vst2.8      {d18, d19}, [%0], %4        \n"
+      "vst2.8      {d16, d17}, [%0], %4        \n"
+      "vst2.8      {d22, d23}, [%0], %4        \n"
+      "vst2.8      {d20, d21}, [%0]            \n"
+
+      "add         %1, #8*2                    \n"  // src   += 8*2
+      "add         %3, %3, %4, lsl #3          \n"  // dst   += 8 * dst_stride
+      "subs        %5,  #8                     \n"  // w     -= 8
+      "bge         1b                          \n"
+
+    // add 8 back to counter. if the result is 0 there are
+    // no residuals.
+    "adds        %5, #8                        \n"
+    "beq         4f                            \n"
+
+    // some residual, so between 1 and 7 lines left to transpose
+    "cmp         %5, #2                        \n"
+    "blt         3f                            \n"
+
+    "cmp         %5, #4                        \n"
+    "blt         2f                            \n"
+
+    // TODO(dony): Clean this up
+    // 4x8 block
+    "mov         %0, %1                        \n"
+    "vld1.64     {d0}, [%0], %2                \n"
+    "vld1.64     {d1}, [%0], %2                \n"
+    "vld1.64     {d2}, [%0], %2                \n"
+    "vld1.64     {d3}, [%0], %2                \n"
+    "vld1.64     {d4}, [%0], %2                \n"
+    "vld1.64     {d5}, [%0], %2                \n"
+    "vld1.64     {d6}, [%0], %2                \n"
+    "vld1.64     {d7}, [%0]                    \n"
+
+    "vtrn.16     d0, d1                        \n"
+    "vtrn.16     d2, d3                        \n"
+    "vtrn.16     d4, d5                        \n"
+    "vtrn.16     d6, d7                        \n"
+    "vtrn.32     q0, q1                        \n"
+    "vtrn.32     q2, q3                        \n"
+
+    "mov         %0, %3                        \n"
+
+    "vst1.64     {d0}, [%0], %4                \n"
+    "vst1.64     {d1}, [%0], %4                \n"
+    "vst1.64     {d2}, [%0], %4                \n"
+    "vst1.64     {d3}, [%0], %4                \n"
+
+    "add         %0, %3, #8                    \n"
+
+    "vst1.64     {d4}, [%0], %4                \n"
+    "vst1.64     {d5}, [%0], %4                \n"
+    "vst1.64     {d6}, [%0], %4                \n"
+    "vst1.64     {d7}, [%0], %4                \n"
+
+    "add         %1, #4*2                      \n"  // src   += 4 * 2
+    "add         %3, %3, %4, lsl #2            \n"  // dst   += 4 * dst_stride
+    "subs        %5,  #4                       \n"  // w     -= 4
+    "beq         4f                            \n"
+
+    // some residual, check to see if it includes a 2x8 block,
+    // or less
+    "cmp         %7, #2                        \n"
+    "blt         3f                            \n"
+
+    // 2x8 block
+    "2:                                        \n"
+    "mov         %0, %1                        \n"
+    "vld2.16     {d0[0], d2[0]}, [%0], %2      \n"
+    "vld2.16     {d0[1], d2[1]}, [%0], %2      \n"
+    "vld2.16     {d0[2], d2[2]}, [%0], %2      \n"
+    "vld2.16     {d0[3], d2[3]}, [%0], %2      \n"
+    "vld2.16     {d1[0], d3[0]}, [%0], %2      \n"
+    "vld2.16     {d1[1], d3[1]}, [%0], %2      \n"
+    "vld2.16     {d1[2], d3[2]}, [%0], %2      \n"
+    "vld2.16     {d1[3], d3[3]}, [%0], %2      \n"
+
+    "mov         %0, %3                        \n"
+
+    "vst1.64     {q0}, [%0], %4                \n"
+    "vst1.64     {q1}, [%0]                    \n"
+
+    "add         %1, #2*2                      \n"  // src   += 2 * 2
+    "add         %3, %3, %4, lsl #1            \n"  // dst += 2 * dst_stride
+    "subs        %5,  #2                       \n"  // w     -= 2
+    "beq         4f                            \n"
+
+    // 1x8 block
+    "3:                                        \n"
+    "vld1.16      {d0[0]}, [%1], %2            \n"
+    "vld1.16      {d0[1]}, [%1], %2            \n"
+    "vld1.16      {d0[2]}, [%1], %2            \n"
+    "vld1.16      {d0[3]}, [%1], %2            \n"
+    "vld1.16      {d1[0]}, [%1], %2            \n"
+    "vld1.16      {d1[1]}, [%1], %2            \n"
+    "vld1.16      {d1[2]}, [%1], %2            \n"
+    "vld1.16      {d1[3]}, [%1]                \n"
+
+    "vst1.64     {q0}, [%3]                    \n"
+
+    "4:                                        \n"
+
+    : "=&r"(src_temp),            // %0
+      "+r"(src),                 // %1
+      "+r"(src_stride),          // %2
+      "+r"(dst),                 // %3
+      "+r"(dst_stride),          // %4
+      "+r"(width)                // %5
+    :
+    : "memory", "cc",
+      "q0", "q1", "q2", "q3", "q8", "q9", "q10", "q11"
+  );
+}
+
 static uvec8 kVTbl4x4TransposeDi = {0, 8,  1, 9,  2, 10, 3, 11,
                                     4, 12, 5, 13, 6, 14, 7, 15};
 
