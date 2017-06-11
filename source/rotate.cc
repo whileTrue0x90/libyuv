@@ -223,6 +223,96 @@ void RotatePlane180(const uint8* src,
   free_aligned_buffer_64(row);
 }
 
+void RotatePlane180_16(const uint8* src,
+                       int src_stride,
+                       uint8* dst,
+                       int dst_stride,
+                       int width,
+                       int height) {
+  // Swap first and last row and mirror the content. Uses a temporary row.
+  align_buffer_64(row, width);
+  const uint8* src_bot = src + src_stride * (height - 1);
+  uint8* dst_bot = dst + dst_stride * (height - 1);
+  int half_height = (height + 1) >> 1;
+  int y;
+  void (*MirrorRow_16)(const uint8* src, uint8* dst, int width) =
+      MirrorRow_16_C;
+  void (*CopyRow)(const uint8* src, uint8* dst, int width) = CopyRow_C;
+#if defined(HAS_MIRRORROW_16_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+    MirrorRow_16 = MirrorRow_16_NEON;
+  }
+#endif
+#if defined(HAS_COPYROW_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+    CopyRow = IS_ALIGNED(width * 2, 32) ? CopyRow_NEON : CopyRow_Any_NEON;
+  }
+#endif
+
+  // Odd height will harmlessly mirror the middle row twice.
+  for (y = 0; y < half_height; ++y) {
+    MirrorRow_16(src, row, width);  // Mirror first row into a buffer
+    src += src_stride;
+    MirrorRow_16(src_bot, dst, width);  // Mirror last row into first row
+    dst += dst_stride;
+    CopyRow(row, dst_bot, width * 2);  // Copy first mirrored row into last
+    src_bot -= src_stride;
+    dst_bot -= dst_stride;
+  }
+  free_aligned_buffer_64(row);
+}
+
+LIBYUV_API
+void TransposePlane_16(const uint8* src,
+                       int src_stride,
+                       uint8* dst,
+                       int dst_stride,
+                       int width,
+                       int height) {
+  int i = height;
+  void (*TransposeWx8_16)(const uint8* src, int src_stride, uint8* dst,
+                          int dst_stride, int width) = TransposeWx8_16_C;
+#if defined(HAS_TRANSPOSEWX8_16_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+    TransposeWx8_16 = TransposeWx8_16_NEON;
+  }
+#endif
+
+  // Work through the source in 8x8 tiles.
+  while (i >= 8) {
+    TransposeWx8_16(src, src_stride, dst, dst_stride, width);
+    src += 8 * src_stride;  // Go down 8 rows.
+    dst += 16;              // Move over 8 columns.
+    i -= 8;
+  }
+
+  TransposeWxH_16_C(src, src_stride, dst, dst_stride, width, i);
+}
+
+void RotatePlane90_16(const uint8* src,
+                      int src_stride,
+                      uint8* dst,
+                      int dst_stride,
+                      int width,
+                      int height) {
+  src += src_stride * (height - 1);
+  src_stride = -src_stride;
+
+  TransposePlane_16(src, src_stride, dst, dst_stride, width, height);
+}
+
+void RotatePlane270_16(const uint8* src,
+                       int src_stride,
+                       uint8* dst,
+                       int dst_stride,
+                       int width,
+                       int height) {
+  dst += dst_stride * (width - 1);
+  dst_stride = -dst_stride;
+
+  TransposePlane_16(src, src_stride, dst, dst_stride, width, height);
+}
+
 LIBYUV_API
 void TransposeUV(const uint8* src,
                  int src_stride,
@@ -405,6 +495,45 @@ int RotatePlane(const uint8* src,
       return 0;
     case kRotate180:
       RotatePlane180(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    default:
+      break;
+  }
+  return -1;
+}
+
+LIBYUV_API
+int RotatePlane_16(const uint8* src,
+                   int src_stride,
+                   uint8* dst,
+                   int dst_stride,
+                   int width,
+                   int height,
+                   enum RotationMode mode) {
+  if (!src || width <= 0 || height == 0 || !dst) {
+    return -1;
+  }
+
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src = src + (height - 1) * src_stride;
+    src_stride = -src_stride;
+  }
+
+  switch (mode) {
+    case kRotate0:
+      // copy frame
+      CopyPlane(src, src_stride, dst, dst_stride, width * 2, height);
+      return 0;
+    case kRotate90:
+      RotatePlane90_16(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    case kRotate270:
+      RotatePlane270_16(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    case kRotate180:
+      RotatePlane180_16(src, src_stride, dst, dst_stride, width, height);
       return 0;
     default:
       break;

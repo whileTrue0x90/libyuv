@@ -602,6 +602,27 @@ void MirrorRow_NEON(const uint8* src, uint8* dst, int width) {
       : "cc", "memory", "r3", "q0");
 }
 
+void MirrorRow_16_NEON(const uint8* src, uint8* dst, int width) {
+  asm volatile(
+      // Start at end of source row.
+      "mov        r3, #-16                       \n"
+      "add        %0, %0, %2, lsl #1             \n"
+      "sub        %0, #16                        \n"
+
+      "1:                                          \n"
+      "vld1.8     {q0}, [%0], r3                 \n"  // src -= 16
+      "subs       %2, #8                         \n"  // 8 pixels per loop.
+      "vrev64.16  q0, q0                         \n"
+      "vst1.8     {d1}, [%1]!                    \n"  // dst += 16
+      "vst1.8     {d0}, [%1]!                    \n"
+      "bgt        1b                             \n"
+      : "+r"(src),   // %0
+        "+r"(dst),   // %1
+        "+r"(width)  // %2
+      :
+      : "cc", "memory", "r3", "q0");
+}
+
 void MirrorUVRow_NEON(const uint8* src_uv,
                       uint8* dst_u,
                       uint8* dst_v,
