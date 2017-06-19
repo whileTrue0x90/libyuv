@@ -199,4 +199,17 @@ class LibYUVBaseTest : public ::testing::Test {
   int benchmark_cpu_info_;        // Default -1.  Use 1 to disable SIMD.
 };
 
+class LibYUVCompareTest : public ::testing::Test {
+ protected:
+  LibYUVCompareTest();
+
+  int benchmark_iterations_;     // Default 1. Use 1000 for benchmarking.
+  int benchmark_width_;          // Default 1280.  Use 640 for benchmarking VGA.
+  int benchmark_height_;         // Default 720.  Use 360 for benchmarking VGA.
+  int benchmark_pixels_div256_;  // Total pixels to benchmark / 256.
+  int benchmark_pixels_div1280_;  // Total pixels to benchmark / 1280.
+  int disable_cpu_flags_;         // Default 1.  Use -1 for benchmarking.
+  int benchmark_cpu_info_;        // Default -1.  Use 1 to disable SIMD.
+};
+
 #endif  // UNIT_TEST_UNIT_TEST_H_  NOLINT
