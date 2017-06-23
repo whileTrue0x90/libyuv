@@ -24,8 +24,166 @@ namespace libyuv {
 extern "C" {
 #endif
 
+#if defined(HAS_ARGBTOUVROW_SSSE3)
+static const uvec8 kAddUV128 = {128u, 128u, 128u, 128u, 128u, 128u, 128u, 128u,
+                                128u, 128u, 128u, 128u, 128u, 128u, 128u, 128u};
+
+static const vec8 kARGBToV = {-18, -94, 112, 0, -18, -94, 112, 0,
+                              -18, -94, 112, 0, -18, -94, 112, 0};
+
+static const vec8 kARGBToU = {112, -74, -38, 0, 112, -74, -38, 0,
+                              112, -74, -38, 0, 112, -74, -38, 0};
+
+static const vec8 kBGRAToV = {0, 112, -94, -18, 0, 112, -94, -18,
+                              0, 112, -94, -18, 0, 112, -94, -18};
+
+static const vec8 kBGRAToU = {0, -38, -74, 112, 0, -38, -74, 112,
+                              0, -38, -74, 112, 0, -38, -74, 112};
+
+static const vec8 kABGRToV = {112, -94, -18, 0, 112, -94, -18, 0,
+                              112, -94, -18, 0, 112, -94, -18, 0};
+
+static const vec8 kABGRToU = {-38, -74, 112, 0, -38, -74, 112, 0,
+                              -38, -74, 112, 0, -38, -74, 112, 0};
+
+static const vec8 kRGBAToU = {0, 112, -74, -38, 0, 112, -74, -38,
+                              0, 112, -74, -38, 0, 112, -74, -38};
+
+static const vec8 kRGBAToV = {0, -18, -94, 112, 0, -18, -94, 112,
+                              0, -18, -94, 112, 0, -18, -94, 112};
+
+static const uvec16 kAddUVJ128 = {0x8080u, 0x8080u, 0x8080u, 0x8080u,
+                                  0x8080u, 0x8080u, 0x8080u, 0x8080u};
+
+static const vec8 kARGBToUJ = {127, -84, -43, 0, 127, -84, -43, 0,
+                               127, -84, -43, 0, 127, -84, -43, 0};
+
+static const vec8 kARGBToVJ = {-20, -107, 127, 0, -20, -107, 127, 0,
+                               -20, -107, 127, 0, -20, -107, 127, 0};
+#endif  // defined(HAS_ARGBTOUVROW_SSSE3)
+
+#if defined(HAS_ARGBTOYROW_SSSE3)
+// Constants for ARGB.
+static const vec8 kARGBToY = {13, 65, 33, 0, 13, 65, 33, 0,
+                              13, 65, 33, 0, 13, 65, 33, 0};
+// Constants for BGRA.
+static const vec8 kBGRAToY = {0, 33, 65, 13, 0, 33, 65, 13,
+                              0, 33, 65, 13, 0, 33, 65, 13};
+// Constants for ABGR.
+static const vec8 kABGRToY = {33, 65, 13, 0, 33, 65, 13, 0,
+                              33, 65, 13, 0, 33, 65, 13, 0};
+
+// Constants for RGBA.
+static const vec8 kRGBAToY = {0, 13, 65, 33, 0, 13, 65, 33,
+                              0, 13, 65, 33, 0, 13, 65, 33};
+
+static const uvec8 kAddY16 = {16u, 16u, 16u, 16u, 16u, 16u, 16u, 16u,
+                              16u, 16u, 16u, 16u, 16u, 16u, 16u, 16u};
+#endif  // defined(HAS_ARGBTOYROW_SSSE3)
+
 // 64 bit
 #if defined(_M_X64)
+
+#if defined(HAS_ARGBTOYROW_SSSE3)
+void ARGBToYRow_SSSE3(const uint8* src_argb, uint8* dst_y, int width) {
+  __m128i xmm0, xmm1, xmm2, xmm3;
+  __m128i xmm4 = _mm_load_si128((__m128i*)kARGBToY);
+  __m128i xmm5 = _mm_load_si128((__m128i*)kAddY16);
+  while (width > 0) {
+    xmm0 = _mm_loadu_si128((__m128i*)(src_argb));
+    xmm1 = _mm_loadu_si128((__m128i*)(src_argb + 16));
+    xmm2 = _mm_loadu_si128((__m128i*)(src_argb + 32));
+    xmm3 = _mm_loadu_si128((__m128i*)(src_argb + 48));
+    xmm0 = _mm_maddubs_epi16(xmm0, xmm4);
+    xmm1 = _mm_maddubs_epi16(xmm1, xmm4);
+    xmm2 = _mm_maddubs_epi16(xmm2, xmm4);
+    xmm3 = _mm_maddubs_epi16(xmm3, xmm4);
+    src_argb += 64;
+    xmm0 = _mm_hadd_epi16(xmm0, xmm1);
+    xmm2 = _mm_hadd_epi16(xmm2, xmm3);
+    xmm0 = _mm_srli_epi16(xmm0, 7);
+    xmm2 = _mm_srli_epi16(xmm2, 7);
+    xmm0 = _mm_packus_epi16(xmm0, xmm2);
+    xmm0 = _mm_add_epi8(xmm0, xmm5);
+    _mm_storeu_si128((__m128i*)dst_y, xmm0);
+    dst_y += 16;
+    width -= 16;
+  }
+}
+#endif
+
+#if defined(HAS_ARGBTOUVROW_SSSE3)
+void ARGBToUVRow_SSSE3(const uint8* src_argb0,
+                       int src_stride_argb,
+                       uint8* dst_u,
+                       uint8* dst_v,
+                       int width) {
+  __m128i xmm0, xmm1, xmm2, xmm3, xmm4;
+  __m128i xmm5 = _mm_load_si128((__m128i*)kAddUV128);
+  __m128i xmm6 = _mm_load_si128((__m128i*)kARGBToV);
+  __m128i xmm7 = _mm_load_si128((__m128i*)kARGBToU);
+
+  const ptrdiff_t offset = (uint8*)dst_v - (uint8*)dst_u;
+
+  while (width > 0) {
+    // step 1 - subsample 16x2 argb pixels to 8x1
+
+    xmm0 = _mm_loadu_si128((__m128i*)(src_argb0));
+    xmm4 = _mm_loadu_si128((__m128i*)(src_argb0 + src_stride_argb));
+    xmm0 = _mm_avg_epu8(xmm0, xmm4);
+
+    xmm1 = _mm_loadu_si128((__m128i*)(src_argb0 + 16));
+    xmm4 = _mm_loadu_si128((__m128i*)(src_argb0 + src_stride_argb + 16));
+    xmm1 = _mm_avg_epu8(xmm1, xmm4);
+
+    xmm2 = _mm_loadu_si128((__m128i*)(src_argb0 + 32));
+    xmm4 = _mm_loadu_si128((__m128i*)(src_argb0 + src_stride_argb + 32));
+    xmm2 = _mm_avg_epu8(xmm2, xmm4);
+
+    xmm3 = _mm_loadu_si128((__m128i*)(src_argb0 + 48));
+    xmm4 = _mm_loadu_si128((__m128i*)(src_argb0 + src_stride_argb + 48));
+    xmm3 = _mm_avg_epu8(xmm3, xmm4);
+
+    src_argb0 += 64;
+
+    xmm0 = _mm_shuffle_epi32(xmm0, 0xd8);  // 0xd8 = _MM_SHUFFLE(3, 1, 2, 0)
+    xmm1 = _mm_shuffle_epi32(xmm1, 0xd8);  // 0xd8 = _MM_SHUFFLE(3, 1, 2, 0)
+    xmm4 = _mm_unpacklo_epi64(xmm0, xmm1);
+    xmm0 = _mm_unpackhi_epi64(xmm0, xmm1);
+    xmm0 = _mm_avg_epu8(xmm0, xmm4);
+
+    xmm2 = _mm_shuffle_epi32(xmm2, 0xd8);  // 0xd8 = _MM_SHUFFLE(3, 1, 2, 0)
+    xmm3 = _mm_shuffle_epi32(xmm3, 0xd8);  // 0xd8 = _MM_SHUFFLE(3, 1, 2, 0)
+    xmm4 = _mm_unpacklo_epi64(xmm2, xmm3);
+    xmm2 = _mm_unpackhi_epi64(xmm2, xmm3);
+    xmm2 = _mm_avg_epu8(xmm2, xmm4);
+
+    // step 2 - convert to U and V
+    // from here down is very similar to Y code except
+    // instead of 16 different pixels, its 8 pixels of U and 8 of V
+
+    xmm1 = xmm0;
+    xmm3 = xmm2;
+    xmm0 = _mm_maddubs_epi16(xmm0, xmm7);  // U
+    xmm2 = _mm_maddubs_epi16(xmm2, xmm7);
+    xmm1 = _mm_maddubs_epi16(xmm1, xmm6);  // V
+    xmm3 = _mm_maddubs_epi16(xmm3, xmm6);
+    xmm0 = _mm_hadd_epi16(xmm0, xmm2);
+    xmm1 = _mm_hadd_epi16(xmm1, xmm3);
+    xmm0 = _mm_srai_epi16(xmm0, 8);
+    xmm1 = _mm_srai_epi16(xmm1, 8);
+    xmm0 = _mm_packs_epi16(xmm0, xmm1);
+    xmm0 = _mm_add_epi8(xmm0, xmm5);  // -> unsigned
+
+    // step 3 - store 8 U and 8 V values
+    _mm_storel_epi64((__m128i*)(dst_u), xmm0);  // U
+    xmm0 = _mm_shuffle_epi32(xmm0, 0x4e);  // 0x4e = _MM_SHUFFLE(1, 0, 3, 2)
+    _mm_storel_epi64((__m128i*)(dst_u + offset), xmm0);  // V
+
+    dst_u += 8;
+    width -= 16;
+  }
+}
 
 // Read 4 UV from 422, upsample to 8 UV.
 #define READYUV422                                      \
