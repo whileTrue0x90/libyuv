@@ -262,6 +262,10 @@ extern "C" {
     (!defined(__clang__) || defined(__SSSE3__))
 #define HAS_I422ALPHATOARGBROW_SSSE3
 #define HAS_I422TOARGBROW_SSSE3
+//Pharago begin
+#define HAS_ARGBTOUVROW_SSSE3
+#define HAS_ARGBTOYROW_SSSE3
+//Pharago end
 #endif
 
 // The following are available on Neon platforms:
