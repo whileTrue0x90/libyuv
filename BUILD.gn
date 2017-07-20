@@ -60,6 +60,7 @@ group("libyuv") {
     # libyuv_internal because in Windows x64 builds that will generate a clang
     # build of libjpeg, and we don't want two copies.
     deps = [
+      "//build/config:exe_and_shlib_deps",  # for new[] on clang 5 libc++
       "//third_party:jpeg",
     ]
   }
