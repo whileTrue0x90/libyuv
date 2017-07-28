@@ -29,7 +29,7 @@
 #endif
 
 #endif
-struct FILE;  // For jpeglib.h.
+//struct FILE;  // For jpeglib.h.
 
 // C++ build requires extern C for jpeg internals.
 #ifdef __cplusplus
