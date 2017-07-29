@@ -75,6 +75,11 @@ extern "C" {
 #define VISUALC_HAS_AVX2 1
 #endif  // VisualStudio >= 2012
 
+// clang 6 mips issue https://bugs.chromium.org/p/libyuv/issues/detail?id=715
+#if defined(__clang__)
+#define DISABLE_CLANG_MSA 1
+#endif
+
 // The following are available on all x86 platforms:
 #if !defined(LIBYUV_DISABLE_X86) && \
     (defined(_M_IX86) || defined(__x86_64__) || defined(__i386__))
