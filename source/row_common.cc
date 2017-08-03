@@ -2639,6 +2639,20 @@ void NV12ToRGB565Row_AVX2(const uint8* src_y,
 }
 #endif
 
+int16 ScaleSumSamples_C(const int16* src, int16* dst, int scale, int width) {
+  int16 smax = 0;
+
+  int i;
+  for (i = 0; i < width; ++i) {
+    int v = src[0] * scale;
+    dst[0] = (v >= 0) ? ((v + 2040) >> 12) : -((-v + 2040) >> 12);
+    if (abs(dst[0]) > abs(smax)) {
+      smax = dst[0];
+    }
+  }
+  return smax;
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
