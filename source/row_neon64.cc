@@ -2612,6 +2612,29 @@ void HalfFloatRow_NEON(const uint16* src, uint16* dst, float scale, int width) {
       : "cc", "memory", "v1", "v2", "v3");
 }
 
+float ScaleSumSamples_NEON(const float* src, float* dst, float scale, int width) {
+  float fmax;
+  asm volatile(
+      "movi       v4.4s, #0                      \n"  // max
+
+      "1:                                        \n"
+      "ld1        {v1.4s}, [%0], #16             \n"  // load 4 samples
+      "subs       %w2, %w2, #4                   \n"  // 8 processed per loop
+      "fmul       v2.4s, v1.4s, %4.s[0]          \n"  // scale
+      "st1        {v1.4s}, [%1], #16             \n"  // store 4 samples
+      "fmax       v4.4s, v4.4s, v1.4s            \n"  // max
+      "b.gt       1b                             \n"
+      "fmaxv      %s3, v4.4s                     \n"  // signed max acculator
+
+      : "+r"(src),    // %0
+        "+r"(dst),    // %1
+        "+r"(width),  // %2
+        "=w"(fmax)    // %3
+      : "w"(scale)    // %4
+      : "cc", "memory", "v1", "v2", "v3", "v4");
+  return fmax;
+}
+
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
 
 #ifdef __cplusplus
