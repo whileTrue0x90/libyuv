@@ -22,11 +22,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <new>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <new>
 #ifdef _OPENMP
 #include <omp.h>
 #endif

@@ -15,11 +15,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <new>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <new>
 
 #include "libyuv/convert.h"
 #include "libyuv/planar_functions.h"
