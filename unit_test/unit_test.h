@@ -36,6 +36,9 @@ static __inline int Abs(int v) {
   return v >= 0 ? v : -v;
 }
 
+static __inline float FAbs(float v) {
+  return v >= 0 ? v : -v;
+}
 #define OFFBY 0
 
 // Scaling uses 16.16 fixed point to step thru the source image, so a
