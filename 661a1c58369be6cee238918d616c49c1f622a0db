@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b41f89aa_fcabd2bd",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-08-10T18:11:28Z",
+      "side": 1,
+      "message": "movl",
+      "range": {
+        "startLine": 1035,
+        "startChar": 32,
+        "endLine": 1035,
+        "endChar": 36
+      },
+      "revId": "661a1c58369be6cee238918d616c49c1f622a0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
