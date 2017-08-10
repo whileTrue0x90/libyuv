@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c21877_e8223d65",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-08-10T00:28:07Z",
+      "side": 1,
+      "message": "8x2 to produce 16x1",
+      "range": {
+        "startLine": 999,
+        "startChar": 8,
+        "endLine": 999,
+        "endChar": 11
+      },
+      "revId": "ba1453992c6531e570f36e78e53f165cac1d0e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a35913_ddd99f34",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-08-10T00:28:07Z",
+      "side": 1,
+      "message": "14",
+      "range": {
+        "startLine": 1014,
+        "startChar": 40,
+        "endLine": 1014,
+        "endChar": 41
+      },
+      "revId": "ba1453992c6531e570f36e78e53f165cac1d0e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85060d49_fd2bce75",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-08-10T00:28:07Z",
+      "side": 1,
+      "message": "16",
+      "range": {
+        "startLine": 1017,
+        "startChar": 30,
+        "endLine": 1017,
+        "endChar": 31
+      },
+      "revId": "ba1453992c6531e570f36e78e53f165cac1d0e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df25af48_54b2d7c3",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-08-10T00:28:07Z",
+      "side": 1,
+      "message": "add stride for next row",
+      "range": {
+        "startLine": 1061,
+        "startChar": 13,
+        "endLine": 1061,
+        "endChar": 23
+      },
+      "revId": "ba1453992c6531e570f36e78e53f165cac1d0e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
