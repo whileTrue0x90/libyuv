@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2eae8f6_c60acbb6",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-14T17:34:17Z",
+      "side": 1,
+      "message": "curious \u0027Any\u0027 functions were not done for the other 3 functions, but I checked and they dont have them for other platforms.",
+      "revId": "c291e831d7617c4abb8086622466eeb43fadba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
