@@ -22,6 +22,30 @@
       "revId": "661a1c58369be6cee238918d616c49c1f622a0db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcb5cba_67cf0fbc",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-15T21:19:58Z",
+      "side": 1,
+      "message": "Ack.\ndeferring until performance and functionality is tested.",
+      "parentUuid": "b41f89aa_fcabd2bd",
+      "range": {
+        "startLine": 1035,
+        "startChar": 32,
+        "endLine": 1035,
+        "endChar": 36
+      },
+      "revId": "661a1c58369be6cee238918d616c49c1f622a0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
