@@ -1,7 +1,7 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': 'da6245e7c4b489a4dc73be76fcb54483add1eb2b',
-  'swarming_revision': 'a56c2b39ca23bdf41458421a7f825ddbf3f43f28',
+  'chromium_revision': '08098c41886a24eb813bc3981f8b9e94c4973614',
+  'swarming_revision': '42721e128da760b345ab60d7cf34e300269112d7',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
   # and whatever else without interference from each other.
@@ -9,18 +9,18 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '9629af7533357c245a90fb7130fbfba53a162284',
+  'catapult_revision': '67520e6add0372b9e025a8b2fc639fbcd13caa90',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '5a3f439e92d3a55858c4eeda57917664657f45fb',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '7dff8529d084bea94bbf9f68569a0ffb4427eb65',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/buildtools.git' + '@' + '5ad14542a6a74dd914f067b948c5d3e8d170396b',
+    Var('chromium_git') + '/chromium/buildtools.git' + '@' + 'd36e2d975b599009ff311719896b88f602987ff8',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + 'ebf1c4622eba176624b5084a727b8fe308d2896b',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + 'ea658acb938addd7d9f9b47d1b4f37dffe568249',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'd58cf433a5327d71ff38bfeab37bd42932f9740b',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '898e262c320c39174eed849b1afdd14d6c8ba65e',
   'src/third_party/catapult':
    Var('chromium_git') + '/external/github.com/catapult-project/catapult.git' + '@' + Var('catapult_revision'),
   'src/third_party/colorama/src':
@@ -30,9 +30,9 @@ deps = {
   'src/third_party/libjpeg_turbo':
     Var('chromium_git') + '/chromium/deps/libjpeg_turbo.git' + '@' + 'a1750dbc79a8792dde3d3f7d7d8ac28ba01ac9dd',
   'src/third_party/yasm/source/patched-yasm':
-    Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + '7da28c6c7c6a1387217352ce02b31754deb54d2a',
+    Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + 'b98114e18d8b9b84586b10d24353ab8616d4c5fc',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + 'f79809d0346e8191983826dee15df3f2c71b1343',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + 'ccc4eb3b18296155d6251fd5b4dd202cd8a66073',
   'src/tools/gyp':
     Var('chromium_git') + '/external/gyp.git' + '@' + 'd61a9397e668fa9843c4aa7da9e79460fe590bfb',
    'src/tools/swarming_client':
@@ -50,13 +50,13 @@ deps = {
 deps_os = {
   'android': {
     'src/base':
-      Var('chromium_git') + '/chromium/src/base' + '@' + '8c06e7a9f6d085c70d25f29a1261c4b01bba7470',
+      Var('chromium_git') + '/chromium/src/base' + '@' + '24c232c48cfab476e2e81b1e565e2d969cead5b8',
     'src/third_party/android_tools':
       Var('chromium_git') + '/android_tools.git' + '@' + 'e9d4018e149d50172ed462a7c21137aa915940ec',
     'src/third_party/ced/src':
       Var('chromium_git') + '/external/github.com/google/compact_enc_det.git' + '@' + '910cca22d881b02cbc8950fa02ccbcdcfb782456',
     'src/third_party/icu':
-      Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '1fec0c83e9ad7f5a075ae0b50af9a3889f54be0e',
+      Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '08cb956852a5ccdba7f9c941728bb833529ba3c6',
     'src/third_party/jsr-305/src':
       Var('chromium_git') + '/external/jsr-305.git' + '@' + '642c508235471f7220af6d5df2d3210e3bfc0919',
     'src/third_party/junit/src':
@@ -68,13 +68,13 @@ deps_os = {
     'src/third_party/requests/src':
       Var('chromium_git') + '/external/github.com/kennethreitz/requests.git' + '@' + 'f172b30356d821d180fa4ecfa3e71c7274a32de4',
     'src/third_party/robolectric/robolectric':
-      Var('chromium_git') + '/external/robolectric.git' + '@' + '2a0b6ba221c14f3371813a676ce06143353e448d',
+      Var('chromium_git') + '/external/robolectric.git' + '@' + '0ccaf33cf6a6d98cbef7d0f3604fda45b13cce54',
     'src/third_party/ub-uiautomator/lib':
       Var('chromium_git') + '/chromium/third_party/ub-uiautomator.git' + '@' + '00270549ce3161ae72ceb24712618ea28b4f9434',
   },
   'ios': {
     'src/ios':
-      Var('chromium_git') + '/chromium/src/ios' + '@' + 'e5a58b0b437af90c301a3bbbd25f8c620546168b',
+      Var('chromium_git') + '/chromium/src/ios' + '@' + 'e8f9fac0d43a512f86cee13999b94bb7f5153ca0',
   },
   'unix': {
     'src/third_party/lss':
