@@ -2692,6 +2692,46 @@ void ScaleSamples_NEON(const float* src, float* dst, float scale, int width) {
       : "cc", "memory", "v1", "v2");
 }
 
+// filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
+void GaussCol_NEON(const uint32* src0,
+                   const uint32* src1,
+                   const uint32* src2,
+                   const uint32* src3,
+                   const uint32* src4,
+                   uint16* dst,
+                   int width) {
+  asm volatile(
+      "movi       v5.4s, #4                      \n"  // constant 4
+      "movi       v6.4s, #6                      \n"  // constant 6
+
+      "1:                                        \n"
+      "ld1        {v0.4s}, [%0], #16             \n"  // load 4 samples, 5 rows
+      "ld1        {v1.4s}, [%1], #16             \n"
+      "ld1        {v2.4s}, [%2], #16             \n"
+      "ld1        {v3.4s}, [%3], #16             \n"
+      "ld1        {v4.4s}, [%4], #16             \n"
+      "subs       %w6, %w6, #8                   \n"  // 8 processed per loop
+
+      "add        v0.4s, v0.4s, v4.4s            \n"  // * 1
+      "mla        v0.4s, v1.4s, v5.4s            \n"  // * 4
+      "mla        v0.4s, v2.4s, v6.4s            \n"  // * 6
+      "mla        v0.4s, v3.4s, v5.4s            \n"  // * 4
+
+      "uqshrn     v0.4h, v0.4s, #8               \n"  // round, shift by 8 pack.
+      "st1        {v0.4h}, [%5], #8              \n"  // store 5 samples
+      "b.gt       1b                             \n"
+
+      : "+r"(src0),  // %0
+        "+r"(src1),  // %1
+        "+r"(src2),  // %2
+        "+r"(src3),  // %3
+        "+r"(src4),  // %4
+        "+r"(dst),   // %5
+        "+r"(width)  // %6
+      :
+      : "cc", "memory", "v1", "v2", "v3", "v4", "v5", "v6");
+}
+
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
 
 #ifdef __cplusplus
