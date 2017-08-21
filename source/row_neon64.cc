@@ -2732,7 +2732,7 @@ void GaussRow_NEON(const uint16* src0,
       : "+r"(src0),  // %0
         "+r"(dst),   // %1
         "+r"(width)  // %2
-      : "r"(&kGauseCoefficients[0])  // %3
+      : "r"(&kGauseCoefficients[0]), // %3
         "r"(8LL)     // %4
       : "cc", "memory", "v0", "v1", "v2", "v3", "v4",
         "v20", "v21", "v22", "v23");
