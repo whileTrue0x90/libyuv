@@ -2699,6 +2699,93 @@ static vec16 kGauseCoefficients[4] = {
     {0, 0, 0, 1, 4, 6, 4, 1},
 };
 
+/*
+
+  fc:	6d7f99a5 	ldp	d5, d6, [x13,#-8]
+ 100:	6d7f8981 	ldp	d1, d2, [x12,#-8]
+ 104:	6d7f9163 	ldp	d3, d4, [x11,#-8]
+ 108:	6d7fc1e7 	ldp	d7, d16, [x15,#-8]
+ 10c:	6d7fca11 	ldp	d17, d18, [x16,#-8]
+ 110:	2e60c0a5 	umull	v5.4s, v5.4h, v0.4h
+ 114:	2e60c0c6 	umull	v6.4s, v6.4h, v0.4h
+ 118:	2e6300e3 	uaddl	v3.4s, v7.4h, v3.4h
+ 11c:	2e640204 	uaddl	v4.4s, v16.4h, v4.4h
+ 120:	2e6110a1 	uaddw	v1.4s, v5.4s, v1.4h
+ 124:	2e6210c2 	uaddw	v2.4s, v6.4s, v2.4h
+ 128:	4f225463 	shl	v3.4s, v3.4s, #2
+ 12c:	4f225484 	shl	v4.4s, v4.4s, #2
+ 130:	2e711021 	uaddw	v1.4s, v1.4s, v17.4h
+ 134:	2e721042 	uaddw	v2.4s, v2.4s, v18.4h
+ 138:	4ea38421 	add	v1.4s, v1.4s, v3.4s
+ 13c:	4ea48442 	add	v2.4s, v2.4s, v4.4s
+ 140:	f100214a 	subs	x10, x10, #0x8
+ 144:	9100416b 	add	x11, x11, #0x10
+ 148:	9100418c 	add	x12, x12, #0x10
+ 14c:	910041ad 	add	x13, x13, #0x10
+ 150:	910041ef 	add	x15, x15, #0x10
+ 154:	ad3f89c1 	stp	q1, q2, [x14,#-16]
+ 158:	910081ce 	add	x14, x14, #0x20
+ 15c:	91004210 	add	x16, x16, #0x10
+ 160:	54fffce1 	b.ne	fc <GaussCol_C+0xfc>
+*/
+
+// filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
+void GaussCol_NEON2(const uint16* src0,
+                   const uint16* src1,
+                   const uint16* src2,
+                   const uint16* src3,
+                   const uint16* src4,
+                   uint32* dst,
+                   int width) {
+  int i;
+  for (i = 0; i < width; ++i) {
+    *dst++ = *src0++ + *src1++ * 4 + *src2++ * 6 + *src3++ * 4 + *src4++;
+  }
+}
+// filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
+void GaussCol_NEON(const uint16* src0,
+                   const uint16* src1,
+                   const uint16* src2,
+                   const uint16* src3,
+                   const uint16* src4,
+                   uint32* dst,
+                   int width) {
+  asm volatile(
+      "movi       v6.8h, #4                      \n"  // constant 4
+      "movi       v7.8h, #6                      \n"  // constant 6
+
+      "1:                                        \n"
+      "ld1        {v1.8h}, [%0], #16             \n"  // load 8 samples, 5 rows
+      "ld1        {v2.8h}, [%1], #16             \n"
+      "ld1        {v3.8h}, [%2], #16             \n"
+      "ld1        {v4.8h}, [%3], #16             \n"
+      "ld1        {v5.8h}, [%4], #16             \n"
+      "subs       %w6, %w6, #8                   \n"  // 8 processed per loop
+
+      "uaddl       v0.4s, v1.4h, v5.4h            \n"  // * 1
+      "uaddl2      v1.4s, v1.8h, v5.8h            \n"  // * 1
+
+      "umlal       v0.4s, v2.4h, v6.4h            \n"  // * 4
+      "umlal2      v1.4s, v2.8h, v6.8h            \n"  // * 4
+      "umlal       v0.4s, v3.4h, v7.4h            \n"  // * 6
+      "umlal2      v1.4s, v3.8h, v7.8h            \n"  // * 6
+      "umlal       v0.4s, v4.4h, v6.4h            \n"  // * 4
+      "umlal2      v1.4s, v4.8h, v6.8h            \n"  // * 4
+
+      "st1        {v0.4s,v1.4s}, [%5], #32       \n"  // store 8 samples
+      "b.gt       1b                             \n"
+
+      : "+r"(src0),  // %0
+        "+r"(src1),  // %1
+        "+r"(src2),  // %2
+        "+r"(src3),  // %3
+        "+r"(src4),  // %4
+        "+r"(dst),   // %5
+        "+r"(width)  // %6
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7");
+}
+
 // filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
 void GaussRow_NEON(const uint16* src0, uint16* dst, int width) {
   asm volatile(
@@ -2711,6 +2798,8 @@ void GaussRow_NEON(const uint16* src0, uint16* dst, int width) {
       "umull      v1.4s, v0.4h, v20.4h           \n"  // first pixel
       "umlal2     v1.4s, v0.8h, v20.8h           \n"
       "addv       s1, v1.4s                      \n"
+
+      "uqshrn     v0.4h, v0.4s, #8               \n"  // round, shift by 8 pack.
 
       "umull      v2.4s, v0.4h, v21.4h           \n"  // second pixel
       "umlal2     v2.4s, v0.8h, v21.8h           \n"
@@ -2734,46 +2823,6 @@ void GaussRow_NEON(const uint16* src0, uint16* dst, int width) {
         "r"(8LL)                      // %4
       : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v20", "v21", "v22",
         "v23");
-}
-
-// filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
-void GaussCol_NEON(const uint32* src0,
-                   const uint32* src1,
-                   const uint32* src2,
-                   const uint32* src3,
-                   const uint32* src4,
-                   uint16* dst,
-                   int width) {
-  asm volatile(
-      "movi       v5.4s, #4                      \n"  // constant 4
-      "movi       v6.4s, #6                      \n"  // constant 6
-
-      "1:                                        \n"
-      "ld1        {v0.4s}, [%0], #16             \n"  // load 4 samples, 5 rows
-      "ld1        {v1.4s}, [%1], #16             \n"
-      "ld1        {v2.4s}, [%2], #16             \n"
-      "ld1        {v3.4s}, [%3], #16             \n"
-      "ld1        {v4.4s}, [%4], #16             \n"
-      "subs       %w6, %w6, #4                   \n"  // 4 processed per loop
-
-      "add        v0.4s, v0.4s, v4.4s            \n"  // * 1
-      "mla        v0.4s, v1.4s, v5.4s            \n"  // * 4
-      "mla        v0.4s, v2.4s, v6.4s            \n"  // * 6
-      "mla        v0.4s, v3.4s, v5.4s            \n"  // * 4
-
-      "uqshrn     v0.4h, v0.4s, #8               \n"  // round, shift by 8 pack.
-      "st1        {v0.4h}, [%5], #8              \n"  // store 4 samples
-      "b.gt       1b                             \n"
-
-      : "+r"(src0),  // %0
-        "+r"(src1),  // %1
-        "+r"(src2),  // %2
-        "+r"(src3),  // %3
-        "+r"(src4),  // %4
-        "+r"(dst),   // %5
-        "+r"(width)  // %6
-      :
-      : "cc", "memory", "v1", "v2", "v3", "v4", "v5", "v6");
 }
 
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
