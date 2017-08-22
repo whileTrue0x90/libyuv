@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678480cf_b7b088ff",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-22T17:55:14Z",
+      "side": 1,
+      "message": "Can you remove vec0 +\u003d vect1 and use the pack to combine the 2 vectors?\nreg0 \u003d __msa_pckev_w((v4i32)vec0, (v4i32)vec1);",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
