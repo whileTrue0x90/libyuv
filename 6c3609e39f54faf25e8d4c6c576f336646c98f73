@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d699c3f3_16286f21",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-08-22T18:44:04Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 2802,
+        "startChar": 7,
+        "endLine": 2802,
+        "endChar": 13
+      },
+      "revId": "6c3609e39f54faf25e8d4c6c576f336646c98f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
