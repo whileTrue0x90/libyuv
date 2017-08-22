@@ -2692,13 +2692,6 @@ void ScaleSamples_NEON(const float* src, float* dst, float scale, int width) {
       : "cc", "memory", "v1", "v2");
 }
 
-static vec16 kGauseCoefficients[4] = {
-    {1, 4, 6, 4, 1, 0, 0, 0},
-    {0, 1, 4, 6, 4, 1, 0, 0},
-    {0, 0, 1, 4, 6, 4, 1, 0},
-    {0, 0, 0, 1, 4, 6, 4, 1},
-};
-
 // filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
 void GaussCol_NEON(const uint16* src0,
                    const uint16* src1,
@@ -2743,8 +2736,53 @@ void GaussCol_NEON(const uint16* src0,
       : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7");
 }
 
+static vec16 kGauseCoefficients[4] = {
+    {1, 4, 6, 4, 1, 0, 0, 0},
+    {0, 1, 4, 6, 4, 1, 0, 0},
+    {0, 0, 1, 4, 6, 4, 1, 0},
+    {0, 0, 0, 1, 4, 6, 4, 1},
+};
+
+
+#if 0
+  a8:	ad7f8d82 	ldp	q2, q3, [x12,#-16]
+  ac:	3cdf8186 	ldur	q6, [x12,#-8]
+  b0:	3cdf4184 	ldur	q4, [x12,#-12]
+  b4:	3cc04185 	ldur	q5, [x12,#4]
+  b8:	3cc08187 	ldur	q7, [x12,#8]
+  bc:	3cdfc190 	ldur	q16, [x12,#-4]
+  c0:	3cc0c191 	ldur	q17, [x12,#12]
+  c4:	3dc00592 	ldr	q18, [x12,#16]
+  c8:	4ea094c2 	mla	v2.4s, v6.4s, v0.4s    #6
+  cc:	4ea48604 	add	v4.4s, v16.4s, v4.4s
+  d0:	4ea58625 	add	v5.4s, v17.4s, v5.4s
+  d4:	4ea38442 	add	v2.4s, v2.4s, v3.4s
+  d8:	4ea094e3 	mla	v3.4s, v7.4s, v0.4s    #6
+  dc:	4f225484 	shl	v4.4s, v4.4s, #2
+  e0:	4f2254a5 	shl	v5.4s, v5.4s, #2
+  e4:	4eb28463 	add	v3.4s, v3.4s, v18.4s
+  e8:	4ea48442 	add	v2.4s, v2.4s, v4.4s
+  ec:	4ea58463 	add	v3.4s, v3.4s, v5.4s
+  f0:	4ea18442 	add	v2.4s, v2.4s, v1.4s    #128
+  f4:	4ea18463 	add	v3.4s, v3.4s, v1.4s    #128
+  f8:	0f188442 	shrn	v2.4h, v2.4s, #8
+  fc:	0f188463 	shrn	v3.4h, v3.4s, #8
+ 100:	f10021ad 	subs	x13, x13, #0x8
+ 104:	6d3f8d62 	stp	d2, d3, [x11,#-8]
+ 108:	9100416b 	add	x11, x11, #0x10
+ 10c:	9100818c 	add	x12, x12, #0x20
+ 110:	54fffcc1 	b.ne	a8 <GaussRow_C+0xa8>
+ #endif
+void GaussRow_NEON(const uint32* src, uint16* dst, int width) {
+  int i;
+  for (i = 0; i < width; ++i) {
+    *dst++ =
+        (src[0] + src[1] * 4 + src[2] * 6 + src[3] * 4 + src[4] + 128) >> 8;
+    ++src;
+  }
+}
 // filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
-void GaussRow_NEON(const uint16* src0, uint16* dst, int width) {
+void GaussRow_NEON2(const uint16* src0, uint16* dst, int width) {
   asm volatile(
       "ld1       {v20.8h,v21.8h,v22.8h,v23.8h}, [%3]  \n"
 
