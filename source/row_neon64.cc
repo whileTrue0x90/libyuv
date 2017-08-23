@@ -2692,13 +2692,6 @@ void ScaleSamples_NEON(const float* src, float* dst, float scale, int width) {
       : "cc", "memory", "v1", "v2");
 }
 
-static vec16 kGauseCoefficients[4] = {
-    {1, 4, 6, 4, 1, 0, 0, 0},
-    {0, 1, 4, 6, 4, 1, 0, 0},
-    {0, 0, 1, 4, 6, 4, 1, 0},
-    {0, 0, 0, 1, 4, 6, 4, 1},
-};
-
 // filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
 void GaussCol_NEON(const uint16* src0,
                    const uint16* src1,
@@ -2719,15 +2712,15 @@ void GaussCol_NEON(const uint16* src0,
       "ld1        {v5.8h}, [%4], #16             \n"
       "subs       %w6, %w6, #8                   \n"  // 8 processed per loop
 
-      "uaddl       v0.4s, v1.4h, v5.4h            \n"  // * 1
-      "uaddl2      v1.4s, v1.8h, v5.8h            \n"  // * 1
+      "uaddl       v0.4s, v1.4h, v5.4h           \n"  // * 1
+      "uaddl2      v1.4s, v1.8h, v5.8h           \n"  // * 1
 
-      "umlal       v0.4s, v2.4h, v6.4h            \n"  // * 4
-      "umlal2      v1.4s, v2.8h, v6.8h            \n"  // * 4
-      "umlal       v0.4s, v3.4h, v7.4h            \n"  // * 6
-      "umlal2      v1.4s, v3.8h, v7.8h            \n"  // * 6
-      "umlal       v0.4s, v4.4h, v6.4h            \n"  // * 4
-      "umlal2      v1.4s, v4.8h, v6.8h            \n"  // * 4
+      "umlal       v0.4s, v2.4h, v6.4h           \n"  // * 4
+      "umlal2      v1.4s, v2.8h, v6.8h           \n"  // * 4
+      "umlal       v0.4s, v3.4h, v7.4h           \n"  // * 6
+      "umlal2      v1.4s, v3.8h, v7.8h           \n"  // * 6
+      "umlal       v0.4s, v4.4h, v6.4h           \n"  // * 4
+      "umlal2      v1.4s, v4.8h, v6.8h           \n"  // * 4
 
       "st1        {v0.4s,v1.4s}, [%5], #32       \n"  // store 8 samples
       "b.gt       1b                             \n"
@@ -2743,41 +2736,85 @@ void GaussCol_NEON(const uint16* src0,
       : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7");
 }
 
+#if 0
+  a8:	ad7f8d82 	ldp	q2, q3, [x12,#-16]
+  ac:	3cdf8186 	ldur	q6, [x12,#-8]
+  b0:	3cdf4184 	ldur	q4, [x12,#-12]
+  b4:	3cc04185 	ldur	q5, [x12,#4]
+  b8:	3cc08187 	ldur	q7, [x12,#8]
+  bc:	3cdfc190 	ldur	q16, [x12,#-4]
+  c0:	3cc0c191 	ldur	q17, [x12,#12]
+  c4:	3dc00592 	ldr	q18, [x12,#16]
+  c8:	4ea094c2 	mla	v2.4s, v6.4s, v0.4s    #6
+  cc:	4ea48604 	add	v4.4s, v16.4s, v4.4s
+  d0:	4ea58625 	add	v5.4s, v17.4s, v5.4s
+  d4:	4ea38442 	add	v2.4s, v2.4s, v3.4s
+  d8:	4ea094e3 	mla	v3.4s, v7.4s, v0.4s    #6
+  dc:	4f225484 	shl	v4.4s, v4.4s, #2
+  e0:	4f2254a5 	shl	v5.4s, v5.4s, #2
+  e4:	4eb28463 	add	v3.4s, v3.4s, v18.4s
+  e8:	4ea48442 	add	v2.4s, v2.4s, v4.4s
+  ec:	4ea58463 	add	v3.4s, v3.4s, v5.4s
+  f0:	4ea18442 	add	v2.4s, v2.4s, v1.4s    #128
+  f4:	4ea18463 	add	v3.4s, v3.4s, v1.4s    #128
+  f8:	0f188442 	shrn	v2.4h, v2.4s, #8
+  fc:	0f188463 	shrn	v3.4h, v3.4s, #8
+ 100:	f10021ad 	subs	x13, x13, #0x8
+ 104:	6d3f8d62 	stp	d2, d3, [x11,#-8]
+ 108:	9100416b 	add	x11, x11, #0x10
+ 10c:	9100818c 	add	x12, x12, #0x20
+ 110:	54fffcc1 	b.ne	a8 <GaussRow_C+0xa8>
+ #endif
+void GaussRow_NEON2(const uint32* src, uint16* dst, int width) {
+  int i;
+  for (i = 0; i < width; ++i) {
+    *dst++ =
+        (src[0] + src[1] * 4 + src[2] * 6 + src[3] * 4 + src[4] + 128) >> 8;
+    ++src;
+  }
+}
 // filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
-void GaussRow_NEON(const uint16* src0, uint16* dst, int width) {
+void GaussRow_NEON(const uint32* src, uint16* dst, int width) {
+  const uint32* src1 = src + 1;
+  const uint32* src2 = src + 2;
+  const uint32* src3 = src + 3;
   asm volatile(
-      "ld1       {v20.8h,v21.8h,v22.8h,v23.8h}, [%3]  \n"
+      "movi       v6.8h, #4                      \n"  // constant 4
+      "movi       v7.8h, #6                      \n"  // constant 6
 
       "1:                                        \n"
-      "ld1        {v0.8h}, [%0], %4              \n"  // load 8 source samples
-      "subs       %w2, %w2, #4                   \n"  // 4 processed per loop
+      "ld1        {v2.4s,v3.4s}, [%0], #32       \n"  // load 8 source samples
+      "ld1        {v4.4s,v5.4s}, [%1], #32       \n"
+      "ld1        {v16.4s,v17.4s}, [%2], #32     \n"
+      "ld1        {v18.4s,v19.4s}, [%3], #32     \n"
+      "ldur       q20, [%0,#-12]                 \n"  // v3 already loaded at 16
+      "subs       %w2, %w2, #8                   \n"  // 8 processed per loop
 
-      "umull      v1.4s, v0.4h, v20.4h           \n"  // first pixel
-      "umlal2     v1.4s, v0.8h, v20.8h           \n"
-      "addv       s1, v1.4s                      \n"
+      "add        v0.4s, v2.4s, v3.4s            \n"  // * 1
+      "add        v1.4s, v3.4s, v20.4s           \n"  // * 1
 
-      "umull      v2.4s, v0.4h, v21.4h           \n"  // second pixel
-      "umlal2     v2.4s, v0.8h, v21.8h           \n"
-      "addv       s2, v2.4s                      \n"
+      "mla        v0.4s, v4.4s, v6.4s            \n"  // * 4
+      "mla        v1.4s, v5.4s, v6.4s            \n"  // * 4
+      "mla        v0.4s, v16.4s, v7.4s           \n"  // * 6
+      "mla        v1.4s, v17.4s, v7.4s           \n"  // * 6
+      "mla        v0.4s, v18.4s, v6.4s           \n"  // * 4
+      "mla        v1.4s, v19.4s, v6.4s           \n"  // * 4
 
-      "umull      v3.4s, v0.4h, v22.4h           \n"  // third pixel
-      "umlal2     v3.4s, v0.8h, v22.8h           \n"
-      "addv       s3, v3.4s                      \n"
+      "uqrshrn    v0.4h, v0.4s, #8               \n"  // round and pack
+      "uqrshrn2   v0.8h, v1.4s, #8               \n"
 
-      "umull      v4.4s, v0.4h, v23.4h           \n"  // forth pixel
-      "umlal2     v4.4s, v0.8h, v23.8h           \n"
-      "addv       s4, v4.4s                      \n"
-
-      "st4       {v1.s,v2.s,v3.s,v4.s}[0], [%1], #16  \n"  // store 4 samples
+      "st1        {v0.8h}, [%1], #16             \n"  // store 8 samples
       "b.gt       1b                             \n"
 
-      : "+r"(src0),                   // %0
-        "+r"(dst),                    // %1
-        "+r"(width)                   // %2
-      : "r"(&kGauseCoefficients[0]),  // %3
-        "r"(8LL)                      // %4
-      : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v20", "v21", "v22",
-        "v23");
+      : "+r"(src),                    // %0
+        "+r"(src1),                   // %1
+        "+r"(src2),                   // %2
+        "+r"(src3),                   // %3
+        "+r"(dst),                    // %4
+        "+r"(width)                   // %5
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
+        "v16", "v17", "v18", "v19", "v20" );
 }
 
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
