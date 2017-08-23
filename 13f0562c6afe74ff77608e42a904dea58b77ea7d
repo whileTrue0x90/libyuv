@@ -22,6 +22,30 @@
       "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f4f48b_a45d02ef",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1169844
+      },
+      "writtenOn": "2017-08-23T09:44:03Z",
+      "side": 1,
+      "message": "Changing strategy a bit for horizontal sum.",
+      "parentUuid": "678480cf_b7b088ff",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
