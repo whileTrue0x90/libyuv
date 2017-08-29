@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "328a99bb_fce49e46",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-29T19:23:13Z",
+      "side": 1,
+      "message": "can this be moved outside the loop?",
+      "range": {
+        "startLine": 41,
+        "startChar": 52,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "3f9c7a49a94712423bb6b525289eda31970f4c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e0ece2_d93b09ff",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-29T19:23:13Z",
+      "side": 1,
+      "message": "can the horizontal adding and following 2 adds be moved outside the loop?\naccumulate counts in a vector for the loop, then add up horizontally when done.",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "3f9c7a49a94712423bb6b525289eda31970f4c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

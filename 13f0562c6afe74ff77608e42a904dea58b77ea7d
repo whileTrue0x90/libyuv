@@ -46,6 +46,64 @@
       "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89a1505_23319ffc",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-29T19:23:13Z",
+      "side": 1,
+      "message": "pcnt_d counts in dwords - 64 bits.  creates 2 counts in a register.  you do it twice for a total of 4 counts, each with a value of 0 to 64.\nCan\u0027t you remove the vec0 +\u003d vec1 and use just the pckev_w?\n\n    reg0 \u003d __msa_pckev_w((v4i32)vec0, (v4i32)vec1);",
+      "parentUuid": "70f4f48b_a45d02ef",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6f4bf9_17aa384e",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-29T19:23:13Z",
+      "side": 1,
+      "message": "is there an abs different instruction you could use instead of ilvr / hsub?",
+      "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e938ccba_925807f2",
+        "filename": "source/compare_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-08-29T19:23:13Z",
+      "side": 1,
+      "message": "cool that msa has dotp instruction.  but do you have a mla?  it would be faster to do mul, mla, mla, mla and then hadd?",
+      "revId": "13f0562c6afe74ff77608e42a904dea58b77ea7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
