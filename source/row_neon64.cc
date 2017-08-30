@@ -2739,22 +2739,34 @@ void GaussRow_NEON(const uint32* src, uint16* dst, int width) {
   const uint32* src2 = src + 2;
   const uint32* src3 = src + 3;
   asm volatile(
-      "movi       v6.4s, #4                      \n"  // constant 4
+//      "movi       v6.4s, #4                      \n"  // constant 4
       "movi       v7.4s, #6                      \n"  // constant 6
 
       "1:                                        \n"
-      "ld1        {v0.4s,v1.4s,v2.4s}, [%0], %6  \n"  // load 12 source samples
-      "add        v0.4s, v0.4s, v1.4s            \n"  // * 1
-      "add        v1.4s, v1.4s, v2.4s            \n"  // * 1
       "ld1        {v2.4s,v3.4s}, [%2], #32       \n"
-      "mla        v0.4s, v2.4s, v7.4s            \n"  // * 6
-      "mla        v1.4s, v3.4s, v7.4s            \n"  // * 6
+      "mul        v0.4s, v2.4s, v7.4s            \n"  // * 6
+      "mul        v1.4s, v3.4s, v7.4s            \n"  // * 6
+
       "ld1        {v2.4s,v3.4s}, [%1], #32       \n"
       "ld1        {v4.4s,v5.4s}, [%3], #32       \n"
+
       "add        v2.4s, v2.4s, v4.4s            \n"  // add rows for * 4
       "add        v3.4s, v3.4s, v5.4s            \n"
-      "mla        v0.4s, v2.4s, v6.4s            \n"  // * 4
-      "mla        v1.4s, v3.4s, v6.4s            \n"  // * 4
+
+      "shl        v2.4s, v2.4s, #2               \n"  // * 4
+      "shl        v3.4s, v3.4s, #2               \n"  // * 4
+
+      "ld1        {v4.4s,v5.4s,v6.4s}, [%0], %6  \n"  // load 12 source samples
+      "add        v0.4s, v0.4s, v4.4s            \n"  // * 1
+      "add        v1.4s, v1.4s, v5.4s            \n"  // * 1
+      "add        v0.4s, v0.4s, v5.4s            \n"  // * 1
+      "add        v1.4s, v1.4s, v6.4s            \n"  // * 1
+
+      "add        v0.4s, v0.4s, v2.4s            \n"
+      "add        v1.4s, v1.4s, v3.4s            \n"
+
+//      "mla        v0.4s, v2.4s, v6.4s            \n"  // * 4
+//      "mla        v1.4s, v3.4s, v6.4s            \n"  // * 4
       "subs       %w5, %w5, #8                   \n"  // 8 processed per loop
       "uqrshrn    v0.4h, v0.4s, #8               \n"  // round and pack
       "uqrshrn2   v0.8h, v1.4s, #8               \n"
