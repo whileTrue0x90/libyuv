@@ -36,7 +36,7 @@ deps = {
   'src/tools/gyp':
     Var('chromium_git') + '/external/gyp.git' + '@' + 'd61a9397e668fa9843c4aa7da9e79460fe590bfb',
    'src/tools/swarming_client':
-     Var('chromium_git') + '/external/swarming.client.git' + '@' +  Var('swarming_revision'),
+     Var('chromium_git') + '/infra/luci/client-py.git' + '@' +  Var('swarming_revision'),
 
   # libyuv-only dependencies (not present in Chromium).
   'src/third_party/gflags':
