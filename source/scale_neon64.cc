@@ -1011,65 +1011,62 @@ void ScaleRowDown2Box_16_NEON(const uint16* src_ptr,
 
 // Read 8x2 upsample with filtering and write 16x1.
 // actually reads an extra pixel, so 9x2.
+// TODO)fbarchard): Consider mlapa
 void ScaleRowUp2_16_NEON(const uint16* src_ptr,
                          ptrdiff_t src_stride,
                          uint16* dst,
                          int dst_width) {
   asm volatile(
       "add        %1, %0, %1, lsl #1             \n"  // ptr + stide * 2
-      "movi       v20.4h, #1                     \n"
-      "movi       v21.4h, #3                     \n"  // constants
       "movi       v22.4h, #9                     \n"
+      "movi       v23.4s, #3                     \n"  // constants
 
       "1:                                        \n"
       "ld2        {v0.4h, v1.4h}, [%0], %4       \n"  // load row 1 even pixels
       "ld2        {v2.4h, v3.4h}, [%1], %4       \n"  // load row 2
-
-      // consider a variation of this for last 8x2 that replicates the last
-      // pixel.
-      "ld2        {v4.4h, v5.4h}, [%0], %5       \n"  // load row 1 odd pixels
-      "ld2        {v6.4h, v7.4h}, [%1], %5       \n"  // load row 2
 
       "subs       %w3, %w3, #16                  \n"  // 16 dst pixels per loop
 
       // filter first 2x2 group to produce 1st and 4th dest pixels
       // 9 3
       // 3 1
-      "umull      v8.4s, v0.4h, v22.4h           \n"
-      "umlal      v8.4s, v1.4h, v21.4h           \n"
-      "umlal      v8.4s, v2.4h, v21.4h           \n"
-      "umlal      v8.4s, v3.4h, v20.4h           \n"
-
       // filter first 2x2 group to produce 2nd and 5th dest pixel
       // 3 9
       // 1 3
-      "umull      v9.4s, v0.4h, v21.4h           \n"
-      "umlal      v9.4s, v1.4h, v22.4h           \n"
-      "umlal      v9.4s, v2.4h, v20.4h           \n"
-      "umlal      v9.4s, v3.4h, v21.4h           \n"
+      "uaddl      v20.4s, v1.4h, v2.4h           \n"
+      "uaddl      v21.4s, v0.4h, v3.4h           \n"
+      "umull      v16.4s, v0.4h, v22.4h          \n"
+      "umull      v17.4s, v1.4h, v22.4h          \n"
+      "uaddw      v16.4s, v16.4s, v3.4h          \n"
+      "uaddw      v17.4s, v17.4s, v2.4h          \n"
+      "mla        v16.4s, v20.4s, v23.4s         \n"
+      "mla        v17.4s, v21.4s, v23.4s         \n"
+      "uqrshrn    v16.4h, v16.4s, #4             \n"  // downshift, round
+      "uqrshrn    v17.4h, v17.4s, #4             \n"
+
+      // consider a variation of this for last 8x2 that replicates the last
+      // pixel.
+      "ld2        {v4.4h, v5.4h}, [%0], %5       \n"  // load row 1 odd pixels
+      "ld2        {v6.4h, v7.4h}, [%1], %5       \n"  // load row 2
 
       // filter second 2x2 group to produce 3rd and 6th dest pixels
       // 9 3
       // 3 1
-      "umull      v10.4s, v4.4h, v22.4h          \n"
-      "umlal      v10.4s, v5.4h, v21.4h          \n"
-      "umlal      v10.4s, v6.4h, v21.4h          \n"
-      "umlal      v10.4s, v7.4h, v20.4h          \n"
-
       // filter second 2x2 group to produce 4th and 7th dest pixel
       // 3 9
       // 1 3
-      "umull      v11.4s, v4.4h, v21.4h          \n"
-      "umlal      v11.4s, v5.4h, v22.4h          \n"
-      "umlal      v11.4s, v6.4h, v20.4h          \n"
-      "umlal      v11.4s, v7.4h, v21.4h          \n"
+      "uaddl      v20.4s, v5.4h, v6.4h           \n"
+      "uaddl      v21.4s, v4.4h, v7.4h           \n"
+      "umull      v18.4s, v4.4h, v22.4h          \n"
+      "umull      v19.4s, v5.4h, v22.4h          \n"
+      "uaddw      v18.4s, v18.4s, v7.4h          \n"
+      "uaddw      v19.4s, v19.4s, v6.4h          \n"
+      "mla        v18.4s, v20.4s, v23.4s         \n"
+      "mla        v19.4s, v21.4s, v23.4s         \n"
+      "uqrshrn    v18.4h, v18.4s, #4             \n"
+      "uqrshrn    v19.4h, v19.4s, #4             \n"
 
-      "uqrshrn    v8.4h, v8.4s, #4               \n"  // downshift, round
-      "uqrshrn    v9.4h, v9.4s, #4               \n"
-      "uqrshrn    v10.4h, v10.4s, #4             \n"
-      "uqrshrn    v11.4h, v11.4s, #4             \n"
-
-      "st4        {v8.4h, v9.4h, v10.4h, v11.4h}, [%2], #32  \n"
+      "st4        {v16.4h, v17.4h, v18.4h, v19.4h}, [%2], #32  \n"
       "b.gt       1b                             \n"
       : "+r"(src_ptr),     // %0
         "+r"(src_stride),  // %1
@@ -1078,8 +1075,8 @@ void ScaleRowUp2_16_NEON(const uint16* src_ptr,
       : "r"(2LL),          // %4
         "r"(14LL)          // %5
 
-      : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10",
-        "v11", "v20", "v21", "v22"  // Clobber List
+      : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v16", "v17", "v18",
+        "v19", "v20", "v21", "v23", "v22"  // Clobber List
       );
 }
 
