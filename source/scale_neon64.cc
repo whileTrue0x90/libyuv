@@ -1011,7 +1011,295 @@ void ScaleRowDown2Box_16_NEON(const uint16* src_ptr,
 
 // Read 8x2 upsample with filtering and write 16x1.
 // actually reads an extra pixel, so 9x2.
+void ScaleRowUp2_16_NEON4(const uint16* src_ptr,
+                         ptrdiff_t src_stride,
+                         uint16* dst,
+                         int dst_width) {
+  const uint16* src2 = src_ptr + src_stride;
+
+  int x;
+  for (x = 0; x < dst_width - 1; x += 2) {
+    uint16 p0 = src_ptr[0];
+    uint16 p1 = src_ptr[1];
+    uint16 p2 = src2[0];
+    uint16 p3 = src2[1];
+    dst[0] = (p0 * 9 + p1 * 3 + p2 * 3 + p3 + 8) >> 4;
+    dst[1] = (p0 * 3 + p1 * 9 + p2 + p3 * 3 + 8) >> 4;
+    ++src_ptr;
+    ++src2;
+    dst += 2;
+  }
+  if (dst_width & 1) {
+    uint16 p0 = src_ptr[0];
+    uint16 p2 = src2[0];
+    dst[0] = (p0 * 3 + p2 + 2) >> 2;
+  }
+}
+
+// Read 8x2 upsample with filtering and write 16x1.
+// actually reads an extra pixel, so 9x2.
+// TODO)fbarchard): Consider mlapa
 void ScaleRowUp2_16_NEON(const uint16* src_ptr,
+                         ptrdiff_t src_stride,
+                         uint16* dst,
+                         int dst_width) {
+  asm volatile(
+      "add        %1, %0, %1, lsl #1             \n"  // ptr + stide * 2
+      "movi       v0.8h, #9                      \n"  // constants
+      "movi       v1.4s, #3                      \n"
+
+      "1:                                        \n"
+      "ld1        {v3.8h}, [%0], %4              \n"
+      "ld1        {v4.8h}, [%0], %5              \n"
+      "ld1        {v5.8h}, [%1], %4              \n"
+      "ld1        {v6.8h}, [%1], %5              \n"
+      "subs       %w3, %w3, #16                  \n"  // 16 dst pixels per loop
+      "umull      v16.4s, v3.4h, v0.4h           \n"
+      "umull2     v7.4s, v3.8h, v0.8h            \n"
+      "umull      v18.4s, v4.4h, v0.4h           \n"
+      "umull2     v17.4s, v4.8h, v0.8h           \n"
+      "uaddw      v16.4s, v16.4s, v6.4h          \n"
+      "uaddl2     v19.4s, v6.8h, v3.8h           \n"
+      "uaddl      v3.4s, v6.4h, v3.4h            \n"
+      "uaddw2     v6.4s, v7.4s, v6.8h            \n"
+      "uaddl2     v7.4s, v5.8h, v4.8h            \n"
+      "uaddl      v4.4s, v5.4h, v4.4h            \n"
+      "uaddw      v18.4s, v18.4s, v5.4h          \n"
+      "mla        v16.4s, v4.4s, v1.4s           \n"
+      "mla        v18.4s, v3.4s, v1.4s           \n"
+      "mla        v6.4s, v7.4s, v1.4s            \n"
+      "uaddw2     v4.4s, v17.4s, v5.8h           \n"
+      "uqrshrn    v16.4h,  v16.4s, #4            \n"
+      "mla        v4.4s, v19.4s, v1.4s           \n"
+      "uqrshrn2   v16.8h, v6.4s, #4              \n"
+      "uqrshrn    v17.4h, v18.4s, #4             \n"
+      "uqrshrn2   v17.8h, v4.4s, #4              \n"
+      "st2        {v16.8h-v17.8h}, [%2], #32     \n"
+      "b.gt       1b                             \n"
+      : "+r"(src_ptr),     // %0
+        "+r"(src_stride),  // %1
+        "+r"(dst),         // %2
+        "+r"(dst_width)    // %3
+      : "r"(2LL),          // %4
+        "r"(14LL)          // %5
+       : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v16", "v17", "v18",
+        "v19"  // Clobber List
+      );
+}
+
+// Read 8x2 upsample with filtering and write 16x1.
+// actually reads an extra pixel, so 9x2.
+// TODO)fbarchard): Consider mlapa
+void ScaleRowUp2_16_NEON_C(const uint16* src_ptr,
+                         ptrdiff_t src_stride,
+                         uint16* dst,
+                         int dst_width) {
+  asm volatile(
+      "add        %1, %0, %1, lsl #1             \n"  // ptr + stide * 2
+      "movi       v0.4h, #9                      \n"  // constants
+      "movi       v1.4s, #3                      \n"
+      "movi       v2.4s, #8                      \n"  // 0.5 for rounding
+
+      "1:                                        \n"
+      "ldr        q3, [%0]                       \n"
+      "ldur       q4, [%0,#2]                    \n"
+      "ldr        q5, [%1]                       \n"
+      "ldur       q6, [%1,#2]                    \n"
+      "add        %1, %1, #16                    \n"
+      "ext        v7.16b, v3.16b, v3.16b, #8     \n"
+      "umull      v16.4s, v3.4h, v0.4h           \n"
+      "umull      v7.4s, v7.4h, v0.4h            \n"
+      "ext        v17.16b, v4.16b, v4.16b, #8    \n" 
+      "umull      v18.4s, v4.4h, v0.4h           \n"
+      "uaddw      v16.4s, v16.4s, v6.4h          \n"
+      "uaddl2     v19.4s, v6.8h, v3.8h           \n"
+      "uaddl      v3.4s, v6.4h, v3.4h            \n"
+      "uaddw2     v6.4s, v7.4s, v6.8h            \n"
+      "uaddl2     v7.4s, v5.8h, v4.8h            \n"
+      "uaddl      v4.4s, v5.4h, v4.4h            \n"
+      "uaddw      v18.4s, v18.4s, v5.4h          \n"
+      "mla        v16.4s, v4.4s, v1.4s           \n"
+      "umull      v17.4s, v17.4h, v0.4h          \n"
+      "mla        v18.4s, v3.4s, v1.4s           \n"
+      "mla        v6.4s, v7.4s, v1.4s            \n"
+      "add        v3.4s, v16.4s, v2.4s           \n"
+      "uaddw2     v4.4s, v17.4s, v5.8h           \n"
+      "add        v6.4s, v6.4s, v2.4s            \n"
+      "shrn       v16.4h, v3.4s, #4              \n"
+      "mla        v4.4s, v19.4s, v1.4s           \n"
+      "add        v5.4s, v18.4s, v2.4s           \n"
+      "shrn2      v16.8h, v6.4s, #4              \n"
+      "add        v3.4s, v4.4s, v2.4s            \n"
+      "shrn       v17.4h, v5.4s, #4              \n"
+      "shrn2      v17.8h, v3.4s, #4              \n"
+      "subs       %w3, %w3, #16                  \n"  // 16 dst pixels per loop
+      "st2        {v16.8h-v17.8h}, [%2], #32     \n"
+      "add        %0, %0, #16                    \n"
+      "b.gt       1b                             \n"
+      : "+r"(src_ptr),     // %0
+        "+r"(src_stride),  // %1
+        "+r"(dst),         // %2
+        "+r"(dst_width)    // %3
+      :
+       : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v16", "v17", "v18",
+        "v19"  // Clobber List
+      );
+}
+
+// Read 8x2 upsample with filtering and write 16x1.
+// actually reads an extra pixel, so 9x2.
+// TODO)fbarchard): Consider mlapa
+void ScaleRowUp2_16_NEON2(const uint16* src_ptr,
+                         ptrdiff_t src_stride,
+                         uint16* dst,
+                         int dst_width) {
+  asm volatile(
+      "add        %1, %0, %1, lsl #1             \n"  // ptr + stide * 2
+      "movi       v22.4h, #9                     \n"
+      "movi       v23.4s, #3                     \n"  // constants
+
+      "1:                                        \n"
+      "ld2        {v0.4h, v1.4h}, [%0], %4       \n"  // load row 1 even pixels
+      "ld2        {v2.4h, v3.4h}, [%1], %4       \n"  // load row 2
+
+      "subs       %w3, %w3, #16                  \n"  // 16 dst pixels per loop
+
+      // filter first 2x2 group to produce 1st and 4th dest pixels
+      // 9 3
+      // 3 1
+      // filter first 2x2 group to produce 2nd and 5th dest pixel
+      // 3 9
+      // 1 3
+      "uaddl      v20.4s, v1.4h, v2.4h           \n"
+      "uaddl      v21.4s, v0.4h, v3.4h           \n"
+      "umull      v16.4s, v0.4h, v22.4h          \n"
+      "umull      v17.4s, v1.4h, v22.4h          \n"
+      "uaddw      v16.4s, v16.4s, v3.4h          \n"
+      "uaddw      v17.4s, v17.4s, v2.4h          \n"
+      "mla        v16.4s, v20.4s, v23.4s         \n"
+      "mla        v17.4s, v21.4s, v23.4s         \n"
+      "uqrshrn    v16.4h, v16.4s, #4             \n"  // downshift, round
+      "uqrshrn    v17.4h, v17.4s, #4             \n"
+
+      // consider a variation of this for last 8x2 that replicates the last
+      // pixel.
+      "ld2        {v4.4h, v5.4h}, [%0], %5       \n"  // load row 1 odd pixels
+      "ld2        {v6.4h, v7.4h}, [%1], %5       \n"  // load row 2
+
+      // filter second 2x2 group to produce 3rd and 6th dest pixels
+      // 9 3
+      // 3 1
+      // filter second 2x2 group to produce 4th and 7th dest pixel
+      // 3 9
+      // 1 3
+      "uaddl      v20.4s, v5.4h, v6.4h           \n"
+      "uaddl      v21.4s, v4.4h, v7.4h           \n"
+      "umull      v18.4s, v4.4h, v22.4h          \n"
+      "umull      v19.4s, v5.4h, v22.4h          \n"
+      "uaddw      v18.4s, v18.4s, v7.4h          \n"
+      "uaddw      v19.4s, v19.4s, v6.4h          \n"
+      "mla        v18.4s, v20.4s, v23.4s         \n"
+      "mla        v19.4s, v21.4s, v23.4s         \n"
+      "uqrshrn    v18.4h, v18.4s, #4             \n"
+      "uqrshrn    v19.4h, v19.4s, #4             \n"
+
+      "st4        {v16.4h, v17.4h, v18.4h, v19.4h}, [%2], #32  \n"
+      "b.gt       1b                             \n"
+      : "+r"(src_ptr),     // %0
+        "+r"(src_stride),  // %1
+        "+r"(dst),         // %2
+        "+r"(dst_width)    // %3
+      : "r"(2LL),          // %4
+        "r"(14LL)          // %5
+
+      : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v16", "v17", "v18",
+        "v19", "v20", "v21", "v23", "v22"  // Clobber List
+      );
+}
+
+// Read 8x2 upsample with filtering and write 16x1.
+// actually reads an extra pixel, so 9x2.
+// TODO)fbarchard): Consider mlapa
+void ScaleRowUp2_16_NEON_mew(const uint16* src_ptr,
+                         ptrdiff_t src_stride,
+                         uint16* dst,
+                         int dst_width) {
+  asm volatile(
+      "add        %1, %0, %1, lsl #1             \n"  // ptr + stide * 2
+      "movi       v22.4h, #9                     \n"
+      "movi       v23.4s, #3                     \n"  // constants
+
+      "1:                                        \n"
+      "ld2        {v0.4h, v1.4h}, [%0], %4       \n"  // load row 1 even pixels
+      "ld2        {v2.4h, v3.4h}, [%1], %4       \n"  // load row 2
+      "subs       %w3, %w3, #16                  \n"  // 16 dst pixels per loop
+
+      // filter first 2x2 group to produce 1st and 4th dest pixels
+      // 9 3
+      // 3 1
+      // filter first 2x2 group to produce 2nd and 5th dest pixel
+      // 3 9
+      // 1 3
+      "umull      v16.4s, v0.4h, v22.4h          \n"
+      "umull      v17.4s, v1.4h, v22.4h          \n"
+
+      // consider a variation of this for last 8x2 that replicates the last
+      // pixel.
+      "ld2        {v4.4h, v5.4h}, [%0], %5       \n"  // load row 1 odd pixels
+      "ld2        {v6.4h, v7.4h}, [%1], %5       \n"  // load row 2
+
+      "umull      v18.4s, v4.4h, v22.4h          \n"
+      "umull      v19.4s, v5.4h, v22.4h          \n"
+
+      "uaddl      v20.4s, v1.4h, v2.4h           \n"
+      "uaddl      v21.4s, v0.4h, v3.4h           \n"
+
+      "mla        v16.4s, v20.4s, v23.4s         \n"
+      "mla        v17.4s, v21.4s, v23.4s         \n"
+
+      "uaddl      v20.4s, v5.4h, v6.4h           \n"
+      "uaddl      v21.4s, v4.4h, v7.4h           \n"
+
+      "mla        v18.4s, v20.4s, v23.4s         \n"
+      "mla        v19.4s, v21.4s, v23.4s         \n"
+
+      "uaddw      v16.4s, v16.4s, v3.4h          \n"
+      "uaddw      v17.4s, v17.4s, v2.4h          \n"
+
+      "uqrshrn    v16.4h, v16.4s, #4             \n"  // downshift, round
+      "uqrshrn    v17.4h, v17.4s, #4             \n"
+
+      "uaddw      v18.4s, v18.4s, v7.4h          \n"
+      "uaddw      v19.4s, v19.4s, v6.4h          \n"
+
+
+
+      // filter second 2x2 group to produce 3rd and 6th dest pixels
+      // 9 3
+      // 3 1
+      // filter second 2x2 group to produce 4th and 7th dest pixel
+      // 3 9
+      // 1 3
+      "uqrshrn    v18.4h, v18.4s, #4             \n"
+      "uqrshrn    v19.4h, v19.4s, #4             \n"
+
+      "st4        {v16.4h, v17.4h, v18.4h, v19.4h}, [%2], #32  \n"
+      "b.gt       1b                             \n"
+      : "+r"(src_ptr),     // %0
+        "+r"(src_stride),  // %1
+        "+r"(dst),         // %2
+        "+r"(dst_width)    // %3
+      : "r"(2LL),          // %4
+        "r"(14LL)          // %5
+
+      : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v16", "v17", "v18",
+        "v19", "v20", "v21", "v23", "v22"  // Clobber List
+      );
+}
+
+// Read 8x2 upsample with filtering and write 16x1.
+// actually reads an extra pixel, so 9x2.
+void ScaleRowUp2_16_NEON_old(const uint16* src_ptr,
                          ptrdiff_t src_stride,
                          uint16* dst,
                          int dst_width) {
