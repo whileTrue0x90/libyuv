@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30280b50_23e35bd0",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-09-05T17:37:42Z",
+      "side": 1,
+      "message": "dst_width-2",
+      "range": {
+        "startLine": 1318,
+        "startChar": 18,
+        "endLine": 1318,
+        "endChar": 27
+      },
+      "revId": "41f07882b6905ae440b45faace7fb5508d064ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
