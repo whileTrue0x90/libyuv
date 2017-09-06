@@ -1021,10 +1021,10 @@ void ScaleRowUp2_16_NEON(const uint16* src_ptr,
       "movi       v1.4s, #3                      \n"
 
       "1:                                        \n"
-      "ld1        {v3.8h}, [%0], %4              \n"  // TL read first 8
-      "ld1        {v4.8h}, [%0], %5              \n"  // TR read 8 offset by 1
-      "ld1        {v5.8h}, [%1], %4              \n"  // BL read 8 from next row
-      "ld1        {v6.8h}, [%1], %5              \n"  // BR offset by 1
+      "ld1        {v3.8h, v4.8h}, [%0], %4       \n"  // TL read 16 pixels
+      "ld1        {v5.8h, v6.8h}, [%1], %4       \n"  // BL read next row
+      "ext        v4.16b, v3.16b, v4.16b, #2     \n"  // TR extract offset 2
+      "ext        v6.16b, v5.16b, v6.16b, #2     \n"  // BR extract offset 2
       "subs       %w3, %w3, #16                  \n"  // 16 dst pixels per loop
       "umull      v16.4s, v3.4h, v0.4h           \n"
       "umull2     v7.4s, v3.8h, v0.8h            \n"
@@ -1052,8 +1052,7 @@ void ScaleRowUp2_16_NEON(const uint16* src_ptr,
         "+r"(src_stride),  // %1
         "+r"(dst),         // %2
         "+r"(dst_width)    // %3
-      : "r"(2LL),          // %4
-        "r"(14LL)          // %5
+      : "r"(16LL)          // %4
        : "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v16", "v17", "v18",
         "v19"  // Clobber List
       );
