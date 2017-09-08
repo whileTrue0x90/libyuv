@@ -943,6 +943,32 @@ ANY12(UYVYToUV422Row_Any_MSA, UYVYToUV422Row_MSA, 1, 4, 1, 31)
 #endif
 #undef ANY12
 
+// Any 1 to 3.  Outputs RGB planes.
+#define ANY13(NAMEANY, ANY_SIMD, BPP, MASK)                                    \
+  void NAMEANY(const uint8* src_ptr, uint8* dst_r, uint8* dst_g, uint8* dst_b, \
+    int width) {                                                               \
+    SIMD_ALIGNED(uint8 temp[16 * 6]);                                          \
+    memset(temp, 0, 16 * 3); /* for msan */                                    \
+    int r = width & MASK;                                                      \
+    int n = width & ~MASK;                                                     \
+    if (n > 0) {                                                               \
+      ANY_SIMD(src_ptr, dst_r, dst_g, dst_b, n);                               \
+    }                                                                          \
+    memcpy(temp, src_ptr + n * BPP, r * BPP);                                  \
+    ANY_SIMD(temp, temp + 16 * 3, temp + 16 * 4, temp + 16 * 5, MASK + 1);     \
+    memcpy(dst_r + n, temp + 16 * 3, r);                                       \
+    memcpy(dst_g + n, temp + 16 * 4, r);                                       \
+    memcpy(dst_b + n, temp + 16 * 5, r);                                       \
+  }
+
+#ifdef HAS_SPLITRGBROW_SSE2
+ANY13(SplitRGBRow_Any_SSE2, SplitRGBRow_SSE2, 3, 15)
+#endif
+#ifdef HAS_SPLITRGBROW_NEON
+ANY13(SplitRGBRow_Any_NEON, SplitRGBRow_NEON, 3, 15)
+#endif
+
+
 // Any 1 to 2 with source stride (2 rows of source).  Outputs UV planes.
 // 128 byte row allows for 32 avx ARGB pixels.
 #define ANY12S(NAMEANY, ANY_SIMD, UVSHIFT, BPP, MASK)                        \
