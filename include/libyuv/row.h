@@ -137,6 +137,7 @@ extern "C" {
 #define HAS_RGBATOYROW_SSSE3
 #define HAS_SETROW_ERMS
 #define HAS_SETROW_X86
+#define HAS_SPLITRGBROW_SSE2
 #define HAS_SPLITUVROW_SSE2
 #define HAS_UYVYTOARGBROW_SSSE3
 #define HAS_UYVYTOUV422ROW_SSE2
@@ -328,6 +329,7 @@ extern "C" {
 #define HAS_RGBATOUVROW_NEON
 #define HAS_RGBATOYROW_NEON
 #define HAS_SETROW_NEON
+#define HAS_SPLITRGBROW_NEON
 #define HAS_SPLITUVROW_NEON
 #define HAS_UYVYTOARGBROW_NEON
 #define HAS_UYVYTOUV422ROW_NEON
@@ -1459,6 +1461,18 @@ void MergeUVRow_Any_MSA(const uint8* src_u,
                         const uint8* src_v,
                         uint8* dst_uv,
                         int width);
+
+void SplitRGBRow_C(const uint8* src_rgb, uint8* dst_r, uint8* dst_g, uint8* dst_b, int width);
+void SplitRGBRow_SSE2(const uint8* src_rgb, uint8* dst_r, uint8* dst_g, uint8* dst_b, int width);
+void SplitRGBRow_NEON(const uint8* src_rgb, uint8* dst_r, uint8* dst_g, uint8* dst_b, int width);
+void SplitRGBRow_Any_SSE2(const uint8* src_rgb, uint8* dst_r, uint8* dst_g, uint8* dst_b, int width);
+void SplitRGBRow_Any_NEON(const uint8* src_rgb, uint8* dst_r, uint8* dst_g, uint8* dst_b, int width);
+
+void MergeRGBRow_C(const uint8* src_r, const uint8* src_g, const uint8* src_b, uint8* dst_rgb, int width);
+void MergeRGBRow_SSE2(const uint8* src_r, const uint8* src_g, const uint8* src_b, uint8* dst_rgb, int width);
+void MergeRGBRow_NEON(const uint8* src_r, const uint8* src_g, const uint8* src_b, uint8* dst_rgb, int width);
+void MergeRGBRow_Any_SSE2(const uint8* src_r, const uint8* src_g, const uint8* src_b, uint8* dst_rgb, int width);
+void MergeRGBRow_Any_NEON(const uint8* src_r, const uint8* src_g, const uint8* src_b, uint8* dst_rgb, int width);
 
 void CopyRow_SSE2(const uint8* src, uint8* dst, int count);
 void CopyRow_AVX(const uint8* src, uint8* dst, int count);
