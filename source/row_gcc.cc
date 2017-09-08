@@ -2754,6 +2754,81 @@ void MergeUVRow_SSE2(const uint8* src_u,
 }
 #endif  // HAS_MERGEUVROW_SSE2
 
+#ifdef HAS_SPLITRGBROW_SSE2
+void SplitRGBRow_SSE2(const uint8* src_rgb,
+                      uint8* dst_r,
+                      uint8* dst_g,
+                      uint8* dst_b,
+                      int width) {
+  asm volatile (
+    "pcmpeqb    %%xmm5,%%xmm5                  \n"
+    "psrlw      $0x8,%%xmm5                    \n"
+    "sub        %1,%2                          \n"
+
+    LABELALIGN
+    "1:                                        \n"
+    "movdqu     " MEMACCESS(0) ",%%xmm0        \n"
+    "movdqu     " MEMACCESS2(0x10,0) ",%%xmm1  \n"
+    "lea        " MEMLEA(0x20,0) ",%0          \n"
+    "movdqa     %%xmm0,%%xmm2                  \n"
+    "movdqa     %%xmm1,%%xmm3                  \n"
+    "pand       %%xmm5,%%xmm0                  \n"
+    "pand       %%xmm5,%%xmm1                  \n"
+    "packuswb   %%xmm1,%%xmm0                  \n"
+    "psrlw      $0x8,%%xmm2                    \n"
+    "psrlw      $0x8,%%xmm3                    \n"
+    "packuswb   %%xmm3,%%xmm2                  \n"
+    "movdqu     %%xmm0," MEMACCESS(1) "        \n"
+    MEMOPMEM(movdqu,xmm2,0x00,1,2,1)           //  movdqu     %%xmm2,(%1,%2)
+    "lea        " MEMLEA(0x10,1) ",%1          \n"
+    "sub        $0x10,%3                       \n"
+    "jg         1b                             \n"
+  : "+r"(src_rgb),              // %0
+    "+r"(dst_r),                // %1
+    "+r"(dst_g),                // %2
+    "+r"(dst_b),                // %3
+    "+r"(width)                 // %4
+  :
+  : "memory", "cc", NACL_R14
+    "xmm0", "xmm1", "xmm2", "xmm3", "xmm5"
+  );
+}
+#endif  // HAS_SPLITRGBROW_SSE2
+
+#ifdef HAS_MERGERGBROW_SSE2
+void MergeRGBRow_SSE2(const uint8* src_r,
+                      const uint8* src_g,
+                      const uint8* src_b,
+                      uint8* dst_rgb,
+                      int width) {
+  asm volatile (
+    "sub       %0,%1                           \n"
+
+    LABELALIGN
+    "1:                                        \n"
+    "movdqu    " MEMACCESS(0) ",%%xmm0         \n"
+    MEMOPREG(movdqu,0x00,0,1,1,xmm1)           //  movdqu    (%0,%1,1),%%xmm1
+    "lea       " MEMLEA(0x10,0) ",%0           \n"
+    "movdqa    %%xmm0,%%xmm2                   \n"
+    "punpcklbw %%xmm1,%%xmm0                   \n"
+    "punpckhbw %%xmm1,%%xmm2                   \n"
+    "movdqu    %%xmm0," MEMACCESS(2) "         \n"
+    "movdqu    %%xmm2," MEMACCESS2(0x10,2) "   \n"
+    "lea       " MEMLEA(0x20,2) ",%2           \n"
+    "sub       $0x10,%3                        \n"
+    "jg        1b                              \n"
+  : "+r"(src_r),                // %0
+    "+r"(src_g),                // %1
+    "+r"(src_b),                // %2
+    "+r"(dst_rgb),              // %3
+    "+r"(width)                 // %4
+  :                             // Input registers
+  : "memory", "cc", NACL_R14
+    "xmm0", "xmm1", "xmm2"
+  );
+}
+#endif  // HAS_MERGERGBROW_SSE2
+
 #ifdef HAS_COPYROW_SSE2
 void CopyRow_SSE2(const uint8* src, uint8* dst, int count) {
   asm volatile (
