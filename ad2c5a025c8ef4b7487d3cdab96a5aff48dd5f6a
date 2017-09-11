@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bae232d_d03b1c3f",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-11T21:41:16Z",
+      "side": 1,
+      "message": "consider using a constant kWidth or kRowLength so.",
+      "range": {
+        "startLine": 2827,
+        "startChar": 34,
+        "endLine": 2827,
+        "endChar": 37
+      },
+      "revId": "ad2c5a025c8ef4b7487d3cdab96a5aff48dd5f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
