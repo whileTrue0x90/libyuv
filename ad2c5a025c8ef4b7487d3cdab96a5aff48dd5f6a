@@ -22,6 +22,30 @@
       "revId": "ad2c5a025c8ef4b7487d3cdab96a5aff48dd5f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74dc8e2_6d6ac7e6",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-11T21:46:30Z",
+      "side": 1,
+      "message": "Theres a variable benchmark_width_ and benchmark_height_ but for simple tests instead of using a full image allocated, I use a small buffer on the stack.  In regular C/C++ you can\u0027t allocate on the stack with variable size.\n\nThis function is just a row function, not a full image, at this point.  If I add a function to Gaussian blur images, I\u0027ll switch this test to allocating an image.",
+      "parentUuid": "5bae232d_d03b1c3f",
+      "range": {
+        "startLine": 2827,
+        "startChar": 34,
+        "endLine": 2827,
+        "endChar": 37
+      },
+      "revId": "ad2c5a025c8ef4b7487d3cdab96a5aff48dd5f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
