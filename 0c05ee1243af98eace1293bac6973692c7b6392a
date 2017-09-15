@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "213ed7f6_8dcb52a2",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-15T18:58:34Z",
+      "side": 1,
+      "message": "Won\u0027t these trigger the static_cast\u003cint\u003e warnings we talked about in Chromium?",
+      "revId": "0c05ee1243af98eace1293bac6973692c7b6392a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
