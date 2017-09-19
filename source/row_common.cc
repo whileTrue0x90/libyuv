@@ -2667,18 +2667,41 @@ void NV12ToRGB565Row_AVX2(const uint8* src_y,
 }
 #endif
 
+// Unrolled to 4 so vectorized sum produces same result
 float ScaleSumSamples_C(const float* src, float* dst, float scale, int width) {
-  float fsum = 0.f;
+  float fsum0 = 0.f;
+  float fsum1 = 0.f;
+  float fsum2 = 0.f;
+  float fsum3 = 0.f;
   int i;
 #if defined(__clang__)
-#pragma clang loop vectorize_width(4)
+//#pragma clang loop vectorize_width(4)
 #endif
-  for (i = 0; i < width; ++i) {
+  for (i = 0; i < width - 3; i += 4) {
     float v = *src++;
-    fsum += v * v;
+    fsum0 += v * v;
+    *dst++ = v * scale;
+
+    v = *src++;
+    fsum1 += v * v;
+    *dst++ = v * scale;
+
+    v = *src++;
+    fsum2 += v * v;
+    *dst++ = v * scale;
+
+    v = *src++;
+    fsum3 += v * v;
     *dst++ = v * scale;
   }
-  return fsum;
+  fsum0 += fsum1 + fsum2 + fsum3;
+  for (;i < width; ++i) {
+    float v = *src++;
+    fsum0 += v * v;
+    *dst++ = v * scale;
+  }
+
+  return fsum0;
 }
 
 float ScaleMaxSamples_C(const float* src, float* dst, float scale, int width) {

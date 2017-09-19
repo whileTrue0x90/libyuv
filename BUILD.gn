@@ -185,7 +185,7 @@ if (libyuv_use_neon) {
       configs -= [ "//build/config/compiler:default_optimization" ]
 
       # Enable optimize for speed (-O2) over size (-Os).
-      configs += [ "//build/config/compiler:optimize_max" ]
+#      configs += [ "//build/config/compiler:optimize_max" ]
     }
 
     if (current_cpu != "arm64") {
