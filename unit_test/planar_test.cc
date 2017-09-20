@@ -2727,7 +2727,10 @@ float TestScaleSumSamples(int benchmark_width,
     }
   }
 
-  float max_diff = FAbs(sum_opt - sum_c);
+  float max_diff = 0.f;
+  if (y_plane_size < 100000) {
+    max_diff = FAbs(sum_opt - sum_c);
+  }
   for (i = 0; i < y_plane_size / 4; ++i) {
     float abs_diff = FAbs((reinterpret_cast<float*>(dst_c)[i]) -
                           (reinterpret_cast<float*>(dst_opt)[i]));
