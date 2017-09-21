@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -2699,9 +2701,14 @@ float TestScaleSumSamples(int benchmark_width,
 
   // Randomize works but may contain some denormals affecting performance.
   // MemRandomize(orig_y, y_plane_size);
+  // large values are problematic.  audio is really -1 to 1.
   for (i = 0; i < y_plane_size / 4; ++i) {
-    (reinterpret_cast<float*>(orig_y))[i] = (i - y_plane_size / 8) * 3.1415f;
+    (reinterpret_cast<float*>(orig_y))[i] =
+        sinf(static_cast<float>(i) * 0.31415f);
   }
+
+  printf("first %f ", (reinterpret_cast<float*>(orig_y))[0]);
+  printf("last  %f ", (reinterpret_cast<float*>(orig_y))[y_plane_size / 4 - 1]);
   memset(dst_c, 0, y_plane_size);
   memset(dst_opt, 1, y_plane_size);
 
@@ -2727,7 +2734,19 @@ float TestScaleSumSamples(int benchmark_width,
     }
   }
 
-  float max_diff = FAbs(sum_opt - sum_c);
+  float mse_opt = sum_opt / y_plane_size;
+  float mse_c = sum_c / y_plane_size;
+  float mse_error = FAbs(mse_opt - mse_c) / mse_c;
+
+  printf("sum_opt %f, sum c %f ", sum_opt, sum_c);
+  printf("mse_opt %f, mse c %f\n", mse_opt, mse_c);
+  printf("mse_error %f\n", mse_error);
+
+  float max_diff = 0.f;
+  if (mse_error > 0.01) {  // allow 1% mse
+    max_diff = mse_error;
+  }
+
   for (i = 0; i < y_plane_size / 4; ++i) {
     float abs_diff = FAbs((reinterpret_cast<float*>(dst_c)[i]) -
                           (reinterpret_cast<float*>(dst_opt)[i]));
@@ -2766,8 +2785,10 @@ float TestScaleSamples(int benchmark_width,
 
   // Randomize works but may contain some denormals affecting performance.
   // MemRandomize(orig_y, y_plane_size);
+  // large values are problematic.  audio is really -1 to 1.
   for (i = 0; i < y_plane_size / 4; ++i) {
-    (reinterpret_cast<float*>(orig_y))[i] = (i - y_plane_size / 8) * 3.1415f;
+    (reinterpret_cast<float*>(orig_y))[i] =
+        sinf(static_cast<float>(i) * 0.31415f);
   }
 
   memset(dst_c, 0, y_plane_size);
