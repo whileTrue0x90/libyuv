@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7983f16_65e8e67b",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-09-21T18:01:47Z",
+      "side": 1,
+      "message": "Can be smaller threshold?",
+      "range": {
+        "startLine": 2746,
+        "startChar": 18,
+        "endLine": 2746,
+        "endChar": 22
+      },
+      "revId": "5c91e40c746199507089af34469bee04e9561fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
