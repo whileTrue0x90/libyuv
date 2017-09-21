@@ -8,6 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <math.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -2623,44 +2624,47 @@ float TestScaleMaxSamples(int benchmark_width,
                           bool opt) {
   int i, j;
   float max_c, max_opt = 0.f;
-  const int y_plane_size = benchmark_width * benchmark_height * 4;
+  // NEON does multiple of 8, so round count up
+  const int plane_size = (benchmark_width * benchmark_height + 7) & ~7;
+  const int plane_bytes = plane_size * 4;
 
-  align_buffer_page_end(orig_y, y_plane_size * 3);
-  uint8* dst_opt = orig_y + y_plane_size;
-  uint8* dst_c = orig_y + y_plane_size * 2;
+  align_buffer_page_end(orig_y, plane_bytes * 3);
+  uint8* dst_opt = orig_y + plane_bytes;
+  uint8* dst_c = orig_y + plane_bytes * 2;
 
   // Randomize works but may contain some denormals affecting performance.
-  // MemRandomize(orig_y, y_plane_size);
-  for (i = 0; i < y_plane_size / 4; ++i) {
-    (reinterpret_cast<float*>(orig_y))[i] = (i - y_plane_size / 8) * 3.1415f;
+  // MemRandomize(orig_y, plane_bytes);
+  // large values are problematic.  audio is really -1 to 1.
+  for (i = 0; i < plane_size; ++i) {
+    (reinterpret_cast<float*>(orig_y))[i] =
+        sinf(static_cast<float>(i) * 0.31415f);
   }
-  memset(dst_c, 0, y_plane_size);
-  memset(dst_opt, 1, y_plane_size);
+  memset(dst_c, 0, plane_bytes * 4);
+  memset(dst_opt, 1, plane_bytes * 4);
 
   max_c = ScaleMaxSamples_C(reinterpret_cast<float*>(orig_y),
-                            reinterpret_cast<float*>(dst_c), scale,
-                            benchmark_width * benchmark_height);
+                            reinterpret_cast<float*>(dst_c), scale, plane_size);
 
   for (j = 0; j < benchmark_iterations; j++) {
     if (opt) {
 #ifdef HAS_SCALESUMSAMPLES_NEON
       max_opt = ScaleMaxSamples_NEON(reinterpret_cast<float*>(orig_y),
                                      reinterpret_cast<float*>(dst_opt), scale,
-                                     benchmark_width * benchmark_height);
+                                     plane_size);
 #else
       max_opt = ScaleMaxSamples_C(reinterpret_cast<float*>(orig_y),
                                   reinterpret_cast<float*>(dst_opt), scale,
-                                  benchmark_width * benchmark_height);
+                                  plane_size);
 #endif
     } else {
       max_opt = ScaleMaxSamples_C(reinterpret_cast<float*>(orig_y),
                                   reinterpret_cast<float*>(dst_opt), scale,
-                                  benchmark_width * benchmark_height);
+                                  plane_size);
     }
   }
 
   float max_diff = FAbs(max_opt - max_c);
-  for (i = 0; i < y_plane_size / 4; ++i) {
+  for (i = 0; i < plane_size; ++i) {
     float abs_diff = FAbs((reinterpret_cast<float*>(dst_c)[i]) -
                           (reinterpret_cast<float*>(dst_opt)[i]));
     if (abs_diff > max_diff) {
@@ -2691,44 +2695,56 @@ float TestScaleSumSamples(int benchmark_width,
                           bool opt) {
   int i, j;
   float sum_c, sum_opt = 0.f;
-  const int y_plane_size = benchmark_width * benchmark_height * 4;
+  // NEON does multiple of 8, so round count up
+  const int plane_size = (benchmark_width * benchmark_height + 7) & ~7;
+  const int plane_bytes = plane_size * 4;
 
-  align_buffer_page_end(orig_y, y_plane_size * 3);
-  uint8* dst_opt = orig_y + y_plane_size;
-  uint8* dst_c = orig_y + y_plane_size * 2;
+  align_buffer_page_end(orig_y, plane_bytes * 3);
+  uint8* dst_opt = orig_y + plane_bytes;
+  uint8* dst_c = orig_y + plane_bytes * 2;
 
   // Randomize works but may contain some denormals affecting performance.
-  // MemRandomize(orig_y, y_plane_size);
-  for (i = 0; i < y_plane_size / 4; ++i) {
-    (reinterpret_cast<float*>(orig_y))[i] = (i - y_plane_size / 8) * 3.1415f;
+  // MemRandomize(orig_y, plane_bytes);
+  // large values are problematic.  audio is really -1 to 1.
+  for (i = 0; i < plane_size; ++i) {
+    (reinterpret_cast<float*>(orig_y))[i] =
+        sinf(static_cast<float>(i) * 0.31415f);
   }
-  memset(dst_c, 0, y_plane_size);
-  memset(dst_opt, 1, y_plane_size);
+
+  memset(dst_c, 0, plane_bytes);
+  memset(dst_opt, 1, plane_bytes);
 
   sum_c = ScaleSumSamples_C(reinterpret_cast<float*>(orig_y),
-                            reinterpret_cast<float*>(dst_c), scale,
-                            benchmark_width * benchmark_height);
+                            reinterpret_cast<float*>(dst_c), scale, plane_size);
 
   for (j = 0; j < benchmark_iterations; j++) {
     if (opt) {
 #ifdef HAS_SCALESUMSAMPLES_NEON
       sum_opt = ScaleSumSamples_NEON(reinterpret_cast<float*>(orig_y),
                                      reinterpret_cast<float*>(dst_opt), scale,
-                                     benchmark_width * benchmark_height);
+                                     plane_size);
 #else
       sum_opt = ScaleSumSamples_C(reinterpret_cast<float*>(orig_y),
                                   reinterpret_cast<float*>(dst_opt), scale,
-                                  benchmark_width * benchmark_height);
+                                  plane_size);
 #endif
     } else {
       sum_opt = ScaleSumSamples_C(reinterpret_cast<float*>(orig_y),
                                   reinterpret_cast<float*>(dst_opt), scale,
-                                  benchmark_width * benchmark_height);
+                                  plane_size);
     }
   }
 
-  float max_diff = FAbs(sum_opt - sum_c);
-  for (i = 0; i < y_plane_size / 4; ++i) {
+  float mse_opt = sum_opt / plane_bytes;
+  float mse_c = sum_c / plane_bytes;
+  float mse_error = FAbs(mse_opt - mse_c) / mse_c;
+
+  float max_diff = 0.f;
+  if (mse_error > 0.0001 && sum_c < 4000000) {  // allow .01% difference of mse
+    max_diff = mse_error;
+  }
+
+  for (i = 0; i < plane_size; ++i) {
     float abs_diff = FAbs((reinterpret_cast<float*>(dst_c)[i]) -
                           (reinterpret_cast<float*>(dst_opt)[i]));
     if (abs_diff > max_diff) {
@@ -2758,45 +2774,45 @@ float TestScaleSamples(int benchmark_width,
                        float scale,
                        bool opt) {
   int i, j;
-  const int y_plane_size = benchmark_width * benchmark_height * 4;
+  // NEON does multiple of 8, so round count up
+  const int plane_size = (benchmark_width * benchmark_height + 7) & ~7;
+  const int plane_bytes = plane_size * 4;
 
-  align_buffer_page_end(orig_y, y_plane_size * 3);
-  uint8* dst_opt = orig_y + y_plane_size;
-  uint8* dst_c = orig_y + y_plane_size * 2;
+  align_buffer_page_end(orig_y, plane_bytes * 3);
+  uint8* dst_opt = orig_y + plane_bytes;
+  uint8* dst_c = orig_y + plane_bytes * 2;
 
   // Randomize works but may contain some denormals affecting performance.
-  // MemRandomize(orig_y, y_plane_size);
-  for (i = 0; i < y_plane_size / 4; ++i) {
-    (reinterpret_cast<float*>(orig_y))[i] = (i - y_plane_size / 8) * 3.1415f;
+  // MemRandomize(orig_y, plane_bytes);
+  // large values are problematic.  audio is really -1 to 1.
+  for (i = 0; i < plane_size; ++i) {
+    (reinterpret_cast<float*>(orig_y))[i] =
+        sinf(static_cast<float>(i) * 0.31415f);
   }
 
-  memset(dst_c, 0, y_plane_size);
-  memset(dst_opt, 1, y_plane_size);
+  memset(dst_c, 0, plane_bytes);
+  memset(dst_opt, 1, plane_bytes);
 
   ScaleSamples_C(reinterpret_cast<float*>(orig_y),
-                 reinterpret_cast<float*>(dst_c), scale,
-                 benchmark_width * benchmark_height);
+                 reinterpret_cast<float*>(dst_c), scale, plane_size);
 
   for (j = 0; j < benchmark_iterations; j++) {
     if (opt) {
 #ifdef HAS_SCALESUMSAMPLES_NEON
       ScaleSamples_NEON(reinterpret_cast<float*>(orig_y),
-                        reinterpret_cast<float*>(dst_opt), scale,
-                        benchmark_width * benchmark_height);
+                        reinterpret_cast<float*>(dst_opt), scale, plane_size);
 #else
       ScaleSamples_C(reinterpret_cast<float*>(orig_y),
-                     reinterpret_cast<float*>(dst_opt), scale,
-                     benchmark_width * benchmark_height);
+                     reinterpret_cast<float*>(dst_opt), scale, plane_size);
 #endif
     } else {
       ScaleSamples_C(reinterpret_cast<float*>(orig_y),
-                     reinterpret_cast<float*>(dst_opt), scale,
-                     benchmark_width * benchmark_height);
+                     reinterpret_cast<float*>(dst_opt), scale, plane_size);
     }
   }
 
   float max_diff = 0.f;
-  for (i = 0; i < y_plane_size / 4; ++i) {
+  for (i = 0; i < plane_size; ++i) {
     float abs_diff = FAbs((reinterpret_cast<float*>(dst_c)[i]) -
                           (reinterpret_cast<float*>(dst_opt)[i]));
     if (abs_diff > max_diff) {
