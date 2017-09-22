@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7934c17_1f6df0c0",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-09-22T00:08:41Z",
+      "side": 1,
+      "message": "some comments",
+      "range": {
+        "startLine": 2743,
+        "startChar": 28,
+        "endLine": 2743,
+        "endChar": 33
+      },
+      "revId": "2022ad84c584d6e81cde9452ad11877aa94ffadf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
