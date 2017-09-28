@@ -2626,9 +2626,12 @@ float TestScaleMaxSamples(int benchmark_width,
   float max_c, max_opt = 0.f;
   // NEON does multiple of 8, so round count up
   const int kPixels = (benchmark_width * benchmark_height + 7) & ~7;
-  align_buffer_page_end(orig_y, kPixels * 4 * 3 + 48);
-  uint8* dst_c = orig_y + kPixels * 4 + 16;
-  uint8* dst_opt = orig_y + kPixels * 4 * 2 + 32;
+//  align_buffer_page_end(orig_y, kPixels * 4 * 3);
+//  uint8* dst_c = orig_y + kPixels * 4;
+//  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+  align_buffer_page_end(orig_y, kPixels * 4);
+  align_buffer_page_end(dst_c, kPixels * 4);
+  align_buffer_page_end(dst_opt, kPixels * 4);
 
   // Randomize works but may contain some denormals affecting performance.
   // MemRandomize(orig_y, kPixels * 4);
@@ -2670,6 +2673,8 @@ float TestScaleMaxSamples(int benchmark_width,
   }
 
   free_aligned_buffer_page_end(orig_y);
+  free_aligned_buffer_page_end(dst_c);
+  free_aligned_buffer_page_end(dst_opt);
   return max_diff;
 }
 
@@ -2694,9 +2699,12 @@ float TestScaleSumSamples(int benchmark_width,
   float sum_c, sum_opt = 0.f;
   // NEON does multiple of 8, so round count up
   const int kPixels = (benchmark_width * benchmark_height + 7) & ~7;
-  align_buffer_page_end(orig_y, kPixels * 4 * 3);
-  uint8* dst_c = orig_y + kPixels * 4;
-  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+//  align_buffer_page_end(orig_y, kPixels * 4 * 3);
+//  uint8* dst_c = orig_y + kPixels * 4;
+//  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+  align_buffer_page_end(orig_y, kPixels * 4);
+  align_buffer_page_end(dst_c, kPixels * 4);
+  align_buffer_page_end(dst_opt, kPixels * 4);
 
   // Randomize works but may contain some denormals affecting performance.
   // MemRandomize(orig_y, kPixels * 4);
@@ -2748,7 +2756,10 @@ float TestScaleSumSamples(int benchmark_width,
     }
   }
 
+
   free_aligned_buffer_page_end(orig_y);
+  free_aligned_buffer_page_end(dst_c);
+  free_aligned_buffer_page_end(dst_opt);
   return max_diff;
 }
 
@@ -2772,9 +2783,12 @@ float TestScaleSamples(int benchmark_width,
   int i, j;
   // NEON does multiple of 8, so round count up
   const int kPixels = (benchmark_width * benchmark_height + 7) & ~7;
-  align_buffer_page_end(orig_y, kPixels * 4 * 3);
-  uint8* dst_c = orig_y + kPixels * 4;
-  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+//  align_buffer_page_end(orig_y, kPixels * 4 * 3);
+//  uint8* dst_c = orig_y + kPixels * 4;
+//  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+  align_buffer_page_end(orig_y, kPixels * 4);
+  align_buffer_page_end(dst_c, kPixels * 4);
+  align_buffer_page_end(dst_opt, kPixels * 4);
 
   // Randomize works but may contain some denormals affecting performance.
   // MemRandomize(orig_y, kPixels * 4);
@@ -2813,6 +2827,8 @@ float TestScaleSamples(int benchmark_width,
   }
 
   free_aligned_buffer_page_end(orig_y);
+  free_aligned_buffer_page_end(dst_c);
+  free_aligned_buffer_page_end(dst_opt);
   return max_diff;
 }
 
@@ -2835,9 +2851,16 @@ float TestCopySamples(int benchmark_width,
   int i, j;
   // NEON does multiple of 16 floats, so round count up
   const int kPixels = (benchmark_width * benchmark_height + 15) & ~15;
-  align_buffer_page_end(orig_y, kPixels * 4 * 3);
-  uint8* dst_c = orig_y + kPixels * 4;
-  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+//  align_buffer_page_end(orig_y, 1024 * 1024 * 4 * 3);
+//  uint8* dst_c = orig_y + 1024 * 1024;
+//  uint8* dst_opt = orig_y + 1024 * 1024 * 2;
+
+  align_buffer_page_end(orig_y, kPixels * 4);
+  align_buffer_page_end(dst_c, kPixels * 4);
+  align_buffer_page_end(dst_opt, kPixels * 4);
+//  uint8* dst_c = orig_y + kPixels * 4;
+//  uint8* dst_opt = orig_y + kPixels * 4 * 2;
+
 
   // Randomize works but may contain some denormals affecting performance.
   // MemRandomize(orig_y, kPixels * 4);
@@ -2873,6 +2896,8 @@ float TestCopySamples(int benchmark_width,
   }
 
   free_aligned_buffer_page_end(orig_y);
+  free_aligned_buffer_page_end(dst_c);
+  free_aligned_buffer_page_end(dst_opt);
   return max_diff;
 }
 
