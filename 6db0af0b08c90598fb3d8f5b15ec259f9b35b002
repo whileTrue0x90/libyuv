@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925957f8_35a77c85",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-29T22:28:15Z",
+      "side": 1,
+      "message": "This function is not called in HammingDistance().  AVX2 version already has hooks and is called.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
