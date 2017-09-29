@@ -229,6 +229,8 @@ TEST_F(LibYUVCompareTest, BenchmarkHammingDistance_Opt) {
   for (int i = 0; i < count; ++i) {
 #if defined(HAS_HAMMINGDISTANCE_NEON)
     h1 = HammingDistance_NEON(src_a, src_b, kMaxWidth);
+#elif defined(HAS_HAMMINGDISTANCE_SSE2)
+    h1 = HammingDistance_SSE2(src_a, src_b, kMaxWidth);
 #elif defined(HAS_HAMMINGDISTANCE_X86)
     h1 = HammingDistance_X86(src_a, src_b, kMaxWidth);
 #else
