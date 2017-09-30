@@ -22,6 +22,57 @@
       "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72db6f0c_d648213b",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T01:18:20Z",
+      "side": 1,
+      "message": "#ifdef HAS_HAMMINGDISTANCE_AVX2 needed around AVX2 code incase the compiler does not support AVX2.\nThe header has macros such as CLANG_HAS_AVX2 to help detect a version that does.",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0df6e0a_a4f47a7b",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T01:18:20Z",
+      "side": 1,
+      "message": "this can be generated with 2 instructions.\na memory reference to fill this in can take a substantial amount of time with 32 bit fpic code.",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0b1be7_a9aed8af",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T01:18:20Z",
+      "side": 1,
+      "message": "remove d0.  output directly to diff.",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
