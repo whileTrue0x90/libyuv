@@ -1,0 +1,521 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdbaff4c_2c2d5618",
+        "filename": "include/libyuv/compare_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "these dont build on 32 bit or visual c... need their own ifdefs",
+      "range": {
+        "startLine": 65,
+        "startChar": 32,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b87372_7cd36fa6",
+        "filename": "include/libyuv/compare_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "duplicate?",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde35f41_8266b38a",
+        "filename": "source/compare.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "order wrong.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5181533_3e19414e",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "this function is slower than the existing  __builtin_popcountll(x) with the same requirements - SSSE4/popcnt.\nIts more interesting if you can make a version that is purely SSE2 and not require popcnt instruction/cpu, or with the current approach, make it faster than purely using popcnt.\nFor pure sse2, the avx2 could be adapted.  It would be SSSE3 for the pshufb.\nAlternatively use Hakmem algoritm, but done with SSE2 instructions.",
+      "range": {
+        "startLine": 39,
+        "startChar": 80,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a9cb36_e9abf708",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "these checks can be removed... the calling code tests length and only calls the SIMD for large amounts.  See compare.cc",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f65fc12_21f678e7",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "this is a lot of unrolling... did it help?  modern cpu\u0027s tend to prefer a shorter loop.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd2c601_d4a174ad",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "copying from sse2 registers to gpr\u0027s is a bit slow... causes a performance\u0027bubble\u0027.\nI think fetching the memory with regular mov would be faster?",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ac8c1f_eb11d850",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "popcnt is not available on purely sse2 cpu\u0027s.  in practice its common on SSE4.2 cpus, but it has its own cpuid bits, so this code really should be named SSE4 or popcnt and do the appropriate cpuid in the calling code.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759ae6d9_51826bfc",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "movq is 64 bits.   would need to use movd for 32 bit.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5989aa_8e5d9417",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "cmp can be removed.  the code is only responsible for multiple of $0x40\nchange branch to jg",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01722937_dd4806ab",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "this is a slow instruction... avoid if possible",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0aef7c_55520a0d",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "too many registers for x86.  typically you can do 5.\nifdef the code to build only for 64 bit or rework this code to use fewer gpr reisters.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abd995d_0958cefe",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "these should be static and aligned.  preferably with meaningful names.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6952f2ac_792ae67c",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "is d0 needed?",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a704edf_1f698d14",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "not needed... remove",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd2cbc5_0c472792",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "hoist out of loop",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9b17df_8e4742ce",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "does 64 bytes at a time really help performance?  consider 32 bytes",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b390c7fc_c030e0f4",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "if we care about NaCL support, the vmovdqa needs a MEMACCESS2().\nWe dont really care at the moment, so I would remove the MEMACCESS() above and just directly access the memory.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869cb32e_51275702",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "theres no vpsrlb to avoid needing the vpand?",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e3dbf2_bd606e3b",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "is \u0027q\u0027 the right size?  does vpsadbw clear the other words?  would vpaddw be faster on any cpus?\nthe final result is an int, so vpadddw might make sense?",
+      "range": {
+        "startLine": 165,
+        "startChar": 17,
+        "endLine": 165,
+        "endChar": 23
+      },
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d918bcb1_5e5e0fd1",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "consider moving this add  to line 157, just after the vmovdqa that uses it.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029ba1a3_972f7ea6",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "could share a pointer and use an offset and then remove this add",
+      "range": {
+        "startLine": 168,
+        "startChar": 49,
+        "endLine": 168,
+        "endChar": 50
+      },
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52ac6ca_9e9a8e1a",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "remove cmp and change branch to jg",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833fcf6d_b6c4f297",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "remove this loop",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a93ea0_c0772e65",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "ext and extract may be slow.  consider using vpermq and vpaddd",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9797e1ed_e17e5de0",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "result is an int, so vmovd to diff would do.\n\nThis is similar to the SumSquareError, except this is AVX2.  It summed the resulting 4 int\u0027s like this:\n    \"pshufd    $0xee,%%xmm0,%%xmm1             \\n\"\n    \"paddd     %%xmm1,%%xmm0                   \\n\"\n    \"pshufd    $0x1,%%xmm0,%%xmm1              \\n\"\n    \"paddd     %%xmm1,%%xmm0                   \\n\"\n    \"movd      %%xmm0,%3                       \\n\"",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3e6805_b7272ad5",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "these should be inputs, not outputs",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6380c2a9_58f270fe",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "need to declare xmm versions of these, not ymm\u0027s.. will cause compile errors on some platforms.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e36ece_3a3e342c",
+        "filename": "unit_test/compare_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-30T00:45:03Z",
+      "side": 1,
+      "message": "need to add AVX2 here, but will need to check cpuid for that.",
+      "revId": "fabf083f53fd82e1e1c9b93539251cd8b595427c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
