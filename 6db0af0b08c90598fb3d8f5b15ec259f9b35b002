@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "f4fc045e_2262bc9b",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-02T18:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72db6f0c_d648213b",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0df6e0a_a4f47a7b",
         "filename": "source/compare_gcc.cc",
         "patchSetId": 1
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "b871a1c8_89c97886",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-02T18:16:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a0df6e0a_a4f47a7b",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b0b1be7_a9aed8af",
         "filename": "source/compare_gcc.cc",
         "patchSetId": 1
@@ -70,6 +106,47 @@
       "writtenOn": "2017-09-30T01:18:20Z",
       "side": 1,
       "message": "remove d0.  output directly to diff.",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587cfde8_be27ef88",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-02T18:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0b1be7_a9aed8af",
+      "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54ce8cc0_ff8c8507",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-02T18:16:30Z",
+      "side": 1,
+      "message": "vpaddd for int\u0027s, since thats what return value is.",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 23
+      },
       "revId": "6db0af0b08c90598fb3d8f5b15ec259f9b35b002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

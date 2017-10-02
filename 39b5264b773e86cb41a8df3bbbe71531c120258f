@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c437ff9c_a57af27c",
+        "filename": "source/compare_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-02T18:16:30Z",
+      "side": 1,
+      "message": "remove vpsadbw and vpaddd",
+      "range": {
+        "startLine": 69,
+        "startChar": 50,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "39b5264b773e86cb41a8df3bbbe71531c120258f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
