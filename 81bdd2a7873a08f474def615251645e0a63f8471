@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f74d3c_24c67249",
+        "filename": "source/compare.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-03T17:44:32Z",
+      "side": 1,
+      "message": "this needs to come before AVX2",
+      "revId": "81bdd2a7873a08f474def615251645e0a63f8471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
