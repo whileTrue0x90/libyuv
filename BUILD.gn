@@ -161,7 +161,8 @@ static_library("libyuv_internal") {
   if (!is_win) {
     cflags = [
       # "-mpopcnt",
-      # "-mavx2",
+      "-mavx2",
+
       # "-mfma",
       "-ffp-contract=fast",  # Enable fma vectorization for NEON.
     ]
