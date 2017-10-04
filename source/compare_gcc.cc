@@ -13,6 +13,8 @@
 #include "libyuv/compare_row.h"
 #include "libyuv/row.h"
 
+#include <immintrin.h>
+
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
