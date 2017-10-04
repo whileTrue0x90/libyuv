@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1361c16_967b7452",
+        "filename": "source/compare.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-10-04T18:29:48Z",
+      "side": 1,
+      "message": "Can you define it in a common name instead of using the constant both here and line 119",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 24
+      },
+      "revId": "cd05a48ba8b8beea42ea3f0244cbf356c42d1b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
