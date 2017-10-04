@@ -159,7 +159,7 @@ uint64 ComputeHammingDistance(const uint8* src_a,
     src_a += remainder;
     src_b += remainder;
   }
-  remainder = count & 31;
+  remainder = count & 63;
   if (remainder) {
     diff += HammingDistance_C(src_a, src_b, remainder);
   }
