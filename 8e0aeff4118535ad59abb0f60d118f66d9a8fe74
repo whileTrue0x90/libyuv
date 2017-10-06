@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5fc9b8_6a99a90b",
+        "filename": "source/compare.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-10-06T22:53:32Z",
+      "side": 1,
+      "message": "64 to kSimdSize",
+      "range": {
+        "startLine": 117,
+        "startChar": 37,
+        "endLine": 117,
+        "endChar": 38
+      },
+      "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb7561a_4c87da5a",
+        "filename": "source/compare.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-10-06T22:53:32Z",
+      "side": 1,
+      "message": "some comments for block remainder and SIMD remainder",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 11
+      },
+      "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d61fdc5_0e7cf154",
+        "filename": "unit_test/compare_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2017-10-06T22:53:32Z",
+      "side": 1,
+      "message": "some way to check?",
+      "range": {
+        "startLine": 384,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 10
+      },
+      "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
