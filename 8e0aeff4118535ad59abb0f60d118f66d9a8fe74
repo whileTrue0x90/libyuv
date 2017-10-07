@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2cf45ce_5411caf7",
+        "filename": "source/compare.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-07T00:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5fc9b8_6a99a90b",
+      "range": {
+        "startLine": 117,
+        "startChar": 37,
+        "endLine": 117,
+        "endChar": 38
+      },
+      "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cb7561a_4c87da5a",
         "filename": "source/compare.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "01e535a3_1dd6fdaa",
+        "filename": "source/compare.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-07T00:39:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb7561a_4c87da5a",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 11
+      },
+      "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d61fdc5_0e7cf154",
         "filename": "unit_test/compare_test.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00599280_1b179e6b",
+        "filename": "unit_test/compare_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-07T00:39:46Z",
+      "side": 1,
+      "message": "Done.\nThis was misleading, since it would say they dont match even if they do.\n\n[ RUN      ] LibYUVCompareTest.TestHammingDistance_Opt\nwarning - HammingDistance_Opt does not match HammingDistance_C: HammingDistance_Opt 7372800 vs HammingDistance_C 7372800\n[       OK ] LibYUVCompareTest.TestHammingDistance_Opt (764 ms)\n\nI\u0027ve added a todo to consider expecting the low bits to match.\nOn intel the result could always be expected to match.",
+      "parentUuid": "9d61fdc5_0e7cf154",
+      "range": {
+        "startLine": 384,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 10
+      },
+      "revId": "8e0aeff4118535ad59abb0f60d118f66d9a8fe74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
