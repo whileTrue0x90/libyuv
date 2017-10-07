@@ -49,12 +49,14 @@ uint32 HammingDistance_SSSE3(const uint8* src_a,
       "movdqa     %5,%%xmm3                      \n"
       "pxor       %%xmm0,%%xmm0                  \n"
       "pxor       %%xmm1,%%xmm1                  \n"
+      "pxor       %%xmm6,%%xmm6                  \n"
       "sub        %0,%1                          \n"
 
       LABELALIGN
       "1:                                        \n"
       "movdqa     (%0),%%xmm4                    \n"
       "movdqa     0x10(%0), %%xmm5               \n"
+      "paddd      %%xmm6,%%xmm0                  \n"
       "pxor       (%0,%1), %%xmm4                \n"
       "movdqa     %%xmm4,%%xmm6                  \n"
       "pand       %%xmm2,%%xmm6                  \n"
@@ -78,10 +80,11 @@ uint32 HammingDistance_SSSE3(const uint8* src_a,
       "paddb      %%xmm7,%%xmm5                  \n"
       "paddb      %%xmm5,%%xmm6                  \n"
       "psadbw     %%xmm1,%%xmm6                  \n"
-      "paddd      %%xmm6,%%xmm0                  \n"
+
       "sub        $0x20,%2                       \n"
       "jg         1b                             \n"
 
+      "paddd      %%xmm6,%%xmm0                  \n"
       "pshufd     $0xaa,%%xmm0,%%xmm1            \n"
       "paddd      %%xmm1,%%xmm0                  \n"
       "vmovd      %%xmm0, %3                     \n"
