@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c9bfe5_a14ae625",
+        "filename": "unit_test/compare_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-10-10T23:44:01Z",
+      "side": 1,
+      "message": "The low level currently does 32768 at a time in blocks, but 65536 - 32 is the maximum that the low level can do without overflow.\nTODO - consider a saturating add so the overflow clamps to a max value - 65535 instead of wrapping.\nThe maximum is for NEON, but SSSE3 has a higher value.  Perhaps the test should be ifdef\u0027ed?",
+      "range": {
+        "startLine": 323,
+        "startChar": 43,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "3cef69944fb70738805fec34288495e8e31a1f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
