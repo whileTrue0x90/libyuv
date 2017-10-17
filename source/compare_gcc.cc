@@ -22,15 +22,25 @@ extern "C" {
 #if !defined(LIBYUV_DISABLE_X86) && \
     (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
 
+inline uint64_t popcnt(uint64_t a)
+{
+  uint64_t r = 0; // Key register dependency breaker.
+  asm volatile("popcnt %1, %0"
+               : "+r"(r)
+               : "r"(a));
+  return r;
+}
+
 uint32 HammingDistance_X86(const uint8* src_a, const uint8* src_b, int count) {
   uint32 diff = 0u;
-
+  uint32 x;
   int i;
-  for (i = 0; i < count - 7; i += 8) {
-    uint64 x = *((uint64*)src_a) ^ *((uint64*)src_b);
-    src_a += 8;
-    src_b += 8;
-    diff += __builtin_popcountll(x);
+  for (i = 0; i < count - 3; i += 4) {
+    x = *((uint32*)(src_a)) ^ *((uint32*)(src_b));
+    diff += popcnt(x);
+    //__builtin_popcount(x);
+    src_a += 4;
+    src_b += 4;
   }
   return diff;
 }
@@ -146,6 +156,38 @@ uint32 HammingDistance_AVX2(const uint8* src_a, const uint8* src_b, int count) {
       : "m"(kNibbleMask),  // %4
         "m"(kBitCount)     // %5
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
+
+  return diff;
+}
+
+uint32 PopCountBinary_AVX2(const uint8* src_a, int count) {
+  uint32 diff = 0u;
+
+  asm volatile(
+      "vpxor      %%ymm0,%%ymm0,%%ymm0           \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "vmovdqa    (%0),%%ymm4                    \n"
+      "vmovdqa    0x20(%0), %%ymm5               \n"
+      "add        $0x40,%0                       \n"
+      "vpsubb     %%ymm0,%%ymm4,%%ymm0           \n"
+      "vpsubb     %%ymm0,%%ymm5,%%ymm0           \n"
+      "sub        $0x40,%1                       \n"
+      "jg         1b                             \n"
+
+      "vpxor      %%ymm1,%%ymm1,%%ymm1           \n"
+      "vpsadbw    %%ymm1,%%ymm0,%%ymm0           \n"
+      "vpermq     $0xb1,%%ymm0,%%ymm1            \n"
+      "vpaddd     %%ymm1,%%ymm0,%%ymm0           \n"
+      "vpermq     $0xaa,%%ymm0,%%ymm1            \n"
+      "vpaddd     %%ymm1,%%ymm0,%%ymm0           \n"
+      "vmovd      %%xmm0, %2                     \n"
+      "vzeroupper                                \n"
+      : "+r"(src_a),       // %0
+        "+r"(count),       // %1
+        "=r"(diff)         // %2
+      :: "memory", "cc", "xmm0", "xmm1", "xmm4", "xmm5");
 
   return diff;
 }
