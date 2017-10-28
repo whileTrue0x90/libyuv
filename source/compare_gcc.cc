@@ -23,12 +23,14 @@ extern "C" {
     (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
 
 #if defined(__x86_64__)
+
+// SSE version
 uint32 HammingDistance_SSE42(const uint8* src_a,
                              const uint8* src_b,
                              int count) {
   uint64 diff = 0u;
 
-  asm volatile(
+  asm volatile (
       "xor        %%r15,%%r15                    \n"
       "xor        %%r14,%%r14                    \n"
       "xor        %%r13,%%r13                    \n"
@@ -36,16 +38,16 @@ uint32 HammingDistance_SSE42(const uint8* src_a,
 
       LABELALIGN
       "1:                                        \n"
-      "mov        (%0),%%rax                     \n"
-      "mov        0x8(%0),%%rdx                  \n"
-      "xor        (%1),%%rax                     \n"
-      "xor        0x8(%1),%%rdx                  \n"
+      "movdqa     (%0),%%xmm0                    \n"
+      "pxor       (%1),%%xmm0                    \n"
+      "movq       %%xmm0,%%rax                   \n"
+      "pextrq     $0x1,%%xmm0,%%rdx              \n"
       "popcnt     %%rax,%%rax                    \n"
       "popcnt     %%rdx,%%rdx                    \n"
-      "mov        0x10(%0),%%rcx                 \n"
-      "mov        0x18(%0),%%rsi                 \n"
-      "xor        0x10(%1),%%rcx                 \n"
-      "xor        0x18(%1),%%rsi                 \n"
+      "movdqa     0x10(%0),%%xmm1                \n"
+      "pxor       0x10(%1),%%xmm1                \n"
+      "movq       %%xmm1,%%rcx                   \n"
+      "pextrq     $0x1,%%xmm1,%%rsi              \n"
       "popcnt     %%rcx,%%rcx                    \n"
       "popcnt     %%rsi,%%rsi                    \n"
       "add        $0x20,%0                       \n"
@@ -66,8 +68,8 @@ uint32 HammingDistance_SSE42(const uint8* src_a,
         "+r"(count),  // %2
         "=r"(diff)    // %3
       :
-      : "memory", "cc", "rax", "rdx", "rcx", "rsi", "r12", "r13", "r14", "r15");
-
+      : "memory", "cc", 
+        "rax", "rdx", "rcx", "rsi", "r12", "r13", "r14", "r15", "xmm0", "xmm1");
   return static_cast<uint32>(diff);
 }
 #else
