@@ -23,7 +23,102 @@ extern "C" {
     (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
 
 #if defined(__x86_64__)
-uint32 HammingDistance_SSE42(const uint8* src_a,
+
+// SSE version
+uint32 HammingDistance_SSE42(const uint8* src_a, const uint8* src_b, int count) {
+  uint64 diff = 0u;
+  uint64 d0 = 0u;
+  uint64 d1 = 0u;
+  uint64 d2 = 0u;
+  uint64 d3 = 0u;
+
+  asm volatile (
+                "pxor                   %%xmm0,%%xmm0                                           \n"
+                "cmp                    $0x40,%2                                                        \n"
+                "jge                    1f                                                                      \n"
+                "cmp                    $0x10,%2                                                        \n"
+                "jge                    2f                                                                      \n"
+
+        LABELALIGN
+        "1:                                                                                                             \n"
+                "movdqa         " MEMACCESS(0) ",%%xmm0                         \n" 
+                "movdqa                 0x10(%0),%%xmm1                                         \n" 
+                "movdqa                 0x20(%0),%%xmm2                                         \n" 
+                "movdqa                 " MEMACCESS(0) ",%%xmm0                         \n" 
+                "pxor               (%1),%%xmm0                                                 \n" 
+                "movq                   %%xmm0,%3                                                       \n" 
+                "popcnt                 %3,%3                                                           \n" 
+                "add                    %4,%3                                                           \n" 
+                "pextrq                 $0x1,%%xmm0,%4                                          \n" 
+                "pxor                   0x10(%1),%%xmm1                                         \n" 
+                "popcnt                 %4,%5                                                           \n" 
+                "add                    %6,%5                                                           \n" 
+                "movq                   %%xmm1,%4                                                       \n" 
+                "popcnt                 %4,%4                                                           \n" 
+                "add                    %3,%4                                                           \n" 
+                "pextrq                 $0x1,%%xmm1,%6                                          \n" 
+                "movdqa                 0x30(%0),%%xmm0                                         \n" 
+                "popcnt                 %6,%7                                                           \n"     
+                "pxor                   0x20(%1),%%xmm2                                         \n" 
+                "add                    %7,%5                                                           \n" 
+                "movq                   %%xmm2, %7                                                      \n" 
+                "popcnt                 %7,%7                                                           \n" 
+                "add                    %4,%5                                                           \n" 
+                "pextrq                 $0x1,%%xmm2,%4                                          \n" 
+                "popcnt                 %4,%3                                                           \n" 
+                "add                    %7,%3                                                           \n" 
+                "pxor                   0x30(%1),%%xmm0                                         \n" 
+                "add                    $0x40,%0                                                        \n" 
+                "movq                   %%xmm0,%4                                                       \n" 
+                "popcnt                 %4,%4                                                           \n" 
+                "add                    %5,%4                                                           \n" 
+                "pextrq                 $0x1,%%xmm0,%5                                          \n" 
+                "add                    $0x40,%1                                                        \n" 
+                "popcnt                 %5,%6                                                           \n" 
+                "add                    %3,%6                                                           \n" 
+                "sub                    $0x40,%2                                                        \n"  
+                "cmp                    $0x40,%2                                                        \n"
+            "jge                        1b                                                                      \n"
+                "cmp                    $0x10,%2                                                        \n"
+                "jl                             3f                                                                      \n"
+                
+        LABELALIGN
+        "2:                                                                                                             \n"
+                "movdqa                 " MEMACCESS(0) ",%%xmm0                         \n" 
+                "pxor                   (%1),%%xmm0                                                     \n" 
+                "movq                   %%xmm0,%5                                                       \n" 
+                "popcnt                 %5,%5                                                           \n" 
+                "add                    %5,%4                                                           \n" 
+                "pextrq                 $0x1,%%xmm0,%5                                          \n" 
+                "popcnt                 %5,%5                                                           \n" 
+                "add                    %5,%6                                                           \n" 
+                "add                    $0x10,%0                                                        \n"
+                "add                    $0x10,%1                                                        \n"
+                "sub                    $0x10,%2                                                        \n"
+                "cmp                    $0x10,%2                                                        \n"
+                "jge                    2b                                                                      \n"
+
+        LABELALIGN
+        "3:                                                                                                             \n"
+           "add            %4,%6                                                                \n"
+
+
+        :       "+r"(src_a),      // %0
+                "+r"(src_b),      // %1
+                "+r"(count),      // %2
+                "+r"(d0),         // %3 
+                "+r"(d1),         // %4 
+                "+r"(d2),         // %5 
+                "+r"(diff),       // %6
+                "+r"(d3)          // %7 
+        :: "memory", "cc", "xmm1", "xmm0", "xmm2"
+        );
+  return diff;
+}
+
+
+
+uint32 HammingDistance_SSE42_0(const uint8* src_a,
                              const uint8* src_b,
                              int count) {
   uint64 diff = 0u;
