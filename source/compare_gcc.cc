@@ -23,9 +23,60 @@ extern "C" {
     (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
 
 #if defined(__x86_64__)
+
+// SSE version
 uint32 HammingDistance_SSE42(const uint8* src_a,
                              const uint8* src_b,
                              int count) {
+  uint64 diff = 0u;
+
+  asm volatile (
+      "xor        %%r15,%%r15                    \n"
+      "xor        %%r14,%%r14                    \n"
+      "xor        %%r13,%%r13                    \n"
+      "xor        %%r12,%%r12                    \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "movdqa     (%0),%%xmm0                    \n"
+      "movdqa     0x10(%0),%%xmm1                \n"
+      "pxor       (%1),%%xmm0                    \n"
+      "pxor       0x10(%1),%%xmm1                \n"
+      
+      "movq       %%xmm0,%%rax                   \n"
+      "pextrq     $0x1,%%xmm0,%%rdx              \n"
+      "popcnt     %%rax,%%rax                    \n"
+      "popcnt     %%rdx,%%rdx                    \n"
+      "movq       %%xmm1,%%rcx                   \n"
+      "pextrq     $0x1,%%xmm1,%%rsi              \n"
+      "popcnt     %%rcx,%%rcx                    \n"
+      "popcnt     %%rsi,%%rsi                    \n"
+      "add        $0x20,%0                       \n"
+      "add        $0x20,%1                       \n"
+      "add        %%rax,%%r15                    \n"
+      "add        %%rdx,%%r14                    \n"
+      "add        %%rcx,%%r13                    \n"
+      "add        %%rsi,%%r12                    \n"
+      "sub        $0x20,%2                       \n"
+      "jg         1b                             \n"
+
+      "add        %%r15, %%r14                   \n"
+      "add        %%r13, %%r12                   \n"
+      "add        %%r14, %%r12                   \n"
+      "mov        %%r12, %3                      \n"
+      : "+r"(src_a),  // %0
+        "+r"(src_b),  // %1
+        "+r"(count),  // %2
+        "=r"(diff)    // %3
+      :
+      : "memory", "cc",
+        "rax", "rdx", "rcx", "rsi", "r12", "r13", "r14", "r15", "xmm0", "xmm1");
+  return diff;
+}
+
+uint32 HammingDistance_SSE42_0(const uint8* src_a,
+                               const uint8* src_b,
+                               int count) {
   uint64 diff = 0u;
 
   asm volatile(
