@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2271024c_ad8aaf06",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-02T14:31:50Z",
+      "side": 1,
+      "message": "Analyzer",
+      "range": {
+        "startLine": 258,
+        "startChar": 28,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "f8ba1ec9cebdd4667d72042563ec5d5c11b2d361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca3d03a_a256ef84",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-02T14:31:50Z",
+      "side": 1,
+      "message": "Remove blank space",
+      "range": {
+        "startLine": 264,
+        "startChar": 95,
+        "endLine": 264,
+        "endChar": 96
+      },
+      "revId": "f8ba1ec9cebdd4667d72042563ec5d5c11b2d361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
