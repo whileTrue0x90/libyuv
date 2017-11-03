@@ -2617,6 +2617,52 @@ TEST_F(LibYUVPlanarTest, SplitRGBPlane_Opt) {
   free_aligned_buffer_page_end(dst_pixels_c);
 }
 
+// TODO(fbarchard): improve test for platforms and cpu detect
+#ifdef HAS_MERGEUV10ROW_AVX2
+TEST_F(LibYUVPlanarTest, MergeUV10Row_Opt) {
+  const int kPixels = benchmark_width_ * benchmark_height_;
+  align_buffer_page_end(src_pixels_u, kPixels * 2);
+  align_buffer_page_end(src_pixels_v, kPixels * 2);
+  align_buffer_page_end(dst_pixels_uv_opt, kPixels * 2 * 2);
+  align_buffer_page_end(dst_pixels_uv_c, kPixels * 2 * 2);
+
+  MemRandomize(src_pixels_u, kPixels * 2);
+  MemRandomize(src_pixels_v, kPixels * 2);
+  MemRandomize(dst_pixels_uv_opt, kPixels * 2 * 2);
+  MemRandomize(dst_pixels_uv_c, kPixels * 2 * 2);
+  for (int i = 0; i < kPixels; ++i) {
+    (reinterpret_cast<uint16*>(src_pixels_u))[i] &= 1023;
+    (reinterpret_cast<uint16*>(src_pixels_v))[i] &= 1023;
+  }
+
+  MergeUV10Row_C(reinterpret_cast<const uint16*>(src_pixels_u),
+                 reinterpret_cast<const uint16*>(src_pixels_v),
+                 reinterpret_cast<uint16*>(dst_pixels_uv_c), kPixels);
+
+  int has_avx2 = TestCpuFlag(kCpuHasAVX2);
+  for (int i = 0; i < benchmark_iterations_; ++i) {
+    if (has_avx2) {
+      MergeUV10Row_AVX2(reinterpret_cast<const uint16*>(src_pixels_u),
+                        reinterpret_cast<const uint16*>(src_pixels_v),
+                        reinterpret_cast<uint16*>(dst_pixels_uv_opt), kPixels);
+    } else {
+      MergeUV10Row_C(reinterpret_cast<const uint16*>(src_pixels_u),
+                     reinterpret_cast<const uint16*>(src_pixels_v),
+                     reinterpret_cast<uint16*>(dst_pixels_uv_opt), kPixels);
+    }
+  }
+
+  for (int i = 0; i < kPixels * 2 * 2; ++i) {
+    EXPECT_EQ(dst_pixels_uv_opt[i], dst_pixels_uv_c[i]);
+  }
+
+  free_aligned_buffer_page_end(src_pixels_u);
+  free_aligned_buffer_page_end(src_pixels_v);
+  free_aligned_buffer_page_end(dst_pixels_uv_opt);
+  free_aligned_buffer_page_end(dst_pixels_uv_c);
+}
+#endif
+
 float TestScaleMaxSamples(int benchmark_width,
                           int benchmark_height,
                           int benchmark_iterations,
