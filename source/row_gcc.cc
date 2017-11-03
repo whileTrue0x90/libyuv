@@ -2795,6 +2795,35 @@ void MergeUV10Row_AVX2(const uint16* src_u,
 #endif  // HAS_MERGEUVROW_AVX2
 
 
+#ifdef HAS_MERGEUV10ROW_AVX2
+void CopyY10Row_AVX2(const uint16* src_y,
+                     uint16* dst_y,
+                     int width) {
+  asm volatile (
+    LABELALIGN
+    "1:                                        \n"
+    "vmovdqu   (%0),%%ymm0                     \n"
+    "vmovdqu   0x20(%0),%%ymm1                 \n"
+    "add       $0x40,%0                        \n"
+    "vpsllw    $0x6,%%ymm0,%%ymm0              \n"
+    "vpsllw    $0x6,%%ymm1,%%ymm1              \n"
+    "vmovdqu   %%ymm0, (%1)                    \n"
+    "vmovdqu   %%ymm1, 0x20(%1)                \n"
+    "add       $0x40,%2                        \n"
+    "sub       $0x20,%3                        \n"
+    "jg        1b                              \n"
+    "vzeroupper                                \n"
+  : "+r"(src_u),     // %0
+    "+r"(src_v),     // %1
+    "+r"(dst_uv),    // %2
+    "+r"(width)      // %3
+  :
+  : "memory", "cc", "xmm0", "xmm1",
+  );
+}
+#endif  // HAS_MERGEUVROW_AVX2
+
+
 #ifdef HAS_SPLITRGBROW_SSSE3
 
 // Shuffle table for converting RGB to Planar.
