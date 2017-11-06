@@ -242,7 +242,13 @@ static SAFEBUFFERS int GetCpuFlags(void) {
 
     // Detect AVX512bw
     if ((GetXCR0() & 0xe0) == 0xe0) {
-      cpu_info |= (cpu_info7[1] & 0x40000000) ? kCpuHasAVX3 : 0;
+      cpu_info |= (cpu_info7[1] & 0x40000000) ? kCpuHasAVX512BW : 0;
+      cpu_info |= (cpu_info7[1] & 0x80000000) ? kCpuHasAVX512VL : 0;
+      cpu_info |= (cpu_info7[2] & 0x00000002) ? kCpuHasAVX512VBMI: 0;
+      cpu_info |= (cpu_info7[2] & 0x00000040) ? kCpuHasAVX512VBMI2: 0;
+      cpu_info |= (cpu_info7[2] & 0x00001000) ? kCpuHasAVX512VBITALG: 0;
+      cpu_info |= (cpu_info7[2] & 0x00004000) ? kCpuHasAVX512VPOPCNTDQ: 0;
+      cpu_info |= (cpu_info7[2] & 0x00000100) ? kCpuHasGFNI: 0;
     }
   }
 
@@ -274,8 +280,8 @@ static SAFEBUFFERS int GetCpuFlags(void) {
   if (TestEnv("LIBYUV_DISABLE_FMA3")) {
     cpu_info &= ~kCpuHasFMA3;
   }
-  if (TestEnv("LIBYUV_DISABLE_AVX3")) {
-    cpu_info &= ~kCpuHasAVX3;
+  if (TestEnv("LIBYUV_DISABLE_AVX512BW")) {
+    cpu_info &= ~kCpuHasAVX512BW;
   }
   if (TestEnv("LIBYUV_DISABLE_F16C")) {
     cpu_info &= ~kCpuHasF16C;

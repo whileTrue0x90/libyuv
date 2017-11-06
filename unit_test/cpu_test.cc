@@ -21,10 +21,12 @@ namespace libyuv {
 TEST_F(LibYUVBaseTest, TestCpuHas) {
   int cpu_flags = TestCpuFlag(-1);
   printf("Cpu Flags %x\n", cpu_flags);
+#if defined(__arm__) || defined(__aarch64__)
   int has_arm = TestCpuFlag(kCpuHasARM);
   printf("Has ARM %x\n", has_arm);
   int has_neon = TestCpuFlag(kCpuHasNEON);
   printf("Has NEON %x\n", has_neon);
+#endif
   int has_x86 = TestCpuFlag(kCpuHasX86);
   printf("Has X86 %x\n", has_x86);
   int has_sse2 = TestCpuFlag(kCpuHasSSE2);
@@ -43,16 +45,31 @@ TEST_F(LibYUVBaseTest, TestCpuHas) {
   printf("Has ERMS %x\n", has_erms);
   int has_fma3 = TestCpuFlag(kCpuHasFMA3);
   printf("Has FMA3 %x\n", has_fma3);
-  int has_avx3 = TestCpuFlag(kCpuHasAVX3);
-  printf("Has AVX3 %x\n", has_avx3);
-  int has_f16c = TestCpuFlag(kCpuHasF16C);
+  int has_AVX512BW = TestCpuFlag(kCpuHasAVX512BW);
+  printf("Has AVX512BW %x\n", has_AVX512BW);
+  int has_f16c = TestCpuFlag(kCpuHasF16C); 
   printf("Has F16C %x\n", has_f16c);
+  int has_AVX512VL = TestCpuFlag(kCpuHasAVX512VL);
+  printf("Has AVX512VL %x\n", has_AVX512VL);
+  int has_AVX512VBMI = TestCpuFlag(kCpuHasAVX512VBMI);
+  printf("Has AVX512VBMI %x\n", has_AVX512VBMI);
+  int has_AVX512VBMI2 = TestCpuFlag(kCpuHasAVX512VBMI2);
+  printf("Has AVX512VBMI2 %x\n", has_AVX512VBMI2);
+  int has_AVX512VBITALG = TestCpuFlag(kCpuHasAVX512VBITALG);
+  printf("Has AVX512VBITALG %x\n", has_AVX512VBITALG);
+  int has_AVX512VPOPCNTDQ = TestCpuFlag(kCpuHasAVX512VPOPCNTDQ);
+  printf("Has AVX512VPOPCNTDQ %x\n", has_AVX512VPOPCNTDQ);
+  int has_GFNI = TestCpuFlag(kCpuHasGFNI);
+  printf("Has GFNI %x\n", has_GFNI);
+
+#if defined(__mips__)
   int has_mips = TestCpuFlag(kCpuHasMIPS);
   printf("Has MIPS %x\n", has_mips);
   int has_dspr2 = TestCpuFlag(kCpuHasDSPR2);
   printf("Has DSPR2 %x\n", has_dspr2);
   int has_msa = TestCpuFlag(kCpuHasMSA);
   printf("Has MSA %x\n", has_msa);
+#endif
 }
 
 TEST_F(LibYUVBaseTest, TestCpuCompilerEnabled) {
