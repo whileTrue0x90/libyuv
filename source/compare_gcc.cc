@@ -167,8 +167,8 @@ uint32 HammingDistance_SSSE3(const uint8* src_a,
         "=r"(diff)         // %3
       : "m"(kNibbleMask),  // %4
         "m"(kBitCount)     // %5
-      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6",
-        "xmm7");
+      : "memory", "cc");//, "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6",
+//        "xmm7");
 
   return diff;
 }

@@ -745,8 +745,7 @@ int I420Interpolate(const uint8* src0_y,
                     int height,
                     int interpolation);
 
-#if defined(__pnacl__) || defined(__CLR_VER) || \
-    (defined(__i386__) && !defined(__SSE2__))
+#if defined(__pnacl__) || defined(__CLR_VER)
 #define LIBYUV_DISABLE_X86
 #endif
 // MemorySanitizer does not support assembly code yet. http://crbug.com/344505
