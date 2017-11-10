@@ -34,7 +34,9 @@ static uint32 ReferenceHashDjb2(const uint8* src, uint64 count, uint32 seed) {
 
 TEST_F(LibYUVCompareTest, Djb2_Test) {
   const int kMaxTest = benchmark_width_ * benchmark_height_;
+
   align_buffer_page_end(src_a, kMaxTest);
+
   align_buffer_page_end(src_b, kMaxTest);
 
   const char* fox =
