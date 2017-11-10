@@ -2760,6 +2760,7 @@ void MergeUV10Row_AVX2(const uint16* src_u,
                        int width) {
   // clang-format off
   asm volatile (
+    "vbroadcastss %4,%%ymm3                    \n"
     "sub       %0,%1                           \n"
 
     // 16 pixels per loop.
@@ -2768,8 +2769,9 @@ void MergeUV10Row_AVX2(const uint16* src_u,
     "vmovdqu   (%0),%%ymm0                     \n"
     "vmovdqu   (%0,%1,1),%%ymm1                \n"
     "add        $0x20,%0                       \n"
-    "vpsllw    $0x6,%%ymm0,%%ymm0              \n"
-    "vpsllw    $0x6,%%ymm1,%%ymm1              \n"
+
+    "vpmullw   ymm3,%%ymm0,%%ymm0              \n"
+    "vpmullw   ymm3,%%ymm1,%%ymm1              \n"
     "vpunpcklwd %%ymm1,%%ymm0,%%ymm2           \n"  // mutates
     "vpunpckhwd %%ymm1,%%ymm0,%%ymm0           \n"
     "vextractf128 $0x0,%%ymm2,(%2)             \n"
@@ -2784,7 +2786,7 @@ void MergeUV10Row_AVX2(const uint16* src_u,
     "+r"(src_v),   // %1
     "+r"(dst_uv),  // %2
     "+r"(width)    // %3
-  :
+  : "r"(0x400040)     // %4
   : "memory", "cc", "xmm0", "xmm1", "xmm2");
   // clang-format on
 }
