@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc44b7a7_3421b7be",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-11-16T00:33:10Z",
+      "side": 1,
+      "message": "trailing white spaces?",
+      "range": {
+        "startLine": 175,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 5
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dad7b0_441766f8",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-11-16T00:33:10Z",
+      "side": 1,
+      "message": "Are these needed in the future?",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 1
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf89d07_6c4b6fea",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-11-16T00:33:10Z",
+      "side": 1,
+      "message": "Missing period here and elsewhere.",
+      "range": {
+        "startLine": 568,
+        "startChar": 26,
+        "endLine": 568,
+        "endChar": 0
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
