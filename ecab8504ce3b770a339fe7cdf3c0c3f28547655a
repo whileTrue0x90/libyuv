@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3b446ce2_1e83d0af",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-11-16T01:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dad7b0_441766f8",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 1
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adf89d07_6c4b6fea",
         "filename": "unit_test/scale_test.cc",
         "patchSetId": 5
@@ -107,6 +131,30 @@
       "writtenOn": "2017-11-16T00:33:10Z",
       "side": 1,
       "message": "Missing period here and elsewhere.",
+      "range": {
+        "startLine": 568,
+        "startChar": 26,
+        "endLine": 568,
+        "endChar": 0
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f37a09_2f6b0186",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-11-16T01:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf89d07_6c4b6fea",
       "range": {
         "startLine": 568,
         "startChar": 26,
