@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46fc6f08_34dff86d",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-11-16T01:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc44b7a7_3421b7be",
+      "range": {
+        "startLine": 175,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 5
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64dad7b0_441766f8",
         "filename": "unit_test/scale_test.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-16T00:33:10Z",
       "side": 1,
       "message": "Are these needed in the future?",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 1
+      },
+      "revId": "ecab8504ce3b770a339fe7cdf3c0c3f28547655a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6920d43d_fc28d7ab",
+        "filename": "unit_test/scale_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-11-16T01:02:55Z",
+      "side": 1,
+      "message": "oops.  I did intend to use these, but while tracking a bug it was easier to spot the issue with memset constants.\nbut alas the tests dont quite pass.\nTheres a filtering difference of 3:\n[ RUN      ] LibYUVScaleTest.ScaleTo1280x720_Box_16\n../../unit_test/scale_test.cc:342: Failure\nExpected: (diff) \u003c\u003d (0), actual: 3 vs 0",
+      "parentUuid": "64dad7b0_441766f8",
       "range": {
         "startLine": 182,
         "startChar": 0,
