@@ -2851,6 +2851,11 @@ void MergeUVRow_16_AVX2(const uint16* src_u,
 }
 #endif  // HAS_MERGEUVROW_AVX2
 
+// Use scale to convert lsb formats to msb, depending how many bits there are:
+// 128 = 9 bits
+// 64 = 10 bits
+// 16 = 12 bits
+// 1 = 16 bits
 #ifdef HAS_MULTIPLYROW_16_AVX2
 void MultiplyRow_16_AVX2(const uint16* src_y,
                          uint16* dst_y,
@@ -2884,6 +2889,48 @@ void MultiplyRow_16_AVX2(const uint16* src_y,
   // clang-format on
 }
 #endif  // HAS_MULTIPLYROW_16_AVX2
+
+// Use scale to convert lsb formats to msb, depending how many bits there are:
+// 32768 = 9 bits
+// 16384 = 10 bits
+// 4096 = 12 bits
+// 256 = 16 bits
+#ifdef HAS_MULTIPLYROW_16_AVX2
+void Convert16To8Row_AVX2(const uint16* src_y,
+                      uint8* dst_y,
+                      int scale,
+                      int width) {  
+  // clang-format off
+  asm volatile (
+    "vmovd      %3,%%xmm3                      \n"
+    "vpunpcklwd %%xmm3,%%xmm3,%%xmm3           \n"
+    "vbroadcastss %%xmm3,%%ymm3                \n"
+
+    // 32 pixels per loop.
+    LABELALIGN
+    "1:                                        \n"
+    "vmovdqu   (%0),%%ymm0                     \n"
+    "vmovdqu   0x20(%0),%%ymm1                 \n"
+    "vpmulhw   %%ymm3,%%ymm0,%%ymm0            \n"
+    "vpmulhw   %%ymm3,%%ymm1,%%ymm1            \n"
+
+    "vpackuswb %%ymm1,%%ymm0,%%ymm0            \n"  // mutates
+    "vpermq    $0xd8,%%ymm0,%%ymm0             \n"
+    "vmovdqu   %%ymm0,(%1)                     \n"
+    "add       $0x40,%0                        \n"
+    "add       $0x20,%1                        \n"
+    "sub       $0x20,%2                        \n"
+    "jg        1b                              \n"
+    "vzeroupper                                \n"
+  : "+r"(src_y),   // %0
+    "+r"(dst_y),   // %1
+    "+r"(width)    // %2
+  : "r"(scale)     // %3
+  : "memory", "cc", "xmm0", "xmm1", "xmm3");
+  // clang-format on
+}
+#endif  // HAS_MULTIPLYROW_16_AVX2
+
 
 #ifdef HAS_SPLITRGBROW_SSSE3
 
