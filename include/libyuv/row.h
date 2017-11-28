@@ -268,6 +268,7 @@ extern "C" {
 // TODO(fbarchard): Port to Visual C
 #if !defined(LIBYUV_DISABLE_X86) && \
     (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
+#define HAS_CONVERT16TO8ROW_SSSE3
 #define HAS_MERGERGBROW_SSSE3
 #define HAS_SPLITRGBROW_SSSE3
 #endif
@@ -1541,6 +1542,10 @@ void MultiplyRow_16_AVX2(const uint16* src_y,
                          int width);
 void MultiplyRow_16_C(const uint16* src_y, uint16* dst_y, int scale, int width);
 
+void Convert16To8Row_SSSE3(const uint16* src_y,
+                           uint8* dst_y,
+                           int scale,
+                           int width);
 void Convert16To8Row_AVX2(const uint16* src_y,
                           uint8* dst_y,
                           int scale,
