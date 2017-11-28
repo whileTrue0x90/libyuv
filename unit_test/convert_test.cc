@@ -2022,6 +2022,15 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
 #define TESTPLANAR16TOB(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN, \
                         YALIGN, DIFF, FMT_C, BPP_C)                            \
   TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
+                   YALIGN, benchmark_width_ - 4, DIFF, _Any, +, 0, FMT_C,      \
+                   BPP_C)                                                      \
+  TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
+                   YALIGN, benchmark_width_, DIFF, _Unaligned, +, 1, FMT_C,    \
+                   BPP_C)                                                      \
+  TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
+                   YALIGN, benchmark_width_, DIFF, _Invert, -, 0, FMT_C,       \
+                   BPP_C)                                                      \
+  TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
                    YALIGN, benchmark_width_, DIFF, _Opt, +, 0, FMT_C, BPP_C)
 
 TESTPLANAR16TOB(H010, 2, 2, AR30, 4, 4, 1, 2, AR30, 4)
