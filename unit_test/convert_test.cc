@@ -1991,22 +1991,22 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
     memset(dst_argb_c + OFF, 1, kStrideB * kHeight);                           \
     memset(dst_argb_opt + OFF, 101, kStrideB * kHeight);                       \
     MaskCpuFlags(disable_cpu_flags_);                                          \
-    FMT_PLANAR##To##FMT_B(reinterpret_cast<uint16*>(src_y) + OFF, kWidth,      \
-                          reinterpret_cast<uint16*>(src_u) + OFF, kStrideUV,   \
-                          reinterpret_cast<uint16*>(src_v) + OFF, kStrideUV,   \
+    FMT_PLANAR##To##FMT_B(reinterpret_cast<uint16*>(src_y + OFF), kWidth,      \
+                          reinterpret_cast<uint16*>(src_u + OFF), kStrideUV,   \
+                          reinterpret_cast<uint16*>(src_v + OFF), kStrideUV,   \
                           dst_argb_c + OFF, kStrideB, kWidth, NEG kHeight);    \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
-      FMT_PLANAR##To##FMT_B(reinterpret_cast<uint16*>(src_y) + OFF, kWidth,    \
-                            reinterpret_cast<uint16*>(src_u) + OFF, kStrideUV, \
-                            reinterpret_cast<uint16*>(src_v) + OFF, kStrideUV, \
+      FMT_PLANAR##To##FMT_B(reinterpret_cast<uint16*>(src_y + OFF), kWidth,    \
+                            reinterpret_cast<uint16*>(src_u + OFF), kStrideUV, \
+                            reinterpret_cast<uint16*>(src_v + OFF), kStrideUV, \
                             dst_argb_opt + OFF, kStrideB, kWidth,              \
                             NEG kHeight);                                      \
     }                                                                          \
     int max_diff = 0;                                                          \
     for (int i = 0; i < kWidth * BPP_C * kHeight; ++i) {                       \
-      int abs_diff = abs(static_cast<int>(dst_argb_c[i]) -                     \
-                         static_cast<int>(dst_argb_opt[i]));                   \
+      int abs_diff = abs(static_cast<int>(dst_argb_c[i + OFF]) -               \
+                         static_cast<int>(dst_argb_opt[i + OFF]));             \
       if (abs_diff > max_diff) {                                               \
         max_diff = abs_diff;                                                   \
       }                                                                        \
@@ -2021,6 +2021,15 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
 
 #define TESTPLANAR16TOB(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN, \
                         YALIGN, DIFF, FMT_C, BPP_C)                            \
+  TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
+                   YALIGN, benchmark_width_ - 4, DIFF, _Any, +, 0, FMT_C,      \
+                   BPP_C)                                                      \
+  TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
+                   YALIGN, benchmark_width_, DIFF, _Unaligned, +, 1, FMT_C,    \
+                   BPP_C)                                                      \
+  TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
+                   YALIGN, benchmark_width_, DIFF, _Invert, -, 0, FMT_C,       \
+                   BPP_C)                                                      \
   TESTPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,      \
                    YALIGN, benchmark_width_, DIFF, _Opt, +, 0, FMT_C, BPP_C)
 
