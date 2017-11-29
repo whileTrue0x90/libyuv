@@ -190,6 +190,28 @@ int NV21ToARGB(const uint8* src_y,
                int width,
                int height);
 
+
+// Convert NV12 to ABGR.
+int NV12ToABGR(const uint8* src_y,
+               int src_stride_y,
+               const uint8* src_uv,
+               int src_stride_uv,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height);
+
+// Convert NV21 to ABGR.
+LIBYUV_API
+int NV21ToABGR(const uint8* src_y,
+               int src_stride_y,
+               const uint8* src_uv,
+               int src_stride_uv,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height);
+
 // Convert M420 to ARGB.
 LIBYUV_API
 int M420ToARGB(const uint8* src_m420,
