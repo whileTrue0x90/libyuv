@@ -1425,16 +1425,16 @@ int ARGB4444ToARGB(const uint8* src_argb4444,
   return 0;
 }
 
-// Convert NV12 to ARGB.
-LIBYUV_API
-int NV12ToARGB(const uint8* src_y,
-               int src_stride_y,
-               const uint8* src_uv,
-               int src_stride_uv,
-               uint8* dst_argb,
-               int dst_stride_argb,
-               int width,
-               int height) {
+// Convert NV12 to ARGB with matrix
+static int NV12ToARGBMatrix(const uint8* src_y,
+                            int src_stride_y,
+                            const uint8* src_uv,
+                            int src_stride_uv,
+                            uint8* dst_argb,
+                            int dst_stride_argb,
+                            const struct YuvConstants* yuvconstants,
+                            int width,
+                            int height) {
   int y;
   void (*NV12ToARGBRow)(const uint8* y_buf, const uint8* uv_buf, uint8* rgb_buf,
                         const struct YuvConstants* yuvconstants, int width) =
@@ -1490,7 +1490,7 @@ int NV12ToARGB(const uint8* src_y,
 #endif
 
   for (y = 0; y < height; ++y) {
-    NV12ToARGBRow(src_y, src_uv, dst_argb, &kYuvI601Constants, width);
+    NV12ToARGBRow(src_y, src_uv, dst_argb, yuvconstants, width);
     dst_argb += dst_stride_argb;
     src_y += src_stride_y;
     if (y & 1) {
@@ -1500,16 +1500,16 @@ int NV12ToARGB(const uint8* src_y,
   return 0;
 }
 
-// Convert NV21 to ARGB.
-LIBYUV_API
-int NV21ToARGB(const uint8* src_y,
-               int src_stride_y,
-               const uint8* src_uv,
-               int src_stride_uv,
-               uint8* dst_argb,
-               int dst_stride_argb,
-               int width,
-               int height) {
+// Convert NV21 to ARGB with matrix
+static int NV21ToARGBMatrix(const uint8* src_y,
+                            int src_stride_y,
+                            const uint8* src_uv,
+                            int src_stride_uv,
+                            uint8* dst_argb,
+                            int dst_stride_argb,
+                            const struct YuvConstants* yuvconstants,
+                            int width,
+                            int height) {
   int y;
   void (*NV21ToARGBRow)(const uint8* y_buf, const uint8* uv_buf, uint8* rgb_buf,
                         const struct YuvConstants* yuvconstants, int width) =
@@ -1557,7 +1557,7 @@ int NV21ToARGB(const uint8* src_y,
 #endif
 
   for (y = 0; y < height; ++y) {
-    NV21ToARGBRow(src_y, src_uv, dst_argb, &kYuvI601Constants, width);
+    NV21ToARGBRow(src_y, src_uv, dst_argb, yuvconstants, width);
     dst_argb += dst_stride_argb;
     src_y += src_stride_y;
     if (y & 1) {
@@ -1565,6 +1565,63 @@ int NV21ToARGB(const uint8* src_y,
     }
   }
   return 0;
+}
+
+// Convert NV12 to ARGB.
+LIBYUV_API
+int NV12ToARGB(const uint8* src_y,
+               int src_stride_y,
+               const uint8* src_uv,
+               int src_stride_uv,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height) {
+  return NV12ToARGBMatrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_argb,
+                          dst_stride_argb, &kYuvI601Constants, width, height);
+}
+
+// Convert NV21 to ARGB.
+LIBYUV_API
+int NV21ToARGB(const uint8* src_y,
+               int src_stride_y,
+               const uint8* src_uv,
+               int src_stride_uv,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height) {
+  return NV21ToARGBMatrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_argb,
+                          dst_stride_argb, &kYuvI601Constants, width, height);
+}
+
+// Convert NV12 to ABGR.
+// To output ABGR instead of ARGB swap the UV and use a mirrrored yuc matrix.
+// To swap the UV use NV12 instead of NV21.LIBYUV_API
+int NV12ToABGR(const uint8* src_y,
+               int src_stride_y,
+               const uint8* src_uv,
+               int src_stride_uv,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height) {
+  return NV21ToARGBMatrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_argb,
+                          dst_stride_argb, &kYvuI601Constants, width, height);
+}
+
+// Convert NV21 to ABGR.
+LIBYUV_API
+int NV21ToABGR(const uint8* src_y,
+               int src_stride_y,
+               const uint8* src_uv,
+               int src_stride_uv,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height) {
+  return NV12ToARGBMatrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_argb,
+                          dst_stride_argb, &kYvuI601Constants, width, height);
 }
 
 // Convert M420 to ARGB.
