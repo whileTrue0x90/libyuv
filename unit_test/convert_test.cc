@@ -1941,7 +1941,14 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
   align_buffer_page_end(dst_opt, kPixels * 4);
   align_buffer_page_end(dst_c, kPixels * 4);
 
-  MemRandomize(src, kPixels * 4);
+  for (int i = 0; i < kPixels; ++i) {
+    src[i * 4 + 0] = 0;  // b
+    src[i * 4 + 1] = 0;  // g
+    src[i * 4 + 2] = i;  // r
+    src[i * 4 + 3] = 0;  // a
+  }
+//  MemRandomize(src, kPixels * 4);
+//  memset(src, 0, kPixels * 4);
   memset(dst_opt, 0, kPixels * 4);
   memset(dst_c, 1, kPixels * 4);
 
