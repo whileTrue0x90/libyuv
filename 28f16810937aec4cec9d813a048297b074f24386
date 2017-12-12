@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e968120_0151b5c0",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177499
+      },
+      "writtenOn": "2017-12-12T10:11:04Z",
+      "side": 1,
+      "message": "I think this change will not affect projects that are relying on public_deps to propagate :libyuv_config. Reading the GN documentation of public_deps:\n\nPublic dependencies are like private dependencies (see \"gn help deps\") but additionally express that the current target exposes the listed deps as part of its public API.\nThis has several ramifications:\n - public_configs that are part of the dependency are forwarded to direct dependents.\n - ...\n\nAnd the one of all_dependent_configs:\nA list of config labels.\nAll targets depending on this one, and recursively, all targets depending on those, will have the configs listed in this variable added to them. These configs will also apply to the current target.\n\nSo, even if a project is using public_deps, :libyuv_config will be forced on all the targets depending on libyuv (with both deps or public_deps).",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "28f16810937aec4cec9d813a048297b074f24386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
