@@ -804,15 +804,16 @@ void ARGBToAR30Row_AVX2(const uint8* src, uint8* dst, int width) {
       "jg         1b                             \n"
       "vzeroupper                                \n"
 
-      : "+r"(src),         // %0
-        "+r"(dst),         // %1
-        "+r"(width)        // %2
-      : "m"(kShuffleRB30), // %3
-        "m"(kMulRB10),     // %4
-        "m"(kMaskRB10),    // %5
-        "m"(kMaskAG10),    // %6
-        "m"(kMulAG10)      // %7
-      : "memory", "cc", "eax", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
+      : "+r"(src),          // %0
+        "+r"(dst),          // %1
+        "+r"(width)         // %2
+      : "m"(kShuffleRB30),  // %3
+        "m"(kMulRB10),      // %4
+        "m"(kMaskRB10),     // %5
+        "m"(kMaskAG10),     // %6
+        "m"(kMulAG10)       // %7
+      : "memory", "cc", "eax", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5",
+        "xmm6");
 }
 #endif
 
