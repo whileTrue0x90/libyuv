@@ -77,6 +77,24 @@ int I420Copy(const uint8* src_y,
              int width,
              int height);
 
+// Copy H010 to H010
+#define H010ToH010 H010Copy
+LIBYUV_API
+int H010Copy(const uint16* src_y,
+             int src_stride_y,
+             const uint16* src_u,
+             int src_stride_u,
+             const uint16* src_v,
+             int src_stride_v,
+             uint16* dst_y,
+             int dst_stride_y,
+             uint16* dst_u,
+             int dst_stride_u,
+             uint16* dst_v,
+             int dst_stride_v,
+             int width,
+             int height);
+
 // Convert I400 (grey) to I420.
 LIBYUV_API
 int I400ToI420(const uint8* src_y,
