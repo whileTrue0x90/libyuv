@@ -19,10 +19,6 @@
 #endif
 #include "libyuv/cpu_id.h"
 
-// Change this to 1000 for benchmarking.
-// TODO(fbarchard): Add command line parsing to pass this as option.
-#define BENCHMARK_ITERATIONS 1
-
 unsigned int fastrand_seed = 0xfb;
 
 #ifdef LIBYUV_USE_GFLAGS
@@ -30,9 +26,7 @@ DEFINE_int32(libyuv_width, 0, "width of test image.");
 DEFINE_int32(libyuv_height, 0, "height of test image.");
 DEFINE_int32(libyuv_repeat, 0, "number of times to repeat test.");
 DEFINE_int32(libyuv_flags, 0, "cpu flags for reference code. 1 = C, -1 = SIMD");
-DEFINE_int32(libyuv_cpu_info,
-             0,
-             "cpu flags for benchmark code. 1 = C, -1 = SIMD");
+DEFINE_int32(libyuv_cpu_info, 0, "cpu flags for benchmark code. 1 = C, -1 = SIMD");
 #else
 // Disable command line parameters if gflags disabled.
 static const int32 FLAGS_libyuv_width = 0;
@@ -47,7 +41,7 @@ static const int32 FLAGS_libyuv_cpu_info = 0;
 // Set flags to -1 for benchmarking to avoid slower C code.
 
 LibYUVConvertTest::LibYUVConvertTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -92,12 +86,6 @@ LibYUVConvertTest::LibYUVConvertTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
@@ -107,7 +95,7 @@ LibYUVConvertTest::LibYUVConvertTest()
 }
 
 LibYUVColorTest::LibYUVColorTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -152,12 +140,6 @@ LibYUVColorTest::LibYUVColorTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
@@ -167,7 +149,7 @@ LibYUVColorTest::LibYUVColorTest()
 }
 
 LibYUVScaleTest::LibYUVScaleTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -212,12 +194,6 @@ LibYUVScaleTest::LibYUVScaleTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
@@ -227,7 +203,7 @@ LibYUVScaleTest::LibYUVScaleTest()
 }
 
 LibYUVRotateTest::LibYUVRotateTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -272,12 +248,6 @@ LibYUVRotateTest::LibYUVRotateTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
@@ -287,7 +257,7 @@ LibYUVRotateTest::LibYUVRotateTest()
 }
 
 LibYUVPlanarTest::LibYUVPlanarTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -332,12 +302,6 @@ LibYUVPlanarTest::LibYUVPlanarTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
@@ -347,7 +311,7 @@ LibYUVPlanarTest::LibYUVPlanarTest()
 }
 
 LibYUVBaseTest::LibYUVBaseTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -392,12 +356,6 @@ LibYUVBaseTest::LibYUVBaseTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
@@ -407,7 +365,7 @@ LibYUVBaseTest::LibYUVBaseTest()
 }
 
 LibYUVCompareTest::LibYUVCompareTest()
-    : benchmark_iterations_(BENCHMARK_ITERATIONS),
+    : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
       disable_cpu_flags_(1),
@@ -452,12 +410,6 @@ LibYUVCompareTest::LibYUVCompareTest()
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
-  benchmark_pixels_div256_ =
-      static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
-                            static_cast<double>(Abs(benchmark_height_)) *
-                            static_cast<double>(benchmark_iterations_) +
-                        255.0) /
-                       256.0);
   benchmark_pixels_div1280_ =
       static_cast<int>((static_cast<double>(Abs(benchmark_width_)) *
                             static_cast<double>(Abs(benchmark_height_)) *
