@@ -29,6 +29,14 @@
 #include "libyuv/rotate.h"
 #include "libyuv/video_common.h"
 
+#if defined(__arm__) || defined(__aarch64__)
+// arm version subsamples by summing 4 pixels then multiplying by matrix with
+// 4x smaller coefficients which are rounded to nearest integer.
+#define ARM_YUV_ERROR 4
+#else
+#define ARM_YUV_ERROR 0
+#endif
+  
 namespace libyuv {
 
 // Alias to copy pixels as is
@@ -1059,21 +1067,23 @@ TESTATOB(ARGB, 4, 4, 1, RGB565, 2, 2, 1, 0)
 TESTATOB(ARGB, 4, 4, 1, ARGB1555, 2, 2, 1, 0)
 TESTATOB(ARGB, 4, 4, 1, ARGB4444, 2, 2, 1, 0)
 TESTATOB(ARGB, 4, 4, 1, AR30, 4, 4, 1, 0)
-TESTATOB(ARGB, 4, 4, 1, YUY2, 2, 4, 1, 4)
-TESTATOB(ARGB, 4, 4, 1, UYVY, 2, 4, 1, 4)
-TESTATOB(ARGB, 4, 4, 1, I400, 1, 1, 1, 2)
-TESTATOB(ARGB, 4, 4, 1, J400, 1, 1, 1, 2)
+TESTATOB(ARGB, 4, 4, 1, YUY2, 2, 4, 1, ARM_YUV_ERROR)
+TESTATOB(ARGB, 4, 4, 1, UYVY, 2, 4, 1, ARM_YUV_ERROR)
+TESTATOB(ARGB, 4, 4, 1, I400, 1, 1, 1, ARM_YUV_ERROR / 2)
+TESTATOB(ARGB, 4, 4, 1, J400, 1, 1, 1, ARM_YUV_ERROR / 2)
 TESTATOB(BGRA, 4, 4, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(ABGR, 4, 4, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(RGBA, 4, 4, 1, ARGB, 4, 4, 1, 0)
+TESTATOB(AR30, 4, 4, 1, AR30, 4, 4, 1, 0)
 TESTATOB(RAW, 3, 3, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(RAW, 3, 3, 1, RGB24, 3, 3, 1, 0)
 TESTATOB(RGB24, 3, 3, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(RGB565, 2, 2, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(ARGB1555, 2, 2, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(ARGB4444, 2, 2, 1, ARGB, 4, 4, 1, 0)
-TESTATOB(YUY2, 2, 4, 1, ARGB, 4, 4, 1, 4)
-TESTATOB(UYVY, 2, 4, 1, ARGB, 4, 4, 1, 4)
+TESTATOB(AR30, 4, 4, 1, ARGB, 4, 4, 1, 0)
+TESTATOB(YUY2, 2, 4, 1, ARGB, 4, 4, 1, ARM_YUV_ERROR)
+TESTATOB(UYVY, 2, 4, 1, ARGB, 4, 4, 1, ARM_YUV_ERROR)
 TESTATOB(YUY2, 2, 4, 1, Y, 1, 1, 1, 0)
 TESTATOB(I400, 1, 1, 1, ARGB, 4, 4, 1, 0)
 TESTATOB(J400, 1, 1, 1, ARGB, 4, 4, 1, 0)
