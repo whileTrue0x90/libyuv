@@ -165,6 +165,25 @@ void ARGB4444ToARGBRow_C(const uint8* src_argb4444,
   }
 }
 
+void AR30ToARGBRow_C(const uint8* src_ar30,
+                         uint8* dst_argb,
+                         int width) {
+  int x;
+  for (x = 0; x < width; ++x) {
+    uint32 ar30 = *(uint32*)src_ar30;
+    uint8 a = (ar30 >> 30) & 0x3;
+    uint8 r = (ar30 >> 20) & 0x3ff;
+    uint8 g = (ar30 >> 10) & 0x3ff;
+    uint8 b = ar30 & 0x3ff;
+    dst_argb[0] = b >> 2;
+    dst_argb[1] = g >> 2;
+    dst_argb[2] = r >> 2;
+    dst_argb[3] = a * 0x55;
+    dst_argb += 4;
+    src_ar30 += 4;
+  }
+}
+
 void ARGBToRGB24Row_C(const uint8* src_argb, uint8* dst_rgb, int width) {
   int x;
   for (x = 0; x < width; ++x) {
@@ -1856,7 +1875,7 @@ void Convert16To8Row_C(const uint16* src_y,
                        int width) {
   int x;
   for (x = 0; x < width; ++x) {
-    dst_y[x] = clamp255((src_y[x] * scale) >> 16);
+    dst_y[x] = (src_y[x] * scale) >> 16;
   }
 }
 
