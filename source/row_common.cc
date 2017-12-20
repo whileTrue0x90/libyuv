@@ -1877,6 +1877,18 @@ void Convert16To8Row_C(const uint16* src_y,
   }
 }
 
+// Use scale to convert lsb formats to msb, depending how many bits there are:
+// 1028 = 10 bits
+void Convert8To16Row_C(const uint8* src_y,
+                       uint16* dst_y,
+                       int scale,
+                       int width) {
+  int x;
+  for (x = 0; x < width; ++x) {
+    dst_y[x] = ((src_y[x] << 8) * scale) >> 16;
+  }
+}
+
 void CopyRow_C(const uint8* src, uint8* dst, int count) {
   memcpy(dst, src, count);
 }
