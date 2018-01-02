@@ -22,6 +22,30 @@
       "revId": "49df54b2bd1dab13fa879aabfe76d156f1ad0871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edde7ff_f152f4ce",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-01-02T19:44:24Z",
+      "side": 1,
+      "message": "This is C89 so declarations at the top, or within a {} scope.",
+      "parentUuid": "7031d0e4_fa26ad18",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 8
+      },
+      "revId": "49df54b2bd1dab13fa879aabfe76d156f1ad0871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
