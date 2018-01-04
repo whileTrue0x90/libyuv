@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2c3338b_ac282b0a",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-01-04T22:55:34Z",
+      "side": 1,
+      "message": "note this reduced 10 to 8 bit on UV.  If half of the values were rounded up (+2) before shift, before replicating them, precision would be effectively 9 bits.",
+      "range": {
+        "startLine": 1632,
+        "startChar": 27,
+        "endLine": 1632,
+        "endChar": 28
+      },
+      "revId": "4d61fc3c76804defb4f707ca442558b2b8abbcd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a067e3c6_15519888",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-01-04T22:55:34Z",
+      "side": 1,
+      "message": "note this leaves the low 6 bits as zero.  should really replicate the upper 6 bits into the low 6 bits to ensure full range of 16 bits is preserved.  but since final output will be 8 or 10 bits, the loss in precision is effectively rounding of the least significant bit.",
+      "range": {
+        "startLine": 1636,
+        "startChar": 27,
+        "endLine": 1636,
+        "endChar": 28
+      },
+      "revId": "4d61fc3c76804defb4f707ca442558b2b8abbcd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
