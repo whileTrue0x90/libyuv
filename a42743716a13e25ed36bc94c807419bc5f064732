@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b18a3d_7d8efb3d",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-05T14:31:58Z",
+      "side": 1,
+      "message": "nit: I guess we can\u0027t do\n  return MAX(MIN(255, y), 0);\n\nbecause there isn\u0027t widespread support among C compilers,\nbut it\u0027d be nice :-)",
+      "range": {
+        "startLine": 2089,
+        "startChar": 0,
+        "endLine": 2095,
+        "endChar": 11
+      },
+      "revId": "a42743716a13e25ed36bc94c807419bc5f064732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd20715b_c45bbc79",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-05T14:31:58Z",
+      "side": 1,
+      "message": "nit: I understand that memset is not used here\nto make explicit the actual writing of the \nmemory addresses and not rely on the C library \nimplementation.",
+      "range": {
+        "startLine": 2135,
+        "startChar": 0,
+        "endLine": 2141,
+        "endChar": 3
+      },
+      "revId": "a42743716a13e25ed36bc94c807419bc5f064732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
