@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df20020d_13948d35",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-01-05T18:54:33Z",
+      "side": 1,
+      "message": "Ack\nIn row_common I implement this with branchless code\nstatic __inline int32 clamp0(int32 v) {\n  return ((-(v) \u003e\u003e 31) \u0026 (v));\n}\n\nstatic __inline int32 clamp255(int32 v) {\n  return (((255 - (v)) \u003e\u003e 31) | (v)) \u0026 255;\n}\n\nstatic __inline uint32 Clamp(int32 val) {\n  int v \u003d clamp0(val);\n  return (uint32)(clamp255(v));\n}\nBut this is just a unittest so clarity is more important.",
+      "parentUuid": "97b18a3d_7d8efb3d",
+      "range": {
+        "startLine": 2089,
+        "startChar": 0,
+        "endLine": 2095,
+        "endChar": 11
+      },
+      "revId": "a42743716a13e25ed36bc94c807419bc5f064732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd20715b_c45bbc79",
         "filename": "unit_test/convert_test.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a42743716a13e25ed36bc94c807419bc5f064732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff6fc96_a680e2db",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-01-05T18:54:33Z",
+      "side": 1,
+      "message": "These values are shorts, not bytes, so memset wouldnt work.",
+      "parentUuid": "bd20715b_c45bbc79",
+      "range": {
+        "startLine": 2135,
+        "startChar": 0,
+        "endLine": 2141,
+        "endChar": 3
+      },
+      "revId": "a42743716a13e25ed36bc94c807419bc5f064732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
