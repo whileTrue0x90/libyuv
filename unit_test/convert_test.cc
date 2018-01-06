@@ -2084,6 +2084,7 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
 
 TESTPLANAR16TOB(H010, 2, 2, AR30, 4, 4, 1, 2, AR30, 4)
 TESTPLANAR16TOB(H010, 2, 2, ARGB, 4, 4, 1, 2, ARGB, 4)
+TESTPLANAR16TOB(H010, 2, 2, ABGR, 4, 4, 1, 2, ARGB, 4)
 
 static int Clamp(int y) {
   if (y < 0) {
