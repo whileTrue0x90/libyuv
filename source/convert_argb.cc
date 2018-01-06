@@ -627,6 +627,25 @@ int H010ToARGB(const uint16* src_y,
                           &kYuvH709Constants, width, height);
 }
 
+// Convert H010 to ABGR.
+LIBYUV_API
+int H010ToABGR(const uint16* src_y,
+               int src_stride_y,
+               const uint16* src_u,
+               int src_stride_u,
+               const uint16* src_v,
+               int src_stride_v,
+               uint8* dst_abgr,
+               int dst_stride_abgr,
+               int width,
+               int height) {
+  return H010ToARGBMatrix(src_y, src_stride_y, src_v,
+                          src_stride_v,  // Swap U and V
+                          src_u, src_stride_u, dst_abgr, dst_stride_abgr,
+                          &kYvuH709Constants,  // Use Yvu matrix
+                          width, height);
+}
+
 // Convert I444 to ARGB with matrix
 static int I444ToARGBMatrix(const uint8* src_y,
                             int src_stride_y,
@@ -1458,7 +1477,7 @@ int AR30ToARGB(const uint8* src_ar30,
     src_stride_ar30 = -src_stride_ar30;
   }
   // Coalesce rows.
-  if (src_stride_ar30 == width * 2 && dst_stride_argb == width * 4) {
+  if (src_stride_ar30 == width * 4 && dst_stride_argb == width * 4) {
     width *= height;
     height = 1;
     src_stride_ar30 = dst_stride_argb = 0;
