@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e8debd5_cc53f130",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-06T02:39:06Z",
+      "side": 1,
+      "message": "neat",
+      "range": {
+        "startLine": 642,
+        "startChar": 33,
+        "endLine": 645,
+        "endChar": 64
+      },
+      "revId": "e46bb3fc70cda6aa04755a486787f321974cd553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
