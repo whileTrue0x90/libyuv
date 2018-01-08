@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6309839a_faedad59",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T16:07:07Z",
+      "side": 0,
+      "message": "This was duplicated in l.373 -- moving both there.",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 14
+      },
+      "revId": "9d2cd6a3ef77556c88070c225cd173d80c7b8387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

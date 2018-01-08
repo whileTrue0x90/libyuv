@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ae72a4_213d884e",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T16:07:07Z",
+      "side": 1,
+      "message": "Somewhat arbitrarily, I reused the H010To...Matrix() methods,\nlet me know if you want them renamed to I010...",
+      "range": {
+        "startLine": 582,
+        "startChar": 9,
+        "endLine": 582,
+        "endChar": 25
+      },
+      "revId": "162c6688529fac27f896b79b29ba65e8fc7c57ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5e148c_503a4155",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-08T16:07:07Z",
+      "side": 1,
+      "message": "I can also turn this into a macro-based test and run it for both\nH010 and I010, please instruct -- also on the macro name, because\nTESTPLANAR16TOB is already taken :-)",
+      "range": {
+        "startLine": 2130,
+        "startChar": 26,
+        "endLine": 2130,
+        "endChar": 40
+      },
+      "revId": "162c6688529fac27f896b79b29ba65e8fc7c57ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
