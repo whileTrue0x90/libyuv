@@ -2149,7 +2149,7 @@ TEST_F(LibYUVConvertTest, TestH010ToARGB) {
   H010ToARGB(orig_y, 0, orig_u, 0, orig_v, 0, argb_pixels, 0, kSize, 1);
 
   for (int i = 0; i < kSize; ++i) {
-    int expected_y = Clamp(static_cast<int>((i - 64) * 1.164f / 4));
+    int expected_y = Clamp((static_cast<int>((i - 64) * 1.164f + 2) / 4));
     EXPECT_NEAR(argb_pixels[i * 4 + 0], expected_y, 1);
     EXPECT_NEAR(argb_pixels[i * 4 + 1], expected_y, 1);
     EXPECT_NEAR(argb_pixels[i * 4 + 2], expected_y, 1);
