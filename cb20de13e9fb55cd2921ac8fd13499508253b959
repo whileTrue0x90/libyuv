@@ -22,6 +22,30 @@
       "revId": "cb20de13e9fb55cd2921ac8fd13499508253b959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916da2e2_d3feeb76",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-01-08T22:41:09Z",
+      "side": 1,
+      "message": "yes, as long as there are additional registers, there should be a comma",
+      "parentUuid": "423b4b7d_4be7d959",
+      "range": {
+        "startLine": 332,
+        "startChar": 26,
+        "endLine": 332,
+        "endChar": 0
+      },
+      "revId": "cb20de13e9fb55cd2921ac8fd13499508253b959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
