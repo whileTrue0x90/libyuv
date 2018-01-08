@@ -486,6 +486,23 @@ static int H010ToAR30Matrix(const uint16* src_y,
   return 0;
 }
 
+// Convert I010 to AR30.
+LIBYUV_API
+int I010ToAR30(const uint16* src_y,
+               int src_stride_y,
+               const uint16* src_u,
+               int src_stride_u,
+               const uint16* src_v,
+               int src_stride_v,
+               uint8* dst_ar30,
+               int dst_stride_ar30,
+               int width,
+               int height) {
+  return H010ToAR30Matrix(src_y, src_stride_y, src_u, src_stride_u, src_v,
+                          src_stride_v, dst_ar30, dst_stride_ar30,
+                          &kYuvI601Constants, width, height);
+}
+
 // Convert H010 to AR30.
 LIBYUV_API
 int H010ToAR30(const uint16* src_y,
@@ -548,6 +565,23 @@ static int H010ToARGBMatrix(const uint16* src_y,
     }
   }
   return 0;
+}
+
+// Convert I010 to ARGB.
+LIBYUV_API
+int I010ToARGB(const uint16* src_y,
+               int src_stride_y,
+               const uint16* src_u,
+               int src_stride_u,
+               const uint16* src_v,
+               int src_stride_v,
+               uint8* dst_argb,
+               int dst_stride_argb,
+               int width,
+               int height) {
+  return H010ToARGBMatrix(src_y, src_stride_y, src_u, src_stride_u, src_v,
+                          src_stride_v, dst_argb, dst_stride_argb,
+                          &kYuvI601Constants, width, height);
 }
 
 // Convert H010 to ARGB.
