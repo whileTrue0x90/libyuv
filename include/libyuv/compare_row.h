@@ -18,15 +18,13 @@ namespace libyuv {
 extern "C" {
 #endif
 
-#if defined(__pnacl__) || defined(__CLR_VER) || \
+#if defined(__pnacl__) || defined(__CLR_VER) ||            \
+    (defined(__native_client__) && defined(__x86_64__)) || \
     (defined(__i386__) && !defined(__SSE__) && !defined(__clang__))
 #define LIBYUV_DISABLE_X86
 #endif
-// MemorySanitizer does not support assembly code yet. http://crbug.com/344505
-#if defined(__has_feature)
-#if __has_feature(memory_sanitizer)
-#define LIBYUV_DISABLE_X86
-#endif
+#if defined(__native_client__)
+#define LIBYUV_DISABLE_NEON
 #endif
 
 // Visual C 2012 required for AVX2.
