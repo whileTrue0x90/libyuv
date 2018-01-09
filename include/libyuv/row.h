@@ -31,17 +31,18 @@ extern "C" {
   var = 0
 
 #if defined(__pnacl__) || defined(__CLR_VER) || \
+    (defined(__native_client__) && defined(__x86_64__)) || \
     (defined(__i386__) && !defined(__SSE__) && !defined(__clang__))
 #define LIBYUV_DISABLE_X86
+#endif
+#if defined(__native_client__)
+#define LIBYUV_DISABLE_NEON
 #endif
 // MemorySanitizer does not support assembly code yet. http://crbug.com/344505
 #if defined(__has_feature)
 #if __has_feature(memory_sanitizer)
-// define LIBYUV_DISABLE_X86
+#define LIBYUV_DISABLE_X86
 #endif
-#endif
-#if defined(__native_client__)
-#define LIBYUV_DISABLE_NEON
 #endif
 // clang >= 3.5.0 required for Arm64.
 #if defined(__clang__) && defined(__aarch64__) && !defined(LIBYUV_DISABLE_NEON)
@@ -572,39 +573,8 @@ extern const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants);  // BT.709
 #else
 #define LABELALIGN
 #endif
-#if defined(__native_client__) && defined(__x86_64__)
-// r14 is used for MEMOP macros.
-#define BUNDLELOCK ".bundle_lock\n"
-#define BUNDLEUNLOCK ".bundle_unlock\n"
-#define MEMACCESS(base) "%%nacl:(%%r15,%q" #base ")"
-#define MEMACCESS2(offset, base) "%%nacl:" #offset "(%%r15,%q" #base ")"
-#define MEMLEA(offset, base) #offset "(%q" #base ")"
-#define MEMLEA3(offset, index, scale) #offset "(,%q" #index "," #scale ")"
-#define MEMLEA4(offset, base, index, scale) \
-  #offset "(%q" #base ",%q" #index "," #scale ")"
-#define MEMMOVESTRING(s, d) "%%nacl:(%q" #s "),%%nacl:(%q" #d "), %%r15"
-#define MEMSTORESTRING(reg, d) "%%" #reg ",%%nacl:(%q" #d "), %%r15"
-#define MEMOPREG(opcode, offset, base, index, scale, reg)                 \
-  BUNDLELOCK                                                              \
-  "lea " #offset "(%q" #base ",%q" #index "," #scale "),%%r14d\n" #opcode \
-  " (%%r15,%%r14),%%" #reg "\n" BUNDLEUNLOCK
-#define MEMOPMEM(opcode, reg, offset, base, index, scale)                 \
-  BUNDLELOCK                                                              \
-  "lea " #offset "(%q" #base ",%q" #index "," #scale "),%%r14d\n" #opcode \
-  " %%" #reg ",(%%r15,%%r14)\n" BUNDLEUNLOCK
-#define MEMOPARG(opcode, offset, base, index, scale, arg)                 \
-  BUNDLELOCK                                                              \
-  "lea " #offset "(%q" #base ",%q" #index "," #scale "),%%r14d\n" #opcode \
-  " (%%r15,%%r14),%" #arg "\n" BUNDLEUNLOCK
-#define VMEMOPREG(opcode, offset, base, index, scale, reg1, reg2)         \
-  BUNDLELOCK                                                              \
-  "lea " #offset "(%q" #base ",%q" #index "," #scale "),%%r14d\n" #opcode \
-  " (%%r15,%%r14),%%" #reg1 ",%%" #reg2 "\n" BUNDLEUNLOCK
-#define VEXTOPMEM(op, sel, reg, offset, base, index, scale)           \
-  BUNDLELOCK                                                          \
-  "lea " #offset "(%q" #base ",%q" #index "," #scale "),%%r14d\n" #op \
-  " $" #sel ",%%" #reg ",(%%r15,%%r14)\n" BUNDLEUNLOCK
-#else  // defined(__native_client__) && defined(__x86_64__)
+
+// NaCL macros for GCC x64 - deprecated.
 #define BUNDLEALIGN
 #define MEMACCESS(base) "(%" #base ")"
 #define MEMACCESS2(offset, base) #offset "(%" #base ")"
@@ -625,7 +595,6 @@ extern const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants);  // BT.709
           ",%%" #reg2 "\n"
 #define VEXTOPMEM(op, sel, reg, offset, base, index, scale) \
   #op " $" #sel ",%%" #reg "," #offset "(%" #base ",%" #index "," #scale ")\n"
-#endif  // defined(__native_client__) && defined(__x86_64__)
 
 // Intel Code Analizer markers.  Insert IACA_START IACA_END around code to be
 // measured and then run with iaca -64 libyuv_unittest.

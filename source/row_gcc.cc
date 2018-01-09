@@ -1968,7 +1968,7 @@ void OMITFP NV12ToARGBRow_SSSE3(const uint8* y_buf,
     [dst_argb]"+r"(dst_argb),  // %[dst_argb]
     [width]"+rm"(width)    // %[width]
   : [yuvconstants]"r"(yuvconstants)  // %[yuvconstants]
-    : "memory", "cc", YUVTORGB_REGS  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS
       "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -1997,7 +1997,7 @@ void OMITFP NV21ToARGBRow_SSSE3(const uint8* y_buf,
     [width]"+rm"(width)    // %[width]
   : [yuvconstants]"r"(yuvconstants), // %[yuvconstants]
     [kShuffleNV21]"m"(kShuffleNV21)
-    : "memory", "cc", YUVTORGB_REGS  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS
       "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -2025,7 +2025,7 @@ void OMITFP YUY2ToARGBRow_SSSE3(const uint8* yuy2_buf,
   : [yuvconstants]"r"(yuvconstants), // %[yuvconstants]
     [kShuffleYUY2Y]"m"(kShuffleYUY2Y),
     [kShuffleYUY2UV]"m"(kShuffleYUY2UV)
-    : "memory", "cc", YUVTORGB_REGS  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS
       "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -2053,7 +2053,7 @@ void OMITFP UYVYToARGBRow_SSSE3(const uint8* uyvy_buf,
   : [yuvconstants]"r"(yuvconstants), // %[yuvconstants]
     [kShuffleUYVYY]"m"(kShuffleUYVYY),
     [kShuffleUYVYUV]"m"(kShuffleUYVYUV)
-    : "memory", "cc", YUVTORGB_REGS  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS
       "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -2419,7 +2419,7 @@ void OMITFP NV12ToARGBRow_AVX2(const uint8* y_buf,
     [dst_argb]"+r"(dst_argb),  // %[dst_argb]
     [width]"+rm"(width)    // %[width]
   : [yuvconstants]"r"(yuvconstants)  // %[yuvconstants]
-    : "memory", "cc", YUVTORGB_REGS_AVX2  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS_AVX2
     "xmm0", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -2453,7 +2453,7 @@ void OMITFP NV21ToARGBRow_AVX2(const uint8* y_buf,
     [width]"+rm"(width)    // %[width]
   : [yuvconstants]"r"(yuvconstants), // %[yuvconstants]
     [kShuffleNV21]"m"(kShuffleNV21)
-    : "memory", "cc", YUVTORGB_REGS_AVX2  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS_AVX2
       "xmm0", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -2486,7 +2486,7 @@ void OMITFP YUY2ToARGBRow_AVX2(const uint8* yuy2_buf,
   : [yuvconstants]"r"(yuvconstants), // %[yuvconstants]
     [kShuffleYUY2Y]"m"(kShuffleYUY2Y),
     [kShuffleYUY2UV]"m"(kShuffleYUY2UV)
-    : "memory", "cc", YUVTORGB_REGS_AVX2  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS_AVX2
       "xmm0", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
@@ -2519,7 +2519,7 @@ void OMITFP UYVYToARGBRow_AVX2(const uint8* uyvy_buf,
   : [yuvconstants]"r"(yuvconstants), // %[yuvconstants]
     [kShuffleUYVYY]"m"(kShuffleUYVYY),
     [kShuffleUYVYUV]"m"(kShuffleUYVYUV)
-    : "memory", "cc", YUVTORGB_REGS_AVX2  // Does not use r14.
+    : "memory", "cc", YUVTORGB_REGS_AVX2
       "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5"
   );
   // clang-format on
