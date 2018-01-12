@@ -229,41 +229,40 @@ uint32 HammingDistance_AVX2(const uint8* src_a, const uint8* src_b, int count) {
 
 uint32 SumSquareError_SSE2(const uint8* src_a, const uint8* src_b, int count) {
   uint32 sse;
-  asm volatile (
-    "pxor      %%xmm0,%%xmm0                   \n"
-    "pxor      %%xmm5,%%xmm5                   \n"
-    LABELALIGN
-  "1:                                          \n"
-    "movdqu    " MEMACCESS(0) ",%%xmm1         \n"
-    "lea       0x10(%0),%0                     \n"
-    "movdqu    " MEMACCESS(1) ",%%xmm2         \n"
-    "lea       0x10(%1),%1                     \n"
-    "movdqa    %%xmm1,%%xmm3                   \n"
-    "psubusb   %%xmm2,%%xmm1                   \n"
-    "psubusb   %%xmm3,%%xmm2                   \n"
-    "por       %%xmm2,%%xmm1                   \n"
-    "movdqa    %%xmm1,%%xmm2                   \n"
-    "punpcklbw %%xmm5,%%xmm1                   \n"
-    "punpckhbw %%xmm5,%%xmm2                   \n"
-    "pmaddwd   %%xmm1,%%xmm1                   \n"
-    "pmaddwd   %%xmm2,%%xmm2                   \n"
-    "paddd     %%xmm1,%%xmm0                   \n"
-    "paddd     %%xmm2,%%xmm0                   \n"
-    "sub       $0x10,%2                        \n"
-    "jg        1b                              \n"
+  asm volatile(
+      "pxor      %%xmm0,%%xmm0                   \n"
+      "pxor      %%xmm5,%%xmm5                   \n" LABELALIGN
+      "1:                                          \n"
+      "movdqu    (%0),%%xmm1                     \n"
+      "lea       0x10(%0),%0                     \n"
+      "movdqu    (%1),%%xmm2                     \n"
+      "lea       0x10(%1),%1                     \n"
+      "movdqa    %%xmm1,%%xmm3                   \n"
+      "psubusb   %%xmm2,%%xmm1                   \n"
+      "psubusb   %%xmm3,%%xmm2                   \n"
+      "por       %%xmm2,%%xmm1                   \n"
+      "movdqa    %%xmm1,%%xmm2                   \n"
+      "punpcklbw %%xmm5,%%xmm1                   \n"
+      "punpckhbw %%xmm5,%%xmm2                   \n"
+      "pmaddwd   %%xmm1,%%xmm1                   \n"
+      "pmaddwd   %%xmm2,%%xmm2                   \n"
+      "paddd     %%xmm1,%%xmm0                   \n"
+      "paddd     %%xmm2,%%xmm0                   \n"
+      "sub       $0x10,%2                        \n"
+      "jg        1b                              \n"
 
-    "pshufd    $0xee,%%xmm0,%%xmm1             \n"
-    "paddd     %%xmm1,%%xmm0                   \n"
-    "pshufd    $0x1,%%xmm0,%%xmm1              \n"
-    "paddd     %%xmm1,%%xmm0                   \n"
-    "movd      %%xmm0,%3                       \n"
+      "pshufd    $0xee,%%xmm0,%%xmm1             \n"
+      "paddd     %%xmm1,%%xmm0                   \n"
+      "pshufd    $0x1,%%xmm0,%%xmm1              \n"
+      "paddd     %%xmm1,%%xmm0                   \n"
+      "movd      %%xmm0,%3                       \n"
 
-  : "+r"(src_a),      // %0
-    "+r"(src_b),      // %1
-    "+r"(count),      // %2
-    "=g"(sse)         // %3
-  :: "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm5"
-  );
+      : "+r"(src_a),  // %0
+        "+r"(src_b),  // %1
+        "+r"(count),  // %2
+        "=g"(sse)     // %3
+        ::"memory",
+        "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm5");
   return sse;
 }
 
@@ -295,56 +294,54 @@ static const uvec32 kHashMul3 = {
 
 uint32 HashDjb2_SSE41(const uint8* src, int count, uint32 seed) {
   uint32 hash;
-  asm volatile (
-    "movd      %2,%%xmm0                       \n"
-    "pxor      %%xmm7,%%xmm7                   \n"
-    "movdqa    %4,%%xmm6                       \n"
-    LABELALIGN
-  "1:                                          \n"
-    "movdqu    " MEMACCESS(0) ",%%xmm1         \n"
-    "lea       0x10(%0),%0                     \n"
-    "pmulld    %%xmm6,%%xmm0                   \n"
-    "movdqa    %5,%%xmm5                       \n"
-    "movdqa    %%xmm1,%%xmm2                   \n"
-    "punpcklbw %%xmm7,%%xmm2                   \n"
-    "movdqa    %%xmm2,%%xmm3                   \n"
-    "punpcklwd %%xmm7,%%xmm3                   \n"
-    "pmulld    %%xmm5,%%xmm3                   \n"
-    "movdqa    %6,%%xmm5                       \n"
-    "movdqa    %%xmm2,%%xmm4                   \n"
-    "punpckhwd %%xmm7,%%xmm4                   \n"
-    "pmulld    %%xmm5,%%xmm4                   \n"
-    "movdqa    %7,%%xmm5                       \n"
-    "punpckhbw %%xmm7,%%xmm1                   \n"
-    "movdqa    %%xmm1,%%xmm2                   \n"
-    "punpcklwd %%xmm7,%%xmm2                   \n"
-    "pmulld    %%xmm5,%%xmm2                   \n"
-    "movdqa    %8,%%xmm5                       \n"
-    "punpckhwd %%xmm7,%%xmm1                   \n"
-    "pmulld    %%xmm5,%%xmm1                   \n"
-    "paddd     %%xmm4,%%xmm3                   \n"
-    "paddd     %%xmm2,%%xmm1                   \n"
-    "paddd     %%xmm3,%%xmm1                   \n"
-    "pshufd    $0xe,%%xmm1,%%xmm2              \n"
-    "paddd     %%xmm2,%%xmm1                   \n"
-    "pshufd    $0x1,%%xmm1,%%xmm2              \n"
-    "paddd     %%xmm2,%%xmm1                   \n"
-    "paddd     %%xmm1,%%xmm0                   \n"
-    "sub       $0x10,%1                        \n"
-    "jg        1b                              \n"
-    "movd      %%xmm0,%3                       \n"
-  : "+r"(src),        // %0
-    "+r"(count),      // %1
-    "+rm"(seed),      // %2
-    "=g"(hash)        // %3
-  : "m"(kHash16x33),  // %4
-    "m"(kHashMul0),   // %5
-    "m"(kHashMul1),   // %6
-    "m"(kHashMul2),   // %7
-    "m"(kHashMul3)    // %8
-  : "memory", "cc"
-    , "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7"
-  );
+  asm volatile(
+      "movd      %2,%%xmm0                       \n"
+      "pxor      %%xmm7,%%xmm7                   \n"
+      "movdqa    %4,%%xmm6                       \n" LABELALIGN
+      "1:                                          \n"
+      "movdqu    (%0),%%xmm1                     \n"
+      "lea       0x10(%0),%0                     \n"
+      "pmulld    %%xmm6,%%xmm0                   \n"
+      "movdqa    %5,%%xmm5                       \n"
+      "movdqa    %%xmm1,%%xmm2                   \n"
+      "punpcklbw %%xmm7,%%xmm2                   \n"
+      "movdqa    %%xmm2,%%xmm3                   \n"
+      "punpcklwd %%xmm7,%%xmm3                   \n"
+      "pmulld    %%xmm5,%%xmm3                   \n"
+      "movdqa    %6,%%xmm5                       \n"
+      "movdqa    %%xmm2,%%xmm4                   \n"
+      "punpckhwd %%xmm7,%%xmm4                   \n"
+      "pmulld    %%xmm5,%%xmm4                   \n"
+      "movdqa    %7,%%xmm5                       \n"
+      "punpckhbw %%xmm7,%%xmm1                   \n"
+      "movdqa    %%xmm1,%%xmm2                   \n"
+      "punpcklwd %%xmm7,%%xmm2                   \n"
+      "pmulld    %%xmm5,%%xmm2                   \n"
+      "movdqa    %8,%%xmm5                       \n"
+      "punpckhwd %%xmm7,%%xmm1                   \n"
+      "pmulld    %%xmm5,%%xmm1                   \n"
+      "paddd     %%xmm4,%%xmm3                   \n"
+      "paddd     %%xmm2,%%xmm1                   \n"
+      "paddd     %%xmm3,%%xmm1                   \n"
+      "pshufd    $0xe,%%xmm1,%%xmm2              \n"
+      "paddd     %%xmm2,%%xmm1                   \n"
+      "pshufd    $0x1,%%xmm1,%%xmm2              \n"
+      "paddd     %%xmm2,%%xmm1                   \n"
+      "paddd     %%xmm1,%%xmm0                   \n"
+      "sub       $0x10,%1                        \n"
+      "jg        1b                              \n"
+      "movd      %%xmm0,%3                       \n"
+      : "+r"(src),        // %0
+        "+r"(count),      // %1
+        "+rm"(seed),      // %2
+        "=g"(hash)        // %3
+      : "m"(kHash16x33),  // %4
+        "m"(kHashMul0),   // %5
+        "m"(kHashMul1),   // %6
+        "m"(kHashMul2),   // %7
+        "m"(kHashMul3)    // %8
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6",
+        "xmm7");
   return hash;
 }
 #endif  // defined(__x86_64__) || (defined(__i386__) && !defined(__pic__)))
