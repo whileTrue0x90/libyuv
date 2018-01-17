@@ -1340,6 +1340,52 @@ static __inline void YuvPixel10(uint16 y,
   *r = Clamp((int32)(-(v * vr) + y1 + br) >> 6);
 }
 
+
+// C reference code that mimics the YUV 16 bit assembly.
+static __inline void YuvPixel16(uint16 y,
+                                uint16 u,
+                                uint16 v,
+                                uint16* b,
+                                uint16* g,
+                                uint16* r,
+                                const struct YuvConstants* yuvconstants) {
+#if defined(__aarch64__)
+  int ub = -yuvconstants->kUVToRB[0];
+  int ug = yuvconstants->kUVToG[0];
+  int vg = yuvconstants->kUVToG[1];
+  int vr = -yuvconstants->kUVToRB[1];
+  int bb = yuvconstants->kUVBiasBGR[0];
+  int bg = yuvconstants->kUVBiasBGR[1];
+  int br = yuvconstants->kUVBiasBGR[2];
+  int yg = yuvconstants->kYToRgb[0] / 0x0101;
+#elif defined(__arm__)
+  int ub = -yuvconstants->kUVToRB[0];
+  int ug = yuvconstants->kUVToG[0];
+  int vg = yuvconstants->kUVToG[4];
+  int vr = -yuvconstants->kUVToRB[4];
+  int bb = yuvconstants->kUVBiasBGR[0];
+  int bg = yuvconstants->kUVBiasBGR[1];
+  int br = yuvconstants->kUVBiasBGR[2];
+  int yg = yuvconstants->kYToRgb[0] / 0x0101;
+#else
+  int ub = yuvconstants->kUVToB[0];
+  int ug = yuvconstants->kUVToG[0];
+  int vg = yuvconstants->kUVToG[1];
+  int vr = yuvconstants->kUVToR[1];
+  int bb = yuvconstants->kUVBiasB[0];
+  int bg = yuvconstants->kUVBiasG[0];
+  int br = yuvconstants->kUVBiasR[0];
+  int yg = yuvconstants->kYToRgb[0];
+#endif
+
+  uint32 y1 = (uint32)((y << 6) * yg) >> 16;
+  u = clamp255(u >> 2);
+  v = clamp255(v >> 2);
+  *b = (uint16)(-(u * ub) + y1 + bb);
+  *g = (uint16)(-(u * ug + v * vg) + y1 + bg);
+  *r = (uint16)(-(v * vr) + y1 + br);
+}
+
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
 #define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
@@ -1457,6 +1503,42 @@ void I210ToARGBRow_C(const uint16* src_y,
     YuvPixel10(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
                rgb_buf + 2, yuvconstants);
     rgb_buf[3] = 255;
+  }
+}
+
+void StoreAR30(uint8* rgb_buf,
+               uint16 b,
+               uint16 g,
+               uint16 r) {
+  b >>= 4;  // convert 10.6 to 10 bit.
+  g >>= 4;
+  r >>= 4;
+  uint32 ar30 = b | (g << 10) || (r << 20) | 0xc0000000;
+  *(uint32*)rgb_buf = ar30;  
+}
+
+// 10 bit YUV to 10 bit AR30
+void I210ToAR30Row_C(const uint16* src_y,
+                     const uint16* src_u,
+                     const uint16* src_v,
+                     uint8* rgb_buf,
+                     const struct YuvConstants* yuvconstants,
+                     int width) {
+  int x;
+  uint16 b, g, r;
+  for (x = 0; x < width - 1; x += 2) {
+    YuvPixel16(src_y[0], src_u[0], src_v[0], &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf, b, g, r);
+    YuvPixel16(src_y[1], src_u[0], src_v[0], &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf + 4, b, g, r);
+    src_y += 2;
+    src_u += 1;
+    src_v += 1;
+    rgb_buf += 8;  // Advance 2 pixels.
+  }
+  if (width & 1) {
+    YuvPixel16(src_y[0], src_u[0], src_v[0], &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf, b, g, r);
   }
 }
 
