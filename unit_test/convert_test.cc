@@ -2159,4 +2159,35 @@ TEST_F(LibYUVConvertTest, TestH010ToARGB) {
   free_aligned_buffer_page_end(argb_pixels);
 }
 
+TEST_F(LibYUVConvertTest, TestH010ToAR30) {
+  const int kSize = 1024;
+  align_buffer_page_end(orig_yuv, kSize * 2 + kSize / 2 * 2 * 2);
+  align_buffer_page_end(argb_pixels, kSize * 4);
+  uint16* orig_y = reinterpret_cast<uint16*>(orig_yuv);
+  uint16* orig_u = orig_y + kSize;
+  uint16* orig_v = orig_u + kSize / 2;
+
+  // Test grey scale
+  for (int i = 0; i < kSize; ++i) {
+    orig_y[i] = i;
+  }
+  for (int i = 0; i < kSize / 2; ++i) {
+    orig_u[i] = 512;  // 512 is 0.
+    orig_v[i] = 512;
+  }
+
+  H010ToAR30(orig_y, 0, orig_u, 0, orig_v, 0, argb_pixels, 0, kSize, 1);
+  AR30ToARGB(argb_pixels, 0, argb_pixels, 0, kSize, 1);
+
+  for (int i = 0; i < kSize; ++i) {
+    int expected_y = Clamp(static_cast<int>((i - 64) * 1.164f / 4));
+    EXPECT_NEAR(argb_pixels[i * 4 + 0], expected_y, 1);
+    EXPECT_NEAR(argb_pixels[i * 4 + 1], expected_y, 1);
+    EXPECT_NEAR(argb_pixels[i * 4 + 2], expected_y, 1);
+    EXPECT_EQ(argb_pixels[i * 4 + 3], 255);
+  }
+  free_aligned_buffer_page_end(orig_yuv);
+  free_aligned_buffer_page_end(argb_pixels);
+}
+
 }  // namespace libyuv
