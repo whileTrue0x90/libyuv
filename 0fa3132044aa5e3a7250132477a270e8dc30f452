@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad449be4_21b03f7c",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-17T20:45:06Z",
+      "side": 1,
+      "message": "We\u0027ll probably need the I010ToAR30 version alongside\nthis -- see the CL being cooked in [1], I\u0027ve seen both\n.610 and .709 videos around in our local test infra.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/862326/9/media/video/gpu_memory_buffer_video_frame_pool.cc#708",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 471,
+        "endChar": 14
+      },
+      "revId": "0fa3132044aa5e3a7250132477a270e8dc30f452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
