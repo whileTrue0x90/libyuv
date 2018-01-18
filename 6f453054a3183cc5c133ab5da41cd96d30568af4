@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "188d46bd_9e80e198",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 1148894
+      },
+      "writtenOn": "2018-01-18T20:03:17Z",
+      "side": 1,
+      "message": "some comments on xmm0, xmm1, xmm2, xmm5, xmm6 and xmm7",
+      "range": {
+        "startLine": 1774,
+        "startChar": 16,
+        "endLine": 1774,
+        "endChar": 22
+      },
+      "revId": "6f453054a3183cc5c133ab5da41cd96d30568af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
