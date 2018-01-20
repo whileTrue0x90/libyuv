@@ -1560,6 +1560,35 @@ void I210ToAR30Row_C(const uint16* src_y,
   }
 }
 
+
+// 8 bit YUV to 10 bit AR30
+// Uses same code as 10 bit YUV bit shifts the 8 bit values up to 10 bits.
+void I422ToAR30Row_C(const uint8* src_y,
+                     const uint8* src_u,
+                     const uint8* src_v,
+                     uint8* rgb_buf,
+                     const struct YuvConstants* yuvconstants,
+                     int width) {
+  int x;
+  int b;
+  int g;
+  int r;
+  for (x = 0; x < width - 1; x += 2) {
+    YuvPixel16(src_y[0] * 4, src_u[0] * 4, src_v[0] * 4, &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf, b, g, r);
+    YuvPixel16(src_y[1] * 4, src_u[0] * 4, src_v[0] * 4, &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf + 4, b, g, r);
+    src_y += 2;
+    src_u += 1;
+    src_v += 1;
+    rgb_buf += 8;  // Advance 2 pixels.
+  }
+  if (width & 1) {
+    YuvPixel16(src_y[0] * 4, src_u[0] * 4, src_v[0] * 4, &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf, b, g, r);
+  }
+}
+
 void I422AlphaToARGBRow_C(const uint8* src_y,
                           const uint8* src_u,
                           const uint8* src_v,
