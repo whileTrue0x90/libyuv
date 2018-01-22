@@ -385,17 +385,7 @@ TEST_F(LibYUVCompareTest, TestHammingDistance_Opt) {
   if (kMaxWidth <= kMaxOptCount) {
     EXPECT_EQ(kMaxWidth * 8U, h1);
   } else {
-    if (kMaxWidth * 8ULL != static_cast<uint64>(h1)) {
-      printf(
-          "warning - HammingDistance_Opt %u does not match %llu "
-          "but length of %u is longer than guaranteed.\n",
-          h1, kMaxWidth * 8ULL, kMaxWidth);
-    } else {
-      printf(
-          "warning - HammingDistance_Opt %u matches but length of %u "
-          "is longer than guaranteed.\n",
-          h1, kMaxWidth);
-    }
+    printf("warning - length is too long to test.\n");
   }
 
   free_aligned_buffer_page_end(src_a);
