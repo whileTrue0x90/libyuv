@@ -310,6 +310,7 @@ TEST_SCALETO(ARGBScale, 1280, 720)
 #undef TEST_SCALETO
 
 // Scale with YUV conversion to ARGB and clipping.
+// TODO(fbarchard): Add fourcc support.  All 4 ARGB formats is easy to support. 
 LIBYUV_API
 int YUVToARGBScaleReference2(const uint8_t* src_y,
                              int src_stride_y,
@@ -317,12 +318,20 @@ int YUVToARGBScaleReference2(const uint8_t* src_y,
                              int src_stride_u,
                              const uint8_t* src_v,
                              int src_stride_v,
+<<<<<<< HEAD
                              uint32_t /* src_fourcc */,  // TODO: Add support.
+=======
+                             uint32 /* src_fourcc */,
+>>>>>>> Lint cleanup after C99 change CL
                              int src_width,
                              int src_height,
                              uint8_t* dst_argb,
                              int dst_stride_argb,
+<<<<<<< HEAD
                              uint32_t /* dst_fourcc */,  // TODO: Add support.
+=======
+                             uint32 /* dst_fourcc */,
+>>>>>>> Lint cleanup after C99 change CL
                              int dst_width,
                              int dst_height,
                              int clip_x,
