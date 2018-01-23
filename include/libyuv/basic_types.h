@@ -25,34 +25,13 @@
 #ifdef COMPILER_MSVC
 typedef unsigned __int64 uint64;
 typedef __int64 int64;
-#ifndef INT64_C
-#define INT64_C(x) x##I64
-#endif
-#ifndef UINT64_C
-#define UINT64_C(x) x##UI64
-#endif
-#define INT64_F "I64"
 #else  // COMPILER_MSVC
 #if defined(__LP64__) && !defined(__OpenBSD__) && !defined(__APPLE__)
 typedef unsigned long uint64;  // NOLINT
 typedef long int64;            // NOLINT
-#ifndef INT64_C
-#define INT64_C(x) x##L
-#endif
-#ifndef UINT64_C
-#define UINT64_C(x) x##UL
-#endif
-#define INT64_F "l"
 #else  // defined(__LP64__) && !defined(__OpenBSD__) && !defined(__APPLE__)
 typedef unsigned long long uint64;  // NOLINT
 typedef long long int64;            // NOLINT
-#ifndef INT64_C
-#define INT64_C(x) x##LL
-#endif
-#ifndef UINT64_C
-#define UINT64_C(x) x##ULL
-#endif
-#define INT64_F "ll"
 #endif  // __LP64__
 #endif  // COMPILER_MSVC
 typedef unsigned int uint32;
@@ -69,21 +48,7 @@ typedef signed char int8;
     defined(_M_IX86)
 #define CPU_X86 1
 #endif
-// Detect compiler is for ARM.
-#if defined(__arm__) || defined(_M_ARM)
-#define CPU_ARM 1
-#endif
 
-#ifndef ALIGNP
-#ifdef __cplusplus
-#define ALIGNP(p, t)        \
-  reinterpret_cast<uint8*>( \
-      ((reinterpret_cast<uintptr_t>(p) + ((t)-1)) & ~((t)-1)))
-#else
-#define ALIGNP(p, t) \
-  (uint8*)((((uintptr_t)(p) + ((t)-1)) & ~((t)-1))) /* NOLINT */
-#endif
-#endif
 
 #if !defined(LIBYUV_API)
 #if defined(_WIN32) || defined(__CYGWIN__)
