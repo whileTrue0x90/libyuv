@@ -29,7 +29,7 @@ typedef __int64 int64_t;
 #if defined(__LP64__) && !defined(__OpenBSD__) && !defined(__APPLE__)
 typedef unsigned long uint64_t;  // NOLINT
 typedef long int64_t;            // NOLINT
-#else  // defined(__LP64__) && !defined(__OpenBSD__) && !defined(__APPLE__)
+#else   // defined(__LP64__) && !defined(__OpenBSD__) && !defined(__APPLE__)
 typedef unsigned long long uint64_t;  // NOLINT
 typedef long long int64_t;            // NOLINT
 #endif  // __LP64__
