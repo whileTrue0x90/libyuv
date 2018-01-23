@@ -59,7 +59,10 @@ static __inline uint32 Abs(int32 v) {
 }
 #endif  // USE_BRANCHLESS
 
-#ifdef LIBYUV_LITTLE_ENDIAN
+// Little Endian
+#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || \
+    defined(_M_IX86) || defined(__arm__) || defined(_M_ARM) ||     \
+    (defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
 #define WRITEWORD(p, v) *(uint32*)(p) = v
 #else
 static inline void WRITEWORD(uint8* p, uint32 v) {
