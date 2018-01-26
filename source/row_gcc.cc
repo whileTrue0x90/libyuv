@@ -2333,6 +2333,32 @@ void OMITFP I422ToRGBARow_SSSE3(const uint8_t* y_buf,
   "vmovdqu    %%ymm0,0x20(%[dst_argb])                            \n" \
   "lea       0x40(%[dst_argb]), %[dst_argb]                       \n"
 
+// Store 16 AR30 values.
+#define STOREAR30_AVX2                                                \
+  "vpsraw     $0x4,%%ymm0,%%ymm0                                  \n" \
+  "vpsraw     $0x4,%%ymm1,%%ymm1                                  \n" \
+  "vpsraw     $0x4,%%ymm2,%%ymm2                                  \n" \
+  "vpminsw    %%ymm7,%%ymm0,%%ymm0                                \n" \
+  "vpminsw    %%ymm7,%%ymm1,%%ymm1                                \n" \
+  "vpminsw    %%ymm7,%%ymm2,%%ymm2                                \n" \
+  "vpmaxsw    %%ymm6,%%ymm0,%%ymm0                                \n" \
+  "vpmaxsw    %%ymm6,%%ymm1,%%ymm1                                \n" \
+  "vpmaxsw    %%ymm6,%%ymm2,%%ymm2                                \n" \
+  "vpsllw     $0x4,%%ymm2,%%ymm2                                  \n" \
+  "vpunpckhwd %%ymm2,%%ymm0,%%ymm3                                \n" \
+  "vpunpcklwd %%ymm2,%%ymm0,%%ymm0                                \n" \
+  "vpunpckhwd %%ymm5,%%ymm1,%%ymm2                                \n" \
+  "vpunpcklwd %%ymm5,%%ymm1,%%ymm1                                \n" \
+  "vpslld     $0xa,%%ymm1,%%ymm1                                  \n" \
+  "vpslld     $0xa,%%ymm2,%%ymm2                                  \n" \
+  "vpor       %%ymm1,%%ymm0,%%ymm0                                \n" \
+  "vpor       %%ymm2,%%ymm3,%%ymm3                                \n" \
+  "vpermq     $0xd8,%%ymm0,%%ymm0                                 \n" \
+  "vpermq     $0xd8,%%ymm3,%%ymm3                                 \n" \
+  "vmovdqu    %%ymm0,(%[dst_ar30])                                \n" \
+  "vmovdqu    %%ymm3,0x20(%[dst_ar30])                            \n" \
+  "lea        0x40(%[dst_ar30]), %[dst_ar30]                      \n"
+
 #ifdef HAS_I444TOARGBROW_AVX2
 // 16 pixels
 // 16 UV values with 16 Y producing 16 ARGB (64 bytes).
@@ -2401,6 +2427,46 @@ void OMITFP I422ToARGBRow_AVX2(const uint8_t* y_buf,
   );
 }
 #endif  // HAS_I422TOARGBROW_AVX2
+
+#if defined(HAS_I422TOAR30ROW_AVX2)
+// 16 pixels
+// 8 UV values upsampled to 16 UV, mixed with 16 Y producing 16 AR30 (64 bytes).
+void OMITFP I422ToAR30Row_AVX2(const uint8_t* y_buf,
+                               const uint8_t* u_buf,
+                               const uint8_t* v_buf,
+                               uint8_t* dst_ar30,
+                               const struct YuvConstants* yuvconstants,
+                               int width) {
+  asm volatile (
+    YUVTORGB_SETUP_AVX2(yuvconstants)
+    "sub       %[u_buf],%[v_buf]               \n"
+    "vpcmpeqb  %%ymm5,%%ymm5,%%ymm5            \n"  // AR30 constants
+    "vpsrlw    $14,%%ymm5,%%ymm5               \n"
+    "vpsllw    $4,%%ymm5,%%ymm5                \n"  // 2 alpha bits
+    "vpxor     %%ymm6,%%ymm6,%%ymm6            \n"  // 0 for min
+    "vpcmpeqb  %%ymm7,%%ymm7,%%ymm7            \n"  // 1023 for max
+    "vpsrlw    $6,%%ymm7,%%ymm7                \n"
+
+    LABELALIGN
+    "1:                                        \n"
+    READYUV422_AVX2
+    YUVTORGB_AVX2(yuvconstants)
+    STOREAR30_AVX2
+    "sub       $0x10,%[width]                  \n"
+    "jg        1b                              \n"
+
+    "vzeroupper                                \n"
+  : [y_buf]"+r"(y_buf),    // %[y_buf]
+    [u_buf]"+r"(u_buf),    // %[u_buf]
+    [v_buf]"+r"(v_buf),    // %[v_buf]
+    [dst_ar30]"+r"(dst_ar30),  // %[dst_ar30]
+    [width]"+rm"(width)    // %[width]
+  : [yuvconstants]"r"(yuvconstants)  // %[yuvconstants]
+  : "memory", "cc", YUVTORGB_REGS_AVX2
+    "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7"
+  );
+}
+#endif  // HAS_I422TOAR30ROW_AVX2
 
 #if defined(HAS_I210TOARGBROW_AVX2)
 // 16 pixels
