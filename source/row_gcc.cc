@@ -1605,7 +1605,7 @@ void RGBAToUVRow_SSSE3(const uint8_t* src_rgba0,
 // Read 8 UV from 444
 #define READYUV444 \
   "movq       (%[u_buf]),%%xmm0                                 \n"            \
-    "movq    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"            \
+    "movq      0x00(%[u_buf],%[v_buf],1),%%xmm1                 \n"            \
     "lea        0x8(%[u_buf]),%[u_buf]                          \n"            \
     "punpcklbw  %%xmm1,%%xmm0                                   \n"            \
     "movq       (%[y_buf]),%%xmm4                               \n"            \
@@ -1615,7 +1615,7 @@ void RGBAToUVRow_SSSE3(const uint8_t* src_rgba0,
 // Read 4 UV from 422, upsample to 8 UV
 #define READYUV422 \
   "movd       (%[u_buf]),%%xmm0                                 \n"            \
-    "movd    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"            \
+    "movd       0x00(%[u_buf],%[v_buf],1),%%xmm1                \n"            \
     "lea        0x4(%[u_buf]),%[u_buf]                          \n"            \
     "punpcklbw  %%xmm1,%%xmm0                                   \n"            \
     "punpcklwd  %%xmm0,%%xmm0                                   \n"            \
@@ -1629,7 +1629,7 @@ void RGBAToUVRow_SSSE3(const uint8_t* src_rgba0,
 // TODO(fbarchard): Consider pmullw to replace psllw and allow different bits.
 #define READYUV210 \
   "movq       (%[u_buf]),%%xmm0                                 \n"            \
-    "movq    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"            \
+    "movq       0x00(%[u_buf],%[v_buf],1),%%xmm1                \n"            \
     "lea        0x8(%[u_buf]),%[u_buf]                          \n"            \
     "punpcklwd  %%xmm1,%%xmm0                                   \n"            \
     "psraw      $0x2,%%xmm0                                     \n"            \
@@ -1642,7 +1642,7 @@ void RGBAToUVRow_SSSE3(const uint8_t* src_rgba0,
 // Read 4 UV from 422, upsample to 8 UV.  With 8 Alpha.
 #define READYUVA422 \
   "movd       (%[u_buf]),%%xmm0                                 \n"            \
-    "movd    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"            \
+    "movd       0x00(%[u_buf],%[v_buf],1),%%xmm1                \n"            \
     "lea        0x4(%[u_buf]),%[u_buf]                          \n"            \
     "punpcklbw  %%xmm1,%%xmm0                                   \n"            \
     "punpcklwd  %%xmm0,%%xmm0                                   \n"            \
@@ -1740,13 +1740,13 @@ void RGBAToUVRow_SSSE3(const uint8_t* src_rgba0,
 #endif
 
 #define YUVTORGB(yuvconstants) \
-    YUVTORGB16(yuvconstants)                                      \
-  "psraw      $0x6,%%xmm0                                     \n" \
-  "psraw      $0x6,%%xmm1                                     \n" \
-  "psraw      $0x6,%%xmm2                                     \n" \
-  "packuswb   %%xmm0,%%xmm0                                   \n" \
-  "packuswb   %%xmm1,%%xmm1                                   \n" \
-  "packuswb   %%xmm2,%%xmm2                                   \n"
+    YUVTORGB16(yuvconstants)                                         \
+  "psraw      $0x6,%%xmm0                                        \n" \
+  "psraw      $0x6,%%xmm1                                        \n" \
+  "psraw      $0x6,%%xmm2                                        \n" \
+  "packuswb   %%xmm0,%%xmm0                                      \n" \
+  "packuswb   %%xmm1,%%xmm1                                      \n" \
+  "packuswb   %%xmm2,%%xmm2                                      \n"
 
 // Store 8 ARGB values.
 #define STOREARGB \
@@ -2185,7 +2185,7 @@ void OMITFP I422ToRGBARow_SSSE3(const uint8_t* y_buf,
 // Read 16 UV from 444
 #define READYUV444_AVX2 \
   "vmovdqu    (%[u_buf]),%%xmm0                                     \n"        \
-    "vmovdqu    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"                         \
+    "vmovdqu    0x00(%[u_buf],%[v_buf],1),%%xmm1                    \n"        \
     "lea        0x10(%[u_buf]),%[u_buf]                             \n"        \
     "vpermq     $0xd8,%%ymm0,%%ymm0                                 \n"        \
     "vpermq     $0xd8,%%ymm1,%%ymm1                                 \n"        \
@@ -2198,7 +2198,7 @@ void OMITFP I422ToRGBARow_SSSE3(const uint8_t* y_buf,
 // Read 8 UV from 422, upsample to 16 UV.
 #define READYUV422_AVX2 \
   "vmovq      (%[u_buf]),%%xmm0                                     \n"        \
-    "vmovq    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"                           \
+    "vmovq      0x00(%[u_buf],%[v_buf],1),%%xmm1                    \n"        \
     "lea        0x8(%[u_buf]),%[u_buf]                              \n"        \
     "vpunpcklbw %%ymm1,%%ymm0,%%ymm0                                \n"        \
     "vpermq     $0xd8,%%ymm0,%%ymm0                                 \n"        \
@@ -2212,23 +2212,23 @@ void OMITFP I422ToRGBARow_SSSE3(const uint8_t* y_buf,
 // TODO(fbarchard): Consider vshufb to replace pack/unpack
 // TODO(fbarchard): Consider vunpcklpd to combine the 2 registers into 1.
 #define READYUV210_AVX2 \
-  "vmovdqu     (%[u_buf]),%%xmm0                                 \n"           \
-    "vmovdqu    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"                         \
-    "lea        0x10(%[u_buf]),%[u_buf]                          \n"           \
-    "vpermq     $0xd8,%%ymm0,%%ymm0                              \n"           \
-    "vpermq     $0xd8,%%ymm1,%%ymm1                              \n"           \
-    "vpunpcklwd %%ymm1,%%ymm0,%%ymm0                             \n"           \
-    "vpsraw     $0x2,%%ymm0,%%ymm0                               \n"           \
-    "vpackuswb  %%ymm0,%%ymm0,%%ymm0                             \n"           \
-    "vpunpcklwd %%ymm0,%%ymm0,%%ymm0                             \n"           \
-    "vmovdqu    (%[y_buf]),%%ymm4                                \n"           \
-    "vpsllw     $0x6,%%ymm4,%%ymm4                               \n"           \
-    "lea        0x20(%[y_buf]),%[y_buf]                          \n"
+  "vmovdqu     (%[u_buf]),%%xmm0                                   \n"         \
+    "vmovdqu    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"         \
+    "lea        0x10(%[u_buf]),%[u_buf]                            \n"         \
+    "vpermq     $0xd8,%%ymm0,%%ymm0                                \n"         \
+    "vpermq     $0xd8,%%ymm1,%%ymm1                                \n"         \
+    "vpunpcklwd %%ymm1,%%ymm0,%%ymm0                               \n"         \
+    "vpsraw     $0x2,%%ymm0,%%ymm0                                 \n"         \
+    "vpackuswb  %%ymm0,%%ymm0,%%ymm0                               \n"         \
+    "vpunpcklwd %%ymm0,%%ymm0,%%ymm0                               \n"         \
+    "vmovdqu    (%[y_buf]),%%ymm4                                  \n"         \
+    "vpsllw     $0x6,%%ymm4,%%ymm4                                 \n"         \
+    "lea        0x20(%[y_buf]),%[y_buf]                            \n"
 
 // Read 8 UV from 422, upsample to 16 UV.  With 16 Alpha.
 #define READYUVA422_AVX2 \
   "vmovq      (%[u_buf]),%%xmm0                                     \n"        \
-    "vmovq    0x00(%[u_buf],%[v_buf],1),%%xmm1                   \n"                           \
+    "vmovq      0x00(%[u_buf],%[v_buf],1),%%xmm1                    \n"        \
     "lea        0x8(%[u_buf]),%[u_buf]                              \n"        \
     "vpunpcklbw %%ymm1,%%ymm0,%%ymm0                                \n"        \
     "vpermq     $0xd8,%%ymm0,%%ymm0                                 \n"        \
@@ -2281,13 +2281,13 @@ void OMITFP I422ToRGBARow_SSSE3(const uint8_t* y_buf,
 
 #if defined(__x86_64__)
 #define YUVTORGB_SETUP_AVX2(yuvconstants) \
-  "vmovdqa     (%[yuvconstants]),%%ymm8                          \n"           \
-    "vmovdqa     32(%[yuvconstants]),%%ymm9                      \n"           \
-    "vmovdqa     64(%[yuvconstants]),%%ymm10                     \n"           \
-    "vmovdqa     96(%[yuvconstants]),%%ymm11                     \n"           \
-    "vmovdqa     128(%[yuvconstants]),%%ymm12                    \n"           \
-    "vmovdqa     160(%[yuvconstants]),%%ymm13                    \n"           \
-    "vmovdqa     192(%[yuvconstants]),%%ymm14                    \n"
+  "vmovdqa     (%[yuvconstants]),%%ymm8                            \n"         \
+    "vmovdqa     32(%[yuvconstants]),%%ymm9                        \n"         \
+    "vmovdqa     64(%[yuvconstants]),%%ymm10                       \n"         \
+    "vmovdqa     96(%[yuvconstants]),%%ymm11                       \n"         \
+    "vmovdqa     128(%[yuvconstants]),%%ymm12                      \n"         \
+    "vmovdqa     160(%[yuvconstants]),%%ymm13                      \n"         \
+    "vmovdqa     192(%[yuvconstants]),%%ymm14                      \n"
 
 #define YUVTORGB_AVX2(yuvconstants)                                   \
   "vpmaddubsw  %%ymm10,%%ymm0,%%ymm2                              \n" \
@@ -2519,9 +2519,9 @@ void OMITFP I422ToRGBARow_AVX2(const uint8_t* y_buf,
     "vpermq     $0xd8,%%ymm2,%%ymm2            \n"
     "vpunpcklwd %%ymm1,%%ymm2,%%ymm0           \n"
     "vpunpckhwd %%ymm1,%%ymm2,%%ymm1           \n"
-    "vmovdqu    %%ymm0,(%[dst_argb])            \n"
-    "vmovdqu    %%ymm1,0x20(%[dst_argb])              \n"
-    "lea       0x40(%[dst_argb]),%[dst_argb]           \n"
+    "vmovdqu    %%ymm0,(%[dst_argb])           \n"
+    "vmovdqu    %%ymm1,0x20(%[dst_argb])       \n"
+    "lea       0x40(%[dst_argb]),%[dst_argb]   \n"
     "sub       $0x10,%[width]                  \n"
     "jg        1b                              \n"
     "vzeroupper                                \n"
@@ -2775,7 +2775,7 @@ void MirrorRow_SSSE3(const uint8_t* src, uint8_t* dst, int width) {
 
     LABELALIGN
     "1:                                        \n"
-    "movdqu    -0x10(%0,%2,1),%%xmm0            \n"
+    "movdqu    -0x10(%0,%2,1),%%xmm0           \n"
     "pshufb    %%xmm5,%%xmm0                   \n"
     "movdqu    %%xmm0,(%1)                     \n"
     "lea       0x10(%1),%1                     \n"
@@ -2799,10 +2799,10 @@ void MirrorRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
 
     LABELALIGN
     "1:                                        \n"
-    "vmovdqu    -0x20(%0,%2,1),%%ymm0            \n"
-    "vpshufb    %%ymm5,%%ymm0,%%ymm0           \n"
-    "vpermq     $0x4e,%%ymm0,%%ymm0            \n"
-    "vmovdqu    %%ymm0,(%1)                    \n"
+    "vmovdqu   -0x20(%0,%2,1),%%ymm0           \n"
+    "vpshufb   %%ymm5,%%ymm0,%%ymm0            \n"
+    "vpermq    $0x4e,%%ymm0,%%ymm0             \n"
+    "vmovdqu   %%ymm0,(%1)                     \n"
     "lea       0x20(%1),%1                     \n"
     "sub       $0x20,%2                        \n"
     "jg        1b                              \n"
@@ -2888,7 +2888,7 @@ void ARGBMirrorRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
 
     LABELALIGN
     "1:                                        \n"
-    "vpermd    -0x20(%0,%2,4),%%ymm5,%%ymm0     \n"
+    "vpermd    -0x20(%0,%2,4),%%ymm5,%%ymm0    \n"
     "vmovdqu    %%ymm0,(%1)                    \n"
     "lea        0x20(%1),%1                    \n"
     "sub        $0x8,%2                        \n"
@@ -2928,7 +2928,7 @@ void SplitUVRow_AVX2(const uint8_t* src_uv,
     "vpermq     $0xd8,%%ymm0,%%ymm0            \n"
     "vpermq     $0xd8,%%ymm2,%%ymm2            \n"
     "vmovdqu    %%ymm0,(%1)                    \n"
-    "vmovdqu    %%ymm2,0x00(%1,%2,1)            \n"
+    "vmovdqu    %%ymm2,0x00(%1,%2,1)           \n"
     "lea        0x20(%1),%1                    \n"
     "sub        $0x20,%3                       \n"
     "jg         1b                             \n"
@@ -2968,7 +2968,7 @@ void SplitUVRow_SSE2(const uint8_t* src_uv,
     "psrlw      $0x8,%%xmm3                    \n"
     "packuswb   %%xmm3,%%xmm2                  \n"
     "movdqu     %%xmm0,(%1)                    \n"
-    "movdqu    %%xmm2,0x00(%1,%2,1)            \n"
+    "movdqu     %%xmm2,0x00(%1,%2,1)           \n"
     "lea        0x10(%1),%1                    \n"
     "sub        $0x10,%3                       \n"
     "jg         1b                             \n"
@@ -2994,7 +2994,7 @@ void MergeUVRow_AVX2(const uint8_t* src_u,
     LABELALIGN
     "1:                                        \n"
     "vmovdqu   (%0),%%ymm0                     \n"
-    "vmovdqu    0x00(%0,%1,1),%%ymm1            \n"
+    "vmovdqu   0x00(%0,%1,1),%%ymm1            \n"
     "lea       0x20(%0),%0                     \n"
     "vpunpcklbw %%ymm1,%%ymm0,%%ymm2           \n"
     "vpunpckhbw %%ymm1,%%ymm0,%%ymm0           \n"
@@ -3599,8 +3599,8 @@ void ARGBCopyAlphaRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
     "vmovdqu   (%0),%%ymm1                     \n"
     "vmovdqu   0x20(%0),%%ymm2                 \n"
     "lea       0x40(%0),%0                     \n"
-    "vpblendvb %%ymm0,(%1),%%ymm1,%%ymm1                    \n"
-    "vpblendvb %%ymm0,0x20(%1),%%ymm2,%%ymm2                \n"
+    "vpblendvb %%ymm0,(%1),%%ymm1,%%ymm1       \n"
+    "vpblendvb %%ymm0,0x20(%1),%%ymm2,%%ymm2   \n"
     "vmovdqu   %%ymm1,(%1)                     \n"
     "vmovdqu   %%ymm2,0x20(%1)                 \n"
     "lea       0x40(%1),%1                     \n"
@@ -3738,8 +3738,8 @@ void ARGBCopyYToAlphaRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
     "lea       0x10(%0),%0                     \n"
     "vpslld    $0x18,%%ymm1,%%ymm1             \n"
     "vpslld    $0x18,%%ymm2,%%ymm2             \n"
-    "vpblendvb %%ymm0,(%1),%%ymm1,%%ymm1                    \n"
-    "vpblendvb %%ymm0,0x20(%1),%%ymm2,%%ymm2                \n"
+    "vpblendvb %%ymm0,(%1),%%ymm1,%%ymm1       \n"
+    "vpblendvb %%ymm0,0x20(%1),%%ymm2,%%ymm2   \n"
     "vmovdqu   %%ymm1,(%1)                     \n"
     "vmovdqu   %%ymm2,0x20(%1)                 \n"
     "lea       0x40(%1),%1                     \n"
@@ -4521,9 +4521,9 @@ void ARGBUnattenuateRow_SSE2(const uint8_t* src_argb,
     "movdqu    (%0),%%xmm0                     \n"
     "movzb     0x03(%0),%3                     \n"
     "punpcklbw %%xmm0,%%xmm0                   \n"
-    "movd    0x00(%4,%3,4),%%xmm2            \n"
+    "movd      0x00(%4,%3,4),%%xmm2            \n"
     "movzb     0x07(%0),%3                     \n"
-    "movd    0x00(%4,%3,4),%%xmm3            \n"
+    "movd      0x00(%4,%3,4),%%xmm3            \n"
     "pshuflw   $0x40,%%xmm2,%%xmm2             \n"
     "pshuflw   $0x40,%%xmm3,%%xmm3             \n"
     "movlhps   %%xmm3,%%xmm2                   \n"
@@ -4531,9 +4531,9 @@ void ARGBUnattenuateRow_SSE2(const uint8_t* src_argb,
     "movdqu    (%0),%%xmm1                     \n"
     "movzb     0x0b(%0),%3                     \n"
     "punpckhbw %%xmm1,%%xmm1                   \n"
-    "movd    0x00(%4,%3,4),%%xmm2            \n"
+    "movd      0x00(%4,%3,4),%%xmm2            \n"
     "movzb     0x0f(%0),%3                     \n"
-    "movd    0x00(%4,%3,4),%%xmm3            \n"
+    "movd      0x00(%4,%3,4),%%xmm3            \n"
     "pshuflw   $0x40,%%xmm2,%%xmm2             \n"
     "pshuflw   $0x40,%%xmm3,%%xmm3             \n"
     "movlhps   %%xmm3,%%xmm2                   \n"
@@ -4572,26 +4572,26 @@ void ARGBUnattenuateRow_AVX2(const uint8_t* src_argb,
     LABELALIGN
     "1:                                        \n"
     // replace VPGATHER
-    "movzb     0x03(%0),%3                     \n"
-    "vmovd    0x00(%4,%3,4),%%xmm0            \n"
-    "movzb     0x07(%0),%3                     \n"
-    "vmovd    0x00(%4,%3,4),%%xmm1            \n"
-    "movzb     0x0b(%0),%3                     \n"
+    "movzb      0x03(%0),%3                    \n"
+    "vmovd      0x00(%4,%3,4),%%xmm0           \n"
+    "movzb      0x07(%0),%3                    \n"
+    "vmovd      0x00(%4,%3,4),%%xmm1           \n"
+    "movzb      0x0b(%0),%3                    \n"
     "vpunpckldq %%xmm1,%%xmm0,%%xmm6           \n"
-    "vmovd    0x00(%4,%3,4),%%xmm2            \n"
-    "movzb     0x0f(%0),%3                     \n"
-    "vmovd    0x00(%4,%3,4),%%xmm3            \n"
-    "movzb     0x13(%0),%3                     \n"
+    "vmovd      0x00(%4,%3,4),%%xmm2           \n"
+    "movzb      0x0f(%0),%3                    \n"
+    "vmovd      0x00(%4,%3,4),%%xmm3           \n"
+    "movzb      0x13(%0),%3                    \n"
     "vpunpckldq %%xmm3,%%xmm2,%%xmm7           \n"
-    "vmovd    0x00(%4,%3,4),%%xmm0            \n"
-    "movzb     0x17(%0),%3                     \n"
-    "vmovd    0x00(%4,%3,4),%%xmm1            \n"
-    "movzb     0x1b(%0),%3                     \n"
+    "vmovd      0x00(%4,%3,4),%%xmm0           \n"
+    "movzb      0x17(%0),%3                    \n"
+    "vmovd      0x00(%4,%3,4),%%xmm1           \n"
+    "movzb      0x1b(%0),%3                    \n"
     "vpunpckldq %%xmm1,%%xmm0,%%xmm0           \n"
-    "vmovd    0x00(%4,%3,4),%%xmm2            \n"
-    "movzb     0x1f(%0),%3                     \n"
-    "vmovd    0x00(%4,%3,4),%%xmm3            \n"
-    "vpunpckldq %%xmm3,%%xmm2,%%xmm2           \n"
+    "vmovd      0x00(%4,%3,4),%%xmm2           \n"
+    "movzb      0x1f(%0),%3                    \n"
+    "vmovd      0x00(%4,%3,4),%%xmm3           \n"
+    "vpunpckldq  %%xmm3,%%xmm2,%%xmm2          \n"
     "vpunpcklqdq %%xmm7,%%xmm6,%%xmm3          \n"
     "vpunpcklqdq %%xmm2,%%xmm0,%%xmm0          \n"
     "vinserti128 $0x1,%%xmm0,%%ymm3,%%ymm3     \n"
@@ -4608,7 +4608,7 @@ void ARGBUnattenuateRow_AVX2(const uint8_t* src_argb,
     "vpmulhuw   %%ymm3,%%ymm1,%%ymm1           \n"
     "vpackuswb  %%ymm1,%%ymm0,%%ymm0           \n"
     "vmovdqu    %%ymm0,0x00(%0,%1,1)           \n"
-    "lea       0x20(%0),%0                     \n"
+    "lea        0x20(%0),%0                    \n"
     "sub        $0x8,%2                        \n"
     "jg        1b                              \n"
     "vzeroupper                                \n"
@@ -5125,13 +5125,13 @@ void SobelXRow_SSE2(const uint8_t* src_y0,
     "punpcklbw %%xmm5,%%xmm0                   \n"
     "punpcklbw %%xmm5,%%xmm1                   \n"
     "psubw     %%xmm1,%%xmm0                   \n"
-    "movq    0x00(%0,%1,1),%%xmm1            \n"
-    "movq    0x02(%0,%1,1),%%xmm2            \n"
+    "movq      0x00(%0,%1,1),%%xmm1            \n"
+    "movq      0x02(%0,%1,1),%%xmm2            \n"
     "punpcklbw %%xmm5,%%xmm1                   \n"
     "punpcklbw %%xmm5,%%xmm2                   \n"
     "psubw     %%xmm2,%%xmm1                   \n"
-    "movq    0x00(%0,%2,1),%%xmm2            \n"
-    "movq    0x02(%0,%2,1),%%xmm3            \n"
+    "movq      0x00(%0,%2,1),%%xmm2            \n"
+    "movq      0x02(%0,%2,1),%%xmm3            \n"
     "punpcklbw %%xmm5,%%xmm2                   \n"
     "punpcklbw %%xmm5,%%xmm3                   \n"
     "psubw     %%xmm3,%%xmm2                   \n"
@@ -5176,17 +5176,17 @@ void SobelYRow_SSE2(const uint8_t* src_y0,
     LABELALIGN
     "1:                                        \n"
     "movq      (%0),%%xmm0                     \n"
-    "movq    0x00(%0,%1,1),%%xmm1            \n"
+    "movq      0x00(%0,%1,1),%%xmm1            \n"
     "punpcklbw %%xmm5,%%xmm0                   \n"
     "punpcklbw %%xmm5,%%xmm1                   \n"
     "psubw     %%xmm1,%%xmm0                   \n"
     "movq      0x1(%0),%%xmm1                  \n"
-    "movq    0x01(%0,%1,1),%%xmm2            \n"
+    "movq      0x01(%0,%1,1),%%xmm2            \n"
     "punpcklbw %%xmm5,%%xmm1                   \n"
     "punpcklbw %%xmm5,%%xmm2                   \n"
     "psubw     %%xmm2,%%xmm1                   \n"
     "movq      0x2(%0),%%xmm2                  \n"
-    "movq    0x02(%0,%1,1),%%xmm3            \n"
+    "movq      0x02(%0,%1,1),%%xmm3            \n"
     "punpcklbw %%xmm5,%%xmm2                   \n"
     "punpcklbw %%xmm5,%%xmm3                   \n"
     "psubw     %%xmm3,%%xmm2                   \n"
@@ -5465,19 +5465,19 @@ void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
     "movdqu    0x10(%0),%%xmm1                 \n"
     "movdqu    0x20(%0),%%xmm2                 \n"
     "movdqu    0x30(%0),%%xmm3                 \n"
-    "psubd    0x00(%0,%4,4),%%xmm0            \n"
-    "psubd    0x10(%0,%4,4),%%xmm1            \n"
-    "psubd    0x20(%0,%4,4),%%xmm2            \n"
-    "psubd    0x30(%0,%4,4),%%xmm3            \n"
+    "psubd     0x00(%0,%4,4),%%xmm0            \n"
+    "psubd     0x10(%0,%4,4),%%xmm1            \n"
+    "psubd     0x20(%0,%4,4),%%xmm2            \n"
+    "psubd     0x30(%0,%4,4),%%xmm3            \n"
     "lea       0x40(%0),%0                     \n"
     "psubd     (%1),%%xmm0                     \n"
     "psubd     0x10(%1),%%xmm1                 \n"
     "psubd     0x20(%1),%%xmm2                 \n"
     "psubd     0x30(%1),%%xmm3                 \n"
-    "paddd    0x00(%1,%4,4),%%xmm0            \n"
-    "paddd    0x10(%1,%4,4),%%xmm1            \n"
-    "paddd    0x20(%1,%4,4),%%xmm2            \n"
-    "paddd    0x30(%1,%4,4),%%xmm3            \n"
+    "paddd     0x00(%1,%4,4),%%xmm0            \n"
+    "paddd     0x10(%1,%4,4),%%xmm1            \n"
+    "paddd     0x20(%1,%4,4),%%xmm2            \n"
+    "paddd     0x30(%1,%4,4),%%xmm3            \n"
     "lea       0x40(%1),%1                     \n"
     "packssdw  %%xmm1,%%xmm0                   \n"
     "packssdw  %%xmm3,%%xmm2                   \n"
@@ -5497,19 +5497,19 @@ void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
     "movdqu    0x10(%0),%%xmm1                 \n"
     "movdqu    0x20(%0),%%xmm2                 \n"
     "movdqu    0x30(%0),%%xmm3                 \n"
-    "psubd    0x00(%0,%4,4),%%xmm0            \n"
-    "psubd    0x10(%0,%4,4),%%xmm1            \n"
-    "psubd    0x20(%0,%4,4),%%xmm2            \n"
-    "psubd    0x30(%0,%4,4),%%xmm3            \n"
+    "psubd     0x00(%0,%4,4),%%xmm0            \n"
+    "psubd     0x10(%0,%4,4),%%xmm1            \n"
+    "psubd     0x20(%0,%4,4),%%xmm2            \n"
+    "psubd     0x30(%0,%4,4),%%xmm3            \n"
     "lea       0x40(%0),%0                     \n"
     "psubd     (%1),%%xmm0                     \n"
     "psubd     0x10(%1),%%xmm1                 \n"
     "psubd     0x20(%1),%%xmm2                 \n"
     "psubd     0x30(%1),%%xmm3                 \n"
-    "paddd    0x00(%1,%4,4),%%xmm0            \n"
-    "paddd    0x10(%1,%4,4),%%xmm1            \n"
-    "paddd    0x20(%1,%4,4),%%xmm2            \n"
-    "paddd    0x30(%1,%4,4),%%xmm3            \n"
+    "paddd     0x00(%1,%4,4),%%xmm0            \n"
+    "paddd     0x10(%1,%4,4),%%xmm1            \n"
+    "paddd     0x20(%1,%4,4),%%xmm2            \n"
+    "paddd     0x30(%1,%4,4),%%xmm3            \n"
     "lea       0x40(%1),%1                     \n"
     "cvtdq2ps  %%xmm0,%%xmm0                   \n"
     "cvtdq2ps  %%xmm1,%%xmm1                   \n"
@@ -5539,10 +5539,10 @@ void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
     LABELALIGN
   "10:                                         \n"
     "movdqu    (%0),%%xmm0                     \n"
-    "psubd    0x00(%0,%4,4),%%xmm0            \n"
+    "psubd     0x00(%0,%4,4),%%xmm0            \n"
     "lea       0x10(%0),%0                     \n"
     "psubd     (%1),%%xmm0                     \n"
-    "paddd    0x00(%1,%4,4),%%xmm0            \n"
+    "paddd     0x00(%1,%4,4),%%xmm0            \n"
     "lea       0x10(%1),%1                     \n"
     "cvtdq2ps  %%xmm0,%%xmm0                   \n"
     "mulps     %%xmm4,%%xmm0                   \n"
@@ -5607,16 +5607,16 @@ void ARGBAffineRow_SSE2(const uint8_t* src_argb,
     "pshufd    $0x39,%%xmm0,%%xmm0             \n"
     "movd      %%xmm0,%k5                      \n"
     "pshufd    $0x39,%%xmm0,%%xmm0             \n"
-    "movd    0x00(%0,%1,1),%%xmm1            \n"
-    "movd    0x00(%0,%5,1),%%xmm6            \n"
+    "movd      0x00(%0,%1,1),%%xmm1            \n"
+    "movd      0x00(%0,%5,1),%%xmm6            \n"
     "punpckldq %%xmm6,%%xmm1                   \n"
     "addps     %%xmm4,%%xmm2                   \n"
     "movq      %%xmm1,(%2)                     \n"
     "movd      %%xmm0,%k1                      \n"
     "pshufd    $0x39,%%xmm0,%%xmm0             \n"
     "movd      %%xmm0,%k5                      \n"
-    "movd    0x00(%0,%1,1),%%xmm0            \n"
-    "movd    0x00(%0,%5,1),%%xmm6            \n"
+    "movd      0x00(%0,%1,1),%%xmm0            \n"
+    "movd      0x00(%0,%5,1),%%xmm6            \n"
     "punpckldq %%xmm6,%%xmm0                   \n"
     "addps     %%xmm4,%%xmm3                   \n"
     "movq      %%xmm0,0x08(%2)                 \n"
@@ -5636,7 +5636,7 @@ void ARGBAffineRow_SSE2(const uint8_t* src_argb,
     "pmaddwd   %%xmm5,%%xmm0                   \n"
     "addps     %%xmm7,%%xmm2                   \n"
     "movd      %%xmm0,%k1                      \n"
-    "movd    0x00(%0,%1,1),%%xmm0            \n"
+    "movd      0x00(%0,%1,1),%%xmm0            \n"
     "movd      %%xmm0,(%2)                     \n"
     "lea       0x04(%2),%2                     \n"
     "sub       $0x1,%4                         \n"
@@ -5685,20 +5685,20 @@ void InterpolateRow_SSSE3(uint8_t* dst_ptr,
     "1:                                        \n"
     "movdqu    (%1),%%xmm0                     \n"
     "movdqu    0x00(%1,%4,1),%%xmm2            \n"
-    "movdqa     %%xmm0,%%xmm1                  \n"
-    "punpcklbw  %%xmm2,%%xmm0                  \n"
-    "punpckhbw  %%xmm2,%%xmm1                  \n"
-    "psubb      %%xmm4,%%xmm0                  \n"
-    "psubb      %%xmm4,%%xmm1                  \n"
-    "movdqa     %%xmm5,%%xmm2                  \n"
-    "movdqa     %%xmm5,%%xmm3                  \n"
-    "pmaddubsw  %%xmm0,%%xmm2                  \n"
-    "pmaddubsw  %%xmm1,%%xmm3                  \n"
-    "paddw      %%xmm4,%%xmm2                  \n"
-    "paddw      %%xmm4,%%xmm3                  \n"
-    "psrlw      $0x8,%%xmm2                    \n"
-    "psrlw      $0x8,%%xmm3                    \n"
-    "packuswb   %%xmm3,%%xmm2                  \n"
+    "movdqa    %%xmm0,%%xmm1                   \n"
+    "punpcklbw %%xmm2,%%xmm0                   \n"
+    "punpckhbw %%xmm2,%%xmm1                   \n"
+    "psubb     %%xmm4,%%xmm0                   \n"
+    "psubb     %%xmm4,%%xmm1                   \n"
+    "movdqa    %%xmm5,%%xmm2                   \n"
+    "movdqa    %%xmm5,%%xmm3                   \n"
+    "pmaddubsw %%xmm0,%%xmm2                   \n"
+    "pmaddubsw %%xmm1,%%xmm3                   \n"
+    "paddw     %%xmm4,%%xmm2                   \n"
+    "paddw     %%xmm4,%%xmm3                   \n"
+    "psrlw     $0x8,%%xmm2                     \n"
+    "psrlw     $0x8,%%xmm3                     \n"
+    "packuswb  %%xmm3,%%xmm2                   \n"
     "movdqu    %%xmm2,0x00(%1,%0,1)            \n"
     "lea       0x10(%1),%1                     \n"
     "sub       $0x10,%2                        \n"
@@ -5767,7 +5767,7 @@ void InterpolateRow_AVX2(uint8_t* dst_ptr,
     LABELALIGN
     "1:                                        \n"
     "vmovdqu    (%1),%%ymm0                    \n"
-    "vmovdqu    0x00(%1,%4,1),%%ymm2            \n"
+    "vmovdqu    0x00(%1,%4,1),%%ymm2           \n"
     "vpunpckhbw %%ymm2,%%ymm0,%%ymm1           \n"
     "vpunpcklbw %%ymm2,%%ymm0,%%ymm0           \n"
     "vpsubb     %%ymm4,%%ymm1,%%ymm1           \n"
@@ -5779,18 +5779,18 @@ void InterpolateRow_AVX2(uint8_t* dst_ptr,
     "vpsrlw     $0x8,%%ymm1,%%ymm1             \n"
     "vpsrlw     $0x8,%%ymm0,%%ymm0             \n"
     "vpackuswb  %%ymm1,%%ymm0,%%ymm0           \n"
-    "vmovdqu    %%ymm0,0x00(%1,%0,1)            \n"
-    "lea       0x20(%1),%1                     \n"
-    "sub       $0x20,%2                        \n"
-    "jg        1b                              \n"
-    "jmp       99f                             \n"
+    "vmovdqu    %%ymm0,0x00(%1,%0,1)           \n"
+    "lea        0x20(%1),%1                    \n"
+    "sub        $0x20,%2                       \n"
+    "jg         1b                             \n"
+    "jmp        99f                            \n"
 
     // Blend 50 / 50.
     LABELALIGN
   "50:                                         \n"
-    "vmovdqu    (%1),%%ymm0                    \n"
+    "vmovdqu   (%1),%%ymm0                     \n"
     "vpavgb    0x00(%1,%4,1),%%ymm0,%%ymm0     \n"
-    "vmovdqu    %%ymm0,0x00(%1,%0,1)            \n"
+    "vmovdqu   %%ymm0,0x00(%1,%0,1)            \n"
     "lea       0x20(%1),%1                     \n"
     "sub       $0x20,%2                        \n"
     "jg        50b                             \n"
@@ -5888,7 +5888,7 @@ void I422ToYUY2Row_SSE2(const uint8_t* src_y,
     LABELALIGN
     "1:                                          \n"
     "movq      (%1),%%xmm2                       \n"
-    "movq    0x00(%1,%2,1),%%xmm3            \n"
+    "movq      0x00(%1,%2,1),%%xmm3              \n"
     "lea       0x8(%1),%1                        \n"
     "punpcklbw %%xmm3,%%xmm2                     \n"
     "movdqu    (%0),%%xmm0                       \n"
@@ -5907,8 +5907,7 @@ void I422ToYUY2Row_SSE2(const uint8_t* src_y,
       "+r"(dst_frame),  // %3
       "+rm"(width)  // %4
     :
-    : "memory", "cc",
-    "xmm0", "xmm1", "xmm2", "xmm3"
+    : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3"
   );
 }
 #endif  // HAS_I422TOYUY2ROW_SSE2
@@ -5924,12 +5923,12 @@ void I422ToUYVYRow_SSE2(const uint8_t* src_y,
     LABELALIGN
     "1:                                          \n"
     "movq      (%1),%%xmm2                       \n"
-    "movq    0x00(%1,%2,1),%%xmm3            \n"
+    "movq      0x00(%1,%2,1),%%xmm3              \n"
     "lea       0x8(%1),%1                        \n"
     "punpcklbw %%xmm3,%%xmm2                     \n"
     "movdqu    (%0),%%xmm0                       \n"
-    "movdqa    %%xmm2,%%xmm1                     \n"
     "lea       0x10(%0),%0                       \n"
+    "movdqa    %%xmm2,%%xmm1                     \n"
     "punpcklbw %%xmm0,%%xmm1                     \n"
     "punpckhbw %%xmm0,%%xmm2                     \n"
     "movdqu    %%xmm1,(%3)                       \n"
@@ -5943,11 +5942,88 @@ void I422ToUYVYRow_SSE2(const uint8_t* src_y,
       "+r"(dst_frame),  // %3
       "+rm"(width)  // %4
     :
-    : "memory", "cc",
-    "xmm0", "xmm1", "xmm2", "xmm3"
+    : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3"
   );
 }
 #endif  // HAS_I422TOUYVYROW_SSE2
+
+#ifdef HAS_I422TOYUY2ROW_AVX2
+void I422ToYUY2Row_AVX2(const uint8_t* src_y,
+                        const uint8_t* src_u,
+                        const uint8_t* src_v,
+                        uint8_t* dst_frame,
+                        int width) {
+  asm volatile (
+    "sub       %1,%2                             \n"
+    LABELALIGN
+    "1:                                          \n"
+    "vmovdqu    (%1),%%xmm2                      \n"
+    "vmovdqu    0x00(%1,%2,1),%%xmm3             \n"
+    "lea        0x10(%1),%1                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm3,%%ymm3              \n"
+    "vpunpcklbw %%ymm3,%%ymm2,%%ymm2             \n"
+    "vmovdqu    (%0),%%ymm0                      \n"
+    "lea        0x20(%0),%0                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm0,%%ymm0              \n"
+    "vpunpckhbw %%ymm2,%%ymm0,%%ymm1             \n"
+    "vpunpcklbw %%ymm2,%%ymm0,%%ymm0             \n"
+    "vmovdqu    %%ymm0,(%3)                      \n"
+    "vmovdqu    %%ymm1,0x20(%3)                  \n"
+    "lea        0x40(%3),%3                      \n"
+    "sub        $0x20,%4                         \n"
+    "jg         1b                               \n"
+    "vzeroupper                                  \n"
+    : "+r"(src_y),  // %0
+      "+r"(src_u),  // %1
+      "+r"(src_v),  // %2
+      "+r"(dst_frame),  // %3
+      "+rm"(width)  // %4
+    :
+    : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3"
+  );
+}
+#endif  // HAS_I422TOYUY2ROW_AVX2
+
+#ifdef HAS_I422TOUYVYROW_AVX2
+void I422ToUYVYRow_AVX2(const uint8_t* src_y,
+                        const uint8_t* src_u,
+                        const uint8_t* src_v,
+                        uint8_t* dst_frame,
+                        int width) {
+  asm volatile (
+    "sub        %1,%2                            \n"
+    LABELALIGN
+    "1:                                          \n"
+    "vmovdqu    (%1),%%xmm2                      \n"
+    "vmovdqu    0x00(%1,%2,1),%%xmm3             \n"
+    "lea        0x10(%1),%1                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm3,%%ymm3              \n"
+    "vpunpcklbw %%ymm3,%%ymm2,%%ymm2             \n"
+    "vmovdqu    (%0),%%ymm0,%%ymm0               \n"
+    "lea        0x20(%0),%0                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm0,%%ymm0              \n"
+    "vpunpcklbw %%ymm0,%%ymm2,%%ymm1             \n"
+    "vpunpckhbw %%ymm0,%%ymm2,%%ymm2             \n"
+    "vmovdqu    %%ymm1,(%3)                      \n"
+    "vmovdqu    %%ymm2,0x20(%3)                  \n"
+    "lea        0x40(%3),%3                      \n"
+    "sub        $0x20,%4                         \n"
+    "jg         1b                               \n"
+    "vzeroupper                                  \n"
+    : "+r"(src_y),  // %0
+      "+r"(src_u),  // %1
+      "+r"(src_v),  // %2
+      "+r"(dst_frame),  // %3
+      "+rm"(width)  // %4
+    :
+    : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3"
+  );
+}
+#endif  // HAS_I422TOUYVYROW_AVX2
 
 #ifdef HAS_ARGBPOLYNOMIALROW_SSE2
 void ARGBPolynomialRow_SSE2(const uint8_t* src_argb,
@@ -6012,10 +6088,10 @@ void ARGBPolynomialRow_AVX2(const uint8_t* src_argb,
                             const float* poly,
                             int width) {
   asm volatile (
-    "vbroadcastf128 (%3),%%ymm4                 \n"
-    "vbroadcastf128 0x10(%3),%%ymm5               \n"
-    "vbroadcastf128 0x20(%3),%%ymm6               \n"
-    "vbroadcastf128 0x30(%3),%%ymm7               \n"
+    "vbroadcastf128 (%3),%%ymm4                \n"
+    "vbroadcastf128 0x10(%3),%%ymm5            \n"
+    "vbroadcastf128 0x20(%3),%%ymm6            \n"
+    "vbroadcastf128 0x30(%3),%%ymm7            \n"
 
     // 2 pixel loop.
     LABELALIGN
@@ -6072,7 +6148,7 @@ void HalfFloatRow_SSE2(const uint16_t* src, uint16_t* dst, float scale, int widt
     "psrld       $0xd,%%xmm2                   \n"
     "psrld       $0xd,%%xmm3                   \n"
     "packssdw    %%xmm3,%%xmm2                 \n"
-    "movdqu    %%xmm2,-0x10(%0,%1,1)            \n"
+    "movdqu      %%xmm2,-0x10(%0,%1,1)         \n"
     "sub         $0x8,%2                       \n"
     "jg          1b                            \n"
   : "+r"(src),    // %0
@@ -6107,7 +6183,7 @@ void HalfFloatRow_AVX2(const uint16_t* src, uint16_t* dst, float scale, int widt
     "vpsrld     $0xd,%%ymm3,%%ymm3             \n"
     "vpsrld     $0xd,%%ymm2,%%ymm2             \n"
     "vpackssdw  %%ymm3, %%ymm2, %%ymm2         \n"  // unmutates
-    "vmovdqu    %%ymm2,-0x20(%0,%1,1)            \n"
+    "vmovdqu    %%ymm2,-0x20(%0,%1,1)          \n"
     "sub        $0x10,%2                       \n"
     "jg         1b                             \n"
 
@@ -6143,8 +6219,8 @@ void HalfFloatRow_F16C(const uint16_t* src, uint16_t* dst, float scale, int widt
     "vmulps      %%ymm3,%%ymm4,%%ymm3          \n"
     "vcvtps2ph   $3, %%ymm2, %%xmm2            \n"
     "vcvtps2ph   $3, %%ymm3, %%xmm3            \n"
-    "vmovdqu    %%xmm2,0x00(%0,%1,1)            \n"
-    "vmovdqu    %%xmm3,0x10(%0,%1,1)            \n"
+    "vmovdqu     %%xmm2,0x00(%0,%1,1)          \n"
+    "vmovdqu     %%xmm3,0x10(%0,%1,1)          \n"
     "add         $0x20,%0                      \n"
     "sub         $0x10,%2                      \n"
     "jg          1b                            \n"
@@ -6176,8 +6252,8 @@ void HalfFloat1Row_F16C(const uint16_t* src, uint16_t* dst, float, int width) {
     "vcvtdq2ps   %%ymm3,%%ymm3                 \n"
     "vcvtps2ph   $3, %%ymm2, %%xmm2            \n"
     "vcvtps2ph   $3, %%ymm3, %%xmm3            \n"
-    "vmovdqu    %%xmm2,0x00(%0,%1,1)            \n"
-    "vmovdqu    %%xmm3,0x10(%0,%1,1)            \n"
+    "vmovdqu     %%xmm2,0x00(%0,%1,1)          \n"
+    "vmovdqu     %%xmm3,0x10(%0,%1,1)          \n"
     "add         $0x20,%0                      \n"
     "sub         $0x10,%2                      \n"
     "jg          1b                            \n"
