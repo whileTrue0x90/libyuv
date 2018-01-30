@@ -6041,6 +6041,84 @@ void I422ToUYVYRow_SSE2(const uint8_t* src_y,
 }
 #endif  // HAS_I422TOUYVYROW_SSE2
 
+#ifdef HAS_I422TOYUY2ROW_AVX2
+void I422ToYUY2Row_AVX2(const uint8_t* src_y,
+                        const uint8_t* src_u,
+                        const uint8_t* src_v,
+                        uint8_t* dst_frame,
+                        int width) {
+  asm volatile (
+    "sub       %1,%2                             \n"
+    LABELALIGN
+    "1:                                          \n"
+    "vmovdqu    (%1),%%xmm2                      \n"
+    "vmovdqu    0x00(%1,%2,1),%%xmm3             \n"
+    "lea        0x10(%1),%1                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm3,%%ymm3              \n"
+    "vpunpcklbw %%ymm3,%%ymm2,%%ymm2             \n"
+    "vmovdqu    (%0),%%ymm0                      \n"
+    "lea        0x20(%0),%0                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm0,%%ymm0              \n"
+    "vpunpckhbw %%ymm2,%%ymm0,%%ymm1             \n"
+    "vpunpcklbw %%ymm2,%%ymm0,%%ymm0             \n"
+    "vmovdqu    %%ymm0,(%3)                      \n"
+    "vmovdqu    %%ymm1,0x20(%3)                  \n"
+    "lea        0x40(%3),%3                      \n"
+    "sub        $0x20,%4                         \n"
+    "jg         1b                               \n"
+    "vzeroupper                                  \n"
+    : "+r"(src_y),  // %0
+      "+r"(src_u),  // %1
+      "+r"(src_v),  // %2
+      "+r"(dst_frame),  // %3
+      "+rm"(width)  // %4
+    :
+    : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3"
+  );
+}
+#endif  // HAS_I422TOYUY2ROW_AVX2
+
+#ifdef HAS_I422TOUYVYROW_AVX2
+void I422ToUYVYRow_AVX2(const uint8_t* src_y,
+                        const uint8_t* src_u,
+                        const uint8_t* src_v,
+                        uint8_t* dst_frame,
+                        int width) {
+  asm volatile (
+    "sub        %1,%2                            \n"
+    LABELALIGN
+    "1:                                          \n"
+    "vmovdqu    (%1),%%xmm2                      \n"
+    "vmovdqu    0x00(%1,%2,1),%%xmm3             \n"
+    "lea        0x10(%1),%1                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm3,%%ymm3              \n"
+    "vpunpcklbw %%ymm3,%%ymm2,%%ymm2             \n"
+    "vmovdqu    (%0),%%ymm0,%%ymm0               \n"
+    "lea        0x20(%0),%0                      \n"
+    "vpermq     $0xd8,%%ymm2,%%ymm2              \n"
+    "vpermq     $0xd8,%%ymm0,%%ymm0              \n"
+    "vpunpcklbw %%ymm0,%%ymm2,%%ymm1             \n"
+    "vpunpckhbw %%ymm0,%%ymm2,%%ymm2             \n"
+    "vmovdqu    %%ymm1,(%3)                      \n"
+    "vmovdqu    %%ymm2,0x20(%3)                  \n"
+    "lea        0x40(%3),%3                      \n"
+    "sub        $0x20,%4                         \n"
+    "jg         1b                               \n"
+    "vzeroupper                                  \n"
+    : "+r"(src_y),  // %0
+      "+r"(src_u),  // %1
+      "+r"(src_v),  // %2
+      "+r"(dst_frame),  // %3
+      "+rm"(width)  // %4
+    :
+    : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3"
+  );
+}
+#endif  // HAS_I422TOUYVYROW_AVX2
+
 #ifdef HAS_ARGBPOLYNOMIALROW_SSE2
 void ARGBPolynomialRow_SSE2(const uint8_t* src_argb,
                             uint8_t* dst_argb,
@@ -6102,11 +6180,19 @@ void ARGBPolynomialRow_AVX2(const uint8_t* src_argb,
                             uint8_t* dst_argb,
                             const float* poly,
                             int width) {
+<<<<<<< HEAD
   asm volatile(
       "vbroadcastf128 (%3),%%ymm4                \n"
       "vbroadcastf128 0x10(%3),%%ymm5            \n"
       "vbroadcastf128 0x20(%3),%%ymm6            \n"
       "vbroadcastf128 0x30(%3),%%ymm7            \n"
+=======
+  asm volatile (
+    "vbroadcastf128 (%3),%%ymm4                \n"
+    "vbroadcastf128 0x10(%3),%%ymm5            \n"
+    "vbroadcastf128 0x20(%3),%%ymm6            \n"
+    "vbroadcastf128 0x30(%3),%%ymm7            \n"
+>>>>>>> I420ToYUY2_AVX2 port
 
       // 2 pixel loop.
       LABELALIGN
@@ -6151,6 +6237,7 @@ void HalfFloatRow_SSE2(const uint16_t* src,
       "pxor        %%xmm5,%%xmm5                 \n"
       "sub         %0,%1                         \n"
 
+<<<<<<< HEAD
       // 16 pixel loop.
       LABELALIGN
       "1:                                        \n"
@@ -6174,6 +6261,33 @@ void HalfFloatRow_SSE2(const uint16_t* src,
         "+r"(width)  // %2
       : "m"(scale)   // %3
       : "memory", "cc", "xmm2", "xmm3", "xmm4", "xmm5");
+=======
+    // 16 pixel loop.
+    LABELALIGN
+    "1:                                        \n"
+    "movdqu      (%0),%%xmm2                   \n"  // 8 shorts
+    "add         $0x10,%0                      \n"
+    "movdqa      %%xmm2,%%xmm3                 \n"
+    "punpcklwd   %%xmm5,%%xmm2                 \n"  // 8 ints in xmm2/1
+    "cvtdq2ps    %%xmm2,%%xmm2                 \n"  // 8 floats
+    "punpckhwd   %%xmm5,%%xmm3                 \n"
+    "cvtdq2ps    %%xmm3,%%xmm3                 \n"
+    "mulps       %%xmm4,%%xmm2                 \n"
+    "mulps       %%xmm4,%%xmm3                 \n"
+    "psrld       $0xd,%%xmm2                   \n"
+    "psrld       $0xd,%%xmm3                   \n"
+    "packssdw    %%xmm3,%%xmm2                 \n"
+    "movdqu      %%xmm2,-0x10(%0,%1,1)         \n"
+    "sub         $0x8,%2                       \n"
+    "jg          1b                            \n"
+  : "+r"(src),    // %0
+    "+r"(dst),    // %1
+    "+r"(width)   // %2
+  : "m"(scale)   // %3
+  : "memory", "cc",
+    "xmm2", "xmm3", "xmm4", "xmm5"
+  );
+>>>>>>> I420ToYUY2_AVX2 port
 }
 #endif  // HAS_HALFFLOATROW_SSE2
 
@@ -6188,6 +6302,7 @@ void HalfFloatRow_AVX2(const uint16_t* src,
       "vpxor      %%ymm5,%%ymm5,%%ymm5           \n"
       "sub        %0,%1                          \n"
 
+<<<<<<< HEAD
       // 16 pixel loop.
       LABELALIGN
       "1:                                        \n"
@@ -6205,6 +6320,25 @@ void HalfFloatRow_AVX2(const uint16_t* src,
       "vmovdqu    %%ymm2,-0x20(%0,%1,1)          \n"
       "sub        $0x10,%2                       \n"
       "jg         1b                             \n"
+=======
+    // 16 pixel loop.
+    LABELALIGN
+    "1:                                        \n"
+    "vmovdqu    (%0),%%ymm2                    \n"  // 16 shorts
+    "add        $0x20,%0                       \n"
+    "vpunpckhwd %%ymm5,%%ymm2,%%ymm3           \n"  // mutates
+    "vpunpcklwd %%ymm5,%%ymm2,%%ymm2           \n"
+    "vcvtdq2ps  %%ymm3,%%ymm3                  \n"
+    "vcvtdq2ps  %%ymm2,%%ymm2                  \n"
+    "vmulps     %%ymm3,%%ymm4,%%ymm3           \n"
+    "vmulps     %%ymm2,%%ymm4,%%ymm2           \n"
+    "vpsrld     $0xd,%%ymm3,%%ymm3             \n"
+    "vpsrld     $0xd,%%ymm2,%%ymm2             \n"
+    "vpackssdw  %%ymm3, %%ymm2, %%ymm2         \n"  // unmutates
+    "vmovdqu    %%ymm2,-0x20(%0,%1,1)          \n"
+    "sub        $0x10,%2                       \n"
+    "jg         1b                             \n"
+>>>>>>> I420ToYUY2_AVX2 port
 
       "vzeroupper                                \n"
       : "+r"(src),   // %0
@@ -6228,6 +6362,7 @@ void HalfFloatRow_F16C(const uint16_t* src,
       "vbroadcastss  %3, %%ymm4                  \n"
       "sub        %0,%1                          \n"
 
+<<<<<<< HEAD
       // 16 pixel loop.
       LABELALIGN
       "1:                                        \n"
@@ -6248,6 +6383,28 @@ void HalfFloatRow_F16C(const uint16_t* src,
       : "+r"(src),   // %0
         "+r"(dst),   // %1
         "+r"(width)  // %2
+=======
+    // 16 pixel loop.
+    LABELALIGN
+    "1:                                        \n"
+    "vpmovzxwd   (%0),%%ymm2                   \n"  // 16 shorts -> 16 ints
+    "vpmovzxwd   0x10(%0),%%ymm3               \n"
+    "vcvtdq2ps   %%ymm2,%%ymm2                 \n"
+    "vcvtdq2ps   %%ymm3,%%ymm3                 \n"
+    "vmulps      %%ymm2,%%ymm4,%%ymm2          \n"
+    "vmulps      %%ymm3,%%ymm4,%%ymm3          \n"
+    "vcvtps2ph   $3, %%ymm2, %%xmm2            \n"
+    "vcvtps2ph   $3, %%ymm3, %%xmm3            \n"
+    "vmovdqu     %%xmm2,0x00(%0,%1,1)          \n"
+    "vmovdqu     %%xmm3,0x10(%0,%1,1)          \n"
+    "add         $0x20,%0                      \n"
+    "sub         $0x10,%2                      \n"
+    "jg          1b                            \n"
+    "vzeroupper                                \n"
+  : "+r"(src),   // %0
+    "+r"(dst),   // %1
+    "+r"(width)  // %2
+>>>>>>> I420ToYUY2_AVX2 port
 #if defined(__x86_64__)
       : "x"(scale)  // %3
 #else
@@ -6259,6 +6416,7 @@ void HalfFloatRow_F16C(const uint16_t* src,
 
 #ifdef HAS_HALFFLOATROW_F16C
 void HalfFloat1Row_F16C(const uint16_t* src, uint16_t* dst, float, int width) {
+<<<<<<< HEAD
   asm volatile(
       "sub        %0,%1                          \n"
       // 16 pixel loop.
@@ -6281,6 +6439,32 @@ void HalfFloat1Row_F16C(const uint16_t* src, uint16_t* dst, float, int width) {
         "+r"(width)  // %2
       :
       : "memory", "cc", "xmm2", "xmm3");
+=======
+  asm volatile (
+    "sub        %0,%1                          \n"
+    // 16 pixel loop.
+    LABELALIGN
+    "1:                                        \n"
+    "vpmovzxwd   (%0),%%ymm2                   \n"  // 16 shorts -> 16 ints
+    "vpmovzxwd   0x10(%0),%%ymm3               \n"
+    "vcvtdq2ps   %%ymm2,%%ymm2                 \n"
+    "vcvtdq2ps   %%ymm3,%%ymm3                 \n"
+    "vcvtps2ph   $3, %%ymm2, %%xmm2            \n"
+    "vcvtps2ph   $3, %%ymm3, %%xmm3            \n"
+    "vmovdqu     %%xmm2,0x00(%0,%1,1)          \n"
+    "vmovdqu     %%xmm3,0x10(%0,%1,1)          \n"
+    "add         $0x20,%0                      \n"
+    "sub         $0x10,%2                      \n"
+    "jg          1b                            \n"
+    "vzeroupper                                \n"
+  : "+r"(src),   // %0
+    "+r"(dst),   // %1
+    "+r"(width)  // %2
+  :
+  : "memory", "cc",
+    "xmm2", "xmm3"
+  );
+>>>>>>> I420ToYUY2_AVX2 port
 }
 #endif  // HAS_HALFFLOATROW_F16C
 
