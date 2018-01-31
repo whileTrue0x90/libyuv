@@ -1324,13 +1324,13 @@ void ScaleARGBFilterCols_SSSE3(uint8_t* dst_argb,
       "movd      %%xmm0,(%0)                     \n"
 
       LABELALIGN "99:                            \n"  // clang-format error.
-      : "+r"(dst_argb),    // %0
-        "+r"(src_argb),    // %1
-        "+rm"(dst_width),  // %2
-        "=&r"(x0),         // %3
-        "=&r"(x1)          // %4
-      : "rm"(x),           // %5
-        "rm"(dx)           // %6
+      : "+r"(dst_argb),                               // %0
+        "+r"(src_argb),                               // %1
+        "+rm"(dst_width),                             // %2
+        "=&r"(x0),                                    // %3
+        "=&r"(x1)                                     // %4
+      : "rm"(x),                                      // %5
+        "rm"(dx)                                      // %6
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
 }
 
