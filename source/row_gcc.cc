@@ -6054,20 +6054,36 @@ void I422ToYUY2Row_AVX2(const uint8_t* src_y,
       LABELALIGN
       "1:                                          \n"
       "vpmovzxbw  (%1),%%ymm1                      \n"
+      "vpmovzxbw  0x10(%1),%%ymm3                  \n"
       "vpmovzxbw  0x00(%1,%2,1),%%ymm2             \n"
-      "add        $0x10,%1                         \n"
+      "vpmovzxbw  0x10(%1,%2,1),%%ymm4             \n"
+      "add        $0x20,%1                         \n"
       "vpsllw     $0x8,%%ymm2,%%ymm2               \n"
+      "vpsllw     $0x8,%%ymm4,%%ymm4               \n"
       "vpor       %%ymm1,%%ymm2,%%ymm2             \n"
+      "vpor       %%ymm3,%%ymm4,%%ymm4             \n"
+
       "vmovdqu    (%0),%%ymm0                      \n"
-      "add        $0x20,%0                         \n"
+      "vmovdqu    0x20(%0),%%ymm3                  \n"
+      "add        $0x40,%0                         \n"
       "vpunpcklbw %%ymm2,%%ymm0,%%ymm1             \n"
       "vpunpckhbw %%ymm2,%%ymm0,%%ymm2             \n"
+
+      "vpunpckhbw %%ymm4,%%ymm3,%%ymm4             \n"
+      "vpunpcklbw %%ymm4,%%ymm3,%%ymm3             \n"
+
       "vextractf128 $0x0,%%ymm1,(%3)               \n"
       "vextractf128 $0x0,%%ymm2,0x10(%3)           \n"
       "vextractf128 $0x1,%%ymm1,0x20(%3)           \n"
       "vextractf128 $0x1,%%ymm2,0x30(%3)           \n"
-      "lea        0x40(%3),%3                      \n"
-      "sub        $0x20,%4                         \n"
+
+      "vextractf128 $0x0,%%ymm3,0x40(%3)           \n"
+      "vextractf128 $0x0,%%ymm4,0x50(%3)           \n"
+      "vextractf128 $0x1,%%ymm3,0x60(%3)           \n"
+      "vextractf128 $0x1,%%ymm4,0x70(%3)           \n"
+      
+      "lea        0x80(%3),%3                      \n"
+      "sub        $0x40,%4                         \n"
       "jg         1b                               \n"
       "vzeroupper                                  \n"
       : "+r"(src_y),     // %0
