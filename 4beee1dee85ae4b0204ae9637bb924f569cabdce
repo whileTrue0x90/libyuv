@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b93748_efd8f25f",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-02-05T22:23:04Z",
+      "side": 1,
+      "message": "Why here is |src_vu|, while line 251 is |src_uv|, give the same source format NV21?",
+      "revId": "4beee1dee85ae4b0204ae9637bb924f569cabdce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16fa4cd_cc9553ba",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-02-05T22:23:04Z",
+      "side": 1,
+      "message": "Prefer |dst_stride_argb| as other functions above.",
+      "range": {
+        "startLine": 610,
+        "startChar": 22,
+        "endLine": 610,
+        "endChar": 33
+      },
+      "revId": "4beee1dee85ae4b0204ae9637bb924f569cabdce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caea5b57_9ccf532c",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2018-02-05T22:23:04Z",
+      "side": 1,
+      "message": "Just curious: why some are |width|, the others are |count|?",
+      "range": {
+        "startLine": 1446,
+        "startChar": 56,
+        "endLine": 1446,
+        "endChar": 61
+      },
+      "revId": "4beee1dee85ae4b0204ae9637bb924f569cabdce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
