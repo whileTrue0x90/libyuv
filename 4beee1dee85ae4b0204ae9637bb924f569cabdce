@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed584c5d_07b47edf",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-02-05T23:12:26Z",
+      "side": 1,
+      "message": "Done.\ntidy is pulling the names from the source code.  vu is a better description of the chroma plane for NV21, since its stored as vu while NV12 is uv.  For this change I\u0027ve fixed the source and re-run tidy",
+      "parentUuid": "b0b93748_efd8f25f",
+      "revId": "4beee1dee85ae4b0204ae9637bb924f569cabdce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b16fa4cd_cc9553ba",
         "filename": "include/libyuv/convert_argb.h",
         "patchSetId": 2
@@ -62,6 +80,30 @@
       "revId": "4beee1dee85ae4b0204ae9637bb924f569cabdce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d68448_38056448",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-02-05T23:12:26Z",
+      "side": 1,
+      "message": "Done.\nwidth implies a pixel count along the horizontal, which is almost always the case, but these are low levels like memcpy and could be used on content other than pixels.\nI\u0027ve gone ahead and changed them to width.",
+      "parentUuid": "caea5b57_9ccf532c",
+      "range": {
+        "startLine": 1446,
+        "startChar": 56,
+        "endLine": 1446,
+        "endChar": 61
+      },
+      "revId": "4beee1dee85ae4b0204ae9637bb924f569cabdce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
