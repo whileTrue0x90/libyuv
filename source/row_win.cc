@@ -255,9 +255,8 @@ static const lvec8 kShuffleNV21 = {
 };
 
 // Duplicates gray value 3 times and fills in alpha opaque.
-__declspec(naked) void J400ToARGBRow_SSE2(const uint8_t* src_y,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked);
+void J400ToARGBRow_SSE2(const uint8_t* src_y, uint8_t* dst_argb, int width) {
   __asm {
     mov        eax, [esp + 4]  // src_y
     mov        edx, [esp + 8]  // dst_argb
@@ -285,9 +284,8 @@ __declspec(naked) void J400ToARGBRow_SSE2(const uint8_t* src_y,
 
 #ifdef HAS_J400TOARGBROW_AVX2
 // Duplicates gray value 3 times and fills in alpha opaque.
-__declspec(naked) void J400ToARGBRow_AVX2(const uint8_t* src_y,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked);
+void J400ToARGBRow_AVX2(const uint8_t* src_y, uint8_t* dst_argb, int width) {
   __asm {
     mov         eax, [esp + 4]  // src_y
     mov         edx, [esp + 8]  // dst_argb
@@ -316,9 +314,10 @@ __declspec(naked) void J400ToARGBRow_AVX2(const uint8_t* src_y,
 }
 #endif  // HAS_J400TOARGBROW_AVX2
 
-__declspec(naked) void RGB24ToARGBRow_SSSE3(const uint8_t* src_rgb24,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked);
+void RGB24ToARGBRow_SSSE3(const uint8_t* src_rgb24,
+                          uint8_t* dst_argb,
+                          int width) {
   __asm {
     mov       eax, [esp + 4]  // src_rgb24
     mov       edx, [esp + 8]  // dst_argb
@@ -355,9 +354,8 @@ __declspec(naked) void RGB24ToARGBRow_SSSE3(const uint8_t* src_rgb24,
   }
 }
 
-__declspec(naked) void RAWToARGBRow_SSSE3(const uint8_t* src_raw,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked);
+void RAWToARGBRow_SSSE3(const uint8_t* src_raw, uint8_t* dst_argb, int width) {
   __asm {
     mov       eax, [esp + 4]  // src_raw
     mov       edx, [esp + 8]  // dst_argb
@@ -394,9 +392,10 @@ __declspec(naked) void RAWToARGBRow_SSSE3(const uint8_t* src_raw,
   }
 }
 
-__declspec(naked) void RAWToRGB24Row_SSSE3(const uint8_t* src_raw,
-                                           uint8_t* dst_rgb24,
-                                           int width) {
+__declspec(naked);
+void RAWToRGB24Row_SSSE3(const uint8_t* src_raw,
+                         uint8_t* dst_rgb24,
+                         int width) {
   __asm {
     mov       eax, [esp + 4]  // src_raw
     mov       edx, [esp + 8]  // dst_rgb24
@@ -3275,14 +3274,14 @@ __declspec(naked) void MergeUVRow_AVX2(const uint8_t* src_u,
 #endif  //  HAS_MERGEUVROW_AVX2
 
 #ifdef HAS_COPYROW_SSE2
-// CopyRow copys 'count' bytes using a 16 byte load/store, 32 bytes at time.
+// CopyRow copys 'width' bytes using a 16 byte load/store, 32 bytes at time.
 __declspec(naked) void CopyRow_SSE2(const uint8_t* src,
                                     uint8_t* dst,
-                                    int count) {
+                                    int width) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     test       eax, 15
     jne        convertloopu
     test       edx, 15
@@ -3314,14 +3313,14 @@ __declspec(naked) void CopyRow_SSE2(const uint8_t* src,
 #endif  // HAS_COPYROW_SSE2
 
 #ifdef HAS_COPYROW_AVX
-// CopyRow copys 'count' bytes using a 32 byte load/store, 64 bytes at time.
+// CopyRow copys 'width' bytes using a 32 byte load/store, 64 bytes at time.
 __declspec(naked) void CopyRow_AVX(const uint8_t* src,
                                    uint8_t* dst,
-                                   int count) {
+                                   int width) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
 
   convertloop:
     vmovdqu    ymm0, [eax]
@@ -3342,13 +3341,13 @@ __declspec(naked) void CopyRow_AVX(const uint8_t* src,
 // Multiple of 1.
 __declspec(naked) void CopyRow_ERMS(const uint8_t* src,
                                     uint8_t* dst,
-                                    int count) {
+                                    int width) {
   __asm {
     mov        eax, esi
     mov        edx, edi
     mov        esi, [esp + 4]  // src
     mov        edi, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     rep movsb
     mov        edi, edx
     mov        esi, eax
@@ -3364,7 +3363,7 @@ __declspec(naked) void ARGBCopyAlphaRow_SSE2(const uint8_t* src,
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     pcmpeqb    xmm0, xmm0  // generate mask 0xff000000
     pslld      xmm0, 24
     pcmpeqb    xmm1, xmm1  // generate mask 0x00ffffff
@@ -3401,7 +3400,7 @@ __declspec(naked) void ARGBCopyAlphaRow_AVX2(const uint8_t* src,
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     vpcmpeqb   ymm0, ymm0, ymm0
     vpsrld     ymm0, ymm0, 8  // generate mask 0x00ffffff
 
@@ -3495,7 +3494,7 @@ __declspec(naked) void ARGBCopyYToAlphaRow_SSE2(const uint8_t* src,
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     pcmpeqb    xmm0, xmm0  // generate mask 0xff000000
     pslld      xmm0, 24
     pcmpeqb    xmm1, xmm1  // generate mask 0x00ffffff
@@ -3534,7 +3533,7 @@ __declspec(naked) void ARGBCopyYToAlphaRow_AVX2(const uint8_t* src,
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     vpcmpeqb   ymm0, ymm0, ymm0
     vpsrld     ymm0, ymm0, 8  // generate mask 0x00ffffff
 
@@ -3559,16 +3558,16 @@ __declspec(naked) void ARGBCopyYToAlphaRow_AVX2(const uint8_t* src,
 #endif  // HAS_ARGBCOPYYTOALPHAROW_AVX2
 
 #ifdef HAS_SETROW_X86
-// Write 'count' bytes using an 8 bit value repeated.
-// Count should be multiple of 4.
-__declspec(naked) void SetRow_X86(uint8_t* dst, uint8_t v8, int count) {
+// Write 'width' bytes using an 8 bit value repeated.
+// width should be multiple of 4.
+__declspec(naked) void SetRow_X86(uint8_t* dst, uint8_t v8, int width) {
   __asm {
     movzx      eax, byte ptr [esp + 8]  // v8
     mov        edx, 0x01010101  // Duplicate byte to all bytes.
     mul        edx  // overwrites edx with upper part of result.
     mov        edx, edi
     mov        edi, [esp + 4]  // dst
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     shr        ecx, 2
     rep stosd
     mov        edi, edx
@@ -3576,28 +3575,28 @@ __declspec(naked) void SetRow_X86(uint8_t* dst, uint8_t v8, int count) {
   }
 }
 
-// Write 'count' bytes using an 8 bit value repeated.
-__declspec(naked) void SetRow_ERMS(uint8_t* dst, uint8_t v8, int count) {
+// Write 'width' bytes using an 8 bit value repeated.
+__declspec(naked) void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
   __asm {
     mov        edx, edi
     mov        edi, [esp + 4]  // dst
     mov        eax, [esp + 8]  // v8
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     rep stosb
     mov        edi, edx
     ret
   }
 }
 
-// Write 'count' 32 bit values.
+// Write 'width' 32 bit values.
 __declspec(naked) void ARGBSetRow_X86(uint8_t* dst_argb,
                                       uint32_t v32,
-                                      int count) {
+                                      int width) {
   __asm {
     mov        edx, edi
     mov        edi, [esp + 4]  // dst
     mov        eax, [esp + 8]  // v32
-    mov        ecx, [esp + 12]  // count
+    mov        ecx, [esp + 12]  // width
     rep stosd
     mov        edi, edx
     ret
@@ -5232,7 +5231,7 @@ __declspec(naked) void SobelXYRow_SSE2(const uint8_t* src_sobelx,
 //   in number of ints.
 // area is the number of pixels in the area being averaged.
 // dst points to pixel to store result to.
-// count is number of averaged pixels to produce.
+// width is number of averaged pixels to produce.
 // Does 4 pixels at a time.
 // This function requires alignment on accumulation buffer pointers.
 void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
@@ -5240,14 +5239,14 @@ void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
                                     int width,
                                     int area,
                                     uint8_t* dst,
-                                    int count) {
+                                    int width) {
   __asm {
     mov        eax, topleft  // eax topleft
     mov        esi, botleft  // esi botleft
     mov        edx, width
     movd       xmm5, area
     mov        edi, dst
-    mov        ecx, count
+    mov        ecx, width
     cvtdq2ps   xmm5, xmm5
     rcpss      xmm4, xmm5  // 1.0f / area
     pshufd     xmm4, xmm4, 0
