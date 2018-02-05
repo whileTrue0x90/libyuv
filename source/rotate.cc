@@ -43,17 +43,17 @@ void TransposePlane(const uint8_t* src,
 #endif
 #if defined(HAS_TRANSPOSEWX8_SSSE3)
   if (TestCpuFlag(kCpuHasSSSE3)) {
-    TransposeWx8 = TransposeWx8_Any_SSSE3;
+    TransposeWx16 = TransposeWx8_Any_SSSE3;
     if (IS_ALIGNED(width, 8)) {
-      TransposeWx8 = TransposeWx8_SSSE3;
+      TransposeWx16 = TransposeWx8_SSSE3;
     }
   }
 #endif
 #if defined(HAS_TRANSPOSEWX8_FAST_SSSE3)
   if (TestCpuFlag(kCpuHasSSSE3)) {
-    TransposeWx8 = TransposeWx8_Fast_Any_SSSE3;
+    TransposeWx16 = TransposeWx8_Fast_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
-      TransposeWx8 = TransposeWx8_Fast_SSSE3;
+      TransposeWx16 = TransposeWx8_Fast_SSSE3;
     }
   }
 #endif
@@ -226,9 +226,9 @@ void TransposeUV(const uint8_t* src,
 #endif
 #if defined(HAS_TRANSPOSEUVWX8_SSE2)
   if (TestCpuFlag(kCpuHasSSE2)) {
-    TransposeUVWx8 = TransposeUVWx8_Any_SSE2;
+    TransposeUVWx16 = TransposeUVWx8_Any_SSE2;
     if (IS_ALIGNED(width, 8)) {
-      TransposeUVWx8 = TransposeUVWx8_SSE2;
+      TransposeUVWx16 = TransposeUVWx8_SSE2;
     }
   }
 #endif
