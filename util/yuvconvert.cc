@@ -235,7 +235,7 @@ int main(int argc, const char* argv[]) {
   const int uv_size = ((dst_width + 1) / 2) * ((dst_height + 1) / 2);
   const size_t total_size = y_size + 2 * uv_size;
 #if defined(_MSC_VER)
-  _fseeki64(file_org,
+  fseeko64(file_org,
             static_cast<__int64>(num_skip_org) * static_cast<__int64>(org_size),
             SEEK_SET);
 #else
