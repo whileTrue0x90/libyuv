@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fb82503_b7abd5cc",
+        "filename": "source/rotate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-02-06T00:31:54Z",
+      "side": 1,
+      "message": "tidy went wrong here.  reverting.",
+      "revId": "3b77679b26d97d0a3ed2f284a3c9fd1a5be02309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
