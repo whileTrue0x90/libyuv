@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1de220ea_cb72ed91",
+        "filename": "include/libyuv/basic_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-02-06T00:10:02Z",
+      "side": 1,
+      "message": "Reverted this change, but it appears to be a clang-tidy bug, so every time I run clang-tidy it makes this change.",
+      "parentUuid": "79ee0e7d_b56677e2",
+      "range": {
+        "startLine": 21,
+        "startChar": 24,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "1e895128e804ea069b3f4c4d31e043f05fd41c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c802d5f_d73f71d6",
         "filename": "include/libyuv/convert_from_argb.h",
         "patchSetId": 5
@@ -91,6 +115,30 @@
       "revId": "1e895128e804ea069b3f4c4d31e043f05fd41c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0a586e_37ef37fa",
+        "filename": "source/row_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-02-06T00:10:02Z",
+      "side": 1,
+      "message": "Done.\nThis is a clang-tidy bug.  I\u0027ve upgraded to clang-tidy 5.0 from 3.8.  Will need to watch if this happens again.",
+      "parentUuid": "43d6ac61_2a0942a7",
+      "range": {
+        "startLine": 258,
+        "startChar": 17,
+        "endLine": 258,
+        "endChar": 19
+      },
+      "revId": "1e895128e804ea069b3f4c4d31e043f05fd41c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
