@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e066e7f4_fdd6684a",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-02-06T01:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3810738_b18c408a",
+      "range": {
+        "startLine": 1947,
+        "startChar": 3,
+        "endLine": 1947,
+        "endChar": 4
+      },
+      "revId": "1e895128e804ea069b3f4c4d31e043f05fd41c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43d6ac61_2a0942a7",
         "filename": "source/row_win.cc",
         "patchSetId": 5
