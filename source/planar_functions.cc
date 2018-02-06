@@ -3221,7 +3221,7 @@ LIBYUV_API
 int ARGBExtractAlpha(const uint8_t* src_argb,
                      int src_stride,
                      uint8_t* dst_a,
-                     int dst_stride,
+                     int dst_stride_a,
                      int width,
                      int height) {
   if (!src_argb || !dst_a || width <= 0 || height == 0) {
@@ -3234,10 +3234,10 @@ int ARGBExtractAlpha(const uint8_t* src_argb,
     src_stride = -src_stride;
   }
   // Coalesce rows.
-  if (src_stride == width * 4 && dst_stride == width) {
+  if (src_stride == width * 4 && dst_stride_a == width) {
     width *= height;
     height = 1;
-    src_stride = dst_stride = 0;
+    src_stride = dst_stride_a = 0;
   }
   void (*ARGBExtractAlphaRow)(const uint8_t* src_argb, uint8_t* dst_a,
                               int width) = ARGBExtractAlphaRow_C;
@@ -3269,7 +3269,7 @@ int ARGBExtractAlpha(const uint8_t* src_argb,
   for (int y = 0; y < height; ++y) {
     ARGBExtractAlphaRow(src_argb, dst_a, width);
     src_argb += src_stride;
-    dst_a += dst_stride;
+    dst_a += dst_stride_a;
   }
   return 0;
 }
