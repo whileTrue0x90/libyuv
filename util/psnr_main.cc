@@ -482,7 +482,7 @@ int main(int argc, const char* argv[]) {
         printf("%5d", number_of_frames);
       }
       if (do_psnr) {
-        metric distorted_frame;
+        metric distorted_frame = {};
         metric* cur_distortion_psnr = &distortion_psnr[cur_rec];
         bool ismin = UpdateMetrics(ch_org, ch_rec, y_size, uv_size, total_size,
                                    number_of_frames, cur_distortion_psnr,
@@ -496,7 +496,7 @@ int main(int argc, const char* argv[]) {
         }
       }
       if (do_ssim) {
-        metric distorted_frame;
+        metric distorted_frame = {};
         metric* cur_distortion_ssim = &distortion_ssim[cur_rec];
         bool ismin = UpdateMetrics(ch_org, ch_rec, y_size, uv_size, total_size,
                                    number_of_frames, cur_distortion_ssim,
