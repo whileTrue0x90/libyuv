@@ -8,10 +8,10 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 
 #include "libyuv/basic_types.h"
 #include "libyuv/compare.h"
@@ -24,9 +24,9 @@ int main(int argc, char** argv) {
     return -1;
   }
   char* name1 = argv[1];
-  char* name2 = (argc > 2) ? argv[2] : NULL;
+  char* name2 = (argc > 2) ? argv[2] : nullptr;
   FILE* fin1 = fopen(name1, "rb");
-  FILE* fin2 = name2 ? fopen(name2, "rb") : NULL;
+  FILE* fin2 = name2 ? fopen(name2, "rb") : nullptr;
 
   const int kBlockSize = 32768;
   uint8_t buf1[kBlockSize];

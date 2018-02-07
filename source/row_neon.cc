@@ -10,7 +10,7 @@
 
 #include "libyuv/row.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 #ifdef __cplusplus
 namespace libyuv {

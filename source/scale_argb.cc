@@ -10,8 +10,8 @@
 
 #include "libyuv/scale.h"
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 
 #include "libyuv/cpu_id.h"
 #include "libyuv/planar_functions.h"  // For CopyARGB
@@ -990,7 +990,7 @@ int YUVToARGBScaleClip(const uint8_t* src_y,
                        int clip_width,
                        int clip_height,
                        enum FilterMode filtering) {
-  uint8_t* argb_buffer = (uint8_t*)malloc(src_width * src_height * 4);
+  auto* argb_buffer = (uint8_t*)malloc(src_width * src_height * 4);
   int r;
   (void)src_fourcc;  // TODO(fbarchard): implement and/or assert.
   (void)dst_fourcc;

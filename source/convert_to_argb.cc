@@ -58,11 +58,11 @@ int ConvertToARGB(const uint8_t* sample,
       (rotation && format != FOURCC_ARGB) || dst_argb == sample;
   uint8_t* dest_argb = dst_argb;
   int dest_dst_stride_argb = dst_stride_argb;
-  uint8_t* rotate_buffer = NULL;
+  uint8_t* rotate_buffer = nullptr;
   int abs_crop_height = (crop_height < 0) ? -crop_height : crop_height;
 
-  if (dst_argb == NULL || sample == NULL || src_width <= 0 || crop_width <= 0 ||
-      src_height == 0 || crop_height == 0) {
+  if (dst_argb == nullptr || sample == nullptr || src_width <= 0 ||
+      crop_width <= 0 || src_height == 0 || crop_height == 0) {
     return -1;
   }
   if (src_height < 0) {

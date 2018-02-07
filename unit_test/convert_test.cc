@@ -8,9 +8,9 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <assert.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cassert>
+#include <cstdlib>
+#include <ctime>
 
 #include "libyuv/row.h" /* For ARGBToAR30Row_AVX2 */
 
@@ -1320,7 +1320,7 @@ TEST_F(LibYUVConvertTest, InvalidateJpeg) {
   align_buffer_page_end(orig_pixels, kSize);
 
   // NULL pointer. Expect fail.
-  EXPECT_FALSE(ValidateJpeg(NULL, kSize));
+  EXPECT_FALSE(ValidateJpeg(nullptr, kSize));
 
   // Negative size. Expect fail.
   EXPECT_FALSE(ValidateJpeg(orig_pixels, -1));
@@ -2215,7 +2215,7 @@ TEST_F(LibYUVConvertTest, TestH010ToARGB) {
   memset(histogram_r, 0, sizeof(histogram_r));
   align_buffer_page_end(orig_yuv, kSize * 2 + kSize / 2 * 2 * 2);
   align_buffer_page_end(argb_pixels, kSize * 4);
-  uint16_t* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
+  auto* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
   uint16_t* orig_u = orig_y + kSize;
   uint16_t* orig_v = orig_u + kSize / 2;
 
@@ -2275,7 +2275,7 @@ TEST_F(LibYUVConvertTest, TestH010ToAR30) {
 
   align_buffer_page_end(orig_yuv, kSize * 2 + kSize / 2 * 2 * 2);
   align_buffer_page_end(ar30_pixels, kSize * 4);
-  uint16_t* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
+  auto* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
   uint16_t* orig_u = orig_y + kSize;
   uint16_t* orig_v = orig_u + kSize / 2;
 

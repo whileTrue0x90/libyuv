@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 
 #include "../unit_test/unit_test.h"
 #include "libyuv/convert_argb.h"
@@ -332,8 +332,7 @@ int YUVToARGBScaleReference2(const uint8_t* src_y,
                              int clip_width,
                              int clip_height,
                              enum FilterMode filtering) {
-  uint8_t* argb_buffer =
-      static_cast<uint8_t*>(malloc(src_width * src_height * 4));
+  auto* argb_buffer = static_cast<uint8_t*>(malloc(src_width * src_height * 4));
   int r;
   I420ToARGB(src_y, src_stride_y, src_u, src_stride_u, src_v, src_stride_v,
              argb_buffer, src_width * 4, src_width, src_height);

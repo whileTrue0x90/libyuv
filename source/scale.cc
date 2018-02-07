@@ -10,8 +10,8 @@
 
 #include "libyuv/scale.h"
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 
 #include "libyuv/cpu_id.h"
 #include "libyuv/planar_functions.h"  // For CopyPlane
@@ -1347,7 +1347,7 @@ void ScalePlaneBilinearUp_16(int src_width,
     const int kRowSize = (dst_width + 31) & ~31;
     align_buffer_64(row, kRowSize * 4);
 
-    uint16_t* rowptr = (uint16_t*)row;
+    auto* rowptr = (uint16_t*)row;
     int rowstride = kRowSize;
     int lasty = yi;
 

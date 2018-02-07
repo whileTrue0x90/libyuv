@@ -2935,7 +2935,7 @@ static const uvec8 kShuffleMirror = {15u, 14u, 13u, 12u, 11u, 10u, 9u, 8u,
                                      7u,  6u,  5u,  4u,  3u,  2u,  1u, 0u};
 
 void MirrorRow_SSSE3(const uint8_t* src, uint8_t* dst, int width) {
-  intptr_t temp_width = (intptr_t)(width);
+  auto temp_width = (intptr_t)(width);
   asm volatile(
 
       "movdqa    %3,%%xmm5                       \n"
@@ -2958,7 +2958,7 @@ void MirrorRow_SSSE3(const uint8_t* src, uint8_t* dst, int width) {
 
 #ifdef HAS_MIRRORROW_AVX2
 void MirrorRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
-  intptr_t temp_width = (intptr_t)(width);
+  auto temp_width = (intptr_t)(width);
   asm volatile(
 
       "vbroadcastf128 %3,%%ymm5                  \n"
@@ -2989,7 +2989,7 @@ void MirrorUVRow_SSSE3(const uint8_t* src,
                        uint8_t* dst_u,
                        uint8_t* dst_v,
                        int width) {
-  intptr_t temp_width = (intptr_t)(width);
+  auto temp_width = (intptr_t)(width);
   asm volatile(
       "movdqa    %4,%%xmm1                       \n"
       "lea       -0x10(%0,%3,2),%0               \n"
@@ -3017,7 +3017,7 @@ void MirrorUVRow_SSSE3(const uint8_t* src,
 #ifdef HAS_ARGBMIRRORROW_SSE2
 
 void ARGBMirrorRow_SSE2(const uint8_t* src, uint8_t* dst, int width) {
-  intptr_t temp_width = (intptr_t)(width);
+  auto temp_width = (intptr_t)(width);
   asm volatile(
 
       "lea       -0x10(%0,%2,4),%0               \n"
@@ -3043,7 +3043,7 @@ void ARGBMirrorRow_SSE2(const uint8_t* src, uint8_t* dst, int width) {
 // Shuffle table for reversing the bytes.
 static const ulvec32 kARGBShuffleMirror_AVX2 = {7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 void ARGBMirrorRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
-  intptr_t temp_width = (intptr_t)(width);
+  auto temp_width = (intptr_t)(width);
   asm volatile(
 
       "vmovdqu    %3,%%ymm5                      \n"
@@ -3690,7 +3690,7 @@ void CopyRow_AVX(const uint8_t* src, uint8_t* dst, int width) {
 #ifdef HAS_COPYROW_ERMS
 // Multiple of 1.
 void CopyRow_ERMS(const uint8_t* src, uint8_t* dst, int width) {
-  size_t width_tmp = (size_t)(width);
+  auto width_tmp = (size_t)(width);
   asm volatile(
 
       "rep movsb                      \n"
@@ -3903,7 +3903,7 @@ void ARGBCopyYToAlphaRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
 
 #ifdef HAS_SETROW_X86
 void SetRow_X86(uint8_t* dst, uint8_t v8, int width) {
-  size_t width_tmp = (size_t)(width >> 2);
+  auto width_tmp = (size_t)(width >> 2);
   const uint32_t v32 = v8 * 0x01010101u;  // Duplicate byte to all bytes.
   asm volatile(
 
@@ -3915,7 +3915,7 @@ void SetRow_X86(uint8_t* dst, uint8_t v8, int width) {
 }
 
 void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
-  size_t width_tmp = (size_t)(width);
+  auto width_tmp = (size_t)(width);
   asm volatile(
 
       "rep stosb                      \n"
@@ -3926,7 +3926,7 @@ void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
 }
 
 void ARGBSetRow_X86(uint8_t* dst_argb, uint32_t v32, int width) {
-  size_t width_tmp = (size_t)(width);
+  auto width_tmp = (size_t)(width);
   asm volatile(
 
       "rep stosl                      \n"

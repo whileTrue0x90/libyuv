@@ -28,7 +28,7 @@ namespace libyuv {
 
 #ifdef LIBYUV_HAVE_PTHREAD
 void* ThreadMain(void* arg) {
-  int* flags = static_cast<int*>(arg);
+  auto* flags = static_cast<int*>(arg);
 
   *flags = TestCpuFlag(kCpuHasSSSE3);
   return nullptr;

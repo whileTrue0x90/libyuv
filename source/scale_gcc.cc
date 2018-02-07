@@ -1072,7 +1072,7 @@ void ScaleARGBRowDownEven_SSE2(const uint8_t* src_argb,
                                int src_stepx,
                                uint8_t* dst_argb,
                                int dst_width) {
-  intptr_t src_stepx_x4 = (intptr_t)(src_stepx);
+  auto src_stepx_x4 = (intptr_t)(src_stepx);
   intptr_t src_stepx_x12;
   (void)src_stride;
   asm volatile(
@@ -1109,9 +1109,9 @@ void ScaleARGBRowDownEvenBox_SSE2(const uint8_t* src_argb,
                                   int src_stepx,
                                   uint8_t* dst_argb,
                                   int dst_width) {
-  intptr_t src_stepx_x4 = (intptr_t)(src_stepx);
+  auto src_stepx_x4 = (intptr_t)(src_stepx);
   intptr_t src_stepx_x12;
-  intptr_t row1 = (intptr_t)(src_stride);
+  auto row1 = (intptr_t)(src_stride);
   asm volatile(
       "lea       0x00(,%1,4),%1                  \n"
       "lea       0x00(%1,%1,2),%4                \n"

@@ -8,9 +8,9 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 // row.h defines SIMD_ALIGNED, overriding unit_test.h
 #include "libyuv/row.h" /* For ScaleSumSamples_Neon */
@@ -255,12 +255,12 @@ TEST_F(LibYUVPlanarTest, TestARGBComputeCumulativeSum) {
   SIMD_ALIGNED(uint8_t orig_pixels[16][16][4]);
   SIMD_ALIGNED(int32_t added_pixels[16][16][4]);
 
-  for (int y = 0; y < 16; ++y) {
+  for (auto& orig_pixel : orig_pixels) {
     for (int x = 0; x < 16; ++x) {
-      orig_pixels[y][x][0] = 1u;
-      orig_pixels[y][x][1] = 2u;
-      orig_pixels[y][x][2] = 3u;
-      orig_pixels[y][x][3] = 255u;
+      orig_pixel[x][0] = 1u;
+      orig_pixel[x][1] = 2u;
+      orig_pixel[x][2] = 3u;
+      orig_pixel[x][3] = 255u;
     }
   }
 

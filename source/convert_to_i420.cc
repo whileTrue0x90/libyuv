@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "libyuv/convert.h"
 
@@ -59,7 +59,7 @@ int ConvertToI420(const uint8_t* sample,
   int tmp_y_stride = dst_stride_y;
   int tmp_u_stride = dst_stride_u;
   int tmp_v_stride = dst_stride_v;
-  uint8_t* rotate_buffer = NULL;
+  uint8_t* rotate_buffer = nullptr;
   const int inv_crop_height =
       (src_height < 0) ? -abs_crop_height : abs_crop_height;
 

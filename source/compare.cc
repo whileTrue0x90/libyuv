@@ -10,8 +10,8 @@
 
 #include "libyuv/compare.h"
 
-#include <float.h>
-#include <math.h>
+#include <cfloat>
+#include <cmath>
 #ifdef _OPENMP
 #include <omp.h>
 #endif

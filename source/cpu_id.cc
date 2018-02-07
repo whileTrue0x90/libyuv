@@ -20,12 +20,12 @@
 #endif
 
 #if !defined(__native_client__)
-#include <stdlib.h>  // For getenv()
+#include <cstdlib>  // For getenv()
 #endif
 
 // For ArmCpuCaps() but unittested on all platforms
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 #ifdef __cplusplus
 namespace libyuv {
@@ -214,7 +214,7 @@ static LIBYUV_BOOL TestEnv(const char*) {
 }
 #endif
 
-static SAFEBUFFERS int GetCpuFlags(void) {
+static SAFEBUFFERS int GetCpuFlags() {
   int cpu_info = 0;
 #if !defined(__pnacl__) && !defined(__CLR_VER) &&                   \
     (defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || \

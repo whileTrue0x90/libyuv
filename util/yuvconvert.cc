@@ -15,10 +15,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstddef>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include "libyuv/convert.h"
 #include "libyuv/planar_functions.h"
@@ -194,17 +194,17 @@ int main(int argc, const char* argv[]) {
 
   // Open original file (first file argument)
   FILE* const file_org = fopen(argv[fileindex_org], "rb");
-  if (file_org == NULL) {
+  if (file_org == nullptr) {
     fprintf(stderr, "Cannot open %s\n", argv[fileindex_org]);
     exit(1);
   }
 
   // Open all files to convert to
-  FILE** file_rec = new FILE*[num_rec];
+  auto** file_rec = new FILE*[num_rec];
   memset(file_rec, 0, num_rec * sizeof(FILE*));  // NOLINT
   for (int cur_rec = 0; cur_rec < num_rec; ++cur_rec) {
     file_rec[cur_rec] = fopen(argv[fileindex_rec + cur_rec], "wb");
-    if (file_rec[cur_rec] == NULL) {
+    if (file_rec[cur_rec] == nullptr) {
       fprintf(stderr, "Cannot open %s\n", argv[fileindex_rec + cur_rec]);
       fclose(file_org);
       for (int i = 0; i < cur_rec; ++i) {
@@ -215,8 +215,8 @@ int main(int argc, const char* argv[]) {
     }
   }
 
-  bool org_is_yuv = strstr(argv[fileindex_org], "_P420.") != NULL;
-  bool org_is_argb = strstr(argv[fileindex_org], "_ARGB.") != NULL;
+  bool org_is_yuv = strstr(argv[fileindex_org], "_P420.") != nullptr;
+  bool org_is_argb = strstr(argv[fileindex_org], "_ARGB.") != nullptr;
   if (!org_is_yuv && !org_is_argb) {
     fprintf(stderr, "Original format unknown %s\n", argv[fileindex_org]);
     exit(1);
@@ -242,10 +242,10 @@ int main(int argc, const char* argv[]) {
   fseek(file_org, num_skip_org * total_size, SEEK_SET);
 #endif
 
-  uint8_t* const ch_org = new uint8_t[org_size];
-  uint8_t* const ch_dst = new uint8_t[dst_size];
-  uint8_t* const ch_rec = new uint8_t[total_size];
-  if (ch_org == NULL || ch_rec == NULL) {
+  auto* const ch_org = new uint8_t[org_size];
+  auto* const ch_dst = new uint8_t[dst_size];
+  auto* const ch_rec = new uint8_t[total_size];
+  if (ch_org == nullptr || ch_rec == nullptr) {
     fprintf(stderr, "No memory available\n");
     fclose(file_org);
     for (int i = 0; i < num_rec; ++i) {
@@ -306,9 +306,10 @@ int main(int argc, const char* argv[]) {
                       ch_dst, dst_width * 4, dst_width, dst_height,
                       static_cast<libyuv::FilterMode>(filter));
       }
-      bool rec_is_yuv = strstr(argv[fileindex_rec + cur_rec], "_P420.") != NULL;
+      bool rec_is_yuv =
+          strstr(argv[fileindex_rec + cur_rec], "_P420.") != nullptr;
       bool rec_is_argb =
-          strstr(argv[fileindex_rec + cur_rec], "_ARGB.") != NULL;
+          strstr(argv[fileindex_rec + cur_rec], "_ARGB.") != nullptr;
       if (!rec_is_yuv && !rec_is_argb) {
         fprintf(stderr, "Output format unknown %s\n",
                 argv[fileindex_rec + cur_rec]);

@@ -11,12 +11,12 @@
 #include "libyuv/mjpeg_decoder.h"
 
 #ifdef HAVE_JPEG
-#include <assert.h>
+#include <cassert>
 
 #if !defined(__pnacl__) && !defined(__CLR_VER) && \
     !defined(COVERAGE_ENABLED) && !defined(TARGET_IPHONE_SIMULATOR)
 // Must be included before jpeglib.
-#include <setjmp.h>
+#include <csetjmp>
 #define HAVE_SETJMP
 
 #if defined(_MSC_VER)
@@ -67,10 +67,10 @@ void OutputHandler(jpeg_common_struct* cinfo);
 MJpegDecoder::MJpegDecoder()
     : has_scanline_padding_(LIBYUV_FALSE),
       num_outbufs_(0),
-      scanlines_(NULL),
-      scanlines_sizes_(NULL),
-      databuf_(NULL),
-      databuf_strides_(NULL) {
+      scanlines_(nullptr),
+      scanlines_sizes_(nullptr),
+      databuf_(nullptr),
+      databuf_strides_(nullptr) {
   decompress_struct_ = new jpeg_decompress_struct;
   source_mgr_ = new jpeg_source_mgr;
 #ifdef HAVE_SETJMP
@@ -80,7 +80,7 @@ MJpegDecoder::MJpegDecoder()
   error_mgr_->base.error_exit = &ErrorHandler;
   error_mgr_->base.output_message = &OutputHandler;
 #endif
-  decompress_struct_->client_data = NULL;
+  decompress_struct_->client_data = nullptr;
   source_mgr_->init_source = &init_source;
   source_mgr_->fill_input_buffer = &fill_input_buffer;
   source_mgr_->skip_input_data = &skip_input_data;
@@ -414,7 +414,7 @@ void init_source(j_decompress_ptr cinfo) {
 }
 
 boolean fill_input_buffer(j_decompress_ptr cinfo) {
-  BufferVector* buf_vec = reinterpret_cast<BufferVector*>(cinfo->client_data);
+  auto* buf_vec = reinterpret_cast<BufferVector*>(cinfo->client_data);
   if (buf_vec->pos >= buf_vec->len) {
     assert(0 && "No more data");
     // ERROR: No more data
@@ -449,7 +449,7 @@ void ErrorHandler(j_common_ptr cinfo) {
 // ERROR: Error in jpeglib: buf
 #endif
 
-  SetJmpErrorMgr* mgr = reinterpret_cast<SetJmpErrorMgr*>(cinfo->err);
+  auto* mgr = reinterpret_cast<SetJmpErrorMgr*>(cinfo->err);
   // This rewinds the call stack to the point of the corresponding setjmp()
   // and causes it to return (for a second time) with value 1.
   longjmp(mgr->setjmp_buffer, 1);
@@ -475,9 +475,9 @@ void MJpegDecoder::AllocOutputBuffers(int num_outbufs) {
     databuf_strides_ = new int[num_outbufs];
 
     for (int i = 0; i < num_outbufs; ++i) {
-      scanlines_[i] = NULL;
+      scanlines_[i] = nullptr;
       scanlines_sizes_[i] = 0;
-      databuf_[i] = NULL;
+      databuf_[i] = nullptr;
       databuf_strides_[i] = 0;
     }
 
@@ -494,10 +494,10 @@ void MJpegDecoder::DestroyOutputBuffers() {
   delete[] databuf_;
   delete[] scanlines_sizes_;
   delete[] databuf_strides_;
-  scanlines_ = NULL;
-  databuf_ = NULL;
-  scanlines_sizes_ = NULL;
-  databuf_strides_ = NULL;
+  scanlines_ = nullptr;
+  databuf_ = nullptr;
+  scanlines_sizes_ = nullptr;
+  databuf_strides_ = nullptr;
   num_outbufs_ = 0;
 }
 

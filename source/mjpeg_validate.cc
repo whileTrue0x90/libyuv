@@ -10,7 +10,7 @@
 
 #include "libyuv/mjpeg_decoder.h"
 
-#include <string.h>  // For memchr.
+#include <cstring>  // For memchr.
 
 #ifdef __cplusplus
 namespace libyuv {
@@ -25,7 +25,7 @@ static LIBYUV_BOOL ScanEOI(const uint8_t* sample, size_t sample_size) {
     while (it < end) {
       // TODO(fbarchard): scan for 0xd9 instead.
       it = (const uint8_t*)(memchr(it, 0xff, end - it));
-      if (it == NULL) {
+      if (it == nullptr) {
         break;
       }
       if (it[1] == 0xd9) {
