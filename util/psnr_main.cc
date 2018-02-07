@@ -70,7 +70,7 @@ bool ExtractResolutionFromFilename(const char* name,
                                    int* height_ptr) {
   // Isolate the .width_height. section of the filename by searching for a
   // dot or underscore followed by a digit.
-  for (int i = 0; name[i]; ++i) {
+  for (int i = 0; name[i] != 0; ++i) {
     if ((name[i] == '.' || name[i] == '_') && name[i + 1] >= '0' &&
         name[i + 1] <= '9') {
       int n = sscanf(name + i + 1, "%dx%d", width_ptr, height_ptr);  // NOLINT
@@ -156,32 +156,33 @@ void ParseOptions(int argc, const char* argv[]) {
     PrintHelp(argv[0]);
   }
   for (int c = 1; c < argc; ++c) {
-    if (!strcmp(argv[c], "-v")) {
+    if (strcmp(argv[c], "-v") == 0) {
       verbose = true;
-    } else if (!strcmp(argv[c], "-q")) {
+    } else if (strcmp(argv[c], "-q") == 0) {
       quiet = true;
-    } else if (!strcmp(argv[c], "-n")) {
+    } else if (strcmp(argv[c], "-n") == 0) {
       show_name = true;
-    } else if (!strcmp(argv[c], "-psnr")) {
+    } else if (strcmp(argv[c], "-psnr") == 0) {
       do_psnr = true;
-    } else if (!strcmp(argv[c], "-mse")) {
+    } else if (strcmp(argv[c], "-mse") == 0) {
       do_mse = true;
-    } else if (!strcmp(argv[c], "-ssim")) {
+    } else if (strcmp(argv[c], "-ssim") == 0) {
       do_ssim = true;
-    } else if (!strcmp(argv[c], "-lssim")) {
+    } else if (strcmp(argv[c], "-lssim") == 0) {
       do_ssim = true;
       do_lssim = true;
-    } else if (!strcmp(argv[c], "-swap")) {
+    } else if (strcmp(argv[c], "-swap") == 0) {
       do_swap_uv = true;
-    } else if (!strcmp(argv[c], "-h") || !strcmp(argv[c], "-help")) {
+    } else if ((strcmp(argv[c], "-h") == 0) ||
+               (strcmp(argv[c], "-help") == 0)) {
       PrintHelp(argv[0]);
-    } else if (!strcmp(argv[c], "-s") && c + 2 < argc) {
+    } else if ((strcmp(argv[c], "-s") == 0) && c + 2 < argc) {
       image_width = atoi(argv[++c]);   // NOLINT
       image_height = atoi(argv[++c]);  // NOLINT
-    } else if (!strcmp(argv[c], "-skip") && c + 2 < argc) {
+    } else if ((strcmp(argv[c], "-skip") == 0) && c + 2 < argc) {
       num_skip_org = atoi(argv[++c]);  // NOLINT
       num_skip_rec = atoi(argv[++c]);  // NOLINT
-    } else if (!strcmp(argv[c], "-frames") && c + 1 < argc) {
+    } else if ((strcmp(argv[c], "-frames") == 0) && c + 1 < argc) {
       num_frames = atoi(argv[++c]);  // NOLINT
 #ifdef _OPENMP
     } else if (!strcmp(argv[c], "-t") && c + 1 < argc) {
@@ -435,7 +436,7 @@ int main(int argc, const char* argv[]) {
 
   int number_of_frames;
   for (number_of_frames = 0;; ++number_of_frames) {
-    if (num_frames && number_of_frames >= num_frames) {
+    if ((num_frames != 0) && number_of_frames >= num_frames) {
       break;
     }
 

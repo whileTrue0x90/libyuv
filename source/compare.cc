@@ -35,7 +35,7 @@ uint32_t HashDjb2(const uint8_t* src, uint64_t count, uint32_t seed) {
   uint32_t (*HashDjb2_SSE)(const uint8_t* src, int count, uint32_t seed) =
       HashDjb2_C;
 #if defined(HAS_HASHDJB2_SSE41)
-  if (TestCpuFlag(kCpuHasSSE41)) {
+  if (TestCpuFlag(kCpuHasSSE41) != 0) {
     HashDjb2_SSE = HashDjb2_SSE41;
   }
 #endif
@@ -51,13 +51,13 @@ uint32_t HashDjb2(const uint8_t* src, uint64_t count, uint32_t seed) {
     count -= kBlockSize;
   }
   remainder = (int)count & ~15;
-  if (remainder) {
+  if (remainder != 0) {
     seed = HashDjb2_SSE(src, remainder, seed);
     src += remainder;
     count -= remainder;
   }
   remainder = (int)count & 15;
-  if (remainder) {
+  if (remainder != 0) {
     seed = HashDjb2_C(src, remainder, seed);
   }
   return seed;
@@ -80,7 +80,7 @@ static uint32_t ARGBDetectRow_C(const uint8_t* argb, int width) {
     }
     argb += 8;
   }
-  if (width & 1) {
+  if ((width & 1) != 0) {
     if (argb[0] != 255) {  // First byte is not Alpha of 255, so not ARGB.
       return FOURCC_BGRA;
     }
@@ -135,17 +135,17 @@ uint64_t ComputeHammingDistance(const uint8_t* src_a,
   }
 #endif
 #if defined(HAS_HAMMINGDISTANCE_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     HammingDistance = HammingDistance_SSSE3;
   }
 #endif
 #if defined(HAS_HAMMINGDISTANCE_SSE42)
-  if (TestCpuFlag(kCpuHasSSE42)) {
+  if (TestCpuFlag(kCpuHasSSE42) != 0) {
     HammingDistance = HammingDistance_SSE42;
   }
 #endif
 #if defined(HAS_HAMMINGDISTANCE_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     HammingDistance = HammingDistance_AVX2;
   }
 #endif
@@ -162,13 +162,13 @@ uint64_t ComputeHammingDistance(const uint8_t* src_a,
   }
   src_a += count & ~(kBlockSize - 1);
   src_b += count & ~(kBlockSize - 1);
-  if (remainder) {
+  if (remainder != 0) {
     diff += HammingDistance(src_a, src_b, remainder);
     src_a += remainder;
     src_b += remainder;
   }
   remainder = count & (kSimdSize - 1);
-  if (remainder) {
+  if (remainder != 0) {
     diff += HammingDistance_C(src_a, src_b, remainder);
   }
   return diff;
@@ -194,7 +194,7 @@ uint64_t ComputeSumSquareError(const uint8_t* src_a,
   }
 #endif
 #if defined(HAS_SUMSQUAREERROR_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     // Note only used for multiples of 16 so count is not checked.
     SumSquareError = SumSquareError_SSE2;
   }
@@ -218,13 +218,13 @@ uint64_t ComputeSumSquareError(const uint8_t* src_a,
   }
   src_a += count & ~(kBlockSize - 1);
   src_b += count & ~(kBlockSize - 1);
-  if (remainder) {
+  if (remainder != 0) {
     sse += SumSquareError(src_a, src_b, remainder);
     src_a += remainder;
     src_b += remainder;
   }
   remainder = count & 31;
-  if (remainder) {
+  if (remainder != 0) {
     sse += SumSquareError_C(src_a, src_b, remainder);
   }
   return sse;

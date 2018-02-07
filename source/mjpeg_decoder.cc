@@ -103,7 +103,7 @@ MJpegDecoder::~MJpegDecoder() {
 }
 
 LIBYUV_BOOL MJpegDecoder::LoadFrame(const uint8_t* src, size_t src_len) {
-  if (!ValidateJpeg(src, src_len)) {
+  if (ValidateJpeg(src, src_len) == 0) {
     return LIBYUV_FALSE;
   }
 
@@ -126,7 +126,7 @@ LIBYUV_BOOL MJpegDecoder::LoadFrame(const uint8_t* src, size_t src_len) {
   for (int i = 0; i < num_outbufs_; ++i) {
     int scanlines_size = GetComponentScanlinesPerImcuRow(i);
     if (scanlines_sizes_[i] != scanlines_size) {
-      if (scanlines_[i]) {
+      if (scanlines_[i] != 0) {
         delete scanlines_[i];
       }
       scanlines_[i] = new uint8_t*[scanlines_size];
@@ -142,7 +142,7 @@ LIBYUV_BOOL MJpegDecoder::LoadFrame(const uint8_t* src, size_t src_len) {
     int databuf_stride = GetComponentStride(i);
     int databuf_size = scanlines_size * databuf_stride;
     if (databuf_strides_[i] != databuf_stride) {
-      if (databuf_[i]) {
+      if (databuf_[i] != 0) {
         delete databuf_[i];
       }
       databuf_[i] = new uint8_t[databuf_size];
@@ -258,7 +258,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToBuffers(uint8_t** planes,
     return LIBYUV_FALSE;
   }
 #endif
-  if (!StartDecode()) {
+  if (StartDecode() == 0) {
     return LIBYUV_FALSE;
   }
   SetScanlinePointers(databuf_);
@@ -271,7 +271,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToBuffers(uint8_t** planes,
     // There is no API to skip lines in the output data, so we read them
     // into the temp buffer.
     while (skip >= GetImageScanlinesPerImcuRow()) {
-      if (!DecodeImcuRow()) {
+      if (DecodeImcuRow() == 0) {
         FinishDecode();
         return LIBYUV_FALSE;
       }
@@ -280,7 +280,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToBuffers(uint8_t** planes,
     if (skip > 0) {
       // Have a partial iMCU row left over to skip. Must read it and then
       // copy the parts we want into the destination.
-      if (!DecodeImcuRow()) {
+      if (DecodeImcuRow() == 0) {
         FinishDecode();
         return LIBYUV_FALSE;
       }
@@ -303,7 +303,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToBuffers(uint8_t** planes,
   // Read full MCUs but cropped horizontally
   for (; lines_left > GetImageScanlinesPerImcuRow();
        lines_left -= GetImageScanlinesPerImcuRow()) {
-    if (!DecodeImcuRow()) {
+    if (DecodeImcuRow() == 0) {
       FinishDecode();
       return LIBYUV_FALSE;
     }
@@ -317,7 +317,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToBuffers(uint8_t** planes,
 
   if (lines_left > 0) {
     // Have a partial iMCU row left over to decode.
-    if (!DecodeImcuRow()) {
+    if (DecodeImcuRow() == 0) {
       FinishDecode();
       return LIBYUV_FALSE;
     }
@@ -348,7 +348,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToCallback(CallbackFunction fn,
     return LIBYUV_FALSE;
   }
 #endif
-  if (!StartDecode()) {
+  if (StartDecode() == 0) {
     return LIBYUV_FALSE;
   }
   SetScanlinePointers(databuf_);
@@ -357,7 +357,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToCallback(CallbackFunction fn,
   int skip = (GetHeight() - dst_height) / 2;
   if (skip > 0) {
     while (skip >= GetImageScanlinesPerImcuRow()) {
-      if (!DecodeImcuRow()) {
+      if (DecodeImcuRow() == 0) {
         FinishDecode();
         return LIBYUV_FALSE;
       }
@@ -365,7 +365,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToCallback(CallbackFunction fn,
     }
     if (skip > 0) {
       // Have a partial iMCU row left over to skip.
-      if (!DecodeImcuRow()) {
+      if (DecodeImcuRow() == 0) {
         FinishDecode();
         return LIBYUV_FALSE;
       }
@@ -392,7 +392,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToCallback(CallbackFunction fn,
   // Read full MCUs until we get to the crop point.
   for (; lines_left >= GetImageScanlinesPerImcuRow();
        lines_left -= GetImageScanlinesPerImcuRow()) {
-    if (!DecodeImcuRow()) {
+    if (DecodeImcuRow() == 0) {
       FinishDecode();
       return LIBYUV_FALSE;
     }
@@ -400,7 +400,7 @@ LIBYUV_BOOL MJpegDecoder::DecodeToCallback(CallbackFunction fn,
   }
   if (lines_left > 0) {
     // Have a partial iMCU row left over to decode.
-    if (!DecodeImcuRow()) {
+    if (DecodeImcuRow() == 0) {
       FinishDecode();
       return LIBYUV_FALSE;
     }
@@ -513,7 +513,7 @@ LIBYUV_BOOL MJpegDecoder::StartDecode() {
   // Blocky but fast:
   decompress_struct_->do_block_smoothing = (boolean)(LIBYUV_FALSE);
 
-  if (!jpeg_start_decompress(decompress_struct_)) {
+  if (jpeg_start_decompress(decompress_struct_) == 0) {
     // ERROR: Couldn't start JPEG decompressor";
     return LIBYUV_FALSE;
   }
@@ -538,23 +538,23 @@ void MJpegDecoder::SetScanlinePointers(uint8_t** data) {
 }
 
 inline LIBYUV_BOOL MJpegDecoder::DecodeImcuRow() {
-  return (unsigned int)(GetImageScanlinesPerImcuRow()) ==
-         jpeg_read_raw_data(decompress_struct_, scanlines_,
-                            GetImageScanlinesPerImcuRow());
+  return static_cast<int>((unsigned int)(GetImageScanlinesPerImcuRow()) ==
+                          jpeg_read_raw_data(decompress_struct_, scanlines_,
+                                             GetImageScanlinesPerImcuRow()));
 }
 
 // The helper function which recognizes the jpeg sub-sampling type.
 JpegSubsamplingType MJpegDecoder::JpegSubsamplingTypeHelper(
-    int* subsample_x,
-    int* subsample_y,
+    const int* subsample_x,
+    const int* subsample_y,
     int number_of_components) {
   if (number_of_components == 3) {  // Color images.
     if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 2 &&
         subsample_y[1] == 2 && subsample_x[2] == 2 && subsample_y[2] == 2) {
       return kJpegYuv420;
-    } else if (subsample_x[0] == 1 && subsample_y[0] == 1 &&
-               subsample_x[1] == 2 && subsample_y[1] == 1 &&
-               subsample_x[2] == 2 && subsample_y[2] == 1) {
+    }
+    if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 2 &&
+        subsample_y[1] == 1 && subsample_x[2] == 2 && subsample_y[2] == 1) {
       return kJpegYuv422;
     } else if (subsample_x[0] == 1 && subsample_y[0] == 1 &&
                subsample_x[1] == 1 && subsample_y[1] == 1 &&

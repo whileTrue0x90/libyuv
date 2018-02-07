@@ -339,16 +339,16 @@ int ARGB4444ToI420(const uint8_t* src_argb4444,
 LIBYUV_API
 int MJPGToI420(const uint8_t* sample,
                size_t sample_size,
-               uint8_t* dst_y,
-               int dst_stride_y,
-               uint8_t* dst_u,
-               int dst_stride_u,
-               uint8_t* dst_v,
-               int dst_stride_v,
-               int src_width,
-               int src_height,
-               int dst_width,
-               int dst_height);
+               uint8_t* y,
+               int y_stride,
+               uint8_t* u,
+               int u_stride,
+               uint8_t* v,
+               int v_stride,
+               int w,
+               int h,
+               int dw,
+               int dh);
 
 // Query size of MJPG in pixels.
 LIBYUV_API

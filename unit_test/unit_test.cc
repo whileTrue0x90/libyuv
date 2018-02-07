@@ -49,10 +49,10 @@ LibYUVConvertTest::LibYUVConvertTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -60,31 +60,31 @@ LibYUVConvertTest::LibYUVConvertTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
@@ -103,10 +103,10 @@ LibYUVColorTest::LibYUVColorTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -114,31 +114,31 @@ LibYUVColorTest::LibYUVColorTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
@@ -157,10 +157,10 @@ LibYUVScaleTest::LibYUVScaleTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -168,31 +168,31 @@ LibYUVScaleTest::LibYUVScaleTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
@@ -211,10 +211,10 @@ LibYUVRotateTest::LibYUVRotateTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -222,31 +222,31 @@ LibYUVRotateTest::LibYUVRotateTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
@@ -265,10 +265,10 @@ LibYUVPlanarTest::LibYUVPlanarTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -276,31 +276,31 @@ LibYUVPlanarTest::LibYUVPlanarTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
@@ -319,10 +319,10 @@ LibYUVBaseTest::LibYUVBaseTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -330,31 +330,31 @@ LibYUVBaseTest::LibYUVBaseTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);
@@ -373,10 +373,10 @@ LibYUVCompareTest::LibYUVCompareTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
-  if (repeat) {
+  if (repeat != 0) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
   }
-  if (FLAGS_libyuv_repeat) {
+  if (FLAGS_libyuv_repeat != 0) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
   }
   if (benchmark_iterations_ > 1) {
@@ -384,31 +384,31 @@ LibYUVCompareTest::LibYUVCompareTest()
     benchmark_height_ = 720;
   }
   const char* width = getenv("LIBYUV_WIDTH");
-  if (width) {
+  if (width != 0) {
     benchmark_width_ = atoi(width);  // NOLINT
   }
-  if (FLAGS_libyuv_width) {
+  if (FLAGS_libyuv_width != 0) {
     benchmark_width_ = FLAGS_libyuv_width;
   }
   const char* height = getenv("LIBYUV_HEIGHT");
-  if (height) {
+  if (height != 0) {
     benchmark_height_ = atoi(height);  // NOLINT
   }
-  if (FLAGS_libyuv_height) {
+  if (FLAGS_libyuv_height != 0) {
     benchmark_height_ = FLAGS_libyuv_height;
   }
   const char* cpu_flags = getenv("LIBYUV_FLAGS");
-  if (cpu_flags) {
+  if (cpu_flags != 0) {
     disable_cpu_flags_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_flags) {
+  if (FLAGS_libyuv_flags != 0) {
     disable_cpu_flags_ = FLAGS_libyuv_flags;
   }
   const char* cpu_info = getenv("LIBYUV_CPU_INFO");
-  if (cpu_info) {
+  if (cpu_info != 0) {
     benchmark_cpu_info_ = atoi(cpu_flags);  // NOLINT
   }
-  if (FLAGS_libyuv_cpu_info) {
+  if (FLAGS_libyuv_cpu_info != 0) {
     benchmark_cpu_info_ = FLAGS_libyuv_cpu_info;
   }
   libyuv::MaskCpuFlags(benchmark_cpu_info_);

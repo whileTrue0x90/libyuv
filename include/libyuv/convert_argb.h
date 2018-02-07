@@ -545,12 +545,12 @@ int AR30ToABGR(const uint8_t* src_ar30,
 LIBYUV_API
 int MJPGToARGB(const uint8_t* sample,
                size_t sample_size,
-               uint8_t* dst_argb,
-               int dst_stride_argb,
-               int src_width,
-               int src_height,
-               int dst_width,
-               int dst_height);
+               uint8_t* argb,
+               int argb_stride,
+               int w,
+               int h,
+               int dw,
+               int dh);
 #endif
 
 // Convert Android420 to ARGB.

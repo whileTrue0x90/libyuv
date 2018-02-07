@@ -142,21 +142,21 @@ int GetXCR0() {
 LIBYUV_API SAFEBUFFERS int ArmCpuCaps(const char* cpuinfo_name) {
   char cpuinfo_line[512];
   FILE* f = fopen(cpuinfo_name, "r");
-  if (!f) {
+  if (f == 0) {
     // Assume Neon if /proc/cpuinfo is unavailable.
     // This will occur for Chrome sandbox for Pepper or Render process.
     return kCpuHasNEON;
   }
-  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f) != 0) {
     if (memcmp(cpuinfo_line, "Features", 8) == 0) {
       char* p = strstr(cpuinfo_line, " neon");
-      if (p && (p[5] == ' ' || p[5] == '\n')) {
+      if ((p != 0) && (p[5] == ' ' || p[5] == '\n')) {
         fclose(f);
         return kCpuHasNEON;
       }
       // aarch64 uses asimd for Neon.
       p = strstr(cpuinfo_line, " asimd");
-      if (p) {
+      if (p != 0) {
         fclose(f);
         return kCpuHasNEON;
       }
@@ -172,17 +172,17 @@ LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name,
                                        const char ase[]) {
   char cpuinfo_line[512];
   FILE* f = fopen(cpuinfo_name, "r");
-  if (!f) {
+  if (f == 0) {
     // ase enabled if /proc/cpuinfo is unavailable.
     if (strcmp(ase, " msa") == 0) {
       return kCpuHasMSA;
     }
     return 0;
   }
-  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f) != 0) {
     if (memcmp(cpuinfo_line, "ASEs implemented", 16) == 0) {
       char* p = strstr(cpuinfo_line, ase);
-      if (p) {
+      if (p != 0) {
         fclose(f);
         if (strcmp(ase, " msa") == 0) {
           return kCpuHasMSA;
@@ -201,7 +201,7 @@ LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name,
 
 static LIBYUV_BOOL TestEnv(const char* name) {
   const char* var = getenv(name);
-  if (var) {
+  if (var != 0) {
     if (var[0] != '0') {
       return LIBYUV_TRUE;
     }
@@ -227,64 +227,65 @@ static SAFEBUFFERS int GetCpuFlags(void) {
   if (cpu_info0[0] >= 7) {
     CpuId(7, 0, cpu_info7);
   }
-  cpu_info = kCpuHasX86 | ((cpu_info1[3] & 0x04000000) ? kCpuHasSSE2 : 0) |
-             ((cpu_info1[2] & 0x00000200) ? kCpuHasSSSE3 : 0) |
-             ((cpu_info1[2] & 0x00080000) ? kCpuHasSSE41 : 0) |
-             ((cpu_info1[2] & 0x00100000) ? kCpuHasSSE42 : 0) |
-             ((cpu_info7[1] & 0x00000200) ? kCpuHasERMS : 0);
+  cpu_info = kCpuHasX86 | ((cpu_info1[3] & 0x04000000) != 0 ? kCpuHasSSE2 : 0) |
+             ((cpu_info1[2] & 0x00000200) != 0 ? kCpuHasSSSE3 : 0) |
+             ((cpu_info1[2] & 0x00080000) != 0 ? kCpuHasSSE41 : 0) |
+             ((cpu_info1[2] & 0x00100000) != 0 ? kCpuHasSSE42 : 0) |
+             ((cpu_info7[1] & 0x00000200) != 0 ? kCpuHasERMS : 0);
 
   // AVX requires OS saves YMM registers.
   if (((cpu_info1[2] & 0x1c000000) == 0x1c000000) &&  // AVX and OSXSave
       ((GetXCR0() & 6) == 6)) {  // Test OS saves YMM registers
-    cpu_info |= kCpuHasAVX | ((cpu_info7[1] & 0x00000020) ? kCpuHasAVX2 : 0) |
-                ((cpu_info1[2] & 0x00001000) ? kCpuHasFMA3 : 0) |
-                ((cpu_info1[2] & 0x20000000) ? kCpuHasF16C : 0);
+    cpu_info |= kCpuHasAVX |
+                ((cpu_info7[1] & 0x00000020) != 0 ? kCpuHasAVX2 : 0) |
+                ((cpu_info1[2] & 0x00001000) != 0 ? kCpuHasFMA3 : 0) |
+                ((cpu_info1[2] & 0x20000000) != 0 ? kCpuHasF16C : 0);
 
     // Detect AVX512bw
     if ((GetXCR0() & 0xe0) == 0xe0) {
-      cpu_info |= (cpu_info7[1] & 0x40000000) ? kCpuHasAVX512BW : 0;
-      cpu_info |= (cpu_info7[1] & 0x80000000) ? kCpuHasAVX512VL : 0;
-      cpu_info |= (cpu_info7[2] & 0x00000002) ? kCpuHasAVX512VBMI : 0;
-      cpu_info |= (cpu_info7[2] & 0x00000040) ? kCpuHasAVX512VBMI2 : 0;
-      cpu_info |= (cpu_info7[2] & 0x00001000) ? kCpuHasAVX512VBITALG : 0;
-      cpu_info |= (cpu_info7[2] & 0x00004000) ? kCpuHasAVX512VPOPCNTDQ : 0;
-      cpu_info |= (cpu_info7[2] & 0x00000100) ? kCpuHasGFNI : 0;
+      cpu_info |= (cpu_info7[1] & 0x40000000) != 0 ? kCpuHasAVX512BW : 0;
+      cpu_info |= (cpu_info7[1] & 0x80000000) != 0u ? kCpuHasAVX512VL : 0;
+      cpu_info |= (cpu_info7[2] & 0x00000002) != 0 ? kCpuHasAVX512VBMI : 0;
+      cpu_info |= (cpu_info7[2] & 0x00000040) != 0 ? kCpuHasAVX512VBMI2 : 0;
+      cpu_info |= (cpu_info7[2] & 0x00001000) != 0 ? kCpuHasAVX512VBITALG : 0;
+      cpu_info |= (cpu_info7[2] & 0x00004000) != 0 ? kCpuHasAVX512VPOPCNTDQ : 0;
+      cpu_info |= (cpu_info7[2] & 0x00000100) != 0 ? kCpuHasGFNI : 0;
     }
   }
 
   // TODO(fbarchard): Consider moving these to gtest
   // Environment variable overrides for testing.
-  if (TestEnv("LIBYUV_DISABLE_X86")) {
+  if (TestEnv("LIBYUV_DISABLE_X86") != 0) {
     cpu_info &= ~kCpuHasX86;
   }
-  if (TestEnv("LIBYUV_DISABLE_SSE2")) {
+  if (TestEnv("LIBYUV_DISABLE_SSE2") != 0) {
     cpu_info &= ~kCpuHasSSE2;
   }
-  if (TestEnv("LIBYUV_DISABLE_SSSE3")) {
+  if (TestEnv("LIBYUV_DISABLE_SSSE3") != 0) {
     cpu_info &= ~kCpuHasSSSE3;
   }
-  if (TestEnv("LIBYUV_DISABLE_SSE41")) {
+  if (TestEnv("LIBYUV_DISABLE_SSE41") != 0) {
     cpu_info &= ~kCpuHasSSE41;
   }
-  if (TestEnv("LIBYUV_DISABLE_SSE42")) {
+  if (TestEnv("LIBYUV_DISABLE_SSE42") != 0) {
     cpu_info &= ~kCpuHasSSE42;
   }
-  if (TestEnv("LIBYUV_DISABLE_AVX")) {
+  if (TestEnv("LIBYUV_DISABLE_AVX") != 0) {
     cpu_info &= ~kCpuHasAVX;
   }
-  if (TestEnv("LIBYUV_DISABLE_AVX2")) {
+  if (TestEnv("LIBYUV_DISABLE_AVX2") != 0) {
     cpu_info &= ~kCpuHasAVX2;
   }
-  if (TestEnv("LIBYUV_DISABLE_ERMS")) {
+  if (TestEnv("LIBYUV_DISABLE_ERMS") != 0) {
     cpu_info &= ~kCpuHasERMS;
   }
-  if (TestEnv("LIBYUV_DISABLE_FMA3")) {
+  if (TestEnv("LIBYUV_DISABLE_FMA3") != 0) {
     cpu_info &= ~kCpuHasFMA3;
   }
-  if (TestEnv("LIBYUV_DISABLE_F16C")) {
+  if (TestEnv("LIBYUV_DISABLE_F16C") != 0) {
     cpu_info &= ~kCpuHasF16C;
   }
-  if (TestEnv("LIBYUV_DISABLE_AVX512BW")) {
+  if (TestEnv("LIBYUV_DISABLE_AVX512BW") != 0) {
     cpu_info &= ~kCpuHasAVX512BW;
   }
 
@@ -319,7 +320,7 @@ static SAFEBUFFERS int GetCpuFlags(void) {
     cpu_info &= ~kCpuHasNEON;
   }
 #endif  // __arm__
-  if (TestEnv("LIBYUV_DISABLE_ASM")) {
+  if (TestEnv("LIBYUV_DISABLE_ASM") != 0) {
     cpu_info = 0;
   }
   cpu_info |= kCpuInitialized;

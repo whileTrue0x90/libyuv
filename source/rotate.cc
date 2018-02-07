@@ -42,7 +42,7 @@ void TransposePlane(const uint8_t* src,
   }
 #endif
 #if defined(HAS_TRANSPOSEWX8_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     TransposeWx8 = TransposeWx8_Any_SSSE3;
     if (IS_ALIGNED(width, 8)) {
       TransposeWx8 = TransposeWx8_SSSE3;
@@ -50,7 +50,7 @@ void TransposePlane(const uint8_t* src,
   }
 #endif
 #if defined(HAS_TRANSPOSEWX8_FAST_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     TransposeWx8 = TransposeWx8_Fast_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       TransposeWx8 = TransposeWx8_Fast_SSSE3;
@@ -143,7 +143,7 @@ void RotatePlane180(const uint8_t* src,
   }
 #endif
 #if defined(HAS_MIRRORROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     MirrorRow = MirrorRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       MirrorRow = MirrorRow_SSSE3;
@@ -151,7 +151,7 @@ void RotatePlane180(const uint8_t* src,
   }
 #endif
 #if defined(HAS_MIRRORROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     MirrorRow = MirrorRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       MirrorRow = MirrorRow_AVX2;
@@ -167,17 +167,17 @@ void RotatePlane180(const uint8_t* src,
   }
 #endif
 #if defined(HAS_COPYROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     CopyRow = IS_ALIGNED(width, 32) ? CopyRow_SSE2 : CopyRow_Any_SSE2;
   }
 #endif
 #if defined(HAS_COPYROW_AVX)
-  if (TestCpuFlag(kCpuHasAVX)) {
+  if (TestCpuFlag(kCpuHasAVX) != 0) {
     CopyRow = IS_ALIGNED(width, 64) ? CopyRow_AVX : CopyRow_Any_AVX;
   }
 #endif
 #if defined(HAS_COPYROW_ERMS)
-  if (TestCpuFlag(kCpuHasERMS)) {
+  if (TestCpuFlag(kCpuHasERMS) != 0) {
     CopyRow = CopyRow_ERMS;
   }
 #endif
@@ -225,7 +225,7 @@ void TransposeUV(const uint8_t* src,
   }
 #endif
 #if defined(HAS_TRANSPOSEUVWX8_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     TransposeUVWx8 = TransposeUVWx8_Any_SSE2;
     if (IS_ALIGNED(width, 8)) {
       TransposeUVWx8 = TransposeUVWx8_SSE2;
@@ -322,7 +322,7 @@ void RotateUV180(const uint8_t* src,
   }
 #endif
 #if defined(HAS_MIRRORUVROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3) && IS_ALIGNED(width, 16)) {
+  if ((TestCpuFlag(kCpuHasSSSE3) != 0) && IS_ALIGNED(width, 16)) {
     MirrorUVRow = MirrorUVRow_SSSE3;
   }
 #endif
@@ -351,7 +351,7 @@ int RotatePlane(const uint8_t* src,
                 int width,
                 int height,
                 enum RotationMode mode) {
-  if (!src || width <= 0 || height == 0 || !dst) {
+  if ((src == 0) || width <= 0 || height == 0 || (dst == 0)) {
     return -1;
   }
 
@@ -400,8 +400,8 @@ int I420Rotate(const uint8_t* src_y,
                enum RotationMode mode) {
   int halfwidth = (width + 1) >> 1;
   int halfheight = (height + 1) >> 1;
-  if (!src_y || !src_u || !src_v || width <= 0 || height == 0 || !dst_y ||
-      !dst_u || !dst_v) {
+  if ((src_y == 0) || (src_u == 0) || (src_v == 0) || width <= 0 ||
+      height == 0 || (dst_y == 0) || (dst_u == 0) || (dst_v == 0)) {
     return -1;
   }
 
@@ -466,8 +466,8 @@ int NV12ToI420Rotate(const uint8_t* src_y,
                      enum RotationMode mode) {
   int halfwidth = (width + 1) >> 1;
   int halfheight = (height + 1) >> 1;
-  if (!src_y || !src_uv || width <= 0 || height == 0 || !dst_y || !dst_u ||
-      !dst_v) {
+  if ((src_y == 0) || (src_uv == 0) || width <= 0 || height == 0 ||
+      (dst_y == 0) || (dst_u == 0) || (dst_v == 0)) {
     return -1;
   }
 

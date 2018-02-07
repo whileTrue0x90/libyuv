@@ -95,7 +95,7 @@ static const uvec16 kScaleAb2 = {65536 / 3, 65536 / 3, 65536 / 2, 65536 / 3,
 
 void ScaleRowDown2_SSSE3(const uint8_t* src_ptr,
                          ptrdiff_t src_stride,
-                         uint8_t* dst_ptr,
+                         const uint8_t* dst_ptr,
                          int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -121,7 +121,7 @@ void ScaleRowDown2_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown2Linear_SSSE3(const uint8_t* src_ptr,
                                ptrdiff_t src_stride,
-                               uint8_t* dst_ptr,
+                               const uint8_t* dst_ptr,
                                int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -153,7 +153,7 @@ void ScaleRowDown2Linear_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown2Box_SSSE3(const uint8_t* src_ptr,
                             ptrdiff_t src_stride,
-                            uint8_t* dst_ptr,
+                            const uint8_t* dst_ptr,
                             int dst_width) {
   asm volatile(
       "pcmpeqb    %%xmm4,%%xmm4                  \n"
@@ -193,7 +193,7 @@ void ScaleRowDown2Box_SSSE3(const uint8_t* src_ptr,
 #ifdef HAS_SCALEROWDOWN2_AVX2
 void ScaleRowDown2_AVX2(const uint8_t* src_ptr,
                         ptrdiff_t src_stride,
-                        uint8_t* dst_ptr,
+                        const uint8_t* dst_ptr,
                         int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -221,7 +221,7 @@ void ScaleRowDown2_AVX2(const uint8_t* src_ptr,
 
 void ScaleRowDown2Linear_AVX2(const uint8_t* src_ptr,
                               ptrdiff_t src_stride,
-                              uint8_t* dst_ptr,
+                              const uint8_t* dst_ptr,
                               int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -255,7 +255,7 @@ void ScaleRowDown2Linear_AVX2(const uint8_t* src_ptr,
 
 void ScaleRowDown2Box_AVX2(const uint8_t* src_ptr,
                            ptrdiff_t src_stride,
-                           uint8_t* dst_ptr,
+                           const uint8_t* dst_ptr,
                            int dst_width) {
   asm volatile(
       "vpcmpeqb   %%ymm4,%%ymm4,%%ymm4           \n"
@@ -297,7 +297,7 @@ void ScaleRowDown2Box_AVX2(const uint8_t* src_ptr,
 
 void ScaleRowDown4_SSSE3(const uint8_t* src_ptr,
                          ptrdiff_t src_stride,
-                         uint8_t* dst_ptr,
+                         const uint8_t* dst_ptr,
                          int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -328,7 +328,7 @@ void ScaleRowDown4_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown4Box_SSSE3(const uint8_t* src_ptr,
                             ptrdiff_t src_stride,
-                            uint8_t* dst_ptr,
+                            const uint8_t* dst_ptr,
                             int dst_width) {
   intptr_t stridex3;
   asm volatile(
@@ -383,7 +383,7 @@ void ScaleRowDown4Box_SSSE3(const uint8_t* src_ptr,
 #ifdef HAS_SCALEROWDOWN4_AVX2
 void ScaleRowDown4_AVX2(const uint8_t* src_ptr,
                         ptrdiff_t src_stride,
-                        uint8_t* dst_ptr,
+                        const uint8_t* dst_ptr,
                         int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -417,7 +417,7 @@ void ScaleRowDown4_AVX2(const uint8_t* src_ptr,
 
 void ScaleRowDown4Box_AVX2(const uint8_t* src_ptr,
                            ptrdiff_t src_stride,
-                           uint8_t* dst_ptr,
+                           const uint8_t* dst_ptr,
                            int dst_width) {
   asm volatile(
       "vpcmpeqb   %%ymm4,%%ymm4,%%ymm4           \n"
@@ -472,7 +472,7 @@ void ScaleRowDown4Box_AVX2(const uint8_t* src_ptr,
 
 void ScaleRowDown34_SSSE3(const uint8_t* src_ptr,
                           ptrdiff_t src_stride,
-                          uint8_t* dst_ptr,
+                          const uint8_t* dst_ptr,
                           int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -511,7 +511,7 @@ void ScaleRowDown34_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown34_1_Box_SSSE3(const uint8_t* src_ptr,
                                 ptrdiff_t src_stride,
-                                uint8_t* dst_ptr,
+                                const uint8_t* dst_ptr,
                                 int dst_width) {
   asm volatile(
       "movdqa    %0,%%xmm2                       \n"  // kShuf01
@@ -577,7 +577,7 @@ void ScaleRowDown34_1_Box_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown34_0_Box_SSSE3(const uint8_t* src_ptr,
                                 ptrdiff_t src_stride,
-                                uint8_t* dst_ptr,
+                                const uint8_t* dst_ptr,
                                 int dst_width) {
   asm volatile(
       "movdqa    %0,%%xmm2                       \n"  // kShuf01
@@ -647,7 +647,7 @@ void ScaleRowDown34_0_Box_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown38_SSSE3(const uint8_t* src_ptr,
                           ptrdiff_t src_stride,
-                          uint8_t* dst_ptr,
+                          const uint8_t* dst_ptr,
                           int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -678,7 +678,7 @@ void ScaleRowDown38_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown38_2_Box_SSSE3(const uint8_t* src_ptr,
                                 ptrdiff_t src_stride,
-                                uint8_t* dst_ptr,
+                                const uint8_t* dst_ptr,
                                 int dst_width) {
   asm volatile(
       "movdqa    %0,%%xmm2                       \n"
@@ -723,7 +723,7 @@ void ScaleRowDown38_2_Box_SSSE3(const uint8_t* src_ptr,
 
 void ScaleRowDown38_3_Box_SSSE3(const uint8_t* src_ptr,
                                 ptrdiff_t src_stride,
-                                uint8_t* dst_ptr,
+                                const uint8_t* dst_ptr,
                                 int dst_width) {
   asm volatile(
       "movdqa    %0,%%xmm2                       \n"
@@ -787,7 +787,7 @@ void ScaleRowDown38_3_Box_SSSE3(const uint8_t* src_ptr,
 
 // Reads 16xN bytes and produces 16 shorts at a time.
 void ScaleAddRow_SSE2(const uint8_t* src_ptr,
-                      uint16_t* dst_ptr,
+                      const uint16_t* dst_ptr,
                       int src_width) {
   asm volatile(
 
@@ -820,7 +820,7 @@ void ScaleAddRow_SSE2(const uint8_t* src_ptr,
 #ifdef HAS_SCALEADDROW_AVX2
 // Reads 32 bytes and accumulates to 32 shorts at a time.
 void ScaleAddRow_AVX2(const uint8_t* src_ptr,
-                      uint16_t* dst_ptr,
+                      const uint16_t* dst_ptr,
                       int src_width) {
   asm volatile(
 
@@ -859,7 +859,7 @@ static const uvec16 kFadd40 = {0x4040, 0x4040, 0x4040, 0x4040,
                                0x4040, 0x4040, 0x4040, 0x4040};
 
 // Bilinear column filtering. SSSE3 version.
-void ScaleFilterCols_SSSE3(uint8_t* dst_ptr,
+void ScaleFilterCols_SSSE3(const uint8_t* dst_ptr,
                            const uint8_t* src_ptr,
                            int dst_width,
                            int x,
@@ -955,7 +955,7 @@ void ScaleFilterCols_SSSE3(uint8_t* dst_ptr,
 
 // Reads 4 pixels, duplicates them and writes 8 pixels.
 // Alignment requirement: src_argb 16 byte aligned, dst_argb 16 byte aligned.
-void ScaleColsUp2_SSE2(uint8_t* dst_ptr,
+void ScaleColsUp2_SSE2(const uint8_t* dst_ptr,
                        const uint8_t* src_ptr,
                        int dst_width,
                        int x,
@@ -986,7 +986,7 @@ void ScaleColsUp2_SSE2(uint8_t* dst_ptr,
 
 void ScaleARGBRowDown2_SSE2(const uint8_t* src_argb,
                             ptrdiff_t src_stride,
-                            uint8_t* dst_argb,
+                            const uint8_t* dst_argb,
                             int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -1010,7 +1010,7 @@ void ScaleARGBRowDown2_SSE2(const uint8_t* src_argb,
 
 void ScaleARGBRowDown2Linear_SSE2(const uint8_t* src_argb,
                                   ptrdiff_t src_stride,
-                                  uint8_t* dst_argb,
+                                  const uint8_t* dst_argb,
                                   int dst_width) {
   (void)src_stride;
   asm volatile(
@@ -1037,7 +1037,7 @@ void ScaleARGBRowDown2Linear_SSE2(const uint8_t* src_argb,
 
 void ScaleARGBRowDown2Box_SSE2(const uint8_t* src_argb,
                                ptrdiff_t src_stride,
-                               uint8_t* dst_argb,
+                               const uint8_t* dst_argb,
                                int dst_width) {
   asm volatile(
 
@@ -1070,7 +1070,7 @@ void ScaleARGBRowDown2Box_SSE2(const uint8_t* src_argb,
 void ScaleARGBRowDownEven_SSE2(const uint8_t* src_argb,
                                ptrdiff_t src_stride,
                                int src_stepx,
-                               uint8_t* dst_argb,
+                               const uint8_t* dst_argb,
                                int dst_width) {
   intptr_t src_stepx_x4 = (intptr_t)(src_stepx);
   intptr_t src_stepx_x12;
@@ -1107,7 +1107,7 @@ void ScaleARGBRowDownEven_SSE2(const uint8_t* src_argb,
 void ScaleARGBRowDownEvenBox_SSE2(const uint8_t* src_argb,
                                   ptrdiff_t src_stride,
                                   int src_stepx,
-                                  uint8_t* dst_argb,
+                                  const uint8_t* dst_argb,
                                   int dst_width) {
   intptr_t src_stepx_x4 = (intptr_t)(src_stepx);
   intptr_t src_stepx_x12;
@@ -1149,7 +1149,7 @@ void ScaleARGBRowDownEvenBox_SSE2(const uint8_t* src_argb,
         "cc", "xmm0", "xmm1", "xmm2", "xmm3");
 }
 
-void ScaleARGBCols_SSE2(uint8_t* dst_argb,
+void ScaleARGBCols_SSE2(const uint8_t* dst_argb,
                         const uint8_t* src_argb,
                         int dst_width,
                         int x,
@@ -1219,7 +1219,7 @@ void ScaleARGBCols_SSE2(uint8_t* dst_argb,
 
 // Reads 4 pixels, duplicates them and writes 8 pixels.
 // Alignment requirement: src_argb 16 byte aligned, dst_argb 16 byte aligned.
-void ScaleARGBColsUp2_SSE2(uint8_t* dst_argb,
+void ScaleARGBColsUp2_SSE2(const uint8_t* dst_argb,
                            const uint8_t* src_argb,
                            int dst_width,
                            int x,
@@ -1260,7 +1260,7 @@ static const uvec8 kShuffleFractions = {
 };
 
 // Bilinear row filtering combines 4x2 -> 4x1. SSSE3 version
-void ScaleARGBFilterCols_SSSE3(uint8_t* dst_argb,
+void ScaleARGBFilterCols_SSSE3(const uint8_t* dst_argb,
                                const uint8_t* src_argb,
                                int dst_width,
                                int x,

@@ -37,7 +37,8 @@ int ARGBToI444(const uint8_t* src_argb,
       ARGBToYRow_C;
   void (*ARGBToUV444Row)(const uint8_t* src_argb, uint8_t* dst_u,
                          uint8_t* dst_v, int width) = ARGBToUV444Row_C;
-  if (!src_argb || !dst_y || !dst_u || !dst_v || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_y == 0) || (dst_u == 0) || (dst_v == 0) ||
+      width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -53,7 +54,7 @@ int ARGBToI444(const uint8_t* src_argb,
     src_stride_argb = dst_stride_y = dst_stride_u = dst_stride_v = 0;
   }
 #if defined(HAS_ARGBTOUV444ROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUV444Row = ARGBToUV444Row_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       ARGBToUV444Row = ARGBToUV444Row_SSSE3;
@@ -77,7 +78,7 @@ int ARGBToI444(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       ARGBToYRow = ARGBToYRow_SSSE3;
@@ -85,7 +86,7 @@ int ARGBToI444(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       ARGBToYRow = ARGBToYRow_AVX2;
@@ -138,7 +139,8 @@ int ARGBToI422(const uint8_t* src_argb,
       ARGBToUVRow_C;
   void (*ARGBToYRow)(const uint8_t* src_argb, uint8_t* dst_y, int width) =
       ARGBToYRow_C;
-  if (!src_argb || !dst_y || !dst_u || !dst_v || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_y == 0) || (dst_u == 0) || (dst_v == 0) ||
+      width <= 0 || height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -155,7 +157,7 @@ int ARGBToI422(const uint8_t* src_argb,
     src_stride_argb = dst_stride_y = dst_stride_u = dst_stride_v = 0;
   }
 #if defined(HAS_ARGBTOYROW_SSSE3) && defined(HAS_ARGBTOUVROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_SSSE3;
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -165,7 +167,7 @@ int ARGBToI422(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2) && defined(HAS_ARGBTOUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_AVX2;
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
@@ -237,7 +239,8 @@ int ARGBToNV12(const uint8_t* src_argb,
       ARGBToYRow_C;
   void (*MergeUVRow_)(const uint8_t* src_u, const uint8_t* src_v,
                       uint8_t* dst_uv, int width) = MergeUVRow_C;
-  if (!src_argb || !dst_y || !dst_uv || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_y == 0) || (dst_uv == 0) || width <= 0 ||
+      height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -247,7 +250,7 @@ int ARGBToNV12(const uint8_t* src_argb,
     src_stride_argb = -src_stride_argb;
   }
 #if defined(HAS_ARGBTOYROW_SSSE3) && defined(HAS_ARGBTOUVROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_SSSE3;
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -257,7 +260,7 @@ int ARGBToNV12(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2) && defined(HAS_ARGBTOUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_AVX2;
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
@@ -299,7 +302,7 @@ int ARGBToNV12(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_MERGEUVROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     MergeUVRow_ = MergeUVRow_Any_SSE2;
     if (IS_ALIGNED(halfwidth, 16)) {
       MergeUVRow_ = MergeUVRow_SSE2;
@@ -307,7 +310,7 @@ int ARGBToNV12(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_MERGEUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     MergeUVRow_ = MergeUVRow_Any_AVX2;
     if (IS_ALIGNED(halfwidth, 32)) {
       MergeUVRow_ = MergeUVRow_AVX2;
@@ -344,7 +347,7 @@ int ARGBToNV12(const uint8_t* src_argb,
       dst_y += dst_stride_y * 2;
       dst_uv += dst_stride_uv;
     }
-    if (height & 1) {
+    if ((height & 1) != 0) {
       ARGBToUVRow(src_argb, 0, row_u, row_v, width);
       MergeUVRow_(row_u, row_v, dst_uv, halfwidth);
       ARGBToYRow(src_argb, dst_y, width);
@@ -373,7 +376,8 @@ int ARGBToNV21(const uint8_t* src_argb,
       ARGBToYRow_C;
   void (*MergeUVRow_)(const uint8_t* src_u, const uint8_t* src_v,
                       uint8_t* dst_vu, int width) = MergeUVRow_C;
-  if (!src_argb || !dst_y || !dst_vu || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_y == 0) || (dst_vu == 0) || width <= 0 ||
+      height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -383,7 +387,7 @@ int ARGBToNV21(const uint8_t* src_argb,
     src_stride_argb = -src_stride_argb;
   }
 #if defined(HAS_ARGBTOYROW_SSSE3) && defined(HAS_ARGBTOUVROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_SSSE3;
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -393,7 +397,7 @@ int ARGBToNV21(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2) && defined(HAS_ARGBTOUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_AVX2;
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
@@ -435,7 +439,7 @@ int ARGBToNV21(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_MERGEUVROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     MergeUVRow_ = MergeUVRow_Any_SSE2;
     if (IS_ALIGNED(halfwidth, 16)) {
       MergeUVRow_ = MergeUVRow_SSE2;
@@ -443,7 +447,7 @@ int ARGBToNV21(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_MERGEUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     MergeUVRow_ = MergeUVRow_Any_AVX2;
     if (IS_ALIGNED(halfwidth, 32)) {
       MergeUVRow_ = MergeUVRow_AVX2;
@@ -480,7 +484,7 @@ int ARGBToNV21(const uint8_t* src_argb,
       dst_y += dst_stride_y * 2;
       dst_vu += dst_stride_vu;
     }
-    if (height & 1) {
+    if ((height & 1) != 0) {
       ARGBToUVRow(src_argb, 0, row_u, row_v, width);
       MergeUVRow_(row_v, row_u, dst_vu, halfwidth);
       ARGBToYRow(src_argb, dst_y, width);
@@ -508,7 +512,7 @@ int ARGBToYUY2(const uint8_t* src_argb,
                         const uint8_t* src_v, uint8_t* dst_yuy2, int width) =
       I422ToYUY2Row_C;
 
-  if (!src_argb || !dst_yuy2 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_yuy2 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -524,7 +528,7 @@ int ARGBToYUY2(const uint8_t* src_argb,
     src_stride_argb = dst_stride_yuy2 = 0;
   }
 #if defined(HAS_ARGBTOYROW_SSSE3) && defined(HAS_ARGBTOUVROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_SSSE3;
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -534,7 +538,7 @@ int ARGBToYUY2(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2) && defined(HAS_ARGBTOUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_AVX2;
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
@@ -576,7 +580,7 @@ int ARGBToYUY2(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_I422TOYUY2ROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     I422ToYUY2Row = I422ToYUY2Row_Any_SSE2;
     if (IS_ALIGNED(width, 16)) {
       I422ToYUY2Row = I422ToYUY2Row_SSE2;
@@ -584,7 +588,7 @@ int ARGBToYUY2(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_I422TOYUY2ROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     I422ToYUY2Row = I422ToYUY2Row_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       I422ToYUY2Row = I422ToYUY2Row_AVX2;
@@ -645,7 +649,7 @@ int ARGBToUYVY(const uint8_t* src_argb,
                         const uint8_t* src_v, uint8_t* dst_uyvy, int width) =
       I422ToUYVYRow_C;
 
-  if (!src_argb || !dst_uyvy || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_uyvy == 0) || width <= 0 || height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -661,7 +665,7 @@ int ARGBToUYVY(const uint8_t* src_argb,
     src_stride_argb = dst_stride_uyvy = 0;
   }
 #if defined(HAS_ARGBTOYROW_SSSE3) && defined(HAS_ARGBTOUVROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_SSSE3;
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -671,7 +675,7 @@ int ARGBToUYVY(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2) && defined(HAS_ARGBTOUVROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToUVRow = ARGBToUVRow_Any_AVX2;
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
@@ -713,7 +717,7 @@ int ARGBToUYVY(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_I422TOUYVYROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     I422ToUYVYRow = I422ToUYVYRow_Any_SSE2;
     if (IS_ALIGNED(width, 16)) {
       I422ToUYVYRow = I422ToUYVYRow_SSE2;
@@ -721,7 +725,7 @@ int ARGBToUYVY(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_I422TOUYVYROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     I422ToUYVYRow = I422ToUYVYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       I422ToUYVYRow = I422ToUYVYRow_AVX2;
@@ -775,7 +779,7 @@ int ARGBToI400(const uint8_t* src_argb,
   int y;
   void (*ARGBToYRow)(const uint8_t* src_argb, uint8_t* dst_y, int width) =
       ARGBToYRow_C;
-  if (!src_argb || !dst_y || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_y == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -790,7 +794,7 @@ int ARGBToI400(const uint8_t* src_argb,
     src_stride_argb = dst_stride_y = 0;
   }
 #if defined(HAS_ARGBTOYROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToYRow = ARGBToYRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       ARGBToYRow = ARGBToYRow_SSSE3;
@@ -798,7 +802,7 @@ int ARGBToI400(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToYRow = ARGBToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       ARGBToYRow = ARGBToYRow_AVX2;
@@ -857,7 +861,7 @@ int ARGBToRGB24(const uint8_t* src_argb,
   int y;
   void (*ARGBToRGB24Row)(const uint8_t* src_argb, uint8_t* dst_rgb, int width) =
       ARGBToRGB24Row_C;
-  if (!src_argb || !dst_rgb24 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_rgb24 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -872,7 +876,7 @@ int ARGBToRGB24(const uint8_t* src_argb,
     src_stride_argb = dst_stride_rgb24 = 0;
   }
 #if defined(HAS_ARGBTORGB24ROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToRGB24Row = ARGBToRGB24Row_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       ARGBToRGB24Row = ARGBToRGB24Row_SSSE3;
@@ -915,7 +919,7 @@ int ARGBToRAW(const uint8_t* src_argb,
   int y;
   void (*ARGBToRAWRow)(const uint8_t* src_argb, uint8_t* dst_rgb, int width) =
       ARGBToRAWRow_C;
-  if (!src_argb || !dst_raw || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_raw == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -930,7 +934,7 @@ int ARGBToRAW(const uint8_t* src_argb,
     src_stride_argb = dst_stride_raw = 0;
   }
 #if defined(HAS_ARGBTORAWROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToRAWRow = ARGBToRAWRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       ARGBToRAWRow = ARGBToRAWRow_SSSE3;
@@ -980,7 +984,7 @@ int ARGBToRGB565Dither(const uint8_t* src_argb,
   void (*ARGBToRGB565DitherRow)(const uint8_t* src_argb, uint8_t* dst_rgb,
                                 const uint32_t dither4, int width) =
       ARGBToRGB565DitherRow_C;
-  if (!src_argb || !dst_rgb565 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_rgb565 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -988,11 +992,11 @@ int ARGBToRGB565Dither(const uint8_t* src_argb,
     src_argb = src_argb + (height - 1) * src_stride_argb;
     src_stride_argb = -src_stride_argb;
   }
-  if (!dither4x4) {
+  if (dither4x4 == 0) {
     dither4x4 = kDither565_4x4;
   }
 #if defined(HAS_ARGBTORGB565DITHERROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     ARGBToRGB565DitherRow = ARGBToRGB565DitherRow_Any_SSE2;
     if (IS_ALIGNED(width, 4)) {
       ARGBToRGB565DitherRow = ARGBToRGB565DitherRow_SSE2;
@@ -1000,7 +1004,7 @@ int ARGBToRGB565Dither(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTORGB565DITHERROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToRGB565DitherRow = ARGBToRGB565DitherRow_Any_AVX2;
     if (IS_ALIGNED(width, 8)) {
       ARGBToRGB565DitherRow = ARGBToRGB565DitherRow_AVX2;
@@ -1046,7 +1050,7 @@ int ARGBToRGB565(const uint8_t* src_argb,
   int y;
   void (*ARGBToRGB565Row)(const uint8_t* src_argb, uint8_t* dst_rgb,
                           int width) = ARGBToRGB565Row_C;
-  if (!src_argb || !dst_rgb565 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_rgb565 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -1061,7 +1065,7 @@ int ARGBToRGB565(const uint8_t* src_argb,
     src_stride_argb = dst_stride_rgb565 = 0;
   }
 #if defined(HAS_ARGBTORGB565ROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     ARGBToRGB565Row = ARGBToRGB565Row_Any_SSE2;
     if (IS_ALIGNED(width, 4)) {
       ARGBToRGB565Row = ARGBToRGB565Row_SSE2;
@@ -1112,7 +1116,7 @@ int ARGBToARGB1555(const uint8_t* src_argb,
   int y;
   void (*ARGBToARGB1555Row)(const uint8_t* src_argb, uint8_t* dst_rgb,
                             int width) = ARGBToARGB1555Row_C;
-  if (!src_argb || !dst_argb1555 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_argb1555 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -1127,7 +1131,7 @@ int ARGBToARGB1555(const uint8_t* src_argb,
     src_stride_argb = dst_stride_argb1555 = 0;
   }
 #if defined(HAS_ARGBTOARGB1555ROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     ARGBToARGB1555Row = ARGBToARGB1555Row_Any_SSE2;
     if (IS_ALIGNED(width, 4)) {
       ARGBToARGB1555Row = ARGBToARGB1555Row_SSE2;
@@ -1178,7 +1182,7 @@ int ARGBToARGB4444(const uint8_t* src_argb,
   int y;
   void (*ARGBToARGB4444Row)(const uint8_t* src_argb, uint8_t* dst_rgb,
                             int width) = ARGBToARGB4444Row_C;
-  if (!src_argb || !dst_argb4444 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_argb4444 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -1193,7 +1197,7 @@ int ARGBToARGB4444(const uint8_t* src_argb,
     src_stride_argb = dst_stride_argb4444 = 0;
   }
 #if defined(HAS_ARGBTOARGB4444ROW_SSE2)
-  if (TestCpuFlag(kCpuHasSSE2)) {
+  if (TestCpuFlag(kCpuHasSSE2) != 0) {
     ARGBToARGB4444Row = ARGBToARGB4444Row_Any_SSE2;
     if (IS_ALIGNED(width, 4)) {
       ARGBToARGB4444Row = ARGBToARGB4444Row_SSE2;
@@ -1244,7 +1248,7 @@ int ABGRToAR30(const uint8_t* src_abgr,
   int y;
   void (*ABGRToAR30Row)(const uint8_t* src_abgr, uint8_t* dst_rgb, int width) =
       ABGRToAR30Row_C;
-  if (!src_abgr || !dst_ar30 || width <= 0 || height == 0) {
+  if ((src_abgr == 0) || (dst_ar30 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -1259,7 +1263,7 @@ int ABGRToAR30(const uint8_t* src_abgr,
     src_stride_abgr = dst_stride_ar30 = 0;
   }
 #if defined(HAS_ABGRTOAR30ROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ABGRToAR30Row = ABGRToAR30Row_Any_SSSE3;
     if (IS_ALIGNED(width, 4)) {
       ABGRToAR30Row = ABGRToAR30Row_SSSE3;
@@ -1267,7 +1271,7 @@ int ABGRToAR30(const uint8_t* src_abgr,
   }
 #endif
 #if defined(HAS_ABGRTOAR30ROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ABGRToAR30Row = ABGRToAR30Row_Any_AVX2;
     if (IS_ALIGNED(width, 8)) {
       ABGRToAR30Row = ABGRToAR30Row_AVX2;
@@ -1293,7 +1297,7 @@ int ARGBToAR30(const uint8_t* src_argb,
   int y;
   void (*ARGBToAR30Row)(const uint8_t* src_argb, uint8_t* dst_rgb, int width) =
       ARGBToAR30Row_C;
-  if (!src_argb || !dst_ar30 || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_ar30 == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -1308,7 +1312,7 @@ int ARGBToAR30(const uint8_t* src_argb,
     src_stride_argb = dst_stride_ar30 = 0;
   }
 #if defined(HAS_ARGBTOAR30ROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToAR30Row = ARGBToAR30Row_Any_SSSE3;
     if (IS_ALIGNED(width, 4)) {
       ARGBToAR30Row = ARGBToAR30Row_SSSE3;
@@ -1316,7 +1320,7 @@ int ARGBToAR30(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOAR30ROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToAR30Row = ARGBToAR30Row_Any_AVX2;
     if (IS_ALIGNED(width, 8)) {
       ARGBToAR30Row = ARGBToAR30Row_AVX2;
@@ -1349,7 +1353,8 @@ int ARGBToJ420(const uint8_t* src_argb,
       ARGBToUVJRow_C;
   void (*ARGBToYJRow)(const uint8_t* src_argb, uint8_t* dst_yj, int width) =
       ARGBToYJRow_C;
-  if (!src_argb || !dst_yj || !dst_u || !dst_v || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_yj == 0) || (dst_u == 0) || (dst_v == 0) ||
+      width <= 0 || height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -1359,7 +1364,7 @@ int ARGBToJ420(const uint8_t* src_argb,
     src_stride_argb = -src_stride_argb;
   }
 #if defined(HAS_ARGBTOYJROW_SSSE3) && defined(HAS_ARGBTOUVJROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVJRow = ARGBToUVJRow_Any_SSSE3;
     ARGBToYJRow = ARGBToYJRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -1369,7 +1374,7 @@ int ARGBToJ420(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYJROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToYJRow = ARGBToYJRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       ARGBToYJRow = ARGBToYJRow_AVX2;
@@ -1418,7 +1423,7 @@ int ARGBToJ420(const uint8_t* src_argb,
     dst_u += dst_stride_u;
     dst_v += dst_stride_v;
   }
-  if (height & 1) {
+  if ((height & 1) != 0) {
     ARGBToUVJRow(src_argb, 0, dst_u, dst_v, width);
     ARGBToYJRow(src_argb, dst_yj, width);
   }
@@ -1443,7 +1448,8 @@ int ARGBToJ422(const uint8_t* src_argb,
       ARGBToUVJRow_C;
   void (*ARGBToYJRow)(const uint8_t* src_argb, uint8_t* dst_yj, int width) =
       ARGBToYJRow_C;
-  if (!src_argb || !dst_yj || !dst_u || !dst_v || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_yj == 0) || (dst_u == 0) || (dst_v == 0) ||
+      width <= 0 || height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -1460,7 +1466,7 @@ int ARGBToJ422(const uint8_t* src_argb,
     src_stride_argb = dst_stride_yj = dst_stride_u = dst_stride_v = 0;
   }
 #if defined(HAS_ARGBTOYJROW_SSSE3) && defined(HAS_ARGBTOUVJROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToUVJRow = ARGBToUVJRow_Any_SSSE3;
     ARGBToYJRow = ARGBToYJRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
@@ -1470,7 +1476,7 @@ int ARGBToJ422(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYJROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToYJRow = ARGBToYJRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       ARGBToYJRow = ARGBToYJRow_AVX2;
@@ -1532,7 +1538,7 @@ int ARGBToJ400(const uint8_t* src_argb,
   int y;
   void (*ARGBToYJRow)(const uint8_t* src_argb, uint8_t* dst_yj, int width) =
       ARGBToYJRow_C;
-  if (!src_argb || !dst_yj || width <= 0 || height == 0) {
+  if ((src_argb == 0) || (dst_yj == 0) || width <= 0 || height == 0) {
     return -1;
   }
   if (height < 0) {
@@ -1547,7 +1553,7 @@ int ARGBToJ400(const uint8_t* src_argb,
     src_stride_argb = dst_stride_yj = 0;
   }
 #if defined(HAS_ARGBTOYJROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     ARGBToYJRow = ARGBToYJRow_Any_SSSE3;
     if (IS_ALIGNED(width, 16)) {
       ARGBToYJRow = ARGBToYJRow_SSSE3;
@@ -1555,7 +1561,7 @@ int ARGBToJ400(const uint8_t* src_argb,
   }
 #endif
 #if defined(HAS_ARGBTOYJROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     ARGBToYJRow = ARGBToYJRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
       ARGBToYJRow = ARGBToYJRow_AVX2;

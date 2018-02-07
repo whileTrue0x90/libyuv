@@ -47,7 +47,7 @@ bool ExtractResolutionFromFilename(const char* name,
                                    int* height_ptr) {
   // Isolate the .width_height. section of the filename by searching for a
   // dot or underscore followed by a digit.
-  for (int i = 0; name[i]; ++i) {
+  for (int i = 0; name[i] != 0; ++i) {
     if ((name[i] == '.' || name[i] == '_') && name[i + 1] >= '0' &&
         name[i + 1] <= '9') {
       int n = sscanf(name + i + 1, "%dx%d", width_ptr, height_ptr);  // NOLINT
@@ -83,25 +83,26 @@ void ParseOptions(int argc, const char* argv[]) {
     PrintHelp(argv[0]);
   }
   for (int c = 1; c < argc; ++c) {
-    if (!strcmp(argv[c], "-v")) {
+    if (strcmp(argv[c], "-v") == 0) {
       verbose = true;
-    } else if (!strcmp(argv[c], "-attenuate")) {
+    } else if (strcmp(argv[c], "-attenuate") == 0) {
       attenuate = true;
-    } else if (!strcmp(argv[c], "-unattenuate")) {
+    } else if (strcmp(argv[c], "-unattenuate") == 0) {
       unattenuate = true;
-    } else if (!strcmp(argv[c], "-h") || !strcmp(argv[c], "-help")) {
+    } else if ((strcmp(argv[c], "-h") == 0) ||
+               (strcmp(argv[c], "-help") == 0)) {
       PrintHelp(argv[0]);
-    } else if (!strcmp(argv[c], "-s") && c + 2 < argc) {
+    } else if ((strcmp(argv[c], "-s") == 0) && c + 2 < argc) {
       image_width = atoi(argv[++c]);   // NOLINT
       image_height = atoi(argv[++c]);  // NOLINT
-    } else if (!strcmp(argv[c], "-d") && c + 2 < argc) {
+    } else if ((strcmp(argv[c], "-d") == 0) && c + 2 < argc) {
       dst_width = atoi(argv[++c]);   // NOLINT
       dst_height = atoi(argv[++c]);  // NOLINT
-    } else if (!strcmp(argv[c], "-skip") && c + 1 < argc) {
+    } else if ((strcmp(argv[c], "-skip") == 0) && c + 1 < argc) {
       num_skip_org = atoi(argv[++c]);  // NOLINT
-    } else if (!strcmp(argv[c], "-frames") && c + 1 < argc) {
+    } else if ((strcmp(argv[c], "-frames") == 0) && c + 1 < argc) {
       num_frames = atoi(argv[++c]);  // NOLINT
-    } else if (!strcmp(argv[c], "-f") && c + 1 < argc) {
+    } else if ((strcmp(argv[c], "-f") == 0) && c + 1 < argc) {
       filter = atoi(argv[++c]);  // NOLINT
     } else if (argv[c][0] == '-') {
       fprintf(stderr, "Unknown option. %s\n", argv[c]);
@@ -182,7 +183,7 @@ static int TileARGBScale(const uint8_t* src_argb,
                                     src_height, dst_argb, dst_stride_argb,
                                     dst_width, dst_height, x, y, clip_width,
                                     clip_height, filtering);
-      if (r) {
+      if (r != 0) {
         return r;
       }
     }
@@ -266,7 +267,7 @@ int main(int argc, const char* argv[]) {
 
   int number_of_frames;
   for (number_of_frames = 0;; ++number_of_frames) {
-    if (num_frames && number_of_frames >= num_frames) {
+    if ((num_frames != 0) && number_of_frames >= num_frames) {
       break;
     }
 

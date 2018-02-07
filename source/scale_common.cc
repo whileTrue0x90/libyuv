@@ -40,7 +40,7 @@ void ScaleRowDown2_C(const uint8_t* src_ptr,
     dst += 2;
     src_ptr += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src_ptr[1];
   }
 }
@@ -57,7 +57,7 @@ void ScaleRowDown2_16_C(const uint16_t* src_ptr,
     dst += 2;
     src_ptr += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src_ptr[1];
   }
 }
@@ -75,7 +75,7 @@ void ScaleRowDown2Linear_C(const uint8_t* src_ptr,
     dst += 2;
     s += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (s[0] + s[1] + 1) >> 1;
   }
 }
@@ -93,7 +93,7 @@ void ScaleRowDown2Linear_16_C(const uint16_t* src_ptr,
     dst += 2;
     s += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (s[0] + s[1] + 1) >> 1;
   }
 }
@@ -112,7 +112,7 @@ void ScaleRowDown2Box_C(const uint8_t* src_ptr,
     s += 4;
     t += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (s[0] + s[1] + t[0] + t[1] + 2) >> 2;
   }
 }
@@ -132,7 +132,7 @@ void ScaleRowDown2Box_Odd_C(const uint8_t* src_ptr,
     s += 4;
     t += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (s[0] + s[1] + t[0] + t[1] + 2) >> 2;
     dst += 1;
     s += 2;
@@ -155,7 +155,7 @@ void ScaleRowDown2Box_16_C(const uint16_t* src_ptr,
     s += 4;
     t += 4;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (s[0] + s[1] + t[0] + t[1] + 2) >> 2;
   }
 }
@@ -172,7 +172,7 @@ void ScaleRowDown4_C(const uint8_t* src_ptr,
     dst += 2;
     src_ptr += 8;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src_ptr[2];
   }
 }
@@ -189,7 +189,7 @@ void ScaleRowDown4_16_C(const uint16_t* src_ptr,
     dst += 2;
     src_ptr += 8;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src_ptr[2];
   }
 }
@@ -220,7 +220,7 @@ void ScaleRowDown4Box_C(const uint8_t* src_ptr,
     dst += 2;
     src_ptr += 8;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (src_ptr[0] + src_ptr[1] + src_ptr[2] + src_ptr[3] +
               src_ptr[stride + 0] + src_ptr[stride + 1] + src_ptr[stride + 2] +
               src_ptr[stride + 3] + src_ptr[stride * 2 + 0] +
@@ -258,7 +258,7 @@ void ScaleRowDown4Box_16_C(const uint16_t* src_ptr,
     dst += 2;
     src_ptr += 8;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = (src_ptr[0] + src_ptr[1] + src_ptr[2] + src_ptr[3] +
               src_ptr[stride + 0] + src_ptr[stride + 1] + src_ptr[stride + 2] +
               src_ptr[stride + 3] + src_ptr[stride * 2 + 0] +
@@ -414,7 +414,7 @@ void ScaleCols_C(uint8_t* dst_ptr,
     x += dx;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst_ptr[0] = src_ptr[x >> 16];
   }
 }
@@ -432,7 +432,7 @@ void ScaleCols_16_C(uint16_t* dst_ptr,
     x += dx;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst_ptr[0] = src_ptr[x >> 16];
   }
 }
@@ -451,7 +451,7 @@ void ScaleColsUp2_C(uint8_t* dst_ptr,
     src_ptr += 1;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst_ptr[0] = src_ptr[0];
   }
 }
@@ -469,7 +469,7 @@ void ScaleColsUp2_16_C(uint16_t* dst_ptr,
     src_ptr += 1;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst_ptr[0] = src_ptr[0];
   }
 }
@@ -503,7 +503,7 @@ void ScaleFilterCols_C(uint8_t* dst_ptr,
     x += dx;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     int xi = x >> 16;
     int a = src_ptr[xi];
     int b = src_ptr[xi + 1];
@@ -531,7 +531,7 @@ void ScaleFilterCols64_C(uint8_t* dst_ptr,
     x += dx;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     int64_t xi = x >> 16;
     int a = src_ptr[xi];
     int b = src_ptr[xi + 1];
@@ -563,7 +563,7 @@ void ScaleFilterCols_16_C(uint16_t* dst_ptr,
     x += dx;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     int xi = x >> 16;
     int a = src_ptr[xi];
     int b = src_ptr[xi + 1];
@@ -591,7 +591,7 @@ void ScaleFilterCols64_16_C(uint16_t* dst_ptr,
     x += dx;
     dst_ptr += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     int64_t xi = x >> 16;
     int a = src_ptr[xi];
     int b = src_ptr[xi + 1];
@@ -753,7 +753,7 @@ void ScaleAddRow_C(const uint8_t* src_ptr, uint16_t* dst_ptr, int src_width) {
     src_ptr += 2;
     dst_ptr += 2;
   }
-  if (src_width & 1) {
+  if ((src_width & 1) != 0) {
     dst_ptr[0] += src_ptr[0];
   }
 }
@@ -769,7 +769,7 @@ void ScaleAddRow_16_C(const uint16_t* src_ptr,
     src_ptr += 2;
     dst_ptr += 2;
   }
-  if (src_width & 1) {
+  if ((src_width & 1) != 0) {
     dst_ptr[0] += src_ptr[0];
   }
 }
@@ -788,7 +788,7 @@ void ScaleARGBRowDown2_C(const uint8_t* src_argb,
     src += 4;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src[1];
   }
 }
@@ -847,7 +847,7 @@ void ScaleARGBRowDownEven_C(const uint8_t* src_argb,
     src += src_stepx * 2;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src[0];
   }
 }
@@ -892,7 +892,7 @@ void ScaleARGBCols_C(uint8_t* dst_argb,
     x += dx;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src[x >> 16];
   }
 }
@@ -913,7 +913,7 @@ void ScaleARGBCols64_C(uint8_t* dst_argb,
     x += dx;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src[x >> 16];
   }
 }
@@ -934,7 +934,7 @@ void ScaleARGBColsUp2_C(uint8_t* dst_argb,
     src += 1;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     dst[0] = src[0];
   }
 }
@@ -971,7 +971,7 @@ void ScaleARGBFilterCols_C(uint8_t* dst_argb,
     x += dx;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     int xi = x >> 16;
     int xf = (x >> 9) & 0x7f;
     uint32_t a = src[xi];
@@ -1004,7 +1004,7 @@ void ScaleARGBFilterCols64_C(uint8_t* dst_argb,
     x += dx;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     int64_t xi = x >> 16;
     int xf = (x >> 9) & 0x7f;
     uint32_t a = src[xi];
@@ -1042,7 +1042,7 @@ void ScalePlaneVertical(int src_height,
   assert(dst_height > 0);
   src_argb += (x >> 16) * bpp;
 #if defined(HAS_INTERPOLATEROW_SSSE3)
-  if (TestCpuFlag(kCpuHasSSSE3)) {
+  if (TestCpuFlag(kCpuHasSSSE3) != 0) {
     InterpolateRow = InterpolateRow_Any_SSSE3;
     if (IS_ALIGNED(dst_width_bytes, 16)) {
       InterpolateRow = InterpolateRow_SSSE3;
@@ -1050,7 +1050,7 @@ void ScalePlaneVertical(int src_height,
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_AVX2)
-  if (TestCpuFlag(kCpuHasAVX2)) {
+  if (TestCpuFlag(kCpuHasAVX2) != 0) {
     InterpolateRow = InterpolateRow_Any_AVX2;
     if (IS_ALIGNED(dst_width_bytes, 32)) {
       InterpolateRow = InterpolateRow_AVX2;
@@ -1080,7 +1080,7 @@ void ScalePlaneVertical(int src_height,
       y = max_y;
     }
     yi = y >> 16;
-    yf = filtering ? ((y >> 8) & 255) : 0;
+    yf = filtering != 0u ? ((y >> 8) & 255) : 0;
     InterpolateRow(dst_argb, src_argb + yi * src_stride, src_stride,
                    dst_width_bytes, yf);
     dst_argb += dst_stride;
@@ -1150,7 +1150,7 @@ void ScalePlaneVertical_16(int src_height,
       y = max_y;
     }
     yi = y >> 16;
-    yf = filtering ? ((y >> 8) & 255) : 0;
+    yf = filtering != 0u ? ((y >> 8) & 255) : 0;
     InterpolateRow(dst_argb, src_argb + yi * src_stride, src_stride,
                    dst_width_words, yf);
     dst_argb += dst_stride;
@@ -1308,7 +1308,7 @@ void ScaleRowUp2_16_C(const uint16_t* src_ptr,
     ++src2;
     dst += 2;
   }
-  if (dst_width & 1) {
+  if ((dst_width & 1) != 0) {
     uint16_t p0 = src_ptr[0];
     uint16_t p1 = src_ptr[1];
     uint16_t p2 = src2[0];

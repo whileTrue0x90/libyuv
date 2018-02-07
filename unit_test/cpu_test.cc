@@ -97,7 +97,7 @@ TEST_F(LibYUVBaseTest, TestCpuCompilerEnabled) {
     defined(_M_X64)
 TEST_F(LibYUVBaseTest, TestCpuId) {
   int has_x86 = TestCpuFlag(kCpuHasX86);
-  if (has_x86) {
+  if (has_x86 != 0) {
     int cpu_info[4];
     // Vendor ID:
     // AuthenticAMD AMD processor
@@ -136,7 +136,7 @@ TEST_F(LibYUVBaseTest, TestCpuId) {
 
 static int FileExists(const char* file_name) {
   FILE* f = fopen(file_name, "r");
-  if (!f) {
+  if (f == 0) {
     return 0;
   }
   fclose(f);
@@ -144,7 +144,7 @@ static int FileExists(const char* file_name) {
 }
 
 TEST_F(LibYUVBaseTest, TestLinuxNeon) {
-  if (FileExists("../../unit_test/testdata/arm_v7.txt")) {
+  if (FileExists("../../unit_test/testdata/arm_v7.txt") != 0) {
     printf("Note: testing to load \"../../unit_test/testdata/arm_v7.txt\"\n");
 
     EXPECT_EQ(0, ArmCpuCaps("../../unit_test/testdata/arm_v7.txt"));

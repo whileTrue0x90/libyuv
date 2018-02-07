@@ -24,7 +24,7 @@ extern "C" {
 #if defined(HAS_TRANSPOSEWX8_SSSE3)
 void TransposeWx8_SSSE3(const uint8_t* src,
                         int src_stride,
-                        uint8_t* dst,
+                        const uint8_t* dst,
                         int dst_stride,
                         int width) {
   asm volatile(
@@ -114,7 +114,7 @@ void TransposeWx8_SSSE3(const uint8_t* src,
 #if defined(HAS_TRANSPOSEWX8_FAST_SSSE3)
 void TransposeWx8_Fast_SSSE3(const uint8_t* src,
                              int src_stride,
-                             uint8_t* dst,
+                             const uint8_t* dst,
                              int dst_stride,
                              int width) {
   asm volatile(
@@ -257,9 +257,9 @@ void TransposeWx8_Fast_SSSE3(const uint8_t* src,
 #if defined(HAS_TRANSPOSEUVWX8_SSE2)
 void TransposeUVWx8_SSE2(const uint8_t* src,
                          int src_stride,
-                         uint8_t* dst_a,
+                         const uint8_t* dst_a,
                          int dst_stride_a,
-                         uint8_t* dst_b,
+                         const uint8_t* dst_b,
                          int dst_stride_b,
                          int width) {
   asm volatile(

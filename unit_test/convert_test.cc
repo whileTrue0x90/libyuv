@@ -2002,9 +2002,9 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
   int has_avx2 = TestCpuFlag(kCpuHasAVX2);
   int has_ssse3 = TestCpuFlag(kCpuHasSSSE3);
   for (int i = 0; i < benchmark_iterations_; ++i) {
-    if (has_avx2) {
+    if (has_avx2 != 0) {
       ARGBToAR30Row_AVX2(src, dst_opt, kPixels);
-    } else if (has_ssse3) {
+    } else if (has_ssse3 != 0) {
       ARGBToAR30Row_SSSE3(src, dst_opt, kPixels);
     } else {
       ARGBToAR30Row_C(src, dst_opt, kPixels);
@@ -2036,9 +2036,9 @@ TEST_F(LibYUVConvertTest, ABGRToAR30Row_Opt) {
   int has_avx2 = TestCpuFlag(kCpuHasAVX2);
   int has_ssse3 = TestCpuFlag(kCpuHasSSSE3);
   for (int i = 0; i < benchmark_iterations_; ++i) {
-    if (has_avx2) {
+    if (has_avx2 != 0) {
       ABGRToAR30Row_AVX2(src, dst_opt, kPixels);
-    } else if (has_ssse3) {
+    } else if (has_ssse3 != 0) {
       ABGRToAR30Row_SSSE3(src, dst_opt, kPixels);
     } else {
       ABGRToAR30Row_C(src, dst_opt, kPixels);
@@ -2191,13 +2191,13 @@ TEST_F(LibYUVConvertTest, TestH420ToARGB) {
   int count_g = 0;
   int count_r = 0;
   for (int i = 0; i < kSize; ++i) {
-    if (histogram_b[i]) {
+    if (histogram_b[i] != 0) {
       ++count_b;
     }
-    if (histogram_g[i]) {
+    if (histogram_g[i] != 0) {
       ++count_g;
     }
-    if (histogram_r[i]) {
+    if (histogram_r[i] != 0) {
       ++count_r;
     }
   }
@@ -2252,13 +2252,13 @@ TEST_F(LibYUVConvertTest, TestH010ToARGB) {
   int count_g = 0;
   int count_r = 0;
   for (int i = 0; i < kSize; ++i) {
-    if (histogram_b[i]) {
+    if (histogram_b[i] != 0) {
       ++count_b;
     }
-    if (histogram_g[i]) {
+    if (histogram_g[i] != 0) {
       ++count_g;
     }
-    if (histogram_r[i]) {
+    if (histogram_r[i] != 0) {
       ++count_r;
     }
   }
@@ -2315,13 +2315,13 @@ TEST_F(LibYUVConvertTest, TestH010ToAR30) {
   int count_g = 0;
   int count_r = 0;
   for (int i = 0; i < kSize; ++i) {
-    if (histogram_b[i]) {
+    if (histogram_b[i] != 0) {
       ++count_b;
     }
-    if (histogram_g[i]) {
+    if (histogram_g[i] != 0) {
       ++count_g;
     }
-    if (histogram_r[i]) {
+    if (histogram_r[i] != 0) {
       ++count_r;
     }
   }
@@ -2377,13 +2377,13 @@ TEST_F(LibYUVConvertTest, TestH420ToAR30) {
   int count_g = 0;
   int count_r = 0;
   for (int i = 0; i < kHistSize; ++i) {
-    if (histogram_b[i]) {
+    if (histogram_b[i] != 0) {
       ++count_b;
     }
-    if (histogram_g[i]) {
+    if (histogram_g[i] != 0) {
       ++count_g;
     }
-    if (histogram_r[i]) {
+    if (histogram_r[i] != 0) {
       ++count_r;
     }
   }

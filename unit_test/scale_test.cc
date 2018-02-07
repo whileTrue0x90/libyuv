@@ -47,7 +47,7 @@ static int TestFilter(int src_width,
   align_buffer_page_end(src_y, src_y_plane_size);
   align_buffer_page_end(src_u, src_uv_plane_size);
   align_buffer_page_end(src_v, src_uv_plane_size);
-  if (!src_y || !src_u || !src_v) {
+  if ((src_y == 0) || (src_u == 0) || (src_v == 0)) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -70,8 +70,8 @@ static int TestFilter(int src_width,
   align_buffer_page_end(dst_y_opt, dst_y_plane_size);
   align_buffer_page_end(dst_u_opt, dst_uv_plane_size);
   align_buffer_page_end(dst_v_opt, dst_uv_plane_size);
-  if (!dst_y_c || !dst_u_c || !dst_v_c || !dst_y_opt || !dst_u_opt ||
-      !dst_v_opt) {
+  if ((dst_y_c == 0) || (dst_u_c == 0) || (dst_v_c == 0) || (dst_y_opt == 0) ||
+      (dst_u_opt == 0) || (dst_v_opt == 0)) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -169,7 +169,8 @@ static int TestFilter_16(int src_width,
   align_buffer_page_end(src_y_16, src_y_plane_size * 2);
   align_buffer_page_end(src_u_16, src_uv_plane_size * 2);
   align_buffer_page_end(src_v_16, src_uv_plane_size * 2);
-  if (!src_y || !src_u || !src_v || !src_y_16 || !src_u_16 || !src_v_16) {
+  if ((src_y == 0) || (src_u == 0) || (src_v == 0) || (src_y_16 == 0) ||
+      (src_u_16 == 0) || (src_v_16 == 0)) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -353,7 +354,7 @@ TEST_F(LibYUVScaleTest, TestScaleRowDown2Box_Odd_SSSE3) {
   memset(dst_pixels_c, 0, sizeof(dst_pixels_c));
 
   int has_ssse3 = TestCpuFlag(kCpuHasSSSE3);
-  if (!has_ssse3) {
+  if (has_ssse3 == 0) {
     printf("Warning SSSE3 not detected; Skipping test.\n");
   } else {
     // TL.

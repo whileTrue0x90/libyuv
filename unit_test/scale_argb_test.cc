@@ -42,7 +42,7 @@ static int ARGBTestFilter(int src_width,
   int src_stride_argb = (b * 2 + Abs(src_width)) * 4;
 
   align_buffer_page_end(src_argb, src_argb_plane_size);
-  if (!src_argb) {
+  if (src_argb == 0) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -54,7 +54,7 @@ static int ARGBTestFilter(int src_width,
 
   align_buffer_page_end(dst_argb_c, dst_argb_plane_size);
   align_buffer_page_end(dst_argb_opt, dst_argb_plane_size);
-  if (!dst_argb_c || !dst_argb_opt) {
+  if ((dst_argb_c == 0) || (dst_argb_opt == 0)) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -139,7 +139,7 @@ static int TileARGBScale(const uint8_t* src_argb,
       int r = ARGBScaleClip(src_argb, src_stride_argb, src_width, src_height,
                             dst_argb, dst_stride_argb, dst_width, dst_height, x,
                             y, clip_width, clip_height, filtering);
-      if (r) {
+      if (r != 0) {
         return r;
       }
     }
@@ -163,7 +163,7 @@ static int ARGBClipTestFilter(int src_width,
   int src_stride_argb = (b * 2 + Abs(src_width)) * 4;
 
   align_buffer_page_end(src_argb, src_argb_plane_size);
-  if (!src_argb) {
+  if (src_argb == 0) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -181,7 +181,7 @@ static int ARGBClipTestFilter(int src_width,
 
   align_buffer_page_end(dst_argb_c, dst_argb_plane_size);
   align_buffer_page_end(dst_argb_opt, dst_argb_plane_size);
-  if (!dst_argb_c || !dst_argb_opt) {
+  if ((dst_argb_c == 0) || (dst_argb_opt == 0)) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
@@ -391,7 +391,8 @@ static int YUVToARGBTestFilter(int src_width,
   int dst_stride_argb = (dst_width)*4;
   align_buffer_page_end(dst_argb_c, dst_argb_plane_size);
   align_buffer_page_end(dst_argb_opt, dst_argb_plane_size);
-  if (!dst_argb_c || !dst_argb_opt || !src_y || !src_u || !src_v) {
+  if ((dst_argb_c == 0) || (dst_argb_opt == 0) || (src_y == 0) ||
+      (src_u == 0) || (src_v == 0)) {
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }

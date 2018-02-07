@@ -95,12 +95,12 @@ int MJPGSize(const uint8_t* sample,
              int* height) {
   MJpegDecoder mjpeg_decoder;
   LIBYUV_BOOL ret = mjpeg_decoder.LoadFrame(sample, sample_size);
-  if (ret) {
+  if (ret != 0) {
     *width = mjpeg_decoder.GetWidth();
     *height = mjpeg_decoder.GetHeight();
   }
   mjpeg_decoder.UnloadFrame();
-  return ret ? 0 : -1;  // -1 for runtime failure.
+  return ret != 0 ? 0 : -1;  // -1 for runtime failure.
 }
 
 // MJPG (Motion JPeg) to I420
@@ -108,11 +108,11 @@ int MJPGSize(const uint8_t* sample,
 LIBYUV_API
 int MJPGToI420(const uint8_t* sample,
                size_t sample_size,
-               uint8_t* y,
+               const uint8_t* y,
                int y_stride,
-               uint8_t* u,
+               const uint8_t* u,
                int u_stride,
-               uint8_t* v,
+               const uint8_t* v,
                int v_stride,
                int w,
                int h,
@@ -126,13 +126,13 @@ int MJPGToI420(const uint8_t* sample,
   // TODO(fbarchard): Port MJpeg to C.
   MJpegDecoder mjpeg_decoder;
   LIBYUV_BOOL ret = mjpeg_decoder.LoadFrame(sample, sample_size);
-  if (ret &&
+  if ((ret != 0) &&
       (mjpeg_decoder.GetWidth() != w || mjpeg_decoder.GetHeight() != h)) {
     // ERROR: MJPEG frame has unexpected dimensions
     mjpeg_decoder.UnloadFrame();
     return 1;  // runtime failure
   }
-  if (ret) {
+  if (ret != 0) {
     I420Buffers bufs = {y, y_stride, u, u_stride, v, v_stride, dw, dh};
     // YUV420
     if (mjpeg_decoder.GetColorSpace() == MJpegDecoder::kColorSpaceYCbCr &&
@@ -181,7 +181,7 @@ int MJPGToI420(const uint8_t* sample,
       return 1;
     }
   }
-  return ret ? 0 : 1;
+  return ret != 0 ? 0 : 1;
 }
 
 #ifdef HAVE_JPEG
@@ -240,7 +240,7 @@ static void JpegI400ToARGB(void* opaque,
 LIBYUV_API
 int MJPGToARGB(const uint8_t* sample,
                size_t sample_size,
-               uint8_t* argb,
+               const uint8_t* argb,
                int argb_stride,
                int w,
                int h,
@@ -254,13 +254,13 @@ int MJPGToARGB(const uint8_t* sample,
   // TODO(fbarchard): Port MJpeg to C.
   MJpegDecoder mjpeg_decoder;
   LIBYUV_BOOL ret = mjpeg_decoder.LoadFrame(sample, sample_size);
-  if (ret &&
+  if ((ret != 0) &&
       (mjpeg_decoder.GetWidth() != w || mjpeg_decoder.GetHeight() != h)) {
     // ERROR: MJPEG frame has unexpected dimensions
     mjpeg_decoder.UnloadFrame();
     return 1;  // runtime failure
   }
-  if (ret) {
+  if (ret != 0) {
     ARGBBuffers bufs = {argb, argb_stride, dw, dh};
     // YUV420
     if (mjpeg_decoder.GetColorSpace() == MJpegDecoder::kColorSpaceYCbCr &&
@@ -309,7 +309,7 @@ int MJPGToARGB(const uint8_t* sample,
       return 1;
     }
   }
-  return ret ? 0 : 1;
+  return ret != 0 ? 0 : 1;
 }
 #endif
 

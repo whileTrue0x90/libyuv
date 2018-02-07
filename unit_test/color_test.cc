@@ -446,25 +446,25 @@ static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
   int i;
   printf("hist");
   for (i = 0; i < 256; ++i) {
-    if (rh[i] || gh[i] || bh[i]) {
+    if ((rh[i] != 0) || (gh[i] != 0) || (bh[i] != 0)) {
       printf("\t%8d", i - 128);
     }
   }
   printf("\nred");
   for (i = 0; i < 256; ++i) {
-    if (rh[i] || gh[i] || bh[i]) {
+    if ((rh[i] != 0) || (gh[i] != 0) || (bh[i] != 0)) {
       printf("\t%8d", rh[i]);
     }
   }
   printf("\ngreen");
   for (i = 0; i < 256; ++i) {
-    if (rh[i] || gh[i] || bh[i]) {
+    if ((rh[i] != 0) || (gh[i] != 0) || (bh[i] != 0)) {
       printf("\t%8d", gh[i]);
     }
   }
   printf("\nblue");
   for (i = 0; i < 256; ++i) {
-    if (rh[i] || gh[i] || bh[i]) {
+    if ((rh[i] != 0) || (gh[i] != 0) || (bh[i] != 0)) {
       printf("\t%8d", bh[i]);
     }
   }

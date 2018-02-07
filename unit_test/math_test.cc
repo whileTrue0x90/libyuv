@@ -102,7 +102,7 @@ TEST_F(LibYUVBaseTest, TestFixedDiv_Opt) {
 
   int has_x86 = TestCpuFlag(kCpuHasX86);
   for (int i = 0; i < benchmark_pixels_div1280_; ++i) {
-    if (has_x86) {
+    if (has_x86 != 0) {
       for (int j = 0; j < 1280; ++j) {
         result_opt[j] = libyuv::FixedDiv(num[j], div[j]);
       }
@@ -136,7 +136,7 @@ TEST_F(LibYUVBaseTest, TestFixedDiv1_Opt) {
 
   int has_x86 = TestCpuFlag(kCpuHasX86);
   for (int i = 0; i < benchmark_pixels_div1280_; ++i) {
-    if (has_x86) {
+    if (has_x86 != 0) {
       for (int j = 0; j < 1280; ++j) {
         result_opt[j] = libyuv::FixedDiv1(num[j], div[j]);
       }

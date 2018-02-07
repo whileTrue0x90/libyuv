@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
   char* name1 = argv[1];
   char* name2 = (argc > 2) ? argv[2] : NULL;
   FILE* fin1 = fopen(name1, "rb");
-  FILE* fin2 = name2 ? fopen(name2, "rb") : NULL;
+  FILE* fin2 = name2 != 0 ? fopen(name2, "rb") : NULL;
 
   const int kBlockSize = 32768;
   uint8_t buf1[kBlockSize];
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     if (amt1 > 0) {
       hash1 = libyuv::HashDjb2(buf1, amt1, hash1);
     }
-    if (fin2) {
+    if (fin2 != 0) {
       amt2 = static_cast<int>(fread(buf2, 1, kBlockSize, fin2));
       if (amt2 > 0) {
         hash2 = libyuv::HashDjb2(buf2, amt2, hash2);
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
   } while (amt1 > 0 || amt2 > 0);
 
   printf("hash1 %x", hash1);
-  if (fin2) {
+  if (fin2 != 0) {
     printf(", hash2 %x", hash2);
     double mse =
         static_cast<double>(sum_square_err) / static_cast<double>(size_min);

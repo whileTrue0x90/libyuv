@@ -54,8 +54,8 @@ int ConvertToARGB(const uint8_t* sample,
   // and then rotate the ARGB to the final destination buffer.
   // For in-place conversion, if destination dst_argb is same as source sample,
   // also enable temporary buffer.
-  LIBYUV_BOOL need_buf =
-      (rotation && format != FOURCC_ARGB) || dst_argb == sample;
+  LIBYUV_BOOL need_buf = static_cast<int>(
+      ((rotation != 0u) && format != FOURCC_ARGB) || dst_argb == sample);
   uint8_t* dest_argb = dst_argb;
   int dest_dst_stride_argb = dst_stride_argb;
   uint8_t* rotate_buffer = NULL;
@@ -69,10 +69,10 @@ int ConvertToARGB(const uint8_t* sample,
     inv_crop_height = -inv_crop_height;
   }
 
-  if (need_buf) {
+  if (need_buf != 0) {
     int argb_size = crop_width * 4 * abs_crop_height;
     rotate_buffer = (uint8_t*)malloc(argb_size); /* NOLINT */
-    if (!rotate_buffer) {
+    if (rotate_buffer == 0) {
       return 1;  // Out of memory runtime error.
     }
     dst_argb = rotate_buffer;
@@ -102,7 +102,7 @@ int ConvertToARGB(const uint8_t* sample,
                     inv_crop_height);
       break;
     case FOURCC_ARGB:
-      if (!need_buf && !rotation) {
+      if ((need_buf == 0) && (rotation == 0u)) {
         src = sample + (src_width * crop_y + crop_x) * 4;
         r = ARGBToARGB(src, src_width * 4, dst_argb, dst_stride_argb,
                        crop_width, inv_crop_height);
@@ -249,13 +249,13 @@ int ConvertToARGB(const uint8_t* sample,
       r = -1;  // unknown fourcc - return failure code.
   }
 
-  if (need_buf) {
-    if (!r) {
+  if (need_buf != 0) {
+    if (r == 0) {
       r = ARGBRotate(dst_argb, dst_stride_argb, dest_argb, dest_dst_stride_argb,
                      crop_width, abs_crop_height, rotation);
     }
     free(rotate_buffer);
-  } else if (rotation) {
+  } else if (rotation != 0u) {
     src = sample + (src_width * crop_y + crop_x) * 4;
     r = ARGBRotate(src, src_width * 4, dst_argb, dst_stride_argb, crop_width,
                    inv_crop_height, rotation);

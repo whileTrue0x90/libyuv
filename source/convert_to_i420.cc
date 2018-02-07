@@ -49,10 +49,10 @@ int ConvertToI420(const uint8_t* sample,
   // TODO(nisse): Why allow crop_height < 0?
   const int abs_crop_height = (crop_height < 0) ? -crop_height : crop_height;
   int r = 0;
-  LIBYUV_BOOL need_buf =
-      (rotation && format != FOURCC_I420 && format != FOURCC_NV12 &&
+  LIBYUV_BOOL need_buf = static_cast<int>(
+      ((rotation != 0u) && format != FOURCC_I420 && format != FOURCC_NV12 &&
        format != FOURCC_NV21 && format != FOURCC_YV12) ||
-      dst_y == sample;
+      dst_y == sample);
   uint8_t* tmp_y = dst_y;
   uint8_t* tmp_u = dst_u;
   uint8_t* tmp_v = dst_v;
@@ -63,8 +63,9 @@ int ConvertToI420(const uint8_t* sample,
   const int inv_crop_height =
       (src_height < 0) ? -abs_crop_height : abs_crop_height;
 
-  if (!dst_y || !dst_u || !dst_v || !sample || src_width <= 0 ||
-      crop_width <= 0 || src_height == 0 || crop_height == 0) {
+  if ((dst_y == 0) || (dst_u == 0) || (dst_v == 0) || (sample == 0) ||
+      src_width <= 0 || crop_width <= 0 || src_height == 0 ||
+      crop_height == 0) {
     return -1;
   }
 
@@ -73,11 +74,11 @@ int ConvertToI420(const uint8_t* sample,
   // and then rotate the I420 to the final destination buffer.
   // For in-place conversion, if destination dst_y is same as source sample,
   // also enable temporary buffer.
-  if (need_buf) {
+  if (need_buf != 0) {
     int y_size = crop_width * abs_crop_height;
     int uv_size = ((crop_width + 1) / 2) * ((abs_crop_height + 1) / 2);
     rotate_buffer = (uint8_t*)malloc(y_size + uv_size * 2); /* NOLINT */
-    if (!rotate_buffer) {
+    if (rotate_buffer == 0) {
       return 1;  // Out of memory runtime error.
     }
     dst_y = rotate_buffer;
@@ -257,8 +258,8 @@ int ConvertToI420(const uint8_t* sample,
       r = -1;  // unknown fourcc - return failure code.
   }
 
-  if (need_buf) {
-    if (!r) {
+  if (need_buf != 0) {
+    if (r == 0) {
       r = I420Rotate(dst_y, dst_stride_y, dst_u, dst_stride_u, dst_v,
                      dst_stride_v, tmp_y, tmp_y_stride, tmp_u, tmp_u_stride,
                      tmp_v, tmp_v_stride, crop_width, abs_crop_height,

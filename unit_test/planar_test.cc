@@ -1192,7 +1192,6 @@ static void TestBlendPlane(int width,
   free_aligned_buffer_page_end(src_argb_alpha);
   free_aligned_buffer_page_end(dst_argb_c);
   free_aligned_buffer_page_end(dst_argb_opt);
-  return;
 }
 
 TEST_F(LibYUVPlanarTest, BlendPlane_Opt) {
@@ -1286,7 +1285,6 @@ static void TestI420Blend(int width,
   free_aligned_buffer_page_end(dst_y_opt);
   free_aligned_buffer_page_end(dst_u_opt);
   free_aligned_buffer_page_end(dst_v_opt);
-  return;
 }
 
 TEST_F(LibYUVPlanarTest, I420Blend_Opt) {
@@ -1333,7 +1331,7 @@ TEST_F(LibYUVPlanarTest, TestAffine) {
   EXPECT_EQ(0, memcmp(interpolate_pixels_Opt, interpolate_pixels_C, 1280 * 4));
 
   int has_sse2 = TestCpuFlag(kCpuHasSSE2);
-  if (has_sse2) {
+  if (has_sse2 != 0) {
     for (int i = 0; i < benchmark_pixels_div1280_; ++i) {
       ARGBAffineRow_SSE2(&orig_pixels_0[0][0], 0, &interpolate_pixels_Opt[0][0],
                          uv_step, 1280);
@@ -2639,7 +2637,7 @@ TEST_F(LibYUVPlanarTest, MergeUVRow_16_Opt) {
 
   int has_avx2 = TestCpuFlag(kCpuHasAVX2);
   for (int i = 0; i < benchmark_iterations_; ++i) {
-    if (has_avx2) {
+    if (has_avx2 != 0) {
       MergeUVRow_16_AVX2(reinterpret_cast<const uint16_t*>(src_pixels_u),
                          reinterpret_cast<const uint16_t*>(src_pixels_v),
                          reinterpret_cast<uint16_t*>(dst_pixels_uv_opt), 64,
@@ -2680,7 +2678,7 @@ TEST_F(LibYUVPlanarTest, MultiplyRow_16_Opt) {
 
   int has_avx2 = TestCpuFlag(kCpuHasAVX2);
   for (int i = 0; i < benchmark_iterations_; ++i) {
-    if (has_avx2) {
+    if (has_avx2 != 0) {
       MultiplyRow_16_AVX2(reinterpret_cast<const uint16_t*>(src_pixels_y),
                           reinterpret_cast<uint16_t*>(dst_pixels_y_opt), 64,
                           kPixels);
@@ -2756,10 +2754,10 @@ TEST_F(LibYUVPlanarTest, Convert16To8Row_Opt) {
   int has_avx2 = TestCpuFlag(kCpuHasAVX2);
   int has_ssse3 = TestCpuFlag(kCpuHasSSSE3);
   for (int i = 0; i < benchmark_iterations_; ++i) {
-    if (has_avx2) {
+    if (has_avx2 != 0) {
       Convert16To8Row_AVX2(reinterpret_cast<const uint16_t*>(src_pixels_y),
                            dst_pixels_y_opt, 16384, kPixels);
-    } else if (has_ssse3) {
+    } else if (has_ssse3 != 0) {
       Convert16To8Row_SSSE3(reinterpret_cast<const uint16_t*>(src_pixels_y),
                             dst_pixels_y_opt, 16384, kPixels);
     } else {
@@ -2829,11 +2827,11 @@ TEST_F(LibYUVPlanarTest, Convert8To16Row_Opt) {
   int has_avx2 = TestCpuFlag(kCpuHasAVX2);
   int has_sse2 = TestCpuFlag(kCpuHasSSE2);
   for (int i = 0; i < benchmark_iterations_; ++i) {
-    if (has_avx2) {
+    if (has_avx2 != 0) {
       Convert8To16Row_AVX2(src_pixels_y,
                            reinterpret_cast<uint16_t*>(dst_pixels_y_opt), 1024,
                            kPixels);
-    } else if (has_sse2) {
+    } else if (has_sse2 != 0) {
       Convert8To16Row_SSE2(src_pixels_y,
                            reinterpret_cast<uint16_t*>(dst_pixels_y_opt), 1024,
                            kPixels);
