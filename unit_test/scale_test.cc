@@ -259,8 +259,8 @@ static int TestFilter_16(int src_width,
 // The following adjustments in dimensions ensure the scale factor will be
 // exactly achieved.
 // 2 is chroma subsample.
-#define DX(x, nom, denom) static_cast<int>(((Abs(x) / nom + 1) / 2) * nom * 2)
-#define SX(x, nom, denom) static_cast<int>(((x / nom + 1) / 2) * denom * 2)
+#define DX(x, nom, denom) static_cast<int>(((Abs(x) / (nom) + 1) / 2) * (nom)*2)
+#define SX(x, nom, denom) static_cast<int>((((x) / (nom) + 1) / 2) * (denom)*2)
 
 #define TEST_FACTOR1(name, filter, nom, denom, max_diff)                     \
   TEST_F(LibYUVScaleTest, ScaleDownBy##name##_##filter) {                    \
@@ -580,8 +580,8 @@ static int TestPlaneFilter_16(int src_width,
 // The following adjustments in dimensions ensure the scale factor will be
 // exactly achieved.
 // 2 is chroma subsample.
-#define DX(x, nom, denom) static_cast<int>(((Abs(x) / nom + 1) / 2) * nom * 2)
-#define SX(x, nom, denom) static_cast<int>(((x / nom + 1) / 2) * denom * 2)
+#define DX(x, nom, denom) static_cast<int>(((Abs(x) / (nom) + 1) / 2) * (nom)*2)
+#define SX(x, nom, denom) static_cast<int>((((x) / (nom) + 1) / 2) * (denom)*2)
 
 #define TEST_FACTOR1(name, filter, nom, denom, max_diff)                     \
   TEST_F(LibYUVScaleTest, ScalePlaneDownBy##name##_##filter##_16) {          \
