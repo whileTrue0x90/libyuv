@@ -135,7 +135,7 @@ TEST_F(LibYUVBaseTest, TestCpuId) {
 #endif
 
 static int FileExists(const char* file_name) {
-  FILE* f = fopen(file_name, "r");
+  FILE* f = fopen(file_name, "re");
   if (!f) {
     return 0;
   }
