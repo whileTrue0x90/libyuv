@@ -40,7 +40,7 @@ namespace libyuv {
   TEST_F(LibYUVColorTest, TESTNAME) {                                          \
     const int kPixels = benchmark_width_ * benchmark_height_;                  \
     const int kHalfPixels =                                                    \
-        ((benchmark_width_ + 1) / 2) * ((benchmark_height_ + HS1) / HS);       \
+        ((benchmark_width_ + 1) / 2) * ((benchmark_height_ + (HS1)) / (HS));   \
     align_buffer_page_end(orig_y, kPixels);                                    \
     align_buffer_page_end(orig_u, kHalfPixels);                                \
     align_buffer_page_end(orig_v, kHalfPixels);                                \
@@ -64,13 +64,13 @@ namespace libyuv {
     /* The test is overall for color conversion matrix being reversible, so */ \
     /* this initializes the pixel with 2x2 blocks to eliminate subsampling. */ \
     uint8_t* p = orig_y;                                                       \
-    for (int y = 0; y < benchmark_height_ - HS1; y += HS) {                    \
+    for (int y = 0; y < benchmark_height_ - (HS1); y += (HS)) {                \
       for (int x = 0; x < benchmark_width_ - 1; x += 2) {                      \
         uint8_t r = static_cast<uint8_t>(fastrand());                          \
         p[0] = r;                                                              \
         p[1] = r;                                                              \
         p[HN] = r;                                                             \
-        p[HN + 1] = r;                                                         \
+        p[(HN) + 1] = r;                                                       \
         p += 2;                                                                \
       }                                                                        \
       if (benchmark_width_ & 1) {                                              \
@@ -79,9 +79,9 @@ namespace libyuv {
         p[HN] = r;                                                             \
         p += 1;                                                                \
       }                                                                        \
-      p += HN;                                                                 \
+      p += (HN);                                                               \
     }                                                                          \
-    if ((benchmark_height_ & 1) && HS == 2) {                                  \
+    if ((benchmark_height_ & 1) && (HS) == 2) {                                \
       for (int x = 0; x < benchmark_width_ - 1; x += 2) {                      \
         uint8_t r = static_cast<uint8_t>(fastrand());                          \
         p[0] = r;                                                              \
@@ -228,10 +228,10 @@ static void YJToRGB(int y, int* r, int* g, int* b) {
 //  #define CLAMPMETHOD_MASK 1
 
 // Pick a method for rounding.
-#define ROUND(f) static_cast<int>(f + 0.5f)
-//  #define ROUND(f) lrintf(f)
-//  #define ROUND(f) static_cast<int>(round(f))
-//  #define ROUND(f) _mm_cvt_ss2si(_mm_load_ss(&f))
+#define ROUND(f) static_cast<int>((f) + 0.5f)
+  //  #define ROUND(f) lrintf(f)
+  //  #define ROUND(f) static_cast<int>(round(f))
+  //  #define ROUND(f) _mm_cvt_ss2si(_mm_load_ss(&f))
 
 #if defined(CLAMPMETHOD_IF)
 static int RoundToByte(float f) {
@@ -318,7 +318,7 @@ static int RoundToByte(float f) {
 }
 #endif
 
-#define RANDOM256(s) ((s & 1) ? ((s >> 1) ^ 0xb8) : (s >> 1))
+#define RANDOM256(s) (((s)&1) ? (((s) >> 1) ^ 0xb8) : ((s) >> 1))
 
 TEST_F(LibYUVColorTest, TestRoundToByte) {
   int allb = 0;

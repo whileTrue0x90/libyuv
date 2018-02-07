@@ -26,7 +26,7 @@ extern "C" {
 //   With MJPEG it is the compressed size of the frame.
 LIBYUV_API
 int ConvertToI420(const uint8_t* sample,
-                  size_t sample_size,
+                  size_t /*sample_size*/,
                   uint8_t* dst_y,
                   int dst_stride_y,
                   uint8_t* dst_u,

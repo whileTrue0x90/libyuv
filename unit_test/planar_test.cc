@@ -1012,24 +1012,26 @@ TEST_F(LibYUVPlanarTest, TestInterpolatePlane) {
     const int kWidth = ((W1280) > 0) ? (W1280) : 1;                           \
     const int kHeight = benchmark_height_;                                    \
     const int kStrideA =                                                      \
-        (kWidth * BPP_A + STRIDE_A - 1) / STRIDE_A * STRIDE_A;                \
+        (kWidth * (BPP_A) + (STRIDE_A)-1) / (STRIDE_A) * (STRIDE_A);          \
     const int kStrideB =                                                      \
-        (kWidth * BPP_B + STRIDE_B - 1) / STRIDE_B * STRIDE_B;                \
-    align_buffer_page_end(src_argb_a, kStrideA* kHeight + OFF);               \
-    align_buffer_page_end(src_argb_b, kStrideA* kHeight + OFF);               \
+        (kWidth * (BPP_B) + (STRIDE_B)-1) / (STRIDE_B) * (STRIDE_B);          \
+    align_buffer_page_end(src_argb_a, kStrideA* kHeight + (OFF));             \
+    align_buffer_page_end(src_argb_b, kStrideA* kHeight + (OFF));             \
     align_buffer_page_end(dst_argb_c, kStrideB* kHeight);                     \
     align_buffer_page_end(dst_argb_opt, kStrideB* kHeight);                   \
     for (int i = 0; i < kStrideA * kHeight; ++i) {                            \
-      src_argb_a[i + OFF] = (fastrand() & 0xff);                              \
-      src_argb_b[i + OFF] = (fastrand() & 0xff);                              \
+      src_argb_a[i + (OFF)] = (fastrand() & 0xff);                            \
+      src_argb_b[i + (OFF)] = (fastrand() & 0xff);                            \
     }                                                                         \
     MaskCpuFlags(disable_cpu_flags_);                                         \
-    ARGBInterpolate(src_argb_a + OFF, kStrideA, src_argb_b + OFF, kStrideA,   \
-                    dst_argb_c, kStrideB, kWidth, NEG kHeight, TERP);         \
+    ARGBInterpolate(src_argb_a + (OFF), kStrideA, src_argb_b + (OFF),         \
+                    kStrideA, dst_argb_c, kStrideB, kWidth, NEG kHeight,      \
+                    TERP);                                                    \
     MaskCpuFlags(benchmark_cpu_info_);                                        \
     for (int i = 0; i < benchmark_iterations_; ++i) {                         \
-      ARGBInterpolate(src_argb_a + OFF, kStrideA, src_argb_b + OFF, kStrideA, \
-                      dst_argb_opt, kStrideB, kWidth, NEG kHeight, TERP);     \
+      ARGBInterpolate(src_argb_a + (OFF), kStrideA, src_argb_b + (OFF),       \
+                      kStrideA, dst_argb_opt, kStrideB, kWidth, NEG kHeight,  \
+                      TERP);                                                  \
     }                                                                         \
     for (int i = 0; i < kStrideB * kHeight; ++i) {                            \
       EXPECT_EQ(dst_argb_c[i], dst_argb_opt[i]);                              \
