@@ -941,9 +941,9 @@ void ScaleARGBColsUp2_C(uint8_t* dst_argb,
 
 // TODO(fbarchard): Replace 0x7f ^ f with 128-f.  bug=607.
 // Mimics SSSE3 blender
-#define BLENDER1(a, b, f) ((a) * (0x7f ^ f) + (b)*f) >> 7
+#define BLENDER1(a, b, f) ((a) * (0x7f ^ (f)) + (b) * (f)) >> 7
 #define BLENDERC(a, b, f, s) \
-  (uint32_t)(BLENDER1(((a) >> s) & 255, ((b) >> s) & 255, f) << s)
+  (uint32_t)(BLENDER1(((a) >> (s)) & 255, ((b) >> (s)) & 255, f) << (s))
 #define BLENDER(a, b, f)                                                 \
   BLENDERC(a, b, f, 24) | BLENDERC(a, b, f, 16) | BLENDERC(a, b, f, 8) | \
       BLENDERC(a, b, f, 0)
@@ -1212,7 +1212,8 @@ int FixedDiv1_C(int num, int div) {
   return (int)((((int64_t)(num) << 16) - 0x00010001) / (div - 1));
 }
 
-#define CENTERSTART(dx, s) (dx < 0) ? -((-dx >> 1) + s) : ((dx >> 1) + s)
+#define CENTERSTART(dx, s) \
+  (((dx) < 0) ? -((-(dx) >> 1) + (s)) : (((dx) >> 1) + (s)))
 
 // Compute slope values for stepping.
 void ScaleSlope(int src_width,

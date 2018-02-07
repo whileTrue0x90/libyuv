@@ -24,7 +24,8 @@ namespace libyuv {
 extern "C" {
 #endif
 
-#define SUBSAMPLE(v, a, s) (v < 0) ? (-((-v + a) >> s)) : ((v + a) >> s)
+#define SUBSAMPLE(v, a, s) \
+  ((v) < 0) ? (-((-(v) + (a)) >> (s))) : (((v) + (a)) >> (s))
 static __inline int Abs(int v) {
   return v >= 0 ? v : -v;
 }
