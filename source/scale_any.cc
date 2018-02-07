@@ -22,12 +22,12 @@ extern "C" {
 #define CANY(NAMEANY, TERP_SIMD, TERP_C, BPP, MASK)                            \
   void NAMEANY(uint8_t* dst_ptr, const uint8_t* src_ptr, int dst_width, int x, \
                int dx) {                                                       \
-    int r = dst_width & MASK;                                                  \
-    int n = dst_width & ~MASK;                                                 \
+    int r = dst_width & (MASK);                                                \
+    int n = dst_width & ~(MASK);                                               \
     if (n > 0) {                                                               \
       TERP_SIMD(dst_ptr, src_ptr, n, x, dx);                                   \
     }                                                                          \
-    TERP_C(dst_ptr + n * BPP, src_ptr, r, x + n * dx, dx);                     \
+    TERP_C(dst_ptr + n * (BPP), src_ptr, r, x + n * dx, dx);                   \
   }
 
 #ifdef HAS_SCALEFILTERCOLS_NEON
@@ -68,8 +68,8 @@ CANY(ScaleARGBFilterCols_Any_MSA,
     if (n > 0) {                                                               \
       SCALEROWDOWN_SIMD(src_ptr, src_stride, dst_ptr, n);                      \
     }                                                                          \
-    SCALEROWDOWN_C(src_ptr + (n * FACTOR) * BPP, src_stride,                   \
-                   dst_ptr + n * BPP, r);                                      \
+    SCALEROWDOWN_C(src_ptr + (n * (FACTOR)) * (BPP), src_stride,               \
+                   dst_ptr + n * (BPP), r);                                    \
   }
 
 // Fixed scale down for odd source width.  Used by I420Blend subsampling.
@@ -83,8 +83,8 @@ CANY(ScaleARGBFilterCols_Any_MSA,
     if (n > 0) {                                                               \
       SCALEROWDOWN_SIMD(src_ptr, src_stride, dst_ptr, n);                      \
     }                                                                          \
-    SCALEROWDOWN_C(src_ptr + (n * FACTOR) * BPP, src_stride,                   \
-                   dst_ptr + n * BPP, r + 1);                                  \
+    SCALEROWDOWN_C(src_ptr + (n * (FACTOR)) * (BPP), src_stride,               \
+                   dst_ptr + n * (BPP), r + 1);                                \
   }
 
 #ifdef HAS_SCALEROWDOWN2_SSSE3
@@ -385,16 +385,16 @@ SDANY(ScaleARGBRowDown2Box_Any_MSA,
 #undef SDANY
 
 // Scale down by even scale factor.
-#define SDAANY(NAMEANY, SCALEROWDOWN_SIMD, SCALEROWDOWN_C, BPP, MASK)       \
-  void NAMEANY(const uint8_t* src_ptr, ptrdiff_t src_stride, int src_stepx, \
-               uint8_t* dst_ptr, int dst_width) {                           \
-    int r = dst_width & MASK;                                               \
-    int n = dst_width & ~MASK;                                              \
-    if (n > 0) {                                                            \
-      SCALEROWDOWN_SIMD(src_ptr, src_stride, src_stepx, dst_ptr, n);        \
-    }                                                                       \
-    SCALEROWDOWN_C(src_ptr + (n * src_stepx) * BPP, src_stride, src_stepx,  \
-                   dst_ptr + n * BPP, r);                                   \
+#define SDAANY(NAMEANY, SCALEROWDOWN_SIMD, SCALEROWDOWN_C, BPP, MASK)        \
+  void NAMEANY(const uint8_t* src_ptr, ptrdiff_t src_stride, int src_stepx,  \
+               uint8_t* dst_ptr, int dst_width) {                            \
+    int r = dst_width & (MASK);                                              \
+    int n = dst_width & ~(MASK);                                             \
+    if (n > 0) {                                                             \
+      SCALEROWDOWN_SIMD(src_ptr, src_stride, src_stepx, dst_ptr, n);         \
+    }                                                                        \
+    SCALEROWDOWN_C(src_ptr + (n * src_stepx) * (BPP), src_stride, src_stepx, \
+                   dst_ptr + n * (BPP), r);                                  \
   }
 
 #ifdef HAS_SCALEARGBROWDOWNEVEN_SSE2
@@ -437,11 +437,11 @@ SDAANY(ScaleARGBRowDownEvenBox_Any_MSA,
 // Add rows box filter scale down.
 #define SAANY(NAMEANY, SCALEADDROW_SIMD, SCALEADDROW_C, MASK)              \
   void NAMEANY(const uint8_t* src_ptr, uint16_t* dst_ptr, int src_width) { \
-    int n = src_width & ~MASK;                                             \
+    int n = src_width & ~(MASK);                                           \
     if (n > 0) {                                                           \
       SCALEADDROW_SIMD(src_ptr, dst_ptr, n);                               \
     }                                                                      \
-    SCALEADDROW_C(src_ptr + n, dst_ptr + n, src_width & MASK);             \
+    SCALEADDROW_C(src_ptr + n, dst_ptr + n, src_width & (MASK));           \
   }
 
 #ifdef HAS_SCALEADDROW_SSE2
