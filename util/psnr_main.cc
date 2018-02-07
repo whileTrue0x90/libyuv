@@ -330,7 +330,7 @@ int main(int argc, const char* argv[]) {
   }
 #endif
   // Open original file (first file argument)
-  FILE* const file_org = fopen(argv[fileindex_org], "rb");
+  FILE* const file_org = fopen(argv[fileindex_org], "rbe");
   if (file_org == NULL) {
     fprintf(stderr, "Cannot open %s\n", argv[fileindex_org]);
     exit(1);
@@ -340,7 +340,7 @@ int main(int argc, const char* argv[]) {
   FILE** file_rec = new FILE*[num_rec];
   memset(file_rec, 0, num_rec * sizeof(FILE*));  // NOLINT
   for (int cur_rec = 0; cur_rec < num_rec; ++cur_rec) {
-    file_rec[cur_rec] = fopen(argv[fileindex_rec + cur_rec], "rb");
+    file_rec[cur_rec] = fopen(argv[fileindex_rec + cur_rec], "rbe");
     if (file_rec[cur_rec] == NULL) {
       fprintf(stderr, "Cannot open %s\n", argv[fileindex_rec + cur_rec]);
       fclose(file_org);
