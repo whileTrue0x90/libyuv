@@ -46,6 +46,7 @@ LibYUVConvertTest::LibYUVConvertTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
@@ -100,6 +101,7 @@ LibYUVColorTest::LibYUVColorTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
@@ -154,6 +156,7 @@ LibYUVScaleTest::LibYUVScaleTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
@@ -208,6 +211,7 @@ LibYUVRotateTest::LibYUVRotateTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
@@ -262,6 +266,7 @@ LibYUVPlanarTest::LibYUVPlanarTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
@@ -316,6 +321,7 @@ LibYUVBaseTest::LibYUVBaseTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
@@ -370,6 +376,7 @@ LibYUVCompareTest::LibYUVCompareTest()
     : benchmark_iterations_(1),
       benchmark_width_(128),
       benchmark_height_(72),
+      benchmark_pixels_div256_(),
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
