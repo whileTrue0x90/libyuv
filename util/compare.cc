@@ -25,8 +25,8 @@ int main(int argc, char** argv) {
   }
   char* name1 = argv[1];
   char* name2 = (argc > 2) ? argv[2] : NULL;
-  FILE* fin1 = fopen(name1, "rb");
-  FILE* fin2 = name2 ? fopen(name2, "rb") : NULL;
+  FILE* fin1 = fopen(name1, "rbe");
+  FILE* fin2 = name2 ? fopen(name2, "rbe") : NULL;
 
   const int kBlockSize = 32768;
   uint8_t buf1[kBlockSize];
