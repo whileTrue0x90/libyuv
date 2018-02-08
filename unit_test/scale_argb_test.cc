@@ -229,8 +229,8 @@ static int ARGBClipTestFilter(int src_width,
 
 // The following adjustments in dimensions ensure the scale factor will be
 // exactly achieved.
-#define DX(x, nom, denom) static_cast<int>((Abs(x) / nom) * nom)
-#define SX(x, nom, denom) static_cast<int>((x / nom) * denom)
+#define DX(x, nom, denom) static_cast<int>((Abs(x) / (nom)) * (nom))
+#define SX(x, nom, denom) static_cast<int>(((x) / (nom)) * (denom))
 
 #define TEST_FACTOR1(name, filter, nom, denom, max_diff)                     \
   TEST_F(LibYUVScaleTest, ARGBScaleDownBy##name##_##filter) {                \
