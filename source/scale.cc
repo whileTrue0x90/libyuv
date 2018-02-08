@@ -27,7 +27,8 @@ static __inline int Abs(int v) {
   return v >= 0 ? v : -v;
 }
 
-#define SUBSAMPLE(v, a, s) (v < 0) ? (-((-v + a) >> s)) : ((v + a) >> s)
+#define SUBSAMPLE(v, a, s) \
+  ((v) < 0) ? (-((-(v) + (a)) >> (s))) : (((v) + (a)) >> (s))
 
 // Scale plane, 1/2
 // This is an optimized version for scaling down a plane to 1/2 of

@@ -391,7 +391,7 @@ static __inline int RGBToV(uint8_t r, uint8_t g, uint8_t b) {
     int x;                                                                   \
     for (x = 0; x < width; ++x) {                                            \
       dst_y[0] = RGBToY(src_argb0[R], src_argb0[G], src_argb0[B]);           \
-      src_argb0 += BPP;                                                      \
+      src_argb0 += (BPP);                                                    \
       dst_y += 1;                                                            \
     }                                                                        \
   }                                                                          \
@@ -400,19 +400,19 @@ static __inline int RGBToV(uint8_t r, uint8_t g, uint8_t b) {
     const uint8_t* src_rgb1 = src_rgb0 + src_stride_rgb;                     \
     int x;                                                                   \
     for (x = 0; x < width - 1; x += 2) {                                     \
-      uint8_t ab = (src_rgb0[B] + src_rgb0[B + BPP] + src_rgb1[B] +          \
-                    src_rgb1[B + BPP]) >>                                    \
+      uint8_t ab = (src_rgb0[B] + src_rgb0[(B) + (BPP)] + src_rgb1[B] +      \
+                    src_rgb1[(B) + (BPP)]) >>                                \
                    2;                                                        \
-      uint8_t ag = (src_rgb0[G] + src_rgb0[G + BPP] + src_rgb1[G] +          \
-                    src_rgb1[G + BPP]) >>                                    \
+      uint8_t ag = (src_rgb0[G] + src_rgb0[(G) + (BPP)] + src_rgb1[G] +      \
+                    src_rgb1[(G) + (BPP)]) >>                                \
                    2;                                                        \
-      uint8_t ar = (src_rgb0[R] + src_rgb0[R + BPP] + src_rgb1[R] +          \
-                    src_rgb1[R + BPP]) >>                                    \
+      uint8_t ar = (src_rgb0[R] + src_rgb0[(R) + (BPP)] + src_rgb1[R] +      \
+                    src_rgb1[(R) + (BPP)]) >>                                \
                    2;                                                        \
       dst_u[0] = RGBToU(ar, ag, ab);                                         \
       dst_v[0] = RGBToV(ar, ag, ab);                                         \
-      src_rgb0 += BPP * 2;                                                   \
-      src_rgb1 += BPP * 2;                                                   \
+      src_rgb0 += (BPP)*2;                                                   \
+      src_rgb1 += (BPP)*2;                                                   \
       dst_u += 1;                                                            \
       dst_v += 1;                                                            \
     }                                                                        \
@@ -477,7 +477,7 @@ static __inline int RGBToVJ(uint8_t r, uint8_t g, uint8_t b) {
     int x;                                                                    \
     for (x = 0; x < width; ++x) {                                             \
       dst_y[0] = RGBToYJ(src_argb0[R], src_argb0[G], src_argb0[B]);           \
-      src_argb0 += BPP;                                                       \
+      src_argb0 += (BPP);                                                     \
       dst_y += 1;                                                             \
     }                                                                         \
   }                                                                           \
@@ -487,15 +487,15 @@ static __inline int RGBToVJ(uint8_t r, uint8_t g, uint8_t b) {
     int x;                                                                    \
     for (x = 0; x < width - 1; x += 2) {                                      \
       uint8_t ab = AVGB(AVGB(src_rgb0[B], src_rgb1[B]),                       \
-                        AVGB(src_rgb0[B + BPP], src_rgb1[B + BPP]));          \
+                        AVGB(src_rgb0[(B) + (BPP)], src_rgb1[(B) + (BPP)]));  \
       uint8_t ag = AVGB(AVGB(src_rgb0[G], src_rgb1[G]),                       \
-                        AVGB(src_rgb0[G + BPP], src_rgb1[G + BPP]));          \
+                        AVGB(src_rgb0[(G) + (BPP)], src_rgb1[(G) + (BPP)]));  \
       uint8_t ar = AVGB(AVGB(src_rgb0[R], src_rgb1[R]),                       \
-                        AVGB(src_rgb0[R + BPP], src_rgb1[R + BPP]));          \
+                        AVGB(src_rgb0[(R) + (BPP)], src_rgb1[(R) + (BPP)]));  \
       dst_u[0] = RGBToUJ(ar, ag, ab);                                         \
       dst_v[0] = RGBToVJ(ar, ag, ab);                                         \
-      src_rgb0 += BPP * 2;                                                    \
-      src_rgb1 += BPP * 2;                                                    \
+      src_rgb0 += (BPP)*2;                                                    \
+      src_rgb1 += (BPP)*2;                                                    \
       dst_u += 1;                                                             \
       dst_v += 1;                                                             \
     }                                                                         \
@@ -838,8 +838,8 @@ void ARGBQuantizeRow_C(uint8_t* dst_argb,
   }
 }
 
-#define REPEAT8(v) (v) | ((v) << 8)
-#define SHADE(f, v) v* f >> 24
+#define REPEAT8(v) ((v) | ((v) << 8))
+#define SHADE(f, v) ((v) * (f) >> 24)
 
 void ARGBShadeRow_C(const uint8_t* src_argb,
                     uint8_t* dst_argb,
@@ -867,8 +867,8 @@ void ARGBShadeRow_C(const uint8_t* src_argb,
 #undef REPEAT8
 #undef SHADE
 
-#define REPEAT8(v) (v) | ((v) << 8)
-#define SHADE(f, v) v* f >> 16
+#define REPEAT8(v) ((v) | ((v) << 8))
+#define SHADE(f, v) ((v) * (f) >> 16)
 
 void ARGBMultiplyRow_C(const uint8_t* src_argb0,
                        const uint8_t* src_argb1,
@@ -896,7 +896,7 @@ void ARGBMultiplyRow_C(const uint8_t* src_argb0,
 #undef REPEAT8
 #undef SHADE
 
-#define SHADE(f, v) clamp255(v + f)
+#define SHADE(f, v) clamp255((v) + (f))
 
 void ARGBAddRow_C(const uint8_t* src_argb0,
                   const uint8_t* src_argb1,
@@ -923,7 +923,7 @@ void ARGBAddRow_C(const uint8_t* src_argb0,
 }
 #undef SHADE
 
-#define SHADE(f, v) clamp0(f - v)
+#define SHADE(f, v) clamp0((f) - (v))
 
 void ARGBSubtractRow_C(const uint8_t* src_argb0,
                        const uint8_t* src_argb1,
@@ -1061,13 +1061,13 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
 
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
-#define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
+#define YGB (-1160) /* 1.164 * 64 * -16 + 64 / 2 */
 
 // U and V contributions to R,G,B.
-#define UB -128 /* max(-128, round(-2.018 * 64)) */
+#define UB (-128) /* max(-128, round(-2.018 * 64)) */
 #define UG 25   /* round(0.391 * 64) */
 #define VG 52   /* round(0.813 * 64) */
-#define VR -102 /* round(-1.596 * 64) */
+#define VR (-102) /* round(-1.596 * 64) */
 
 // Bias values to subtract 16 from Y and 128 from U and V.
 #define BB (UB * 128 + YGB)
@@ -1145,10 +1145,10 @@ const struct YuvConstants SIMD_ALIGNED(kYvuI601Constants) = {
 #define YGB 32   /* 64 / 2 */
 
 // U and V contributions to R,G,B.
-#define UB -113 /* round(-1.77200 * 64) */
+#define UB (-113) /* round(-1.77200 * 64) */
 #define UG 22   /* round(0.34414 * 64) */
 #define VG 46   /* round(0.71414  * 64) */
-#define VR -90  /* round(-1.40200 * 64) */
+#define VR (-90) /* round(-1.40200 * 64) */
 
 // Bias values to round, and subtract 128 from U and V.
 #define BB (UB * 128 + YGB)
@@ -1224,14 +1224,14 @@ const struct YuvConstants SIMD_ALIGNED(kYvuJPEGConstants) = {
 
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
-#define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
+#define YGB (-1160) /* 1.164 * 64 * -16 + 64 / 2 */
 
 // TODO(fbarchard): Find way to express 2.112 instead of 2.0.
 // U and V contributions to R,G,B.
-#define UB -128 /* max(-128, round(-2.112 * 64)) */
+#define UB (-128) /* max(-128, round(-2.112 * 64)) */
 #define UG 14   /* round(0.213 * 64) */
 #define VG 34   /* round(0.533  * 64) */
-#define VR -115 /* round(-1.793 * 64) */
+#define VR (-115) /* round(-1.793 * 64) */
 
 // Bias values to round, and subtract 128 from U and V.
 #define BB (UB * 128 + YGB)
@@ -1453,7 +1453,7 @@ static __inline void YuvPixel10(uint16_t y,
 
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
-#define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
+#define YGB (-1160) /* 1.164 * 64 * -16 + 64 / 2 */
 
 // C reference code that mimics the YUV assembly.
 static __inline void YPixel(uint8_t y, uint8_t* b, uint8_t* g, uint8_t* r) {
@@ -2260,7 +2260,7 @@ void UYVYToYRow_C(const uint8_t* src_uyvy, uint8_t* dst_y, int width) {
   }
 }
 
-#define BLEND(f, b, a) (((256 - a) * b) >> 8) + f
+#define BLEND(f, b, a) ((((256 - (a)) * (b)) >> 8) + (f))
 
 // Blend src_argb0 over src_argb1 and store to dst_argb.
 // dst_argb may be src_argb0 or src_argb1.
@@ -2315,7 +2315,7 @@ void ARGBBlendRow_C(const uint8_t* src_argb0,
 }
 #undef BLEND
 
-#define UBLEND(f, b, a) (((a)*f) + ((255 - a) * b) + 255) >> 8
+#define UBLEND(f, b, a) (((a) * (f)) + ((255 - (a)) * (b)) + 255) >> 8
 void BlendPlaneRow_C(const uint8_t* src0,
                      const uint8_t* src1,
                      const uint8_t* alpha,
@@ -2336,7 +2336,7 @@ void BlendPlaneRow_C(const uint8_t* src0,
 }
 #undef UBLEND
 
-#define ATTENUATE(f, a) (a | (a << 8)) * (f | (f << 8)) >> 24
+#define ATTENUATE(f, a) (((a) | ((a) << 8)) * ((f) | ((f) << 8)) >> 24)
 
 // Multiply source RGB by alpha and store to destination.
 // This code mimics the SSSE3 version for better testability.
@@ -2382,7 +2382,7 @@ void ARGBAttenuateRow_C(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
 // r = (r * 255 + (a / 2)) / a;
 // Reciprocal method is off by 1 on some values. ie 125
 // 8.8 fixed point inverse table with 1.0 in upper short and 1 / a in lower.
-#define T(a) 0x01000000 + (0x10000 / a)
+#define T(a) (0x01000000 + (0x10000 / (a)))
 const uint32_t fixed_invtbl8[256] = {
     0x01000000, 0x0100ffff, T(0x02), T(0x03),   T(0x04), T(0x05), T(0x06),
     T(0x07),    T(0x08),    T(0x09), T(0x0a),   T(0x0b), T(0x0c), T(0x0d),
@@ -2507,20 +2507,14 @@ void ARGBAffineRow_C(const uint8_t* src_argb,
 }
 
 // Blend 2 rows into 1.
-static void HalfRow_C(const uint8_t* src_uv,
-                      ptrdiff_t src_uv_stride,
-                      uint8_t* dst_uv,
-                      int width) {
+static void HalfRow_C(const uint8_t* src_uv, uint8_t* dst_uv, int width) {
   int x;
   for (x = 0; x < width; ++x) {
     dst_uv[x] = (src_uv[x] + src_uv[src_uv_stride + x] + 1) >> 1;
   }
 }
 
-static void HalfRow_16_C(const uint16_t* src_uv,
-                         ptrdiff_t src_uv_stride,
-                         uint16_t* dst_uv,
-                         int width) {
+static void HalfRow_16_C(const uint16_t* src_uv, uint16_t* dst_uv, int width) {
   int x;
   for (x = 0; x < width; ++x) {
     dst_uv[x] = (src_uv[x] + src_uv[src_uv_stride + x] + 1) >> 1;
@@ -2530,7 +2524,7 @@ static void HalfRow_16_C(const uint16_t* src_uv,
 // C version 2x2 -> 2x1.
 void InterpolateRow_C(uint8_t* dst_ptr,
                       const uint8_t* src_ptr,
-                      ptrdiff_t src_stride,
+                      ptrdiff_t /*src_stride*/,
                       int width,
                       int source_y_fraction) {
   int y1_fraction = source_y_fraction;
@@ -2562,7 +2556,7 @@ void InterpolateRow_C(uint8_t* dst_ptr,
 
 void InterpolateRow_16_C(uint16_t* dst_ptr,
                          const uint16_t* src_ptr,
-                         ptrdiff_t src_stride,
+                         ptrdiff_t /*src_stride*/,
                          int width,
                          int source_y_fraction) {
   int y1_fraction = source_y_fraction;
