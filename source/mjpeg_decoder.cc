@@ -507,11 +507,11 @@ LIBYUV_BOOL MJpegDecoder::StartDecode() {
   decompress_struct_->dct_method = JDCT_IFAST;  // JDCT_ISLOW is default
   decompress_struct_->dither_mode = JDITHER_NONE;
   // Not applicable to 'raw':
-  decompress_struct_->do_fancy_upsampling = (boolean)(LIBYUV_FALSE);
+  decompress_struct_->do_fancy_upsampling = static_cast<boolean>(LIBYUV_FALSE);
   // Only for buffered mode:
-  decompress_struct_->enable_2pass_quant = (boolean)(LIBYUV_FALSE);
+  decompress_struct_->enable_2pass_quant = static_cast<boolean>(LIBYUV_FALSE);
   // Blocky but fast:
-  decompress_struct_->do_block_smoothing = (boolean)(LIBYUV_FALSE);
+  decompress_struct_->do_block_smoothing = static_cast<boolean>(LIBYUV_FALSE);
 
   if (!jpeg_start_decompress(decompress_struct_)) {
     // ERROR: Couldn't start JPEG decompressor";
@@ -538,7 +538,7 @@ void MJpegDecoder::SetScanlinePointers(uint8_t** data) {
 }
 
 inline LIBYUV_BOOL MJpegDecoder::DecodeImcuRow() {
-  return (unsigned int)(GetImageScanlinesPerImcuRow()) ==
+  return static_cast<unsigned int>(GetImageScanlinesPerImcuRow()) ==
          jpeg_read_raw_data(decompress_struct_, scanlines_,
                             GetImageScanlinesPerImcuRow());
 }
@@ -552,9 +552,9 @@ JpegSubsamplingType MJpegDecoder::JpegSubsamplingTypeHelper(
     if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 2 &&
         subsample_y[1] == 2 && subsample_x[2] == 2 && subsample_y[2] == 2) {
       return kJpegYuv420;
-    } else if (subsample_x[0] == 1 && subsample_y[0] == 1 &&
-               subsample_x[1] == 2 && subsample_y[1] == 1 &&
-               subsample_x[2] == 2 && subsample_y[2] == 1) {
+    }
+    if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 2 &&
+        subsample_y[1] == 1 && subsample_x[2] == 2 && subsample_y[2] == 1) {
       return kJpegYuv422;
     } else if (subsample_x[0] == 1 && subsample_y[0] == 1 &&
                subsample_x[1] == 1 && subsample_y[1] == 1 &&
