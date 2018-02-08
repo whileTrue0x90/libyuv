@@ -141,7 +141,7 @@ int GetXCR0() {
 // For Arm, but public to allow testing on any CPU
 LIBYUV_API SAFEBUFFERS int ArmCpuCaps(const char* cpuinfo_name) {
   char cpuinfo_line[512];
-  FILE* f = fopen(cpuinfo_name, "r");
+  FILE* f = fopen(cpuinfo_name, "re");
   if (!f) {
     // Assume Neon if /proc/cpuinfo is unavailable.
     // This will occur for Chrome sandbox for Pepper or Render process.
@@ -171,7 +171,7 @@ LIBYUV_API SAFEBUFFERS int ArmCpuCaps(const char* cpuinfo_name) {
 LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name,
                                        const char ase[]) {
   char cpuinfo_line[512];
-  FILE* f = fopen(cpuinfo_name, "r");
+  FILE* f = fopen(cpuinfo_name, "re");
   if (!f) {
     // ase enabled if /proc/cpuinfo is unavailable.
     if (strcmp(ase, " msa") == 0) {
