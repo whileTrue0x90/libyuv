@@ -10,7 +10,7 @@
 
 #include "libyuv/planar_functions.h"
 
-#include <string.h>  // for memset()
+#include <cstring>  // for memset()
 
 #include "libyuv/cpu_id.h"
 #ifdef HAVE_JPEG

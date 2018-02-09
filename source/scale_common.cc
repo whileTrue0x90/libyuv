@@ -10,8 +10,8 @@
 
 #include "libyuv/scale.h"
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 
 #include "libyuv/cpu_id.h"
 #include "libyuv/planar_functions.h"  // For CopyARGB
@@ -516,7 +516,7 @@ void ScaleFilterCols64_C(uint8_t* dst_ptr,
                          int dst_width,
                          int x32,
                          int dx) {
-  int64_t x = (int64_t)(x32);
+  auto x = (int64_t)(x32);
   int j;
   for (j = 0; j < dst_width - 1; j += 2) {
     int64_t xi = x >> 16;
@@ -576,7 +576,7 @@ void ScaleFilterCols64_16_C(uint16_t* dst_ptr,
                             int dst_width,
                             int x32,
                             int dx) {
-  int64_t x = (int64_t)(x32);
+  auto x = (int64_t)(x32);
   int j;
   for (j = 0; j < dst_width - 1; j += 2) {
     int64_t xi = x >> 16;
@@ -778,8 +778,8 @@ void ScaleARGBRowDown2_C(const uint8_t* src_argb,
                          ptrdiff_t src_stride,
                          uint8_t* dst_argb,
                          int dst_width) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int x;
   (void)src_stride;
   for (x = 0; x < dst_width - 1; x += 2) {
@@ -837,8 +837,8 @@ void ScaleARGBRowDownEven_C(const uint8_t* src_argb,
                             int src_stepx,
                             uint8_t* dst_argb,
                             int dst_width) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   (void)src_stride;
   int x;
   for (x = 0; x < dst_width - 1; x += 2) {
@@ -882,8 +882,8 @@ void ScaleARGBCols_C(uint8_t* dst_argb,
                      int dst_width,
                      int x,
                      int dx) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int j;
   for (j = 0; j < dst_width - 1; j += 2) {
     dst[0] = src[x >> 16];
@@ -902,9 +902,9 @@ void ScaleARGBCols64_C(uint8_t* dst_argb,
                        int dst_width,
                        int x32,
                        int dx) {
-  int64_t x = (int64_t)(x32);
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  auto x = (int64_t)(x32);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int j;
   for (j = 0; j < dst_width - 1; j += 2) {
     dst[0] = src[x >> 16];
@@ -924,8 +924,8 @@ void ScaleARGBColsUp2_C(uint8_t* dst_argb,
                         int dst_width,
                         int x,
                         int dx) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int j;
   (void)x;
   (void)dx;
@@ -953,8 +953,8 @@ void ScaleARGBFilterCols_C(uint8_t* dst_argb,
                            int dst_width,
                            int x,
                            int dx) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int j;
   for (j = 0; j < dst_width - 1; j += 2) {
     int xi = x >> 16;
@@ -985,9 +985,9 @@ void ScaleARGBFilterCols64_C(uint8_t* dst_argb,
                              int dst_width,
                              int x32,
                              int dx) {
-  int64_t x = (int64_t)(x32);
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  auto x = (int64_t)(x32);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int j;
   for (j = 0; j < dst_width - 1; j += 2) {
     int64_t xi = x >> 16;

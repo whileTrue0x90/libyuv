@@ -10,7 +10,7 @@
 
 #include "../unit_test/unit_test.h"
 
-#include <stdlib.h>  // For getenv()
+#include <cstdlib>  // For getenv()
 
 #include <cstring>
 

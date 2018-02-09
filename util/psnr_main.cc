@@ -22,10 +22,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstddef>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -90,7 +90,7 @@ bool ExtractResolutionFromFilename(const char* name,
   fseek(file_org, 0, SEEK_END);
   size_t total_size = ftell(file_org);
   fseek(file_org, 0, SEEK_SET);
-  uint8_t* const ch_org = new uint8_t[total_size];
+  auto* const ch_org = new uint8_t[total_size];
   memset(ch_org, 0, total_size);
   size_t bytes_org = fread(ch_org, sizeof(uint8_t), total_size, file_org);
   fclose(file_org);
@@ -256,11 +256,11 @@ bool UpdateMetrics(uint8_t* ch_org,
   const uint8_t* const v_rec = ch_rec + y_size + uv_size;
   if (do_psnr) {
 #ifdef HAVE_JPEG
-    double y_err = static_cast<double>(
+    auto y_err = static_cast<double>(
         libyuv::ComputeSumSquareError(ch_org, ch_rec, y_size));
-    double u_err = static_cast<double>(
+    auto u_err = static_cast<double>(
         libyuv::ComputeSumSquareError(u_org, u_rec, uv_size));
-    double v_err = static_cast<double>(
+    auto v_err = static_cast<double>(
         libyuv::ComputeSumSquareError(v_org, v_rec, uv_size));
 #else
     double y_err = ComputeSumSquareError(ch_org, ch_rec, y_size);
@@ -343,7 +343,7 @@ int main(int argc, const char* argv[]) {
   }
 
   // Open all files to compare to
-  FILE** file_rec = new FILE*[num_rec];
+  auto** file_rec = new FILE*[num_rec];
   memset(file_rec, 0, num_rec * sizeof(FILE*));  // NOLINT
   for (int cur_rec = 0; cur_rec < num_rec; ++cur_rec) {
     file_rec[cur_rec] = fopen(argv[fileindex_rec + cur_rec], "rb");
@@ -380,8 +380,8 @@ int main(int argc, const char* argv[]) {
 #endif
   }
 
-  uint8_t* const ch_org = new uint8_t[total_size];
-  uint8_t* const ch_rec = new uint8_t[total_size];
+  auto* const ch_org = new uint8_t[total_size];
+  auto* const ch_rec = new uint8_t[total_size];
   if (ch_org == NULL || ch_rec == NULL) {
     fprintf(stderr, "No memory available\n");
     fclose(file_org);
@@ -394,8 +394,8 @@ int main(int argc, const char* argv[]) {
     exit(1);
   }
 
-  metric* const distortion_psnr = new metric[num_rec];
-  metric* const distortion_ssim = new metric[num_rec];
+  auto* const distortion_psnr = new metric[num_rec];
+  auto* const distortion_ssim = new metric[num_rec];
   for (int cur_rec = 0; cur_rec < num_rec; ++cur_rec) {
     metric* cur_distortion_psnr = &distortion_psnr[cur_rec];
     cur_distortion_psnr->y = 0.0;
@@ -443,7 +443,7 @@ int main(int argc, const char* argv[]) {
     if (bytes_org < total_size) {
 #ifdef HAVE_JPEG
       // Try parsing file as a jpeg.
-      uint8_t* const ch_jpeg = new uint8_t[bytes_org];
+      auto* const ch_jpeg = new uint8_t[bytes_org];
       memcpy(ch_jpeg, ch_org, bytes_org);
       memset(ch_org, 0, total_size);
 
@@ -467,7 +467,7 @@ int main(int argc, const char* argv[]) {
       if (bytes_rec < total_size) {
 #ifdef HAVE_JPEG
         // Try parsing file as a jpeg.
-        uint8_t* const ch_jpeg = new uint8_t[bytes_rec];
+        auto* const ch_jpeg = new uint8_t[bytes_rec];
         memcpy(ch_jpeg, ch_rec, bytes_rec);
         memset(ch_rec, 0, total_size);
 

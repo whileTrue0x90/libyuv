@@ -10,8 +10,8 @@
 
 #include "libyuv/row.h"
 
-#include <stdio.h>
-#include <string.h>  // For memcpy and memset.
+#include <cstdio>
+#include <cstring>  // For memcpy and memset.
 
 #include "libyuv/basic_types.h"
 
@@ -2007,8 +2007,8 @@ void MirrorUVRow_C(const uint8_t* src_uv,
 
 void ARGBMirrorRow_C(const uint8_t* src, uint8_t* dst, int width) {
   int x;
-  const uint32_t* src32 = (const uint32_t*)(src);
-  uint32_t* dst32 = (uint32_t*)(dst);
+  const auto* src32 = (const uint32_t*)(src);
+  auto* dst32 = (uint32_t*)(dst);
   src32 += width - 1;
   for (x = 0; x < width - 1; x += 2) {
     dst32[x] = src32[0];
@@ -2159,7 +2159,7 @@ void SetRow_C(uint8_t* dst, uint8_t v8, int width) {
 }
 
 void ARGBSetRow_C(uint8_t* dst_argb, uint32_t v32, int width) {
-  uint32_t* d = (uint32_t*)(dst_argb);
+  auto* d = (uint32_t*)(dst_argb);
   int x;
   for (x = 0; x < width; ++x) {
     d[x] = v32;
@@ -2496,8 +2496,8 @@ void ARGBAffineRow_C(const uint8_t* src_argb,
   uv[0] = uv_dudv[0];
   uv[1] = uv_dudv[1];
   for (i = 0; i < width; ++i) {
-    int x = (int)(uv[0]);
-    int y = (int)(uv[1]);
+    auto x = (int)(uv[0]);
+    auto y = (int)(uv[1]);
     *(uint32_t*)(dst_argb) =
         *(const uint32_t*)(src_argb + y * src_argb_stride + x * 4);
     dst_argb += 4;
@@ -2669,10 +2669,10 @@ void ARGBPolynomialRow_C(const uint8_t* src_argb,
                          int width) {
   int i;
   for (i = 0; i < width; ++i) {
-    float b = (float)(src_argb[0]);
-    float g = (float)(src_argb[1]);
-    float r = (float)(src_argb[2]);
-    float a = (float)(src_argb[3]);
+    auto b = (float)(src_argb[0]);
+    auto g = (float)(src_argb[1]);
+    auto r = (float)(src_argb[2]);
+    auto a = (float)(src_argb[3]);
     float b2 = b * b;
     float g2 = g * g;
     float r2 = r * r;

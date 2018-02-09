@@ -11,12 +11,12 @@
 #include "libyuv/mjpeg_decoder.h"
 
 #ifdef HAVE_JPEG
-#include <assert.h>
+#include <cassert>
 
 #if !defined(__pnacl__) && !defined(__CLR_VER) && \
     !defined(COVERAGE_ENABLED) && !defined(TARGET_IPHONE_SIMULATOR)
 // Must be included before jpeglib.
-#include <setjmp.h>
+#include <csetjmp>
 #define HAVE_SETJMP
 
 #if defined(_MSC_VER)
@@ -414,7 +414,7 @@ void init_source(j_decompress_ptr cinfo) {
 }
 
 boolean fill_input_buffer(j_decompress_ptr cinfo) {
-  BufferVector* buf_vec = reinterpret_cast<BufferVector*>(cinfo->client_data);
+  auto* buf_vec = reinterpret_cast<BufferVector*>(cinfo->client_data);
   if (buf_vec->pos >= buf_vec->len) {
     assert(0 && "No more data");
     // ERROR: No more data
@@ -449,7 +449,7 @@ void ErrorHandler(j_common_ptr cinfo) {
 // ERROR: Error in jpeglib: buf
 #endif
 
-  SetJmpErrorMgr* mgr = reinterpret_cast<SetJmpErrorMgr*>(cinfo->err);
+  auto* mgr = reinterpret_cast<SetJmpErrorMgr*>(cinfo->err);
   // This rewinds the call stack to the point of the corresponding setjmp()
   // and causes it to return (for a second time) with value 1.
   longjmp(mgr->setjmp_buffer, 1);

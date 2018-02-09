@@ -8,9 +8,9 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 // row.h defines SIMD_ALIGNED, overriding unit_test.h
 #include "libyuv/row.h" /* For ScaleSumSamples_Neon */

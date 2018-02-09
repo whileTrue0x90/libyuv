@@ -10,8 +10,8 @@
 
 #include "libyuv/scale.h"
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 
 #include "libyuv/cpu_id.h"
 #include "libyuv/planar_functions.h"  // For CopyARGB

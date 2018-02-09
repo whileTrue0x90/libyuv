@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "../unit_test/unit_test.h"
 #include "libyuv/basic_types.h"
@@ -307,7 +307,7 @@ static int RoundToByte(float f) {
 }
 #elif defined(CLAMPMETHOD_TERNARY)
 static int RoundToByte(float f) {
-  int i = ROUND(f);
+  auto i = ROUND(f);
   return (i < 0) ? 0 : ((i > 255) ? 255 : i);
 }
 #elif defined(CLAMPMETHOD_MASK)

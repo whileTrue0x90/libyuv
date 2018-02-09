@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <assert.h>
+#include <cassert>
 
 #include "libyuv/scale_row.h"
 
@@ -635,8 +635,8 @@ void ScaleARGBCols_MSA(uint8_t* dst_argb,
                        int dst_width,
                        int x,
                        int dx) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
-  uint32_t* dst = (uint32_t*)(dst_argb);
+  const auto* src = (const uint32_t*)(src_argb);
+  auto* dst = (uint32_t*)(dst_argb);
   int j;
   v4i32 x_vec = __msa_fill_w(x);
   v4i32 dx_vec = __msa_fill_w(dx);
@@ -662,7 +662,7 @@ void ScaleARGBFilterCols_MSA(uint8_t* dst_argb,
                              int dst_width,
                              int x,
                              int dx) {
-  const uint32_t* src = (const uint32_t*)(src_argb);
+  const auto* src = (const uint32_t*)(src_argb);
   int j;
   v4u32 src0, src1, src2, src3;
   v4u32 vec0, vec1, vec2, vec3;

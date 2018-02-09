@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <string.h>
+#include <cstring>
 
 #include "libyuv/row.h"
 
@@ -1862,8 +1862,8 @@ void ARGB1555ToUVRow_MSA(const uint8_t* src_argb1555,
                          uint8_t* dst_v,
                          int width) {
   int x;
-  const uint16_t* s = (const uint16_t*)src_argb1555;
-  const uint16_t* t = (const uint16_t*)(src_argb1555 + src_stride_argb1555);
+  const auto* s = (const uint16_t*)src_argb1555;
+  const auto* t = (const uint16_t*)(src_argb1555 + src_stride_argb1555);
   int64_t res0, res1;
   v8u16 src0, src1, src2, src3, reg0, reg1, reg2, reg3;
   v8u16 vec0, vec1, vec2, vec3, vec4, vec5, vec6;
@@ -1943,8 +1943,8 @@ void RGB565ToUVRow_MSA(const uint8_t* src_rgb565,
                        uint8_t* dst_v,
                        int width) {
   int x;
-  const uint16_t* s = (const uint16_t*)src_rgb565;
-  const uint16_t* t = (const uint16_t*)(src_rgb565 + src_stride_rgb565);
+  const auto* s = (const uint16_t*)src_rgb565;
+  const auto* t = (const uint16_t*)(src_rgb565 + src_stride_rgb565);
   int64_t res0, res1;
   v8u16 src0, src1, src2, src3, reg0, reg1, reg2, reg3;
   v8u16 vec0, vec1, vec2, vec3, vec4, vec5;
