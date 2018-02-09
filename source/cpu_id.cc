@@ -20,12 +20,12 @@
 #endif
 
 #if !defined(__native_client__)
-#include <stdlib.h>  // For getenv()
+#include <cstdlib>  // For getenv()
 #endif
 
 // For ArmCpuCaps() but unittested on all platforms
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 #ifdef __cplusplus
 namespace libyuv {

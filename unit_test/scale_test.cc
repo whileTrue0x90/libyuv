@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 
 #include "../unit_test/unit_test.h"
 #include "libyuv/cpu_id.h"
@@ -173,9 +173,9 @@ static int TestFilter_16(int src_width,
     printf("Skipped.  Alloc failed " FILELINESTR(__FILE__, __LINE__) "\n");
     return 0;
   }
-  uint16_t* p_src_y_16 = reinterpret_cast<uint16_t*>(src_y_16);
-  uint16_t* p_src_u_16 = reinterpret_cast<uint16_t*>(src_u_16);
-  uint16_t* p_src_v_16 = reinterpret_cast<uint16_t*>(src_v_16);
+  auto* p_src_y_16 = reinterpret_cast<uint16_t*>(src_y_16);
+  auto* p_src_u_16 = reinterpret_cast<uint16_t*>(src_u_16);
+  auto* p_src_v_16 = reinterpret_cast<uint16_t*>(src_v_16);
 
   MemRandomize(src_y, src_y_plane_size);
   MemRandomize(src_u, src_uv_plane_size);
@@ -205,9 +205,9 @@ static int TestFilter_16(int src_width,
   align_buffer_page_end(dst_u_16, dst_uv_plane_size * 2);
   align_buffer_page_end(dst_v_16, dst_uv_plane_size * 2);
 
-  uint16_t* p_dst_y_16 = reinterpret_cast<uint16_t*>(dst_y_16);
-  uint16_t* p_dst_u_16 = reinterpret_cast<uint16_t*>(dst_u_16);
-  uint16_t* p_dst_v_16 = reinterpret_cast<uint16_t*>(dst_v_16);
+  auto* p_dst_y_16 = reinterpret_cast<uint16_t*>(dst_y_16);
+  auto* p_dst_u_16 = reinterpret_cast<uint16_t*>(dst_u_16);
+  auto* p_dst_v_16 = reinterpret_cast<uint16_t*>(dst_v_16);
 
   MaskCpuFlags(disable_cpu_flags);  // Disable all CPU optimization.
   I420Scale(src_y, src_stride_y, src_u, src_stride_uv, src_v, src_stride_uv,
@@ -539,8 +539,8 @@ static int TestPlaneFilter_16(int src_width,
   align_buffer_page_end(src_y_16, src_y_plane_size * 2);
   align_buffer_page_end(dst_y_8, dst_y_plane_size);
   align_buffer_page_end(dst_y_16, dst_y_plane_size * 2);
-  uint16_t* p_src_y_16 = reinterpret_cast<uint16_t*>(src_y_16);
-  uint16_t* p_dst_y_16 = reinterpret_cast<uint16_t*>(dst_y_16);
+  auto* p_src_y_16 = reinterpret_cast<uint16_t*>(src_y_16);
+  auto* p_dst_y_16 = reinterpret_cast<uint16_t*>(dst_y_16);
 
   MemRandomize(src_y, src_y_plane_size);
   memset(dst_y_8, 0, dst_y_plane_size);
