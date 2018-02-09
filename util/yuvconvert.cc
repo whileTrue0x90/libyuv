@@ -201,7 +201,7 @@ int main(int argc, const char* argv[]) {
   }
 
   // Open all files to convert to
-  FILE** file_rec = new FILE*[num_rec];
+  auto** file_rec = new FILE*[num_rec];
   memset(file_rec, 0, num_rec * sizeof(FILE*));  // NOLINT
   for (int cur_rec = 0; cur_rec < num_rec; ++cur_rec) {
     file_rec[cur_rec] = fopen(argv[fileindex_rec + cur_rec], "wb");
@@ -243,9 +243,9 @@ int main(int argc, const char* argv[]) {
   fseek(file_org, num_skip_org * total_size, SEEK_SET);
 #endif
 
-  uint8_t* const ch_org = new uint8_t[org_size];
-  uint8_t* const ch_dst = new uint8_t[dst_size];
-  uint8_t* const ch_rec = new uint8_t[total_size];
+  auto* const ch_org = new uint8_t[org_size];
+  auto* const ch_dst = new uint8_t[dst_size];
+  auto* const ch_rec = new uint8_t[total_size];
   if (ch_org == NULL || ch_rec == NULL) {
     fprintf(stderr, "No memory available\n");
     fclose(file_org);

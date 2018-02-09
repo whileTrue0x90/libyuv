@@ -414,7 +414,7 @@ void init_source(j_decompress_ptr cinfo) {
 }
 
 boolean fill_input_buffer(j_decompress_ptr cinfo) {
-  BufferVector* buf_vec = reinterpret_cast<BufferVector*>(cinfo->client_data);
+  auto* buf_vec = reinterpret_cast<BufferVector*>(cinfo->client_data);
   if (buf_vec->pos >= buf_vec->len) {
     assert(0 && "No more data");
     // ERROR: No more data
@@ -449,7 +449,7 @@ void ErrorHandler(j_common_ptr cinfo) {
 // ERROR: Error in jpeglib: buf
 #endif
 
-  SetJmpErrorMgr* mgr = reinterpret_cast<SetJmpErrorMgr*>(cinfo->err);
+  auto* mgr = reinterpret_cast<SetJmpErrorMgr*>(cinfo->err);
   // This rewinds the call stack to the point of the corresponding setjmp()
   // and causes it to return (for a second time) with value 1.
   longjmp(mgr->setjmp_buffer, 1);
@@ -552,13 +552,13 @@ JpegSubsamplingType MJpegDecoder::JpegSubsamplingTypeHelper(
     if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 2 &&
         subsample_y[1] == 2 && subsample_x[2] == 2 && subsample_y[2] == 2) {
       return kJpegYuv420;
-    } else if (subsample_x[0] == 1 && subsample_y[0] == 1 &&
-               subsample_x[1] == 2 && subsample_y[1] == 1 &&
-               subsample_x[2] == 2 && subsample_y[2] == 1) {
+    }
+    if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 2 &&
+        subsample_y[1] == 1 && subsample_x[2] == 2 && subsample_y[2] == 1) {
       return kJpegYuv422;
-    } else if (subsample_x[0] == 1 && subsample_y[0] == 1 &&
-               subsample_x[1] == 1 && subsample_y[1] == 1 &&
-               subsample_x[2] == 1 && subsample_y[2] == 1) {
+    }
+    if (subsample_x[0] == 1 && subsample_y[0] == 1 && subsample_x[1] == 1 &&
+        subsample_y[1] == 1 && subsample_x[2] == 1 && subsample_y[2] == 1) {
       return kJpegYuv444;
     }
   } else if (number_of_components == 1) {  // Grey-scale images.
