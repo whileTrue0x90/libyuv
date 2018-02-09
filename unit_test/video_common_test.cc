@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include "../unit_test/unit_test.h"
 #include "libyuv/video_common.h"
@@ -19,11 +19,8 @@ namespace libyuv {
 // Tests FourCC codes in video common, which are used for ConvertToI420().
 
 static bool TestValidChar(uint32_t onecc) {
-  if ((onecc >= '0' && onecc <= '9') || (onecc >= 'A' && onecc <= 'Z') ||
-      (onecc >= 'a' && onecc <= 'z') || (onecc == ' ') || (onecc == 0xff)) {
-    return true;
-  }
-  return false;
+  return (onecc >= '0' && onecc <= '9') || (onecc >= 'A' && onecc <= 'Z') ||
+         (onecc >= 'a' && onecc <= 'z') || (onecc == ' ') || (onecc == 0xff);
 }
 
 static bool TestValidFourCC(uint32_t fourcc, int bpp) {

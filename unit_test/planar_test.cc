@@ -8,9 +8,9 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <math.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 // row.h defines SIMD_ALIGNED, overriding unit_test.h
 #include "libyuv/row.h" /* For ScaleSumSamples_Neon */
@@ -1192,7 +1192,6 @@ static void TestBlendPlane(int width,
   free_aligned_buffer_page_end(src_argb_alpha);
   free_aligned_buffer_page_end(dst_argb_c);
   free_aligned_buffer_page_end(dst_argb_opt);
-  return;
 }
 
 TEST_F(LibYUVPlanarTest, BlendPlane_Opt) {
@@ -1286,7 +1285,6 @@ static void TestI420Blend(int width,
   free_aligned_buffer_page_end(dst_y_opt);
   free_aligned_buffer_page_end(dst_u_opt);
   free_aligned_buffer_page_end(dst_v_opt);
-  return;
 }
 
 TEST_F(LibYUVPlanarTest, I420Blend_Opt) {

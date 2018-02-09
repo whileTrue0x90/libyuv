@@ -10,7 +10,7 @@
 
 #include "../util/ssim.h"  // NOLINT
 
-#include <string.h>
+#include <cstring>
 
 #ifdef __cplusplus
 extern "C" {

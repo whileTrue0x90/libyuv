@@ -10,7 +10,7 @@
 
 #include "libyuv/mjpeg_decoder.h"
 
-#include <string.h>  // For memchr.
+#include <cstring>  // For memchr.
 
 #ifdef __cplusplus
 namespace libyuv {
