@@ -2218,7 +2218,7 @@ TEST_F(LibYUVConvertTest, TestH010ToARGB) {
   memset(histogram_r, 0, sizeof(histogram_r));
   align_buffer_page_end(orig_yuv, kSize * 2 + kSize / 2 * 2 * 2);
   align_buffer_page_end(argb_pixels, kSize * 4);
-  uint16_t* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
+  auto* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
   uint16_t* orig_u = orig_y + kSize;
   uint16_t* orig_v = orig_u + kSize / 2;
 
@@ -2281,7 +2281,7 @@ TEST_F(LibYUVConvertTest, TestH010ToAR30) {
 
   align_buffer_page_end(orig_yuv, kSize * 2 + kSize / 2 * 2 * 2);
   align_buffer_page_end(ar30_pixels, kSize * 4);
-  uint16_t* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
+  auto* orig_y = reinterpret_cast<uint16_t*>(orig_yuv);
   uint16_t* orig_u = orig_y + kSize;
   uint16_t* orig_v = orig_u + kSize / 2;
 

@@ -1347,7 +1347,7 @@ void ScalePlaneBilinearUp_16(int src_width,
     const int kRowSize = (dst_width + 31) & ~31;
     align_buffer_64(row, kRowSize * 4);
 
-    uint16_t* rowptr = (uint16_t*)row;
+    auto* rowptr = (uint16_t*)row;
     int rowstride = kRowSize;
     int lasty = yi;
 
