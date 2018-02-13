@@ -102,7 +102,7 @@ MJpegDecoder::~MJpegDecoder() {
   DestroyOutputBuffers();
 }
 
-LIBYUV_BOOL MJpegDecoder::LoadFrame(const uint8_t* src, size_t src_len) {
+LIBYUV_BOOL MJpegDecoder::LoadFrame(const uint8_t* src, size_t /*src_len*/) {
   if (!ValidateJpeg(src, src_len)) {
     return LIBYUV_FALSE;
   }

@@ -90,7 +90,7 @@ static void JpegI400ToI420(void* opaque,
 // Query size of MJPG in pixels.
 LIBYUV_API
 int MJPGSize(const uint8_t* sample,
-             size_t sample_size,
+             size_t /*sample_size*/,
              int* width,
              int* height) {
   MJpegDecoder mjpeg_decoder;
@@ -107,7 +107,7 @@ int MJPGSize(const uint8_t* sample,
 // TODO(fbarchard): review w and h requirement. dw and dh may be enough.
 LIBYUV_API
 int MJPGToI420(const uint8_t* sample,
-               size_t sample_size,
+               size_t /*sample_size*/,
                uint8_t* y,
                int y_stride,
                uint8_t* u,
@@ -239,7 +239,7 @@ static void JpegI400ToARGB(void* opaque,
 // TODO(fbarchard): review w and h requirement. dw and dh may be enough.
 LIBYUV_API
 int MJPGToARGB(const uint8_t* sample,
-               size_t sample_size,
+               size_t /*sample_size*/,
                uint8_t* argb,
                int argb_stride,
                int w,
