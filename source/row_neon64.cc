@@ -2009,7 +2009,7 @@ void RAWToYRow_NEON(const uint8_t* src_raw, uint8_t* dst_y, int width) {
 // Bilinear filter 16x2 -> 16x1
 void InterpolateRow_NEON(uint8_t* dst_ptr,
                          const uint8_t* src_ptr,
-                         ptrdiff_t src_stride,
+                         ptrdiff_t /*src_stride*/,
                          int dst_width,
                          int source_y_fraction) {
   int y1_fraction = source_y_fraction;

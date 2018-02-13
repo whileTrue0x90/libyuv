@@ -1303,7 +1303,7 @@ void ARGBAttenuateRow_MSA(const uint8_t* src_argb,
 
 void ARGBToRGB565DitherRow_MSA(const uint8_t* src_argb,
                                uint8_t* dst_rgb,
-                               uint32_t dither4,
+                               uint32_t /*dither4*/,
                                int width) {
   int x;
   v16u8 src0, src1, dst0, vec0, vec1;
@@ -2865,7 +2865,7 @@ void UYVYToARGBRow_MSA(const uint8_t* src_uyvy,
 
 void InterpolateRow_MSA(uint8_t* dst_ptr,
                         const uint8_t* src_ptr,
-                        ptrdiff_t src_stride,
+                        ptrdiff_t /*src_stride*/,
                         int width,
                         int32_t source_y_fraction) {
   int32_t y1_fraction = source_y_fraction;
@@ -3068,8 +3068,8 @@ void ARGBBlendRow_MSA(const uint8_t* src_argb0,
 
 void ARGBQuantizeRow_MSA(uint8_t* dst_argb,
                          int scale,
-                         int interval_size,
-                         int interval_offset,
+                         int /*interval_size*/,
+                         int /*interval_offset*/,
                          int width) {
   int x;
   v16u8 src0, src1, src2, src3, dst0, dst1, dst2, dst3;
@@ -3174,7 +3174,7 @@ void ARGBQuantizeRow_MSA(uint8_t* dst_argb,
 
 void ARGBColorMatrixRow_MSA(const uint8_t* src_argb,
                             uint8_t* dst_argb,
-                            const int8_t* matrix_argb,
+                            const int8_t* /*matrix_argb*/,
                             int width) {
   int32_t x;
   v16i8 src0;
@@ -3305,7 +3305,7 @@ void SplitUVRow_MSA(const uint8_t* src_uv,
   }
 }
 
-void SetRow_MSA(uint8_t* dst, uint8_t v8, int width) {
+void SetRow_MSA(uint8_t* dst, uint8_t /*v8*/, int width) {
   int x;
   v16u8 dst0 = (v16u8)__msa_fill_b(v8);
 

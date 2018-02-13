@@ -30,7 +30,7 @@ extern "C" {
   }
 
 void ScaleARGBRowDown2_MSA(const uint8_t* src_argb,
-                           ptrdiff_t src_stride,
+                           ptrdiff_t /*src_stride*/,
                            uint8_t* dst_argb,
                            int dst_width) {
   int x;
@@ -48,7 +48,7 @@ void ScaleARGBRowDown2_MSA(const uint8_t* src_argb,
 }
 
 void ScaleARGBRowDown2Linear_MSA(const uint8_t* src_argb,
-                                 ptrdiff_t src_stride,
+                                 ptrdiff_t /*src_stride*/,
                                  uint8_t* dst_argb,
                                  int dst_width) {
   int x;
@@ -68,7 +68,7 @@ void ScaleARGBRowDown2Linear_MSA(const uint8_t* src_argb,
 }
 
 void ScaleARGBRowDown2Box_MSA(const uint8_t* src_argb,
-                              ptrdiff_t src_stride,
+                              ptrdiff_t /*src_stride*/,
                               uint8_t* dst_argb,
                               int dst_width) {
   int x;
@@ -104,7 +104,7 @@ void ScaleARGBRowDown2Box_MSA(const uint8_t* src_argb,
 }
 
 void ScaleARGBRowDownEven_MSA(const uint8_t* src_argb,
-                              ptrdiff_t src_stride,
+                              ptrdiff_t /*src_stride*/,
                               int32_t src_stepx,
                               uint8_t* dst_argb,
                               int dst_width) {
@@ -128,7 +128,7 @@ void ScaleARGBRowDownEven_MSA(const uint8_t* src_argb,
 }
 
 void ScaleARGBRowDownEvenBox_MSA(const uint8_t* src_argb,
-                                 ptrdiff_t src_stride,
+                                 ptrdiff_t /*src_stride*/,
                                  int src_stepx,
                                  uint8_t* dst_argb,
                                  int dst_width) {
@@ -183,7 +183,7 @@ void ScaleARGBRowDownEvenBox_MSA(const uint8_t* src_argb,
 }
 
 void ScaleRowDown2_MSA(const uint8_t* src_ptr,
-                       ptrdiff_t src_stride,
+                       ptrdiff_t /*src_stride*/,
                        uint8_t* dst,
                        int dst_width) {
   int x;
@@ -204,7 +204,7 @@ void ScaleRowDown2_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown2Linear_MSA(const uint8_t* src_ptr,
-                             ptrdiff_t src_stride,
+                             ptrdiff_t /*src_stride*/,
                              uint8_t* dst,
                              int dst_width) {
   int x;
@@ -229,7 +229,7 @@ void ScaleRowDown2Linear_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown2Box_MSA(const uint8_t* src_ptr,
-                          ptrdiff_t src_stride,
+                          ptrdiff_t /*src_stride*/,
                           uint8_t* dst,
                           int dst_width) {
   int x;
@@ -269,7 +269,7 @@ void ScaleRowDown2Box_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown4_MSA(const uint8_t* src_ptr,
-                       ptrdiff_t src_stride,
+                       ptrdiff_t /*src_stride*/,
                        uint8_t* dst,
                        int dst_width) {
   int x;
@@ -291,7 +291,7 @@ void ScaleRowDown4_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown4Box_MSA(const uint8_t* src_ptr,
-                          ptrdiff_t src_stride,
+                          ptrdiff_t /*src_stride*/,
                           uint8_t* dst,
                           int dst_width) {
   int x;
@@ -357,7 +357,7 @@ void ScaleRowDown4Box_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown38_MSA(const uint8_t* src_ptr,
-                        ptrdiff_t src_stride,
+                        ptrdiff_t /*src_stride*/,
                         uint8_t* dst,
                         int dst_width) {
   int x, width;
@@ -384,7 +384,7 @@ void ScaleRowDown38_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown38_2_Box_MSA(const uint8_t* src_ptr,
-                              ptrdiff_t src_stride,
+                              ptrdiff_t /*src_stride*/,
                               uint8_t* dst_ptr,
                               int dst_width) {
   int x, width;
@@ -453,7 +453,7 @@ void ScaleRowDown38_2_Box_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown38_3_Box_MSA(const uint8_t* src_ptr,
-                              ptrdiff_t src_stride,
+                              ptrdiff_t /*src_stride*/,
                               uint8_t* dst_ptr,
                               int dst_width) {
   int x, width;
@@ -660,8 +660,8 @@ void ScaleARGBCols_MSA(uint8_t* dst_argb,
 void ScaleARGBFilterCols_MSA(uint8_t* dst_argb,
                              const uint8_t* src_argb,
                              int dst_width,
-                             int x,
-                             int dx) {
+                             int /*x*/,
+                             int /*dx*/) {
   const uint32_t* src = (const uint32_t*)(src_argb);
   int j;
   v4u32 src0, src1, src2, src3;
@@ -723,7 +723,7 @@ void ScaleARGBFilterCols_MSA(uint8_t* dst_argb,
 }
 
 void ScaleRowDown34_MSA(const uint8_t* src_ptr,
-                        ptrdiff_t src_stride,
+                        ptrdiff_t /*src_stride*/,
                         uint8_t* dst,
                         int dst_width) {
   int x;
@@ -754,7 +754,7 @@ void ScaleRowDown34_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown34_0_Box_MSA(const uint8_t* src_ptr,
-                              ptrdiff_t src_stride,
+                              ptrdiff_t /*src_stride*/,
                               uint8_t* d,
                               int dst_width) {
   const uint8_t* s = src_ptr;
@@ -848,7 +848,7 @@ void ScaleRowDown34_0_Box_MSA(const uint8_t* src_ptr,
 }
 
 void ScaleRowDown34_1_Box_MSA(const uint8_t* src_ptr,
-                              ptrdiff_t src_stride,
+                              ptrdiff_t /*src_stride*/,
                               uint8_t* d,
                               int dst_width) {
   const uint8_t* s = src_ptr;

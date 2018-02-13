@@ -255,9 +255,9 @@ static const lvec8 kShuffleNV21 = {
 };
 
 // Duplicates gray value 3 times and fills in alpha opaque.
-__declspec(naked) void J400ToARGBRow_SSE2(const uint8_t* src_y,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked) void J400ToARGBRow_SSE2(const uint8_t* /*src_y*/,
+                                          uint8_t* /*dst_argb*/,
+                                          int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_y
     mov        edx, [esp + 8]  // dst_argb
@@ -285,9 +285,9 @@ __declspec(naked) void J400ToARGBRow_SSE2(const uint8_t* src_y,
 
 #ifdef HAS_J400TOARGBROW_AVX2
 // Duplicates gray value 3 times and fills in alpha opaque.
-__declspec(naked) void J400ToARGBRow_AVX2(const uint8_t* src_y,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked) void J400ToARGBRow_AVX2(const uint8_t* /*src_y*/,
+                                          uint8_t* /*dst_argb*/,
+                                          int /*width*/) {
   __asm {
     mov         eax, [esp + 4]  // src_y
     mov         edx, [esp + 8]  // dst_argb
@@ -316,9 +316,9 @@ __declspec(naked) void J400ToARGBRow_AVX2(const uint8_t* src_y,
 }
 #endif  // HAS_J400TOARGBROW_AVX2
 
-__declspec(naked) void RGB24ToARGBRow_SSSE3(const uint8_t* src_rgb24,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void RGB24ToARGBRow_SSSE3(const uint8_t* /*src_rgb24*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_rgb24
     mov       edx, [esp + 8]  // dst_argb
@@ -355,9 +355,9 @@ __declspec(naked) void RGB24ToARGBRow_SSSE3(const uint8_t* src_rgb24,
   }
 }
 
-__declspec(naked) void RAWToARGBRow_SSSE3(const uint8_t* src_raw,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked) void RAWToARGBRow_SSSE3(const uint8_t* /*src_raw*/,
+                                          uint8_t* /*dst_argb*/,
+                                          int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_raw
     mov       edx, [esp + 8]  // dst_argb
@@ -394,9 +394,9 @@ __declspec(naked) void RAWToARGBRow_SSSE3(const uint8_t* src_raw,
   }
 }
 
-__declspec(naked) void RAWToRGB24Row_SSSE3(const uint8_t* src_raw,
-                                           uint8_t* dst_rgb24,
-                                           int width) {
+__declspec(naked) void RAWToRGB24Row_SSSE3(const uint8_t* /*src_raw*/,
+                                           uint8_t* /*dst_rgb24*/,
+                                           int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_raw
     mov       edx, [esp + 8]  // dst_rgb24
@@ -430,9 +430,9 @@ __declspec(naked) void RAWToRGB24Row_SSSE3(const uint8_t* src_raw,
 // v * (256 + 8)
 // G shift of 5 is incorporated, so shift is 5 + 8 and 5 + 3
 // 20 instructions.
-__declspec(naked) void RGB565ToARGBRow_SSE2(const uint8_t* src_rgb565,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void RGB565ToARGBRow_SSE2(const uint8_t* /*src_rgb565*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     mov       eax, 0x01080108  // generate multiplier to repeat 5 bits
     movd      xmm5, eax
@@ -486,9 +486,9 @@ __declspec(naked) void RGB565ToARGBRow_SSE2(const uint8_t* src_rgb565,
 // v * 256 + v * 8
 // v * (256 + 8)
 // G shift of 5 is incorporated, so shift is 5 + 8 and 5 + 3
-__declspec(naked) void RGB565ToARGBRow_AVX2(const uint8_t* src_rgb565,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void RGB565ToARGBRow_AVX2(const uint8_t* /*src_rgb565*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     mov        eax, 0x01080108  // generate multiplier to repeat 5 bits
     vmovd      xmm5, eax
@@ -537,9 +537,9 @@ __declspec(naked) void RGB565ToARGBRow_AVX2(const uint8_t* src_rgb565,
 #endif  // HAS_RGB565TOARGBROW_AVX2
 
 #ifdef HAS_ARGB1555TOARGBROW_AVX2
-__declspec(naked) void ARGB1555ToARGBRow_AVX2(const uint8_t* src_argb1555,
-                                              uint8_t* dst_argb,
-                                              int width) {
+__declspec(naked) void ARGB1555ToARGBRow_AVX2(const uint8_t* /*src_argb1555*/,
+                                              uint8_t* /*dst_argb*/,
+                                              int /*width*/) {
   __asm {
     mov        eax, 0x01080108  // generate multiplier to repeat 5 bits
     vmovd      xmm5, eax
@@ -589,9 +589,9 @@ __declspec(naked) void ARGB1555ToARGBRow_AVX2(const uint8_t* src_argb1555,
 #endif  // HAS_ARGB1555TOARGBROW_AVX2
 
 #ifdef HAS_ARGB4444TOARGBROW_AVX2
-__declspec(naked) void ARGB4444ToARGBRow_AVX2(const uint8_t* src_argb4444,
-                                              uint8_t* dst_argb,
-                                              int width) {
+__declspec(naked) void ARGB4444ToARGBRow_AVX2(const uint8_t* /*src_argb4444*/,
+                                              uint8_t* /*dst_argb*/,
+                                              int /*width*/) {
   __asm {
     mov       eax,  0x0f0f0f0f  // generate mask 0x0f0f0f0f
     vmovd     xmm4, eax
@@ -627,9 +627,9 @@ __declspec(naked) void ARGB4444ToARGBRow_AVX2(const uint8_t* src_argb4444,
 #endif  // HAS_ARGB4444TOARGBROW_AVX2
 
 // 24 instructions
-__declspec(naked) void ARGB1555ToARGBRow_SSE2(const uint8_t* src_argb1555,
-                                              uint8_t* dst_argb,
-                                              int width) {
+__declspec(naked) void ARGB1555ToARGBRow_SSE2(const uint8_t* /*src_argb1555*/,
+                                              uint8_t* /*dst_argb*/,
+                                              int /*width*/) {
   __asm {
     mov       eax, 0x01080108  // generate multiplier to repeat 5 bits
     movd      xmm5, eax
@@ -680,9 +680,9 @@ __declspec(naked) void ARGB1555ToARGBRow_SSE2(const uint8_t* src_argb1555,
 }
 
 // 18 instructions.
-__declspec(naked) void ARGB4444ToARGBRow_SSE2(const uint8_t* src_argb4444,
-                                              uint8_t* dst_argb,
-                                              int width) {
+__declspec(naked) void ARGB4444ToARGBRow_SSE2(const uint8_t* /*src_argb4444*/,
+                                              uint8_t* /*dst_argb*/,
+                                              int /*width*/) {
   __asm {
     mov       eax, 0x0f0f0f0f  // generate mask 0x0f0f0f0f
     movd      xmm4, eax
@@ -718,9 +718,9 @@ __declspec(naked) void ARGB4444ToARGBRow_SSE2(const uint8_t* src_argb4444,
   }
 }
 
-__declspec(naked) void ARGBToRGB24Row_SSSE3(const uint8_t* src_argb,
-                                            uint8_t* dst_rgb,
-                                            int width) {
+__declspec(naked) void ARGBToRGB24Row_SSSE3(const uint8_t* /*src_argb*/,
+                                            uint8_t* /*dst_rgb*/,
+                                            int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_argb
     mov       edx, [esp + 8]  // dst_rgb
@@ -757,9 +757,9 @@ __declspec(naked) void ARGBToRGB24Row_SSSE3(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void ARGBToRAWRow_SSSE3(const uint8_t* src_argb,
-                                          uint8_t* dst_rgb,
-                                          int width) {
+__declspec(naked) void ARGBToRAWRow_SSSE3(const uint8_t* /*src_argb*/,
+                                          uint8_t* /*dst_rgb*/,
+                                          int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_argb
     mov       edx, [esp + 8]  // dst_rgb
@@ -796,9 +796,9 @@ __declspec(naked) void ARGBToRAWRow_SSSE3(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void ARGBToRGB565Row_SSE2(const uint8_t* src_argb,
-                                            uint8_t* dst_rgb,
-                                            int width) {
+__declspec(naked) void ARGBToRGB565Row_SSE2(const uint8_t* /*src_argb*/,
+                                            uint8_t* /*dst_rgb*/,
+                                            int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_argb
     mov       edx, [esp + 8]  // dst_rgb
@@ -834,10 +834,10 @@ __declspec(naked) void ARGBToRGB565Row_SSE2(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void ARGBToRGB565DitherRow_SSE2(const uint8_t* src_argb,
-                                                  uint8_t* dst_rgb,
-                                                  const uint32_t dither4,
-                                                  int width) {
+__declspec(naked) void ARGBToRGB565DitherRow_SSE2(const uint8_t* /*src_argb*/,
+                                                  uint8_t* /*dst_rgb*/,
+                                                  const uint32_t /*dither4*/,
+                                                  int /*width*/) {
   __asm {
 
     mov       eax, [esp + 4]  // src_argb
@@ -881,10 +881,10 @@ __declspec(naked) void ARGBToRGB565DitherRow_SSE2(const uint8_t* src_argb,
 }
 
 #ifdef HAS_ARGBTORGB565DITHERROW_AVX2
-__declspec(naked) void ARGBToRGB565DitherRow_AVX2(const uint8_t* src_argb,
-                                                  uint8_t* dst_rgb,
-                                                  const uint32_t dither4,
-                                                  int width) {
+__declspec(naked) void ARGBToRGB565DitherRow_AVX2(const uint8_t* /*src_argb*/,
+                                                  uint8_t* /*dst_rgb*/,
+                                                  const uint32_t /*dither4*/,
+                                                  int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_rgb
@@ -925,9 +925,9 @@ __declspec(naked) void ARGBToRGB565DitherRow_AVX2(const uint8_t* src_argb,
 #endif  // HAS_ARGBTORGB565DITHERROW_AVX2
 
 // TODO(fbarchard): Improve sign extension/packing.
-__declspec(naked) void ARGBToARGB1555Row_SSE2(const uint8_t* src_argb,
-                                              uint8_t* dst_rgb,
-                                              int width) {
+__declspec(naked) void ARGBToARGB1555Row_SSE2(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_rgb*/,
+                                              int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_argb
     mov       edx, [esp + 8]  // dst_rgb
@@ -967,9 +967,9 @@ __declspec(naked) void ARGBToARGB1555Row_SSE2(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void ARGBToARGB4444Row_SSE2(const uint8_t* src_argb,
-                                              uint8_t* dst_rgb,
-                                              int width) {
+__declspec(naked) void ARGBToARGB4444Row_SSE2(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_rgb*/,
+                                              int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src_argb
     mov       edx, [esp + 8]  // dst_rgb
@@ -998,9 +998,9 @@ __declspec(naked) void ARGBToARGB4444Row_SSE2(const uint8_t* src_argb,
 }
 
 #ifdef HAS_ARGBTORGB565ROW_AVX2
-__declspec(naked) void ARGBToRGB565Row_AVX2(const uint8_t* src_argb,
-                                            uint8_t* dst_rgb,
-                                            int width) {
+__declspec(naked) void ARGBToRGB565Row_AVX2(const uint8_t* /*src_argb*/,
+                                            uint8_t* /*dst_rgb*/,
+                                            int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_rgb
@@ -1036,9 +1036,9 @@ __declspec(naked) void ARGBToRGB565Row_AVX2(const uint8_t* src_argb,
 #endif  // HAS_ARGBTORGB565ROW_AVX2
 
 #ifdef HAS_ARGBTOARGB1555ROW_AVX2
-__declspec(naked) void ARGBToARGB1555Row_AVX2(const uint8_t* src_argb,
-                                              uint8_t* dst_rgb,
-                                              int width) {
+__declspec(naked) void ARGBToARGB1555Row_AVX2(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_rgb*/,
+                                              int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_rgb
@@ -1077,9 +1077,9 @@ __declspec(naked) void ARGBToARGB1555Row_AVX2(const uint8_t* src_argb,
 #endif  // HAS_ARGBTOARGB1555ROW_AVX2
 
 #ifdef HAS_ARGBTOARGB4444ROW_AVX2
-__declspec(naked) void ARGBToARGB4444Row_AVX2(const uint8_t* src_argb,
-                                              uint8_t* dst_rgb,
-                                              int width) {
+__declspec(naked) void ARGBToARGB4444Row_AVX2(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_rgb*/,
+                                              int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_rgb
@@ -1109,9 +1109,9 @@ __declspec(naked) void ARGBToARGB4444Row_AVX2(const uint8_t* src_argb,
 #endif  // HAS_ARGBTOARGB4444ROW_AVX2
 
 // Convert 16 ARGB pixels (64 bytes) to 16 Y values.
-__declspec(naked) void ARGBToYRow_SSSE3(const uint8_t* src_argb,
-                                        uint8_t* dst_y,
-                                        int width) {
+__declspec(naked) void ARGBToYRow_SSSE3(const uint8_t* /*src_argb*/,
+                                        uint8_t* /*dst_y*/,
+                                        int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1145,9 +1145,9 @@ __declspec(naked) void ARGBToYRow_SSSE3(const uint8_t* src_argb,
 
 // Convert 16 ARGB pixels (64 bytes) to 16 YJ values.
 // Same as ARGBToYRow but different coefficients, no add 16, but do rounding.
-__declspec(naked) void ARGBToYJRow_SSSE3(const uint8_t* src_argb,
-                                         uint8_t* dst_y,
-                                         int width) {
+__declspec(naked) void ARGBToYJRow_SSSE3(const uint8_t* /*src_argb*/,
+                                         uint8_t* /*dst_y*/,
+                                         int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1185,9 +1185,9 @@ __declspec(naked) void ARGBToYJRow_SSSE3(const uint8_t* src_argb,
 static const lvec32 kPermdARGBToY_AVX = {0, 4, 1, 5, 2, 6, 3, 7};
 
 // Convert 32 ARGB pixels (128 bytes) to 32 Y values.
-__declspec(naked) void ARGBToYRow_AVX2(const uint8_t* src_argb,
-                                       uint8_t* dst_y,
-                                       int width) {
+__declspec(naked) void ARGBToYRow_AVX2(const uint8_t* /*src_argb*/,
+                                       uint8_t* /*dst_y*/,
+                                       int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1225,9 +1225,9 @@ __declspec(naked) void ARGBToYRow_AVX2(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBTOYJROW_AVX2
 // Convert 32 ARGB pixels (128 bytes) to 32 Y values.
-__declspec(naked) void ARGBToYJRow_AVX2(const uint8_t* src_argb,
-                                        uint8_t* dst_y,
-                                        int width) {
+__declspec(naked) void ARGBToYJRow_AVX2(const uint8_t* /*src_argb*/,
+                                        uint8_t* /*dst_y*/,
+                                        int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1265,9 +1265,9 @@ __declspec(naked) void ARGBToYJRow_AVX2(const uint8_t* src_argb,
 }
 #endif  //  HAS_ARGBTOYJROW_AVX2
 
-__declspec(naked) void BGRAToYRow_SSSE3(const uint8_t* src_argb,
-                                        uint8_t* dst_y,
-                                        int width) {
+__declspec(naked) void BGRAToYRow_SSSE3(const uint8_t* /*src_argb*/,
+                                        uint8_t* /*dst_y*/,
+                                        int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1299,9 +1299,9 @@ __declspec(naked) void BGRAToYRow_SSSE3(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void ABGRToYRow_SSSE3(const uint8_t* src_argb,
-                                        uint8_t* dst_y,
-                                        int width) {
+__declspec(naked) void ABGRToYRow_SSSE3(const uint8_t* /*src_argb*/,
+                                        uint8_t* /*dst_y*/,
+                                        int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1333,9 +1333,9 @@ __declspec(naked) void ABGRToYRow_SSSE3(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void RGBAToYRow_SSSE3(const uint8_t* src_argb,
-                                        uint8_t* dst_y,
-                                        int width) {
+__declspec(naked) void RGBAToYRow_SSSE3(const uint8_t* /*src_argb*/,
+                                        uint8_t* /*dst_y*/,
+                                        int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_y */
@@ -1367,11 +1367,11 @@ __declspec(naked) void RGBAToYRow_SSSE3(const uint8_t* src_argb,
   }
 }
 
-__declspec(naked) void ARGBToUVRow_SSSE3(const uint8_t* src_argb0,
-                                         int src_stride_argb,
-                                         uint8_t* dst_u,
-                                         uint8_t* dst_v,
-                                         int width) {
+__declspec(naked) void ARGBToUVRow_SSSE3(const uint8_t* /*src_argb0*/,
+                                         int /*src_stride_argb*/,
+                                         uint8_t* /*dst_u*/,
+                                         uint8_t* /*dst_v*/,
+                                         int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -1439,11 +1439,11 @@ __declspec(naked) void ARGBToUVRow_SSSE3(const uint8_t* src_argb0,
   }
 }
 
-__declspec(naked) void ARGBToUVJRow_SSSE3(const uint8_t* src_argb0,
-                                          int src_stride_argb,
-                                          uint8_t* dst_u,
-                                          uint8_t* dst_v,
-                                          int width) {
+__declspec(naked) void ARGBToUVJRow_SSSE3(const uint8_t* /*src_argb0*/,
+                                          int /*src_stride_argb*/,
+                                          uint8_t* /*dst_u*/,
+                                          uint8_t* /*dst_v*/,
+                                          int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -1513,11 +1513,11 @@ __declspec(naked) void ARGBToUVJRow_SSSE3(const uint8_t* src_argb0,
 }
 
 #ifdef HAS_ARGBTOUVROW_AVX2
-__declspec(naked) void ARGBToUVRow_AVX2(const uint8_t* src_argb0,
-                                        int src_stride_argb,
-                                        uint8_t* dst_u,
-                                        uint8_t* dst_v,
-                                        int width) {
+__declspec(naked) void ARGBToUVRow_AVX2(const uint8_t* /*src_argb0*/,
+                                        int /*src_stride_argb*/,
+                                        uint8_t* /*dst_u*/,
+                                        uint8_t* /*dst_v*/,
+                                        int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -1581,11 +1581,11 @@ __declspec(naked) void ARGBToUVRow_AVX2(const uint8_t* src_argb0,
 #endif  // HAS_ARGBTOUVROW_AVX2
 
 #ifdef HAS_ARGBTOUVJROW_AVX2
-__declspec(naked) void ARGBToUVJRow_AVX2(const uint8_t* src_argb0,
-                                         int src_stride_argb,
-                                         uint8_t* dst_u,
-                                         uint8_t* dst_v,
-                                         int width) {
+__declspec(naked) void ARGBToUVJRow_AVX2(const uint8_t* /*src_argb0*/,
+                                         int /*src_stride_argb*/,
+                                         uint8_t* /*dst_u*/,
+                                         uint8_t* /*dst_v*/,
+                                         int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -1649,10 +1649,10 @@ __declspec(naked) void ARGBToUVJRow_AVX2(const uint8_t* src_argb0,
 }
 #endif  // HAS_ARGBTOUVJROW_AVX2
 
-__declspec(naked) void ARGBToUV444Row_SSSE3(const uint8_t* src_argb0,
-                                            uint8_t* dst_u,
-                                            uint8_t* dst_v,
-                                            int width) {
+__declspec(naked) void ARGBToUV444Row_SSSE3(const uint8_t* /*src_argb0*/,
+                                            uint8_t* /*dst_u*/,
+                                            uint8_t* /*dst_v*/,
+                                            int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_argb
@@ -1707,11 +1707,11 @@ __declspec(naked) void ARGBToUV444Row_SSSE3(const uint8_t* src_argb0,
   }
 }
 
-__declspec(naked) void BGRAToUVRow_SSSE3(const uint8_t* src_argb0,
-                                         int src_stride_argb,
-                                         uint8_t* dst_u,
-                                         uint8_t* dst_v,
-                                         int width) {
+__declspec(naked) void BGRAToUVRow_SSSE3(const uint8_t* /*src_argb0*/,
+                                         int /*src_stride_argb*/,
+                                         uint8_t* /*dst_u*/,
+                                         uint8_t* /*dst_v*/,
+                                         int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -1779,11 +1779,11 @@ __declspec(naked) void BGRAToUVRow_SSSE3(const uint8_t* src_argb0,
   }
 }
 
-__declspec(naked) void ABGRToUVRow_SSSE3(const uint8_t* src_argb0,
-                                         int src_stride_argb,
-                                         uint8_t* dst_u,
-                                         uint8_t* dst_v,
-                                         int width) {
+__declspec(naked) void ABGRToUVRow_SSSE3(const uint8_t* /*src_argb0*/,
+                                         int /*src_stride_argb*/,
+                                         uint8_t* /*dst_u*/,
+                                         uint8_t* /*dst_v*/,
+                                         int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -1851,11 +1851,11 @@ __declspec(naked) void ABGRToUVRow_SSSE3(const uint8_t* src_argb0,
   }
 }
 
-__declspec(naked) void RGBAToUVRow_SSSE3(const uint8_t* src_argb0,
-                                         int src_stride_argb,
-                                         uint8_t* dst_u,
-                                         uint8_t* dst_v,
-                                         int width) {
+__declspec(naked) void RGBAToUVRow_SSSE3(const uint8_t* /*src_argb0*/,
+                                         int /*src_stride_argb*/,
+                                         uint8_t* /*dst_u*/,
+                                         uint8_t* /*dst_v*/,
+                                         int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2065,12 +2065,12 @@ __declspec(naked) void RGBAToUVRow_SSSE3(const uint8_t* src_argb0,
 // 16 pixels
 // 8 UV values upsampled to 16 UV, mixed with 16 Y producing 16 ARGB (64 bytes).
 __declspec(naked) void I422ToARGBRow_AVX2(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2105,13 +2105,13 @@ __declspec(naked) void I422ToARGBRow_AVX2(
 // 16 pixels
 // 8 UV values upsampled to 16 UV, mixed with 16 Y and 16 A producing 16 ARGB.
 __declspec(naked) void I422AlphaToARGBRow_AVX2(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    const uint8_t* a_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    const uint8_t* /*a_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2148,12 +2148,12 @@ __declspec(naked) void I422AlphaToARGBRow_AVX2(
 // 16 pixels
 // 16 UV values with 16 Y producing 16 ARGB (64 bytes).
 __declspec(naked) void I444ToARGBRow_AVX2(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2187,11 +2187,11 @@ __declspec(naked) void I444ToARGBRow_AVX2(
 // 16 pixels.
 // 8 UV values upsampled to 16 UV, mixed with 16 Y producing 16 ARGB (64 bytes).
 __declspec(naked) void NV12ToARGBRow_AVX2(
-    const uint8_t* y_buf,
-    const uint8_t* uv_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*uv_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       ebx
@@ -2222,11 +2222,11 @@ __declspec(naked) void NV12ToARGBRow_AVX2(
 // 16 pixels.
 // 8 VU values upsampled to 16 UV, mixed with 16 Y producing 16 ARGB (64 bytes).
 __declspec(naked) void NV21ToARGBRow_AVX2(
-    const uint8_t* y_buf,
-    const uint8_t* vu_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*vu_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       ebx
@@ -2257,10 +2257,10 @@ __declspec(naked) void NV21ToARGBRow_AVX2(
 // 16 pixels.
 // 8 YUY2 values with 16 Y and 8 UV producing 16 ARGB (64 bytes).
 __declspec(naked) void YUY2ToARGBRow_AVX2(
-    const uint8_t* src_yuy2,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*src_yuy2*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       ebx
     mov        eax, [esp + 4 + 4]  // yuy2
@@ -2288,10 +2288,10 @@ __declspec(naked) void YUY2ToARGBRow_AVX2(
 // 16 pixels.
 // 8 UYVY values with 16 Y and 8 UV producing 16 ARGB (64 bytes).
 __declspec(naked) void UYVYToARGBRow_AVX2(
-    const uint8_t* src_uyvy,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*src_uyvy*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       ebx
     mov        eax, [esp + 4 + 4]  // uyvy
@@ -2319,12 +2319,12 @@ __declspec(naked) void UYVYToARGBRow_AVX2(
 // 16 pixels
 // 8 UV values upsampled to 16 UV, mixed with 16 Y producing 16 RGBA (64 bytes).
 __declspec(naked) void I422ToRGBARow_AVX2(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2551,12 +2551,12 @@ __declspec(naked) void I422ToRGBARow_AVX2(
 // 8 pixels.
 // 8 UV values, mixed with 8 Y producing 8 ARGB (32 bytes).
 __declspec(naked) void I444ToARGBRow_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2588,12 +2588,12 @@ __declspec(naked) void I444ToARGBRow_SSSE3(
 // 8 pixels.
 // 4 UV values upsampled to 8 UV, mixed with 8 Y producing 8 RGB24 (24 bytes).
 __declspec(naked) void I422ToRGB24Row_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_rgb24,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_rgb24*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2626,12 +2626,12 @@ __declspec(naked) void I422ToRGB24Row_SSSE3(
 // 8 pixels
 // 4 UV values upsampled to 8 UV, mixed with 8 Y producing 8 RGB565 (16 bytes).
 __declspec(naked) void I422ToRGB565Row_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* rgb565_buf,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*rgb565_buf*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2669,12 +2669,12 @@ __declspec(naked) void I422ToRGB565Row_SSSE3(
 // 8 pixels.
 // 4 UV values upsampled to 8 UV, mixed with 8 Y producing 8 ARGB (32 bytes).
 __declspec(naked) void I422ToARGBRow_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2706,13 +2706,13 @@ __declspec(naked) void I422ToARGBRow_SSSE3(
 // 8 pixels.
 // 4 UV values upsampled to 8 UV, mixed with 8 Y and 8 A producing 8 ARGB.
 __declspec(naked) void I422AlphaToARGBRow_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    const uint8_t* a_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    const uint8_t* /*a_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2746,11 +2746,11 @@ __declspec(naked) void I422AlphaToARGBRow_SSSE3(
 // 8 pixels.
 // 4 UV values upsampled to 8 UV, mixed with 8 Y producing 8 ARGB (32 bytes).
 __declspec(naked) void NV12ToARGBRow_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* uv_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*uv_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       ebx
@@ -2778,11 +2778,11 @@ __declspec(naked) void NV12ToARGBRow_SSSE3(
 // 8 pixels.
 // 4 UV values upsampled to 8 UV, mixed with 8 Y producing 8 ARGB (32 bytes).
 __declspec(naked) void NV21ToARGBRow_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* vu_buf,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*vu_buf*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       ebx
@@ -2810,10 +2810,10 @@ __declspec(naked) void NV21ToARGBRow_SSSE3(
 // 8 pixels.
 // 4 YUY2 values with 8 Y and 4 UV producing 8 ARGB (32 bytes).
 __declspec(naked) void YUY2ToARGBRow_SSSE3(
-    const uint8_t* src_yuy2,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*src_yuy2*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       ebx
     mov        eax, [esp + 4 + 4]  // yuy2
@@ -2838,10 +2838,10 @@ __declspec(naked) void YUY2ToARGBRow_SSSE3(
 // 8 pixels.
 // 4 UYVY values with 8 Y and 4 UV producing 8 ARGB (32 bytes).
 __declspec(naked) void UYVYToARGBRow_SSSE3(
-    const uint8_t* src_uyvy,
-    uint8_t* dst_argb,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*src_uyvy*/,
+    uint8_t* /*dst_argb*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       ebx
     mov        eax, [esp + 4 + 4]  // uyvy
@@ -2864,12 +2864,12 @@ __declspec(naked) void UYVYToARGBRow_SSSE3(
 }
 
 __declspec(naked) void I422ToRGBARow_SSSE3(
-    const uint8_t* y_buf,
-    const uint8_t* u_buf,
-    const uint8_t* v_buf,
-    uint8_t* dst_rgba,
-    const struct YuvConstants* yuvconstants,
-    int width) {
+    const uint8_t* /*y_buf*/,
+    const uint8_t* /*u_buf*/,
+    const uint8_t* /*v_buf*/,
+    uint8_t* /*dst_rgba*/,
+    const struct YuvConstants* /*yuvconstants*/,
+    int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -2900,9 +2900,9 @@ __declspec(naked) void I422ToRGBARow_SSSE3(
 
 #ifdef HAS_I400TOARGBROW_SSE2
 // 8 pixels of Y converted to 8 pixels of ARGB (32 bytes).
-__declspec(naked) void I400ToARGBRow_SSE2(const uint8_t* y_buf,
-                                          uint8_t* rgb_buf,
-                                          int width) {
+__declspec(naked) void I400ToARGBRow_SSE2(const uint8_t* /*y_buf*/,
+                                          uint8_t* /*rgb_buf*/,
+                                          int /*width*/) {
   __asm {
     mov        eax, 0x4a354a35  // 4a35 = 18997 = round(1.164 * 64 * 256)
     movd       xmm2, eax
@@ -2947,9 +2947,9 @@ __declspec(naked) void I400ToARGBRow_SSE2(const uint8_t* y_buf,
 #ifdef HAS_I400TOARGBROW_AVX2
 // 16 pixels of Y converted to 16 pixels of ARGB (64 bytes).
 // note: vpunpcklbw mutates and vpackuswb unmutates.
-__declspec(naked) void I400ToARGBRow_AVX2(const uint8_t* y_buf,
-                                          uint8_t* rgb_buf,
-                                          int width) {
+__declspec(naked) void I400ToARGBRow_AVX2(const uint8_t* /*y_buf*/,
+                                          uint8_t* /*rgb_buf*/,
+                                          int /*width*/) {
   __asm {
     mov        eax, 0x4a354a35  // 4a35 = 18997 = round(1.164 * 64 * 256)
     vmovd      xmm2, eax
@@ -3000,9 +3000,9 @@ static const uvec8 kShuffleMirror = {15u, 14u, 13u, 12u, 11u, 10u, 9u, 8u,
                                      7u,  6u,  5u,  4u,  3u,  2u,  1u, 0u};
 
 // TODO(fbarchard): Replace lea with -16 offset.
-__declspec(naked) void MirrorRow_SSSE3(const uint8_t* src,
-                                       uint8_t* dst,
-                                       int width) {
+__declspec(naked) void MirrorRow_SSSE3(const uint8_t* /*src*/,
+                                       uint8_t* /*dst*/,
+                                       int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src
     mov       edx, [esp + 8]  // dst
@@ -3022,9 +3022,9 @@ __declspec(naked) void MirrorRow_SSSE3(const uint8_t* src,
 #endif  // HAS_MIRRORROW_SSSE3
 
 #ifdef HAS_MIRRORROW_AVX2
-__declspec(naked) void MirrorRow_AVX2(const uint8_t* src,
-                                      uint8_t* dst,
-                                      int width) {
+__declspec(naked) void MirrorRow_AVX2(const uint8_t* /*src*/,
+                                      uint8_t* /*dst*/,
+                                      int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src
     mov       edx, [esp + 8]  // dst
@@ -3050,10 +3050,10 @@ __declspec(naked) void MirrorRow_AVX2(const uint8_t* src,
 static const uvec8 kShuffleMirrorUV = {14u, 12u, 10u, 8u, 6u, 4u, 2u, 0u,
                                        15u, 13u, 11u, 9u, 7u, 5u, 3u, 1u};
 
-__declspec(naked) void MirrorUVRow_SSSE3(const uint8_t* src,
-                                         uint8_t* dst_u,
-                                         uint8_t* dst_v,
-                                         int width) {
+__declspec(naked) void MirrorUVRow_SSSE3(const uint8_t* /*src*/,
+                                         uint8_t* /*dst_u*/,
+                                         uint8_t* /*dst_v*/,
+                                         int /*width*/) {
   __asm {
     push      edi
     mov       eax, [esp + 4 + 4]  // src
@@ -3081,9 +3081,9 @@ __declspec(naked) void MirrorUVRow_SSSE3(const uint8_t* src,
 #endif  // HAS_MIRRORUVROW_SSSE3
 
 #ifdef HAS_ARGBMIRRORROW_SSE2
-__declspec(naked) void ARGBMirrorRow_SSE2(const uint8_t* src,
-                                          uint8_t* dst,
-                                          int width) {
+__declspec(naked) void ARGBMirrorRow_SSE2(const uint8_t* /*src*/,
+                                          uint8_t* /*dst*/,
+                                          int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src
     mov       edx, [esp + 8]  // dst
@@ -3107,9 +3107,9 @@ __declspec(naked) void ARGBMirrorRow_SSE2(const uint8_t* src,
 // Shuffle table for reversing the bytes.
 static const ulvec32 kARGBShuffleMirror_AVX2 = {7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-__declspec(naked) void ARGBMirrorRow_AVX2(const uint8_t* src,
-                                          uint8_t* dst,
-                                          int width) {
+__declspec(naked) void ARGBMirrorRow_AVX2(const uint8_t* /*src*/,
+                                          uint8_t* /*dst*/,
+                                          int /*width*/) {
   __asm {
     mov       eax, [esp + 4]  // src
     mov       edx, [esp + 8]  // dst
@@ -3129,10 +3129,10 @@ __declspec(naked) void ARGBMirrorRow_AVX2(const uint8_t* src,
 #endif  // HAS_ARGBMIRRORROW_AVX2
 
 #ifdef HAS_SPLITUVROW_SSE2
-__declspec(naked) void SplitUVRow_SSE2(const uint8_t* src_uv,
-                                       uint8_t* dst_u,
-                                       uint8_t* dst_v,
-                                       int width) {
+__declspec(naked) void SplitUVRow_SSE2(const uint8_t* /*src_uv*/,
+                                       uint8_t* /*dst_u*/,
+                                       uint8_t* /*dst_v*/,
+                                       int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_uv
@@ -3169,10 +3169,10 @@ __declspec(naked) void SplitUVRow_SSE2(const uint8_t* src_uv,
 #endif  // HAS_SPLITUVROW_SSE2
 
 #ifdef HAS_SPLITUVROW_AVX2
-__declspec(naked) void SplitUVRow_AVX2(const uint8_t* src_uv,
-                                       uint8_t* dst_u,
-                                       uint8_t* dst_v,
-                                       int width) {
+__declspec(naked) void SplitUVRow_AVX2(const uint8_t* /*src_uv*/,
+                                       uint8_t* /*dst_u*/,
+                                       uint8_t* /*dst_v*/,
+                                       int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_uv
@@ -3209,10 +3209,10 @@ __declspec(naked) void SplitUVRow_AVX2(const uint8_t* src_uv,
 #endif  // HAS_SPLITUVROW_AVX2
 
 #ifdef HAS_MERGEUVROW_SSE2
-__declspec(naked) void MergeUVRow_SSE2(const uint8_t* src_u,
-                                       const uint8_t* src_v,
-                                       uint8_t* dst_uv,
-                                       int width) {
+__declspec(naked) void MergeUVRow_SSE2(const uint8_t* /*src_u*/,
+                                       const uint8_t* /*src_v*/,
+                                       uint8_t* /*dst_uv*/,
+                                       int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_u
@@ -3241,10 +3241,10 @@ __declspec(naked) void MergeUVRow_SSE2(const uint8_t* src_u,
 #endif  //  HAS_MERGEUVROW_SSE2
 
 #ifdef HAS_MERGEUVROW_AVX2
-__declspec(naked) void MergeUVRow_AVX2(const uint8_t* src_u,
-                                       const uint8_t* src_v,
-                                       uint8_t* dst_uv,
-                                       int width) {
+__declspec(naked) void MergeUVRow_AVX2(const uint8_t* /*src_u*/,
+                                       const uint8_t* /*src_v*/,
+                                       uint8_t* /*dst_uv*/,
+                                       int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_u
@@ -3276,9 +3276,9 @@ __declspec(naked) void MergeUVRow_AVX2(const uint8_t* src_u,
 
 #ifdef HAS_COPYROW_SSE2
 // CopyRow copys 'width' bytes using a 16 byte load/store, 32 bytes at time.
-__declspec(naked) void CopyRow_SSE2(const uint8_t* src,
-                                    uint8_t* dst,
-                                    int width) {
+__declspec(naked) void CopyRow_SSE2(const uint8_t* /*src*/,
+                                    uint8_t* /*dst*/,
+                                    int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
@@ -3315,9 +3315,9 @@ __declspec(naked) void CopyRow_SSE2(const uint8_t* src,
 
 #ifdef HAS_COPYROW_AVX
 // CopyRow copys 'width' bytes using a 32 byte load/store, 64 bytes at time.
-__declspec(naked) void CopyRow_AVX(const uint8_t* src,
-                                   uint8_t* dst,
-                                   int width) {
+__declspec(naked) void CopyRow_AVX(const uint8_t* /*src*/,
+                                   uint8_t* /*dst*/,
+                                   int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
@@ -3340,9 +3340,9 @@ __declspec(naked) void CopyRow_AVX(const uint8_t* src,
 #endif  // HAS_COPYROW_AVX
 
 // Multiple of 1.
-__declspec(naked) void CopyRow_ERMS(const uint8_t* src,
-                                    uint8_t* dst,
-                                    int width) {
+__declspec(naked) void CopyRow_ERMS(const uint8_t* /*src*/,
+                                    uint8_t* /*dst*/,
+                                    int /*width*/) {
   __asm {
     mov        eax, esi
     mov        edx, edi
@@ -3358,9 +3358,9 @@ __declspec(naked) void CopyRow_ERMS(const uint8_t* src,
 
 #ifdef HAS_ARGBCOPYALPHAROW_SSE2
 // width in pixels
-__declspec(naked) void ARGBCopyAlphaRow_SSE2(const uint8_t* src,
-                                             uint8_t* dst,
-                                             int width) {
+__declspec(naked) void ARGBCopyAlphaRow_SSE2(const uint8_t* /*src*/,
+                                             uint8_t* /*dst*/,
+                                             int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
@@ -3395,9 +3395,9 @@ __declspec(naked) void ARGBCopyAlphaRow_SSE2(const uint8_t* src,
 
 #ifdef HAS_ARGBCOPYALPHAROW_AVX2
 // width in pixels
-__declspec(naked) void ARGBCopyAlphaRow_AVX2(const uint8_t* src,
-                                             uint8_t* dst,
-                                             int width) {
+__declspec(naked) void ARGBCopyAlphaRow_AVX2(const uint8_t* /*src*/,
+                                             uint8_t* /*dst*/,
+                                             int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
@@ -3425,9 +3425,9 @@ __declspec(naked) void ARGBCopyAlphaRow_AVX2(const uint8_t* src,
 
 #ifdef HAS_ARGBEXTRACTALPHAROW_SSE2
 // width in pixels
-__declspec(naked) void ARGBExtractAlphaRow_SSE2(const uint8_t* src_argb,
-                                                uint8_t* dst_a,
-                                                int width) {
+__declspec(naked) void ARGBExtractAlphaRow_SSE2(const uint8_t* /*src_argb*/,
+                                                uint8_t* /*dst_a*/,
+                                                int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_a
@@ -3453,9 +3453,9 @@ __declspec(naked) void ARGBExtractAlphaRow_SSE2(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBEXTRACTALPHAROW_AVX2
 // width in pixels
-__declspec(naked) void ARGBExtractAlphaRow_AVX2(const uint8_t* src_argb,
-                                                uint8_t* dst_a,
-                                                int width) {
+__declspec(naked) void ARGBExtractAlphaRow_AVX2(const uint8_t* /*src_argb*/,
+                                                uint8_t* /*dst_a*/,
+                                                int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_a
@@ -3489,9 +3489,9 @@ __declspec(naked) void ARGBExtractAlphaRow_AVX2(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBCOPYYTOALPHAROW_SSE2
 // width in pixels
-__declspec(naked) void ARGBCopyYToAlphaRow_SSE2(const uint8_t* src,
-                                                uint8_t* dst,
-                                                int width) {
+__declspec(naked) void ARGBCopyYToAlphaRow_SSE2(const uint8_t* /*src*/,
+                                                uint8_t* /*dst*/,
+                                                int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
@@ -3528,9 +3528,9 @@ __declspec(naked) void ARGBCopyYToAlphaRow_SSE2(const uint8_t* src,
 
 #ifdef HAS_ARGBCOPYYTOALPHAROW_AVX2
 // width in pixels
-__declspec(naked) void ARGBCopyYToAlphaRow_AVX2(const uint8_t* src,
-                                                uint8_t* dst,
-                                                int width) {
+__declspec(naked) void ARGBCopyYToAlphaRow_AVX2(const uint8_t* /*src*/,
+                                                uint8_t* /*dst*/,
+                                                int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src
     mov        edx, [esp + 8]  // dst
@@ -3561,7 +3561,9 @@ __declspec(naked) void ARGBCopyYToAlphaRow_AVX2(const uint8_t* src,
 #ifdef HAS_SETROW_X86
 // Write 'width' bytes using an 8 bit value repeated.
 // width should be multiple of 4.
-__declspec(naked) void SetRow_X86(uint8_t* dst, uint8_t v8, int width) {
+__declspec(naked) void SetRow_X86(uint8_t* /*dst*/,
+                                  uint8_t /*v8*/,
+                                  int /*width*/) {
   __asm {
     movzx      eax, byte ptr [esp + 8]  // v8
     mov        edx, 0x01010101  // Duplicate byte to all bytes.
@@ -3577,7 +3579,9 @@ __declspec(naked) void SetRow_X86(uint8_t* dst, uint8_t v8, int width) {
 }
 
 // Write 'width' bytes using an 8 bit value repeated.
-__declspec(naked) void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
+__declspec(naked) void SetRow_ERMS(uint8_t* /*dst*/,
+                                   uint8_t /*v8*/,
+                                   int /*width*/) {
   __asm {
     mov        edx, edi
     mov        edi, [esp + 4]  // dst
@@ -3590,9 +3594,9 @@ __declspec(naked) void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
 }
 
 // Write 'width' 32 bit values.
-__declspec(naked) void ARGBSetRow_X86(uint8_t* dst_argb,
-                                      uint32_t v32,
-                                      int width) {
+__declspec(naked) void ARGBSetRow_X86(uint8_t* /*dst_argb*/,
+                                      uint32_t /*v32*/,
+                                      int /*width*/) {
   __asm {
     mov        edx, edi
     mov        edi, [esp + 4]  // dst
@@ -3606,9 +3610,9 @@ __declspec(naked) void ARGBSetRow_X86(uint8_t* dst_argb,
 #endif  // HAS_SETROW_X86
 
 #ifdef HAS_YUY2TOYROW_AVX2
-__declspec(naked) void YUY2ToYRow_AVX2(const uint8_t* src_yuy2,
-                                       uint8_t* dst_y,
-                                       int width) {
+__declspec(naked) void YUY2ToYRow_AVX2(const uint8_t* /*src_yuy2*/,
+                                       uint8_t* /*dst_y*/,
+                                       int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_yuy2
     mov        edx, [esp + 8]  // dst_y
@@ -3633,11 +3637,11 @@ __declspec(naked) void YUY2ToYRow_AVX2(const uint8_t* src_yuy2,
   }
 }
 
-__declspec(naked) void YUY2ToUVRow_AVX2(const uint8_t* src_yuy2,
-                                        int stride_yuy2,
-                                        uint8_t* dst_u,
-                                        uint8_t* dst_v,
-                                        int width) {
+__declspec(naked) void YUY2ToUVRow_AVX2(const uint8_t* /*src_yuy2*/,
+                                        int /*stride_yuy2*/,
+                                        uint8_t* /*dst_u*/,
+                                        uint8_t* /*dst_v*/,
+                                        int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -3679,10 +3683,10 @@ __declspec(naked) void YUY2ToUVRow_AVX2(const uint8_t* src_yuy2,
   }
 }
 
-__declspec(naked) void YUY2ToUV422Row_AVX2(const uint8_t* src_yuy2,
-                                           uint8_t* dst_u,
-                                           uint8_t* dst_v,
-                                           int width) {
+__declspec(naked) void YUY2ToUV422Row_AVX2(const uint8_t* /*src_yuy2*/,
+                                           uint8_t* /*dst_u*/,
+                                           uint8_t* /*dst_v*/,
+                                           int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_yuy2
@@ -3719,9 +3723,9 @@ __declspec(naked) void YUY2ToUV422Row_AVX2(const uint8_t* src_yuy2,
   }
 }
 
-__declspec(naked) void UYVYToYRow_AVX2(const uint8_t* src_uyvy,
-                                       uint8_t* dst_y,
-                                       int width) {
+__declspec(naked) void UYVYToYRow_AVX2(const uint8_t* /*src_uyvy*/,
+                                       uint8_t* /*dst_y*/,
+                                       int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_uyvy
     mov        edx, [esp + 8]  // dst_y
@@ -3744,11 +3748,11 @@ __declspec(naked) void UYVYToYRow_AVX2(const uint8_t* src_uyvy,
   }
 }
 
-__declspec(naked) void UYVYToUVRow_AVX2(const uint8_t* src_uyvy,
-                                        int stride_uyvy,
-                                        uint8_t* dst_u,
-                                        uint8_t* dst_v,
-                                        int width) {
+__declspec(naked) void UYVYToUVRow_AVX2(const uint8_t* /*src_uyvy*/,
+                                        int /*stride_uyvy*/,
+                                        uint8_t* /*dst_u*/,
+                                        uint8_t* /*dst_v*/,
+                                        int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -3790,10 +3794,10 @@ __declspec(naked) void UYVYToUVRow_AVX2(const uint8_t* src_uyvy,
   }
 }
 
-__declspec(naked) void UYVYToUV422Row_AVX2(const uint8_t* src_uyvy,
-                                           uint8_t* dst_u,
-                                           uint8_t* dst_v,
-                                           int width) {
+__declspec(naked) void UYVYToUV422Row_AVX2(const uint8_t* /*src_uyvy*/,
+                                           uint8_t* /*dst_u*/,
+                                           uint8_t* /*dst_v*/,
+                                           int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_yuy2
@@ -3832,9 +3836,9 @@ __declspec(naked) void UYVYToUV422Row_AVX2(const uint8_t* src_uyvy,
 #endif  // HAS_YUY2TOYROW_AVX2
 
 #ifdef HAS_YUY2TOYROW_SSE2
-__declspec(naked) void YUY2ToYRow_SSE2(const uint8_t* src_yuy2,
-                                       uint8_t* dst_y,
-                                       int width) {
+__declspec(naked) void YUY2ToYRow_SSE2(const uint8_t* /*src_yuy2*/,
+                                       uint8_t* /*dst_y*/,
+                                       int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_yuy2
     mov        edx, [esp + 8]  // dst_y
@@ -3857,11 +3861,11 @@ __declspec(naked) void YUY2ToYRow_SSE2(const uint8_t* src_yuy2,
   }
 }
 
-__declspec(naked) void YUY2ToUVRow_SSE2(const uint8_t* src_yuy2,
-                                        int stride_yuy2,
-                                        uint8_t* dst_u,
-                                        uint8_t* dst_v,
-                                        int width) {
+__declspec(naked) void YUY2ToUVRow_SSE2(const uint8_t* /*src_yuy2*/,
+                                        int /*stride_yuy2*/,
+                                        uint8_t* /*dst_u*/,
+                                        uint8_t* /*dst_v*/,
+                                        int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -3902,10 +3906,10 @@ __declspec(naked) void YUY2ToUVRow_SSE2(const uint8_t* src_yuy2,
   }
 }
 
-__declspec(naked) void YUY2ToUV422Row_SSE2(const uint8_t* src_yuy2,
-                                           uint8_t* dst_u,
-                                           uint8_t* dst_v,
-                                           int width) {
+__declspec(naked) void YUY2ToUV422Row_SSE2(const uint8_t* /*src_yuy2*/,
+                                           uint8_t* /*dst_u*/,
+                                           uint8_t* /*dst_v*/,
+                                           int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_yuy2
@@ -3939,9 +3943,9 @@ __declspec(naked) void YUY2ToUV422Row_SSE2(const uint8_t* src_yuy2,
   }
 }
 
-__declspec(naked) void UYVYToYRow_SSE2(const uint8_t* src_uyvy,
-                                       uint8_t* dst_y,
-                                       int width) {
+__declspec(naked) void UYVYToYRow_SSE2(const uint8_t* /*src_uyvy*/,
+                                       uint8_t* /*dst_y*/,
+                                       int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_uyvy
     mov        edx, [esp + 8]  // dst_y
@@ -3962,11 +3966,11 @@ __declspec(naked) void UYVYToYRow_SSE2(const uint8_t* src_uyvy,
   }
 }
 
-__declspec(naked) void UYVYToUVRow_SSE2(const uint8_t* src_uyvy,
-                                        int stride_uyvy,
-                                        uint8_t* dst_u,
-                                        uint8_t* dst_v,
-                                        int width) {
+__declspec(naked) void UYVYToUVRow_SSE2(const uint8_t* /*src_uyvy*/,
+                                        int /*stride_uyvy*/,
+                                        uint8_t* /*dst_u*/,
+                                        uint8_t* /*dst_v*/,
+                                        int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -4007,10 +4011,10 @@ __declspec(naked) void UYVYToUVRow_SSE2(const uint8_t* src_uyvy,
   }
 }
 
-__declspec(naked) void UYVYToUV422Row_SSE2(const uint8_t* src_uyvy,
-                                           uint8_t* dst_u,
-                                           uint8_t* dst_v,
-                                           int width) {
+__declspec(naked) void UYVYToUV422Row_SSE2(const uint8_t* /*src_uyvy*/,
+                                           uint8_t* /*dst_u*/,
+                                           uint8_t* /*dst_v*/,
+                                           int /*width*/) {
   __asm {
     push       edi
     mov        eax, [esp + 4 + 4]  // src_yuy2
@@ -4051,11 +4055,11 @@ __declspec(naked) void UYVYToUV422Row_SSE2(const uint8_t* src_uyvy,
 // =((A2*C2)+(B2*(255-C2))+255)/256
 // signed version of math
 // =(((A2-128)*C2)+((B2-128)*(255-C2))+32768+127)/256
-__declspec(naked) void BlendPlaneRow_SSSE3(const uint8_t* src0,
-                                           const uint8_t* src1,
-                                           const uint8_t* alpha,
-                                           uint8_t* dst,
-                                           int width) {
+__declspec(naked) void BlendPlaneRow_SSSE3(const uint8_t* /*src0*/,
+                                           const uint8_t* /*src1*/,
+                                           const uint8_t* /*alpha*/,
+                                           uint8_t* /*dst*/,
+                                           int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -4108,11 +4112,11 @@ __declspec(naked) void BlendPlaneRow_SSSE3(const uint8_t* src0,
 // =((A2*C2)+(B2*(255-C2))+255)/256
 // signed version of math
 // =(((A2-128)*C2)+((B2-128)*(255-C2))+32768+127)/256
-__declspec(naked) void BlendPlaneRow_AVX2(const uint8_t* src0,
-                                          const uint8_t* src1,
-                                          const uint8_t* alpha,
-                                          uint8_t* dst,
-                                          int width) {
+__declspec(naked) void BlendPlaneRow_AVX2(const uint8_t* /*src0*/,
+                                          const uint8_t* /*src1*/,
+                                          const uint8_t* /*alpha*/,
+                                          uint8_t* /*dst*/,
+                                          int /*width*/) {
   __asm {
     push        esi
     push        edi
@@ -4172,10 +4176,10 @@ static const uvec8 kShuffleAlpha = {3u,  0x80, 3u,  0x80, 7u,  0x80, 7u,  0x80,
                                     11u, 0x80, 11u, 0x80, 15u, 0x80, 15u, 0x80};
 
 // Blend 8 pixels at a time.
-__declspec(naked) void ARGBBlendRow_SSSE3(const uint8_t* src_argb0,
-                                          const uint8_t* src_argb1,
-                                          uint8_t* dst_argb,
-                                          int width) {
+__declspec(naked) void ARGBBlendRow_SSSE3(const uint8_t* /*src_argb0*/,
+                                          const uint8_t* /*src_argb1*/,
+                                          uint8_t* /*dst_argb*/,
+                                          int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4263,9 +4267,9 @@ static const uvec8 kShuffleAlpha1 = {
     11u, 11u, 11u, 11u, 11u, 11u, 128u, 128u,
     15u, 15u, 15u, 15u, 15u, 15u, 128u, 128u,
 };
-__declspec(naked) void ARGBAttenuateRow_SSSE3(const uint8_t* src_argb,
-                                              uint8_t* dst_argb,
-                                              int width) {
+__declspec(naked) void ARGBAttenuateRow_SSSE3(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_argb*/,
+                                              int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb0
     mov        edx, [esp + 8]  // dst_argb
@@ -4308,9 +4312,9 @@ __declspec(naked) void ARGBAttenuateRow_SSSE3(const uint8_t* src_argb,
 static const uvec8 kShuffleAlpha_AVX2 = {6u,   7u,   6u,   7u,  6u,  7u,
                                          128u, 128u, 14u,  15u, 14u, 15u,
                                          14u,  15u,  128u, 128u};
-__declspec(naked) void ARGBAttenuateRow_AVX2(const uint8_t* src_argb,
-                                             uint8_t* dst_argb,
-                                             int width) {
+__declspec(naked) void ARGBAttenuateRow_AVX2(const uint8_t* /*src_argb*/,
+                                             uint8_t* /*dst_argb*/,
+                                             int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb0
     mov        edx, [esp + 8]  // dst_argb
@@ -4346,9 +4350,9 @@ __declspec(naked) void ARGBAttenuateRow_AVX2(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBUNATTENUATEROW_SSE2
 // Unattenuate 4 pixels at a time.
-__declspec(naked) void ARGBUnattenuateRow_SSE2(const uint8_t* src_argb,
-                                               uint8_t* dst_argb,
-                                               int width) {
+__declspec(naked) void ARGBUnattenuateRow_SSE2(const uint8_t* /*src_argb*/,
+                                               uint8_t* /*dst_argb*/,
+                                               int /*width*/) {
   __asm {
     push       ebx
     push       esi
@@ -4436,9 +4440,9 @@ __declspec(naked) void ARGBUnattenuateRow_AVX2(const uint8_t* src_argb,
   }
 }
 #else   // USE_GATHER
-__declspec(naked) void ARGBUnattenuateRow_AVX2(const uint8_t* src_argb,
-                                               uint8_t* dst_argb,
-                                               int width) {
+__declspec(naked) void ARGBUnattenuateRow_AVX2(const uint8_t* /*src_argb*/,
+                                               uint8_t* /*dst_argb*/,
+                                               int /*width*/) {
   __asm {
 
     push       ebx
@@ -4505,9 +4509,9 @@ __declspec(naked) void ARGBUnattenuateRow_AVX2(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBGRAYROW_SSSE3
 // Convert 8 ARGB pixels (64 bytes) to 8 Gray ARGB pixels.
-__declspec(naked) void ARGBGrayRow_SSSE3(const uint8_t* src_argb,
-                                         uint8_t* dst_argb,
-                                         int width) {
+__declspec(naked) void ARGBGrayRow_SSSE3(const uint8_t* /*src_argb*/,
+                                         uint8_t* /*dst_argb*/,
+                                         int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_argb */
@@ -4562,7 +4566,8 @@ static const vec8 kARGBToSepiaR = {24, 98, 50, 0, 24, 98, 50, 0,
                                    24, 98, 50, 0, 24, 98, 50, 0};
 
 // Convert 8 ARGB pixels (32 bytes) to 8 Sepia ARGB pixels.
-__declspec(naked) void ARGBSepiaRow_SSSE3(uint8_t* dst_argb, int width) {
+__declspec(naked) void ARGBSepiaRow_SSSE3(uint8_t* /*dst_argb*/,
+                                          int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* dst_argb */
     mov        ecx, [esp + 8] /* width */
@@ -4618,10 +4623,10 @@ __declspec(naked) void ARGBSepiaRow_SSSE3(uint8_t* dst_argb, int width) {
 // Same as Sepia except matrix is provided.
 // TODO(fbarchard): packuswbs only use half of the reg. To make RGBA, combine R
 // and B into a high and low, then G/A, unpackl/hbw and then unpckl/hwd.
-__declspec(naked) void ARGBColorMatrixRow_SSSE3(const uint8_t* src_argb,
-                                                uint8_t* dst_argb,
-                                                const int8_t* matrix_argb,
-                                                int width) {
+__declspec(naked) void ARGBColorMatrixRow_SSSE3(const uint8_t* /*src_argb*/,
+                                                uint8_t* /*dst_argb*/,
+                                                const int8_t* /*matrix_argb*/,
+                                                int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_argb */
@@ -4680,11 +4685,11 @@ __declspec(naked) void ARGBColorMatrixRow_SSSE3(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBQUANTIZEROW_SSE2
 // Quantize 4 ARGB pixels (16 bytes).
-__declspec(naked) void ARGBQuantizeRow_SSE2(uint8_t* dst_argb,
-                                            int scale,
-                                            int interval_size,
-                                            int interval_offset,
-                                            int width) {
+__declspec(naked) void ARGBQuantizeRow_SSE2(uint8_t* /*dst_argb*/,
+                                            int /*scale*/,
+                                            int /*interval_size*/,
+                                            int /*interval_offset*/,
+                                            int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* dst_argb */
     movd       xmm2, [esp + 8] /* scale */
@@ -4727,10 +4732,10 @@ __declspec(naked) void ARGBQuantizeRow_SSE2(uint8_t* dst_argb,
 
 #ifdef HAS_ARGBSHADEROW_SSE2
 // Shade 4 pixels at a time by specified value.
-__declspec(naked) void ARGBShadeRow_SSE2(const uint8_t* src_argb,
-                                         uint8_t* dst_argb,
-                                         int width,
-                                         uint32_t value) {
+__declspec(naked) void ARGBShadeRow_SSE2(const uint8_t* /*src_argb*/,
+                                         uint8_t* /*dst_argb*/,
+                                         int /*width*/,
+                                         uint32_t /*value*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_argb
@@ -4762,10 +4767,10 @@ __declspec(naked) void ARGBShadeRow_SSE2(const uint8_t* src_argb,
 
 #ifdef HAS_ARGBMULTIPLYROW_SSE2
 // Multiply 2 rows of ARGB pixels together, 4 pixels at a time.
-__declspec(naked) void ARGBMultiplyRow_SSE2(const uint8_t* src_argb0,
-                                            const uint8_t* src_argb1,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void ARGBMultiplyRow_SSE2(const uint8_t* /*src_argb0*/,
+                                            const uint8_t* /*src_argb1*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4802,10 +4807,10 @@ __declspec(naked) void ARGBMultiplyRow_SSE2(const uint8_t* src_argb0,
 #ifdef HAS_ARGBADDROW_SSE2
 // Add 2 rows of ARGB pixels together, 4 pixels at a time.
 // TODO(fbarchard): Port this to posix, neon and other math functions.
-__declspec(naked) void ARGBAddRow_SSE2(const uint8_t* src_argb0,
-                                       const uint8_t* src_argb1,
-                                       uint8_t* dst_argb,
-                                       int width) {
+__declspec(naked) void ARGBAddRow_SSE2(const uint8_t* /*src_argb0*/,
+                                       const uint8_t* /*src_argb1*/,
+                                       uint8_t* /*dst_argb*/,
+                                       int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4851,10 +4856,10 @@ __declspec(naked) void ARGBAddRow_SSE2(const uint8_t* src_argb0,
 
 #ifdef HAS_ARGBSUBTRACTROW_SSE2
 // Subtract 2 rows of ARGB pixels together, 4 pixels at a time.
-__declspec(naked) void ARGBSubtractRow_SSE2(const uint8_t* src_argb0,
-                                            const uint8_t* src_argb1,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void ARGBSubtractRow_SSE2(const uint8_t* /*src_argb0*/,
+                                            const uint8_t* /*src_argb1*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4881,10 +4886,10 @@ __declspec(naked) void ARGBSubtractRow_SSE2(const uint8_t* src_argb0,
 
 #ifdef HAS_ARGBMULTIPLYROW_AVX2
 // Multiply 2 rows of ARGB pixels together, 8 pixels at a time.
-__declspec(naked) void ARGBMultiplyRow_AVX2(const uint8_t* src_argb0,
-                                            const uint8_t* src_argb1,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void ARGBMultiplyRow_AVX2(const uint8_t* /*src_argb0*/,
+                                            const uint8_t* /*src_argb1*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4919,10 +4924,10 @@ __declspec(naked) void ARGBMultiplyRow_AVX2(const uint8_t* src_argb0,
 
 #ifdef HAS_ARGBADDROW_AVX2
 // Add 2 rows of ARGB pixels together, 8 pixels at a time.
-__declspec(naked) void ARGBAddRow_AVX2(const uint8_t* src_argb0,
-                                       const uint8_t* src_argb1,
-                                       uint8_t* dst_argb,
-                                       int width) {
+__declspec(naked) void ARGBAddRow_AVX2(const uint8_t* /*src_argb0*/,
+                                       const uint8_t* /*src_argb1*/,
+                                       uint8_t* /*dst_argb*/,
+                                       int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4949,10 +4954,10 @@ __declspec(naked) void ARGBAddRow_AVX2(const uint8_t* src_argb0,
 
 #ifdef HAS_ARGBSUBTRACTROW_AVX2
 // Subtract 2 rows of ARGB pixels together, 8 pixels at a time.
-__declspec(naked) void ARGBSubtractRow_AVX2(const uint8_t* src_argb0,
-                                            const uint8_t* src_argb1,
-                                            uint8_t* dst_argb,
-                                            int width) {
+__declspec(naked) void ARGBSubtractRow_AVX2(const uint8_t* /*src_argb0*/,
+                                            const uint8_t* /*src_argb1*/,
+                                            uint8_t* /*dst_argb*/,
+                                            int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb0
@@ -4982,11 +4987,11 @@ __declspec(naked) void ARGBSubtractRow_AVX2(const uint8_t* src_argb0,
 // -1  0  1
 // -2  0  2
 // -1  0  1
-__declspec(naked) void SobelXRow_SSE2(const uint8_t* src_y0,
-                                      const uint8_t* src_y1,
-                                      const uint8_t* src_y2,
-                                      uint8_t* dst_sobelx,
-                                      int width) {
+__declspec(naked) void SobelXRow_SSE2(const uint8_t* /*src_y0*/,
+                                      const uint8_t* /*src_y1*/,
+                                      const uint8_t* /*src_y2*/,
+                                      uint8_t* /*dst_sobelx*/,
+                                      int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -5040,10 +5045,10 @@ __declspec(naked) void SobelXRow_SSE2(const uint8_t* src_y0,
 // -1 -2 -1
 //  0  0  0
 //  1  2  1
-__declspec(naked) void SobelYRow_SSE2(const uint8_t* src_y0,
-                                      const uint8_t* src_y1,
-                                      uint8_t* dst_sobely,
-                                      int width) {
+__declspec(naked) void SobelYRow_SSE2(const uint8_t* /*src_y0*/,
+                                      const uint8_t* /*src_y1*/,
+                                      uint8_t* /*dst_sobely*/,
+                                      int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_y0
@@ -5094,10 +5099,10 @@ __declspec(naked) void SobelYRow_SSE2(const uint8_t* src_y0,
 // R = Sobel
 // G = Sobel
 // B = Sobel
-__declspec(naked) void SobelRow_SSE2(const uint8_t* src_sobelx,
-                                     const uint8_t* src_sobely,
-                                     uint8_t* dst_argb,
-                                     int width) {
+__declspec(naked) void SobelRow_SSE2(const uint8_t* /*src_sobelx*/,
+                                     const uint8_t* /*src_sobely*/,
+                                     uint8_t* /*dst_argb*/,
+                                     int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_sobelx
@@ -5142,10 +5147,10 @@ __declspec(naked) void SobelRow_SSE2(const uint8_t* src_sobelx,
 
 #ifdef HAS_SOBELTOPLANEROW_SSE2
 // Adds Sobel X and Sobel Y and stores Sobel into a plane.
-__declspec(naked) void SobelToPlaneRow_SSE2(const uint8_t* src_sobelx,
-                                            const uint8_t* src_sobely,
-                                            uint8_t* dst_y,
-                                            int width) {
+__declspec(naked) void SobelToPlaneRow_SSE2(const uint8_t* /*src_sobelx*/,
+                                            const uint8_t* /*src_sobely*/,
+                                            uint8_t* /*dst_y*/,
+                                            int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_sobelx
@@ -5176,10 +5181,10 @@ __declspec(naked) void SobelToPlaneRow_SSE2(const uint8_t* src_sobelx,
 // R = Sobel X
 // G = Sobel
 // B = Sobel Y
-__declspec(naked) void SobelXYRow_SSE2(const uint8_t* src_sobelx,
-                                       const uint8_t* src_sobely,
-                                       uint8_t* dst_argb,
-                                       int width) {
+__declspec(naked) void SobelXYRow_SSE2(const uint8_t* /*src_sobelx*/,
+                                       const uint8_t* /*src_sobely*/,
+                                       uint8_t* /*dst_argb*/,
+                                       int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_sobelx
@@ -5235,12 +5240,12 @@ __declspec(naked) void SobelXYRow_SSE2(const uint8_t* src_sobelx,
 // count is number of averaged pixels to produce.
 // Does 4 pixels at a time.
 // This function requires alignment on accumulation buffer pointers.
-void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
-                                    const int32_t* botleft,
-                                    int width,
-                                    int area,
-                                    uint8_t* dst,
-                                    int count) {
+void CumulativeSumToAverageRow_SSE2(const int32_t* /*topleft*/,
+                                    const int32_t* /*botleft*/,
+                                    int /*width*/,
+                                    int /*area*/,
+                                    uint8_t* /*dst*/,
+                                    int /*count*/) {
   __asm {
     mov        eax, topleft  // eax topleft
     mov        esi, botleft  // esi botleft
@@ -5385,10 +5390,10 @@ void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
 #ifdef HAS_COMPUTECUMULATIVESUMROW_SSE2
 // Creates a table of cumulative sums where each value is a sum of all values
 // above and to the left of the value.
-void ComputeCumulativeSumRow_SSE2(const uint8_t* row,
-                                  int32_t* cumsum,
-                                  const int32_t* previous_cumsum,
-                                  int width) {
+void ComputeCumulativeSumRow_SSE2(const uint8_t* /*row*/,
+                                  int32_t* /*cumsum*/,
+                                  const int32_t* /*previous_cumsum*/,
+                                  int /*width*/) {
   __asm {
     mov        eax, row
     mov        edx, cumsum
@@ -5470,11 +5475,12 @@ void ComputeCumulativeSumRow_SSE2(const uint8_t* row,
 
 #ifdef HAS_ARGBAFFINEROW_SSE2
 // Copy ARGB pixels from source image with slope to a row of destination.
-__declspec(naked) LIBYUV_API void ARGBAffineRow_SSE2(const uint8_t* src_argb,
-                                                     int src_argb_stride,
-                                                     uint8_t* dst_argb,
-                                                     const float* uv_dudv,
-                                                     int width) {
+__declspec(naked) LIBYUV_API
+    void ARGBAffineRow_SSE2(const uint8_t* /*src_argb*/,
+                            int /*src_argb_stride*/,
+                            uint8_t* /*dst_argb*/,
+                            const float* /*uv_dudv*/,
+                            int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -5556,11 +5562,11 @@ __declspec(naked) LIBYUV_API void ARGBAffineRow_SSE2(const uint8_t* src_argb,
 
 #ifdef HAS_INTERPOLATEROW_AVX2
 // Bilinear filter 32x2 -> 32x1
-__declspec(naked) void InterpolateRow_AVX2(uint8_t* dst_ptr,
-                                           const uint8_t* src_ptr,
-                                           ptrdiff_t src_stride,
-                                           int dst_width,
-                                           int source_y_fraction) {
+__declspec(naked) void InterpolateRow_AVX2(uint8_t* /*dst_ptr*/,
+                                           const uint8_t* /*src_ptr*/,
+                                           ptrdiff_t /*src_stride*/,
+                                           int /*dst_width*/,
+                                           int /*source_y_fraction*/) {
   __asm {
     push       esi
     push       edi
@@ -5633,11 +5639,11 @@ __declspec(naked) void InterpolateRow_AVX2(uint8_t* dst_ptr,
 
 // Bilinear filter 16x2 -> 16x1
 // TODO(fbarchard): Consider allowing 256 using memcpy.
-__declspec(naked) void InterpolateRow_SSSE3(uint8_t* dst_ptr,
-                                            const uint8_t* src_ptr,
-                                            ptrdiff_t src_stride,
-                                            int dst_width,
-                                            int source_y_fraction) {
+__declspec(naked) void InterpolateRow_SSSE3(uint8_t* /*dst_ptr*/,
+                                            const uint8_t* /*src_ptr*/,
+                                            ptrdiff_t /*src_stride*/,
+                                            int /*dst_width*/,
+                                            int /*source_y_fraction*/) {
   __asm {
     push       esi
     push       edi
@@ -5715,10 +5721,10 @@ __declspec(naked) void InterpolateRow_SSSE3(uint8_t* dst_ptr,
 }
 
 // For BGRAToARGB, ABGRToARGB, RGBAToARGB, and ARGBToRGBA.
-__declspec(naked) void ARGBShuffleRow_SSSE3(const uint8_t* src_argb,
-                                            uint8_t* dst_argb,
-                                            const uint8_t* shuffler,
-                                            int width) {
+__declspec(naked) void ARGBShuffleRow_SSSE3(const uint8_t* /*src_argb*/,
+                                            uint8_t* /*dst_argb*/,
+                                            const uint8_t* /*shuffler*/,
+                                            int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_argb
@@ -5742,10 +5748,10 @@ __declspec(naked) void ARGBShuffleRow_SSSE3(const uint8_t* src_argb,
 }
 
 #ifdef HAS_ARGBSHUFFLEROW_AVX2
-__declspec(naked) void ARGBShuffleRow_AVX2(const uint8_t* src_argb,
-                                           uint8_t* dst_argb,
-                                           const uint8_t* shuffler,
-                                           int width) {
+__declspec(naked) void ARGBShuffleRow_AVX2(const uint8_t* /*src_argb*/,
+                                           uint8_t* /*dst_argb*/,
+                                           const uint8_t* /*shuffler*/,
+                                           int /*width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     mov        edx, [esp + 8]  // dst_argb
@@ -5777,11 +5783,11 @@ __declspec(naked) void ARGBShuffleRow_AVX2(const uint8_t* src_argb,
 // UYVY - Macro-pixel = 2 image pixels
 // U0Y0V0Y1
 
-__declspec(naked) void I422ToYUY2Row_SSE2(const uint8_t* src_y,
-                                          const uint8_t* src_u,
-                                          const uint8_t* src_v,
-                                          uint8_t* dst_frame,
-                                          int width) {
+__declspec(naked) void I422ToYUY2Row_SSE2(const uint8_t* /*src_y*/,
+                                          const uint8_t* /*src_u*/,
+                                          const uint8_t* /*src_v*/,
+                                          uint8_t* /*dst_frame*/,
+                                          int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -5814,11 +5820,11 @@ __declspec(naked) void I422ToYUY2Row_SSE2(const uint8_t* src_y,
   }
 }
 
-__declspec(naked) void I422ToUYVYRow_SSE2(const uint8_t* src_y,
-                                          const uint8_t* src_u,
-                                          const uint8_t* src_v,
-                                          uint8_t* dst_frame,
-                                          int width) {
+__declspec(naked) void I422ToUYVYRow_SSE2(const uint8_t* /*src_y*/,
+                                          const uint8_t* /*src_u*/,
+                                          const uint8_t* /*src_v*/,
+                                          uint8_t* /*dst_frame*/,
+                                          int /*width*/) {
   __asm {
     push       esi
     push       edi
@@ -5852,10 +5858,10 @@ __declspec(naked) void I422ToUYVYRow_SSE2(const uint8_t* src_y,
 }
 
 #ifdef HAS_ARGBPOLYNOMIALROW_SSE2
-__declspec(naked) void ARGBPolynomialRow_SSE2(const uint8_t* src_argb,
-                                              uint8_t* dst_argb,
-                                              const float* poly,
-                                              int width) {
+__declspec(naked) void ARGBPolynomialRow_SSE2(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_argb*/,
+                                              const float* /*poly*/,
+                                              int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4] /* src_argb */
@@ -5911,10 +5917,10 @@ __declspec(naked) void ARGBPolynomialRow_SSE2(const uint8_t* src_argb,
 #endif  // HAS_ARGBPOLYNOMIALROW_SSE2
 
 #ifdef HAS_ARGBPOLYNOMIALROW_AVX2
-__declspec(naked) void ARGBPolynomialRow_AVX2(const uint8_t* src_argb,
-                                              uint8_t* dst_argb,
-                                              const float* poly,
-                                              int width) {
+__declspec(naked) void ARGBPolynomialRow_AVX2(const uint8_t* /*src_argb*/,
+                                              uint8_t* /*dst_argb*/,
+                                              const float* /*poly*/,
+                                              int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src_argb */
     mov        edx, [esp + 8] /* dst_argb */
@@ -5951,10 +5957,10 @@ __declspec(naked) void ARGBPolynomialRow_AVX2(const uint8_t* src_argb,
 
 #ifdef HAS_HALFFLOATROW_SSE2
 static float kExpBias = 1.9259299444e-34f;
-__declspec(naked) void HalfFloatRow_SSE2(const uint16_t* src,
-                                         uint16_t* dst,
-                                         float scale,
-                                         int width) {
+__declspec(naked) void HalfFloatRow_SSE2(const uint16_t* /*src*/,
+                                         uint16_t* /*dst*/,
+                                         float /*scale*/,
+                                         int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src */
     mov        edx, [esp + 8] /* dst */
@@ -5988,10 +5994,10 @@ __declspec(naked) void HalfFloatRow_SSE2(const uint16_t* src,
 #endif  // HAS_HALFFLOATROW_SSE2
 
 #ifdef HAS_HALFFLOATROW_AVX2
-__declspec(naked) void HalfFloatRow_AVX2(const uint16_t* src,
-                                         uint16_t* dst,
-                                         float scale,
-                                         int width) {
+__declspec(naked) void HalfFloatRow_AVX2(const uint16_t* /*src*/,
+                                         uint16_t* /*dst*/,
+                                         float /*scale*/,
+                                         int /*width*/) {
   __asm {
     mov        eax, [esp + 4] /* src */
     mov        edx, [esp + 8] /* dst */
@@ -6060,9 +6066,9 @@ __declspec(naked) void HalfFloatRow_F16C(const uint16_t* src,
 
 #ifdef HAS_ARGBCOLORTABLEROW_X86
 // Tranform ARGB pixels with color table.
-__declspec(naked) void ARGBColorTableRow_X86(uint8_t* dst_argb,
-                                             const uint8_t* table_argb,
-                                             int width) {
+__declspec(naked) void ARGBColorTableRow_X86(uint8_t* /*dst_argb*/,
+                                             const uint8_t* /*table_argb*/,
+                                             int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4] /* dst_argb */
@@ -6094,9 +6100,9 @@ __declspec(naked) void ARGBColorTableRow_X86(uint8_t* dst_argb,
 
 #ifdef HAS_RGBCOLORTABLEROW_X86
 // Tranform RGB pixels with color table.
-__declspec(naked) void RGBColorTableRow_X86(uint8_t* dst_argb,
-                                            const uint8_t* table_argb,
-                                            int width) {
+__declspec(naked) void RGBColorTableRow_X86(uint8_t* /*dst_argb*/,
+                                            const uint8_t* /*table_argb*/,
+                                            int /*width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4] /* dst_argb */
@@ -6126,11 +6132,11 @@ __declspec(naked) void RGBColorTableRow_X86(uint8_t* dst_argb,
 
 #ifdef HAS_ARGBLUMACOLORTABLEROW_SSSE3
 // Tranform RGB pixels with luma table.
-__declspec(naked) void ARGBLumaColorTableRow_SSSE3(const uint8_t* src_argb,
-                                                   uint8_t* dst_argb,
-                                                   int width,
-                                                   const uint8_t* luma,
-                                                   uint32_t lumacoeff) {
+__declspec(naked) void ARGBLumaColorTableRow_SSSE3(const uint8_t* /*src_argb*/,
+                                                   uint8_t* /*dst_argb*/,
+                                                   int /*width*/,
+                                                   const uint8_t* /*luma*/,
+                                                   uint32_t /*lumacoeff*/) {
   __asm {
     push       esi
     push       edi

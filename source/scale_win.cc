@@ -89,10 +89,10 @@ static const uvec16 kScaleAb2 = {65536 / 3, 65536 / 3, 65536 / 2, 65536 / 3,
                                  65536 / 3, 65536 / 2, 0,         0};
 
 // Reads 32 pixels, throws half away and writes 16 pixels.
-__declspec(naked) void ScaleRowDown2_SSSE3(const uint8_t* src_ptr,
-                                           ptrdiff_t src_stride,
-                                           uint8_t* dst_ptr,
-                                           int dst_width) {
+__declspec(naked) void ScaleRowDown2_SSSE3(const uint8_t* /*src_ptr*/,
+                                           ptrdiff_t /*src_stride*/,
+                                           uint8_t* /*dst_ptr*/,
+                                           int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_ptr
     // src_stride ignored
@@ -116,10 +116,10 @@ __declspec(naked) void ScaleRowDown2_SSSE3(const uint8_t* src_ptr,
 }
 
 // Blends 32x1 rectangle to 16x1.
-__declspec(naked) void ScaleRowDown2Linear_SSSE3(const uint8_t* src_ptr,
-                                                 ptrdiff_t src_stride,
-                                                 uint8_t* dst_ptr,
-                                                 int dst_width) {
+__declspec(naked) void ScaleRowDown2Linear_SSSE3(const uint8_t* /*src_ptr*/,
+                                                 ptrdiff_t /*src_stride*/,
+                                                 uint8_t* /*dst_ptr*/,
+                                                 int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_ptr
     // src_stride
@@ -150,10 +150,10 @@ __declspec(naked) void ScaleRowDown2Linear_SSSE3(const uint8_t* src_ptr,
 }
 
 // Blends 32x2 rectangle to 16x1.
-__declspec(naked) void ScaleRowDown2Box_SSSE3(const uint8_t* src_ptr,
-                                              ptrdiff_t src_stride,
-                                              uint8_t* dst_ptr,
-                                              int dst_width) {
+__declspec(naked) void ScaleRowDown2Box_SSSE3(const uint8_t* /*src_ptr*/,
+                                              ptrdiff_t /*src_stride*/,
+                                              uint8_t* /*dst_ptr*/,
+                                              int /*dst_width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_ptr
@@ -195,10 +195,10 @@ __declspec(naked) void ScaleRowDown2Box_SSSE3(const uint8_t* src_ptr,
 
 #ifdef HAS_SCALEROWDOWN2_AVX2
 // Reads 64 pixels, throws half away and writes 32 pixels.
-__declspec(naked) void ScaleRowDown2_AVX2(const uint8_t* src_ptr,
-                                          ptrdiff_t src_stride,
-                                          uint8_t* dst_ptr,
-                                          int dst_width) {
+__declspec(naked) void ScaleRowDown2_AVX2(const uint8_t* /*src_ptr*/,
+                                          ptrdiff_t /*src_stride*/,
+                                          uint8_t* /*dst_ptr*/,
+                                          int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_ptr
     // src_stride ignored
@@ -224,10 +224,10 @@ __declspec(naked) void ScaleRowDown2_AVX2(const uint8_t* src_ptr,
 }
 
 // Blends 64x1 rectangle to 32x1.
-__declspec(naked) void ScaleRowDown2Linear_AVX2(const uint8_t* src_ptr,
-                                                ptrdiff_t src_stride,
-                                                uint8_t* dst_ptr,
-                                                int dst_width) {
+__declspec(naked) void ScaleRowDown2Linear_AVX2(const uint8_t* /*src_ptr*/,
+                                                ptrdiff_t /*src_stride*/,
+                                                uint8_t* /*dst_ptr*/,
+                                                int /*dst_width*/) {
   __asm {
     mov         eax, [esp + 4]  // src_ptr
     // src_stride
@@ -262,10 +262,10 @@ __declspec(naked) void ScaleRowDown2Linear_AVX2(const uint8_t* src_ptr,
 // For rounding, average = (sum + 2) / 4
 // becomes average((sum >> 1), 0)
 // Blends 64x2 rectangle to 32x1.
-__declspec(naked) void ScaleRowDown2Box_AVX2(const uint8_t* src_ptr,
-                                             ptrdiff_t src_stride,
-                                             uint8_t* dst_ptr,
-                                             int dst_width) {
+__declspec(naked) void ScaleRowDown2Box_AVX2(const uint8_t* /*src_ptr*/,
+                                             ptrdiff_t /*src_stride*/,
+                                             uint8_t* /*dst_ptr*/,
+                                             int /*dst_width*/) {
   __asm {
     push        esi
     mov         eax, [esp + 4 + 4]  // src_ptr
@@ -309,10 +309,10 @@ __declspec(naked) void ScaleRowDown2Box_AVX2(const uint8_t* src_ptr,
 #endif  // HAS_SCALEROWDOWN2_AVX2
 
 // Point samples 32 pixels to 8 pixels.
-__declspec(naked) void ScaleRowDown4_SSSE3(const uint8_t* src_ptr,
-                                           ptrdiff_t src_stride,
-                                           uint8_t* dst_ptr,
-                                           int dst_width) {
+__declspec(naked) void ScaleRowDown4_SSSE3(const uint8_t* /*src_ptr*/,
+                                           ptrdiff_t /*src_stride*/,
+                                           uint8_t* /*dst_ptr*/,
+                                           int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_ptr
     // src_stride ignored
@@ -341,10 +341,10 @@ __declspec(naked) void ScaleRowDown4_SSSE3(const uint8_t* src_ptr,
 }
 
 // Blends 32x4 rectangle to 8x1.
-__declspec(naked) void ScaleRowDown4Box_SSSE3(const uint8_t* src_ptr,
-                                              ptrdiff_t src_stride,
-                                              uint8_t* dst_ptr,
-                                              int dst_width) {
+__declspec(naked) void ScaleRowDown4Box_SSSE3(const uint8_t* /*src_ptr*/,
+                                              ptrdiff_t /*src_stride*/,
+                                              uint8_t* /*dst_ptr*/,
+                                              int /*dst_width*/) {
   __asm {
     push       esi
     push       edi
@@ -400,10 +400,10 @@ __declspec(naked) void ScaleRowDown4Box_SSSE3(const uint8_t* src_ptr,
 
 #ifdef HAS_SCALEROWDOWN4_AVX2
 // Point samples 64 pixels to 16 pixels.
-__declspec(naked) void ScaleRowDown4_AVX2(const uint8_t* src_ptr,
-                                          ptrdiff_t src_stride,
-                                          uint8_t* dst_ptr,
-                                          int dst_width) {
+__declspec(naked) void ScaleRowDown4_AVX2(const uint8_t* /*src_ptr*/,
+                                          ptrdiff_t /*src_stride*/,
+                                          uint8_t* /*dst_ptr*/,
+                                          int /*dst_width*/) {
   __asm {
     mov         eax, [esp + 4]  // src_ptr
     // src_stride ignored
@@ -435,10 +435,10 @@ __declspec(naked) void ScaleRowDown4_AVX2(const uint8_t* src_ptr,
 }
 
 // Blends 64x4 rectangle to 16x1.
-__declspec(naked) void ScaleRowDown4Box_AVX2(const uint8_t* src_ptr,
-                                             ptrdiff_t src_stride,
-                                             uint8_t* dst_ptr,
-                                             int dst_width) {
+__declspec(naked) void ScaleRowDown4Box_AVX2(const uint8_t* /*src_ptr*/,
+                                             ptrdiff_t /*src_stride*/,
+                                             uint8_t* /*dst_ptr*/,
+                                             int /*dst_width*/) {
   __asm {
     push        esi
     push        edi
@@ -499,10 +499,10 @@ __declspec(naked) void ScaleRowDown4Box_AVX2(const uint8_t* src_ptr,
 // Produces three 8 byte values. For each 8 bytes, 16 bytes are read.
 // Then shuffled to do the scaling.
 
-__declspec(naked) void ScaleRowDown34_SSSE3(const uint8_t* src_ptr,
-                                            ptrdiff_t src_stride,
-                                            uint8_t* dst_ptr,
-                                            int dst_width) {
+__declspec(naked) void ScaleRowDown34_SSSE3(const uint8_t* /*src_ptr*/,
+                                            ptrdiff_t /*src_stride*/,
+                                            uint8_t* /*dst_ptr*/,
+                                            int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]   // src_ptr
     // src_stride ignored
@@ -547,10 +547,10 @@ __declspec(naked) void ScaleRowDown34_SSSE3(const uint8_t* src_ptr,
 // xmm7 kRound34
 
 // Note that movdqa+palign may be better than movdqu.
-__declspec(naked) void ScaleRowDown34_1_Box_SSSE3(const uint8_t* src_ptr,
-                                                  ptrdiff_t src_stride,
-                                                  uint8_t* dst_ptr,
-                                                  int dst_width) {
+__declspec(naked) void ScaleRowDown34_1_Box_SSSE3(const uint8_t* /*src_ptr*/,
+                                                  ptrdiff_t /*src_stride*/,
+                                                  uint8_t* /*dst_ptr*/,
+                                                  int /*dst_width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_ptr
@@ -604,10 +604,10 @@ __declspec(naked) void ScaleRowDown34_1_Box_SSSE3(const uint8_t* src_ptr,
 }
 
 // Note that movdqa+palign may be better than movdqu.
-__declspec(naked) void ScaleRowDown34_0_Box_SSSE3(const uint8_t* src_ptr,
-                                                  ptrdiff_t src_stride,
-                                                  uint8_t* dst_ptr,
-                                                  int dst_width) {
+__declspec(naked) void ScaleRowDown34_0_Box_SSSE3(const uint8_t* /*src_ptr*/,
+                                                  ptrdiff_t /*src_stride*/,
+                                                  uint8_t* /*dst_ptr*/,
+                                                  int /*dst_width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_ptr
@@ -666,10 +666,10 @@ __declspec(naked) void ScaleRowDown34_0_Box_SSSE3(const uint8_t* src_ptr,
 // 3/8 point sampler
 
 // Scale 32 pixels to 12
-__declspec(naked) void ScaleRowDown38_SSSE3(const uint8_t* src_ptr,
-                                            ptrdiff_t src_stride,
-                                            uint8_t* dst_ptr,
-                                            int dst_width) {
+__declspec(naked) void ScaleRowDown38_SSSE3(const uint8_t* /*src_ptr*/,
+                                            ptrdiff_t /*src_stride*/,
+                                            uint8_t* /*dst_ptr*/,
+                                            int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_ptr
     // src_stride ignored
@@ -698,10 +698,10 @@ __declspec(naked) void ScaleRowDown38_SSSE3(const uint8_t* src_ptr,
 }
 
 // Scale 16x3 pixels to 6x1 with interpolation
-__declspec(naked) void ScaleRowDown38_3_Box_SSSE3(const uint8_t* src_ptr,
-                                                  ptrdiff_t src_stride,
-                                                  uint8_t* dst_ptr,
-                                                  int dst_width) {
+__declspec(naked) void ScaleRowDown38_3_Box_SSSE3(const uint8_t* /*src_ptr*/,
+                                                  ptrdiff_t /*src_stride*/,
+                                                  uint8_t* /*dst_ptr*/,
+                                                  int /*dst_width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_ptr
@@ -763,10 +763,10 @@ __declspec(naked) void ScaleRowDown38_3_Box_SSSE3(const uint8_t* src_ptr,
 }
 
 // Scale 16x2 pixels to 6x1 with interpolation
-__declspec(naked) void ScaleRowDown38_2_Box_SSSE3(const uint8_t* src_ptr,
-                                                  ptrdiff_t src_stride,
-                                                  uint8_t* dst_ptr,
-                                                  int dst_width) {
+__declspec(naked) void ScaleRowDown38_2_Box_SSSE3(const uint8_t* /*src_ptr*/,
+                                                  ptrdiff_t /*src_stride*/,
+                                                  uint8_t* /*dst_ptr*/,
+                                                  int /*dst_width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_ptr
@@ -808,9 +808,9 @@ __declspec(naked) void ScaleRowDown38_2_Box_SSSE3(const uint8_t* src_ptr,
 }
 
 // Reads 16 bytes and accumulates to 16 shorts at a time.
-__declspec(naked) void ScaleAddRow_SSE2(const uint8_t* src_ptr,
-                                        uint16_t* dst_ptr,
-                                        int src_width) {
+__declspec(naked) void ScaleAddRow_SSE2(const uint8_t* /*src_ptr*/,
+                                        uint16_t* /*dst_ptr*/,
+                                        int /*src_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_ptr
     mov        edx, [esp + 8]  // dst_ptr
@@ -839,9 +839,9 @@ __declspec(naked) void ScaleAddRow_SSE2(const uint8_t* src_ptr,
 
 #ifdef HAS_SCALEADDROW_AVX2
 // Reads 32 bytes and accumulates to 32 shorts at a time.
-__declspec(naked) void ScaleAddRow_AVX2(const uint8_t* src_ptr,
-                                        uint16_t* dst_ptr,
-                                        int src_width) {
+__declspec(naked) void ScaleAddRow_AVX2(const uint8_t* /*src_ptr*/,
+                                        uint16_t* /*dst_ptr*/,
+                                        int /*src_width*/) {
   __asm {
     mov         eax, [esp + 4]  // src_ptr
     mov         edx, [esp + 8]  // dst_ptr
@@ -879,11 +879,11 @@ static const uvec16 kFadd40 = {0x4040, 0x4040, 0x4040, 0x4040,
                                0x4040, 0x4040, 0x4040, 0x4040};
 
 // Bilinear column filtering. SSSE3 version.
-__declspec(naked) void ScaleFilterCols_SSSE3(uint8_t* dst_ptr,
-                                             const uint8_t* src_ptr,
-                                             int dst_width,
-                                             int x,
-                                             int dx) {
+__declspec(naked) void ScaleFilterCols_SSSE3(uint8_t* /*dst_ptr*/,
+                                             const uint8_t* /*src_ptr*/,
+                                             int /*dst_width*/,
+                                             int /*x*/,
+                                             int /*dx*/) {
   __asm {
     push       ebx
     push       esi
@@ -965,11 +965,11 @@ __declspec(naked) void ScaleFilterCols_SSSE3(uint8_t* dst_ptr,
 }
 
 // Reads 16 pixels, duplicates them and writes 32 pixels.
-__declspec(naked) void ScaleColsUp2_SSE2(uint8_t* dst_ptr,
-                                         const uint8_t* src_ptr,
-                                         int dst_width,
-                                         int x,
-                                         int dx) {
+__declspec(naked) void ScaleColsUp2_SSE2(uint8_t* /*dst_ptr*/,
+                                         const uint8_t* /*src_ptr*/,
+                                         int /*dst_width*/,
+                                         int /*x*/,
+                                         int /*dx*/) {
   __asm {
     mov        edx, [esp + 4]  // dst_ptr
     mov        eax, [esp + 8]  // src_ptr
@@ -992,10 +992,10 @@ __declspec(naked) void ScaleColsUp2_SSE2(uint8_t* dst_ptr,
 }
 
 // Reads 8 pixels, throws half away and writes 4 even pixels (0, 2, 4, 6)
-__declspec(naked) void ScaleARGBRowDown2_SSE2(const uint8_t* src_argb,
-                                              ptrdiff_t src_stride,
-                                              uint8_t* dst_argb,
-                                              int dst_width) {
+__declspec(naked) void ScaleARGBRowDown2_SSE2(const uint8_t* /*src_argb*/,
+                                              ptrdiff_t /*src_stride*/,
+                                              uint8_t* /*dst_argb*/,
+                                              int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]   // src_argb
     // src_stride ignored
@@ -1017,10 +1017,10 @@ __declspec(naked) void ScaleARGBRowDown2_SSE2(const uint8_t* src_argb,
 }
 
 // Blends 8x1 rectangle to 4x1.
-__declspec(naked) void ScaleARGBRowDown2Linear_SSE2(const uint8_t* src_argb,
-                                                    ptrdiff_t src_stride,
-                                                    uint8_t* dst_argb,
-                                                    int dst_width) {
+__declspec(naked) void ScaleARGBRowDown2Linear_SSE2(const uint8_t* /*src_argb*/,
+                                                    ptrdiff_t /*src_stride*/,
+                                                    uint8_t* /*dst_argb*/,
+                                                    int /*dst_width*/) {
   __asm {
     mov        eax, [esp + 4]  // src_argb
     // src_stride ignored
@@ -1045,10 +1045,10 @@ __declspec(naked) void ScaleARGBRowDown2Linear_SSE2(const uint8_t* src_argb,
 }
 
 // Blends 8x2 rectangle to 4x1.
-__declspec(naked) void ScaleARGBRowDown2Box_SSE2(const uint8_t* src_argb,
-                                                 ptrdiff_t src_stride,
-                                                 uint8_t* dst_argb,
-                                                 int dst_width) {
+__declspec(naked) void ScaleARGBRowDown2Box_SSE2(const uint8_t* /*src_argb*/,
+                                                 ptrdiff_t /*src_stride*/,
+                                                 uint8_t* /*dst_argb*/,
+                                                 int /*dst_width*/) {
   __asm {
     push       esi
     mov        eax, [esp + 4 + 4]  // src_argb
@@ -1079,11 +1079,11 @@ __declspec(naked) void ScaleARGBRowDown2Box_SSE2(const uint8_t* src_argb,
 }
 
 // Reads 4 pixels at a time.
-__declspec(naked) void ScaleARGBRowDownEven_SSE2(const uint8_t* src_argb,
-                                                 ptrdiff_t src_stride,
-                                                 int src_stepx,
-                                                 uint8_t* dst_argb,
-                                                 int dst_width) {
+__declspec(naked) void ScaleARGBRowDownEven_SSE2(const uint8_t* /*src_argb*/,
+                                                 ptrdiff_t /*src_stride*/,
+                                                 int /*src_stepx*/,
+                                                 uint8_t* /*dst_argb*/,
+                                                 int /*dst_width*/) {
   __asm {
     push       ebx
     push       edi
@@ -1116,11 +1116,11 @@ __declspec(naked) void ScaleARGBRowDownEven_SSE2(const uint8_t* src_argb,
 }
 
 // Blends four 2x2 to 4x1.
-__declspec(naked) void ScaleARGBRowDownEvenBox_SSE2(const uint8_t* src_argb,
-                                                    ptrdiff_t src_stride,
-                                                    int src_stepx,
-                                                    uint8_t* dst_argb,
-                                                    int dst_width) {
+__declspec(naked) void ScaleARGBRowDownEvenBox_SSE2(const uint8_t* /*src_argb*/,
+                                                    ptrdiff_t /*src_stride*/,
+                                                    int /*src_stepx*/,
+                                                    uint8_t* /*dst_argb*/,
+                                                    int /*dst_width*/) {
   __asm {
     push       ebx
     push       esi
@@ -1164,11 +1164,11 @@ __declspec(naked) void ScaleARGBRowDownEvenBox_SSE2(const uint8_t* src_argb,
 }
 
 // Column scaling unfiltered. SSE2 version.
-__declspec(naked) void ScaleARGBCols_SSE2(uint8_t* dst_argb,
-                                          const uint8_t* src_argb,
-                                          int dst_width,
-                                          int x,
-                                          int dx) {
+__declspec(naked) void ScaleARGBCols_SSE2(uint8_t* /*dst_argb*/,
+                                          const uint8_t* /*src_argb*/,
+                                          int /*dst_width*/,
+                                          int /*x*/,
+                                          int /*dx*/) {
   __asm {
     push       edi
     push       esi
@@ -1257,11 +1257,11 @@ static const uvec8 kShuffleFractions = {
     0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 4u, 4u, 4u, 4u, 4u, 4u, 4u, 4u,
 };
 
-__declspec(naked) void ScaleARGBFilterCols_SSSE3(uint8_t* dst_argb,
-                                                 const uint8_t* src_argb,
-                                                 int dst_width,
-                                                 int x,
-                                                 int dx) {
+__declspec(naked) void ScaleARGBFilterCols_SSSE3(uint8_t* /*dst_argb*/,
+                                                 const uint8_t* /*src_argb*/,
+                                                 int /*dst_width*/,
+                                                 int /*x*/,
+                                                 int /*dx*/) {
   __asm {
     push       esi
     push       edi
@@ -1330,11 +1330,11 @@ __declspec(naked) void ScaleARGBFilterCols_SSSE3(uint8_t* dst_argb,
 }
 
 // Reads 4 pixels, duplicates them and writes 8 pixels.
-__declspec(naked) void ScaleARGBColsUp2_SSE2(uint8_t* dst_argb,
-                                             const uint8_t* src_argb,
-                                             int dst_width,
-                                             int x,
-                                             int dx) {
+__declspec(naked) void ScaleARGBColsUp2_SSE2(uint8_t* /*dst_argb*/,
+                                             const uint8_t* /*src_argb*/,
+                                             int /*dst_width*/,
+                                             int /*x*/,
+                                             int /*dx*/) {
   __asm {
     mov        edx, [esp + 4]  // dst_argb
     mov        eax, [esp + 8]  // src_argb
@@ -1357,7 +1357,7 @@ __declspec(naked) void ScaleARGBColsUp2_SSE2(uint8_t* dst_argb,
 }
 
 // Divide num by div and return as 16.16 fixed point result.
-__declspec(naked) int FixedDiv_X86(int num, int div) {
+__declspec(naked) int FixedDiv_X86(int /*num*/, int /*div*/) {
   __asm {
     mov        eax, [esp + 4]  // num
     cdq  // extend num to 64 bits
@@ -1369,7 +1369,7 @@ __declspec(naked) int FixedDiv_X86(int num, int div) {
 }
 
 // Divide num by div and return as 16.16 fixed point result.
-__declspec(naked) int FixedDiv1_X86(int num, int div) {
+__declspec(naked) int FixedDiv1_X86(int /*num*/, int /*div*/) {
   __asm {
     mov        eax, [esp + 4]  // num
     mov        ecx, [esp + 8]  // denom

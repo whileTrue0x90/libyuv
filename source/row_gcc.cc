@@ -3914,7 +3914,7 @@ void SetRow_X86(uint8_t* dst, uint8_t v8, int width) {
       : "memory", "cc");
 }
 
-void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
+void SetRow_ERMS(uint8_t* dst, uint8_t /*v8*/, int width) {
   size_t width_tmp = (size_t)(width);
   asm volatile(
 
@@ -3925,7 +3925,7 @@ void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width) {
       : "memory", "cc");
 }
 
-void ARGBSetRow_X86(uint8_t* dst_argb, uint32_t v32, int width) {
+void ARGBSetRow_X86(uint8_t* dst_argb, uint32_t /*v32*/, int width) {
   size_t width_tmp = (size_t)(width);
   asm volatile(
 
@@ -5755,7 +5755,7 @@ void ARGBAffineRow_SSE2(const uint8_t* src_argb,
 // Bilinear filter 16x2 -> 16x1
 void InterpolateRow_SSSE3(uint8_t* dst_ptr,
                           const uint8_t* src_ptr,
-                          ptrdiff_t src_stride,
+
                           int dst_width,
                           int source_y_fraction) {
   asm volatile(
@@ -5836,7 +5836,7 @@ void InterpolateRow_SSSE3(uint8_t* dst_ptr,
 // Bilinear filter 32x2 -> 32x1
 void InterpolateRow_AVX2(uint8_t* dst_ptr,
                          const uint8_t* src_ptr,
-                         ptrdiff_t src_stride,
+
                          int dst_width,
                          int source_y_fraction) {
   asm volatile(

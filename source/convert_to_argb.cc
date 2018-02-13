@@ -30,7 +30,7 @@ extern "C" {
 //   With MJPEG it is the compressed size of the frame.
 LIBYUV_API
 int ConvertToARGB(const uint8_t* sample,
-                  size_t sample_size,
+
                   uint8_t* dst_argb,
                   int dst_stride_argb,
                   int crop_x,
