@@ -1,7 +1,7 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': 'ff3b31782d552b03104a6d831c7530605b52b13f',
-  'swarming_revision': '5e8001d9a710121ce7a68efd0804430a34b4f9e4',
+  'chromium_revision': '80f0c5570649c35a869429b2ab8c381a0a7246cb',
+  'swarming_revision': '88229872dd17e71658fe96763feaa77915d8cbd6',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
   # and whatever else without interference from each other.
@@ -9,30 +9,30 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'aa736cc76ee5e35215abcfb83a8c354f12d0c684',
+  'catapult_revision': 'e7298f36f7912f2caa122086cfbe71734d04b73f',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '156ba982d749902e3403c242e23ded87fd316494',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '39738e75b27f39d4c0030a0b11d5d2ddd34715f7',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/buildtools.git' + '@' + 'f6d165d9d842ddd29056c127a5f3a3c5d8e0d2e3',
+    Var('chromium_git') + '/chromium/buildtools.git' + '@' + 'a09e064635a49f08e585e3b173d5fbc3dd3f485e',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + 'cc96d3d66b5b9613fd0fe055509cfec5eb54b19c',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '5f7e36cad6434fd3d65674af96653a23ecc9f694',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '72c52c224cdd3c377f7caff8ffed0f5749e79549',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '2c0ced3ddbf84ce1c0759b277d9538da42f23650',
   'src/third_party/catapult':
     Var('chromium_git') + '/catapult.git' + '@' + Var('catapult_revision'),
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
   'src/third_party/googletest/src':
-    Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '7f8fefabedf2965980585be8c2bff97458f28e0b',
+    Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '0062e4869f07a3ef235703ddf63af604b712446c',
   'src/third_party/libjpeg_turbo':
     Var('chromium_git') + '/chromium/deps/libjpeg_turbo.git' + '@' + 'a1750dbc79a8792dde3d3f7d7d8ac28ba01ac9dd',
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + 'b98114e18d8b9b84586b10d24353ab8616d4c5fc',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + 'eceb2c420b20350a2d2ba261953109280968647a',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '6202b67fc46a9984097caf237e12e3b8f7a9f7da',
   'src/tools/gyp':
     Var('chromium_git') + '/external/gyp.git' + '@' + 'd61a9397e668fa9843c4aa7da9e79460fe590bfb',
    'src/tools/swarming_client':
@@ -53,7 +53,7 @@ deps = {
 
   # Android deps:
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '9b543d487c7c38be191c6180001ff9ce186ae326',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'ac3d2b81181b085a9952cb83dba748420eefe691',
     'condition': 'checkout_android',
   },
   'src/third_party/android_ndk': {
@@ -61,7 +61,7 @@ deps = {
     'condition': 'checkout_android',
   },
   'src/third_party/android_tools': {
-    'url': Var('chromium_git') + '/android_tools.git' + '@' + 'aadb2fed04af8606545b0afe4e3060bc1a15fad7',
+    'url': Var('chromium_git') + '/android_tools.git' + '@' + '9a70d48fcdd68cd0e7e968f342bd767ee6323bd1',
     'condition': 'checkout_android',
   },
   'src/third_party/ced/src': {
@@ -69,7 +69,7 @@ deps = {
     'condition': 'checkout_android',
   },
   'src/third_party/icu': {
-    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '08cb956852a5ccdba7f9c941728bb833529ba3c6',
+    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + 'd888fd2a1be890f4d35e43f68d6d79f42519a357',
     'condition': 'checkout_android',
   },
   'src/third_party/jsr-305/src': {
@@ -89,7 +89,7 @@ deps = {
     'condition': 'checkout_android',
   },
   'src/third_party/robolectric/robolectric': {
-    'url': Var('chromium_git') + '/external/robolectric.git' + '@' + 'b02c65cc6d7465f58f0de48a39914aa905692afa',
+    'url': Var('chromium_git') + '/external/robolectric.git' + '@' + '7e067f1112e1502caa742f7be72d37b5678d3403',
     'condition': 'checkout_android',
   },
   'src/third_party/ub-uiautomator/lib': {
@@ -99,7 +99,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '39c4b2fcf73f5b1e82af3b9c57267c17217d6a30',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '299ef76e844a74a1f2f4ce7f06d101861fb49aba',
     'condition': 'checkout_ios'
   },
 
@@ -143,18 +143,18 @@ hooks = [
   # Android dependencies. Many are downloaded using Google Storage these days.
   # They're copied from https://cs.chromium.org/chromium/src/DEPS for all
   # such dependencies we share with Chromium.
-  {
+#  {
     # This downloads SDK extras and puts them in the
     # third_party/android_tools/sdk/extras directory.
-    'name': 'sdkextras',
-    'pattern': '.',
+#    'name': 'sdkextras',
+#    'pattern': '.',
     # When adding a new sdk extras package to download, add the package
     # directory and zip file to .gitignore in third_party/android_tools.
-    'action': ['python',
-               'src/build/android/play_services/update.py',
-               'download'
-    ],
-  },
+#    'action': ['python',
+#               'src/build/android/play_services/update.py',
+#               'download'
+#    ],
+#  },
   {
     'name': 'intellij',
     'pattern': '.',
@@ -325,15 +325,41 @@ hooks = [
                '-l', 'third_party/objenesis'
     ],
   },
+  # Downloads the current stable linux sysroot to build/linux/ if needed.
   {
-    # Downloads the current stable linux sysroot to build/linux/ if needed.
-    # This sysroot updates at about the same rate that the chrome build deps
-    # change. This script is a no-op except for linux users who are doing
-    # official chrome builds or cross compiling.
-    'name': 'sysroot',
+    'name': 'sysroot_arm',
     'pattern': '.',
+    'condition': 'checkout_linux and checkout_arm',
     'action': ['python', 'src/build/linux/sysroot_scripts/install-sysroot.py',
-               '--running-as-hook'],
+               '--arch=arm'],
+  },
+  {
+    'name': 'sysroot_arm64',
+    'pattern': '.',
+    'condition': 'checkout_linux and checkout_arm64',
+    'action': ['python', 'src/build/linux/sysroot_scripts/install-sysroot.py',
+               '--arch=arm64'],
+  },
+  {
+    'name': 'sysroot_x86',
+    'pattern': '.',
+    'condition': 'checkout_linux and (checkout_x86 or checkout_x64)',
+    'action': ['python', 'src/build/linux/sysroot_scripts/install-sysroot.py',
+               '--arch=x86'],
+  },
+  {
+    'name': 'sysroot_mips',
+    'pattern': '.',
+    'condition': 'checkout_linux and checkout_mips',
+    'action': ['python', 'src/build/linux/sysroot_scripts/install-sysroot.py',
+               '--arch=mips'],
+  },
+  {
+    'name': 'sysroot_x64',
+    'pattern': '.',
+    'condition': 'checkout_linux and checkout_x64',
+    'action': ['python', 'src/build/linux/sysroot_scripts/install-sysroot.py',
+               '--arch=x64'],
   },
   {
     # Update the Windows toolchain if necessary.
