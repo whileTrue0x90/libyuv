@@ -208,8 +208,7 @@ void I422ToRGBARow_NEON(const uint8_t* src_y,
 
       READYUV422 YUVTORGB
       "subs       %4, %4, #8                     \n"
-      "vmov.u8    d19, #255                      \n"  // d19 modified by
-                                                      // YUVTORGB
+      "vmov.u8    d19, #255                      \n"  // YUVTORGB modified d19
       "vst4.8     {d19, d20, d21, d22}, [%3]!    \n"
       "bgt        1b                             \n"
       : "+r"(src_y),     // %0
@@ -317,7 +316,6 @@ void I422ToARGB1555Row_NEON(const uint8_t* src_y,
 
       ARGBTOARGB1555
       "vst1.8     {q0}, [%3]!                    \n"  // store 8 pixels
-                                                      // ARGB1555.
       "bgt        1b                             \n"
       : "+r"(src_y),         // %0
         "+r"(src_u),         // %1
@@ -349,8 +347,7 @@ void I422ToARGB4444Row_NEON(const uint8_t* src_y,
                             int width) {
   asm volatile(
       YUVTORGB_SETUP
-      "vmov.u8    d4, #0x0f                      \n"  // bits to clear with
-                                                      // vbic.
+      "vmov.u8    d4, #0x0f                      \n"  // vbic bits to clear
       "1:                                        \n"
 
       READYUV422 YUVTORGB
@@ -359,7 +356,6 @@ void I422ToARGB4444Row_NEON(const uint8_t* src_y,
 
       ARGBTOARGB4444
       "vst1.8     {q0}, [%3]!                    \n"  // store 8 pixels
-                                                      // ARGB4444.
       "bgt        1b                             \n"
       : "+r"(src_y),         // %0
         "+r"(src_u),         // %1
