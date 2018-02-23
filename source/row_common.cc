@@ -2720,6 +2720,8 @@ void ARGBPolynomialRow_C(const uint8_t* src_argb,
 // simply extract the low bits of the exponent and the high
 // bits of the mantissa from our float and we're done.
 
+#include <math.h>
+
 void HalfFloatRow_C(const uint16_t* src,
                     uint16_t* dst,
                     float scale,
@@ -2729,6 +2731,14 @@ void HalfFloatRow_C(const uint16_t* src,
   for (i = 0; i < width; ++i) {
     float value = src[i] * mult;
     dst[i] = (uint16_t)((*(uint32_t*)&value) >> 13);
+  }
+}
+
+void ByteToFloatRow_C(const uint8_t* src, float* dst, float scale, int width) {
+  int i;
+  for (i = 0; i < width; ++i) {
+    float value = src[i] * sqrtf(scale * scale);
+    dst[i] = value;
   }
 }
 
