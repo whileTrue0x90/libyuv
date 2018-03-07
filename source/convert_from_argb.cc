@@ -879,6 +879,14 @@ int ARGBToRGB24(const uint8_t* src_argb,
     }
   }
 #endif
+#if defined(HAS_ARGBTORGB24ROW_AVX2)
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    ARGBToRGB24Row = ARGBToRGB24Row_Any_AVX2;
+    if (IS_ALIGNED(width, 32)) {
+      ARGBToRGB24Row = ARGBToRGB24Row_AVX2;
+    }
+  }
+#endif
 #if defined(HAS_ARGBTORGB24ROW_NEON)
   if (TestCpuFlag(kCpuHasNEON)) {
     ARGBToRGB24Row = ARGBToRGB24Row_Any_NEON;
