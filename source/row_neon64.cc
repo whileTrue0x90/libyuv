@@ -2706,22 +2706,29 @@ void ByteToFloatRow_NEON(const uint8_t* src,
                          int width) {
   asm volatile(
       "1:                                        \n"
-      "ld1        {v1.8b}, [%0], #8              \n"  // load 8 bytes
-      "subs       %w2, %w2, #8                   \n"  // 8 pixels per loop
-      "uxtl       v1.8h, v1.8b                   \n"  // 8 shorts
-      "uxtl       v2.4s, v1.4h                   \n"  // 8 ints
-      "uxtl2      v3.4s, v1.8h                   \n"
-      "scvtf      v2.4s, v2.4s                   \n"  // 8 floats
-      "scvtf      v3.4s, v3.4s                   \n"
-      "fmul       v2.4s, v2.4s, %3.s[0]          \n"  // scale
-      "fmul       v3.4s, v3.4s, %3.s[0]          \n"
-      "st1        {v2.16b, v3.16b}, [%1], #32    \n"  // store 8 floats
+      "ld1        {v1.16b}, [%0], #16            \n"  // load 16 bytes
+      "subs       %w2, %w2, #16                  \n"  // 16 pixels per loop
+      "uxtl       v2.8h, v1.8b                   \n"  // 16 shorts
+      "uxtl2      v3.8h, v1.16b                  \n"
+      "uxtl       v4.4s, v2.4h                   \n"  // 16 ints
+      "uxtl2      v5.4s, v2.8h                   \n"
+      "uxtl       v6.4s, v3.4h                   \n"
+      "uxtl2      v7.4s, v3.8h                   \n"
+      "scvtf      v4.4s, v4.4s                   \n"  // 16 floats
+      "scvtf      v5.4s, v5.4s                   \n"
+      "scvtf      v6.4s, v6.4s                   \n"
+      "scvtf      v7.4s, v7.4s                   \n"
+      "fmul       v4.4s, v4.4s, %3.s[0]          \n"  // scale
+      "fmul       v5.4s, v5.4s, %3.s[0]          \n"
+      "fmul       v6.4s, v6.4s, %3.s[0]          \n"
+      "fmul       v7.4s, v7.4s, %3.s[0]          \n"
+      "st1        {v4.16b - v7.16b}, [%1], #64   \n"  // store 16 floats
       "b.gt       1b                             \n"
       : "+r"(src),   // %0
         "+r"(dst),   // %1
         "+r"(width)  // %2
       : "w"(scale)   // %3
-      : "cc", "memory", "v1", "v2", "v3");
+      : "cc", "memory", "v1", "v2", "v3", "v4", "v5", "v6", "v7");
 }
 
 float ScaleMaxSamples_NEON(const float* src,

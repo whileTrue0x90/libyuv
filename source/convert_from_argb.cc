@@ -846,6 +846,7 @@ int ARGBToRGBA(const uint8_t* src_argb,
                      (const uint8_t*)(&kShuffleMaskARGBToRGBA), width, height);
 }
 
+void ARGBToRGB24Row_AVX512VMBI(const uint8_t* src, uint8_t* dst, int width);
 // Convert ARGB To RGB24.
 LIBYUV_API
 int ARGBToRGB24(const uint8_t* src_argb,
@@ -883,7 +884,7 @@ int ARGBToRGB24(const uint8_t* src_argb,
   if (TestCpuFlag(kCpuHasAVX2)) {
     ARGBToRGB24Row = ARGBToRGB24Row_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
-      ARGBToRGB24Row = ARGBToRGB24Row_AVX2;
+      ARGBToRGB24Row = ARGBToRGB24Row_AVX512VMBI;
     }
   }
 #endif
