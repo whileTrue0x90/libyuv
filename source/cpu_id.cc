@@ -287,6 +287,9 @@ static SAFEBUFFERS int GetCpuFlags(void) {
   if (TestEnv("LIBYUV_DISABLE_AVX512BW")) {
     cpu_info &= ~kCpuHasAVX512BW;
   }
+  if (TestEnv("LIBYUV_DISABLE_AVX512VBMI")) {
+    cpu_info &= ~kCpuHasAVX512VBMI;
+  }
 
 #endif
 #if defined(__mips__) && defined(__linux__)
