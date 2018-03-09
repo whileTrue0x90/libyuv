@@ -10,6 +10,9 @@
 
 #include "libyuv/row.h"
 
+#include <string.h>
+#include "immintrin.h"
+
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
@@ -505,9 +508,30 @@ void ARGBToRAWRow_SSSE3(const uint8_t* src, uint8_t* dst, int width) {
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
 }
 
+__attribute__ ((target ("avx2")))
+void ARGBToRGB24Row_AVX2(const uint8_t* src, uint8_t* dst, int width) {
+  for (int i = 0; i < width; i += 8) {
+    __m256i rgba;
+    memcpy(&rgba, src, 32);
+
+    const char _ = ~0;  // zero the lane
+    __m256i rgb_weird = _mm256_shuffle_epi8(rgba,
+            _mm256_setr_epi8(0,1,2, 4,5,6, 8,9,10, 12,13,14, _,_,_,_,
+                             0,1,2, 4,5,6, 8,9,10, 12,13,14, _,_,_,_));
+
+    __m256i rgb = _mm256_permutevar8x32_epi32(rgb_weird,
+            _mm256_setr_epi32(0,1,2,4,5,6,3,7));
+
+    memcpy(dst, &rgb, 24);
+    src += 32;
+    dst += 24;
+  }
+}
+
 // vpermd for 12+12 to 24
 static const lvec32 kPermdRGB24_AVX = {0, 1, 2, 4, 5, 6, 3, 7};
 
+# if 0
 void ARGBToRGB24Row_AVX2(const uint8_t* src, uint8_t* dst, int width) {
   asm volatile(
       "vbroadcastf128 %3,%%ymm6                  \n"
@@ -550,6 +574,50 @@ void ARGBToRGB24Row_AVX2(const uint8_t* src, uint8_t* dst, int width) {
         "m"(kPermdRGB24_AVX)           // %4
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6",
         "xmm7");
+}
+#endif
+
+// Shuffle table for converting ARGBToRGB24
+static const ulvec8 kPermARGBToRGB24_0 = {
+  0u, 1u, 2u, 4u, 5u, 6u, 8u, 9u, 10u, 12u, 13u, 14u, 16u, 17u, 18u, 20u, 21u, 22u, 24u, 25u, 26u, 28u, 29u, 30u, 32u, 33u, 34u, 36u, 37u, 38u, 40u, 41u
+};
+static const ulvec8 kPermARGBToRGB24_1 = {
+  10u, 12u, 13u, 14u, 16u, 17u, 18u, 20u, 21u, 22u, 24u, 25u, 26u, 28u, 29u, 30u, 32u, 33u, 34u, 36u, 37u, 38u, 40u, 41u, 42u, 44u, 45u, 46u, 48u, 49u, 50u, 52u
+};
+static const ulvec8 kPermARGBToRGB24_2 = {
+  21u, 22u, 24u, 25u, 26u, 28u, 29u, 30u, 32u, 33u, 34u, 36u, 37u, 38u, 40u, 41u, 42u, 44u, 45u, 46u, 48u, 49u, 50u, 52u, 53u, 54u, 56u, 57u, 58u, 60u, 61u, 62u
+};
+
+void ARGBToRGB24Row_AVX512VMBI(const uint8_t* src, uint8_t* dst, int width) {
+  asm volatile(
+      "vmovdqa    %3,%%ymm5                      \n"
+      "vmovdqa    %4,%%ymm6                      \n"
+      "vmovdqa    %5,%%ymm7                      \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "vmovdqu    (%0),%%ymm0                    \n"
+      "vmovdqu    0x20(%0),%%ymm1                \n"
+      "vmovdqu    0x40(%0),%%ymm2                \n"
+      "vmovdqu    0x60(%0),%%ymm3                \n"
+      "lea        0x80(%0),%0                    \n"
+      "vpermt2b   %%ymm1,%%ymm5,%%ymm0           \n"
+      "vpermt2b   %%ymm2,%%ymm6,%%ymm1           \n"
+      "vpermt2b   %%ymm3,%%ymm7,%%ymm2           \n"
+      "vmovdqu    %%ymm0,(%1)                    \n"
+      "vmovdqu    %%ymm1,0x20(%1)                \n"
+      "vmovdqu    %%ymm2,0x40(%1)                \n"
+      "lea        0x60(%1),%1                    \n"
+      "sub        $0x20,%2                       \n"
+      "jg         1b                             \n"
+      "vzeroupper                                \n"
+      : "+r"(src),                     // %0
+        "+r"(dst),                     // %1
+        "+r"(width)                    // %2
+      : "m"(kPermARGBToRGB24_0),  // %3
+        "m"(kPermARGBToRGB24_1),  // %4
+        "m"(kPermARGBToRGB24_2)   // %5
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm5", "xmm6", "xmm7");
 }
 
 void ARGBToRAWRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
