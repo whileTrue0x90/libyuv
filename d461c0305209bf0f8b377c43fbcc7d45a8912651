@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd59c95b_b121e09f",
+        "filename": "build_overrides/build.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-19T21:21:00Z",
+      "side": 1,
+      "message": "typo - maintainted\nshould be maintained\n\nnit - it\u0027s  - prefer it is\n\n# Use bundled hermetic Xcode installation maintained by Chromium,\n# except for local iOS builds where it is unsupported.",
+      "range": {
+        "startLine": 36,
+        "startChar": 66,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "d461c0305209bf0f8b377c43fbcc7d45a8912651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
