@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "6df6d1b8_0d73e669",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd131665_1713205f",
+      "range": {
+        "startLine": 88,
+        "startChar": 30,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bc1f650_5b31f3bb",
         "filename": "include/libyuv/cpu_id.h",
         "patchSetId": 1
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "27ca08f2_899437d0",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "6bc1f650_5b31f3bb",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca26b73b_6ad45691",
         "filename": "source/cpu_id.cc",
         "patchSetId": 1
@@ -70,6 +112,24 @@
       "writtenOn": "2018-03-21T19:19:56Z",
       "side": 1,
       "message": "consider using ForceCpuFlags() so there is only one function that sets the cpu_info_",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbaec454_9ada63eb",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca26b73b_6ad45691",
       "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -123,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "2785bcb2_bd4d0f98",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Ah, I understand now! I thought the libyuv code would use InitCpuFlags() to retrieve the flags. Now I see it uses TestCpuFlag. (so I assume InitCpuFlags is exposed for tests, and for warming up the CPU info just like Chrome does before the sandbox is initialized)",
+      "parentUuid": "62d2c9c5_42944722",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 21
+      },
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "084278e0_bdda504f",
         "filename": "source/cpu_id.cc",
         "patchSetId": 1
@@ -134,6 +218,24 @@
       "writtenOn": "2018-03-21T19:19:56Z",
       "side": 1,
       "message": "Would \u0027SetCpuFlags() make more sense as a name?",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "985f084b_01935e6a",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Yes, changed.",
+      "parentUuid": "084278e0_bdda504f",
       "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -163,6 +265,30 @@
     },
     {
       "key": {
+        "uuid": "066efab1_9c93619b",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Added to the method doc.",
+      "parentUuid": "d87b23e7_dc2a7155",
+      "range": {
+        "startLine": 286,
+        "startChar": 30,
+        "endLine": 286,
+        "endChar": 31
+      },
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11f3c756_e7cc0c36",
         "filename": "unit_test/cpu_test.cc",
         "patchSetId": 1
@@ -180,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "9dcc8fd9_fe3e3d02",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f3c756_e7cc0c36",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a74713b_c93c5db2",
         "filename": "unit_test/cpu_test.cc",
         "patchSetId": 1
@@ -191,6 +335,24 @@
       "writtenOn": "2018-03-21T19:19:56Z",
       "side": 1,
       "message": "add a test for behavior when 0 is passed, and perhaps an invalid case.\n\nbtw to test real cpu behavior, intelsde is very handy.",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4d06503_51dbe893",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-21T20:00:33Z",
+      "side": 1,
+      "message": "I added a test for 0, but I am not sure how to test for invalid cases (since set the CPU flags does not perform any validation from what I understand).",
+      "parentUuid": "6a74713b_c93c5db2",
       "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
