@@ -80,6 +80,15 @@ int ArmCpuCaps(const char* cpuinfo_name);
 LIBYUV_API
 int MaskCpuFlags(int enable_flags);
 
+// Can be used in place of InitCpuFlags to force cpu_info_ to a value and bypass
+// the auto init. This is useful when running in a sandboxed process where
+// InitCpuFlags might fail (as it might access /proc/cpuinfo). In such case the
+// cpu_info can be obtained from a non sandboxed process by calling
+// InitCpuFlags() and passed to the sandboxed process which can call this method
+// to initialize the CPU flags.
+LIBYUV_API
+void ForceCpuFlags(int cpu_flags);
+
 // Low level cpuid for X86. Returns zeros on other CPUs.
 // eax is the info type that you want.
 // ecx is typically the cpu number, and should normally be zero.

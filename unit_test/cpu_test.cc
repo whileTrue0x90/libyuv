@@ -158,4 +158,17 @@ TEST_F(LibYUVBaseTest, TestLinuxNeon) {
 #endif
 }
 
+TEST_F(LibYUVBaseTest, TestForceCpuFlags) {
+  int original_cpu_flags = InitCpuFlags();
+
+  ForceCpuFlags(kCpuHasARM | kCpuHasNEON);
+  EXPECT_EQ(kCpuHasARM | kCpuHasNEON | kCpuInitialized, InitCpuFlags());
+
+  ForceCpuFlags(kCpuHasX86);
+  EXPECT_EQ(kCpuHasX86 | kCpuInitialized, InitCpuFlags());
+
+  // Restore the original flags.
+  ForceCpuFlags(original_cpu_flags);
+}
+
 }  // namespace libyuv
