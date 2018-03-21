@@ -271,7 +271,19 @@ int MaskCpuFlags(int enable_flags) {
 
 LIBYUV_API
 int InitCpuFlags(void) {
+  if (cpu_info_)
+    return cpu_info_;
   return MaskCpuFlags(-1);
+}
+
+LIBYUV_API
+void ForceCpuFlags(int cpu_flags) {
+#ifdef __ATOMIC_RELAXED
+  __atomic_store_n(&cpu_info_, cpu_flags, __ATOMIC_RELAXED);
+#else
+  cpu_info_ = cpu_flags;
+#endif
+  cpu_info_ |= kCpuInitialized;
 }
 
 #ifdef __cplusplus
