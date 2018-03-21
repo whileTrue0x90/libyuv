@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e623bd_4d1875cf",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T22:09:14Z",
+      "side": 1,
+      "message": "Please add an initial sentence that says what the function does.  Which is sets the cpu flags to the specified value, bypassing the detection code.",
+      "revId": "a7906952b6e817bb5969960e34d1c74817084df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5436ef95_7e0d34d3",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T22:09:14Z",
+      "side": 1,
+      "message": "InitCpuFlags is not normally called by applications.  You can get all the flags with TestCpuFlag(-1);",
+      "revId": "a7906952b6e817bb5969960e34d1c74817084df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "423e277e_179a4961",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T22:09:14Z",
+      "side": 1,
+      "message": "I\u0027m thinking this could fail because the user of the unit_test/unit_test.cc can set the cpu flags.\n\nlibyuv::MaskCpuFlags(benchmark_cpu_info_);\n\nYou could do that.. you\u0027ll see other examples of this in the unit tests, or SetCpuFlags(original_cpu_flags);\n\nTo test command line cpu flags, run your tests with \n--libyuv_cpu_info\u003d and a number.  eg\n\nout/Release/libyuv_unittest --gtest_filter\u003d*Cpu* --libyuv_width\u003d640 --libyuv_height\u003d360 --libyuv_repeat\u003d40000 --libyuv_cpu_info\u003d255\n\nFor testing SetCpuFlags causes reinitialization, you\u0027re only guaranteed the value wont be zero after the detect.\nIt will have all the bits from original_cpu_flags, which is benchmark_cpu_info_, and may have some additional bits that were disabled.",
+      "revId": "a7906952b6e817bb5969960e34d1c74817084df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
