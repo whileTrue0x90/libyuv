@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd131665_1713205f",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "this comment is okay, but it may be worth explaining what the parameter is expected to have. It is the same value as  TestCpuFlag() returns or can be constructions from the kCpuHas constants.  It has a special value of 0, which would cause auto initialization to be re-enabled.\nIt would be dangerous to enable cpus features that dont exist.\nIt would be possible to write a helper that translates from some other library to libyuv flags.\ncpu detection is almost worth writing a .md document for.  Perhaps add a todo for me to do that.",
+      "range": {
+        "startLine": 88,
+        "startChar": 30,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bc1f650_5b31f3bb",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "Consider implementing as inline.\nThe TestCpuFlag is implemented here as an atomic load.\nYour function can implement the atomic store.\nThen remove atomics from the .cc file - the header will have the only 2 references.",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca26b73b_6ad45691",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "consider using ForceCpuFlags() so there is only one function that sets the cpu_info_",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44448db0_363efd10",
         "filename": "source/cpu_id.cc",
         "patchSetId": 1
@@ -22,6 +79,104 @@
       "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d2c9c5_42944722",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "no, it would cause a tsan error.",
+      "parentUuid": "44448db0_363efd10",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 21
+      },
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084278e0_bdda504f",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "Would \u0027SetCpuFlags() make more sense as a name?",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d87b23e7_dc2a7155",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "remove - require user include this.",
+      "range": {
+        "startLine": 286,
+        "startChar": 30,
+        "endLine": 286,
+        "endChar": 31
+      },
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11f3c756_e7cc0c36",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "Use TestCpuFlag(-1)\n\nInitCpuFlags() is not meant to be used more than once.",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a74713b_c93c5db2",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-21T19:19:56Z",
+      "side": 1,
+      "message": "add a test for behavior when 0 is passed, and perhaps an invalid case.\n\nbtw to test real cpu behavior, intelsde is very handy.",
+      "revId": "33b0f373d3dbade32da13aa73eff31cbdc197e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
