@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ed18ef_70b6c4c5",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-22T01:53:53Z",
+      "side": 1,
+      "message": "this changes the cpu flags as a side effect of calling this unittest.\nthe auto detected cpu flags are not necessarily being used.  the user can pass environment variables or command line to change the flags.\n\nsomehow you should set the flags back to what they were before running the test.\n\nmost tests that change the flags, to disable SIMD, set it back by doing this:\n libyuv::MaskCpuFlags(benchmark_cpu_info_);\n\nHere\u0027s an example of disabling just SSE2\n\nLIBYUV_DISABLE_SSE2\u003d1 out/Release/libyuv_unittest --gtest_filter\u003d*Cpu* --libyuv_width\u003d640 --libyuv_height\u003d480 --libyuv_repeat\u003d999\n\nor this disables all assembly\n\nLIBYUV_DISABLE_ASM\u003d1 out/Release/libyuv_unittest --gtest_filter\u003d*Cpu* --libyuv_width\u003d640 --libyuv_height\u003d480 --libyuv_repeat\u003d999",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 18
+      },
+      "revId": "bbcb1bbe23d43026af24e657b1112f33f51192c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
