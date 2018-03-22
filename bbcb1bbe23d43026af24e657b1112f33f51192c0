@@ -22,6 +22,30 @@
       "revId": "bbcb1bbe23d43026af24e657b1112f33f51192c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc91d71e_9d5184ea",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-03-22T17:40:57Z",
+      "side": 1,
+      "message": "Restoring it at the end of the test. Is that sufficient? (printing the values of the flags retrieved before and after restoring the CPU flags starting with the command line you suggested indicate the flags are changed before and after restoring)",
+      "parentUuid": "f6ed18ef_70b6c4c5",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 18
+      },
+      "revId": "bbcb1bbe23d43026af24e657b1112f33f51192c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
