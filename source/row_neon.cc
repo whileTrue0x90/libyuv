@@ -2608,81 +2608,83 @@ void HalfFloat1Row_NEON(const uint16_t* src,
                         uint16_t* dst,
                         float /*unused*/,
                         int width) {
+  float __attribute__((vector_size(8))) fscale;
+  fscale[0] = 1.9259299444e-34f;
   asm volatile(
-      "vdup.32    q0, %3                         \n"
 
       "1:                                        \n"
-      "vld1.8     {q1}, [%0]!                    \n"  // load 8 shorts
+      "vld1.8     {q2}, [%0]!                    \n"  // load 8 shorts
       "subs       %2, %2, #8                     \n"  // 8 pixels per loop
-      "vmovl.u16  q2, d2                         \n"  // 8 int's
-      "vmovl.u16  q3, d3                         \n"
-      "vcvt.f32.u32  q2, q2                      \n"  // 8 floats
-      "vcvt.f32.u32  q3, q3                      \n"
-      "vmul.f32   q2, q2, q0                     \n"  // adjust exponent
-      "vmul.f32   q3, q3, q0                     \n"
-      "vqshrn.u32 d2, q2, #13                    \n"  // isolate halffloat
-      "vqshrn.u32 d3, q3, #13                    \n"
-      "vst1.8     {q1}, [%1]!                    \n"
+      "vmovl.u16  q3, d4                         \n"  // 8 int's
+      "vmovl.u16  q4, d5                         \n"
+      "vcvt.f32.u32  q3, q3                      \n"  // 8 floats
+      "vcvt.f32.u32  q4, q4                      \n"
+      "vmul.f32   q3, q3, %3[0]                  \n"  // adjust exponent
+      "vmul.f32   q4, q4, %3[0]                  \n"
+      "vqshrn.u32 d4, q3, #13                    \n"  // isolate halffloat
+      "vqshrn.u32 d5, q4, #13                    \n"
+      "vst1.8     {q2}, [%1]!                    \n"
       "bgt        1b                             \n"
-      : "+r"(src),              // %0
-        "+r"(dst),              // %1
-        "+r"(width)             // %2
-      : "r"(1.9259299444e-34f)  // %3
-      : "cc", "memory", "q0", "q1", "q2", "q3");
+      : "+r"(src),   // %0
+        "+r"(dst),   // %1
+        "+r"(width)  // %2
+      : "w"(fscale)  // %3
+      : "cc", "memory", "q2", "q3", "q4");
 }
 
-// TODO(fbarchard): multiply by element.
 void HalfFloatRow_NEON(const uint16_t* src,
                        uint16_t* dst,
                        float scale,
                        int width) {
+  float __attribute__((vector_size(8))) fscale;
+  fscale[0] = scale * 1.9259299444e-34f;
   asm volatile(
-      "vdup.32    q0, %3                         \n"
 
       "1:                                        \n"
-      "vld1.8     {q1}, [%0]!                    \n"  // load 8 shorts
+      "vld1.8     {q2}, [%0]!                    \n"  // load 8 shorts
       "subs       %2, %2, #8                     \n"  // 8 pixels per loop
-      "vmovl.u16  q2, d2                         \n"  // 8 int's
-      "vmovl.u16  q3, d3                         \n"
-      "vcvt.f32.u32  q2, q2                      \n"  // 8 floats
-      "vcvt.f32.u32  q3, q3                      \n"
-      "vmul.f32   q2, q2, q0                     \n"  // adjust exponent
-      "vmul.f32   q3, q3, q0                     \n"
-      "vqshrn.u32 d2, q2, #13                    \n"  // isolate halffloat
-      "vqshrn.u32 d3, q3, #13                    \n"
-      "vst1.8     {q1}, [%1]!                    \n"
+      "vmovl.u16  q3, d4                         \n"  // 8 int's
+      "vmovl.u16  q4, d5                         \n"
+      "vcvt.f32.u32  q3, q3                      \n"  // 8 floats
+      "vcvt.f32.u32  q4, q4                      \n"
+      "vmul.f32   q3, q3, %3[0]                  \n"  // adjust exponent
+      "vmul.f32   q4, q4, %3[0]                  \n"
+      "vqshrn.u32 d4, q3, #13                    \n"  // isolate halffloat
+      "vqshrn.u32 d5, q4, #13                    \n"
+      "vst1.8     {q2}, [%1]!                    \n"
       "bgt        1b                             \n"
-      : "+r"(src),                      // %0
-        "+r"(dst),                      // %1
-        "+r"(width)                     // %2
-      : "r"(scale * 1.9259299444e-34f)  // %3
-      : "cc", "memory", "q0", "q1", "q2", "q3");
+      : "+r"(src),   // %0
+        "+r"(dst),   // %1
+        "+r"(width)  // %2
+      : "w"(fscale)  // %3
+      : "cc", "memory", "q2", "q3", "q4");
 }
 
 void ByteToFloatRow_NEON(const uint8_t* src,
                          float* dst,
                          float scale,
                          int width) {
+  float __attribute__((vector_size(8))) fscale;
+  fscale[0] = scale;
   asm volatile(
-      "vdup.32    q0, %3                         \n"
 
       "1:                                        \n"
-      "vld1.8     {d2}, [%0]!                    \n"  // load 8 bytes
+      "vld1.8     {d4}, [%0]!                    \n"  // load 8 bytes
       "subs       %2, %2, #8                     \n"  // 8 pixels per loop
-      "vmovl.u8   q1, d2                         \n"  // 8 shorts
-      "vmovl.u16  q2, d2                         \n"  // 8 ints
-      "vmovl.u16  q3, d3                         \n"
-      "vcvt.f32.u32  q2, q2                      \n"  // 8 floats
-      "vcvt.f32.u32  q3, q3                      \n"
-      "vmul.f32   q2, q2, d0[0]                  \n"  // scale
-      "vmul.f32   q3, q3, d0[0]                  \n"
-      "vst1.8     {q2, q3}, [%1]!                \n"  // store 8 floats
+      "vmovl.u8   q2, d4                         \n"  // 8 shorts
+      "vmovl.u16  q3, d4                         \n"  // 8 ints
+      "vmovl.u16  q4, d5                         \n"
+      "vcvt.f32.u32  q3, q3                      \n"  // 8 floats
+      "vcvt.f32.u32  q4, q4                      \n"
+      "vmul.f32   q3, q3, %3[0]                  \n"  // scale
+      "vmul.f32   q4, q4, %3[0]                  \n"
+      "vst1.8     {q3, q4}, [%1]!                \n"  // store 8 floats
       "bgt        1b                             \n"
       : "+r"(src),   // %0
         "+r"(dst),   // %1
         "+r"(width)  // %2
-      : "r"(scale)   // %3
-      : "cc", "memory", "q0", "q1", "q2", "q3");
+      : "w"(fscale)  // %3
+      : "cc", "memory", "q2", "q3", "q4");
 }
 
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__ARM_NEON__)..
