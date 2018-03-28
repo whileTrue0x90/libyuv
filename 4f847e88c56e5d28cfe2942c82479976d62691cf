@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2d78f71_d061dd9b",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-03-28T18:01:00Z",
+      "side": 1,
+      "message": "These macros are tricky to get right.\nIve seen similar preprocessor macros for gcc for mingw, where gcc could not compile visual C style code.\nclangcl can.\nIts most important the macros in the header and the source match, so this does that.\n\nrow_win.cc is guarded with:\n\n// This module is for Visual C 32/64 bit and clangcl 32 bit\n#if !defined(LIBYUV_DISABLE_X86) \u0026\u0026 defined(_MSC_VER) \u0026\u0026 \\\n    (defined(_M_IX86) || (defined(_M_X64) \u0026\u0026 !defined(__clang__)))",
+      "revId": "4f847e88c56e5d28cfe2942c82479976d62691cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
