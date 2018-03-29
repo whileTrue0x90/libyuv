@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6b3764_81c365b2",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1179484
+      },
+      "writtenOn": "2018-03-29T06:59:43Z",
+      "side": 1,
+      "message": "Probably should do that ASAP because this breaks WebRTC compilation on iOS (only x86 I guess)\n\nhttps://build.chromium.org/p/tryserver.webrtc/builders/ios_api_framework/builds/20024\nhttps://webrtc-review.googlesource.com/65345\n\nFAILED: obj/third_party/libyuv/libyuv_internal/row_gcc.o \n/b/c/goma_client/gomacc clang++ -MMD -MF obj/third_party/libyuv/libyuv_internal/row_gcc.o.d -DV8_DEPRECATION_WARNINGS -DNO_TCMALLOC -DCHROMIUM_BUILD -DFIELDTRIAL_TESTING_ENABLED -DCR_XCODE_VERSION\u003d0920 -DCR_CLANG_REVISION\u003d\\\"328575-1\\\" -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE\u003d2 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED\u003d0 -DNS_BLOCK_ASSERTIONS\u003d1 -I../.. -Igen -I../../third_party/libyuv/include -ffp-contract\u003dfast -fno-strict-aliasing --param\u003dssp-buffer-size\u003d4 -fstack-protector -Wno-builtin-macro-redefined -D__DATE__\u003d -D__TIME__\u003d -D__TIMESTAMP__\u003d -fcolor-diagnostics -no-canonical-prefixes -arch x86_64 -Wall -Werror -Wextra -Wimplicit-fallthrough -Wthread-safety -Wunguarded-availability -Wundeclared-selector -Wno-missing-field-initializers -Wno-unused-parameter -Wno-c++11-narrowing -Wno-covered-switch-default -Wno-unneeded-internal-declaration -Wno-inconsistent-missing-override -Wno-undefined-var-template -Wno-address-of-packed-member -fno-omit-frame-pointer -gdwarf-2 -isysroot /b/c/xcode_ios_9c40b.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.2.sdk -stdlib\u003dlibc++ -mios-simulator-version-min\u003d9.0 -fvisibility\u003dhidden -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -O2 -std\u003dc++11 -fno-exceptions -fno-rtti -fvisibility-inlines-hidden -c ../../third_party/libyuv/source/row_gcc.cc -o obj/third_party/libyuv/libyuv_internal/row_gcc.o\n../../third_party/libyuv/source/row_gcc.cc:585:8: error: instruction requires: AVX-512 VBMI ISA AVX-512 VL ISA\n      \"vpermt2b   %%ymm1,%%ymm5,%%ymm0           \\n\"\n       ^\n\u003cinline asm\u003e:10:1: note: instantiated into assembly here\nvpermt2b   %ymm1,%ymm5,%ymm0           \n^\n../../third_party/libyuv/source/row_gcc.cc:586:8: error: instruction requires: AVX-512 VBMI ISA AVX-512 VL ISA\n      \"vpermt2b   %%ymm2,%%ymm6,%%ymm1           \\n\"\n       ^\n\u003cinline asm\u003e:11:1: note: instantiated into assembly here\nvpermt2b   %ymm2,%ymm6,%ymm1           \n^\n../../third_party/libyuv/source/row_gcc.cc:587:8: error: instruction requires: AVX-512 VBMI ISA AVX-512 VL ISA\n      \"vpermt2b   %%ymm3,%%ymm7,%%ymm2           \\n\"\n       ^\n\u003cinline asm\u003e:12:1: note: instantiated into assembly here\nvpermt2b   %ymm3,%ymm7,%ymm2           \n^\n3 errors generated.",
+      "range": {
+        "startLine": 555,
+        "startChar": 20,
+        "endLine": 555,
+        "endChar": 64
+      },
+      "revId": "83aa7512c1d2de46f1378279029d80a213dba67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
