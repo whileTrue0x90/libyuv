@@ -1424,85 +1424,91 @@ TEST_F(LibYUVConvertTest, MJPGToARGB) {
 
 #endif  // HAVE_JPEG
 
-TEST_F(LibYUVConvertTest, NV12Crop) {
-  const int SUBSAMP_X = 2;
-  const int SUBSAMP_Y = 2;
-  const int kWidth = benchmark_width_;
-  const int kHeight = benchmark_height_;
-  const int crop_y =
-      ((benchmark_height_ - (benchmark_height_ * 360 / 480)) / 2 + 1) & ~1;
-  const int kDestWidth = benchmark_width_;
-  const int kDestHeight = benchmark_height_ - crop_y * 2;
-  const int kStrideUV = SUBSAMPLE(kWidth, SUBSAMP_X);
-  const int sample_size =
-      kWidth * kHeight + kStrideUV * SUBSAMPLE(kHeight, SUBSAMP_Y) * 2;
-  align_buffer_page_end(src_y, sample_size);
-  uint8_t* src_uv = src_y + kWidth * kHeight;
-
-  align_buffer_page_end(dst_y, kDestWidth * kDestHeight);
-  align_buffer_page_end(dst_u, SUBSAMPLE(kDestWidth, SUBSAMP_X) *
-                                   SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-  align_buffer_page_end(dst_v, SUBSAMPLE(kDestWidth, SUBSAMP_X) *
-                                   SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-
-  align_buffer_page_end(dst_y_2, kDestWidth * kDestHeight);
-  align_buffer_page_end(dst_u_2, SUBSAMPLE(kDestWidth, SUBSAMP_X) *
-                                     SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-  align_buffer_page_end(dst_v_2, SUBSAMPLE(kDestWidth, SUBSAMP_X) *
-                                     SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-
-  for (int i = 0; i < kHeight * kWidth; ++i) {
-    src_y[i] = (fastrand() & 0xff);
+#define TESTTOI420(FMT, NEG, N)                                                     \
+  TEST_F(LibYUVConvertTest, FMT##N) {                                               \
+    const int SUBSAMP_X = 2;                                                        \
+    const int SUBSAMP_Y = 2;                                                        \
+    const int kWidth = benchmark_width_;                                            \
+    const int kHeight = benchmark_height_;                                          \
+    const int crop_y =                                                              \
+        ((benchmark_height_ - (benchmark_height_ * 360 / 480)) / 2 + 1) & ~1;       \
+    const int kDestWidth = benchmark_width_;                                        \
+    const int kDestHeight = benchmark_height_ - crop_y * 2;                         \
+    const int kStrideUV = SUBSAMPLE(kWidth, SUBSAMP_X);                             \
+    const int sample_size =                                                         \
+        kWidth * kHeight + kStrideUV * SUBSAMPLE(kHeight, SUBSAMP_Y) * 2;           \
+    align_buffer_page_end(src_y, sample_size);                                      \
+    uint8_t* src_uv = src_y + kWidth * kHeight;                                     \
+                                                                                    \
+    align_buffer_page_end(dst_y, kDestWidth * kDestHeight);                         \
+    align_buffer_page_end(dst_u, SUBSAMPLE(kDestWidth, SUBSAMP_X) *                 \
+                                     SUBSAMPLE(kDestHeight, SUBSAMP_Y));            \
+    align_buffer_page_end(dst_v, SUBSAMPLE(kDestWidth, SUBSAMP_X) *                 \
+                                     SUBSAMPLE(kDestHeight, SUBSAMP_Y));            \
+                                                                                    \
+    align_buffer_page_end(dst_y_2, kDestWidth * kDestHeight);                       \
+    align_buffer_page_end(dst_u_2, SUBSAMPLE(kDestWidth, SUBSAMP_X) *               \
+                                       SUBSAMPLE(kDestHeight, SUBSAMP_Y));          \
+    align_buffer_page_end(dst_v_2, SUBSAMPLE(kDestWidth, SUBSAMP_X) *               \
+                                       SUBSAMPLE(kDestHeight, SUBSAMP_Y));          \
+                                                                                    \
+    for (int i = 0; i < kHeight * kWidth; ++i) {                                    \
+      src_y[i] = (fastrand() & 0xff);                                               \
+    }                                                                               \
+    for (int i = 0; i < (SUBSAMPLE(kHeight, SUBSAMP_Y) * kStrideUV) * 2; ++i) {     \
+      src_uv[i] = (fastrand() & 0xff);                                              \
+    }                                                                               \
+    memset(dst_y, 1, kDestWidth * kDestHeight);                                     \
+    memset(dst_u, 2,                                                                \
+           SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));   \
+    memset(dst_v, 3,                                                                \
+           SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));   \
+    memset(dst_y_2, 1, kDestWidth * kDestHeight);                                   \
+    memset(dst_u_2, 2,                                                              \
+           SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));   \
+    memset(dst_v_2, 3,                                                              \
+           SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));   \
+                                                                                    \
+    ConvertToI420(src_y, sample_size, dst_y_2, kDestWidth, dst_u_2,                 \
+                  SUBSAMPLE(kDestWidth, SUBSAMP_X), dst_v_2,                        \
+                  SUBSAMPLE(kDestWidth, SUBSAMP_X), 0, crop_y, kWidth, NEG kHeight, \
+                  kDestWidth, kDestHeight, libyuv::kRotate0, libyuv::FOURCC_##FMT); \
+                                                                                    \
+    FMT##ToI420(src_y + crop_y * kWidth, kWidth,                                    \
+               src_uv + (crop_y / 2) * kStrideUV * 2, kStrideUV * 2, dst_y,         \
+               kDestWidth, dst_u, SUBSAMPLE(kDestWidth, SUBSAMP_X), dst_v,          \
+               SUBSAMPLE(kDestWidth, SUBSAMP_X), kDestWidth, NEG kDestHeight);      \
+                                                                                    \
+    for (int i = 0; i < kDestHeight; ++i) {                                         \
+      for (int j = 0; j < kDestWidth; ++j) {                                        \
+        EXPECT_EQ(dst_y[i * kWidth + j], dst_y_2[i * kWidth + j]);                  \
+      }                                                                             \
+    }                                                                               \
+    for (int i = 0; i < SUBSAMPLE(kDestHeight, SUBSAMP_Y); ++i) {                   \
+      for (int j = 0; j < SUBSAMPLE(kDestWidth, SUBSAMP_X); ++j) {                  \
+        EXPECT_EQ(dst_u[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j],                  \
+                  dst_u_2[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j]);               \
+      }                                                                             \
+    }                                                                               \
+    for (int i = 0; i < SUBSAMPLE(kDestHeight, SUBSAMP_Y); ++i) {                   \
+      for (int j = 0; j < SUBSAMPLE(kDestWidth, SUBSAMP_X); ++j) {                  \
+        EXPECT_EQ(dst_v[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j],                  \
+                  dst_v_2[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j]);               \
+      }                                                                             \
+    }                                                                               \
+    free_aligned_buffer_page_end(dst_y);                                            \
+    free_aligned_buffer_page_end(dst_u);                                            \
+    free_aligned_buffer_page_end(dst_v);                                            \
+    free_aligned_buffer_page_end(dst_y_2);                                          \
+    free_aligned_buffer_page_end(dst_u_2);                                          \
+    free_aligned_buffer_page_end(dst_v_2);                                          \
+    free_aligned_buffer_page_end(src_y);                                            \
   }
-  for (int i = 0; i < (SUBSAMPLE(kHeight, SUBSAMP_Y) * kStrideUV) * 2; ++i) {
-    src_uv[i] = (fastrand() & 0xff);
-  }
-  memset(dst_y, 1, kDestWidth * kDestHeight);
-  memset(dst_u, 2,
-         SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-  memset(dst_v, 3,
-         SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-  memset(dst_y_2, 1, kDestWidth * kDestHeight);
-  memset(dst_u_2, 2,
-         SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));
-  memset(dst_v_2, 3,
-         SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));
 
-  ConvertToI420(src_y, sample_size, dst_y_2, kDestWidth, dst_u_2,
-                SUBSAMPLE(kDestWidth, SUBSAMP_X), dst_v_2,
-                SUBSAMPLE(kDestWidth, SUBSAMP_X), 0, crop_y, kWidth, kHeight,
-                kDestWidth, kDestHeight, libyuv::kRotate0, libyuv::FOURCC_NV12);
-
-  NV12ToI420(src_y + crop_y * kWidth, kWidth,
-             src_uv + (crop_y / 2) * kStrideUV * 2, kStrideUV * 2, dst_y,
-             kDestWidth, dst_u, SUBSAMPLE(kDestWidth, SUBSAMP_X), dst_v,
-             SUBSAMPLE(kDestWidth, SUBSAMP_X), kDestWidth, kDestHeight);
-
-  for (int i = 0; i < kDestHeight; ++i) {
-    for (int j = 0; j < kDestWidth; ++j) {
-      EXPECT_EQ(dst_y[i * kWidth + j], dst_y_2[i * kWidth + j]);
-    }
-  }
-  for (int i = 0; i < SUBSAMPLE(kDestHeight, SUBSAMP_Y); ++i) {
-    for (int j = 0; j < SUBSAMPLE(kDestWidth, SUBSAMP_X); ++j) {
-      EXPECT_EQ(dst_u[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j],
-                dst_u_2[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j]);
-    }
-  }
-  for (int i = 0; i < SUBSAMPLE(kDestHeight, SUBSAMP_Y); ++i) {
-    for (int j = 0; j < SUBSAMPLE(kDestWidth, SUBSAMP_X); ++j) {
-      EXPECT_EQ(dst_v[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j],
-                dst_v_2[i * SUBSAMPLE(kDestWidth, SUBSAMP_X) + j]);
-    }
-  }
-  free_aligned_buffer_page_end(dst_y);
-  free_aligned_buffer_page_end(dst_u);
-  free_aligned_buffer_page_end(dst_v);
-  free_aligned_buffer_page_end(dst_y_2);
-  free_aligned_buffer_page_end(dst_u_2);
-  free_aligned_buffer_page_end(dst_v_2);
-  free_aligned_buffer_page_end(src_y);
-}
+TESTTOI420(NV12, +, Crop)
+TESTTOI420(NV12, -, Crop_Invert)
+TESTTOI420(NV21, +, Crop)
+TESTTOI420(NV21, -, Crop_Invert)
 
 TEST_F(LibYUVConvertTest, TestYToARGB) {
   uint8_t y[32];
