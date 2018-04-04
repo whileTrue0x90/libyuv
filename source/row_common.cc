@@ -2770,7 +2770,7 @@ void HalfFloatRow_C(const uint16_t* src,
   float mult = 1.9259299444e-34f * scale;
   for (i = 0; i < width; ++i) {
     float value = src[i] * mult;
-    dst[i] = (uint16_t)((*(uint32_t*)&value) >> 13);
+    dst[i] = (uint16_t)(((uint32_t)value) >> 13);
   }
 }
 
