@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee272e42_dc4ed29d",
+        "filename": "source/convert_to_i420.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-04-12T23:12:24Z",
+      "side": 1,
+      "message": "This looks right.. its the same as 3 plane formats do.  Good catch.\nSimilar code is in convert_to_argb.cc\nCould you add the same change there?",
+      "range": {
+        "startLine": 166,
+        "startChar": 54,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "97ccf0bec7417576b31406544603a2a2c58a63f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5086c5_64f562df",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-04-12T23:12:24Z",
+      "side": 1,
+      "message": "This looks right.  Usually there would be some existing conversions and theres normally 4 variations:\n\n#define TESTPLANARTOE(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, SUB_B, BPP_B, \\\n                      FMT_C, BPP_C)                                          \\\n  TESTPLANARTOEI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, SUB_B, BPP_B,      \\\n                 benchmark_width_ - 4, _Any, +, 0, FMT_C, BPP_C)             \\\n  TESTPLANARTOEI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, SUB_B, BPP_B,      \\\n                 benchmark_width_, _Unaligned, +, 1, FMT_C, BPP_C)           \\\n  TESTPLANARTOEI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, SUB_B, BPP_B,      \\\n                 benchmark_width_, _Invert, -, 0, FMT_C, BPP_C)              \\\n  TESTPLANARTOEI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, SUB_B, BPP_B,      \\\n                 benchmark_width_, _Opt, +, 0, FMT_C, BPP_C)\n\nIts not necessary.  But the lack of an Invert test is why it wasnt caught.\nInvert doesnt come up much... it was mainly Windows formats that went thru a conversion from jpeg to rgb.  I havent seen it used for MV1?\nIf theres an NV12 to ARGB version of this might want to do a similar test for ARGB.",
+      "revId": "97ccf0bec7417576b31406544603a2a2c58a63f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
