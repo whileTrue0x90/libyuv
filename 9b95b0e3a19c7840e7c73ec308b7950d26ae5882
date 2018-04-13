@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1482879b_c9198e49",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-04-13T00:14:18Z",
+      "side": 1,
+      "message": "wont work.  this actually casts the float to int.\nWhat I want to do is grab the 32 bits of the float and extract 16 of them from the middle.\nA float normally has 1 bit sign, 8 bit exponent and 23 bit mantissa.\nA half float is 1 bit sign, 5 bit exponent and 10 bit mantinssa.\nAfter multiplying by the magic number 1.9259299444e-34f the 16 bits that represent the halffloat are the upper 10 bits of the mantissa, and the next 6 bits from the exponent.\nSo we shift by 13 to throw away 13 bits from the 23, leaving 10.  And keep the low 6 bits of the exponent.",
+      "revId": "9b95b0e3a19c7840e7c73ec308b7950d26ae5882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
