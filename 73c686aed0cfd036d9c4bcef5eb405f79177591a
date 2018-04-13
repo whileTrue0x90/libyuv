@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b263db_1dd8085e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2780,
+      "author": {
+        "id": 1002325
+      },
+      "writtenOn": "2018-04-13T19:14:25Z",
+      "side": 1,
+      "message": "Isn\u0027t this safer to do with a union, without having to rely on compiler specific attributes?",
+      "revId": "73c686aed0cfd036d9c4bcef5eb405f79177591a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
