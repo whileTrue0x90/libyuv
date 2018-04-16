@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3ebeff9_0a985d04",
+        "filename": "source/convert_to_argb.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1273348
+      },
+      "writtenOn": "2018-04-16T19:06:24Z",
+      "side": 1,
+      "message": "As far as I am aware crop_height was never used directly, only via abs_crop_height or inv_crop_height. With that in mind, previously we had:\n\n  inv_crop_height \u003d abs(crop_height)\n  abs_crop_height \u003d abs(crop_height)\n  if (src_height \u003c 0) inv_crop_height \u003d -inv_crop_height\n\nThe intention in this CL was to have the following:\n\n  crop_height \u003d abs(crop_height)\n  inv_crop_height \u003d (src_height \u003c 0) ? -crop_height : crop_height\n\nSuch that crop_height is forced positive and inv_crop_height is assigned once with the correct value. All references to abs_crop_height can then be replaced with crop_height without changing behaviour.\n\nIn any case I agree that returning -1 would be preferable as negative crop is incorrect. This will be a behaviour change but will also resolve \"TODO(nisse): Why allow crop_height \u003c 0?\" in ConvertToI420.",
+      "parentUuid": "f36bc65e_a7f14e28",
+      "range": {
+        "startLine": 69,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a6c00aa_4a11bd3f",
         "filename": "source/convert_to_i420.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e0898c8f_ac3c4371",
+        "filename": "source/convert_to_i420.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1273348
+      },
+      "writtenOn": "2018-04-16T19:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a6c00aa_4a11bd3f",
+      "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c2c14c9_689003f1",
         "filename": "unit_test/convert_test.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd19528b_a8cedfc6",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1273348
+      },
+      "writtenOn": "2018-04-16T19:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c2c14c9_689003f1",
+      "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
