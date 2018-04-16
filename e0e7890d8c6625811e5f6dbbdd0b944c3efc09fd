@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36bc65e_a7f14e28",
+        "filename": "source/convert_to_argb.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-04-16T17:45:02Z",
+      "side": 1,
+      "message": "this is a small behavior change.  if a user passed negative for crop_height, the image wont be inverted after this change.\ni think thats ok... the api is meant to specify src_height as negative.\ni wonder if treating negative crop height as error and return -1 would be safer?  it would clarify the api if someone used it wrong?",
+      "range": {
+        "startLine": 69,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6c00aa_4a11bd3f",
+        "filename": "source/convert_to_i420.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-04-16T17:45:02Z",
+      "side": 1,
+      "message": "ditto.  consider return -1",
+      "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2c14c9_689003f1",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-04-16T17:45:02Z",
+      "side": 1,
+      "message": "nit: comments should end in .",
+      "revId": "e0e7890d8c6625811e5f6dbbdd0b944c3efc09fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
