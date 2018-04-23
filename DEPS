@@ -10,6 +10,14 @@ vars = {
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
   'catapult_revision': 'e7298f36f7912f2caa122086cfbe71734d04b73f',
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling freetype
+  # and whatever else without interference from each other.
+  'freetype_revision': '26ad1acbcb4ca9e25163bd102971c8f0e1b56d87',
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling HarfBuzz
+  # and whatever else without interference from each other.
+  'harfbuzz_revision': '957e7756634a4fdf1654041e20e883cf964ecac9',
 }
 
 deps = {
@@ -37,7 +45,10 @@ deps = {
     Var('chromium_git') + '/external/gyp.git' + '@' + 'd61a9397e668fa9843c4aa7da9e79460fe590bfb',
    'src/tools/swarming_client':
      Var('chromium_git') + '/infra/luci/client-py.git' + '@' +  Var('swarming_revision'),
-
+  'src/third_party/freetype/src':
+    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + Var('freetype_revision'),
+  'src/third_party/harfbuzz-ng/src':
+    Var('chromium_git') + '/external/github.com/harfbuzz/harfbuzz.git' + '@' + Var('harfbuzz_revision'),
   # libyuv-only dependencies (not present in Chromium).
   'src/third_party/gflags':
     Var('chromium_git') + '/external/webrtc/deps/third_party/gflags' + '@' + '892576179b45861b53e04a112996a738309cf364',
