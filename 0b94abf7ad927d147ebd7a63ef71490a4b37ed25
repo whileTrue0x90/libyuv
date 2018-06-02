@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561abd7b_322c91b9",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "AVX2 macros go in a different ifdef that also checks the compiler can do AVX2.",
+      "range": {
+        "startLine": 261,
+        "startChar": 30,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08709862_1eedf1f9",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "hmmm... usually i implement these as a pair.  Its not great mix SSE2 and AVX2, but I guess this wont happen.\nPerhaps add a TODO to implement the UV and remove the ifdefs.\nSometimes I would check both\n#if defined(HAS_YUY2TOYROW_SSE2) \u0026\u0026 defined(HAS_YUY2TOUV422ROW_SSE2)",
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9780e156_f212c874",
+        "filename": "source/row_any.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "Consider implementing UYVYToY at the same time... the code is very similar.",
+      "range": {
+        "startLine": 550,
+        "startChar": 27,
+        "endLine": 550,
+        "endChar": 42
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebbb92f_4281f6ba",
+        "filename": "source/row_any.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "My ifdefs are lazy... the way you did it is right.  But remove the other one at line 529.",
+      "range": {
+        "startLine": 552,
+        "startChar": 56,
+        "endLine": 553,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b2cb9f_5a9dec8b",
+        "filename": "source/row_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "will probably need an ifdef that the compiler can do AVX2.\nSince you include row.h first you could use the macros it sets.\n\nReferring to row.h, this is what it has:\n\n// Visual C 2012 required for AVX2.\n#if defined(_M_IX86) \u0026\u0026 !defined(__clang__) \u0026\u0026 defined(_MSC_VER) \u0026\u0026 \\\n    _MSC_VER \u003e\u003d 1700\n#define VISUALC_HAS_AVX2 1\n#endif  // VisualStudio \u003e\u003d 2012\n\nAlso keep in mind this module is used for clangcl for 32 bit.\nBut 64 bit clang uses row_gcc.cc",
+      "range": {
+        "startLine": 20,
+        "startChar": 42,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127f5f3d_573bb2a2",
+        "filename": "source/row_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "These variables should already be defined below for 32 bit, so move them outside the ifdefs and share them.",
+      "range": {
+        "startLine": 32,
+        "startChar": 78,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644c2052_0703c127",
+        "filename": "source/row_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "convert tabs to spaces.  indent should be 2.\nTheres a clang-format tool that can fix it up.",
+      "range": {
+        "startLine": 188,
+        "startChar": 1,
+        "endLine": 188,
+        "endChar": 8
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb585d6_291a2e19",
+        "filename": "source/row_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "AVX2 functions all need to end with    vzeroupper or you\u0027ll incure a performance hit.",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e907f783_dc7bb31e",
+        "filename": "source/row_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-06-02T01:35:46Z",
+      "side": 1,
+      "message": "Consider doing YUY2ToUV as well.   Its more of a bottleneck, since it averages 2 rows, and works nicely in AVX2\nvpavgb     ymm0, ymm0, [eax + esi]",
+      "range": {
+        "startLine": 254,
+        "startChar": 35,
+        "endLine": 254,
+        "endChar": 36
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
