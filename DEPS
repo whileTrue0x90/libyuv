@@ -1,6 +1,5 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '80f0c5570649c35a869429b2ab8c381a0a7246cb',
   'swarming_revision': '88229872dd17e71658fe96763feaa77915d8cbd6',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
@@ -9,14 +8,14 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'e7298f36f7912f2caa122086cfbe71734d04b73f',
+  'catapult_revision': 'f3ce003c2baaf3b2aba669681f832139efe5d773',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '39738e75b27f39d4c0030a0b11d5d2ddd34715f7',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '8cb53523220fec0dee401d2ee5f046cbf43b0656',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/buildtools.git' + '@' + 'a09e064635a49f08e585e3b173d5fbc3dd3f485e',
+    Var('chromium_git') + '/chromium/buildtools.git' + '@' + '5941c1b3df96c1db756a2834343533335c394c4a',
   'src/testing':
     Var('chromium_git') + '/chromium/src/testing' + '@' + '5f7e36cad6434fd3d65674af96653a23ecc9f694',
   'src/third_party':
@@ -32,7 +31,7 @@ deps = {
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + 'b98114e18d8b9b84586b10d24353ab8616d4c5fc',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + '6202b67fc46a9984097caf237e12e3b8f7a9f7da',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '55c65d8fecf04f55f5ba9e14b1fdba170f0202d0',
   'src/tools/gyp':
     Var('chromium_git') + '/external/gyp.git' + '@' + 'd61a9397e668fa9843c4aa7da9e79460fe590bfb',
    'src/tools/swarming_client':
@@ -331,12 +330,15 @@ hooks = [
     ],
   },
   {
-    'name': 'Android CIPD Ensure',
+    # We used to use src as a CIPD root. We moved it to a different directory
+    # in crrev.com/c/930178 but left the clobber here to ensure that that CL
+    # could be reverted safely. This can be safely removed once crbug.com/794764
+    # is resolved.
+    'name': 'Android Clobber Deprecated CIPD Root',
     'pattern': '.',
     'condition': 'checkout_android',
-    'action': ['src/build/cipd/cipd_wrapper.py',
-               '--chromium-root', 'src',
-               '--ensure-file', 'src/build/cipd/android/android.ensure',
+    'action': ['src/build/cipd/clobber_cipd_root.py',
+               '--root', 'src',
     ],
   },
   # Android dependencies. Many are downloaded using Google Storage these days.
