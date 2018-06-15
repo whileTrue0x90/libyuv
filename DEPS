@@ -1,6 +1,5 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '80f0c5570649c35a869429b2ab8c381a0a7246cb',
   'swarming_revision': '88229872dd17e71658fe96763feaa77915d8cbd6',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
@@ -9,30 +8,34 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'e7298f36f7912f2caa122086cfbe71734d04b73f',
+  'catapult_revision': 'f3ce003c2baaf3b2aba669681f832139efe5d773',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '39738e75b27f39d4c0030a0b11d5d2ddd34715f7',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '8cb53523220fec0dee401d2ee5f046cbf43b0656',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/buildtools.git' + '@' + 'a09e064635a49f08e585e3b173d5fbc3dd3f485e',
+    Var('chromium_git') + '/chromium/buildtools.git' + '@' + '5941c1b3df96c1db756a2834343533335c394c4a',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '5f7e36cad6434fd3d65674af96653a23ecc9f694',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '60b2c69b17816251c0d20557eb818d26ac7e0fe4',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '2c0ced3ddbf84ce1c0759b277d9538da42f23650',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'e755204b7ae59ba1c63e5720a0420d8661672642',
   'src/third_party/catapult':
     Var('chromium_git') + '/catapult.git' + '@' + Var('catapult_revision'),
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
+  'src/third_party/freetype/src':
+    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + 'a44e20879cefea41663bb36ff4af908cc4146fb8',
   'src/third_party/googletest/src':
-    Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '0062e4869f07a3ef235703ddf63af604b712446c',
+    Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + 'ba96d0b1161f540656efdaed035b3c062b60e006',
+  'src/third_party/harfbuzz-ng/src':
+    Var('chromium_git') + '/external/github.com/harfbuzz/harfbuzz.git' + '@' + '957e7756634a4fdf1654041e20e883cf964ecac9',
   'src/third_party/libjpeg_turbo':
     Var('chromium_git') + '/chromium/deps/libjpeg_turbo.git' + '@' + 'a1750dbc79a8792dde3d3f7d7d8ac28ba01ac9dd',
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + 'b98114e18d8b9b84586b10d24353ab8616d4c5fc',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + '6202b67fc46a9984097caf237e12e3b8f7a9f7da',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '55c65d8fecf04f55f5ba9e14b1fdba170f0202d0',
   'src/tools/gyp':
     Var('chromium_git') + '/external/gyp.git' + '@' + 'd61a9397e668fa9843c4aa7da9e79460fe590bfb',
    'src/tools/swarming_client':
@@ -56,20 +59,16 @@ deps = {
     'url': Var('chromium_git') + '/external/github.com/google/auto.git' + '@' + '8a81a858ae7b78a1aef71ac3905fade0bbd64e82',
     'condition': 'checkout_android',
   },
-  'src/third_party/auto/src': {
-    'url': Var('chromium_git') + '/external/github.com/google/auto.git' + '@' + '8a81a858ae7b78a1aef71ac3905fade0bbd64e82',
-    'condition': 'checkout_android',
-  },
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'ac3d2b81181b085a9952cb83dba748420eefe691',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '733a32608c5cd39c03a578cf6001afc2e6c636a2',
     'condition': 'checkout_android',
   },
   'src/third_party/android_ndk': {
-    'url': Var('chromium_git') + '/android_ndk.git' + '@' + 'e951c37287c7d8cd915bf8d4149fd4a06d808b55',
+    'url': Var('chromium_git') + '/android_ndk.git' + '@' + '5cd86312e794bdf542a3685c6f10cbb96072990b',
     'condition': 'checkout_android',
   },
   'src/third_party/android_tools': {
-    'url': Var('chromium_git') + '/android_tools.git' + '@' + '9a70d48fcdd68cd0e7e968f342bd767ee6323bd1',
+    'url': Var('chromium_git') + '/android_tools.git' + '@' + 'c22a664c39af72dd8f89200220713dcad811300a',
     'condition': 'checkout_android',
   },
   'src/third_party/ced/src': {
@@ -331,12 +330,15 @@ hooks = [
     ],
   },
   {
-    'name': 'Android CIPD Ensure',
+    # We used to use src as a CIPD root. We moved it to a different directory
+    # in crrev.com/c/930178 but left the clobber here to ensure that that CL
+    # could be reverted safely. This can be safely removed once crbug.com/794764
+    # is resolved.
+    'name': 'Android Clobber Deprecated CIPD Root',
     'pattern': '.',
     'condition': 'checkout_android',
-    'action': ['src/build/cipd/cipd_wrapper.py',
-               '--chromium-root', 'src',
-               '--ensure-file', 'src/build/cipd/android/android.ensure',
+    'action': ['src/build/cipd/clobber_cipd_root.py',
+               '--root', 'src',
     ],
   },
   # Android dependencies. Many are downloaded using Google Storage these days.
