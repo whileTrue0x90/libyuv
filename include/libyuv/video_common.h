@@ -79,7 +79,7 @@ enum FourCC {
   // 1 Primary Compressed YUV format.
   FOURCC_MJPG = FOURCC('M', 'J', 'P', 'G'),
 
-  // 7 Auxiliary YUV variations: 3 with U and V planes are swapped, 1 Alias.
+  // 8 Auxiliary YUV variations: 3 with U and V planes are swapped, 1 Alias.
   FOURCC_YV12 = FOURCC('Y', 'V', '1', '2'),
   FOURCC_YV16 = FOURCC('Y', 'V', '1', '6'),
   FOURCC_YV24 = FOURCC('Y', 'V', '2', '4'),
@@ -87,6 +87,7 @@ enum FourCC {
   FOURCC_J420 = FOURCC('J', '4', '2', '0'),
   FOURCC_J400 = FOURCC('J', '4', '0', '0'),  // unofficial fourcc
   FOURCC_H420 = FOURCC('H', '4', '2', '0'),  // unofficial fourcc
+  FOURCC_H422 = FOURCC('H', '4', '2', '2'),  // unofficial fourcc
 
   // 14 Auxiliary aliases.  CanonicalFourCC() maps these to canonical fourcc.
   FOURCC_IYUV = FOURCC('I', 'Y', 'U', 'V'),  // Alias for I420.
@@ -155,6 +156,7 @@ enum FourCCBpp {
   FOURCC_BPP_J420 = 12,
   FOURCC_BPP_J400 = 8,
   FOURCC_BPP_H420 = 12,
+  FOURCC_BPP_H422 = 16,
   FOURCC_BPP_H010 = 24,
   FOURCC_BPP_MJPG = 0,  // 0 means unknown.
   FOURCC_BPP_H264 = 0,
