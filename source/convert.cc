@@ -464,20 +464,28 @@ int YUY2ToI420(const uint8_t* src_yuy2,
   }
 #if defined(HAS_YUY2TOYROW_SSE2)
   if (TestCpuFlag(kCpuHasSSE2)) {
+#if defined(HAS_YUY2TOUVROW_SSE2)
     YUY2ToUVRow = YUY2ToUVRow_Any_SSE2;
+#endif
     YUY2ToYRow = YUY2ToYRow_Any_SSE2;
     if (IS_ALIGNED(width, 16)) {
+#if defined(HAS_YUY2TOUVROW_SSE2)
       YUY2ToUVRow = YUY2ToUVRow_SSE2;
+#endif
       YUY2ToYRow = YUY2ToYRow_SSE2;
     }
   }
 #endif
 #if defined(HAS_YUY2TOYROW_AVX2)
   if (TestCpuFlag(kCpuHasAVX2)) {
+#if defined(HAS_YUY2TOUVROW_AVX2)
     YUY2ToUVRow = YUY2ToUVRow_Any_AVX2;
+#endif
     YUY2ToYRow = YUY2ToYRow_Any_AVX2;
     if (IS_ALIGNED(width, 32)) {
+#if defined(HAS_YUY2TOUVROW_AVX2)
       YUY2ToUVRow = YUY2ToUVRow_AVX2;
+#endif
       YUY2ToYRow = YUY2ToYRow_AVX2;
     }
   }
