@@ -258,6 +258,19 @@ extern "C" {
     (!defined(__clang__) || defined(__SSSE3__))
 #define HAS_I422ALPHATOARGBROW_SSSE3
 #define HAS_I422TOARGBROW_SSSE3
+#define HAS_YUY2TOARGBROW_SSSE3
+#define HAS_UYVYTOARGBROW_SSSE3
+#define HAS_YUY2TOYROW_SSE2
+#define HAS_NV12TOARGBROW_SSSE3
+#endif
+
+// The following are also available on x64 Visual C.
+#if !defined(LIBYUV_DISABLE_X86) && defined(VISUALC_HAS_AVX2)
+#define HAS_I422TOARGBROW_AVX2
+#define HAS_YUY2TOARGBROW_AVX2
+#define HAS_UYVYTOARGBROW_AVX2
+#define HAS_YUY2TOYROW_AVX2
+#define HAS_NV12TOARGBROW_AVX2
 #endif
 
 // The following are available for gcc/clang x86 platforms:
