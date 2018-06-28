@@ -17,6 +17,9 @@
 #if defined(_M_X64)
 #include <emmintrin.h>
 #include <tmmintrin.h>  // For _mm_maddubs_epi16
+#if defined(VISUALC_HAS_AVX2)
+#include <immintrin.h>  // AVX2 intrinsics
+#endif                  // VISUALC_HAS_AVX2
 #endif
 
 #ifdef __cplusplus
@@ -24,8 +27,53 @@ namespace libyuv {
 extern "C" {
 #endif
 
+// YUY2 shuf 16 Y to 32 Y.
+static const lvec8 kShuffleYUY2Y = {0,  0,  2,  2,  4,  4,  6,  6,  8,  8, 10,
+                                    10, 12, 12, 14, 14, 0,  0,  2,  2,  4, 4,
+                                    6,  6,  8,  8,  10, 10, 12, 12, 14, 14};
+
+// YUY2 shuf 8 UV to 16 UV.
+static const lvec8 kShuffleYUY2UV = {1,  3,  1,  3,  5,  7,  5,  7,  9,  11, 9,
+                                     11, 13, 15, 13, 15, 1,  3,  1,  3,  5,  7,
+                                     5,  7,  9,  11, 9,  11, 13, 15, 13, 15};
+
+// UYVY shuf 16 Y to 32 Y.
+static const lvec8 kShuffleUYVYY = {1,  1,  3,  3,  5,  5,  7,  7,  9,  9, 11,
+                                    11, 13, 13, 15, 15, 1,  1,  3,  3,  5, 5,
+                                    7,  7,  9,  9,  11, 11, 13, 13, 15, 15};
+
+// UYVY shuf 8 UV to 16 UV.
+static const lvec8 kShuffleUYVYUV = {0,  2,  0,  2,  4,  6,  4,  6,  8,  10, 8,
+                                     10, 12, 14, 12, 14, 0,  2,  0,  2,  4,  6,
+                                     4,  6,  8,  10, 8,  10, 12, 14, 12, 14};
+
 // 64 bit
 #if defined(_M_X64)
+
+// Read 4 UV from NV12, upsample to 8 UV.
+#define READNV12                                          \
+xmm0 = _mm_cvtsi64_si128(*(uint64_t*)uv_buf);             \
+xmm0 = _mm_unpacklo_epi16(xmm0, xmm0);                    \
+uv_buf += 8;                                              \
+xmm4 = _mm_loadl_epi64((__m128i*)y_buf);                  \
+xmm4 = _mm_unpacklo_epi8(xmm4, xmm4);                     \
+y_buf += 8;
+
+// Read 4 UYVY with 8 Y and update 4 UV to 8 UV.
+#define READUYVY                                           \
+  xmm4 = _mm_loadu_si128((__m128i*)src_uyvy);              \
+  xmm4 = _mm_shuffle_epi8(xmm4, *(__m128i*)kShuffleUYVYY); \
+  xmm0 = _mm_loadu_si128((__m128i*)src_uyvy);              \
+  xmm0 = _mm_shuffle_epi8(xmm0, *(__m128i*)kShuffleUYVYUV);\
+  src_uyvy += 16;
+
+// Read 4 YUY2 with 8 Y and update 4 UV to 8 UV.
+#define READYUY2                                           \
+  xmm4 = _mm_loadu_si128((__m128i*)src_yuy2);              \
+  xmm4 = _mm_shuffle_epi8(xmm4, *(__m128i*)kShuffleYUY2Y); \
+  xmm0 = _mm_loadu_si128((__m128i*)src_yuy2);              \
+  xmm0 = _mm_shuffle_epi8(xmm0, *(__m128i*)kShuffleYUY2UV);\
+  src_yuy2 += 16;
 
 // Read 4 UV from 422, upsample to 8 UV.
 #define READYUV422                                        \
@@ -83,6 +131,232 @@ extern "C" {
   _mm_storeu_si128((__m128i*)(dst_argb + 16), xmm1); \
   dst_argb += 32;
 
+// Read 8 UV from NV12, upsample to 16 UV.
+#define READNV12_AVX2                                          \
+  ymm0 = _mm256_broadcastsi128_si256(*(const __m128i*)uv_buf); \
+  uv_buf += 16;                                                \
+  ymm0 = _mm256_permute4x64_epi64(ymm0, 0xd8);                 \
+  ymm0 = _mm256_unpacklo_epi16(ymm0, ymm0);                    \
+  ymm4 = _mm256_broadcastsi128_si256(*(const __m128i*)y_buf);  \
+  ymm4 = _mm256_permute4x64_epi64(ymm4, 0xd8);                 \
+  ymm4 = _mm256_unpacklo_epi16(ymm4, ymm4);                    \
+  y_buf += 16;
+
+#define READYUV422_AVX2                                   \
+  __m128i xmm0, xmm1;                                     \
+  xmm0 = _mm_cvtsi64_si128(*(uint64_t*)u_buf);            \
+  xmm1 = _mm_cvtsi64_si128(*(uint64_t*)(u_buf + offset)); \
+  u_buf += 8;                                             \
+  ymm0 = _mm256_broadcastq_epi64(xmm0);                   \
+  ymm1 = _mm256_broadcastq_epi64(xmm1);                   \
+  ymm0 = _mm256_unpacklo_epi8(ymm0, ymm1);                \
+  ymm0 = _mm256_permute4x64_epi64(ymm0, 0xd8);            \
+  ymm0 = _mm256_unpacklo_epi16(ymm0, ymm0);               \
+  ymm4 = _mm256_loadu_si256((__m256i*)y_buf);             \
+  ymm4 = _mm256_permute4x64_epi64(ymm4, 0xd8);            \
+  ymm4 = _mm256_unpacklo_epi8(ymm4, ymm4);                \
+  y_buf += 16;
+
+// Read 8 YUY2 with 16 Y and upsample 8 UV to 16 UV.
+#define READYUY2_AVX2                                          \
+  ymm4 = _mm256_loadu_si256((__m256i*)src_yuy2);               \
+  ymm4 = _mm256_shuffle_epi8(ymm4, *(__m256i*)kShuffleYUY2Y);  \
+  ymm0 = _mm256_loadu_si256((__m256i*)src_yuy2);               \
+  ymm0 = _mm256_shuffle_epi8(ymm0, *(__m256i*)kShuffleYUY2UV); \
+  src_yuy2 += 32;
+
+// Read 4 UYVY with 8 Y and update 4 UV to 8 UV.
+#define READUYVY_AVX2                                          \
+  ymm4 = _mm256_loadu_si256((__m256i*)src_uyvy);               \
+  ymm4 = _mm256_shuffle_epi8(ymm4, *(__m256i*)kShuffleUYVYY);  \
+  ymm0 = _mm256_loadu_si256((__m256i*)src_uyvy);               \
+  ymm0 = _mm256_shuffle_epi8(ymm0, *(__m256i*)kShuffleUYVYUV); \
+  src_uyvy += 32;
+
+// Convert 16 pixels: 16 UV and 16 Y.
+#define YUVTORGB_AVX2(YuvConstants)                                   \
+  ymm2 = _mm256_maddubs_epi16(ymm0, *(__m256i*)yuvconstants->kUVToR); \
+  ymm1 = _mm256_maddubs_epi16(ymm0, *(__m256i*)yuvconstants->kUVToG); \
+  ymm0 = _mm256_maddubs_epi16(ymm0, *(__m256i*)yuvconstants->kUVToB); \
+  ymm2 = _mm256_sub_epi32(*(__m256i*)yuvconstants->kUVBiasR, ymm2);   \
+  ymm1 = _mm256_sub_epi32(*(__m256i*)yuvconstants->kUVBiasG, ymm1);   \
+  ymm0 = _mm256_sub_epi32(                                            \
+      *(__m256i*)yuvconstants->kUVBiasB,                              \
+      ymm0); /* Step 2: Find Y contribution to 16 R,G,B values */     \
+  ymm4 = _mm256_mulhi_epu16(ymm4, *(__m256i*)yuvconstants->kYToRgb);  \
+  ymm0 = _mm256_adds_epi16(ymm0, ymm4); /* B += Y */                  \
+  ymm1 = _mm256_adds_epi16(ymm1, ymm4); /* G += Y */                  \
+  ymm2 = _mm256_adds_epi16(ymm2, ymm4); /* R += Y */                  \
+  ymm0 = _mm256_srai_epi16(ymm0, 6);                                  \
+  ymm1 = _mm256_srai_epi16(ymm1, 6);                                  \
+  ymm2 = _mm256_srai_epi16(ymm2, 6);                                  \
+  ymm0 = _mm256_packus_epi16(ymm0, ymm0);                             \
+  ymm1 = _mm256_packus_epi16(ymm1, ymm1);                             \
+  ymm2 = _mm256_packus_epi16(ymm2, ymm2);
+
+// Store 16 ARGB values.
+#define STOREARGB_AVX2                                  \
+  ymm0 = _mm256_unpacklo_epi8(ymm0, ymm1);              \
+  ymm0 = _mm256_permute4x64_epi64(ymm0, 0xd8);          \
+  ymm2 = _mm256_unpacklo_epi8(ymm2, ymm5);              \
+  ymm2 = _mm256_permute4x64_epi64(ymm2, 0xd8);          \
+  ymm1 = _mm256_unpacklo_epi16(ymm0, ymm2);             \
+  ymm0 = _mm256_unpackhi_epi16(ymm0, ymm2);             \
+  _mm256_storeu_si256((__m256i*)dst_argb, ymm1);        \
+  _mm256_storeu_si256((__m256i*)(dst_argb + 32), ymm0); \
+  dst_argb += 64;
+
+#if defined(HAS_NV12TOARGBROW_AVX2)
+// 16 pixels.
+// 8 UV values upsampled to 16 UV, mixed with 16 Y producing 16 ARGB (64 bytes).
+void NV12ToARGBRow_AVX2(const uint8_t* y_buf,
+                        const uint8_t* uv_buf,
+                        uint8_t* dst_argb,
+                        const struct YuvConstants* yuvconstants,
+                        int width) {
+  __m256i ymm0, ymm1, ymm2, ymm4;
+  const __m256i ymm5 = _mm256_set1_epi8(-1);
+  while (width > 0) {
+    READNV12_AVX2
+    YUVTORGB_AVX2(yuvconstants)
+    STOREARGB_AVX2
+    width -= 16;
+  }
+  _mm256_zeroupper();
+}
+#endif
+
+#ifdef HAS_YUY2TOARGBROW_AVX2
+// 16 pixels.
+// 8 YUY2 values with 16 Y and 8 UV producing 16 ARGB (64 bytes).
+void YUY2ToARGBRow_AVX2(const uint8_t* src_yuy2,
+                        uint8_t* dst_argb,
+                        const struct YuvConstants* yuvconstants,
+                        int width) {
+  __m256i ymm0, ymm1, ymm2, ymm4;
+  const __m256i ymm5 = _mm256_set1_epi8(-1);
+  while (width > 0) {
+    READYUY2_AVX2
+    YUVTORGB_AVX2(yuvconstants)
+    STOREARGB_AVX2
+    width -= 16;
+  }
+  _mm256_zeroupper();
+}
+
+void UYVYToARGBRow_AVX2(const uint8_t* src_uyvy,
+                        uint8_t* dst_argb,
+                        const struct YuvConstants* yuvconstants,
+                        int width) {
+  __m256i ymm0, ymm1, ymm2, ymm4;
+  const __m256i ymm5 = _mm256_set1_epi8(-1);
+  while (width > 0) {
+    READUYVY_AVX2
+    YUVTORGB_AVX2(yuvconstants)
+    STOREARGB_AVX2
+    width -= 16;
+  }
+  _mm256_zeroupper();
+}
+#endif
+
+#if defined(HAS_I422TOARGBROW_AVX2)
+void I422ToARGBRow_AVX2(const uint8_t* y_buf,
+                        const uint8_t* u_buf,
+                        const uint8_t* v_buf,
+                        uint8_t* dst_argb,
+                        const struct YuvConstants* yuvconstants,
+                        int width) {
+  __m256i ymm0, ymm1, ymm2, ymm4;
+  const __m256i ymm5 = _mm256_set1_epi8(-1);
+  const ptrdiff_t offset = (uint8_t*)v_buf - (uint8_t*)u_buf;
+  while (width > 0) {
+    READYUV422_AVX2
+    YUVTORGB_AVX2(yuvconstants)
+    STOREARGB_AVX2
+    width -= 16;
+  }
+  _mm256_zeroupper();
+}
+#endif
+
+#ifdef HAS_YUY2TOYROW_AVX2
+void YUY2ToYRow_AVX2(const uint8_t* src_yuy2, uint8_t* dst_y, int width) {
+  __m256i ymm0, ymm1;
+  __m256i ymm5 = _mm256_set1_epi8(-1);
+  ymm5 = _mm256_srli_epi16(ymm5, 8);  // 0x00ff00ff
+  while (width > 0) {
+    ymm0 = _mm256_loadu_si256((__m256i*)src_yuy2);
+    ymm1 = _mm256_loadu_si256((__m256i*)(src_yuy2 + 32));
+    src_yuy2 += 64;
+    ymm0 = _mm256_and_si256(ymm0, ymm5);
+    ymm1 = _mm256_and_si256(ymm1, ymm5);
+    ymm0 = _mm256_packus_epi16(ymm0, ymm1);
+    ymm0 = _mm256_permute4x64_epi64(ymm0, 0xd8);
+    _mm256_storeu_si256((__m256i*)dst_y, ymm0);
+
+    dst_y += 32;
+    width -= 32;
+  }
+  _mm256_zeroupper();
+}
+#endif  // HAS_YUY2TOYROW_AVX2
+
+#if defined(HAS_NV12TOARGBROW_SSSE3)
+// 8 pixels.
+// 4 UV values upsampled to 8 UV, mixed with 8 Y producing 8 ARGB (32 bytes).
+void NV12ToARGBRow_SSSE3(const uint8_t* y_buf,
+                         const uint8_t* uv_buf,
+                         uint8_t* dst_argb,
+                         const struct YuvConstants* yuvconstants,
+                         int width) {
+  __m128i xmm0, xmm1, xmm2, xmm4;
+  const __m128i xmm5 = _mm_set1_epi8(-1);
+
+  while (width > 0) {
+    READNV12
+    YUVTORGB(yuvconstants)
+    STOREARGB
+    width -= 8;
+  }
+}
+#endif
+
+#if defined(HAS_YUY2TOARGBROW_SSSE3)
+// 8 pixels.
+// 4 YUY2 values with 8 Y and 4 UV producing 8 ARGB (32 bytes).
+void YUY2ToARGBRow_SSSE3(const uint8_t* src_yuy2,
+                         uint8_t* dst_argb,
+                         const struct YuvConstants* yuvconstants,
+                         int width) {
+  __m128i xmm0, xmm1, xmm2, xmm4;
+  const __m128i xmm5 = _mm_set1_epi8(-1);
+
+  while (width > 0) {
+    READYUY2
+    YUVTORGB(yuvconstants)
+    STOREARGB
+    width -= 8;
+  }
+}
+
+void UYVYToARGBRow_SSSE3(const uint8_t* src_uyvy,
+                         uint8_t* dst_argb,
+                         const struct YuvConstants* yuvconstants,
+                         int width) {
+  __m128i xmm0, xmm1, xmm2, xmm4;
+  const __m128i xmm5 = _mm_set1_epi8(-1);
+
+  while (width > 0) {
+    READUYVY
+    YUVTORGB(yuvconstants)
+    STOREARGB
+    width -= 8;
+  }
+}
+
+#endif
+
 #if defined(HAS_I422TOARGBROW_SSSE3)
 void I422ToARGBRow_SSSE3(const uint8_t* y_buf,
                          const uint8_t* u_buf,
@@ -117,6 +391,25 @@ void I422AlphaToARGBRow_SSSE3(const uint8_t* y_buf,
     YUVTORGB(yuvconstants)
     STOREARGB
     width -= 8;
+  }
+}
+#endif
+
+#ifdef HAS_YUY2TOYROW_SSE2
+void YUY2ToYRow_SSE2(const uint8_t* src_yuy2, uint8_t* dst_y, int width) {
+  __m128i xmm0, xmm1;
+  __m128i xmm5 = _mm_set1_epi8(-1);
+  xmm5 = _mm_srli_epi16(xmm5, 8);
+  while (width > 0) {
+    xmm0 = _mm_loadu_si128((__m128i*)src_yuy2);
+    xmm1 = _mm_loadu_si128((__m128i*)(src_yuy2 + 16));
+    src_yuy2 += 32;
+    xmm0 = _mm_and_si128(xmm0, xmm5);
+    xmm1 = _mm_and_si128(xmm1, xmm5);
+    xmm0 = _mm_packus_epi16(xmm0, xmm1);
+    _mm_storeu_si128((__m128i*)dst_y, xmm0);
+    dst_y += 16;
+    width -= 16;
   }
 }
 #endif
@@ -227,26 +520,6 @@ static const uvec8 kShuffleMaskARGBToRAW = {
 // Shuffle table for converting ARGBToRGB24 for I422ToRGB24.  First 8 + next 4
 static const uvec8 kShuffleMaskARGBToRGB24_0 = {
     0u, 1u, 2u, 4u, 5u, 6u, 8u, 9u, 128u, 128u, 128u, 128u, 10u, 12u, 13u, 14u};
-
-// YUY2 shuf 16 Y to 32 Y.
-static const lvec8 kShuffleYUY2Y = {0,  0,  2,  2,  4,  4,  6,  6,  8,  8, 10,
-                                    10, 12, 12, 14, 14, 0,  0,  2,  2,  4, 4,
-                                    6,  6,  8,  8,  10, 10, 12, 12, 14, 14};
-
-// YUY2 shuf 8 UV to 16 UV.
-static const lvec8 kShuffleYUY2UV = {1,  3,  1,  3,  5,  7,  5,  7,  9,  11, 9,
-                                     11, 13, 15, 13, 15, 1,  3,  1,  3,  5,  7,
-                                     5,  7,  9,  11, 9,  11, 13, 15, 13, 15};
-
-// UYVY shuf 16 Y to 32 Y.
-static const lvec8 kShuffleUYVYY = {1,  1,  3,  3,  5,  5,  7,  7,  9,  9, 11,
-                                    11, 13, 13, 15, 15, 1,  1,  3,  3,  5, 5,
-                                    7,  7,  9,  9,  11, 11, 13, 13, 15, 15};
-
-// UYVY shuf 8 UV to 16 UV.
-static const lvec8 kShuffleUYVYUV = {0,  2,  0,  2,  4,  6,  4,  6,  8,  10, 8,
-                                     10, 12, 14, 12, 14, 0,  2,  0,  2,  4,  6,
-                                     4,  6,  8,  10, 8,  10, 12, 14, 12, 14};
 
 // NV21 shuf 8 VU to 16 UV.
 static const lvec8 kShuffleNV21 = {
@@ -4222,7 +4495,7 @@ __declspec(naked) void ARGBBlendRow_SSSE3(const uint8_t* src_argb0,
     add        ecx, 4 - 1
     jl         convertloop1b
 
-        // 1 pixel loop.
+            // 1 pixel loop.
   convertloop1:
     movd       xmm3, [eax]  // src argb
     lea        eax, [eax + 4]
@@ -5360,7 +5633,7 @@ void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
     add        ecx, 4 - 1
     jl         l1b
 
-        // 1 pixel loop
+            // 1 pixel loop
   l1:
     movdqu     xmm0, [eax]
     psubd      xmm0, [eax + edx * 4]
@@ -5448,7 +5721,7 @@ void ComputeCumulativeSumRow_SSE2(const uint8_t* row,
     add        ecx, 4 - 1
     jl         l1b
 
-        // 1 pixel loop
+            // 1 pixel loop
   l1:
     movd       xmm2, dword ptr [eax]  // 1 argb pixel 4 bytes.
     lea        eax, [eax + 4]
@@ -5534,7 +5807,7 @@ __declspec(naked) LIBYUV_API void ARGBAffineRow_SSE2(const uint8_t* src_argb,
     add        ecx, 4 - 1
     jl         l1b
 
-        // 1 pixel loop
+            // 1 pixel loop
   l1:
     cvttps2dq  xmm0, xmm2  // x, y float to int
     packssdw   xmm0, xmm0  // x, y as shorts
