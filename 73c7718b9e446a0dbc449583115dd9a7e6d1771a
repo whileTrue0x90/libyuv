@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e707bb4a_3252c8c7",
+        "filename": "source/row_any.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-02T19:30:08Z",
+      "side": 1,
+      "message": "The last number is a mask so it should be a power of 2 - 1.  I think you intended 7\nANY31(MergeRGBRow_Any_MMI, MergeRGBRow_MMI, 0, 0, 3, 7)",
+      "range": {
+        "startLine": 96,
+        "startChar": 55,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "73c7718b9e446a0dbc449583115dd9a7e6d1771a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
