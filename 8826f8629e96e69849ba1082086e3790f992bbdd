@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156c682e_140ffa63",
+        "filename": "source/row_any.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-04T00:23:32Z",
+      "side": 1,
+      "message": "8 is likely wrong - should be 7?\nits a mask.  find the low level MergeRGBRow_MMI loop counter.  Whatever number of elements it does per loop, subtract 1 and that is the mask for the any function.",
+      "range": {
+        "startLine": 96,
+        "startChar": 55,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "8826f8629e96e69849ba1082086e3790f992bbdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
