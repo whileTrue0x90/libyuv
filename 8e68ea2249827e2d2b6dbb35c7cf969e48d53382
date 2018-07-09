@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e624e2ab_eb06dbb3",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-09T19:21:34Z",
+      "side": 1,
+      "message": "nit Its difficult to see the real changes with formatting applied.\nThe new formatting does look cleaner, but was only applied to this function, not all tests.\nWould prefer separate CLs, or start the CL with the minimal change and then do formatting once the basic code is reviewed.",
+      "revId": "8e68ea2249827e2d2b6dbb35c7cf969e48d53382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5cd6fc_9aa3aa27",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-09T19:21:34Z",
+      "side": 1,
+      "message": "FYI I\u0027m moving away from max_diff for 2 reasons\n1. zero error is expected on a function like this\n2. when a difference occurs, EXPECT_EQ can give more detail",
+      "range": {
+        "startLine": 242,
+        "startChar": 36,
+        "endLine": 242,
+        "endChar": 37
+      },
+      "revId": "8e68ea2249827e2d2b6dbb35c7cf969e48d53382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b425ba6_97e03335",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-09T19:21:34Z",
+      "side": 1,
+      "message": "FYI the C version is intended to be the baseline that opt compares against.",
+      "revId": "8e68ea2249827e2d2b6dbb35c7cf969e48d53382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefded0c_b0399e38",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-09T19:21:34Z",
+      "side": 1,
+      "message": "I420TOI420_I feels awkward, adapting API to NV12.\nIt wont scale well to all formats.  Since its just Android420 there are limited capture formats for now.",
+      "revId": "8e68ea2249827e2d2b6dbb35c7cf969e48d53382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
