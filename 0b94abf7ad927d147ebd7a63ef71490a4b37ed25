@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "36bc3c11_78d52cbe",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-10T03:11:03Z",
+      "side": 1,
+      "message": "I meant, in the todo you could mention removing the ifdef in the future, when the function is implemented.\nBut its fine as is.\nThe UV functions are a bit of a bottleneck, despite being smaller memory wise.",
+      "parentUuid": "1bb4770c_e1061659",
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9780e156_f212c874",
         "filename": "source/row_any.cc",
         "patchSetId": 3
@@ -237,6 +255,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "51b2cb9f_5a9dec8b",
+      "range": {
+        "startLine": 20,
+        "startChar": 42,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2651ccb6_0659d22d",
+        "filename": "source/row_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-10T03:11:03Z",
+      "side": 1,
+      "message": "I dont see a change here?\nI\u0027m pretty sure this will break if you attempt to build with an older compiler that does not support AVX2.\nIn this case, its any compiler that sets _M_X64, so clangcl or mingw could also fail.\nPerhaps #ifdef VISUALC_HAS_AVX2 around it.\nrow.h sets VISUALC_HAS_AVX2 based on MSC_VER",
+      "parentUuid": "c05807cd_6411cd50",
       "range": {
         "startLine": 20,
         "startChar": 42,
