@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "30f39832_14ebf65a",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-07-10T03:00:57Z",
+      "side": 1,
+      "message": "These macros need to be inside an ifdef that checks the compiler supports AVX2\nThe macro is VISUALC_HAS_AVX2\n\nprobably need a new ifdef, since we havent done avx2 intrinsics before.  So similar to the current one, but add \u0026\u0026 defined(VISUALC_HAS_AVX2)",
+      "parentUuid": "01d44424_ce147e2f",
+      "range": {
+        "startLine": 261,
+        "startChar": 30,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "0b94abf7ad927d147ebd7a63ef71490a4b37ed25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08709862_1eedf1f9",
         "filename": "source/planar_functions.cc",
         "patchSetId": 3
