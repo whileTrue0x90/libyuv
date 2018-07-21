@@ -20,6 +20,8 @@ namespace libyuv {
 extern "C" {
 #endif
 
+#if !defined(LIBYUV_DISABLE_MMI) && defined(_MIPS_ARCH_LOONGSON3A)
+
 void RGB24ToARGBRow_MMI(const uint8_t* src_rgb24,
                         uint8_t* dst_argb,
                         int width) {
@@ -5965,6 +5967,7 @@ void ARGBCopyYToAlphaRow_MMI(const uint8_t* src, uint8_t* dst, int width) {
         [mask1] "f"(mask1), [width] "r"(width)
       : "memory");
 }
+#endif
 
 #ifdef __cplusplus
 }  // extern "C"
