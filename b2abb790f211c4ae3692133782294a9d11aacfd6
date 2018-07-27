@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cfa32ce_fffea9fb",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-07-27T20:21:50Z",
+      "side": 1,
+      "message": "are *two* blank lines intentional?",
+      "revId": "b2abb790f211c4ae3692133782294a9d11aacfd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fd82d2_ab182e1c",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-07-27T20:21:50Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "b2abb790f211c4ae3692133782294a9d11aacfd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6147561_3139cab3",
+        "filename": "luci-scheduler.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-07-27T20:21:50Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "b2abb790f211c4ae3692133782294a9d11aacfd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1de4773_1982f5a8",
+        "filename": "luci-scheduler.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2018-07-27T20:21:50Z",
+      "side": 1,
+      "message": "remove two blank lines?",
+      "revId": "b2abb790f211c4ae3692133782294a9d11aacfd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
