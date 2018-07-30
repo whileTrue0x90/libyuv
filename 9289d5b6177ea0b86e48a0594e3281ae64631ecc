@@ -22,6 +22,30 @@
       "revId": "9289d5b6177ea0b86e48a0594e3281ae64631ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37867878_8600e935",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2018-07-30T17:50:11Z",
+      "side": 1,
+      "message": "Before the \"luci is prod\" checkbox is checked, all builds are experimental, so milo won\u0027t show them unless this flag is there.",
+      "parentUuid": "1c96d7f6_05fd15c7",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "9289d5b6177ea0b86e48a0594e3281ae64631ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
