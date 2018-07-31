@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1236d544_b64c8de4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2018-07-31T23:56:00Z",
+      "side": 1,
+      "message": "really, it will inherit whatever venv that gclient itself is running in (which happens to be empty).\n\nThe Real Fix (tm) would be to change gclient to s/python/vpython in hooks. I think that\u0027s probably even safe to do now.",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "b762f62e12db0750e49863a0da8de29eb469697a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
