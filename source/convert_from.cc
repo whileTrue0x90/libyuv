@@ -930,9 +930,9 @@ int I420ToARGB4444(const uint8_t* src_y,
   return 0;
 }
 
-// Convert I420 to RGB565.
+// Convert I420 to RGB565 with specified color matrix.
 LIBYUV_API
-int I420ToRGB565(const uint8_t* src_y,
+int I420ToRGB565Matrix(const uint8_t* src_y,
                  int src_stride_y,
                  const uint8_t* src_u,
                  int src_stride_u,
@@ -941,7 +941,8 @@ int I420ToRGB565(const uint8_t* src_y,
                  uint8_t* dst_rgb565,
                  int dst_stride_rgb565,
                  int width,
-                 int height) {
+                 int height,
+                 const struct YuvConstants* yuvconstants) {
   int y;
   void (*I422ToRGB565Row)(const uint8_t* y_buf, const uint8_t* u_buf,
                           const uint8_t* v_buf, uint8_t* rgb_buf,
@@ -990,7 +991,7 @@ int I420ToRGB565(const uint8_t* src_y,
 #endif
 
   for (y = 0; y < height; ++y) {
-    I422ToRGB565Row(src_y, src_u, src_v, dst_rgb565, &kYuvI601Constants, width);
+    I422ToRGB565Row(src_y, src_u, src_v, dst_rgb565, yuvconstants, width);
     dst_rgb565 += dst_stride_rgb565;
     src_y += src_stride_y;
     if (y & 1) {
@@ -999,6 +1000,81 @@ int I420ToRGB565(const uint8_t* src_y,
     }
   }
   return 0;
+}
+
+// Convert I420 to RGB565.
+LIBYUV_API
+int I420ToRGB565(const uint8_t* src_y,
+                 int src_stride_y,
+                 const uint8_t* src_u,
+                 int src_stride_u,
+                 const uint8_t* src_v,
+                 int src_stride_v,
+                 uint8_t* dst_rgb565,
+                 int dst_stride_rgb565,
+                 int width,
+                 int height) {
+    return I420ToRGB565Matrix(src_y,
+                 src_stride_y,
+                 src_u,
+                 src_stride_u,
+                 src_v,
+                 src_stride_v,
+                 dst_rgb565,
+                 dst_stride_rgb565,
+                 width,
+                 height,
+                 &kYuvI601Constants);
+}
+
+// Convert J420 to RGB565.
+LIBYUV_API
+int J420ToRGB565(const uint8_t* src_y,
+                 int src_stride_y,
+                 const uint8_t* src_u,
+                 int src_stride_u,
+                 const uint8_t* src_v,
+                 int src_stride_v,
+                 uint8_t* dst_rgb565,
+                 int dst_stride_rgb565,
+                 int width,
+                 int height) {
+    return I420ToRGB565Matrix(src_y,
+                 src_stride_y,
+                 src_u,
+                 src_stride_u,
+                 src_v,
+                 src_stride_v,
+                 dst_rgb565,
+                 dst_stride_rgb565,
+                 width,
+                 height,
+                 &kYuvJPEGConstants);
+}
+
+// Convert H420 to RGB565.
+LIBYUV_API
+int H420ToRGB565(const uint8_t* src_y,
+                 int src_stride_y,
+                 const uint8_t* src_u,
+                 int src_stride_u,
+                 const uint8_t* src_v,
+                 int src_stride_v,
+                 uint8_t* dst_rgb565,
+                 int dst_stride_rgb565,
+                 int width,
+                 int height) {
+    return I420ToRGB565Matrix(src_y,
+                 src_stride_y,
+                 src_u,
+                 src_stride_u,
+                 src_v,
+                 src_stride_v,
+                 dst_rgb565,
+                 dst_stride_rgb565,
+                 width,
+                 height,
+                 &kYuvH709Constants);
 }
 
 // Convert I422 to RGB565.
