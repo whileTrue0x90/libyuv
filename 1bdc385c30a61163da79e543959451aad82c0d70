@@ -22,6 +22,30 @@
       "revId": "1bdc385c30a61163da79e543959451aad82c0d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c264b440_90a7411a",
+        "filename": "infra/config/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2018-08-10T08:16:58Z",
+      "side": 1,
+      "message": "Good catch, thanks",
+      "parentUuid": "eefbd9a1_0c765792",
+      "range": {
+        "startLine": 1,
+        "startChar": 21,
+        "endLine": 1,
+        "endChar": 47
+      },
+      "revId": "1bdc385c30a61163da79e543959451aad82c0d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
