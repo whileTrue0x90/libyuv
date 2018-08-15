@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a28cc08_c2f328e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-08-15T18:10:36Z",
+      "side": 1,
+      "message": "please add\nNo-Try: True\n\nthere is no reason to be blocked on CQ when modifying cq.cfg if cq.cfg isn\u0027t tested anyhow.",
+      "revId": "3264d47388e2abd087266b115ce2fe3d7f3bbc71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
