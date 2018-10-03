@@ -530,31 +530,41 @@ void ScaleRowDown4_16_MMI(const uint16_t* src_ptr,
   "paddh      %[dest_lo],      %[dest_lo],       %[src_lo]     \n\t" \
   "paddh      %[dest_hi],      %[dest_hi],       %[src_hi]     \n\t"
 
-#define DO_SCALEROWDOWN4BOX_LOOP(reg)                                \
-  "ldc1       %[src],          0x00(%[src0_ptr])               \n\t" \
-  "punpcklbh  %[dest_lo],      %[src],           %[mask0]      \n\t" \
-  "punpckhbh  %[dest_hi],      %[src],           %[mask0]      \n\t" \
-                                                                     \
-  "ldc1       %[src],          0x00(%[src1_ptr])               \n\t" \
-  DO_SCALEROWDOWN4BOX_PUNPCKADD()                                    \
-                                                                     \
-  "ldc1       %[src],          0x00(%[src2_ptr])               \n\t" \
-  DO_SCALEROWDOWN4BOX_PUNPCKADD()                                    \
-                                                                     \
-  "ldc1       %[src],          0x00(%[src3_ptr])               \n\t" \
-  DO_SCALEROWDOWN4BOX_PUNPCKADD()                                    \
-                                                                     \
-  "pmaddhw    %[dest_lo],      %[dest_lo],       %[mask1]      \n\t" \
-  "pmaddhw    %[dest_hi],      %[dest_hi],       %[mask1]      \n\t" \
-  "packsswh   " #reg   ",      %[dest_lo],       %[dest_hi]    \n\t" \
-  "pmaddhw    " #reg   ",      " #reg   ",       %[mask1]      \n\t" \
-  "paddh      " #reg   ",      " #reg   ",       %[ph]         \n\t" \
-  "psrlh      " #reg   ",      " #reg   ",       %[shift]      \n\t" \
-                                                                     \
-  "daddiu     %[src0_ptr],     %[src0_ptr],      0x08          \n\t" \
-  "daddiu     %[src1_ptr],     %[src1_ptr],      0x08          \n\t" \
-  "daddiu     %[src2_ptr],     %[src2_ptr],      0x08          \n\t" \
-  "daddiu     %[src3_ptr],     %[src3_ptr],      0x08          \n\t"
+#define DO_SCALEROWDOWN4BOX_LOOP(reg)                                        \
+  "ldc1       %[src],          0x00(%[src0_ptr])               \n\t"         \
+  "punpcklbh  %[dest_lo],      %[src],           %[mask0]      \n\t"         \
+  "punpckhbh  %[dest_hi],      %[src],           %[mask0]      \n\t"         \
+                                                                             \
+  "ldc1       %[src],          0x00(%[src1_ptr])               "             \
+  "\n\t" DO_SCALEROWDOWN4BOX_PUNPCKADD()                                     \
+                                                                             \
+      "ldc1       %[src],          0x00(%[src2_ptr])               "         \
+      "\n\t" DO_SCALEROWDOWN4BOX_PUNPCKADD()                                 \
+                                                                             \
+          "ldc1       %[src],          0x00(%[src3_ptr])               "     \
+          "\n\t" DO_SCALEROWDOWN4BOX_PUNPCKADD()                             \
+                                                                             \
+              "pmaddhw    %[dest_lo],      %[dest_lo],       %[mask1]      " \
+              "\n\t"                                                         \
+              "pmaddhw    %[dest_hi],      %[dest_hi],       %[mask1]      " \
+              "\n\t"                                                         \
+              "packsswh   " #reg                                             \
+              ",      %[dest_lo],       %[dest_hi]    \n\t"                  \
+              "pmaddhw    " #reg ",      " #reg                              \
+              ",       %[mask1]      \n\t"                                   \
+              "paddh      " #reg ",      " #reg                              \
+              ",       %[ph]         \n\t"                                   \
+              "psrlh      " #reg ",      " #reg                              \
+              ",       %[shift]      \n\t"                                   \
+                                                                             \
+              "daddiu     %[src0_ptr],     %[src0_ptr],      0x08          " \
+              "\n\t"                                                         \
+              "daddiu     %[src1_ptr],     %[src1_ptr],      0x08          " \
+              "\n\t"                                                         \
+              "daddiu     %[src2_ptr],     %[src2_ptr],      0x08          " \
+              "\n\t"                                                         \
+              "daddiu     %[src3_ptr],     %[src3_ptr],      0x08          " \
+              "\n\t"
 
 /* LibYUVScaleTest.ScaleDownBy4_Box */
 void ScaleRowDown4Box_MMI(const uint8_t* src_ptr,
@@ -577,21 +587,28 @@ void ScaleRowDown4Box_MMI(const uint8_t* src_ptr,
   __asm__ volatile(
       "1:                                                           \n\t"
 
-      DO_SCALEROWDOWN4BOX_LOOP(%[dest0])
-      DO_SCALEROWDOWN4BOX_LOOP(%[dest1])
-      DO_SCALEROWDOWN4BOX_LOOP(%[dest2])
-      DO_SCALEROWDOWN4BOX_LOOP(%[dest3])
+      DO_SCALEROWDOWN4BOX_LOOP(% [dest0]) DO_SCALEROWDOWN4BOX_LOOP(% [dest1])
+          DO_SCALEROWDOWN4BOX_LOOP(% [dest2])
+              DO_SCALEROWDOWN4BOX_LOOP(% [dest3])
 
-      "packsswh   %[dest_lo],      %[dest0],          %[dest1]      \n\t"
-      "packsswh   %[dest_hi],      %[dest2],          %[dest3]      \n\t"
+                  "packsswh   %[dest_lo],      %[dest0],          %[dest1]     "
+                  " \n\t"
+                  "packsswh   %[dest_hi],      %[dest2],          %[dest3]     "
+                  " \n\t"
 
-      "packushb   %[dest],         %[dest_lo],        %[dest_hi]    \n\t"
-      "gssdlc1    %[dest],         0x07(%[dst_ptr])                 \n\t"
-      "gssdrc1    %[dest],         0x00(%[dst_ptr])                 \n\t"
+                  "packushb   %[dest],         %[dest_lo],        %[dest_hi]   "
+                  " \n\t"
+                  "gssdlc1    %[dest],         0x07(%[dst_ptr])                "
+                  " \n\t"
+                  "gssdrc1    %[dest],         0x00(%[dst_ptr])                "
+                  " \n\t"
 
-      "daddiu     %[dst_ptr],      %[dst_ptr],        0x08          \n\t"
-      "daddi      %[width],        %[width],         -0x08          \n\t"
-      "bnez       %[width],        1b                               \n\t"
+                  "daddiu     %[dst_ptr],      %[dst_ptr],        0x08         "
+                  " \n\t"
+                  "daddi      %[width],        %[width],         -0x08         "
+                  " \n\t"
+                  "bnez       %[width],        1b                              "
+                  " \n\t"
       : [src_hi] "=&f"(src_hi), [src_lo] "=&f"(src_lo),
         [dest_hi] "=&f"(dest_hi), [dest_lo] "=&f"(dest_lo),
         [dest0] "=&f"(dest0), [dest1] "=&f"(dest1), [dest2] "=&f"(dest2),
@@ -609,31 +626,41 @@ void ScaleRowDown4Box_MMI(const uint8_t* src_ptr,
   "paddh      %[dest_lo],      %[dest_lo],        %[src_lo]     \n\t" \
   "paddh      %[dest_hi],      %[dest_hi],        %[src_hi]     \n\t"
 
-#define DO_SCALEROWDOWN4BOX_16_LOOP(reg)                              \
-  "ldc1       %[src],          0x00(%[src0_ptr])                \n\t" \
-  "punpcklbh  %[dest_lo],      %[src],            %[mask0]      \n\t" \
-  "punpckhbh  %[dest_hi],      %[src],            %[mask0]      \n\t" \
-                                                                      \
-  "ldc1       %[src],          0x00(%[src1_ptr])                \n\t" \
-  DO_SCALEROWDOWN4BOX_16_PUNPCKADD()                                  \
-                                                                      \
-  "ldc1       %[src],          0x00(%[src2_ptr])                \n\t" \
-  DO_SCALEROWDOWN4BOX_16_PUNPCKADD()                                  \
-                                                                      \
-  "ldc1       %[src],          0x00(%[src3_ptr])                \n\t" \
-  DO_SCALEROWDOWN4BOX_16_PUNPCKADD()                                  \
-                                                                      \
-  "paddw      %[dest],         %[dest_lo],        %[dest_hi]    \n\t" \
-  "punpckhwd  %[dest_hi],      %[dest],           %[dest]       \n\t" \
-  "paddw      %[dest],         %[dest_hi],        %[dest]       \n\t" \
-  "paddw      %[dest],         %[dest],           %[ph]         \n\t" \
-  "psraw      %[dest],         %[dest],           %[shift]      \n\t" \
-  "and        " #reg ",        %[dest],           %[mask1]      \n\t" \
-                                                                      \
-  "daddiu     %[src0_ptr],     %[src0_ptr],       0x08          \n\t" \
-  "daddiu     %[src1_ptr],     %[src1_ptr],       0x08          \n\t" \
-  "daddiu     %[src2_ptr],     %[src2_ptr],       0x08          \n\t" \
-  "daddiu     %[src3_ptr],     %[src3_ptr],       0x08          \n\t"
+#define DO_SCALEROWDOWN4BOX_16_LOOP(reg)                                      \
+  "ldc1       %[src],          0x00(%[src0_ptr])                \n\t"         \
+  "punpcklbh  %[dest_lo],      %[src],            %[mask0]      \n\t"         \
+  "punpckhbh  %[dest_hi],      %[src],            %[mask0]      \n\t"         \
+                                                                              \
+  "ldc1       %[src],          0x00(%[src1_ptr])                "             \
+  "\n\t" DO_SCALEROWDOWN4BOX_16_PUNPCKADD()                                   \
+                                                                              \
+      "ldc1       %[src],          0x00(%[src2_ptr])                "         \
+      "\n\t" DO_SCALEROWDOWN4BOX_16_PUNPCKADD()                               \
+                                                                              \
+          "ldc1       %[src],          0x00(%[src3_ptr])                "     \
+          "\n\t" DO_SCALEROWDOWN4BOX_16_PUNPCKADD()                           \
+                                                                              \
+              "paddw      %[dest],         %[dest_lo],        %[dest_hi]    " \
+              "\n\t"                                                          \
+              "punpckhwd  %[dest_hi],      %[dest],           %[dest]       " \
+              "\n\t"                                                          \
+              "paddw      %[dest],         %[dest_hi],        %[dest]       " \
+              "\n\t"                                                          \
+              "paddw      %[dest],         %[dest],           %[ph]         " \
+              "\n\t"                                                          \
+              "psraw      %[dest],         %[dest],           %[shift]      " \
+              "\n\t"                                                          \
+              "and        " #reg                                              \
+              ",        %[dest],           %[mask1]      \n\t"                \
+                                                                              \
+              "daddiu     %[src0_ptr],     %[src0_ptr],       0x08          " \
+              "\n\t"                                                          \
+              "daddiu     %[src1_ptr],     %[src1_ptr],       0x08          " \
+              "\n\t"                                                          \
+              "daddiu     %[src2_ptr],     %[src2_ptr],       0x08          " \
+              "\n\t"                                                          \
+              "daddiu     %[src3_ptr],     %[src3_ptr],       0x08          " \
+              "\n\t"
 
 /* LibYUVScaleTest.ScaleDownBy4_Box_16 */
 void ScaleRowDown4Box_16_MMI(const uint16_t* src_ptr,
@@ -982,8 +1009,7 @@ int FixedDiv_MIPS(int num, int div) {
   int quotient = 0;
   const int shift = 16;
 
-  asm(
-      "dsll    %[num],     %[num],     %[shift]    \n\t"
+  asm("dsll    %[num],     %[num],     %[shift]    \n\t"
       "ddiv    %[num],     %[div]                  \t\n"
       "mflo    %[quo]                              \t\n"
       : [quo] "+&r"(quotient)
@@ -1000,8 +1026,7 @@ int FixedDiv1_MIPS(int num, int div) {
   const int val1 = 1;
   const int64_t val11 = 0x00010001ULL;
 
-  asm(
-      "dsll    %[num],     %[num],     %[shift]    \n\t"
+  asm("dsll    %[num],     %[num],     %[shift]    \n\t"
       "dsub    %[num],     %[num],     %[val11]    \n\t"
       "dsub    %[div],     %[div],     %[val1]     \n\t"
       "ddiv    %[num],     %[div]                  \t\n"
