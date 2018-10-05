@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb683220_05d37a55",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2018-10-05T17:03:34Z",
+      "side": 1,
+      "message": "This isn\u0027t actually a real swarming dimension.  Our OS is Ubuntu-14.04 (or 16.04)",
+      "revId": "d6a05fc030c21d4e4180bd6b3d150b4b05285ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
