@@ -95,25 +95,25 @@ static void ARGBTestRotate(int src_width,
                 benchmark_iterations, disable_cpu_flags, benchmark_cpu_info, 4);
 }
 
-TEST_F(LibYUVRotateTest, ARGBRotate0_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, ARGBRotate0_Opt /*unused*/) {
   ARGBTestRotate(benchmark_width_, benchmark_height_, benchmark_width_,
                  benchmark_height_, kRotate0, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, ARGBRotate90_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, ARGBRotate90_Opt /*unused*/) {
   ARGBTestRotate(benchmark_width_, benchmark_height_, benchmark_height_,
                  benchmark_width_, kRotate90, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, ARGBRotate180_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, ARGBRotate180_Opt /*unused*/) {
   ARGBTestRotate(benchmark_width_, benchmark_height_, benchmark_width_,
                  benchmark_height_, kRotate180, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, ARGBRotate270_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, ARGBRotate270_Opt /*unused*/) {
   ARGBTestRotate(benchmark_width_, benchmark_height_, benchmark_height_,
                  benchmark_width_, kRotate270, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_);
@@ -131,52 +131,52 @@ static void TestRotatePlane(int src_width,
                 benchmark_iterations, disable_cpu_flags, benchmark_cpu_info, 1);
 }
 
-TEST_F(LibYUVRotateTest, RotatePlane0_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, RotatePlane0_Opt /*unused*/) {
   TestRotatePlane(benchmark_width_, benchmark_height_, benchmark_width_,
                   benchmark_height_, kRotate0, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, RotatePlane90_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, RotatePlane90_Opt /*unused*/) {
   TestRotatePlane(benchmark_width_, benchmark_height_, benchmark_height_,
                   benchmark_width_, kRotate90, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, RotatePlane180_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, RotatePlane180_Opt /*unused*/) {
   TestRotatePlane(benchmark_width_, benchmark_height_, benchmark_width_,
                   benchmark_height_, kRotate180, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, RotatePlane270_Opt) {
+TEST_F(LibYUVRotateTest /*unused*/, RotatePlane270_Opt /*unused*/) {
   TestRotatePlane(benchmark_width_, benchmark_height_, benchmark_height_,
                   benchmark_width_, kRotate270, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, DISABLED_RotatePlane0_Odd) {
+TEST_F(LibYUVRotateTest /*unused*/, DISABLED_RotatePlane0_Odd /*unused*/) {
   TestRotatePlane(benchmark_width_ - 3, benchmark_height_ - 1,
                   benchmark_width_ - 3, benchmark_height_ - 1, kRotate0,
                   benchmark_iterations_, disable_cpu_flags_,
                   benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, DISABLED_RotatePlane90_Odd) {
+TEST_F(LibYUVRotateTest /*unused*/, DISABLED_RotatePlane90_Odd /*unused*/) {
   TestRotatePlane(benchmark_width_ - 3, benchmark_height_ - 1,
                   benchmark_height_ - 1, benchmark_width_ - 3, kRotate90,
                   benchmark_iterations_, disable_cpu_flags_,
                   benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, DISABLED_RotatePlane180_Odd) {
+TEST_F(LibYUVRotateTest /*unused*/, DISABLED_RotatePlane180_Odd /*unused*/) {
   TestRotatePlane(benchmark_width_ - 3, benchmark_height_ - 1,
                   benchmark_width_ - 3, benchmark_height_ - 1, kRotate180,
                   benchmark_iterations_, disable_cpu_flags_,
                   benchmark_cpu_info_);
 }
 
-TEST_F(LibYUVRotateTest, DISABLED_RotatePlane270_Odd) {
+TEST_F(LibYUVRotateTest /*unused*/, DISABLED_RotatePlane270_Odd /*unused*/) {
   TestRotatePlane(benchmark_width_ - 3, benchmark_height_ - 1,
                   benchmark_height_ - 1, benchmark_width_ - 3, kRotate270,
                   benchmark_iterations_, disable_cpu_flags_,

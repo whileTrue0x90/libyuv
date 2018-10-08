@@ -37,7 +37,7 @@ void* ThreadMain(void* arg) {
 
 // Call TestCpuFlag() from two threads. ThreadSanitizer should not report any
 // data race.
-TEST(LibYUVCpuThreadTest, TestCpuFlagMultipleThreads) {
+TEST(LibYUVCpuThreadTest, TestCpuFlagMultipleThreads /*unused*/) {
 #ifdef LIBYUV_HAVE_PTHREAD
   int cpu_flags1;
   int cpu_flags2;

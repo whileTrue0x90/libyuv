@@ -320,7 +320,7 @@ static int RoundToByte(float f) {
 
 #define RANDOM256(s) ((s & 1) ? ((s >> 1) ^ 0xb8) : (s >> 1))
 
-TEST_F(LibYUVColorTest, TestRoundToByte) {
+TEST_F(LibYUVColorTest /*unused*/, TestRoundToByte /*unused*/) {
   int allb = 0;
   int count = benchmark_width_ * benchmark_height_;
   for (int i = 0; i < benchmark_iterations_; ++i) {
@@ -347,7 +347,7 @@ static void YUVJToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
   *b = RoundToByte(y - (u - 128) * -1.77200);
 }
 
-TEST_F(LibYUVColorTest, TestYUV) {
+TEST_F(LibYUVColorTest /*unused*/, TestYUV /*unused*/) {
   int r0, g0, b0, r1, g1, b1;
 
   // cyan (less red)
@@ -393,7 +393,7 @@ TEST_F(LibYUVColorTest, TestYUV) {
   }
 }
 
-TEST_F(LibYUVColorTest, TestGreyYUV) {
+TEST_F(LibYUVColorTest /*unused*/, TestGreyYUV /*unused*/) {
   int r0, g0, b0, r1, g1, b1, r2, g2, b2;
 
   // black
@@ -474,7 +474,7 @@ static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
 // Step by 5 on inner loop goes from 0 to 255 inclusive.
 // Set to 1 for better converage.  3, 5 or 17 for faster testing.
 #define FASTSTEP 5
-TEST_F(LibYUVColorTest, TestFullYUV) {
+TEST_F(LibYUVColorTest /*unused*/, TestFullYUV /*unused*/) {
   int rh[256] = {
       0,
   };
@@ -503,7 +503,7 @@ TEST_F(LibYUVColorTest, TestFullYUV) {
   PrintHistogram(rh, gh, bh);
 }
 
-TEST_F(LibYUVColorTest, TestFullYUVJ) {
+TEST_F(LibYUVColorTest /*unused*/, TestFullYUVJ /*unused*/) {
   int rh[256] = {
       0,
   };
@@ -533,7 +533,7 @@ TEST_F(LibYUVColorTest, TestFullYUVJ) {
 }
 #undef FASTSTEP
 
-TEST_F(LibYUVColorTest, TestGreyYUVJ) {
+TEST_F(LibYUVColorTest /*unused*/, TestGreyYUVJ /*unused*/) {
   int r0, g0, b0, r1, g1, b1, r2, g2, b2;
 
   // black

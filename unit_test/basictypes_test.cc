@@ -13,7 +13,7 @@
 
 namespace libyuv {
 
-TEST_F(LibYUVBaseTest, SizeOfTypes) {
+TEST_F(LibYUVBaseTest /*unused*/, SizeOfTypes /*unused*/) {
   int8_t i8 = -1;
   uint8_t u8 = 1u;
   int16_t i16 = -1;

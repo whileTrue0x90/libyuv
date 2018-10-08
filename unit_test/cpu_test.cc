@@ -18,7 +18,7 @@
 
 namespace libyuv {
 
-TEST_F(LibYUVBaseTest, TestCpuHas) {
+TEST_F(LibYUVBaseTest /*unused*/, TestCpuHas /*unused*/) {
   int cpu_flags = TestCpuFlag(-1);
   printf("Cpu Flags %d\n", cpu_flags);
 #if defined(__arm__) || defined(__aarch64__)
@@ -72,7 +72,7 @@ TEST_F(LibYUVBaseTest, TestCpuHas) {
 #endif
 }
 
-TEST_F(LibYUVBaseTest, TestCpuCompilerEnabled) {
+TEST_F(LibYUVBaseTest /*unused*/, TestCpuCompilerEnabled /*unused*/) {
 #if defined(__aarch64__)
   printf("Arm64 build\n");
 #endif
@@ -97,7 +97,7 @@ TEST_F(LibYUVBaseTest, TestCpuCompilerEnabled) {
 
 #if defined(__i386__) || defined(__x86_64__) || defined(_M_IX86) || \
     defined(_M_X64)
-TEST_F(LibYUVBaseTest, TestCpuId) {
+TEST_F(LibYUVBaseTest /*unused*/, TestCpuId /*unused*/) {
   int has_x86 = TestCpuFlag(kCpuHasX86);
   if (has_x86) {
     int cpu_info[4];
@@ -145,7 +145,7 @@ static int FileExists(const char* file_name) {
   return 1;
 }
 
-TEST_F(LibYUVBaseTest, TestLinuxNeon) {
+TEST_F(LibYUVBaseTest /*unused*/, TestLinuxNeon /*unused*/) {
   if (FileExists("../../unit_test/testdata/arm_v7.txt")) {
     printf("Note: testing to load \"../../unit_test/testdata/arm_v7.txt\"\n");
 
@@ -160,7 +160,7 @@ TEST_F(LibYUVBaseTest, TestLinuxNeon) {
 #endif
 }
 
-TEST_F(LibYUVBaseTest, TestSetCpuFlags) {
+TEST_F(LibYUVBaseTest /*unused*/, TestSetCpuFlags /*unused*/) {
   // Reset any masked flags that may have been set so auto init is enabled.
   MaskCpuFlags(0);
 

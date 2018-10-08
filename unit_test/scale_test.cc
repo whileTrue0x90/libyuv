@@ -344,7 +344,7 @@ TEST_SCALETO(Scale, 1280, 720)
 #undef TEST_SCALETO
 
 #ifdef HAS_SCALEROWDOWN2_SSSE3
-TEST_F(LibYUVScaleTest, TestScaleRowDown2Box_Odd_SSSE3) {
+TEST_F(LibYUVScaleTest /*unused*/, TestScaleRowDown2Box_Odd_SSSE3 /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[128 * 2]);
   SIMD_ALIGNED(uint8_t dst_pixels_opt[64]);
   SIMD_ALIGNED(uint8_t dst_pixels_c[64]);
@@ -446,7 +446,7 @@ extern "C" void ScaleRowUp2_16_C(const uint16_t* src_ptr,
                                  uint16_t* dst,
                                  int dst_width);
 
-TEST_F(LibYUVScaleTest, TestScaleRowUp2_16) {
+TEST_F(LibYUVScaleTest /*unused*/, TestScaleRowUp2_16 /*unused*/) {
   SIMD_ALIGNED(uint16_t orig_pixels[640 * 2 + 1]);  // 2 rows + 1 pixel overrun.
   SIMD_ALIGNED(uint16_t dst_pixels_opt[1280]);
   SIMD_ALIGNED(uint16_t dst_pixels_c[1280]);
@@ -491,7 +491,7 @@ extern "C" void ScaleRowDown2Box_16_NEON(const uint16_t* src_ptr,
                                          uint16_t* dst,
                                          int dst_width);
 
-TEST_F(LibYUVScaleTest, TestScaleRowDown2Box_16) {
+TEST_F(LibYUVScaleTest /*unused*/, TestScaleRowDown2Box_16 /*unused*/) {
   SIMD_ALIGNED(uint16_t orig_pixels[2560 * 2]);
   SIMD_ALIGNED(uint16_t dst_pixels_c[1280]);
   SIMD_ALIGNED(uint16_t dst_pixels_opt[1280]);

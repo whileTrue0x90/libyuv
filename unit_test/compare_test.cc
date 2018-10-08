@@ -34,7 +34,7 @@ static uint32_t ReferenceHashDjb2(const uint8_t* src,
   return hash;
 }
 
-TEST_F(LibYUVCompareTest, Djb2_Test) {
+TEST_F(LibYUVCompareTest /*unused*/, Djb2_Test /*unused*/) {
   const int kMaxTest = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_a, kMaxTest);
   align_buffer_page_end(src_b, kMaxTest);
@@ -119,7 +119,7 @@ TEST_F(LibYUVCompareTest, Djb2_Test) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkDjb2_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkDjb2_Opt /*unused*/) {
   const int kMaxTest = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_a, kMaxTest);
 
@@ -135,7 +135,7 @@ TEST_F(LibYUVCompareTest, BenchmarkDjb2_Opt) {
   free_aligned_buffer_page_end(src_a);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkDjb2_Unaligned) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkDjb2_Unaligned /*unused*/) {
   const int kMaxTest = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_a, kMaxTest + 1);
   for (int i = 0; i < kMaxTest; ++i) {
@@ -150,7 +150,7 @@ TEST_F(LibYUVCompareTest, BenchmarkDjb2_Unaligned) {
   free_aligned_buffer_page_end(src_a);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkARGBDetect_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkARGBDetect_Opt /*unused*/) {
   uint32_t fourcc;
   const int kMaxTest = benchmark_width_ * benchmark_height_ * 4;
   align_buffer_page_end(src_a, kMaxTest);
@@ -178,7 +178,7 @@ TEST_F(LibYUVCompareTest, BenchmarkARGBDetect_Opt) {
   free_aligned_buffer_page_end(src_a);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkARGBDetect_Unaligned) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkARGBDetect_Unaligned /*unused*/) {
   uint32_t fourcc;
   const int kMaxTest = benchmark_width_ * benchmark_height_ * 4 + 1;
   align_buffer_page_end(src_a, kMaxTest);
@@ -206,7 +206,7 @@ TEST_F(LibYUVCompareTest, BenchmarkARGBDetect_Unaligned) {
   free_aligned_buffer_page_end(src_a);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkHammingDistance_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkHammingDistance_Opt /*unused*/) {
   const int kMaxWidth = 4096 * 3;
   align_buffer_page_end(src_a, kMaxWidth);
   align_buffer_page_end(src_b, kMaxWidth);
@@ -265,7 +265,7 @@ TEST_F(LibYUVCompareTest, BenchmarkHammingDistance_Opt) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkHammingDistance_C) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkHammingDistance_C /*unused*/) {
   const int kMaxWidth = 4096 * 3;
   align_buffer_page_end(src_a, kMaxWidth);
   align_buffer_page_end(src_b, kMaxWidth);
@@ -297,7 +297,7 @@ TEST_F(LibYUVCompareTest, BenchmarkHammingDistance_C) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkHammingDistance) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkHammingDistance /*unused*/) {
   const int kMaxWidth = 4096 * 3;
   align_buffer_page_end(src_a, kMaxWidth);
   align_buffer_page_end(src_b, kMaxWidth);
@@ -338,7 +338,7 @@ static const int kMaxOptCount = 65536 - 32;  // 65504
 static const int kMaxOptCount = (1 << (32 - 3)) - 64;  // 536870848
 #endif
 
-TEST_F(LibYUVCompareTest, TestHammingDistance_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, TestHammingDistance_Opt /*unused*/) {
   uint32_t h1 = 0;
   const int kMaxWidth = (benchmark_width_ * benchmark_height_ + 31) & ~31;
   align_buffer_page_end(src_a, kMaxWidth);
@@ -404,7 +404,7 @@ TEST_F(LibYUVCompareTest, TestHammingDistance_Opt) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, TestHammingDistance) {
+TEST_F(LibYUVCompareTest /*unused*/, TestHammingDistance /*unused*/) {
   align_buffer_page_end(src_a, benchmark_width_ * benchmark_height_);
   align_buffer_page_end(src_b, benchmark_width_ * benchmark_height_);
   memset(src_a, 255u, benchmark_width_ * benchmark_height_);
@@ -421,7 +421,7 @@ TEST_F(LibYUVCompareTest, TestHammingDistance) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkSumSquareError_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkSumSquareError_Opt /*unused*/) {
   const int kMaxWidth = 4096 * 3;
   align_buffer_page_end(src_a, kMaxWidth);
   align_buffer_page_end(src_b, kMaxWidth);
@@ -453,7 +453,7 @@ TEST_F(LibYUVCompareTest, BenchmarkSumSquareError_Opt) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, SumSquareError) {
+TEST_F(LibYUVCompareTest /*unused*/, SumSquareError /*unused*/) {
   const int kMaxWidth = 4096 * 3;
   align_buffer_page_end(src_a, kMaxWidth);
   align_buffer_page_end(src_b, kMaxWidth);
@@ -493,7 +493,7 @@ TEST_F(LibYUVCompareTest, SumSquareError) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkPsnr_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkPsnr_Opt /*unused*/) {
   align_buffer_page_end(src_a, benchmark_width_ * benchmark_height_);
   align_buffer_page_end(src_b, benchmark_width_ * benchmark_height_);
   for (int i = 0; i < benchmark_width_ * benchmark_height_; ++i) {
@@ -518,7 +518,7 @@ TEST_F(LibYUVCompareTest, BenchmarkPsnr_Opt) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, BenchmarkPsnr_Unaligned) {
+TEST_F(LibYUVCompareTest /*unused*/, BenchmarkPsnr_Unaligned /*unused*/) {
   align_buffer_page_end(src_a, benchmark_width_ * benchmark_height_ + 1);
   align_buffer_page_end(src_b, benchmark_width_ * benchmark_height_);
   for (int i = 0; i < benchmark_width_ * benchmark_height_; ++i) {
@@ -543,7 +543,7 @@ TEST_F(LibYUVCompareTest, BenchmarkPsnr_Unaligned) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, Psnr) {
+TEST_F(LibYUVCompareTest /*unused*/, Psnr /*unused*/) {
   const int kSrcWidth = benchmark_width_;
   const int kSrcHeight = benchmark_height_;
   const int b = 128;
@@ -620,7 +620,7 @@ TEST_F(LibYUVCompareTest, Psnr) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, DISABLED_BenchmarkSsim_Opt) {
+TEST_F(LibYUVCompareTest /*unused*/, DISABLED_BenchmarkSsim_Opt /*unused*/) {
   align_buffer_page_end(src_a, benchmark_width_ * benchmark_height_);
   align_buffer_page_end(src_b, benchmark_width_ * benchmark_height_);
   for (int i = 0; i < benchmark_width_ * benchmark_height_; ++i) {
@@ -645,7 +645,7 @@ TEST_F(LibYUVCompareTest, DISABLED_BenchmarkSsim_Opt) {
   free_aligned_buffer_page_end(src_b);
 }
 
-TEST_F(LibYUVCompareTest, Ssim) {
+TEST_F(LibYUVCompareTest /*unused*/, Ssim /*unused*/) {
   const int kSrcWidth = benchmark_width_;
   const int kSrcHeight = benchmark_height_;
   const int b = 128;

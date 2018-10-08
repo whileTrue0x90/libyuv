@@ -27,7 +27,7 @@
 
 namespace libyuv {
 
-TEST_F(LibYUVPlanarTest, TestAttenuate) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestAttenuate /*unused*/) {
   const int kSize = 1280 * 4;
   align_buffer_page_end(orig_pixels, kSize);
   align_buffer_page_end(atten_pixels, kSize);
@@ -150,28 +150,28 @@ static int TestAttenuateI(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAttenuate_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAttenuate_Any /*unused*/) {
   int max_diff = TestAttenuateI(benchmark_width_ - 1, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAttenuate_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAttenuate_Unaligned /*unused*/) {
   int max_diff =
       TestAttenuateI(benchmark_width_, benchmark_height_, benchmark_iterations_,
                      disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAttenuate_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAttenuate_Invert /*unused*/) {
   int max_diff =
       TestAttenuateI(benchmark_width_, benchmark_height_, benchmark_iterations_,
                      disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAttenuate_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAttenuate_Opt /*unused*/) {
   int max_diff =
       TestAttenuateI(benchmark_width_, benchmark_height_, benchmark_iterations_,
                      disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -223,35 +223,35 @@ static int TestUnattenuateI(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBUnattenuate_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBUnattenuate_Any /*unused*/) {
   int max_diff = TestUnattenuateI(benchmark_width_ - 1, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBUnattenuate_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBUnattenuate_Unaligned /*unused*/) {
   int max_diff = TestUnattenuateI(benchmark_width_, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, +1, 1);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBUnattenuate_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBUnattenuate_Invert /*unused*/) {
   int max_diff = TestUnattenuateI(benchmark_width_, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, -1, 0);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBUnattenuate_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBUnattenuate_Opt /*unused*/) {
   int max_diff = TestUnattenuateI(benchmark_width_, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 2);
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBComputeCumulativeSum) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBComputeCumulativeSum /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[16][16][4]);
   SIMD_ALIGNED(int32_t added_pixels[16][16][4]);
 
@@ -277,7 +277,7 @@ TEST_F(LibYUVPlanarTest, TestARGBComputeCumulativeSum) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBGray) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBGray /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   memset(orig_pixels, 0, sizeof(orig_pixels));
 
@@ -348,7 +348,7 @@ TEST_F(LibYUVPlanarTest, TestARGBGray) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBGrayTo) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBGrayTo /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t gray_pixels[1280][4]);
   memset(orig_pixels, 0, sizeof(orig_pixels));
@@ -420,7 +420,7 @@ TEST_F(LibYUVPlanarTest, TestARGBGrayTo) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBSepia) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBSepia /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   memset(orig_pixels, 0, sizeof(orig_pixels));
 
@@ -492,7 +492,7 @@ TEST_F(LibYUVPlanarTest, TestARGBSepia) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBColorMatrix) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBColorMatrix /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels_opt[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels_c[1280][4]);
@@ -568,7 +568,7 @@ TEST_F(LibYUVPlanarTest, TestARGBColorMatrix) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestRGBColorMatrix) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestRGBColorMatrix /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
 
   // Matrix for Sepia.
@@ -628,7 +628,7 @@ TEST_F(LibYUVPlanarTest, TestRGBColorMatrix) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBColorTable) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBColorTable /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   memset(orig_pixels, 0, sizeof(orig_pixels));
 
@@ -684,7 +684,7 @@ TEST_F(LibYUVPlanarTest, TestARGBColorTable) {
 }
 
 // Same as TestARGBColorTable except alpha does not change.
-TEST_F(LibYUVPlanarTest, TestRGBColorTable) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestRGBColorTable /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   memset(orig_pixels, 0, sizeof(orig_pixels));
 
@@ -739,7 +739,7 @@ TEST_F(LibYUVPlanarTest, TestRGBColorTable) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBQuantize) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBQuantize /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
 
   for (int i = 0; i < 1280; ++i) {
@@ -763,7 +763,7 @@ TEST_F(LibYUVPlanarTest, TestARGBQuantize) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBMirror) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBMirror /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels[1280][4]);
 
@@ -786,7 +786,7 @@ TEST_F(LibYUVPlanarTest, TestARGBMirror) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestShade) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestShade /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t shade_pixels[1280][4]);
   memset(orig_pixels, 0, sizeof(orig_pixels));
@@ -844,7 +844,7 @@ TEST_F(LibYUVPlanarTest, TestShade) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBInterpolate) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBInterpolate /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels_0[1280][4]);
   SIMD_ALIGNED(uint8_t orig_pixels_1[1280][4]);
   SIMD_ALIGNED(uint8_t interpolate_pixels[1280][4]);
@@ -925,7 +925,7 @@ TEST_F(LibYUVPlanarTest, TestARGBInterpolate) {
   }
 }
 
-TEST_F(LibYUVPlanarTest, TestInterpolatePlane) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestInterpolatePlane /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels_0[1280]);
   SIMD_ALIGNED(uint8_t orig_pixels_1[1280]);
   SIMD_ALIGNED(uint8_t interpolate_pixels[1280]);
@@ -1102,28 +1102,28 @@ static int TestBlend(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlend_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlend_Any /*unused*/) {
   int max_diff =
       TestBlend(benchmark_width_ - 4, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlend_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlend_Unaligned /*unused*/) {
   int max_diff =
       TestBlend(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlend_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlend_Invert /*unused*/) {
   int max_diff =
       TestBlend(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlend_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlend_Opt /*unused*/) {
   int max_diff =
       TestBlend(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -1194,19 +1194,19 @@ static void TestBlendPlane(int width,
   free_aligned_buffer_page_end(dst_argb_opt);
 }
 
-TEST_F(LibYUVPlanarTest, BlendPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, BlendPlane_Opt /*unused*/) {
   TestBlendPlane(benchmark_width_, benchmark_height_, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
 }
-TEST_F(LibYUVPlanarTest, BlendPlane_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, BlendPlane_Unaligned /*unused*/) {
   TestBlendPlane(benchmark_width_, benchmark_height_, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
 }
-TEST_F(LibYUVPlanarTest, BlendPlane_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, BlendPlane_Any /*unused*/) {
   TestBlendPlane(benchmark_width_ - 4, benchmark_height_, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
 }
-TEST_F(LibYUVPlanarTest, BlendPlane_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, BlendPlane_Invert /*unused*/) {
   TestBlendPlane(benchmark_width_, benchmark_height_, benchmark_iterations_,
                  disable_cpu_flags_, benchmark_cpu_info_, -1, 1);
 }
@@ -1287,26 +1287,26 @@ static void TestI420Blend(int width,
   free_aligned_buffer_page_end(dst_v_opt);
 }
 
-TEST_F(LibYUVPlanarTest, I420Blend_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, I420Blend_Opt /*unused*/) {
   TestI420Blend(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
 }
-TEST_F(LibYUVPlanarTest, I420Blend_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, I420Blend_Unaligned /*unused*/) {
   TestI420Blend(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
 }
 
 // TODO(fbarchard): DISABLED because _Any uses C.  Avoid C and re-enable.
-TEST_F(LibYUVPlanarTest, DISABLED_I420Blend_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, DISABLED_I420Blend_Any /*unused*/) {
   TestI420Blend(benchmark_width_ - 4, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
 }
-TEST_F(LibYUVPlanarTest, I420Blend_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, I420Blend_Invert /*unused*/) {
   TestI420Blend(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
 }
 
-TEST_F(LibYUVPlanarTest, TestAffine) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestAffine /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels_0[1280][4]);
   SIMD_ALIGNED(uint8_t interpolate_pixels_C[1280][4]);
 
@@ -1340,7 +1340,7 @@ TEST_F(LibYUVPlanarTest, TestAffine) {
 #endif
 }
 
-TEST_F(LibYUVPlanarTest, TestCopyPlane) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestCopyPlane /*unused*/) {
   int err = 0;
   int yw = benchmark_width_;
   int yh = benchmark_height_;
@@ -1446,28 +1446,28 @@ static int TestMultiply(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBMultiply_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBMultiply_Any /*unused*/) {
   int max_diff = TestMultiply(benchmark_width_ - 1, benchmark_height_,
                               benchmark_iterations_, disable_cpu_flags_,
                               benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBMultiply_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBMultiply_Unaligned /*unused*/) {
   int max_diff =
       TestMultiply(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBMultiply_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBMultiply_Invert /*unused*/) {
   int max_diff =
       TestMultiply(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBMultiply_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBMultiply_Opt /*unused*/) {
   int max_diff =
       TestMultiply(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -1520,28 +1520,28 @@ static int TestAdd(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAdd_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAdd_Any /*unused*/) {
   int max_diff =
       TestAdd(benchmark_width_ - 1, benchmark_height_, benchmark_iterations_,
               disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAdd_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAdd_Unaligned /*unused*/) {
   int max_diff =
       TestAdd(benchmark_width_, benchmark_height_, benchmark_iterations_,
               disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAdd_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAdd_Invert /*unused*/) {
   int max_diff =
       TestAdd(benchmark_width_, benchmark_height_, benchmark_iterations_,
               disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBAdd_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBAdd_Opt /*unused*/) {
   int max_diff =
       TestAdd(benchmark_width_, benchmark_height_, benchmark_iterations_,
               disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -1594,28 +1594,28 @@ static int TestSubtract(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSubtract_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSubtract_Any /*unused*/) {
   int max_diff = TestSubtract(benchmark_width_ - 1, benchmark_height_,
                               benchmark_iterations_, disable_cpu_flags_,
                               benchmark_cpu_info_, +1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSubtract_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSubtract_Unaligned /*unused*/) {
   int max_diff =
       TestSubtract(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSubtract_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSubtract_Invert /*unused*/) {
   int max_diff =
       TestSubtract(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSubtract_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSubtract_Opt /*unused*/) {
   int max_diff =
       TestSubtract(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -1666,28 +1666,28 @@ static int TestSobel(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobel_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobel_Any /*unused*/) {
   int max_diff =
       TestSobel(benchmark_width_ - 1, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobel_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobel_Unaligned /*unused*/) {
   int max_diff =
       TestSobel(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobel_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobel_Invert /*unused*/) {
   int max_diff =
       TestSobel(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobel_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobel_Opt /*unused*/) {
   int max_diff =
       TestSobel(benchmark_width_, benchmark_height_, benchmark_iterations_,
                 disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -1740,28 +1740,28 @@ static int TestSobelToPlane(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelToPlane_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelToPlane_Any /*unused*/) {
   int max_diff = TestSobelToPlane(benchmark_width_ - 1, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, +1, 0);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelToPlane_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelToPlane_Unaligned /*unused*/) {
   int max_diff = TestSobelToPlane(benchmark_width_, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, +1, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelToPlane_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelToPlane_Invert /*unused*/) {
   int max_diff = TestSobelToPlane(benchmark_width_, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, -1, 0);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelToPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelToPlane_Opt /*unused*/) {
   int max_diff = TestSobelToPlane(benchmark_width_, benchmark_height_,
                                   benchmark_iterations_, disable_cpu_flags_,
                                   benchmark_cpu_info_, +1, 0);
@@ -1812,28 +1812,28 @@ static int TestSobelXY(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelXY_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelXY_Any /*unused*/) {
   int max_diff = TestSobelXY(benchmark_width_ - 1, benchmark_height_,
                              benchmark_iterations_, disable_cpu_flags_,
                              benchmark_cpu_info_, +1, 0);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelXY_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelXY_Unaligned /*unused*/) {
   int max_diff =
       TestSobelXY(benchmark_width_, benchmark_height_, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_, +1, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelXY_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelXY_Invert /*unused*/) {
   int max_diff =
       TestSobelXY(benchmark_width_, benchmark_height_, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_, -1, 0);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBSobelXY_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBSobelXY_Opt /*unused*/) {
   int max_diff =
       TestSobelXY(benchmark_width_, benchmark_height_, benchmark_iterations_,
                   disable_cpu_flags_, benchmark_cpu_info_, +1, 0);
@@ -1890,28 +1890,28 @@ static int TestBlur(int width,
 }
 
 static const int kBlurSize = 55;
-TEST_F(LibYUVPlanarTest, ARGBBlur_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlur_Any /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_ - 1, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, +1, 0, kBlurSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlur_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlur_Unaligned /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, +1, 1, kBlurSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlur_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlur_Invert /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, -1, 0, kBlurSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlur_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlur_Opt /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, +1, 0, kBlurSize);
@@ -1919,35 +1919,35 @@ TEST_F(LibYUVPlanarTest, ARGBBlur_Opt) {
 }
 
 static const int kBlurSmallSize = 5;
-TEST_F(LibYUVPlanarTest, ARGBBlurSmall_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlurSmall_Any /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_ - 1, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, +1, 0, kBlurSmallSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlurSmall_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlurSmall_Unaligned /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, +1, 1, kBlurSmallSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlurSmall_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlurSmall_Invert /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, -1, 0, kBlurSmallSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBBlurSmall_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBBlurSmall_Opt /*unused*/) {
   int max_diff =
       TestBlur(benchmark_width_, benchmark_height_, benchmark_iterations_,
                disable_cpu_flags_, benchmark_cpu_info_, +1, 0, kBlurSmallSize);
   EXPECT_LE(max_diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBPolynomial) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBPolynomial /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels_opt[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels_c[1280][4]);
@@ -2101,7 +2101,8 @@ static void EnableFlushDenormalToZero(void) {
 // exponent to be less than 0.  15 - log2(65536) = -1/  This shouldnt normally
 // happen since scale is 1/(1<<bits) where bits is 9, 10 or 12.
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_16bit_denormal) {
+TEST_F(LibYUVPlanarTest /*unused*/,
+       TestHalfFloatPlane_16bit_denormal /*unused*/) {
 // 32 bit arm rounding on denormal case is off by 1 compared to C.
 #if defined(__arm__)
   EnableFlushDenormalToZero();
@@ -2112,56 +2113,56 @@ TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_16bit_denormal) {
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_16bit_One) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_16bit_One /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f, 65535);
   EXPECT_LE(diff, 1);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_16bit_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_16bit_Opt /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f / 4096.0f, 65535);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_10bit_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_10bit_Opt /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f / 1024.0f, 1023);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_9bit_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_9bit_Opt /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f / 512.0f, 511);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_Opt /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f / 4096.0f, 4095);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_Offby1) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_Offby1 /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f / 4095.0f, 4095);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_One) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_One /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f, 2047);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestHalfFloatPlane_12bit_One) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestHalfFloatPlane_12bit_One /*unused*/) {
   int diff = TestHalfFloatPlane(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, disable_cpu_flags_,
                                 benchmark_cpu_info_, 1.0f, 4095);
@@ -2207,14 +2208,14 @@ float TestByteToFloat(int benchmark_width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, TestByteToFloat) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestByteToFloat /*unused*/) {
   float diff = TestByteToFloat(benchmark_width_, benchmark_height_,
                                benchmark_iterations_, disable_cpu_flags_,
                                benchmark_cpu_info_, 1.0f);
   EXPECT_EQ(0.f, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBLumaColorTable) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBLumaColorTable /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels_opt[1280][4]);
   SIMD_ALIGNED(uint8_t dst_pixels_c[1280][4]);
@@ -2292,7 +2293,7 @@ TEST_F(LibYUVPlanarTest, TestARGBLumaColorTable) {
   free_aligned_buffer_page_end(lumacolortable);
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBCopyAlpha) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBCopyAlpha /*unused*/) {
   const int kSize = benchmark_width_ * benchmark_height_ * 4;
   align_buffer_page_end(orig_pixels, kSize);
   align_buffer_page_end(dst_pixels_opt, kSize);
@@ -2320,7 +2321,7 @@ TEST_F(LibYUVPlanarTest, TestARGBCopyAlpha) {
   free_aligned_buffer_page_end(orig_pixels);
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBExtractAlpha) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBExtractAlpha /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 4);
   align_buffer_page_end(dst_pixels_opt, kPixels);
@@ -2348,7 +2349,7 @@ TEST_F(LibYUVPlanarTest, TestARGBExtractAlpha) {
   free_aligned_buffer_page_end(src_pixels);
 }
 
-TEST_F(LibYUVPlanarTest, TestARGBCopyYToAlpha) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestARGBCopyYToAlpha /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(orig_pixels, kPixels);
   align_buffer_page_end(dst_pixels_opt, kPixels * 4);
@@ -2425,63 +2426,63 @@ static int TestARGBRect(int width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, ARGBRect_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBRect_Any /*unused*/) {
   int max_diff = TestARGBRect(benchmark_width_ - 1, benchmark_height_,
                               benchmark_iterations_, disable_cpu_flags_,
                               benchmark_cpu_info_, +1, 0, 4);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBRect_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBRect_Unaligned /*unused*/) {
   int max_diff =
       TestARGBRect(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 1, 4);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBRect_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBRect_Invert /*unused*/) {
   int max_diff =
       TestARGBRect(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, -1, 0, 4);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, ARGBRect_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, ARGBRect_Opt /*unused*/) {
   int max_diff =
       TestARGBRect(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 0, 4);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, SetPlane_Any) {
+TEST_F(LibYUVPlanarTest /*unused*/, SetPlane_Any /*unused*/) {
   int max_diff = TestARGBRect(benchmark_width_ - 1, benchmark_height_,
                               benchmark_iterations_, disable_cpu_flags_,
                               benchmark_cpu_info_, +1, 0, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, SetPlane_Unaligned) {
+TEST_F(LibYUVPlanarTest /*unused*/, SetPlane_Unaligned /*unused*/) {
   int max_diff =
       TestARGBRect(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 1, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, SetPlane_Invert) {
+TEST_F(LibYUVPlanarTest /*unused*/, SetPlane_Invert /*unused*/) {
   int max_diff =
       TestARGBRect(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, -1, 0, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, SetPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, SetPlane_Opt /*unused*/) {
   int max_diff =
       TestARGBRect(benchmark_width_, benchmark_height_, benchmark_iterations_,
                    disable_cpu_flags_, benchmark_cpu_info_, +1, 0, 1);
   EXPECT_EQ(0, max_diff);
 }
 
-TEST_F(LibYUVPlanarTest, MergeUVPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, MergeUVPlane_Opt /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 2);
   align_buffer_page_end(tmp_pixels_u, kPixels);
@@ -2525,7 +2526,7 @@ TEST_F(LibYUVPlanarTest, MergeUVPlane_Opt) {
   free_aligned_buffer_page_end(dst_pixels_c);
 }
 
-TEST_F(LibYUVPlanarTest, SplitUVPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, SplitUVPlane_Opt /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 2);
   align_buffer_page_end(tmp_pixels_u, kPixels);
@@ -2568,7 +2569,7 @@ TEST_F(LibYUVPlanarTest, SplitUVPlane_Opt) {
   free_aligned_buffer_page_end(dst_pixels_c);
 }
 
-TEST_F(LibYUVPlanarTest, MergeRGBPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, MergeRGBPlane_Opt /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 3);
   align_buffer_page_end(tmp_pixels_r, kPixels);
@@ -2616,7 +2617,7 @@ TEST_F(LibYUVPlanarTest, MergeRGBPlane_Opt) {
   free_aligned_buffer_page_end(dst_pixels_c);
 }
 
-TEST_F(LibYUVPlanarTest, SplitRGBPlane_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, SplitRGBPlane_Opt /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 3);
   align_buffer_page_end(tmp_pixels_r, kPixels);
@@ -2665,7 +2666,7 @@ TEST_F(LibYUVPlanarTest, SplitRGBPlane_Opt) {
 
 // TODO(fbarchard): improve test for platforms and cpu detect
 #ifdef HAS_MERGEUVROW_16_AVX2
-TEST_F(LibYUVPlanarTest, MergeUVRow_16_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, MergeUVRow_16_Opt /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_u, kPixels * 2);
   align_buffer_page_end(src_pixels_v, kPixels * 2);
@@ -2709,7 +2710,7 @@ TEST_F(LibYUVPlanarTest, MergeUVRow_16_Opt) {
 
 // TODO(fbarchard): Improve test for more platforms.
 #ifdef HAS_MULTIPLYROW_16_AVX2
-TEST_F(LibYUVPlanarTest, MultiplyRow_16_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, MultiplyRow_16_Opt /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_y, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_opt, kPixels * 2);
@@ -2745,7 +2746,7 @@ TEST_F(LibYUVPlanarTest, MultiplyRow_16_Opt) {
 }
 #endif  // HAS_MULTIPLYROW_16_AVX2
 
-TEST_F(LibYUVPlanarTest, Convert16To8Plane) {
+TEST_F(LibYUVPlanarTest /*unused*/, Convert16To8Plane /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_y, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_opt, kPixels);
@@ -2778,7 +2779,7 @@ TEST_F(LibYUVPlanarTest, Convert16To8Plane) {
 
 // TODO(fbarchard): Improve test for more platforms.
 #ifdef HAS_CONVERT16TO8ROW_AVX2
-TEST_F(LibYUVPlanarTest, Convert16To8Row_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, Convert16To8Row_Opt /*unused*/) {
   // AVX2 does multiple of 32, so round count up
   const int kPixels = (benchmark_width_ * benchmark_height_ + 31) & ~31;
   align_buffer_page_end(src_pixels_y, kPixels * 2);
@@ -2822,7 +2823,7 @@ TEST_F(LibYUVPlanarTest, Convert16To8Row_Opt) {
 }
 #endif  // HAS_CONVERT16TO8ROW_AVX2
 
-TEST_F(LibYUVPlanarTest, Convert8To16Plane) {
+TEST_F(LibYUVPlanarTest /*unused*/, Convert8To16Plane /*unused*/) {
   const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_y, kPixels);
   align_buffer_page_end(dst_pixels_y_opt, kPixels * 2);
@@ -2857,7 +2858,7 @@ TEST_F(LibYUVPlanarTest, Convert8To16Plane) {
 
 // TODO(fbarchard): Improve test for more platforms.
 #ifdef HAS_CONVERT8TO16ROW_AVX2
-TEST_F(LibYUVPlanarTest, Convert8To16Row_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, Convert8To16Row_Opt /*unused*/) {
   const int kPixels = (benchmark_width_ * benchmark_height_ + 31) & ~31;
   align_buffer_page_end(src_pixels_y, kPixels);
   align_buffer_page_end(dst_pixels_y_opt, kPixels * 2);
@@ -2954,13 +2955,13 @@ float TestScaleMaxSamples(int benchmark_width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, TestScaleMaxSamples_C) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestScaleMaxSamples_C /*unused*/) {
   float diff = TestScaleMaxSamples(benchmark_width_, benchmark_height_,
                                    benchmark_iterations_, 1.2f, false);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestScaleMaxSamples_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestScaleMaxSamples_Opt /*unused*/) {
   float diff = TestScaleMaxSamples(benchmark_width_, benchmark_height_,
                                    benchmark_iterations_, 1.2f, true);
   EXPECT_EQ(0, diff);
@@ -3033,13 +3034,13 @@ float TestScaleSumSamples(int benchmark_width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, TestScaleSumSamples_C) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestScaleSumSamples_C /*unused*/) {
   float diff = TestScaleSumSamples(benchmark_width_, benchmark_height_,
                                    benchmark_iterations_, 1.2f, false);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestScaleSumSamples_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestScaleSumSamples_Opt /*unused*/) {
   float diff = TestScaleSumSamples(benchmark_width_, benchmark_height_,
                                    benchmark_iterations_, 1.2f, true);
   EXPECT_EQ(0, diff);
@@ -3097,13 +3098,13 @@ float TestScaleSamples(int benchmark_width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, TestScaleSamples_C) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestScaleSamples_C /*unused*/) {
   float diff = TestScaleSamples(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, 1.2f, false);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestScaleSamples_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestScaleSamples_Opt /*unused*/) {
   float diff = TestScaleSamples(benchmark_width_, benchmark_height_,
                                 benchmark_iterations_, 1.2f, true);
   EXPECT_EQ(0, diff);
@@ -3157,13 +3158,13 @@ float TestCopySamples(int benchmark_width,
   return max_diff;
 }
 
-TEST_F(LibYUVPlanarTest, TestCopySamples_C) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestCopySamples_C /*unused*/) {
   float diff = TestCopySamples(benchmark_width_, benchmark_height_,
                                benchmark_iterations_, false);
   EXPECT_EQ(0, diff);
 }
 
-TEST_F(LibYUVPlanarTest, TestCopySamples_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestCopySamples_Opt /*unused*/) {
   float diff = TestCopySamples(benchmark_width_, benchmark_height_,
                                benchmark_iterations_, true);
   EXPECT_EQ(0, diff);
@@ -3172,7 +3173,7 @@ TEST_F(LibYUVPlanarTest, TestCopySamples_Opt) {
 extern "C" void GaussRow_NEON(const uint32_t* src, uint16_t* dst, int width);
 extern "C" void GaussRow_C(const uint32_t* src, uint16_t* dst, int width);
 
-TEST_F(LibYUVPlanarTest, TestGaussRow_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestGaussRow_Opt /*unused*/) {
   SIMD_ALIGNED(uint32_t orig_pixels[640 + 4]);
   SIMD_ALIGNED(uint16_t dst_pixels_c[640]);
   SIMD_ALIGNED(uint16_t dst_pixels_opt[640]);
@@ -3223,7 +3224,7 @@ extern "C" void GaussCol_C(const uint16_t* src0,
                            uint32_t* dst,
                            int width);
 
-TEST_F(LibYUVPlanarTest, TestGaussCol_Opt) {
+TEST_F(LibYUVPlanarTest /*unused*/, TestGaussCol_Opt /*unused*/) {
   SIMD_ALIGNED(uint16_t orig_pixels[640 * 5]);
   SIMD_ALIGNED(uint32_t dst_pixels_c[640]);
   SIMD_ALIGNED(uint32_t dst_pixels_opt[640]);

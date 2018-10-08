@@ -1234,7 +1234,7 @@ TESTSYM(ARGBToABGR, 4, 4, 1)
 TESTSYM(BGRAToARGB, 4, 4, 1)
 TESTSYM(ABGRToARGB, 4, 4, 1)
 
-TEST_F(LibYUVConvertTest, Test565) {
+TEST_F(LibYUVConvertTest /*unused*/, Test565 /*unused*/) {
   SIMD_ALIGNED(uint8_t orig_pixels[256][4]);
   SIMD_ALIGNED(uint8_t pixels565[256][2]);
 
@@ -1249,7 +1249,7 @@ TEST_F(LibYUVConvertTest, Test565) {
 }
 
 #ifdef HAVE_JPEG
-TEST_F(LibYUVConvertTest, ValidateJpeg) {
+TEST_F(LibYUVConvertTest /*unused*/, ValidateJpeg /*unused*/) {
   const int kOff = 10;
   const int kMinJpeg = 64;
   const int kImageSize = benchmark_width_ * benchmark_height_ >= kMinJpeg
@@ -1277,7 +1277,7 @@ TEST_F(LibYUVConvertTest, ValidateJpeg) {
   free_aligned_buffer_page_end(orig_pixels);
 }
 
-TEST_F(LibYUVConvertTest, ValidateJpegLarge) {
+TEST_F(LibYUVConvertTest /*unused*/, ValidateJpegLarge /*unused*/) {
   const int kOff = 10;
   const int kMinJpeg = 64;
   const int kImageSize = benchmark_width_ * benchmark_height_ >= kMinJpeg
@@ -1303,7 +1303,7 @@ TEST_F(LibYUVConvertTest, ValidateJpegLarge) {
   free_aligned_buffer_page_end(orig_pixels);
 }
 
-TEST_F(LibYUVConvertTest, InvalidateJpeg) {
+TEST_F(LibYUVConvertTest /*unused*/, InvalidateJpeg /*unused*/) {
   const int kOff = 10;
   const int kMinJpeg = 64;
   const int kImageSize = benchmark_width_ * benchmark_height_ >= kMinJpeg
@@ -1342,7 +1342,7 @@ TEST_F(LibYUVConvertTest, InvalidateJpeg) {
   free_aligned_buffer_page_end(orig_pixels);
 }
 
-TEST_F(LibYUVConvertTest, FuzzJpeg) {
+TEST_F(LibYUVConvertTest /*unused*/, FuzzJpeg /*unused*/) {
   // SOI but no EOI. Expect fail.
   for (int times = 0; times < benchmark_iterations_; ++times) {
     const int kSize = fastrand() % 5000 + 2;
@@ -1358,7 +1358,7 @@ TEST_F(LibYUVConvertTest, FuzzJpeg) {
   }
 }
 
-TEST_F(LibYUVConvertTest, MJPGToI420) {
+TEST_F(LibYUVConvertTest /*unused*/, MJPGToI420 /*unused*/) {
   const int kOff = 10;
   const int kMinJpeg = 64;
   const int kImageSize = benchmark_width_ * benchmark_height_ >= kMinJpeg
@@ -1395,7 +1395,7 @@ TEST_F(LibYUVConvertTest, MJPGToI420) {
   free_aligned_buffer_page_end(orig_pixels);
 }
 
-TEST_F(LibYUVConvertTest, MJPGToARGB) {
+TEST_F(LibYUVConvertTest /*unused*/, MJPGToARGB /*unused*/) {
   const int kOff = 10;
   const int kMinJpeg = 64;
   const int kImageSize = benchmark_width_ * benchmark_height_ >= kMinJpeg
@@ -1426,7 +1426,7 @@ TEST_F(LibYUVConvertTest, MJPGToARGB) {
 
 #endif  // HAVE_JPEG
 
-TEST_F(LibYUVConvertTest, NV12Crop) {
+TEST_F(LibYUVConvertTest /*unused*/, NV12Crop /*unused*/) {
   const int SUBSAMP_X = 2;
   const int SUBSAMP_Y = 2;
   const int kWidth = benchmark_width_;
@@ -1506,7 +1506,7 @@ TEST_F(LibYUVConvertTest, NV12Crop) {
   free_aligned_buffer_page_end(src_y);
 }
 
-TEST_F(LibYUVConvertTest, I420CropOddY) {
+TEST_F(LibYUVConvertTest /*unused*/, I420CropOddY /*unused*/) {
   const int SUBSAMP_X = 2;
   const int SUBSAMP_Y = 2;
   const int kWidth = benchmark_width_;
@@ -1578,7 +1578,7 @@ TEST_F(LibYUVConvertTest, I420CropOddY) {
   free_aligned_buffer_page_end(src_y);
 }
 
-TEST_F(LibYUVConvertTest, TestYToARGB) {
+TEST_F(LibYUVConvertTest /*unused*/, TestYToARGB /*unused*/) {
   uint8_t y[32];
   uint8_t expectedg[32];
   for (int i = 0; i < 32; ++i) {
@@ -1601,7 +1601,7 @@ static const uint8_t kNoDither4x4[16] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-TEST_F(LibYUVConvertTest, TestNoDither) {
+TEST_F(LibYUVConvertTest /*unused*/, TestNoDither /*unused*/) {
   align_buffer_page_end(src_argb, benchmark_width_ * benchmark_height_ * 4);
   align_buffer_page_end(dst_rgb565, benchmark_width_ * benchmark_height_ * 2);
   align_buffer_page_end(dst_rgb565dither,
@@ -1628,7 +1628,7 @@ static const uint8_t kDither565_4x4[16] = {
     0, 4, 1, 5, 6, 2, 7, 3, 1, 5, 0, 4, 7, 3, 6, 2,
 };
 
-TEST_F(LibYUVConvertTest, TestDither) {
+TEST_F(LibYUVConvertTest /*unused*/, TestDither /*unused*/) {
   align_buffer_page_end(src_argb, benchmark_width_ * benchmark_height_ * 4);
   align_buffer_page_end(dst_rgb565, benchmark_width_ * benchmark_height_ * 2);
   align_buffer_page_end(dst_rgb565dither,
@@ -2020,7 +2020,7 @@ TESTPLANETOE(ABGR, 1, 4, AB30, 1, 4, ABGR, 4)
 TESTPLANETOE(AB30, 1, 4, ARGB, 1, 4, ABGR, 4)
 TESTPLANETOE(AB30, 1, 4, ABGR, 1, 4, ARGB, 4)
 
-TEST_F(LibYUVConvertTest, RotateWithARGBSource) {
+TEST_F(LibYUVConvertTest /*unused*/, RotateWithARGBSource /*unused*/) {
   // 2x2 frames
   uint32_t src[4];
   uint32_t dst[4];
@@ -2056,7 +2056,7 @@ TEST_F(LibYUVConvertTest, RotateWithARGBSource) {
 }
 
 #ifdef HAS_ARGBTOAR30ROW_AVX2
-TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
+TEST_F(LibYUVConvertTest /*unused*/, ARGBToAR30Row_Opt /*unused*/) {
   // ARGBToAR30Row_AVX2 expects a multiple of 8 pixels.
   const int kPixels = (benchmark_width_ * benchmark_height_ + 7) & ~7;
   align_buffer_page_end(src, kPixels * 4);
@@ -2090,7 +2090,7 @@ TEST_F(LibYUVConvertTest, ARGBToAR30Row_Opt) {
 #endif  // HAS_ARGBTOAR30ROW_AVX2
 
 #ifdef HAS_ABGRTOAR30ROW_AVX2
-TEST_F(LibYUVConvertTest, ABGRToAR30Row_Opt) {
+TEST_F(LibYUVConvertTest /*unused*/, ABGRToAR30Row_Opt /*unused*/) {
   // ABGRToAR30Row_AVX2 expects a multiple of 8 pixels.
   const int kPixels = (benchmark_width_ * benchmark_height_ + 7) & ~7;
   align_buffer_page_end(src, kPixels * 4);
@@ -2218,7 +2218,7 @@ static int Clamp10(int y) {
 }
 
 // Test 8 bit YUV to 8 bit RGB
-TEST_F(LibYUVConvertTest, TestH420ToARGB) {
+TEST_F(LibYUVConvertTest /*unused*/, TestH420ToARGB /*unused*/) {
   const int kSize = 256;
   int histogram_b[256];
   int histogram_g[256];
@@ -2279,7 +2279,7 @@ TEST_F(LibYUVConvertTest, TestH420ToARGB) {
 }
 
 // Test 10 bit YUV to 8 bit RGB
-TEST_F(LibYUVConvertTest, TestH010ToARGB) {
+TEST_F(LibYUVConvertTest /*unused*/, TestH010ToARGB /*unused*/) {
   const int kSize = 1024;
   int histogram_b[1024];
   int histogram_g[1024];
@@ -2341,7 +2341,7 @@ TEST_F(LibYUVConvertTest, TestH010ToARGB) {
 
 // Test 10 bit YUV to 10 bit RGB
 // Caveat: Result is near due to float rounding in expected result.
-TEST_F(LibYUVConvertTest, TestH010ToAR30) {
+TEST_F(LibYUVConvertTest /*unused*/, TestH010ToAR30 /*unused*/) {
   const int kSize = 1024;
   int histogram_b[1024];
   int histogram_g[1024];
@@ -2404,7 +2404,7 @@ TEST_F(LibYUVConvertTest, TestH010ToAR30) {
 
 // Test 10 bit YUV to 10 bit RGB
 // Caveat: Result is near due to float rounding in expected result.
-TEST_F(LibYUVConvertTest, TestH010ToAB30) {
+TEST_F(LibYUVConvertTest /*unused*/, TestH010ToAB30 /*unused*/) {
   const int kSize = 1024;
   int histogram_b[1024];
   int histogram_g[1024];
@@ -2466,7 +2466,7 @@ TEST_F(LibYUVConvertTest, TestH010ToAB30) {
 }
 
 // Test 8 bit YUV to 10 bit RGB
-TEST_F(LibYUVConvertTest, TestH420ToAR30) {
+TEST_F(LibYUVConvertTest /*unused*/, TestH420ToAR30 /*unused*/) {
   const int kSize = 256;
   const int kHistSize = 1024;
   int histogram_b[kHistSize];
@@ -2528,7 +2528,7 @@ TEST_F(LibYUVConvertTest, TestH420ToAR30) {
 }
 
 // Test RGB24 to ARGB and back to RGB24
-TEST_F(LibYUVConvertTest, TestARGBToRGB24) {
+TEST_F(LibYUVConvertTest /*unused*/, TestARGBToRGB24 /*unused*/) {
   const int kSize = 256;
   align_buffer_page_end(orig_rgb24, kSize * 3);
   align_buffer_page_end(argb_pixels, kSize * 4);

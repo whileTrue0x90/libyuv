@@ -439,7 +439,7 @@ static int YUVToARGBTestFilter(int src_width,
   return max_diff;
 }
 
-TEST_F(LibYUVScaleTest, YUVToRGBScaleUp) {
+TEST_F(LibYUVScaleTest /*unused*/, YUVToRGBScaleUp /*unused*/) {
   int diff =
       YUVToARGBTestFilter(benchmark_width_, benchmark_height_,
                           benchmark_width_ * 3 / 2, benchmark_height_ * 3 / 2,
@@ -447,7 +447,7 @@ TEST_F(LibYUVScaleTest, YUVToRGBScaleUp) {
   EXPECT_LE(diff, 10);
 }
 
-TEST_F(LibYUVScaleTest, YUVToRGBScaleDown) {
+TEST_F(LibYUVScaleTest /*unused*/, YUVToRGBScaleDown /*unused*/) {
   int diff = YUVToARGBTestFilter(
       benchmark_width_ * 3 / 2, benchmark_height_ * 3 / 2, benchmark_width_,
       benchmark_height_, libyuv::kFilterBilinear, benchmark_iterations_);
