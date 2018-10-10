@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b6bd7a8_73bc8355",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-10-10T17:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ace9b595_defd74d9",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "c698676e2187ac7458180199dcd8a24461343397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1bcc63b_d6def34d",
         "filename": "source/convert_argb.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c698676e2187ac7458180199dcd8a24461343397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fa972b_c82a44e6",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-10-10T17:52:05Z",
+      "side": 1,
+      "message": "No, this is where a trick comes in.  To adapt NV21ToRGB24 to end swap the RGB, you swap the UV and use a horizontally mirrored 3x3 conversion matrix that produces R,G,B instead of B,G,R.\nWith NV12 and NV21 you swap the UV by switching from NV12 to NV21 and NV21 to NV12.\nThe mirrored matrix is YvuI601Constants instead of YuvI601Constants\nYou can look at NV12ToARGB and NV12ToABGR for reference.",
+      "parentUuid": "f1bcc63b_d6def34d",
+      "range": {
+        "startLine": 1998,
+        "startChar": 9,
+        "endLine": 1998,
+        "endChar": 26
+      },
+      "revId": "c698676e2187ac7458180199dcd8a24461343397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
