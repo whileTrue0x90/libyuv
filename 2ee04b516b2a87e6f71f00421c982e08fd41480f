@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c594d7cb_faceddc6",
+        "filename": "source/convert_jpeg.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2018-10-24T18:19:10Z",
+      "side": 1,
+      "message": "Looks like you cleaned up a redundant HAVE_JPEG?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d8675c_3bafef99",
+        "filename": "source/convert_jpeg.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2018-10-24T18:19:10Z",
+      "side": 1,
+      "message": "Is there any documentation about the data/strides setup?",
+      "range": {
+        "startLine": 207,
+        "startChar": 13,
+        "endLine": 207,
+        "endChar": 17
+      },
+      "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948e3b4a_072c9da1",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2018-10-24T18:19:10Z",
+      "side": 1,
+      "message": "Not rounding up?",
+      "range": {
+        "startLine": 1695,
+        "startChar": 6,
+        "endLine": 1695,
+        "endChar": 28
+      },
+      "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
