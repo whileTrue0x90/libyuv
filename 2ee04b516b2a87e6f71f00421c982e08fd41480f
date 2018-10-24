@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a95d9959_f2228b98",
+        "filename": "source/convert_jpeg.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-10-24T21:18:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c594d7cb_faceddc6",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d8675c_3bafef99",
         "filename": "source/convert_jpeg.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "af5d82dc_d60ac422",
+        "filename": "source/convert_jpeg.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-10-24T21:18:29Z",
+      "side": 1,
+      "message": "Its just how the internals of jpeg pass down the 3 planes.  The public API doesnt expose there.\nThere are 3 pointers and 3 strides for the 3 planes which are Y,U,V.",
+      "parentUuid": "91d8675c_3bafef99",
+      "range": {
+        "startLine": 207,
+        "startChar": 13,
+        "endLine": 207,
+        "endChar": 17
+      },
+      "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "948e3b4a_072c9da1",
         "filename": "unit_test/convert_test.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84a5cba_0a9cd938",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2018-10-24T21:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "948e3b4a_072c9da1",
+      "range": {
+        "startLine": 1695,
+        "startChar": 6,
+        "endLine": 1695,
+        "endChar": 28
+      },
+      "revId": "2ee04b516b2a87e6f71f00421c982e08fd41480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
