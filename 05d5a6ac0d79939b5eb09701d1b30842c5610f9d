@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ece1a0_14211602",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-10-25T18:36:16Z",
+      "side": 1,
+      "message": "nit: s/store/load/, right?",
+      "range": {
+        "startLine": 548,
+        "startChar": 57,
+        "endLine": 548,
+        "endChar": 62
+      },
+      "revId": "05d5a6ac0d79939b5eb09701d1b30842c5610f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
