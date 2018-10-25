@@ -538,6 +538,28 @@ void ScaleAddRows_NEON(const uint8_t* src_ptr,
       );
 }
 
+// Add a row of bytes to a row of shorts.  Used for box filter.
+// Reads 16 bytes and accumulates to 16 shorts at a time.
+void ScaleAddRow_NEON(const uint8_t* src_ptr,
+                      uint16_t* dst_ptr,
+                      int src_width) {
+  asm volatile(
+      "1:                                        \n"
+      "vld1.16    {q1, q2}, [%1]                 \n"  // store pixels
+      "vld1.8     {q0}, [%0]!                    \n"
+      "vaddw.u8   q2, q2, d1                     \n"
+      "vaddw.u8   q1, q1, d0                     \n"
+      "vst1.16    {q1, q2}, [%1]!                \n"  // store pixels
+      "subs       %2, %2, #16                    \n"  // 16 processed per loop
+      "bgt        1b                             \n"
+      : "+r"(src_ptr),   // %0
+        "+r"(dst_ptr),   // %1
+        "+r"(src_width)  // %2
+      :
+      : "memory", "cc", "q0", "q1", "q2"  // Clobber List
+      );
+}
+
 // TODO(Yang Zhang): Investigate less load instructions for
 // the x/dx stepping
 #define LOAD2_DATA8_LANE(n)                      \
