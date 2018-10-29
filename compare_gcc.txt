@@ -1,0 +1,203 @@
+
+out/Release/obj/libyuv_internal/compare_gcc.o:     file format elf64-x86-64
+
+
+Disassembly of section .text.HammingDistance_SSE42:
+
+0000000000000000 <HammingDistance_SSE42>:
+   0:	41 56                	push   %r14
+   2:	53                   	push   %rbx
+   3:	41 89 d3             	mov    %edx,%r11d
+   6:	49 89 f6             	mov    %rsi,%r14
+   9:	48 89 fb             	mov    %rdi,%rbx
+   c:	48 31 c0             	xor    %rax,%rax
+   f:	4d 31 c0             	xor    %r8,%r8
+  12:	4d 31 c9             	xor    %r9,%r9
+  15:	4d 31 d2             	xor    %r10,%r10
+  18:	48 8b 0b             	mov    (%rbx),%rcx
+  1b:	48 8b 53 08          	mov    0x8(%rbx),%rdx
+  1f:	49 33 0e             	xor    (%r14),%rcx
+  22:	49 33 56 08          	xor    0x8(%r14),%rdx
+  26:	f3 48 0f b8 c9       	popcnt %rcx,%rcx
+  2b:	f3 48 0f b8 d2       	popcnt %rdx,%rdx
+  30:	48 8b 73 10          	mov    0x10(%rbx),%rsi
+  34:	48 8b 7b 18          	mov    0x18(%rbx),%rdi
+  38:	49 33 76 10          	xor    0x10(%r14),%rsi
+  3c:	49 33 7e 18          	xor    0x18(%r14),%rdi
+  40:	f3 48 0f b8 f6       	popcnt %rsi,%rsi
+  45:	f3 48 0f b8 ff       	popcnt %rdi,%rdi
+  4a:	48 83 c3 20          	add    $0x20,%rbx
+  4e:	49 83 c6 20          	add    $0x20,%r14
+  52:	48 01 c8             	add    %rcx,%rax
+  55:	49 01 d0             	add    %rdx,%r8
+  58:	49 01 f1             	add    %rsi,%r9
+  5b:	49 01 fa             	add    %rdi,%r10
+  5e:	41 83 eb 20          	sub    $0x20,%r11d
+  62:	7f b4                	jg     18 <HammingDistance_SSE42+0x18>
+  64:	4c 01 c0             	add    %r8,%rax
+  67:	4c 01 c8             	add    %r9,%rax
+  6a:	4c 01 d0             	add    %r10,%rax
+  6d:	5b                   	pop    %rbx
+  6e:	41 5e                	pop    %r14
+  70:	c3                   	retq   
+
+Disassembly of section .text.HammingDistance_SSSE3:
+
+0000000000000000 <HammingDistance_SSSE3>:
+   0:	66 0f 6f 15 00 00 00 	movdqa 0x0(%rip),%xmm2        # 8 <HammingDistance_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 10 <HammingDistance_SSSE3+0x10>
+   f:	00 
+  10:	66 0f ef c0          	pxor   %xmm0,%xmm0
+  14:	66 0f ef c9          	pxor   %xmm1,%xmm1
+  18:	48 29 fe             	sub    %rdi,%rsi
+  1b:	66 0f 6f 27          	movdqa (%rdi),%xmm4
+  1f:	66 0f 6f 6f 10       	movdqa 0x10(%rdi),%xmm5
+  24:	66 0f ef 24 37       	pxor   (%rdi,%rsi,1),%xmm4
+  29:	66 0f 6f f4          	movdqa %xmm4,%xmm6
+  2d:	66 0f db f2          	pand   %xmm2,%xmm6
+  31:	66 0f 71 d4 04       	psrlw  $0x4,%xmm4
+  36:	66 0f 6f fb          	movdqa %xmm3,%xmm7
+  3a:	66 0f 38 00 fe       	pshufb %xmm6,%xmm7
+  3f:	66 0f db e2          	pand   %xmm2,%xmm4
+  43:	66 0f 6f f3          	movdqa %xmm3,%xmm6
+  47:	66 0f 38 00 f4       	pshufb %xmm4,%xmm6
+  4c:	66 0f fc f7          	paddb  %xmm7,%xmm6
+  50:	66 0f ef 6c 37 10    	pxor   0x10(%rdi,%rsi,1),%xmm5
+  56:	48 83 c7 20          	add    $0x20,%rdi
+  5a:	66 0f 6f e5          	movdqa %xmm5,%xmm4
+  5e:	66 0f db ea          	pand   %xmm2,%xmm5
+  62:	66 0f 71 d4 04       	psrlw  $0x4,%xmm4
+  67:	66 0f 6f fb          	movdqa %xmm3,%xmm7
+  6b:	66 0f 38 00 fd       	pshufb %xmm5,%xmm7
+  70:	66 0f db e2          	pand   %xmm2,%xmm4
+  74:	66 0f 6f eb          	movdqa %xmm3,%xmm5
+  78:	66 0f 38 00 ec       	pshufb %xmm4,%xmm5
+  7d:	66 0f fc ef          	paddb  %xmm7,%xmm5
+  81:	66 0f fc f5          	paddb  %xmm5,%xmm6
+  85:	66 0f f6 f1          	psadbw %xmm1,%xmm6
+  89:	66 0f fe c6          	paddd  %xmm6,%xmm0
+  8d:	83 ea 20             	sub    $0x20,%edx
+  90:	7f 89                	jg     1b <HammingDistance_SSSE3+0x1b>
+  92:	66 0f 70 c8 aa       	pshufd $0xaa,%xmm0,%xmm1
+  97:	66 0f fe c1          	paddd  %xmm1,%xmm0
+  9b:	66 0f 7e c0          	movd   %xmm0,%eax
+  9f:	c3                   	retq   
+
+Disassembly of section .text.HammingDistance_AVX2:
+
+0000000000000000 <HammingDistance_AVX2>:
+   0:	c4 e2 7d 1a 15 00 00 	vbroadcastf128 0x0(%rip),%ymm2        # 9 <HammingDistance_AVX2+0x9>
+   7:	00 00 
+   9:	c4 e2 7d 1a 1d 00 00 	vbroadcastf128 0x0(%rip),%ymm3        # 12 <HammingDistance_AVX2+0x12>
+  10:	00 00 
+  12:	c5 fd ef c0          	vpxor  %ymm0,%ymm0,%ymm0
+  16:	c5 f5 ef c9          	vpxor  %ymm1,%ymm1,%ymm1
+  1a:	48 29 fe             	sub    %rdi,%rsi
+  1d:	c5 fd 6f 27          	vmovdqa (%rdi),%ymm4
+  21:	c5 fd 6f 6f 20       	vmovdqa 0x20(%rdi),%ymm5
+  26:	c5 dd ef 24 37       	vpxor  (%rdi,%rsi,1),%ymm4,%ymm4
+  2b:	c5 dd db f2          	vpand  %ymm2,%ymm4,%ymm6
+  2f:	c5 dd 71 d4 04       	vpsrlw $0x4,%ymm4,%ymm4
+  34:	c4 e2 65 00 f6       	vpshufb %ymm6,%ymm3,%ymm6
+  39:	c5 dd db e2          	vpand  %ymm2,%ymm4,%ymm4
+  3d:	c4 e2 65 00 e4       	vpshufb %ymm4,%ymm3,%ymm4
+  42:	c5 cd fc f4          	vpaddb %ymm4,%ymm6,%ymm6
+  46:	c5 d5 ef 64 37 20    	vpxor  0x20(%rdi,%rsi,1),%ymm5,%ymm4
+  4c:	48 83 c7 40          	add    $0x40,%rdi
+  50:	c5 dd db ea          	vpand  %ymm2,%ymm4,%ymm5
+  54:	c5 dd 71 d4 04       	vpsrlw $0x4,%ymm4,%ymm4
+  59:	c4 e2 65 00 ed       	vpshufb %ymm5,%ymm3,%ymm5
+  5e:	c5 dd db e2          	vpand  %ymm2,%ymm4,%ymm4
+  62:	c4 e2 65 00 e4       	vpshufb %ymm4,%ymm3,%ymm4
+  67:	c5 dd fc e5          	vpaddb %ymm5,%ymm4,%ymm4
+  6b:	c5 dd fc e6          	vpaddb %ymm6,%ymm4,%ymm4
+  6f:	c5 dd f6 e1          	vpsadbw %ymm1,%ymm4,%ymm4
+  73:	c5 dd fe c0          	vpaddd %ymm0,%ymm4,%ymm0
+  77:	83 ea 40             	sub    $0x40,%edx
+  7a:	7f a1                	jg     1d <HammingDistance_AVX2+0x1d>
+  7c:	c4 e3 fd 00 c8 b1    	vpermq $0xb1,%ymm0,%ymm1
+  82:	c5 fd fe c1          	vpaddd %ymm1,%ymm0,%ymm0
+  86:	c4 e3 fd 00 c8 aa    	vpermq $0xaa,%ymm0,%ymm1
+  8c:	c5 fd fe c1          	vpaddd %ymm1,%ymm0,%ymm0
+  90:	c5 f9 7e c0          	vmovd  %xmm0,%eax
+  94:	c5 f8 77             	vzeroupper 
+  97:	c3                   	retq   
+
+Disassembly of section .text.SumSquareError_SSE2:
+
+0000000000000000 <SumSquareError_SSE2>:
+   0:	66 0f ef c0          	pxor   %xmm0,%xmm0
+   4:	66 0f ef ed          	pxor   %xmm5,%xmm5
+   8:	f3 0f 6f 0f          	movdqu (%rdi),%xmm1
+   c:	48 8d 7f 10          	lea    0x10(%rdi),%rdi
+  10:	f3 0f 6f 16          	movdqu (%rsi),%xmm2
+  14:	48 8d 76 10          	lea    0x10(%rsi),%rsi
+  18:	66 0f 6f d9          	movdqa %xmm1,%xmm3
+  1c:	66 0f d8 ca          	psubusb %xmm2,%xmm1
+  20:	66 0f d8 d3          	psubusb %xmm3,%xmm2
+  24:	66 0f eb ca          	por    %xmm2,%xmm1
+  28:	66 0f 6f d1          	movdqa %xmm1,%xmm2
+  2c:	66 0f 60 cd          	punpcklbw %xmm5,%xmm1
+  30:	66 0f 68 d5          	punpckhbw %xmm5,%xmm2
+  34:	66 0f f5 c9          	pmaddwd %xmm1,%xmm1
+  38:	66 0f f5 d2          	pmaddwd %xmm2,%xmm2
+  3c:	66 0f fe c1          	paddd  %xmm1,%xmm0
+  40:	66 0f fe c2          	paddd  %xmm2,%xmm0
+  44:	83 ea 10             	sub    $0x10,%edx
+  47:	7f bf                	jg     8 <SumSquareError_SSE2+0x8>
+  49:	66 0f 70 c8 ee       	pshufd $0xee,%xmm0,%xmm1
+  4e:	66 0f fe c1          	paddd  %xmm1,%xmm0
+  52:	66 0f 70 c8 01       	pshufd $0x1,%xmm0,%xmm1
+  57:	66 0f fe c1          	paddd  %xmm1,%xmm0
+  5b:	66 0f 7e 44 24 fc    	movd   %xmm0,-0x4(%rsp)
+  61:	8b 44 24 fc          	mov    -0x4(%rsp),%eax
+  65:	c3                   	retq   
+
+Disassembly of section .text.HashDjb2_SSE41:
+
+0000000000000000 <HashDjb2_SSE41>:
+   0:	89 54 24 fc          	mov    %edx,-0x4(%rsp)
+   4:	66 0f 6e c2          	movd   %edx,%xmm0
+   8:	66 0f ef ff          	pxor   %xmm7,%xmm7
+   c:	66 0f 6f 35 00 00 00 	movdqa 0x0(%rip),%xmm6        # 14 <HashDjb2_SSE41+0x14>
+  13:	00 
+  14:	f3 0f 6f 0f          	movdqu (%rdi),%xmm1
+  18:	48 8d 7f 10          	lea    0x10(%rdi),%rdi
+  1c:	66 0f 38 40 c6       	pmulld %xmm6,%xmm0
+  21:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 29 <HashDjb2_SSE41+0x29>
+  28:	00 
+  29:	66 0f 6f d1          	movdqa %xmm1,%xmm2
+  2d:	66 0f 60 d7          	punpcklbw %xmm7,%xmm2
+  31:	66 0f 6f da          	movdqa %xmm2,%xmm3
+  35:	66 0f 61 df          	punpcklwd %xmm7,%xmm3
+  39:	66 0f 38 40 dd       	pmulld %xmm5,%xmm3
+  3e:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 46 <HashDjb2_SSE41+0x46>
+  45:	00 
+  46:	66 0f 6f e2          	movdqa %xmm2,%xmm4
+  4a:	66 0f 69 e7          	punpckhwd %xmm7,%xmm4
+  4e:	66 0f 38 40 e5       	pmulld %xmm5,%xmm4
+  53:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 5b <HashDjb2_SSE41+0x5b>
+  5a:	00 
+  5b:	66 0f 68 cf          	punpckhbw %xmm7,%xmm1
+  5f:	66 0f 6f d1          	movdqa %xmm1,%xmm2
+  63:	66 0f 61 d7          	punpcklwd %xmm7,%xmm2
+  67:	66 0f 38 40 d5       	pmulld %xmm5,%xmm2
+  6c:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 74 <HashDjb2_SSE41+0x74>
+  73:	00 
+  74:	66 0f 69 cf          	punpckhwd %xmm7,%xmm1
+  78:	66 0f 38 40 cd       	pmulld %xmm5,%xmm1
+  7d:	66 0f fe dc          	paddd  %xmm4,%xmm3
+  81:	66 0f fe ca          	paddd  %xmm2,%xmm1
+  85:	66 0f fe cb          	paddd  %xmm3,%xmm1
+  89:	66 0f 70 d1 0e       	pshufd $0xe,%xmm1,%xmm2
+  8e:	66 0f fe ca          	paddd  %xmm2,%xmm1
+  92:	66 0f 70 d1 01       	pshufd $0x1,%xmm1,%xmm2
+  97:	66 0f fe ca          	paddd  %xmm2,%xmm1
+  9b:	66 0f fe c1          	paddd  %xmm1,%xmm0
+  9f:	83 ee 10             	sub    $0x10,%esi
+  a2:	0f 8f 6c ff ff ff    	jg     14 <HashDjb2_SSE41+0x14>
+  a8:	66 0f 7e 44 24 f8    	movd   %xmm0,-0x8(%rsp)
+  ae:	89 54 24 fc          	mov    %edx,-0x4(%rsp)
+  b2:	8b 44 24 f8          	mov    -0x8(%rsp),%eax
+  b6:	c3                   	retq   

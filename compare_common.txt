@@ -1,0 +1,382 @@
+
+out/Release/obj/libyuv_internal/compare_common.o:     file format elf64-x86-64
+
+
+Disassembly of section .text.HammingDistance_C:
+
+0000000000000000 <HammingDistance_C>:
+   0:	55                   	push   %rbp
+   1:	41 57                	push   %r15
+   3:	41 56                	push   %r14
+   5:	53                   	push   %rbx
+   6:	45 31 c9             	xor    %r9d,%r9d
+   9:	83 fa 04             	cmp    $0x4,%edx
+   c:	0f 8c f5 01 00 00    	jl     207 <HammingDistance_C+0x207>
+  12:	44 8d 5a fc          	lea    -0x4(%rdx),%r11d
+  16:	45 89 d9             	mov    %r11d,%r9d
+  19:	41 83 e1 fc          	and    $0xfffffffc,%r9d
+  1d:	4d 8d 41 04          	lea    0x4(%r9),%r8
+  21:	41 c1 eb 02          	shr    $0x2,%r11d
+  25:	41 83 c3 01          	add    $0x1,%r11d
+  29:	31 c0                	xor    %eax,%eax
+  2b:	49 89 fa             	mov    %rdi,%r10
+  2e:	49 89 f6             	mov    %rsi,%r14
+  31:	bd 00 00 00 00       	mov    $0x0,%ebp
+  36:	41 83 fb 07          	cmp    $0x7,%r11d
+  3a:	0f 86 54 01 00 00    	jbe    194 <HammingDistance_C+0x194>
+  40:	44 89 db             	mov    %r11d,%ebx
+  43:	83 e3 f8             	and    $0xfffffff8,%ebx
+  46:	4c 8d 14 9f          	lea    (%rdi,%rbx,4),%r10
+  4a:	4c 8d 34 9e          	lea    (%rsi,%rbx,4),%r14
+  4e:	8d 2c 9d 00 00 00 00 	lea    0x0(,%rbx,4),%ebp
+  55:	66 0f ef c0          	pxor   %xmm0,%xmm0
+  59:	31 c0                	xor    %eax,%eax
+  5b:	66 44 0f 6f 05 00 00 	movdqa 0x0(%rip),%xmm8        # 64 <HammingDistance_C+0x64>
+  62:	00 00 
+  64:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 6c <HammingDistance_C+0x6c>
+  6b:	00 
+  6c:	66 44 0f 6f 0d 00 00 	movdqa 0x0(%rip),%xmm9        # 75 <HammingDistance_C+0x75>
+  73:	00 00 
+  75:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 7d <HammingDistance_C+0x7d>
+  7c:	00 
+  7d:	66 0f ef d2          	pxor   %xmm2,%xmm2
+  81:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  88:	00 00 00 
+  8b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+  90:	f3 0f 6f 3c 87       	movdqu (%rdi,%rax,4),%xmm7
+  95:	f3 0f 6f 4c 87 10    	movdqu 0x10(%rdi,%rax,4),%xmm1
+  9b:	f3 0f 6f 34 86       	movdqu (%rsi,%rax,4),%xmm6
+  a0:	66 0f ef f7          	pxor   %xmm7,%xmm6
+  a4:	f3 0f 6f 7c 86 10    	movdqu 0x10(%rsi,%rax,4),%xmm7
+  aa:	66 0f ef f9          	pxor   %xmm1,%xmm7
+  ae:	66 0f 6f ce          	movdqa %xmm6,%xmm1
+  b2:	66 0f 72 d1 01       	psrld  $0x1,%xmm1
+  b7:	66 0f 6f e7          	movdqa %xmm7,%xmm4
+  bb:	66 0f 72 d4 01       	psrld  $0x1,%xmm4
+  c0:	66 41 0f db c8       	pand   %xmm8,%xmm1
+  c5:	66 41 0f db e0       	pand   %xmm8,%xmm4
+  ca:	66 0f fa f1          	psubd  %xmm1,%xmm6
+  ce:	66 0f fa fc          	psubd  %xmm4,%xmm7
+  d2:	66 0f 6f ce          	movdqa %xmm6,%xmm1
+  d6:	66 0f 72 d1 02       	psrld  $0x2,%xmm1
+  db:	66 0f 6f e7          	movdqa %xmm7,%xmm4
+  df:	66 0f 72 d4 02       	psrld  $0x2,%xmm4
+  e4:	66 0f db cb          	pand   %xmm3,%xmm1
+  e8:	66 0f db e3          	pand   %xmm3,%xmm4
+  ec:	66 0f db f3          	pand   %xmm3,%xmm6
+  f0:	66 0f fe f1          	paddd  %xmm1,%xmm6
+  f4:	66 0f db fb          	pand   %xmm3,%xmm7
+  f8:	66 0f fe fc          	paddd  %xmm4,%xmm7
+  fc:	66 0f 6f ce          	movdqa %xmm6,%xmm1
+ 100:	66 0f 72 d1 04       	psrld  $0x4,%xmm1
+ 105:	66 0f 6f e7          	movdqa %xmm7,%xmm4
+ 109:	66 0f 72 d4 04       	psrld  $0x4,%xmm4
+ 10e:	66 0f fe ce          	paddd  %xmm6,%xmm1
+ 112:	66 0f fe e7          	paddd  %xmm7,%xmm4
+ 116:	66 41 0f db c9       	pand   %xmm9,%xmm1
+ 11b:	66 41 0f db e1       	pand   %xmm9,%xmm4
+ 120:	66 0f 70 f1 f5       	pshufd $0xf5,%xmm1,%xmm6
+ 125:	66 0f f4 cd          	pmuludq %xmm5,%xmm1
+ 129:	66 0f 70 c9 e8       	pshufd $0xe8,%xmm1,%xmm1
+ 12e:	66 0f f4 f5          	pmuludq %xmm5,%xmm6
+ 132:	66 0f 70 f6 e8       	pshufd $0xe8,%xmm6,%xmm6
+ 137:	66 0f 62 ce          	punpckldq %xmm6,%xmm1
+ 13b:	66 0f 70 f4 f5       	pshufd $0xf5,%xmm4,%xmm6
+ 140:	66 0f f4 e5          	pmuludq %xmm5,%xmm4
+ 144:	66 0f 70 e4 e8       	pshufd $0xe8,%xmm4,%xmm4
+ 149:	66 0f f4 f5          	pmuludq %xmm5,%xmm6
+ 14d:	66 0f 70 f6 e8       	pshufd $0xe8,%xmm6,%xmm6
+ 152:	66 0f 62 e6          	punpckldq %xmm6,%xmm4
+ 156:	66 0f 72 d1 18       	psrld  $0x18,%xmm1
+ 15b:	66 0f fe c1          	paddd  %xmm1,%xmm0
+ 15f:	66 0f 72 d4 18       	psrld  $0x18,%xmm4
+ 164:	66 0f fe d4          	paddd  %xmm4,%xmm2
+ 168:	48 83 c0 08          	add    $0x8,%rax
+ 16c:	48 39 c3             	cmp    %rax,%rbx
+ 16f:	0f 85 1b ff ff ff    	jne    90 <HammingDistance_C+0x90>
+ 175:	66 0f fe d0          	paddd  %xmm0,%xmm2
+ 179:	66 0f 70 c2 4e       	pshufd $0x4e,%xmm2,%xmm0
+ 17e:	66 0f fe c2          	paddd  %xmm2,%xmm0
+ 182:	66 0f 70 c8 e5       	pshufd $0xe5,%xmm0,%xmm1
+ 187:	66 0f fe c8          	paddd  %xmm0,%xmm1
+ 18b:	66 0f 7e c8          	movd   %xmm1,%eax
+ 18f:	4c 39 db             	cmp    %r11,%rbx
+ 192:	74 58                	je     1ec <HammingDistance_C+0x1ec>
+ 194:	44 8d 5a fd          	lea    -0x3(%rdx),%r11d
+ 198:	41 89 ef             	mov    %ebp,%r15d
+ 19b:	31 c9                	xor    %ecx,%ecx
+ 19d:	0f 1f 00             	nopl   (%rax)
+ 1a0:	41 8b 2c 0e          	mov    (%r14,%rcx,1),%ebp
+ 1a4:	41 33 2c 0a          	xor    (%r10,%rcx,1),%ebp
+ 1a8:	89 eb                	mov    %ebp,%ebx
+ 1aa:	d1 eb                	shr    %ebx
+ 1ac:	81 e3 55 55 55 55    	and    $0x55555555,%ebx
+ 1b2:	29 dd                	sub    %ebx,%ebp
+ 1b4:	89 eb                	mov    %ebp,%ebx
+ 1b6:	c1 eb 02             	shr    $0x2,%ebx
+ 1b9:	81 e3 33 33 33 33    	and    $0x33333333,%ebx
+ 1bf:	81 e5 33 33 33 33    	and    $0x33333333,%ebp
+ 1c5:	01 dd                	add    %ebx,%ebp
+ 1c7:	89 eb                	mov    %ebp,%ebx
+ 1c9:	c1 eb 04             	shr    $0x4,%ebx
+ 1cc:	01 eb                	add    %ebp,%ebx
+ 1ce:	81 e3 0f 0f 0f 0f    	and    $0xf0f0f0f,%ebx
+ 1d4:	69 db 01 01 01 01    	imul   $0x1010101,%ebx,%ebx
+ 1da:	c1 eb 18             	shr    $0x18,%ebx
+ 1dd:	01 d8                	add    %ebx,%eax
+ 1df:	48 83 c1 04          	add    $0x4,%rcx
+ 1e3:	41 8d 1c 0f          	lea    (%r15,%rcx,1),%ebx
+ 1e7:	44 39 db             	cmp    %r11d,%ebx
+ 1ea:	7c b4                	jl     1a0 <HammingDistance_C+0x1a0>
+ 1ec:	4c 01 cf             	add    %r9,%rdi
+ 1ef:	48 83 c7 04          	add    $0x4,%rdi
+ 1f3:	4c 01 c6             	add    %r8,%rsi
+ 1f6:	41 89 d1             	mov    %edx,%r9d
+ 1f9:	41 83 e1 fc          	and    $0xfffffffc,%r9d
+ 1fd:	41 39 d1             	cmp    %edx,%r9d
+ 200:	7c 10                	jl     212 <HammingDistance_C+0x212>
+ 202:	e9 9e 01 00 00       	jmpq   3a5 <HammingDistance_C+0x3a5>
+ 207:	31 c0                	xor    %eax,%eax
+ 209:	41 39 d1             	cmp    %edx,%r9d
+ 20c:	0f 8d 93 01 00 00    	jge    3a5 <HammingDistance_C+0x3a5>
+ 212:	44 8d 52 ff          	lea    -0x1(%rdx),%r10d
+ 216:	45 29 ca             	sub    %r9d,%r10d
+ 219:	49 8d 6a 01          	lea    0x1(%r10),%rbp
+ 21d:	48 83 fd 07          	cmp    $0x7,%rbp
+ 221:	77 0b                	ja     22e <HammingDistance_C+0x22e>
+ 223:	49 89 f8             	mov    %rdi,%r8
+ 226:	48 89 f1             	mov    %rsi,%rcx
+ 229:	e9 2e 01 00 00       	jmpq   35c <HammingDistance_C+0x35c>
+ 22e:	41 83 c2 01          	add    $0x1,%r10d
+ 232:	41 83 e2 07          	and    $0x7,%r10d
+ 236:	4c 29 d5             	sub    %r10,%rbp
+ 239:	4c 8d 04 2f          	lea    (%rdi,%rbp,1),%r8
+ 23d:	48 8d 0c 2e          	lea    (%rsi,%rbp,1),%rcx
+ 241:	41 01 e9             	add    %ebp,%r9d
+ 244:	66 0f 6e c8          	movd   %eax,%xmm1
+ 248:	66 0f ef c0          	pxor   %xmm0,%xmm0
+ 24c:	31 c0                	xor    %eax,%eax
+ 24e:	66 44 0f 6f 05 00 00 	movdqa 0x0(%rip),%xmm8        # 257 <HammingDistance_C+0x257>
+ 255:	00 00 
+ 257:	66 44 0f 6f 0d 00 00 	movdqa 0x0(%rip),%xmm9        # 260 <HammingDistance_C+0x260>
+ 25e:	00 00 
+ 260:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 268 <HammingDistance_C+0x268>
+ 267:	00 
+ 268:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 270 <HammingDistance_C+0x270>
+ 26f:	00 
+ 270:	66 0f 6e 3c 07       	movd   (%rdi,%rax,1),%xmm7
+ 275:	66 0f 60 f8          	punpcklbw %xmm0,%xmm7
+ 279:	66 0f 61 f8          	punpcklwd %xmm0,%xmm7
+ 27d:	66 0f 6e 54 07 04    	movd   0x4(%rdi,%rax,1),%xmm2
+ 283:	66 0f 60 d0          	punpcklbw %xmm0,%xmm2
+ 287:	66 0f 61 d0          	punpcklwd %xmm0,%xmm2
+ 28b:	66 0f 6e 34 06       	movd   (%rsi,%rax,1),%xmm6
+ 290:	66 0f 60 f0          	punpcklbw %xmm0,%xmm6
+ 294:	66 0f 61 f0          	punpcklwd %xmm0,%xmm6
+ 298:	66 0f ef f7          	pxor   %xmm7,%xmm6
+ 29c:	66 0f 6e 7c 06 04    	movd   0x4(%rsi,%rax,1),%xmm7
+ 2a2:	66 0f 60 f8          	punpcklbw %xmm0,%xmm7
+ 2a6:	66 0f 61 f8          	punpcklwd %xmm0,%xmm7
+ 2aa:	66 0f ef fa          	pxor   %xmm2,%xmm7
+ 2ae:	66 41 0f db f0       	pand   %xmm8,%xmm6
+ 2b3:	66 41 0f db f8       	pand   %xmm8,%xmm7
+ 2b8:	66 0f 6f d6          	movdqa %xmm6,%xmm2
+ 2bc:	66 0f 72 d2 01       	psrld  $0x1,%xmm2
+ 2c1:	66 0f 6f df          	movdqa %xmm7,%xmm3
+ 2c5:	66 0f 72 d3 01       	psrld  $0x1,%xmm3
+ 2ca:	66 41 0f db d1       	pand   %xmm9,%xmm2
+ 2cf:	66 41 0f db d9       	pand   %xmm9,%xmm3
+ 2d4:	66 0f fa f2          	psubd  %xmm2,%xmm6
+ 2d8:	66 0f fa fb          	psubd  %xmm3,%xmm7
+ 2dc:	66 0f 6f d6          	movdqa %xmm6,%xmm2
+ 2e0:	66 0f 72 d2 02       	psrld  $0x2,%xmm2
+ 2e5:	66 0f 6f df          	movdqa %xmm7,%xmm3
+ 2e9:	66 0f 72 d3 02       	psrld  $0x2,%xmm3
+ 2ee:	66 0f db d4          	pand   %xmm4,%xmm2
+ 2f2:	66 0f db dc          	pand   %xmm4,%xmm3
+ 2f6:	66 0f db f4          	pand   %xmm4,%xmm6
+ 2fa:	66 0f fe f2          	paddd  %xmm2,%xmm6
+ 2fe:	66 0f db fc          	pand   %xmm4,%xmm7
+ 302:	66 0f fe fb          	paddd  %xmm3,%xmm7
+ 306:	66 0f 6f d6          	movdqa %xmm6,%xmm2
+ 30a:	66 0f 72 d2 04       	psrld  $0x4,%xmm2
+ 30f:	66 0f 6f df          	movdqa %xmm7,%xmm3
+ 313:	66 0f 72 d3 04       	psrld  $0x4,%xmm3
+ 318:	66 0f fe d6          	paddd  %xmm6,%xmm2
+ 31c:	66 0f fe df          	paddd  %xmm7,%xmm3
+ 320:	66 0f db d5          	pand   %xmm5,%xmm2
+ 324:	66 0f fe ca          	paddd  %xmm2,%xmm1
+ 328:	66 0f db dd          	pand   %xmm5,%xmm3
+ 32c:	66 0f fe c3          	paddd  %xmm3,%xmm0
+ 330:	48 83 c0 08          	add    $0x8,%rax
+ 334:	48 39 c5             	cmp    %rax,%rbp
+ 337:	0f 85 33 ff ff ff    	jne    270 <HammingDistance_C+0x270>
+ 33d:	66 0f fe c1          	paddd  %xmm1,%xmm0
+ 341:	66 0f 70 c8 4e       	pshufd $0x4e,%xmm0,%xmm1
+ 346:	66 0f fe c8          	paddd  %xmm0,%xmm1
+ 34a:	66 0f 70 c1 e5       	pshufd $0xe5,%xmm1,%xmm0
+ 34f:	66 0f fe c1          	paddd  %xmm1,%xmm0
+ 353:	66 0f 7e c0          	movd   %xmm0,%eax
+ 357:	45 85 d2             	test   %r10d,%r10d
+ 35a:	74 49                	je     3a5 <HammingDistance_C+0x3a5>
+ 35c:	44 29 ca             	sub    %r9d,%edx
+ 35f:	31 f6                	xor    %esi,%esi
+ 361:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+ 368:	00 00 00 
+ 36b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+ 370:	0f b6 1c 31          	movzbl (%rcx,%rsi,1),%ebx
+ 374:	41 32 1c 30          	xor    (%r8,%rsi,1),%bl
+ 378:	0f b6 eb             	movzbl %bl,%ebp
+ 37b:	89 ef                	mov    %ebp,%edi
+ 37d:	d1 ef                	shr    %edi
+ 37f:	83 e7 d5             	and    $0xffffffd5,%edi
+ 382:	29 fd                	sub    %edi,%ebp
+ 384:	89 ef                	mov    %ebp,%edi
+ 386:	c1 ef 02             	shr    $0x2,%edi
+ 389:	83 e7 33             	and    $0x33,%edi
+ 38c:	83 e5 33             	and    $0x33,%ebp
+ 38f:	01 fd                	add    %edi,%ebp
+ 391:	89 ef                	mov    %ebp,%edi
+ 393:	c1 ef 04             	shr    $0x4,%edi
+ 396:	01 ef                	add    %ebp,%edi
+ 398:	83 e7 0f             	and    $0xf,%edi
+ 39b:	01 f8                	add    %edi,%eax
+ 39d:	48 83 c6 01          	add    $0x1,%rsi
+ 3a1:	39 f2                	cmp    %esi,%edx
+ 3a3:	75 cb                	jne    370 <HammingDistance_C+0x370>
+ 3a5:	5b                   	pop    %rbx
+ 3a6:	41 5e                	pop    %r14
+ 3a8:	41 5f                	pop    %r15
+ 3aa:	5d                   	pop    %rbp
+ 3ab:	c3                   	retq   
+
+Disassembly of section .text.SumSquareError_C:
+
+0000000000000000 <SumSquareError_C>:
+   0:	85 d2                	test   %edx,%edx
+   2:	7e 12                	jle    16 <SumSquareError_C+0x16>
+   4:	41 89 d0             	mov    %edx,%r8d
+   7:	83 fa 08             	cmp    $0x8,%edx
+   a:	73 0d                	jae    19 <SumSquareError_C+0x19>
+   c:	45 31 c9             	xor    %r9d,%r9d
+   f:	31 c0                	xor    %eax,%eax
+  11:	e9 ca 00 00 00       	jmpq   e0 <SumSquareError_C+0xe0>
+  16:	31 c0                	xor    %eax,%eax
+  18:	c3                   	retq   
+  19:	45 89 c1             	mov    %r8d,%r9d
+  1c:	41 83 e1 f8          	and    $0xfffffff8,%r9d
+  20:	66 0f ef c9          	pxor   %xmm1,%xmm1
+  24:	31 c0                	xor    %eax,%eax
+  26:	66 0f ef d2          	pxor   %xmm2,%xmm2
+  2a:	66 0f ef c0          	pxor   %xmm0,%xmm0
+  2e:	66 90                	xchg   %ax,%ax
+  30:	66 0f 6e 24 07       	movd   (%rdi,%rax,1),%xmm4
+  35:	66 0f 6e 5c 07 04    	movd   0x4(%rdi,%rax,1),%xmm3
+  3b:	66 0f 60 e1          	punpcklbw %xmm1,%xmm4
+  3f:	66 0f 61 e1          	punpcklwd %xmm1,%xmm4
+  43:	66 0f 60 d9          	punpcklbw %xmm1,%xmm3
+  47:	66 0f 61 d9          	punpcklwd %xmm1,%xmm3
+  4b:	66 0f 6e 2c 06       	movd   (%rsi,%rax,1),%xmm5
+  50:	66 0f 6e 74 06 04    	movd   0x4(%rsi,%rax,1),%xmm6
+  56:	66 0f 60 e9          	punpcklbw %xmm1,%xmm5
+  5a:	66 0f 61 e9          	punpcklwd %xmm1,%xmm5
+  5e:	66 0f f9 e5          	psubw  %xmm5,%xmm4
+  62:	66 0f 60 f1          	punpcklbw %xmm1,%xmm6
+  66:	66 0f 61 f1          	punpcklwd %xmm1,%xmm6
+  6a:	66 0f f9 de          	psubw  %xmm6,%xmm3
+  6e:	f2 0f 70 e4 e8       	pshuflw $0xe8,%xmm4,%xmm4
+  73:	f3 0f 70 e4 e8       	pshufhw $0xe8,%xmm4,%xmm4
+  78:	66 0f 70 e4 e8       	pshufd $0xe8,%xmm4,%xmm4
+  7d:	66 0f 6f ec          	movdqa %xmm4,%xmm5
+  81:	66 0f e5 ec          	pmulhw %xmm4,%xmm5
+  85:	66 0f d5 e4          	pmullw %xmm4,%xmm4
+  89:	66 0f 61 e5          	punpcklwd %xmm5,%xmm4
+  8d:	66 0f fe d4          	paddd  %xmm4,%xmm2
+  91:	f2 0f 70 db e8       	pshuflw $0xe8,%xmm3,%xmm3
+  96:	f3 0f 70 db e8       	pshufhw $0xe8,%xmm3,%xmm3
+  9b:	66 0f 70 db e8       	pshufd $0xe8,%xmm3,%xmm3
+  a0:	66 0f 6f e3          	movdqa %xmm3,%xmm4
+  a4:	66 0f e5 e3          	pmulhw %xmm3,%xmm4
+  a8:	66 0f d5 db          	pmullw %xmm3,%xmm3
+  ac:	66 0f 61 dc          	punpcklwd %xmm4,%xmm3
+  b0:	66 0f fe c3          	paddd  %xmm3,%xmm0
+  b4:	48 83 c0 08          	add    $0x8,%rax
+  b8:	49 39 c1             	cmp    %rax,%r9
+  bb:	0f 85 6f ff ff ff    	jne    30 <SumSquareError_C+0x30>
+  c1:	66 0f fe c2          	paddd  %xmm2,%xmm0
+  c5:	66 0f 70 c8 4e       	pshufd $0x4e,%xmm0,%xmm1
+  ca:	66 0f fe c8          	paddd  %xmm0,%xmm1
+  ce:	66 0f 70 c1 e5       	pshufd $0xe5,%xmm1,%xmm0
+  d3:	66 0f fe c1          	paddd  %xmm1,%xmm0
+  d7:	66 0f 7e c0          	movd   %xmm0,%eax
+  db:	4d 39 c1             	cmp    %r8,%r9
+  de:	74 1a                	je     fa <SumSquareError_C+0xfa>
+  e0:	42 0f b6 0c 0f       	movzbl (%rdi,%r9,1),%ecx
+  e5:	42 0f b6 14 0e       	movzbl (%rsi,%r9,1),%edx
+  ea:	29 d1                	sub    %edx,%ecx
+  ec:	0f af c9             	imul   %ecx,%ecx
+  ef:	01 c8                	add    %ecx,%eax
+  f1:	49 83 c1 01          	add    $0x1,%r9
+  f5:	4d 39 c8             	cmp    %r9,%r8
+  f8:	75 e6                	jne    e0 <SumSquareError_C+0xe0>
+  fa:	c3                   	retq   
+
+Disassembly of section .text.HashDjb2_C:
+
+0000000000000000 <HashDjb2_C>:
+   0:	85 f6                	test   %esi,%esi
+   2:	7e 18                	jle    1c <HashDjb2_C+0x1c>
+   4:	41 89 f1             	mov    %esi,%r9d
+   7:	49 8d 71 ff          	lea    -0x1(%r9),%rsi
+   b:	45 89 c8             	mov    %r9d,%r8d
+   e:	41 83 e0 03          	and    $0x3,%r8d
+  12:	48 83 fe 03          	cmp    $0x3,%rsi
+  16:	73 07                	jae    1f <HashDjb2_C+0x1f>
+  18:	31 f6                	xor    %esi,%esi
+  1a:	eb 54                	jmp    70 <HashDjb2_C+0x70>
+  1c:	89 d0                	mov    %edx,%eax
+  1e:	c3                   	retq   
+  1f:	4d 29 c1             	sub    %r8,%r9
+  22:	31 f6                	xor    %esi,%esi
+  24:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  2b:	00 00 00 
+  2e:	66 90                	xchg   %ax,%ax
+  30:	0f b6 0c 37          	movzbl (%rdi,%rsi,1),%ecx
+  34:	89 d0                	mov    %edx,%eax
+  36:	c1 e0 05             	shl    $0x5,%eax
+  39:	01 d0                	add    %edx,%eax
+  3b:	01 c8                	add    %ecx,%eax
+  3d:	0f b6 4c 37 01       	movzbl 0x1(%rdi,%rsi,1),%ecx
+  42:	89 c2                	mov    %eax,%edx
+  44:	c1 e2 05             	shl    $0x5,%edx
+  47:	01 c2                	add    %eax,%edx
+  49:	01 ca                	add    %ecx,%edx
+  4b:	0f b6 44 37 02       	movzbl 0x2(%rdi,%rsi,1),%eax
+  50:	89 d1                	mov    %edx,%ecx
+  52:	c1 e1 05             	shl    $0x5,%ecx
+  55:	01 d1                	add    %edx,%ecx
+  57:	01 c1                	add    %eax,%ecx
+  59:	0f b6 44 37 03       	movzbl 0x3(%rdi,%rsi,1),%eax
+  5e:	89 ca                	mov    %ecx,%edx
+  60:	c1 e2 05             	shl    $0x5,%edx
+  63:	01 ca                	add    %ecx,%edx
+  65:	01 c2                	add    %eax,%edx
+  67:	48 83 c6 04          	add    $0x4,%rsi
+  6b:	49 39 f1             	cmp    %rsi,%r9
+  6e:	75 c0                	jne    30 <HashDjb2_C+0x30>
+  70:	89 d0                	mov    %edx,%eax
+  72:	4d 85 c0             	test   %r8,%r8
+  75:	74 1f                	je     96 <HashDjb2_C+0x96>
+  77:	48 01 f7             	add    %rsi,%rdi
+  7a:	31 f6                	xor    %esi,%esi
+  7c:	89 d0                	mov    %edx,%eax
+  7e:	66 90                	xchg   %ax,%ax
+  80:	0f b6 0c 37          	movzbl (%rdi,%rsi,1),%ecx
+  84:	c1 e0 05             	shl    $0x5,%eax
+  87:	01 d0                	add    %edx,%eax
+  89:	01 c8                	add    %ecx,%eax
+  8b:	48 83 c6 01          	add    $0x1,%rsi
+  8f:	89 c2                	mov    %eax,%edx
+  91:	49 39 f0             	cmp    %rsi,%r8
+  94:	75 ea                	jne    80 <HashDjb2_C+0x80>
+  96:	c3                   	retq   

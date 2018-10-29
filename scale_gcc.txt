@@ -1,0 +1,869 @@
+
+out/Release/obj/libyuv_internal/scale_gcc.o:     file format elf64-x86-64
+
+
+Disassembly of section .text.ScaleRowDown2_SSSE3:
+
+0000000000000000 <ScaleRowDown2_SSSE3>:
+   0:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+   4:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+   9:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+   d:	66 0f 71 d0 08       	psrlw  $0x8,%xmm0
+  12:	66 0f 71 d1 08       	psrlw  $0x8,%xmm1
+  17:	66 0f 67 c1          	packuswb %xmm1,%xmm0
+  1b:	f3 0f 7f 02          	movdqu %xmm0,(%rdx)
+  1f:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  23:	83 e9 10             	sub    $0x10,%ecx
+  26:	7f d8                	jg     0 <ScaleRowDown2_SSSE3>
+  28:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown2Linear_SSSE3:
+
+0000000000000000 <ScaleRowDown2Linear_SSSE3>:
+   0:	66 0f 74 e4          	pcmpeqb %xmm4,%xmm4
+   4:	66 0f 71 d4 0f       	psrlw  $0xf,%xmm4
+   9:	66 0f 67 e4          	packuswb %xmm4,%xmm4
+   d:	66 0f ef ed          	pxor   %xmm5,%xmm5
+  11:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  15:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+  1a:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  1e:	66 0f 38 04 c4       	pmaddubsw %xmm4,%xmm0
+  23:	66 0f 38 04 cc       	pmaddubsw %xmm4,%xmm1
+  28:	66 0f e3 c5          	pavgw  %xmm5,%xmm0
+  2c:	66 0f e3 cd          	pavgw  %xmm5,%xmm1
+  30:	66 0f 67 c1          	packuswb %xmm1,%xmm0
+  34:	f3 0f 7f 02          	movdqu %xmm0,(%rdx)
+  38:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  3c:	83 e9 10             	sub    $0x10,%ecx
+  3f:	7f d0                	jg     11 <ScaleRowDown2Linear_SSSE3+0x11>
+  41:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown2Box_SSSE3:
+
+0000000000000000 <ScaleRowDown2Box_SSSE3>:
+   0:	66 0f 74 e4          	pcmpeqb %xmm4,%xmm4
+   4:	66 0f 71 d4 0f       	psrlw  $0xf,%xmm4
+   9:	66 0f 67 e4          	packuswb %xmm4,%xmm4
+   d:	66 0f ef ed          	pxor   %xmm5,%xmm5
+  11:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  15:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+  1a:	f3 0f 6f 14 37       	movdqu (%rdi,%rsi,1),%xmm2
+  1f:	f3 0f 6f 5c 37 10    	movdqu 0x10(%rdi,%rsi,1),%xmm3
+  25:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  29:	66 0f 38 04 c4       	pmaddubsw %xmm4,%xmm0
+  2e:	66 0f 38 04 cc       	pmaddubsw %xmm4,%xmm1
+  33:	66 0f 38 04 d4       	pmaddubsw %xmm4,%xmm2
+  38:	66 0f 38 04 dc       	pmaddubsw %xmm4,%xmm3
+  3d:	66 0f fd c2          	paddw  %xmm2,%xmm0
+  41:	66 0f fd cb          	paddw  %xmm3,%xmm1
+  45:	66 0f 71 d0 01       	psrlw  $0x1,%xmm0
+  4a:	66 0f 71 d1 01       	psrlw  $0x1,%xmm1
+  4f:	66 0f e3 c5          	pavgw  %xmm5,%xmm0
+  53:	66 0f e3 cd          	pavgw  %xmm5,%xmm1
+  57:	66 0f 67 c1          	packuswb %xmm1,%xmm0
+  5b:	f3 0f 7f 02          	movdqu %xmm0,(%rdx)
+  5f:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  63:	83 e9 10             	sub    $0x10,%ecx
+  66:	7f a9                	jg     11 <ScaleRowDown2Box_SSSE3+0x11>
+  68:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown2_AVX2:
+
+0000000000000000 <ScaleRowDown2_AVX2>:
+   0:	c5 fe 6f 07          	vmovdqu (%rdi),%ymm0
+   4:	c5 fe 6f 4f 20       	vmovdqu 0x20(%rdi),%ymm1
+   9:	48 8d 7f 40          	lea    0x40(%rdi),%rdi
+   d:	c5 fd 71 d0 08       	vpsrlw $0x8,%ymm0,%ymm0
+  12:	c5 f5 71 d1 08       	vpsrlw $0x8,%ymm1,%ymm1
+  17:	c5 fd 67 c1          	vpackuswb %ymm1,%ymm0,%ymm0
+  1b:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  21:	c5 fe 7f 02          	vmovdqu %ymm0,(%rdx)
+  25:	48 8d 52 20          	lea    0x20(%rdx),%rdx
+  29:	83 e9 20             	sub    $0x20,%ecx
+  2c:	7f d2                	jg     0 <ScaleRowDown2_AVX2>
+  2e:	c5 f8 77             	vzeroupper 
+  31:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown2Linear_AVX2:
+
+0000000000000000 <ScaleRowDown2Linear_AVX2>:
+   0:	c5 dd 74 e4          	vpcmpeqb %ymm4,%ymm4,%ymm4
+   4:	c5 dd 71 d4 0f       	vpsrlw $0xf,%ymm4,%ymm4
+   9:	c5 dd 67 e4          	vpackuswb %ymm4,%ymm4,%ymm4
+   d:	c5 d5 ef ed          	vpxor  %ymm5,%ymm5,%ymm5
+  11:	c5 fe 6f 07          	vmovdqu (%rdi),%ymm0
+  15:	c5 fe 6f 4f 20       	vmovdqu 0x20(%rdi),%ymm1
+  1a:	48 8d 7f 40          	lea    0x40(%rdi),%rdi
+  1e:	c4 e2 7d 04 c4       	vpmaddubsw %ymm4,%ymm0,%ymm0
+  23:	c4 e2 75 04 cc       	vpmaddubsw %ymm4,%ymm1,%ymm1
+  28:	c5 fd e3 c5          	vpavgw %ymm5,%ymm0,%ymm0
+  2c:	c5 f5 e3 cd          	vpavgw %ymm5,%ymm1,%ymm1
+  30:	c5 fd 67 c1          	vpackuswb %ymm1,%ymm0,%ymm0
+  34:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  3a:	c5 fe 7f 02          	vmovdqu %ymm0,(%rdx)
+  3e:	48 8d 52 20          	lea    0x20(%rdx),%rdx
+  42:	83 e9 20             	sub    $0x20,%ecx
+  45:	7f ca                	jg     11 <ScaleRowDown2Linear_AVX2+0x11>
+  47:	c5 f8 77             	vzeroupper 
+  4a:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown2Box_AVX2:
+
+0000000000000000 <ScaleRowDown2Box_AVX2>:
+   0:	c5 dd 74 e4          	vpcmpeqb %ymm4,%ymm4,%ymm4
+   4:	c5 dd 71 d4 0f       	vpsrlw $0xf,%ymm4,%ymm4
+   9:	c5 dd 67 e4          	vpackuswb %ymm4,%ymm4,%ymm4
+   d:	c5 d5 ef ed          	vpxor  %ymm5,%ymm5,%ymm5
+  11:	c5 fe 6f 07          	vmovdqu (%rdi),%ymm0
+  15:	c5 fe 6f 4f 20       	vmovdqu 0x20(%rdi),%ymm1
+  1a:	c5 fe 6f 14 37       	vmovdqu (%rdi,%rsi,1),%ymm2
+  1f:	c5 fe 6f 5c 37 20    	vmovdqu 0x20(%rdi,%rsi,1),%ymm3
+  25:	48 8d 7f 40          	lea    0x40(%rdi),%rdi
+  29:	c4 e2 7d 04 c4       	vpmaddubsw %ymm4,%ymm0,%ymm0
+  2e:	c4 e2 75 04 cc       	vpmaddubsw %ymm4,%ymm1,%ymm1
+  33:	c4 e2 6d 04 d4       	vpmaddubsw %ymm4,%ymm2,%ymm2
+  38:	c4 e2 65 04 dc       	vpmaddubsw %ymm4,%ymm3,%ymm3
+  3d:	c5 fd fd c2          	vpaddw %ymm2,%ymm0,%ymm0
+  41:	c5 f5 fd cb          	vpaddw %ymm3,%ymm1,%ymm1
+  45:	c5 fd 71 d0 01       	vpsrlw $0x1,%ymm0,%ymm0
+  4a:	c5 f5 71 d1 01       	vpsrlw $0x1,%ymm1,%ymm1
+  4f:	c5 fd e3 c5          	vpavgw %ymm5,%ymm0,%ymm0
+  53:	c5 f5 e3 cd          	vpavgw %ymm5,%ymm1,%ymm1
+  57:	c5 fd 67 c1          	vpackuswb %ymm1,%ymm0,%ymm0
+  5b:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  61:	c5 fe 7f 02          	vmovdqu %ymm0,(%rdx)
+  65:	48 8d 52 20          	lea    0x20(%rdx),%rdx
+  69:	83 e9 20             	sub    $0x20,%ecx
+  6c:	7f a3                	jg     11 <ScaleRowDown2Box_AVX2+0x11>
+  6e:	c5 f8 77             	vzeroupper 
+  71:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown4_SSSE3:
+
+0000000000000000 <ScaleRowDown4_SSSE3>:
+   0:	66 0f 74 ed          	pcmpeqb %xmm5,%xmm5
+   4:	66 0f 72 d5 18       	psrld  $0x18,%xmm5
+   9:	66 0f 72 f5 10       	pslld  $0x10,%xmm5
+   e:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  12:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+  17:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  1b:	66 0f db c5          	pand   %xmm5,%xmm0
+  1f:	66 0f db cd          	pand   %xmm5,%xmm1
+  23:	66 0f 67 c1          	packuswb %xmm1,%xmm0
+  27:	66 0f 71 d0 08       	psrlw  $0x8,%xmm0
+  2c:	66 0f 67 c0          	packuswb %xmm0,%xmm0
+  30:	66 0f d6 02          	movq   %xmm0,(%rdx)
+  34:	48 8d 52 08          	lea    0x8(%rdx),%rdx
+  38:	83 e9 08             	sub    $0x8,%ecx
+  3b:	7f d1                	jg     e <ScaleRowDown4_SSSE3+0xe>
+  3d:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown4Box_SSSE3:
+
+0000000000000000 <ScaleRowDown4Box_SSSE3>:
+   0:	66 0f 74 e4          	pcmpeqb %xmm4,%xmm4
+   4:	66 0f 71 d4 0f       	psrlw  $0xf,%xmm4
+   9:	66 0f 6f ec          	movdqa %xmm4,%xmm5
+   d:	66 0f 67 e4          	packuswb %xmm4,%xmm4
+  11:	66 0f 71 f5 03       	psllw  $0x3,%xmm5
+  16:	48 8d 04 76          	lea    (%rsi,%rsi,2),%rax
+  1a:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  1e:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+  23:	f3 0f 6f 14 37       	movdqu (%rdi,%rsi,1),%xmm2
+  28:	f3 0f 6f 5c 37 10    	movdqu 0x10(%rdi,%rsi,1),%xmm3
+  2e:	66 0f 38 04 c4       	pmaddubsw %xmm4,%xmm0
+  33:	66 0f 38 04 cc       	pmaddubsw %xmm4,%xmm1
+  38:	66 0f 38 04 d4       	pmaddubsw %xmm4,%xmm2
+  3d:	66 0f 38 04 dc       	pmaddubsw %xmm4,%xmm3
+  42:	66 0f fd c2          	paddw  %xmm2,%xmm0
+  46:	66 0f fd cb          	paddw  %xmm3,%xmm1
+  4a:	f3 0f 6f 14 77       	movdqu (%rdi,%rsi,2),%xmm2
+  4f:	f3 0f 6f 5c 77 10    	movdqu 0x10(%rdi,%rsi,2),%xmm3
+  55:	66 0f 38 04 d4       	pmaddubsw %xmm4,%xmm2
+  5a:	66 0f 38 04 dc       	pmaddubsw %xmm4,%xmm3
+  5f:	66 0f fd c2          	paddw  %xmm2,%xmm0
+  63:	66 0f fd cb          	paddw  %xmm3,%xmm1
+  67:	f3 0f 6f 14 07       	movdqu (%rdi,%rax,1),%xmm2
+  6c:	f3 0f 6f 5c 07 10    	movdqu 0x10(%rdi,%rax,1),%xmm3
+  72:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  76:	66 0f 38 04 d4       	pmaddubsw %xmm4,%xmm2
+  7b:	66 0f 38 04 dc       	pmaddubsw %xmm4,%xmm3
+  80:	66 0f fd c2          	paddw  %xmm2,%xmm0
+  84:	66 0f fd cb          	paddw  %xmm3,%xmm1
+  88:	66 0f 38 01 c1       	phaddw %xmm1,%xmm0
+  8d:	66 0f fd c5          	paddw  %xmm5,%xmm0
+  91:	66 0f 71 d0 04       	psrlw  $0x4,%xmm0
+  96:	66 0f 67 c0          	packuswb %xmm0,%xmm0
+  9a:	66 0f d6 02          	movq   %xmm0,(%rdx)
+  9e:	48 8d 52 08          	lea    0x8(%rdx),%rdx
+  a2:	83 e9 08             	sub    $0x8,%ecx
+  a5:	0f 8f 6f ff ff ff    	jg     1a <ScaleRowDown4Box_SSSE3+0x1a>
+  ab:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown4_AVX2:
+
+0000000000000000 <ScaleRowDown4_AVX2>:
+   0:	c5 d5 74 ed          	vpcmpeqb %ymm5,%ymm5,%ymm5
+   4:	c5 d5 72 d5 18       	vpsrld $0x18,%ymm5,%ymm5
+   9:	c5 d5 72 f5 10       	vpslld $0x10,%ymm5,%ymm5
+   e:	c5 fe 6f 07          	vmovdqu (%rdi),%ymm0
+  12:	c5 fe 6f 4f 20       	vmovdqu 0x20(%rdi),%ymm1
+  17:	48 8d 7f 40          	lea    0x40(%rdi),%rdi
+  1b:	c5 fd db c5          	vpand  %ymm5,%ymm0,%ymm0
+  1f:	c5 f5 db cd          	vpand  %ymm5,%ymm1,%ymm1
+  23:	c5 fd 67 c1          	vpackuswb %ymm1,%ymm0,%ymm0
+  27:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  2d:	c5 fd 71 d0 08       	vpsrlw $0x8,%ymm0,%ymm0
+  32:	c5 fd 67 c0          	vpackuswb %ymm0,%ymm0,%ymm0
+  36:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  3c:	c5 fa 7f 02          	vmovdqu %xmm0,(%rdx)
+  40:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  44:	83 e9 10             	sub    $0x10,%ecx
+  47:	7f c5                	jg     e <ScaleRowDown4_AVX2+0xe>
+  49:	c5 f8 77             	vzeroupper 
+  4c:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown4Box_AVX2:
+
+0000000000000000 <ScaleRowDown4Box_AVX2>:
+   0:	48 8d 04 76          	lea    (%rsi,%rsi,2),%rax
+   4:	c5 dd 74 e4          	vpcmpeqb %ymm4,%ymm4,%ymm4
+   8:	c5 dd 71 d4 0f       	vpsrlw $0xf,%ymm4,%ymm4
+   d:	c5 d5 71 f4 03       	vpsllw $0x3,%ymm4,%ymm5
+  12:	c5 dd 67 e4          	vpackuswb %ymm4,%ymm4,%ymm4
+  16:	c5 fe 6f 07          	vmovdqu (%rdi),%ymm0
+  1a:	c5 fe 6f 4f 20       	vmovdqu 0x20(%rdi),%ymm1
+  1f:	c5 fe 6f 14 37       	vmovdqu (%rdi,%rsi,1),%ymm2
+  24:	c5 fe 6f 5c 37 20    	vmovdqu 0x20(%rdi,%rsi,1),%ymm3
+  2a:	c4 e2 7d 04 c4       	vpmaddubsw %ymm4,%ymm0,%ymm0
+  2f:	c4 e2 75 04 cc       	vpmaddubsw %ymm4,%ymm1,%ymm1
+  34:	c4 e2 6d 04 d4       	vpmaddubsw %ymm4,%ymm2,%ymm2
+  39:	c4 e2 65 04 dc       	vpmaddubsw %ymm4,%ymm3,%ymm3
+  3e:	c5 fd fd c2          	vpaddw %ymm2,%ymm0,%ymm0
+  42:	c5 f5 fd cb          	vpaddw %ymm3,%ymm1,%ymm1
+  46:	c5 fe 6f 14 77       	vmovdqu (%rdi,%rsi,2),%ymm2
+  4b:	c5 fe 6f 5c 77 20    	vmovdqu 0x20(%rdi,%rsi,2),%ymm3
+  51:	c4 e2 6d 04 d4       	vpmaddubsw %ymm4,%ymm2,%ymm2
+  56:	c4 e2 65 04 dc       	vpmaddubsw %ymm4,%ymm3,%ymm3
+  5b:	c5 fd fd c2          	vpaddw %ymm2,%ymm0,%ymm0
+  5f:	c5 f5 fd cb          	vpaddw %ymm3,%ymm1,%ymm1
+  63:	c5 fe 6f 14 07       	vmovdqu (%rdi,%rax,1),%ymm2
+  68:	c5 fe 6f 5c 07 20    	vmovdqu 0x20(%rdi,%rax,1),%ymm3
+  6e:	48 8d 7f 40          	lea    0x40(%rdi),%rdi
+  72:	c4 e2 6d 04 d4       	vpmaddubsw %ymm4,%ymm2,%ymm2
+  77:	c4 e2 65 04 dc       	vpmaddubsw %ymm4,%ymm3,%ymm3
+  7c:	c5 fd fd c2          	vpaddw %ymm2,%ymm0,%ymm0
+  80:	c5 f5 fd cb          	vpaddw %ymm3,%ymm1,%ymm1
+  84:	c4 e2 7d 01 c1       	vphaddw %ymm1,%ymm0,%ymm0
+  89:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  8f:	c5 fd fd c5          	vpaddw %ymm5,%ymm0,%ymm0
+  93:	c5 fd 71 d0 04       	vpsrlw $0x4,%ymm0,%ymm0
+  98:	c5 fd 67 c0          	vpackuswb %ymm0,%ymm0,%ymm0
+  9c:	c4 e3 fd 00 c0 d8    	vpermq $0xd8,%ymm0,%ymm0
+  a2:	c5 fa 7f 02          	vmovdqu %xmm0,(%rdx)
+  a6:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  aa:	83 e9 10             	sub    $0x10,%ecx
+  ad:	0f 8f 63 ff ff ff    	jg     16 <ScaleRowDown4Box_AVX2+0x16>
+  b3:	c5 f8 77             	vzeroupper 
+  b6:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown34_SSSE3:
+
+0000000000000000 <ScaleRowDown34_SSSE3>:
+   0:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 8 <ScaleRowDown34_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 10 <ScaleRowDown34_SSSE3+0x10>
+   f:	00 
+  10:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 18 <ScaleRowDown34_SSSE3+0x18>
+  17:	00 
+  18:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  1c:	f3 0f 6f 57 10       	movdqu 0x10(%rdi),%xmm2
+  21:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  25:	66 0f 6f ca          	movdqa %xmm2,%xmm1
+  29:	66 0f 3a 0f c8 08    	palignr $0x8,%xmm0,%xmm1
+  2f:	66 0f 38 00 c3       	pshufb %xmm3,%xmm0
+  34:	66 0f 38 00 cc       	pshufb %xmm4,%xmm1
+  39:	66 0f 38 00 d5       	pshufb %xmm5,%xmm2
+  3e:	66 0f d6 02          	movq   %xmm0,(%rdx)
+  42:	66 0f d6 4a 08       	movq   %xmm1,0x8(%rdx)
+  47:	66 0f d6 52 10       	movq   %xmm2,0x10(%rdx)
+  4c:	48 8d 52 18          	lea    0x18(%rdx),%rdx
+  50:	83 e9 18             	sub    $0x18,%ecx
+  53:	7f c3                	jg     18 <ScaleRowDown34_SSSE3+0x18>
+  55:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown34_1_Box_SSSE3:
+
+0000000000000000 <ScaleRowDown34_1_Box_SSSE3>:
+   0:	66 0f 6f 15 00 00 00 	movdqa 0x0(%rip),%xmm2        # 8 <ScaleRowDown34_1_Box_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 10 <ScaleRowDown34_1_Box_SSSE3+0x10>
+   f:	00 
+  10:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 18 <ScaleRowDown34_1_Box_SSSE3+0x18>
+  17:	00 
+  18:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 20 <ScaleRowDown34_1_Box_SSSE3+0x20>
+  1f:	00 
+  20:	66 0f 6f 05 00 00 00 	movdqa 0x0(%rip),%xmm0        # 28 <ScaleRowDown34_1_Box_SSSE3+0x28>
+  27:	00 
+  28:	66 0f 6f 0d 00 00 00 	movdqa 0x0(%rip),%xmm1        # 30 <ScaleRowDown34_1_Box_SSSE3+0x30>
+  2f:	00 
+  30:	f3 0f 6f 37          	movdqu (%rdi),%xmm6
+  34:	f3 0f 6f 3c 37       	movdqu (%rdi,%rsi,1),%xmm7
+  39:	66 0f e0 f7          	pavgb  %xmm7,%xmm6
+  3d:	66 0f 38 00 f2       	pshufb %xmm2,%xmm6
+  42:	66 0f 38 04 f5       	pmaddubsw %xmm5,%xmm6
+  47:	66 0f ed f1          	paddsw %xmm1,%xmm6
+  4b:	66 0f 71 d6 02       	psrlw  $0x2,%xmm6
+  50:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  54:	66 0f d6 32          	movq   %xmm6,(%rdx)
+  58:	f3 0f 6f 77 08       	movdqu 0x8(%rdi),%xmm6
+  5d:	f3 0f 6f 7c 37 08    	movdqu 0x8(%rdi,%rsi,1),%xmm7
+  63:	66 0f e0 f7          	pavgb  %xmm7,%xmm6
+  67:	66 0f 38 00 f3       	pshufb %xmm3,%xmm6
+  6c:	66 0f 38 04 f0       	pmaddubsw %xmm0,%xmm6
+  71:	66 0f ed f1          	paddsw %xmm1,%xmm6
+  75:	66 0f 71 d6 02       	psrlw  $0x2,%xmm6
+  7a:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  7e:	66 0f d6 72 08       	movq   %xmm6,0x8(%rdx)
+  83:	f3 0f 6f 77 10       	movdqu 0x10(%rdi),%xmm6
+  88:	f3 0f 6f 7c 37 10    	movdqu 0x10(%rdi,%rsi,1),%xmm7
+  8e:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  92:	66 0f e0 f7          	pavgb  %xmm7,%xmm6
+  96:	66 0f 38 00 f4       	pshufb %xmm4,%xmm6
+  9b:	66 0f 38 04 35 00 00 	pmaddubsw 0x0(%rip),%xmm6        # a4 <ScaleRowDown34_1_Box_SSSE3+0xa4>
+  a2:	00 00 
+  a4:	66 0f ed f1          	paddsw %xmm1,%xmm6
+  a8:	66 0f 71 d6 02       	psrlw  $0x2,%xmm6
+  ad:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  b1:	66 0f d6 72 10       	movq   %xmm6,0x10(%rdx)
+  b6:	48 8d 52 18          	lea    0x18(%rdx),%rdx
+  ba:	83 e9 18             	sub    $0x18,%ecx
+  bd:	0f 8f 6d ff ff ff    	jg     30 <ScaleRowDown34_1_Box_SSSE3+0x30>
+  c3:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown34_0_Box_SSSE3:
+
+0000000000000000 <ScaleRowDown34_0_Box_SSSE3>:
+   0:	66 0f 6f 15 00 00 00 	movdqa 0x0(%rip),%xmm2        # 8 <ScaleRowDown34_0_Box_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 10 <ScaleRowDown34_0_Box_SSSE3+0x10>
+   f:	00 
+  10:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 18 <ScaleRowDown34_0_Box_SSSE3+0x18>
+  17:	00 
+  18:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 20 <ScaleRowDown34_0_Box_SSSE3+0x20>
+  1f:	00 
+  20:	66 0f 6f 05 00 00 00 	movdqa 0x0(%rip),%xmm0        # 28 <ScaleRowDown34_0_Box_SSSE3+0x28>
+  27:	00 
+  28:	66 0f 6f 0d 00 00 00 	movdqa 0x0(%rip),%xmm1        # 30 <ScaleRowDown34_0_Box_SSSE3+0x30>
+  2f:	00 
+  30:	f3 0f 6f 37          	movdqu (%rdi),%xmm6
+  34:	f3 0f 6f 3c 37       	movdqu (%rdi,%rsi,1),%xmm7
+  39:	66 0f e0 fe          	pavgb  %xmm6,%xmm7
+  3d:	66 0f e0 f7          	pavgb  %xmm7,%xmm6
+  41:	66 0f 38 00 f2       	pshufb %xmm2,%xmm6
+  46:	66 0f 38 04 f5       	pmaddubsw %xmm5,%xmm6
+  4b:	66 0f ed f1          	paddsw %xmm1,%xmm6
+  4f:	66 0f 71 d6 02       	psrlw  $0x2,%xmm6
+  54:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  58:	66 0f d6 32          	movq   %xmm6,(%rdx)
+  5c:	f3 0f 6f 77 08       	movdqu 0x8(%rdi),%xmm6
+  61:	f3 0f 6f 7c 37 08    	movdqu 0x8(%rdi,%rsi,1),%xmm7
+  67:	66 0f e0 fe          	pavgb  %xmm6,%xmm7
+  6b:	66 0f e0 f7          	pavgb  %xmm7,%xmm6
+  6f:	66 0f 38 00 f3       	pshufb %xmm3,%xmm6
+  74:	66 0f 38 04 f0       	pmaddubsw %xmm0,%xmm6
+  79:	66 0f ed f1          	paddsw %xmm1,%xmm6
+  7d:	66 0f 71 d6 02       	psrlw  $0x2,%xmm6
+  82:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  86:	66 0f d6 72 08       	movq   %xmm6,0x8(%rdx)
+  8b:	f3 0f 6f 77 10       	movdqu 0x10(%rdi),%xmm6
+  90:	f3 0f 6f 7c 37 10    	movdqu 0x10(%rdi,%rsi,1),%xmm7
+  96:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  9a:	66 0f e0 fe          	pavgb  %xmm6,%xmm7
+  9e:	66 0f e0 f7          	pavgb  %xmm7,%xmm6
+  a2:	66 0f 38 00 f4       	pshufb %xmm4,%xmm6
+  a7:	66 0f 38 04 35 00 00 	pmaddubsw 0x0(%rip),%xmm6        # b0 <ScaleRowDown34_0_Box_SSSE3+0xb0>
+  ae:	00 00 
+  b0:	66 0f ed f1          	paddsw %xmm1,%xmm6
+  b4:	66 0f 71 d6 02       	psrlw  $0x2,%xmm6
+  b9:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  bd:	66 0f d6 72 10       	movq   %xmm6,0x10(%rdx)
+  c2:	48 8d 52 18          	lea    0x18(%rdx),%rdx
+  c6:	83 e9 18             	sub    $0x18,%ecx
+  c9:	0f 8f 61 ff ff ff    	jg     30 <ScaleRowDown34_0_Box_SSSE3+0x30>
+  cf:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown38_SSSE3:
+
+0000000000000000 <ScaleRowDown38_SSSE3>:
+   0:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 8 <ScaleRowDown38_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 10 <ScaleRowDown38_SSSE3+0x10>
+   f:	00 
+  10:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  14:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+  19:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  1d:	66 0f 38 00 c4       	pshufb %xmm4,%xmm0
+  22:	66 0f 38 00 cd       	pshufb %xmm5,%xmm1
+  27:	66 0f dc c1          	paddusb %xmm1,%xmm0
+  2b:	66 0f d6 02          	movq   %xmm0,(%rdx)
+  2f:	0f 12 c8             	movhlps %xmm0,%xmm1
+  32:	66 0f 7e 4a 08       	movd   %xmm1,0x8(%rdx)
+  37:	48 8d 52 0c          	lea    0xc(%rdx),%rdx
+  3b:	83 e9 0c             	sub    $0xc,%ecx
+  3e:	7f d0                	jg     10 <ScaleRowDown38_SSSE3+0x10>
+  40:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown38_2_Box_SSSE3:
+
+0000000000000000 <ScaleRowDown38_2_Box_SSSE3>:
+   0:	66 0f 6f 15 00 00 00 	movdqa 0x0(%rip),%xmm2        # 8 <ScaleRowDown38_2_Box_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 10 <ScaleRowDown38_2_Box_SSSE3+0x10>
+   f:	00 
+  10:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 18 <ScaleRowDown38_2_Box_SSSE3+0x18>
+  17:	00 
+  18:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 20 <ScaleRowDown38_2_Box_SSSE3+0x20>
+  1f:	00 
+  20:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  24:	f3 0f 6f 0c 37       	movdqu (%rdi,%rsi,1),%xmm1
+  29:	48 8d 7f 10          	lea    0x10(%rdi),%rdi
+  2d:	66 0f e0 c1          	pavgb  %xmm1,%xmm0
+  31:	66 0f 6f c8          	movdqa %xmm0,%xmm1
+  35:	66 0f 38 00 ca       	pshufb %xmm2,%xmm1
+  3a:	66 0f 6f f0          	movdqa %xmm0,%xmm6
+  3e:	66 0f 38 00 f3       	pshufb %xmm3,%xmm6
+  43:	66 0f dd ce          	paddusw %xmm6,%xmm1
+  47:	66 0f 38 00 c4       	pshufb %xmm4,%xmm0
+  4c:	66 0f dd c8          	paddusw %xmm0,%xmm1
+  50:	66 0f e4 cd          	pmulhuw %xmm5,%xmm1
+  54:	66 0f 67 c9          	packuswb %xmm1,%xmm1
+  58:	66 0f 7e 0a          	movd   %xmm1,(%rdx)
+  5c:	66 0f 73 d1 10       	psrlq  $0x10,%xmm1
+  61:	66 0f 7e 4a 02       	movd   %xmm1,0x2(%rdx)
+  66:	48 8d 52 06          	lea    0x6(%rdx),%rdx
+  6a:	83 e9 06             	sub    $0x6,%ecx
+  6d:	7f b1                	jg     20 <ScaleRowDown38_2_Box_SSSE3+0x20>
+  6f:	c3                   	retq   
+
+Disassembly of section .text.ScaleRowDown38_3_Box_SSSE3:
+
+0000000000000000 <ScaleRowDown38_3_Box_SSSE3>:
+   0:	66 0f 6f 15 00 00 00 	movdqa 0x0(%rip),%xmm2        # 8 <ScaleRowDown38_3_Box_SSSE3+0x8>
+   7:	00 
+   8:	66 0f 6f 1d 00 00 00 	movdqa 0x0(%rip),%xmm3        # 10 <ScaleRowDown38_3_Box_SSSE3+0x10>
+   f:	00 
+  10:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # 18 <ScaleRowDown38_3_Box_SSSE3+0x18>
+  17:	00 
+  18:	66 0f ef ed          	pxor   %xmm5,%xmm5
+  1c:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+  20:	f3 0f 6f 34 37       	movdqu (%rdi,%rsi,1),%xmm6
+  25:	0f 12 c8             	movhlps %xmm0,%xmm1
+  28:	0f 12 fe             	movhlps %xmm6,%xmm7
+  2b:	66 0f 60 c5          	punpcklbw %xmm5,%xmm0
+  2f:	66 0f 60 cd          	punpcklbw %xmm5,%xmm1
+  33:	66 0f 60 f5          	punpcklbw %xmm5,%xmm6
+  37:	66 0f 60 fd          	punpcklbw %xmm5,%xmm7
+  3b:	66 0f dd c6          	paddusw %xmm6,%xmm0
+  3f:	66 0f dd cf          	paddusw %xmm7,%xmm1
+  43:	f3 0f 6f 34 77       	movdqu (%rdi,%rsi,2),%xmm6
+  48:	48 8d 7f 10          	lea    0x10(%rdi),%rdi
+  4c:	0f 12 fe             	movhlps %xmm6,%xmm7
+  4f:	66 0f 60 f5          	punpcklbw %xmm5,%xmm6
+  53:	66 0f 60 fd          	punpcklbw %xmm5,%xmm7
+  57:	66 0f dd c6          	paddusw %xmm6,%xmm0
+  5b:	66 0f dd cf          	paddusw %xmm7,%xmm1
+  5f:	66 0f 6f f0          	movdqa %xmm0,%xmm6
+  63:	66 0f 73 d8 02       	psrldq $0x2,%xmm0
+  68:	66 0f dd f0          	paddusw %xmm0,%xmm6
+  6c:	66 0f 73 d8 02       	psrldq $0x2,%xmm0
+  71:	66 0f dd f0          	paddusw %xmm0,%xmm6
+  75:	66 0f 38 00 f2       	pshufb %xmm2,%xmm6
+  7a:	66 0f 6f f9          	movdqa %xmm1,%xmm7
+  7e:	66 0f 73 d9 02       	psrldq $0x2,%xmm1
+  83:	66 0f dd f9          	paddusw %xmm1,%xmm7
+  87:	66 0f 73 d9 02       	psrldq $0x2,%xmm1
+  8c:	66 0f dd f9          	paddusw %xmm1,%xmm7
+  90:	66 0f 38 00 fb       	pshufb %xmm3,%xmm7
+  95:	66 0f dd f7          	paddusw %xmm7,%xmm6
+  99:	66 0f e4 f4          	pmulhuw %xmm4,%xmm6
+  9d:	66 0f 67 f6          	packuswb %xmm6,%xmm6
+  a1:	66 0f 7e 32          	movd   %xmm6,(%rdx)
+  a5:	66 0f 73 d6 10       	psrlq  $0x10,%xmm6
+  aa:	66 0f 7e 72 02       	movd   %xmm6,0x2(%rdx)
+  af:	48 8d 52 06          	lea    0x6(%rdx),%rdx
+  b3:	83 e9 06             	sub    $0x6,%ecx
+  b6:	0f 8f 60 ff ff ff    	jg     1c <ScaleRowDown38_3_Box_SSSE3+0x1c>
+  bc:	c3                   	retq   
+
+Disassembly of section .text.ScaleAddRow_SSE2:
+
+0000000000000000 <ScaleAddRow_SSE2>:
+   0:	66 0f ef ed          	pxor   %xmm5,%xmm5
+   4:	f3 0f 6f 1f          	movdqu (%rdi),%xmm3
+   8:	48 8d 7f 10          	lea    0x10(%rdi),%rdi
+   c:	f3 0f 6f 06          	movdqu (%rsi),%xmm0
+  10:	f3 0f 6f 4e 10       	movdqu 0x10(%rsi),%xmm1
+  15:	66 0f 6f d3          	movdqa %xmm3,%xmm2
+  19:	66 0f 60 d5          	punpcklbw %xmm5,%xmm2
+  1d:	66 0f 68 dd          	punpckhbw %xmm5,%xmm3
+  21:	66 0f dd c2          	paddusw %xmm2,%xmm0
+  25:	66 0f dd cb          	paddusw %xmm3,%xmm1
+  29:	f3 0f 7f 06          	movdqu %xmm0,(%rsi)
+  2d:	f3 0f 7f 4e 10       	movdqu %xmm1,0x10(%rsi)
+  32:	48 8d 76 20          	lea    0x20(%rsi),%rsi
+  36:	83 ea 10             	sub    $0x10,%edx
+  39:	7f c9                	jg     4 <ScaleAddRow_SSE2+0x4>
+  3b:	c3                   	retq   
+
+Disassembly of section .text.ScaleAddRow_AVX2:
+
+0000000000000000 <ScaleAddRow_AVX2>:
+   0:	c5 d5 ef ed          	vpxor  %ymm5,%ymm5,%ymm5
+   4:	c5 fe 6f 1f          	vmovdqu (%rdi),%ymm3
+   8:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+   c:	c4 e3 fd 00 db d8    	vpermq $0xd8,%ymm3,%ymm3
+  12:	c5 e5 60 d5          	vpunpcklbw %ymm5,%ymm3,%ymm2
+  16:	c5 e5 68 dd          	vpunpckhbw %ymm5,%ymm3,%ymm3
+  1a:	c5 ed dd 06          	vpaddusw (%rsi),%ymm2,%ymm0
+  1e:	c5 e5 dd 4e 20       	vpaddusw 0x20(%rsi),%ymm3,%ymm1
+  23:	c5 fe 7f 06          	vmovdqu %ymm0,(%rsi)
+  27:	c5 fe 7f 4e 20       	vmovdqu %ymm1,0x20(%rsi)
+  2c:	48 8d 76 40          	lea    0x40(%rsi),%rsi
+  30:	83 ea 20             	sub    $0x20,%edx
+  33:	7f cf                	jg     4 <ScaleAddRow_AVX2+0x4>
+  35:	c5 f8 77             	vzeroupper 
+  38:	c3                   	retq   
+
+Disassembly of section .text.ScaleFilterCols_SSSE3:
+
+0000000000000000 <ScaleFilterCols_SSSE3>:
+   0:	89 54 24 fc          	mov    %edx,-0x4(%rsp)
+   4:	89 4c 24 f8          	mov    %ecx,-0x8(%rsp)
+   8:	44 89 44 24 f4       	mov    %r8d,-0xc(%rsp)
+   d:	44 0f 28 05 00 00 00 	movaps 0x0(%rip),%xmm8        # 15 <ScaleFilterCols_SSSE3+0x15>
+  14:	00 
+  15:	44 0f 28 0d 00 00 00 	movaps 0x0(%rip),%xmm9        # 1d <ScaleFilterCols_SSSE3+0x1d>
+  1c:	00 
+  1d:	66 0f 6e 54 24 f8    	movd   -0x8(%rsp),%xmm2
+  23:	66 0f 6e 5c 24 f4    	movd   -0xc(%rsp),%xmm3
+  29:	b8 00 00 04 04       	mov    $0x4040000,%eax
+  2e:	66 0f 6e e8          	movd   %eax,%xmm5
+  32:	66 0f 74 f6          	pcmpeqb %xmm6,%xmm6
+  36:	66 0f 71 d6 09       	psrlw  $0x9,%xmm6
+  3b:	66 0f 74 ff          	pcmpeqb %xmm7,%xmm7
+  3f:	66 0f 71 d7 0f       	psrlw  $0xf,%xmm7
+  44:	66 0f c5 ca 01       	pextrw $0x1,%xmm2,%ecx
+  49:	83 ea 02             	sub    $0x2,%edx
+  4c:	7c 7c                	jl     ca <ScaleFilterCols_SSSE3+0xca>
+  4e:	66 0f 6f c2          	movdqa %xmm2,%xmm0
+  52:	66 0f fe c3          	paddd  %xmm3,%xmm0
+  56:	66 0f 62 d0          	punpckldq %xmm0,%xmm2
+  5a:	66 0f 62 db          	punpckldq %xmm3,%xmm3
+  5e:	66 0f fe db          	paddd  %xmm3,%xmm3
+  62:	66 44 0f c5 c2 03    	pextrw $0x3,%xmm2,%r8d
+  68:	66 0f 6f ca          	movdqa %xmm2,%xmm1
+  6c:	66 0f fe d3          	paddd  %xmm3,%xmm2
+  70:	0f b7 04 0e          	movzwl (%rsi,%rcx,1),%eax
+  74:	66 0f 6e c0          	movd   %eax,%xmm0
+  78:	66 0f 71 d1 09       	psrlw  $0x9,%xmm1
+  7d:	42 0f b7 04 06       	movzwl (%rsi,%r8,1),%eax
+  82:	66 0f 6e e0          	movd   %eax,%xmm4
+  86:	66 0f 38 00 cd       	pshufb %xmm5,%xmm1
+  8b:	66 0f 61 c4          	punpcklwd %xmm4,%xmm0
+  8f:	66 41 0f f8 c0       	psubb  %xmm8,%xmm0
+  94:	66 0f ef ce          	pxor   %xmm6,%xmm1
+  98:	66 0f dc cf          	paddusb %xmm7,%xmm1
+  9c:	66 0f 38 04 c8       	pmaddubsw %xmm0,%xmm1
+  a1:	66 0f c5 ca 01       	pextrw $0x1,%xmm2,%ecx
+  a6:	66 44 0f c5 c2 03    	pextrw $0x3,%xmm2,%r8d
+  ac:	66 41 0f fd c9       	paddw  %xmm9,%xmm1
+  b1:	66 0f 71 d1 07       	psrlw  $0x7,%xmm1
+  b6:	66 0f 67 c9          	packuswb %xmm1,%xmm1
+  ba:	66 0f 7e c8          	movd   %xmm1,%eax
+  be:	66 89 07             	mov    %ax,(%rdi)
+  c1:	48 8d 7f 02          	lea    0x2(%rdi),%rdi
+  c5:	83 ea 02             	sub    $0x2,%edx
+  c8:	7d 9e                	jge    68 <ScaleFilterCols_SSSE3+0x68>
+  ca:	83 c2 01             	add    $0x1,%edx
+  cd:	7c 38                	jl     107 <ScaleFilterCols_SSSE3+0x107>
+  cf:	0f b7 04 0e          	movzwl (%rsi,%rcx,1),%eax
+  d3:	66 0f 6e c0          	movd   %eax,%xmm0
+  d7:	66 0f 71 d2 09       	psrlw  $0x9,%xmm2
+  dc:	66 0f 38 00 d5       	pshufb %xmm5,%xmm2
+  e1:	66 41 0f f8 c0       	psubb  %xmm8,%xmm0
+  e6:	66 0f ef d6          	pxor   %xmm6,%xmm2
+  ea:	66 0f dc d7          	paddusb %xmm7,%xmm2
+  ee:	66 0f 38 04 d0       	pmaddubsw %xmm0,%xmm2
+  f3:	66 41 0f fd d1       	paddw  %xmm9,%xmm2
+  f8:	66 0f 71 d2 07       	psrlw  $0x7,%xmm2
+  fd:	66 0f 67 d2          	packuswb %xmm2,%xmm2
+ 101:	66 0f 7e d0          	movd   %xmm2,%eax
+ 105:	88 07                	mov    %al,(%rdi)
+ 107:	89 54 24 fc          	mov    %edx,-0x4(%rsp)
+ 10b:	c3                   	retq   
+
+Disassembly of section .text.ScaleColsUp2_SSE2:
+
+0000000000000000 <ScaleColsUp2_SSE2>:
+   0:	f3 0f 6f 06          	movdqu (%rsi),%xmm0
+   4:	48 8d 76 10          	lea    0x10(%rsi),%rsi
+   8:	66 0f 6f c8          	movdqa %xmm0,%xmm1
+   c:	66 0f 60 c0          	punpcklbw %xmm0,%xmm0
+  10:	66 0f 68 c9          	punpckhbw %xmm1,%xmm1
+  14:	f3 0f 7f 07          	movdqu %xmm0,(%rdi)
+  18:	f3 0f 7f 4f 10       	movdqu %xmm1,0x10(%rdi)
+  1d:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  21:	83 ea 20             	sub    $0x20,%edx
+  24:	7f da                	jg     0 <ScaleColsUp2_SSE2>
+  26:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBRowDown2_SSE2:
+
+0000000000000000 <ScaleARGBRowDown2_SSE2>:
+   0:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+   4:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+   9:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+   d:	0f c6 c1 dd          	shufps $0xdd,%xmm1,%xmm0
+  11:	f3 0f 7f 02          	movdqu %xmm0,(%rdx)
+  15:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  19:	83 e9 04             	sub    $0x4,%ecx
+  1c:	7f e2                	jg     0 <ScaleARGBRowDown2_SSE2>
+  1e:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBRowDown2Linear_SSE2:
+
+0000000000000000 <ScaleARGBRowDown2Linear_SSE2>:
+   0:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+   4:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+   9:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+   d:	66 0f 6f d0          	movdqa %xmm0,%xmm2
+  11:	0f c6 c1 88          	shufps $0x88,%xmm1,%xmm0
+  15:	0f c6 d1 dd          	shufps $0xdd,%xmm1,%xmm2
+  19:	66 0f e0 c2          	pavgb  %xmm2,%xmm0
+  1d:	f3 0f 7f 02          	movdqu %xmm0,(%rdx)
+  21:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  25:	83 e9 04             	sub    $0x4,%ecx
+  28:	7f d6                	jg     0 <ScaleARGBRowDown2Linear_SSE2>
+  2a:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBRowDown2Box_SSE2:
+
+0000000000000000 <ScaleARGBRowDown2Box_SSE2>:
+   0:	f3 0f 6f 07          	movdqu (%rdi),%xmm0
+   4:	f3 0f 6f 4f 10       	movdqu 0x10(%rdi),%xmm1
+   9:	f3 0f 6f 14 37       	movdqu (%rdi,%rsi,1),%xmm2
+   e:	f3 0f 6f 5c 37 10    	movdqu 0x10(%rdi,%rsi,1),%xmm3
+  14:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  18:	66 0f e0 c2          	pavgb  %xmm2,%xmm0
+  1c:	66 0f e0 cb          	pavgb  %xmm3,%xmm1
+  20:	66 0f 6f d0          	movdqa %xmm0,%xmm2
+  24:	0f c6 c1 88          	shufps $0x88,%xmm1,%xmm0
+  28:	0f c6 d1 dd          	shufps $0xdd,%xmm1,%xmm2
+  2c:	66 0f e0 c2          	pavgb  %xmm2,%xmm0
+  30:	f3 0f 7f 02          	movdqu %xmm0,(%rdx)
+  34:	48 8d 52 10          	lea    0x10(%rdx),%rdx
+  38:	83 e9 04             	sub    $0x4,%ecx
+  3b:	7f c3                	jg     0 <ScaleARGBRowDown2Box_SSE2>
+  3d:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBRowDownEven_SSE2:
+
+0000000000000000 <ScaleARGBRowDownEven_SSE2>:
+   0:	48 63 c2             	movslq %edx,%rax
+   3:	48 8d 04 85 00 00 00 	lea    0x0(,%rax,4),%rax
+   a:	00 
+   b:	48 8d 14 40          	lea    (%rax,%rax,2),%rdx
+   f:	66 0f 6e 07          	movd   (%rdi),%xmm0
+  13:	66 0f 6e 0c 07       	movd   (%rdi,%rax,1),%xmm1
+  18:	66 0f 62 c1          	punpckldq %xmm1,%xmm0
+  1c:	66 0f 6e 14 47       	movd   (%rdi,%rax,2),%xmm2
+  21:	66 0f 6e 1c 17       	movd   (%rdi,%rdx,1),%xmm3
+  26:	48 8d 3c 87          	lea    (%rdi,%rax,4),%rdi
+  2a:	66 0f 62 d3          	punpckldq %xmm3,%xmm2
+  2e:	66 0f 6c c2          	punpcklqdq %xmm2,%xmm0
+  32:	f3 0f 7f 01          	movdqu %xmm0,(%rcx)
+  36:	48 8d 49 10          	lea    0x10(%rcx),%rcx
+  3a:	41 83 e8 04          	sub    $0x4,%r8d
+  3e:	7f cf                	jg     f <ScaleARGBRowDownEven_SSE2+0xf>
+  40:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBRowDownEvenBox_SSE2:
+
+0000000000000000 <ScaleARGBRowDownEvenBox_SSE2>:
+   0:	44 89 44 24 fc       	mov    %r8d,-0x4(%rsp)
+   5:	48 63 c2             	movslq %edx,%rax
+   8:	48 8d 04 85 00 00 00 	lea    0x0(,%rax,4),%rax
+   f:	00 
+  10:	48 8d 14 40          	lea    (%rax,%rax,2),%rdx
+  14:	48 8d 34 37          	lea    (%rdi,%rsi,1),%rsi
+  18:	f3 0f 7e 07          	movq   (%rdi),%xmm0
+  1c:	0f 16 04 07          	movhps (%rdi,%rax,1),%xmm0
+  20:	f3 0f 7e 0c 47       	movq   (%rdi,%rax,2),%xmm1
+  25:	0f 16 0c 17          	movhps (%rdi,%rdx,1),%xmm1
+  29:	48 8d 3c 87          	lea    (%rdi,%rax,4),%rdi
+  2d:	f3 0f 7e 16          	movq   (%rsi),%xmm2
+  31:	0f 16 14 06          	movhps (%rsi,%rax,1),%xmm2
+  35:	f3 0f 7e 1c 46       	movq   (%rsi,%rax,2),%xmm3
+  3a:	0f 16 1c 16          	movhps (%rsi,%rdx,1),%xmm3
+  3e:	48 8d 34 86          	lea    (%rsi,%rax,4),%rsi
+  42:	66 0f e0 c2          	pavgb  %xmm2,%xmm0
+  46:	66 0f e0 cb          	pavgb  %xmm3,%xmm1
+  4a:	66 0f 6f d0          	movdqa %xmm0,%xmm2
+  4e:	0f c6 c1 88          	shufps $0x88,%xmm1,%xmm0
+  52:	0f c6 d1 dd          	shufps $0xdd,%xmm1,%xmm2
+  56:	66 0f e0 c2          	pavgb  %xmm2,%xmm0
+  5a:	f3 0f 7f 01          	movdqu %xmm0,(%rcx)
+  5e:	48 8d 49 10          	lea    0x10(%rcx),%rcx
+  62:	41 83 e8 04          	sub    $0x4,%r8d
+  66:	7f b0                	jg     18 <ScaleARGBRowDownEvenBox_SSE2+0x18>
+  68:	44 89 44 24 fc       	mov    %r8d,-0x4(%rsp)
+  6d:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBCols_SSE2:
+
+0000000000000000 <ScaleARGBCols_SSE2>:
+   0:	41 89 d1             	mov    %edx,%r9d
+   3:	44 89 44 24 f8       	mov    %r8d,-0x8(%rsp)
+   8:	89 4c 24 fc          	mov    %ecx,-0x4(%rsp)
+   c:	66 0f 6e 54 24 fc    	movd   -0x4(%rsp),%xmm2
+  12:	66 0f 6e 5c 24 f8    	movd   -0x8(%rsp),%xmm3
+  18:	66 0f 70 d2 00       	pshufd $0x0,%xmm2,%xmm2
+  1d:	66 0f 70 c3 11       	pshufd $0x11,%xmm3,%xmm0
+  22:	66 0f fe d0          	paddd  %xmm0,%xmm2
+  26:	66 0f fe db          	paddd  %xmm3,%xmm3
+  2a:	66 0f 70 c3 05       	pshufd $0x5,%xmm3,%xmm0
+  2f:	66 0f fe d0          	paddd  %xmm0,%xmm2
+  33:	66 0f fe db          	paddd  %xmm3,%xmm3
+  37:	66 0f 70 db 00       	pshufd $0x0,%xmm3,%xmm3
+  3c:	66 0f c5 c2 01       	pextrw $0x1,%xmm2,%eax
+  41:	66 0f c5 d2 03       	pextrw $0x3,%xmm2,%edx
+  46:	41 83 f9 00          	cmp    $0x0,%r9d
+  4a:	0f 8c 82 00 00 00    	jl     d2 <ScaleARGBCols_SSE2+0xd2>
+  50:	41 83 e9 04          	sub    $0x4,%r9d
+  54:	7c 46                	jl     9c <ScaleARGBCols_SSE2+0x9c>
+  56:	66 0f 6e 04 86       	movd   (%rsi,%rax,4),%xmm0
+  5b:	66 0f 6e 0c 96       	movd   (%rsi,%rdx,4),%xmm1
+  60:	66 0f c5 c2 05       	pextrw $0x5,%xmm2,%eax
+  65:	66 0f c5 d2 07       	pextrw $0x7,%xmm2,%edx
+  6a:	66 0f fe d3          	paddd  %xmm3,%xmm2
+  6e:	66 0f 62 c1          	punpckldq %xmm1,%xmm0
+  72:	66 0f 6e 0c 86       	movd   (%rsi,%rax,4),%xmm1
+  77:	66 0f 6e 24 96       	movd   (%rsi,%rdx,4),%xmm4
+  7c:	66 0f c5 c2 01       	pextrw $0x1,%xmm2,%eax
+  81:	66 0f c5 d2 03       	pextrw $0x3,%xmm2,%edx
+  86:	66 0f 62 cc          	punpckldq %xmm4,%xmm1
+  8a:	66 0f 6c c1          	punpcklqdq %xmm1,%xmm0
+  8e:	f3 0f 7f 07          	movdqu %xmm0,(%rdi)
+  92:	48 8d 7f 10          	lea    0x10(%rdi),%rdi
+  96:	41 83 e9 04          	sub    $0x4,%r9d
+  9a:	7d ba                	jge    56 <ScaleARGBCols_SSE2+0x56>
+  9c:	41 f7 c1 02 00 00 00 	test   $0x2,%r9d
+  a3:	74 1b                	je     c0 <ScaleARGBCols_SSE2+0xc0>
+  a5:	66 0f 6e 04 86       	movd   (%rsi,%rax,4),%xmm0
+  aa:	66 0f 6e 0c 96       	movd   (%rsi,%rdx,4),%xmm1
+  af:	66 0f c5 c2 05       	pextrw $0x5,%xmm2,%eax
+  b4:	66 0f 62 c1          	punpckldq %xmm1,%xmm0
+  b8:	66 0f d6 07          	movq   %xmm0,(%rdi)
+  bc:	48 8d 7f 08          	lea    0x8(%rdi),%rdi
+  c0:	41 f7 c1 01 00 00 00 	test   $0x1,%r9d
+  c7:	74 09                	je     d2 <ScaleARGBCols_SSE2+0xd2>
+  c9:	66 0f 6e 04 86       	movd   (%rsi,%rax,4),%xmm0
+  ce:	66 0f 7e 07          	movd   %xmm0,(%rdi)
+  d2:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBColsUp2_SSE2:
+
+0000000000000000 <ScaleARGBColsUp2_SSE2>:
+   0:	f3 0f 6f 06          	movdqu (%rsi),%xmm0
+   4:	48 8d 76 10          	lea    0x10(%rsi),%rsi
+   8:	66 0f 6f c8          	movdqa %xmm0,%xmm1
+   c:	66 0f 62 c0          	punpckldq %xmm0,%xmm0
+  10:	66 0f 6a c9          	punpckhdq %xmm1,%xmm1
+  14:	f3 0f 7f 07          	movdqu %xmm0,(%rdi)
+  18:	f3 0f 7f 4f 10       	movdqu %xmm1,0x10(%rdi)
+  1d:	48 8d 7f 20          	lea    0x20(%rdi),%rdi
+  21:	83 ea 08             	sub    $0x8,%edx
+  24:	7f da                	jg     0 <ScaleARGBColsUp2_SSE2>
+  26:	c3                   	retq   
+
+Disassembly of section .text.ScaleARGBFilterCols_SSSE3:
+
+0000000000000000 <ScaleARGBFilterCols_SSSE3>:
+   0:	89 54 24 fc          	mov    %edx,-0x4(%rsp)
+   4:	66 0f 6f 25 00 00 00 	movdqa 0x0(%rip),%xmm4        # c <ScaleARGBFilterCols_SSSE3+0xc>
+   b:	00 
+   c:	66 0f 6f 2d 00 00 00 	movdqa 0x0(%rip),%xmm5        # 14 <ScaleARGBFilterCols_SSSE3+0x14>
+  13:	00 
+  14:	44 89 44 24 f4       	mov    %r8d,-0xc(%rsp)
+  19:	89 4c 24 f8          	mov    %ecx,-0x8(%rsp)
+  1d:	66 0f 6e 54 24 f8    	movd   -0x8(%rsp),%xmm2
+  23:	66 0f 6e 5c 24 f4    	movd   -0xc(%rsp),%xmm3
+  29:	66 0f 74 f6          	pcmpeqb %xmm6,%xmm6
+  2d:	66 0f 71 d6 09       	psrlw  $0x9,%xmm6
+  32:	66 0f c5 c2 01       	pextrw $0x1,%xmm2,%eax
+  37:	83 ea 02             	sub    $0x2,%edx
+  3a:	7c 62                	jl     9e <ScaleARGBFilterCols_SSSE3+0x9e>
+  3c:	66 0f 6f c2          	movdqa %xmm2,%xmm0
+  40:	66 0f fe c3          	paddd  %xmm3,%xmm0
+  44:	66 0f 62 d0          	punpckldq %xmm0,%xmm2
+  48:	66 0f 62 db          	punpckldq %xmm3,%xmm3
+  4c:	66 0f fe db          	paddd  %xmm3,%xmm3
+  50:	66 0f c5 ca 03       	pextrw $0x3,%xmm2,%ecx
+  55:	66 0f 6f ca          	movdqa %xmm2,%xmm1
+  59:	66 0f fe d3          	paddd  %xmm3,%xmm2
+  5d:	f3 0f 7e 04 86       	movq   (%rsi,%rax,4),%xmm0
+  62:	66 0f 71 d1 09       	psrlw  $0x9,%xmm1
+  67:	0f 16 04 8e          	movhps (%rsi,%rcx,4),%xmm0
+  6b:	66 0f 38 00 cd       	pshufb %xmm5,%xmm1
+  70:	66 0f 38 00 c4       	pshufb %xmm4,%xmm0
+  75:	66 0f ef ce          	pxor   %xmm6,%xmm1
+  79:	66 0f 38 04 c1       	pmaddubsw %xmm1,%xmm0
+  7e:	66 0f 71 d0 07       	psrlw  $0x7,%xmm0
+  83:	66 0f c5 c2 01       	pextrw $0x1,%xmm2,%eax
+  88:	66 0f c5 ca 03       	pextrw $0x3,%xmm2,%ecx
+  8d:	66 0f 67 c0          	packuswb %xmm0,%xmm0
+  91:	66 0f d6 07          	movq   %xmm0,(%rdi)
+  95:	48 8d 7f 08          	lea    0x8(%rdi),%rdi
+  99:	83 ea 02             	sub    $0x2,%edx
+  9c:	7d b7                	jge    55 <ScaleARGBFilterCols_SSSE3+0x55>
+  9e:	83 c2 01             	add    $0x1,%edx
+  a1:	7c 2a                	jl     cd <ScaleARGBFilterCols_SSSE3+0xcd>
+  a3:	66 0f 71 d2 09       	psrlw  $0x9,%xmm2
+  a8:	f3 0f 7e 04 86       	movq   (%rsi,%rax,4),%xmm0
+  ad:	66 0f 38 00 d5       	pshufb %xmm5,%xmm2
+  b2:	66 0f 38 00 c4       	pshufb %xmm4,%xmm0
+  b7:	66 0f ef d6          	pxor   %xmm6,%xmm2
+  bb:	66 0f 38 04 c2       	pmaddubsw %xmm2,%xmm0
+  c0:	66 0f 71 d0 07       	psrlw  $0x7,%xmm0
+  c5:	66 0f 67 c0          	packuswb %xmm0,%xmm0
+  c9:	66 0f 7e 07          	movd   %xmm0,(%rdi)
+  cd:	89 54 24 fc          	mov    %edx,-0x4(%rsp)
+  d1:	c3                   	retq   
+
+Disassembly of section .text.FixedDiv_X86:
+
+0000000000000000 <FixedDiv_X86>:
+   0:	89 f1                	mov    %esi,%ecx
+   2:	89 f8                	mov    %edi,%eax
+   4:	99                   	cltd   
+   5:	0f a4 c2 10          	shld   $0x10,%eax,%edx
+   9:	c1 e0 10             	shl    $0x10,%eax
+   c:	f7 f9                	idiv   %ecx
+   e:	89 c0                	mov    %eax,%eax
+  10:	c3                   	retq   
+
+Disassembly of section .text.FixedDiv1_X86:
+
+0000000000000000 <FixedDiv1_X86>:
+   0:	89 f1                	mov    %esi,%ecx
+   2:	89 f8                	mov    %edi,%eax
+   4:	99                   	cltd   
+   5:	0f a4 c2 10          	shld   $0x10,%eax,%edx
+   9:	c1 e0 10             	shl    $0x10,%eax
+   c:	2d 01 00 01 00       	sub    $0x10001,%eax
+  11:	83 da 00             	sbb    $0x0,%edx
+  14:	83 e9 01             	sub    $0x1,%ecx
+  17:	f7 f9                	idiv   %ecx
+  19:	89 c0                	mov    %eax,%eax
+  1b:	c3                   	retq   
