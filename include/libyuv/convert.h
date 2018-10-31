@@ -375,6 +375,8 @@ int ARGB4444ToI420(const uint8_t* src_argb4444,
                    int height);
 
 #ifdef HAVE_JPEG
+// sample is pointer to raw jpeg bytes in memory
+// sample_size is size of jpeg in bytes
 // src_width/height provided by capture.
 // dst_width/height for clipping determine final size.
 LIBYUV_API
