@@ -2107,6 +2107,7 @@ TEST_F(LibYUVConvertTest, I420CropOddY) {
   memset(dst_v, 3,
          SUBSAMPLE(kDestWidth, SUBSAMP_X) * SUBSAMPLE(kDestHeight, SUBSAMP_Y));
 
+<<<<<<< HEAD
   MaskCpuFlags(benchmark_cpu_info_);
   for (int i = 0; i < benchmark_iterations_; ++i) {
     ConvertToI420(src_y, sample_size, dst_y, kDestWidth, dst_u,
@@ -2115,6 +2116,12 @@ TEST_F(LibYUVConvertTest, I420CropOddY) {
                   kDestWidth, kDestHeight, libyuv::kRotate0,
                   libyuv::FOURCC_I420);
   }
+=======
+  ConvertToI420(src_y, sample_size, dst_y, kDestWidth, dst_u,
+                SUBSAMPLE(kDestWidth, SUBSAMP_X), dst_v,
+                SUBSAMPLE(kDestWidth, SUBSAMP_X), 0, crop_y, kWidth, kHeight,
+                kDestWidth, kDestHeight, libyuv::kRotate0, libyuv::FOURCC_I420);
+>>>>>>> Fix ConvertToI420() for odd crop_y
 
   for (int i = 0; i < kDestHeight; ++i) {
     for (int j = 0; j < kDestWidth; ++j) {

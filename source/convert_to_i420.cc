@@ -194,12 +194,20 @@ int ConvertToI420(const uint8_t* sample,
       int halfheight = (abs_src_height + 1) / 2;
       if (format == FOURCC_YV12) {
         src_v = sample + src_width * abs_src_height + halfwidth * (crop_y / 2) +
+<<<<<<< HEAD
                 (crop_x / 2);
+=======
+                crop_x / 2;
+>>>>>>> Fix ConvertToI420() for odd crop_y
         src_u = sample + src_width * abs_src_height +
                 halfwidth * (halfheight + (crop_y / 2)) + (crop_x / 2);
       } else {
         src_u = sample + src_width * abs_src_height + halfwidth * (crop_y / 2) +
+<<<<<<< HEAD
                 (crop_x / 2);
+=======
+                crop_x / 2;
+>>>>>>> Fix ConvertToI420() for odd crop_y
         src_v = sample + src_width * abs_src_height +
                 halfwidth * (halfheight + (crop_y / 2)) + (crop_x / 2);
       }
