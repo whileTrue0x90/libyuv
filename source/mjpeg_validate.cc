@@ -17,8 +17,15 @@ namespace libyuv {
 extern "C" {
 #endif
 
+// JPeg markers are described here:
+http://vip.sugovica.hu/Sardi/kepnezo/JPEG%20File%20Layout%20and%20Format.htm
+
+// return size of jpeg in bytes.
+// scans the src_mjpg for EOI marker.
+// src_size_mjpg input limits the scan but can be 0.
+
 // Helper function to scan for EOI marker (0xff 0xd9).
-static LIBYUV_BOOL ScanEOI(const uint8_t* src_mjpg, size_t src_size_mjpg) {
+LIBYUV_API size_t SizeOfJpeg(const uint8_t* src_mjpg, size_t src_size_mjpg) {
   if (src_size_mjpg >= 2) {
     const uint8_t* end = src_mjpg + src_size_mjpg - 1;
     const uint8_t* it = src_mjpg;
@@ -29,13 +36,13 @@ static LIBYUV_BOOL ScanEOI(const uint8_t* src_mjpg, size_t src_size_mjpg) {
         break;
       }
       if (it[1] == 0xd9) {
-        return LIBYUV_TRUE;  // Success: Valid jpeg.
+         return it - src_mjpg + 2;  // Success: Valid jpeg.
       }
       ++it;  // Skip over current 0xff.
     }
   }
-  // ERROR: Invalid jpeg end code not found. Size src_size_mjpg
-  return LIBYUV_FALSE;
+  // ERROR: Invalid jpeg end code not found.
+  return 0;
 }
 
 // Helper function to validate the jpeg appears intact.
@@ -54,14 +61,14 @@ LIBYUV_BOOL ValidateJpeg(const uint8_t* src_mjpg, size_t src_size_mjpg) {
 
   // Look for the End Of Image (EOI) marker near the end of the buffer.
   if (src_size_mjpg > kBackSearchSize) {
-    if (ScanEOI(src_mjpg + src_size_mjpg - kBackSearchSize, kBackSearchSize)) {
+    if (SizeOfJpeg(src_mjpg + src_size_mjpg - kBackSearchSize, kBackSearchSize)) {
       return LIBYUV_TRUE;  // Success: Valid jpeg.
     }
     // Reduce search size for forward search.
     src_size_mjpg = src_size_mjpg - kBackSearchSize + 1;
   }
   // Step over SOI marker and scan for EOI.
-  return ScanEOI(src_mjpg + 2, src_size_mjpg - 2);
+  return (SizeOfJpeg(src_mjpg + 2, src_size_mjpg - 2) > 0) ? LIBYUV_TRUE : LIBYUV_FALSE;
 }
 
 #ifdef __cplusplus

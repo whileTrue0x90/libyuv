@@ -26,7 +26,12 @@ namespace libyuv {
 extern "C" {
 #endif
 
-LIBYUV_BOOL ValidateJpeg(const uint8_t* src_mjpg, size_t src_size_mjpg_size);
+LIBYUV_API LIBYUV_BOOL ValidateJpeg(const uint8_t* src_mjpg, size_t src_size_mjpg);
+
+// return size of jpeg in bytes.
+// scans the src_mjpg for EOI marker.
+// src_size_mjpg input limits the scan but can be 0.
+LIBYUV_API size_t SizeOfJpeg(const uint8_t* src_mjpg, size_t src_size_mjpg);
 
 #ifdef __cplusplus
 }  // extern "C"
