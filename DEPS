@@ -1,6 +1,6 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': 'af6fc95fe355184662cc07ef315821f190533268',
+  'chromium_revision': '0046768337a62af8352abe1196be5c4c9fd23a7c',
   'swarming_revision': '7f463e66e1c4bb830ef3de9d046aa227d28e1b00',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
@@ -14,13 +14,13 @@ vars = {
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '1caa03da844c72496e733bd51570eb1467b9b37c',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '2fb6537bf59c9c9a736997b8bd888ca0ecf54322',
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' + '13a00f110ef910a25763346d6538b60f12845656',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '84700d98096f8c8986ef2538bb58dd61427f04c4',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '7bdda3c6577f21fd0ec986a0383ecfce28f5d761',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'e6fa7d7040e57ca1ab3b9dd95051c6219ccabc86',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '5ba0b4acbf82132709d6f81419733954fe686a03',
   'src/third_party/catapult':
     Var('chromium_git') + '/catapult.git' + '@' + Var('catapult_revision'),
   'src/third_party/colorama/src':
@@ -173,7 +173,7 @@ deps = {
       'dep_type': 'cipd',
   },
   'src/third_party/icu': {
-    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '45f655f2feb7069a7b9b47d1b1a596807bfd4220',
+    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '407b39301e71006b68bd38e770f35d32398a7b14',
   },
   'src/third_party/icu4j': {
       'packages': [
