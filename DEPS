@@ -1,6 +1,6 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '1ae58559b7be51433a031e81abd400cadf373767',
+  'chromium_revision': 'ba36bdbbbced29c4bf218766d2c86bd0ec569a9f',
   'swarming_revision': '157bec8a25cc4ebd6a16052510d08b05b6102aad',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling lss
@@ -9,18 +9,18 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'eee0f6ad0df532b4ba3eee2bf04a5a155817586c',
+  'catapult_revision': '1b98245e3cb73fd67d1e2e50a016f4d2af76dd30',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '854ff0514a56dde0b7fc27a7a990c56cbd5f3fa7',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '59f4bb0792b999a8561d2a8138d1da82007c7626',
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' + '04161ec8d7c781e4498c699254c69ba0dd959fde',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '7d3e0c43d6f1de35b7fab6b54b89b8ea91d37b67',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + 'd387a4a97ace9515944f4bebf7b1a27022028da0',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'ebb1b22c255852aef5c8052d0331b8d58c2d92f2',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '565df8c4986142617f7aa5cf8b92762d1edb611b',
   'src/third_party/catapult':
     Var('chromium_git') + '/catapult.git' + '@' + Var('catapult_revision'),
   'src/third_party/colorama/src':
@@ -30,13 +30,13 @@ deps = {
   'src/third_party/googletest/src':
     Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '879ac092fde0a19e1b3a61b2546b2a422b1528bc',
   'src/third_party/harfbuzz-ng/src':
-    Var('chromium_git') + '/external/github.com/harfbuzz/harfbuzz.git' + '@' + '574d888c8a409295a952361a39c8e83a52a0fc3d',
+    Var('chromium_git') + '/external/github.com/harfbuzz/harfbuzz.git' + '@' + 'e0307de818ad1f70ef96938642bda61d7a62532a',
   'src/third_party/libjpeg_turbo':
     Var('chromium_git') + '/chromium/deps/libjpeg_turbo.git' + '@' + '61a2bbaa9aec89cb2c882d87ace6aba9aee49bb9',
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + '720b70524a4424b15fc57e82263568c8ba0496ad',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + '94c5e5f5d952f02064fec937188a624b55dc2422',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + 'a265c769a05c87ba9c2937a72e43ab9e3f519742',
   'src/tools/swarming_client':
     Var('chromium_git') + '/infra/luci/client-py.git' + '@' +  Var('swarming_revision'),
 
@@ -69,7 +69,7 @@ deps = {
     'condition': 'checkout_android',
   },
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '295ee1c89adb91e19157480896ed884ff6c0f77d',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'cc12771b4f3d60b32dcc22a241b246fcfc8ef90c',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -292,7 +292,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + 'e217e3709fdf67ac304fcdd4926ec9e7174766f2',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + 'e2fbe966e1f8ce980a59c6ae18f7f15ff44fdb6e',
     'condition': 'checkout_ios'
   },
 
