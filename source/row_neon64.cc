@@ -2898,6 +2898,34 @@ void NV21ToYUV24Row_NEON(const uint8_t* src_y,
     : "cc", "memory", "v0", "v1", "v2");
 }
 
+void AYUVToUVRow_NEON(const uint8_t* src_ayuv,
+                      int src_stride_ayuv,
+                      uint8_t* dst_uv,
+                      int width) {
+  const uint8_t* src_ayuv_1 = src_ayuv + src_stride_ayuv;
+  asm volatile(
+
+  "1:                                          \n"
+    "ld4        {v0.16b,v1.16b,v2.16b,v3.16b}, [%0], #64 \n"  // load 16 pixels.
+    "uaddlp     v0.8h, v0.16b                  \n"  // V 16 bytes -> 8 shorts.
+    "uaddlp     v1.8h, v1.16b                  \n"  // U 16 bytes -> 8 shorts.
+    "ld4        {v4.16b,v5.16b,v6.16b,v7.16b}, [%1], #64 \n"  // load next 16
+    "uadalp     v0.8h, v4.16b                  \n"  // V 16 bytes -> 8 shorts.
+    "uadalp     v1.8h, v5.16b                  \n"  // U 16 bytes -> 8 shorts.
+    "uqrshrn    v3.8b, v0.8h, #2               \n"  // 2x2 average
+    "uqrshrn    v2.8b, v1.8h, #2               \n"
+    "subs       %w3, %w3, #16                  \n"  // 16 processed per loop.
+    "st2        {v2.8b,v3.8b}, [%2], #16       \n"  // store 8 pixels UV.
+    "b.gt       1b                             \n"
+  : "+r"(src_ayuv),    // %0
+    "+r"(src_ayuv_1),  // %1
+    "+r"(dst_uv),      // %2
+    "+r"(width)        // %3
+  :
+  : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7"
+  );
+}
+
 void AYUVToVURow_NEON(const uint8_t* src_ayuv,
                       int src_stride_ayuv,
                       uint8_t* dst_vu,
@@ -2962,7 +2990,7 @@ void FloatDivToByteRow_NEON(const float* src_weights,
       "uqxtn      v1.4h, v1.4s                   \n"  // 8 shorts
       "uqxtn2     v1.8h, v2.4s                   \n"
       "uqxtn      v1.8b, v1.8h                   \n"  // 8 bytes
- 
+
       "st1        {v1.8b}, [%2], #8              \n"  // store 8 byte out
 
       "fcmgt      v5.4s, v1.4s, v0.4s            \n"  // cmp weight to zero
@@ -2981,6 +3009,24 @@ void FloatDivToByteRow_NEON(const float* src_weights,
         "+r"(width)        // %4
       :
       : "cc", "memory", "v1", "v2", "v3", "v4", "v5", "v6");
+}
+
+// Convert biplanar UV channel of NV12 to NV21
+void UVToVURow_NEON(const uint8_t* src_uv,
+                    uint8_t* dst_vu,
+                    int width) {
+  asm volatile (
+  "1:                                          \n"
+    "ld2        {v0.16b, v1.16b}, [%0], #32    \n"  // load 16 UV values
+    "orr        v2.16b, v0.16b, v0.16b         \n"  // move U after V
+    "subs       %w2, %w2, #16                  \n"  // 16 pixels per loop
+    "st2        {v1.16b, v2.16b}, [%1], #32    \n"  // store 16 VU pixels
+    "b.gt       1b                             \n"
+    : "+r"(src_uv),  // %0
+      "+r"(dst_vu),  // %1
+      "+r"(width)    // %2
+    :
+    : "cc", "memory", "v0", "v1", "v2");
 }
 
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
