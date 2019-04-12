@@ -1,0 +1,246 @@
+ninja_required_version = 1.7.2
+
+rule gn
+  command = ../../../../../chrome/src/buildtools/linux64/gn --root=../../.. -q gen .
+  description = Regenerating ninja files
+
+build build.ninja: gn
+  generator = 1
+  depfile = build.ninja.d
+
+pool build_toolchain_action_pool
+  depth = 72
+
+pool build_toolchain_link_pool
+  depth = 62
+
+subninja toolchain.ninja
+
+build default: phony obj/default.stamp
+build libyuv: phony obj/libyuv.stamp
+build libyuv_internal: phony obj/libyuv_internal.a
+build common_deps: phony obj/build/config/common_deps.stamp
+build compile_gperf: phony obj/third_party/yasm/compile_gperf.stamp
+build compile_gperf_for_include: phony obj/third_party/yasm/compile_gperf_for_include.stamp
+build compile_nasm_macros: phony obj/third_party/yasm/compile_nasm_macros.stamp
+build compile_nasm_version: phony obj/third_party/yasm/compile_nasm_version.stamp
+build compile_re2c: phony obj/third_party/yasm/compile_re2c.stamp
+build compile_re2c_lc3b: phony obj/third_party/yasm/compile_re2c_lc3b.stamp
+build compile_win64_gas: phony obj/third_party/yasm/compile_win64_gas.stamp
+build compile_win64_nasm: phony obj/third_party/yasm/compile_win64_nasm.stamp
+build cxa_demangle_stub: phony obj/buildtools/third_party/libc++abi/cxa_demangle_stub.stamp
+build default_exe_manifest: phony obj/build/win/default_exe_manifest.stamp
+build deps: phony obj/build/config/sanitizers/deps.stamp
+build executable_deps: phony obj/build/config/executable_deps.stamp
+build freetype_harfbuzz: phony obj/third_party/freetype_harfbuzz.stamp
+build freetype_source: phony obj/third_party/freetype/freetype_source.stamp
+build generate_license: phony obj/third_party/yasm/generate_license.stamp
+build generate_module: phony obj/third_party/yasm/generate_module.stamp
+build generate_version: phony obj/third_party/yasm/generate_version.stamp
+build gflags: phony obj/third_party/gflags/gflags.stamp
+build gmock: phony obj/third_party/googletest/gmock.stamp
+build gmock_main: phony obj/third_party/googletest/libgmock_main.a
+build harfbuzz_fuzzer_seed_corpus: phony obj/third_party/harfbuzz-ng/harfbuzz_fuzzer_seed_corpus.stamp
+build harfbuzz_source: phony obj/third_party/harfbuzz-ng/harfbuzz_source.stamp
+build icu: phony obj/third_party/icu/icu.stamp
+build icudata: phony obj/third_party/icu/icudata.stamp
+build icui18n: phony obj/third_party/icu/libicui18n.a
+build icuuc: phony obj/third_party/icu/libicuuc.a
+build jpeg: phony obj/third_party/jpeg.stamp
+build jpeg_includes: phony obj/third_party/jpeg_includes.stamp
+build libc++: phony obj/buildtools/third_party/libc++/libc++.stamp
+build libc++abi: phony obj/buildtools/third_party/libc++abi/libc++abi.stamp
+build libfuzzer_main: phony obj/testing/libfuzzer/libfuzzer_main.stamp
+build libjpeg: phony obj/third_party/libjpeg_turbo/libjpeg.a
+build libpng: phony obj/third_party/libpng/libpng.stamp
+build libpng_read_fuzzer_dict_copy: phony obj/third_party/libpng/libpng_read_fuzzer_dict_copy.stamp
+build libpng_read_fuzzer_seed_corpus: phony obj/third_party/libpng/libpng_read_fuzzer_seed_corpus.stamp
+build libpng_sources: phony obj/third_party/libpng/libpng_sources.stamp
+build linux: phony obj/build/config/linux/linux.stamp
+build loadable_module_deps: phony obj/build/config/loadable_module_deps.stamp
+build minizip: phony obj/third_party/zlib/libminizip.a
+build options_sources: phony obj/build/config/sanitizers/liboptions_sources.a
+build posix: phony obj/build/config/posix/posix.stamp
+build seed_corpus: phony obj/testing/libfuzzer/seed_corpus.stamp
+build shared_library_deps: phony obj/build/config/shared_library_deps.stamp
+build simd: phony obj/third_party/libjpeg_turbo/libsimd.a
+build simd_asm: phony obj/third_party/libjpeg_turbo/libsimd_asm.a
+build simd_asm_action: phony obj/third_party/libjpeg_turbo/simd_asm_action.stamp
+build yasm_utils: phony obj/third_party/yasm/libyasm_utils.a
+build zlib: phony obj/third_party/zlib/libchrome_zlib.a
+build zlib_adler32_simd: phony obj/third_party/zlib/zlib_adler32_simd.stamp
+build zlib_crc32_simd: phony obj/third_party/zlib/zlib_crc32_simd.stamp
+build zlib_inflate_chunk_simd: phony obj/third_party/zlib/zlib_inflate_chunk_simd.stamp
+build zlib_x86_simd: phony obj/third_party/zlib/libzlib_x86_simd.a
+build $:compare: phony ./compare
+build $:cpuid: phony ./cpuid
+build $:default: phony obj/default.stamp
+build $:libyuv: phony obj/libyuv.stamp
+build $:libyuv_internal: phony obj/libyuv_internal.a
+build $:libyuv_unittest: phony ./libyuv_unittest
+build $:psnr: phony ./psnr
+build $:yuvconvert: phony ./yuvconvert
+build build/config$:common_deps: phony obj/build/config/common_deps.stamp
+build build/config$:executable_deps: phony obj/build/config/executable_deps.stamp
+build build/config$:loadable_module_deps: phony obj/build/config/loadable_module_deps.stamp
+build build/config$:shared_library_deps: phony obj/build/config/shared_library_deps.stamp
+build build/config/linux$:linux: phony obj/build/config/linux/linux.stamp
+build build/config/linux: phony obj/build/config/linux/linux.stamp
+build build/config/posix$:posix: phony obj/build/config/posix/posix.stamp
+build build/config/posix: phony obj/build/config/posix/posix.stamp
+build build/config/sanitizers$:deps: phony obj/build/config/sanitizers/deps.stamp
+build build/config/sanitizers$:options_sources: phony obj/build/config/sanitizers/liboptions_sources.a
+build build/win$:default_exe_manifest: phony obj/build/win/default_exe_manifest.stamp
+build buildtools/third_party/libc++$:libc++: phony obj/buildtools/third_party/libc++/libc++.stamp
+build buildtools/third_party/libc++: phony obj/buildtools/third_party/libc++/libc++.stamp
+build buildtools/third_party/libc++abi$:cxa_demangle_stub: phony obj/buildtools/third_party/libc++abi/cxa_demangle_stub.stamp
+build buildtools/third_party/libc++abi$:libc++abi: phony obj/buildtools/third_party/libc++abi/libc++abi.stamp
+build buildtools/third_party/libc++abi: phony obj/buildtools/third_party/libc++abi/libc++abi.stamp
+build testing/gtest$:gtest: phony obj/testing/gtest/libgtest.a
+build testing/gtest: phony obj/testing/gtest/libgtest.a
+build testing/gtest$:gtest_main: phony obj/testing/gtest/gtest_main.stamp
+build testing/libfuzzer$:libfuzzer_main: phony obj/testing/libfuzzer/libfuzzer_main.stamp
+build testing/libfuzzer$:seed_corpus: phony obj/testing/libfuzzer/seed_corpus.stamp
+build third_party$:freetype_harfbuzz: phony obj/third_party/freetype_harfbuzz.stamp
+build third_party$:jpeg: phony obj/third_party/jpeg.stamp
+build third_party$:jpeg_includes: phony obj/third_party/jpeg_includes.stamp
+build third_party/freetype$:freetype_source: phony obj/third_party/freetype/freetype_source.stamp
+build third_party/gflags$:gflags: phony obj/third_party/gflags/gflags.stamp
+build third_party/gflags: phony obj/third_party/gflags/gflags.stamp
+build third_party/googletest$:gmock: phony obj/third_party/googletest/gmock.stamp
+build third_party/googletest$:gmock_main: phony obj/third_party/googletest/libgmock_main.a
+build third_party/googletest$:gtest: phony obj/third_party/googletest/gtest.stamp
+build third_party/googletest$:gtest_main: phony obj/third_party/googletest/gtest_main.stamp
+build third_party/harfbuzz-ng$:harfbuzz_fuzzer: phony ./harfbuzz_fuzzer
+build third_party/harfbuzz-ng$:harfbuzz_fuzzer.options: phony obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.options.stamp
+build third_party/harfbuzz-ng$:harfbuzz_fuzzer.owners: phony obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.owners.stamp
+build third_party/harfbuzz-ng$:harfbuzz_fuzzer_seed_corpus: phony obj/third_party/harfbuzz-ng/harfbuzz_fuzzer_seed_corpus.stamp
+build third_party/harfbuzz-ng$:harfbuzz_source: phony obj/third_party/harfbuzz-ng/harfbuzz_source.stamp
+build third_party/icu$:icu: phony obj/third_party/icu/icu.stamp
+build third_party/icu: phony obj/third_party/icu/icu.stamp
+build third_party/icu$:icudata: phony obj/third_party/icu/icudata.stamp
+build third_party/icu$:icui18n: phony obj/third_party/icu/libicui18n.a
+build third_party/icu$:icuuc: phony obj/third_party/icu/libicuuc.a
+build third_party/libjpeg_turbo$:libjpeg: phony obj/third_party/libjpeg_turbo/libjpeg.a
+build third_party/libjpeg_turbo$:simd: phony obj/third_party/libjpeg_turbo/libsimd.a
+build third_party/libjpeg_turbo$:simd_asm: phony obj/third_party/libjpeg_turbo/libsimd_asm.a
+build third_party/libjpeg_turbo$:simd_asm_action: phony obj/third_party/libjpeg_turbo/simd_asm_action.stamp
+build third_party/libpng$:libpng: phony obj/third_party/libpng/libpng.stamp
+build third_party/libpng: phony obj/third_party/libpng/libpng.stamp
+build third_party/libpng$:libpng_read_fuzzer: phony ./libpng_read_fuzzer
+build third_party/libpng$:libpng_read_fuzzer.options: phony obj/third_party/libpng/libpng_read_fuzzer.options.stamp
+build third_party/libpng$:libpng_read_fuzzer.owners: phony obj/third_party/libpng/libpng_read_fuzzer.owners.stamp
+build third_party/libpng$:libpng_read_fuzzer_dict_copy: phony obj/third_party/libpng/libpng_read_fuzzer_dict_copy.stamp
+build third_party/libpng$:libpng_read_fuzzer_seed_corpus: phony obj/third_party/libpng/libpng_read_fuzzer_seed_corpus.stamp
+build third_party/libpng$:libpng_sources: phony obj/third_party/libpng/libpng_sources.stamp
+build third_party/yasm$:compile_gperf: phony obj/third_party/yasm/compile_gperf.stamp
+build third_party/yasm$:compile_gperf_for_include: phony obj/third_party/yasm/compile_gperf_for_include.stamp
+build third_party/yasm$:compile_nasm_macros: phony obj/third_party/yasm/compile_nasm_macros.stamp
+build third_party/yasm$:compile_nasm_version: phony obj/third_party/yasm/compile_nasm_version.stamp
+build third_party/yasm$:compile_re2c: phony obj/third_party/yasm/compile_re2c.stamp
+build third_party/yasm$:compile_re2c_lc3b: phony obj/third_party/yasm/compile_re2c_lc3b.stamp
+build third_party/yasm$:compile_win64_gas: phony obj/third_party/yasm/compile_win64_gas.stamp
+build third_party/yasm$:compile_win64_nasm: phony obj/third_party/yasm/compile_win64_nasm.stamp
+build third_party/yasm$:generate_license: phony obj/third_party/yasm/generate_license.stamp
+build third_party/yasm$:generate_module: phony obj/third_party/yasm/generate_module.stamp
+build third_party/yasm$:generate_version: phony obj/third_party/yasm/generate_version.stamp
+build third_party/yasm$:genmacro: phony ./genmacro
+build third_party/yasm$:genmodule: phony ./genmodule
+build third_party/yasm$:genperf: phony ./genperf
+build third_party/yasm$:genstring: phony ./genstring
+build third_party/yasm$:genversion: phony ./genversion
+build third_party/yasm$:re2c: phony ./re2c
+build third_party/yasm$:yasm: phony ./yasm
+build third_party/yasm: phony ./yasm
+build third_party/yasm$:yasm_utils: phony obj/third_party/yasm/libyasm_utils.a
+build third_party/zlib$:minizip: phony obj/third_party/zlib/libminizip.a
+build third_party/zlib$:zlib: phony obj/third_party/zlib/libchrome_zlib.a
+build third_party/zlib: phony obj/third_party/zlib/libchrome_zlib.a
+build third_party/zlib$:zlib_adler32_simd: phony obj/third_party/zlib/zlib_adler32_simd.stamp
+build third_party/zlib$:zlib_bench: phony ./zlib_bench
+build third_party/zlib$:zlib_crc32_simd: phony obj/third_party/zlib/zlib_crc32_simd.stamp
+build third_party/zlib$:zlib_inflate_chunk_simd: phony obj/third_party/zlib/zlib_inflate_chunk_simd.stamp
+build third_party/zlib$:zlib_x86_simd: phony obj/third_party/zlib/libzlib_x86_simd.a
+
+build all: phony $
+    ./compare $
+    ./cpuid $
+    obj/default.stamp $
+    obj/libyuv.stamp $
+    obj/libyuv_internal.a $
+    ./libyuv_unittest $
+    ./psnr $
+    ./yuvconvert $
+    obj/build/config/common_deps.stamp $
+    obj/build/config/executable_deps.stamp $
+    obj/build/config/loadable_module_deps.stamp $
+    obj/build/config/shared_library_deps.stamp $
+    obj/build/config/linux/linux.stamp $
+    obj/build/config/posix/posix.stamp $
+    obj/build/config/sanitizers/deps.stamp $
+    obj/build/config/sanitizers/liboptions_sources.a $
+    obj/build/win/default_exe_manifest.stamp $
+    obj/buildtools/third_party/libc++/libc++.stamp $
+    obj/buildtools/third_party/libc++abi/cxa_demangle_stub.stamp $
+    obj/buildtools/third_party/libc++abi/libc++abi.stamp $
+    obj/testing/gtest/libgtest.a $
+    obj/testing/gtest/gtest_main.stamp $
+    obj/testing/libfuzzer/libfuzzer_main.stamp $
+    obj/testing/libfuzzer/seed_corpus.stamp $
+    obj/third_party/freetype_harfbuzz.stamp $
+    obj/third_party/jpeg.stamp $
+    obj/third_party/jpeg_includes.stamp $
+    obj/third_party/freetype/freetype_source.stamp $
+    obj/third_party/gflags/gflags.stamp $
+    obj/third_party/googletest/gmock.stamp $
+    obj/third_party/googletest/libgmock_main.a $
+    obj/third_party/googletest/gtest.stamp $
+    obj/third_party/googletest/gtest_main.stamp $
+    ./harfbuzz_fuzzer $
+    obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.options.stamp $
+    obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.owners.stamp $
+    obj/third_party/harfbuzz-ng/harfbuzz_fuzzer_seed_corpus.stamp $
+    obj/third_party/harfbuzz-ng/harfbuzz_source.stamp $
+    obj/third_party/icu/icu.stamp $
+    obj/third_party/icu/icudata.stamp $
+    obj/third_party/icu/libicui18n.a $
+    obj/third_party/icu/libicuuc.a $
+    obj/third_party/libjpeg_turbo/libjpeg.a $
+    obj/third_party/libjpeg_turbo/libsimd.a $
+    obj/third_party/libjpeg_turbo/libsimd_asm.a $
+    obj/third_party/libjpeg_turbo/simd_asm_action.stamp $
+    obj/third_party/libpng/libpng.stamp $
+    ./libpng_read_fuzzer $
+    obj/third_party/libpng/libpng_read_fuzzer.options.stamp $
+    obj/third_party/libpng/libpng_read_fuzzer.owners.stamp $
+    obj/third_party/libpng/libpng_read_fuzzer_dict_copy.stamp $
+    obj/third_party/libpng/libpng_read_fuzzer_seed_corpus.stamp $
+    obj/third_party/libpng/libpng_sources.stamp $
+    obj/third_party/yasm/compile_gperf.stamp $
+    obj/third_party/yasm/compile_gperf_for_include.stamp $
+    obj/third_party/yasm/compile_nasm_macros.stamp $
+    obj/third_party/yasm/compile_nasm_version.stamp $
+    obj/third_party/yasm/compile_re2c.stamp $
+    obj/third_party/yasm/compile_re2c_lc3b.stamp $
+    obj/third_party/yasm/compile_win64_gas.stamp $
+    obj/third_party/yasm/compile_win64_nasm.stamp $
+    obj/third_party/yasm/generate_license.stamp $
+    obj/third_party/yasm/generate_module.stamp $
+    obj/third_party/yasm/generate_version.stamp $
+    ./genmacro $
+    ./genmodule $
+    ./genperf $
+    ./genstring $
+    ./genversion $
+    ./re2c $
+    ./yasm $
+    obj/third_party/yasm/libyasm_utils.a $
+    obj/third_party/zlib/libminizip.a $
+    obj/third_party/zlib/libchrome_zlib.a $
+    obj/third_party/zlib/zlib_adler32_simd.stamp $
+    ./zlib_bench $
+    obj/third_party/zlib/zlib_crc32_simd.stamp $
+    obj/third_party/zlib/zlib_inflate_chunk_simd.stamp $
+    obj/third_party/zlib/libzlib_x86_simd.a
+
+default default
