@@ -22,6 +22,30 @@
       "revId": "ecc12ba1641baa193e77ae13ca967d0b4f3865cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d41be30_f56fe51e",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1345227
+      },
+      "writtenOn": "2019-05-06T23:31:28Z",
+      "side": 1,
+      "message": "Should be removed",
+      "parentUuid": "9b1a1f6e_4564524e",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "ecc12ba1641baa193e77ae13ca967d0b4f3865cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
