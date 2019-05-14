@@ -3210,11 +3210,13 @@ void ScaleSamples_C(const float* src, float* dst, float scale, int width) {
 
 void GaussRow_C(const uint32_t* src, uint16_t* dst, int width) {
   int i;
+  __asm volatile("# LLVM-MCA-BEGIN foo");
   for (i = 0; i < width; ++i) {
     *dst++ =
         (src[0] + src[1] * 4 + src[2] * 6 + src[3] * 4 + src[4] + 128) >> 8;
     ++src;
   }
+  __asm volatile("# LLVM-MCA-END");
 }
 
 // filter 5 rows with 1, 4, 6, 4, 1 coefficients to produce 1 row.
