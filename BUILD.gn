@@ -6,8 +6,8 @@
 # in the file PATENTS. All contributing project authors may
 # be found in the AUTHORS file in the root of the source tree.
 
-import("libyuv.gni")
 import("//testing/test.gni")
+import("libyuv.gni")
 
 declare_args() {
   # Set to false to disable building with gflags.
@@ -17,6 +17,11 @@ declare_args() {
   # Chromium projects that depends on libyuv, setting this flag
   # to true makes libyuv symbols visible inside that library.
   libyuv_symbols_visible = false
+
+  # When building a static library in WebRTC on Windows with
+  # is_clang=false, setting this flag to false makes libyuv client
+  # executables be usable.
+  libyuv_force_clang_win = true
 }
 
 config("libyuv_config") {
@@ -50,7 +55,7 @@ group("libyuv") {
   all_dependent_configs = [ ":libyuv_config" ]
   deps = []
 
-  if (is_win && target_cpu == "x64") {
+  if (is_win && target_cpu == "x64" && libyuv_force_clang_win) {
     # Compile with clang in order to get inline assembly
     public_deps = [
       ":libyuv_internal(//build/toolchain/win:win_clang_x64)",
