@@ -6,8 +6,9 @@
 # in the file PATENTS. All contributing project authors may
 # be found in the AUTHORS file in the root of the source tree.
 
-import("libyuv.gni")
+import("//build/config/c++/c++.gni")
 import("//testing/test.gni")
+import("libyuv.gni")
 
 declare_args() {
   # Set to false to disable building with gflags.
@@ -51,6 +52,12 @@ group("libyuv") {
   deps = []
 
   if (is_win && target_cpu == "x64") {
+    # It is not consistent to link clang-compiled libyuv with custom cxx while
+    # the rest of the targets use stdlibc++ and msvc.
+    assert(
+        is_clang || !use_custom_libcxx,
+        "Must have use_custom_libcxx=false when compiling libyuv with is_clang=false.")
+
     # Compile with clang in order to get inline assembly
     public_deps = [
       ":libyuv_internal(//build/toolchain/win:win_clang_x64)",
@@ -395,4 +402,15 @@ if (libyuv_include_tests) {
       ":libyuv",
     ]
   }
+}
+
+executable("libyuv_clang_link_test") {
+  sources = [
+    "util/libyuv_clang_link_test.cc",
+  ]
+  deps = [
+    ":libyuv",
+  ]
+  configs += [ "//build/config/win:windowed" ]
+  deps += [ "//build/win:default_exe_manifest" ]
 }
