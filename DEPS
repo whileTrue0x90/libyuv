@@ -141,10 +141,6 @@ deps = {
       'condition': 'checkout_android',
       'dep_type': 'cipd',
   },
-  'src/third_party/android_tools': {
-    'url': Var('chromium_git') + '/android_tools.git' + '@' + 'e958d6ea74442d4e0849bb8a018d215a0e78981d',
-    'condition': 'checkout_android',
-  },
   'src/third_party/android_sdk/public': {
       'packages': [
           {
