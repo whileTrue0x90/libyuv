@@ -1,0 +1,333 @@
+rule cc
+  command =  ../../../third_party/llvm-build/Release+Asserts/bin/clang -MMD -MF ${out}.d ${defines} ${include_dirs} ${cflags} ${cflags_c} -c ${in} -o ${out}
+  description = CC ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule cxx
+  command =  ../../../third_party/llvm-build/Release+Asserts/bin/clang++ -MMD -MF ${out}.d ${defines} ${include_dirs} ${cflags} ${cflags_cc} -c ${in} -o ${out}
+  description = CXX ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule asm
+  command =  ../../../third_party/llvm-build/Release+Asserts/bin/clang -MMD -MF ${out}.d ${defines} ${include_dirs} ${asmflags} -c ${in} -o ${out}
+  description = ASM ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule alink
+  command = rm -f ${out} && "../../../third_party/llvm-build/Release+Asserts/bin/llvm-ar" ${arflags} -r -c -s -D ${out} @"${out}.rsp"
+  description = AR ${out}
+  rspfile = ${out}.rsp
+  rspfile_content = ${in}
+rule solink
+  command = python "../../../build/toolchain/gcc_solink_wrapper.py" --readelf="readelf" --nm="nm" --sofile="${output_dir}/${target_output_name}${output_extension}" --tocfile="${output_dir}/${target_output_name}${output_extension}.TOC" --output="${output_dir}/${target_output_name}${output_extension}" -- ../../../third_party/llvm-build/Release+Asserts/bin/clang++ -shared ${ldflags} -o "${output_dir}/${target_output_name}${output_extension}" -Wl,-soname="${target_output_name}${output_extension}" @"${output_dir}/${target_output_name}${output_extension}.rsp"
+  description = SOLINK ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = -Wl,--whole-archive ${in} ${solibs} -Wl,--no-whole-archive  ${libs} 
+  pool = build_toolchain_link_pool
+  restat = 1
+rule solink_module
+  command = ../../../third_party/llvm-build/Release+Asserts/bin/clang++ -shared ${ldflags} -o "${output_dir}/${target_output_name}${output_extension}" -Wl,-soname="${target_output_name}${output_extension}" @"${output_dir}/${target_output_name}${output_extension}.rsp"
+  description = SOLINK_MODULE ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = -Wl,--whole-archive ${in} ${solibs} -Wl,--no-whole-archive  ${libs} 
+  pool = build_toolchain_link_pool
+rule link
+  command = python "../../../build/toolchain/gcc_link_wrapper.py" --output="${output_dir}/${target_output_name}${output_extension}" -- ../../../third_party/llvm-build/Release+Asserts/bin/clang++ ${ldflags} -o "${output_dir}/${target_output_name}${output_extension}" -Wl,--start-group @"${output_dir}/${target_output_name}${output_extension}.rsp" ${solibs} -Wl,--end-group   ${libs} 
+  description = LINK ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = ${in}
+  pool = build_toolchain_link_pool
+rule stamp
+  command = touch ${out}
+  description = STAMP ${out}
+rule copy
+  command = ln -f ${in} ${out} 2>/dev/null || (rm -rf ${out} && cp -af ${in} ${out})
+  description = COPY ${in} ${out}
+
+subninja obj/compare.ninja
+subninja obj/cpuid.ninja
+build obj/default.stamp: stamp obj/libyuv.stamp ./compare ./cpuid ./libyuv_unittest ./psnr ./yuvconvert
+build obj/libyuv.stamp: stamp obj/libyuv_internal.a obj/third_party/jpeg.stamp
+subninja obj/libyuv_internal.ninja
+subninja obj/libyuv_unittest.ninja
+subninja obj/psnr.ninja
+subninja obj/yuvconvert.ninja
+build obj/build/config/common_deps.stamp: stamp obj/buildtools/third_party/libc++/libc++.stamp
+build obj/build/config/executable_deps.stamp: stamp obj/build/config/common_deps.stamp
+build obj/build/config/loadable_module_deps.stamp: stamp obj/build/config/common_deps.stamp
+build obj/build/config/shared_library_deps.stamp: stamp obj/build/config/common_deps.stamp
+build obj/build/config/linux/linux.stamp: stamp
+build obj/build/config/posix/posix.stamp: stamp
+build obj/build/config/sanitizers/deps.stamp: stamp
+subninja obj/build/config/sanitizers/options_sources.ninja
+build obj/build/win/default_exe_manifest.stamp: stamp
+subninja obj/buildtools/third_party/libc++/libc++.ninja
+subninja obj/buildtools/third_party/libc++abi/cxa_demangle_stub.ninja
+subninja obj/buildtools/third_party/libc++abi/libc++abi.ninja
+subninja obj/testing/gtest/gtest.ninja
+subninja obj/testing/gtest/gtest_main.ninja
+subninja obj/testing/libfuzzer/libfuzzer_main.ninja
+subninja obj/testing/libfuzzer/seed_corpus.ninja
+subninja obj/third_party/freetype_harfbuzz.ninja
+build obj/third_party/jpeg.stamp: stamp obj/third_party/libjpeg_turbo/libjpeg.a
+build obj/third_party/jpeg_includes.stamp: stamp
+subninja obj/third_party/freetype/freetype_source.ninja
+subninja obj/third_party/gflags/gflags.ninja
+subninja obj/third_party/googletest/gmock.ninja
+subninja obj/third_party/googletest/gmock_main.ninja
+subninja obj/third_party/googletest/gtest.ninja
+subninja obj/third_party/googletest/gtest_main.ninja
+subninja obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.ninja
+rule __third_party_harfbuzz-ng_harfbuzz_fuzzer.options___build_toolchain_linux_clang_x64__rule
+  command = python ../../../testing/libfuzzer/gen_fuzzer_config.py --config harfbuzz_fuzzer.options --libfuzzer_options max_len=16800
+  description = ACTION //third_party/harfbuzz-ng:harfbuzz_fuzzer.options(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build harfbuzz_fuzzer.options: __third_party_harfbuzz-ng_harfbuzz_fuzzer.options___build_toolchain_linux_clang_x64__rule | ../../../testing/libfuzzer/gen_fuzzer_config.py
+
+build obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.options.stamp: stamp harfbuzz_fuzzer.options
+rule __third_party_harfbuzz-ng_harfbuzz_fuzzer.owners___build_toolchain_linux_clang_x64__rule
+  command = python ../../../testing/libfuzzer/gen_fuzzer_owners.py --owners harfbuzz_fuzzer.owners --sources third_party/harfbuzz-ng/fuzz/harfbuzz_fuzzer.cc
+  description = ACTION //third_party/harfbuzz-ng:harfbuzz_fuzzer.owners(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build harfbuzz_fuzzer.owners: __third_party_harfbuzz-ng_harfbuzz_fuzzer.owners___build_toolchain_linux_clang_x64__rule | ../../../testing/libfuzzer/gen_fuzzer_owners.py
+
+build obj/third_party/harfbuzz-ng/harfbuzz_fuzzer.owners.stamp: stamp harfbuzz_fuzzer.owners
+rule __third_party_harfbuzz-ng_harfbuzz_fuzzer_seed_corpus___build_toolchain_linux_clang_x64__rule
+  command = python ../../../testing/libfuzzer/archive_corpus.py --output harfbuzz_fuzzer_seed_corpus.zip ../../../third_party/harfbuzz-ng/fuzz/seed_corpus
+  description = ACTION //third_party/harfbuzz-ng:harfbuzz_fuzzer_seed_corpus(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build harfbuzz_fuzzer_seed_corpus.zip: __third_party_harfbuzz-ng_harfbuzz_fuzzer_seed_corpus___build_toolchain_linux_clang_x64__rule | ../../../testing/libfuzzer/archive_corpus.py obj/testing/libfuzzer/seed_corpus.stamp
+
+build obj/third_party/harfbuzz-ng/harfbuzz_fuzzer_seed_corpus.stamp: stamp harfbuzz_fuzzer_seed_corpus.zip
+subninja obj/third_party/harfbuzz-ng/harfbuzz_source.ninja
+build obj/third_party/icu/icu.stamp: stamp obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a
+build icudtl.dat: copy ../../../third_party/icu/common/icudtl.dat
+
+build obj/third_party/icu/icudata.stamp: stamp icudtl.dat
+subninja obj/third_party/icu/icui18n.ninja
+subninja obj/third_party/icu/icuuc.ninja
+subninja obj/third_party/libjpeg_turbo/libjpeg.ninja
+subninja obj/third_party/libjpeg_turbo/simd.ninja
+subninja obj/third_party/libjpeg_turbo/simd_asm.ninja
+rule __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule
+  command = python ../../../third_party/yasm/run_yasm.py ./yasm -DPIC -felf64 -m amd64 -I. -I../../.. -Igen -D__x86_64__ -DPIC -DELF -o obj/third_party/libjpeg_turbo/simd_asm/${source_name_part}.o ${in}
+  description = ACTION //third_party/libjpeg_turbo:simd_asm_action(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+build obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp: stamp ../../../third_party/yasm/run_yasm.py ./yasm
+
+build obj/third_party/libjpeg_turbo/simd_asm/jccolor-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jccolor-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jccolor-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jccolor-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcgray-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jcgray-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcgray-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcgray-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jchuff-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jchuff-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jchuff-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jchuff-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcsample-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jcsample-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcsample-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcsample-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdcolor-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jdcolor-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdcolor-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdcolor-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdmerge-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jdmerge-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdmerge-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdmerge-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdsample-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jdsample-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdsample-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdsample-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctflt-sse-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jfdctflt-sse-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctflt-sse-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctflt-sse-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctfst-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jfdctfst-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctfst-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctfst-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctint-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jfdctint-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctint-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctint-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctflt-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jidctflt-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctflt-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctflt-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctfst-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jidctfst-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctfst-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctfst-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctint-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jidctint-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctint-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctint-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctred-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jidctred-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctred-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctred-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jquantf-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jquantf-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jquantf-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jquantf-sse2-64.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jquanti-sse2-64.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../third_party/libjpeg_turbo/simd/jquanti-sse2-64.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jquanti-sse2-64
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jquanti-sse2-64.o.d
+
+build obj/third_party/libjpeg_turbo/simd_asm_action.stamp: stamp obj/third_party/libjpeg_turbo/simd_asm/jccolor-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jcgray-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jchuff-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jcsample-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jdcolor-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jdmerge-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jdsample-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jfdctflt-sse-64.o obj/third_party/libjpeg_turbo/simd_asm/jfdctfst-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jfdctint-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jidctflt-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jidctfst-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jidctint-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jidctred-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jquantf-sse2-64.o obj/third_party/libjpeg_turbo/simd_asm/jquanti-sse2-64.o
+build obj/third_party/libpng/libpng.stamp: stamp obj/third_party/libpng/libpng_sources.stamp
+subninja obj/third_party/libpng/libpng_read_fuzzer.ninja
+rule __third_party_libpng_libpng_read_fuzzer.options___build_toolchain_linux_clang_x64__rule
+  command = python ../../../testing/libfuzzer/gen_fuzzer_config.py --config libpng_read_fuzzer.options --dict libpng_read_fuzzer.dict
+  description = ACTION //third_party/libpng:libpng_read_fuzzer.options(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build libpng_read_fuzzer.options: __third_party_libpng_libpng_read_fuzzer.options___build_toolchain_linux_clang_x64__rule | ../../../testing/libfuzzer/gen_fuzzer_config.py
+
+build obj/third_party/libpng/libpng_read_fuzzer.options.stamp: stamp libpng_read_fuzzer.options
+rule __third_party_libpng_libpng_read_fuzzer.owners___build_toolchain_linux_clang_x64__rule
+  command = python ../../../testing/libfuzzer/gen_fuzzer_owners.py --owners libpng_read_fuzzer.owners --sources third_party/libpng/contrib/oss-fuzz/libpng_read_fuzzer.cc
+  description = ACTION //third_party/libpng:libpng_read_fuzzer.owners(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build libpng_read_fuzzer.owners: __third_party_libpng_libpng_read_fuzzer.owners___build_toolchain_linux_clang_x64__rule | ../../../testing/libfuzzer/gen_fuzzer_owners.py
+
+build obj/third_party/libpng/libpng_read_fuzzer.owners.stamp: stamp libpng_read_fuzzer.owners
+build libpng_read_fuzzer.dict: copy ../../../third_party/libpng/contrib/oss-fuzz/png.dict
+
+build obj/third_party/libpng/libpng_read_fuzzer_dict_copy.stamp: stamp libpng_read_fuzzer.dict
+rule __third_party_libpng_libpng_read_fuzzer_seed_corpus___build_toolchain_linux_clang_x64__rule
+  command = python ../../../testing/libfuzzer/archive_corpus.py --output libpng_read_fuzzer_seed_corpus.zip ../../../components/viz/test/data ../../../third_party/blink/web_tests/images/png-suite/samples ../../../third_party/blink/web_tests/images/resources/pngfuzz
+  description = ACTION //third_party/libpng:libpng_read_fuzzer_seed_corpus(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build libpng_read_fuzzer_seed_corpus.zip: __third_party_libpng_libpng_read_fuzzer_seed_corpus___build_toolchain_linux_clang_x64__rule | ../../../testing/libfuzzer/archive_corpus.py obj/testing/libfuzzer/seed_corpus.stamp
+
+build obj/third_party/libpng/libpng_read_fuzzer_seed_corpus.stamp: stamp libpng_read_fuzzer_seed_corpus.zip
+subninja obj/third_party/libpng/libpng_sources.ninja
+rule __third_party_yasm_compile_gperf___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genperf ${in} gen/third_party/yasm/${source_name_part}.c
+  description = ACTION //third_party/yasm:compile_gperf(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+build obj/third_party/yasm/compile_gperf.inputdeps.stamp: stamp ../../../build/gn_run_binary.py ./genperf
+
+build gen/third_party/yasm/x86cpu.c: __third_party_yasm_compile_gperf___build_toolchain_linux_clang_x64__rule ../../../third_party/yasm/source/patched-yasm/modules/arch/x86/x86cpu.gperf | obj/third_party/yasm/compile_gperf.inputdeps.stamp
+  source_name_part = x86cpu
+build gen/third_party/yasm/x86regtmod.c: __third_party_yasm_compile_gperf___build_toolchain_linux_clang_x64__rule ../../../third_party/yasm/source/patched-yasm/modules/arch/x86/x86regtmod.gperf | obj/third_party/yasm/compile_gperf.inputdeps.stamp
+  source_name_part = x86regtmod
+
+build obj/third_party/yasm/compile_gperf.stamp: stamp gen/third_party/yasm/x86cpu.c gen/third_party/yasm/x86regtmod.c
+rule __third_party_yasm_compile_gperf_for_include___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genperf ${in} gen/third_party/yasm/gen_include/${source_name_part}.c
+  description = ACTION //third_party/yasm:compile_gperf_for_include(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+build obj/third_party/yasm/compile_gperf_for_include.inputdeps.stamp: stamp ../../../build/gn_run_binary.py ./genperf
+
+build gen/third_party/yasm/gen_include/x86insn_gas.c: __third_party_yasm_compile_gperf_for_include___build_toolchain_linux_clang_x64__rule ../../../third_party/yasm/source/patched-yasm/x86insn_gas.gperf | obj/third_party/yasm/compile_gperf_for_include.inputdeps.stamp
+  source_name_part = x86insn_gas
+build gen/third_party/yasm/gen_include/x86insn_nasm.c: __third_party_yasm_compile_gperf_for_include___build_toolchain_linux_clang_x64__rule ../../../third_party/yasm/source/patched-yasm/x86insn_nasm.gperf | obj/third_party/yasm/compile_gperf_for_include.inputdeps.stamp
+  source_name_part = x86insn_nasm
+
+build obj/third_party/yasm/compile_gperf_for_include.stamp: stamp gen/third_party/yasm/gen_include/x86insn_gas.c gen/third_party/yasm/gen_include/x86insn_nasm.c
+rule __third_party_yasm_compile_nasm_macros___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genmacro gen/third_party/yasm/gen_include/nasm-macros.c nasm_standard_mac ../../../third_party/yasm/source/patched-yasm/modules/parsers/nasm/nasm-std.mac
+  description = ACTION //third_party/yasm:compile_nasm_macros(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/gen_include/nasm-macros.c: __third_party_yasm_compile_nasm_macros___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ../../../third_party/yasm/source/patched-yasm/modules/parsers/nasm/nasm-std.mac ./genmacro
+
+build obj/third_party/yasm/compile_nasm_macros.stamp: stamp gen/third_party/yasm/gen_include/nasm-macros.c
+rule __third_party_yasm_compile_nasm_version___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genmacro gen/third_party/yasm/gen_include/nasm-version.c nasm_version_mac gen/third_party/yasm/version.mac
+  description = ACTION //third_party/yasm:compile_nasm_version(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/gen_include/nasm-version.c: __third_party_yasm_compile_nasm_version___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py gen/third_party/yasm/version.mac obj/third_party/yasm/generate_version.stamp ./genmacro
+
+build obj/third_party/yasm/compile_nasm_version.stamp: stamp gen/third_party/yasm/gen_include/nasm-version.c
+rule __third_party_yasm_compile_re2c___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py re2c -b -o gen/third_party/yasm/${source_name_part}.c ${in}
+  description = ACTION //third_party/yasm:compile_re2c(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+build obj/third_party/yasm/compile_re2c.inputdeps.stamp: stamp ../../../build/gn_run_binary.py ./re2c
+
+build gen/third_party/yasm/gas-token.c: __third_party_yasm_compile_re2c___build_toolchain_linux_clang_x64__rule ../../../third_party/yasm/source/patched-yasm/modules/parsers/gas/gas-token.re | obj/third_party/yasm/compile_re2c.inputdeps.stamp
+  source_name_part = gas-token
+build gen/third_party/yasm/nasm-token.c: __third_party_yasm_compile_re2c___build_toolchain_linux_clang_x64__rule ../../../third_party/yasm/source/patched-yasm/modules/parsers/nasm/nasm-token.re | obj/third_party/yasm/compile_re2c.inputdeps.stamp
+  source_name_part = nasm-token
+
+build obj/third_party/yasm/compile_re2c.stamp: stamp gen/third_party/yasm/gas-token.c gen/third_party/yasm/nasm-token.c
+rule __third_party_yasm_compile_re2c_lc3b___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py re2c -s -o gen/third_party/yasm/lc3bid.c ../../../third_party/yasm/source/patched-yasm/modules/arch/lc3b/lc3bid.re
+  description = ACTION //third_party/yasm:compile_re2c_lc3b(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/lc3bid.c: __third_party_yasm_compile_re2c_lc3b___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ../../../third_party/yasm/source/patched-yasm/modules/arch/lc3b/lc3bid.re ./re2c
+
+build obj/third_party/yasm/compile_re2c_lc3b.stamp: stamp gen/third_party/yasm/lc3bid.c
+rule __third_party_yasm_compile_win64_gas___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genmacro gen/third_party/yasm/gen_include/win64-gas.c win64_gas_stdmac ../../../third_party/yasm/source/patched-yasm/modules/objfmts/coff/win64-gas.mac
+  description = ACTION //third_party/yasm:compile_win64_gas(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/gen_include/win64-gas.c: __third_party_yasm_compile_win64_gas___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ../../../third_party/yasm/source/patched-yasm/modules/objfmts/coff/win64-gas.mac ./genmacro
+
+build obj/third_party/yasm/compile_win64_gas.stamp: stamp gen/third_party/yasm/gen_include/win64-gas.c
+rule __third_party_yasm_compile_win64_nasm___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genmacro gen/third_party/yasm/gen_include/win64-nasm.c win64_nasm_stdmac ../../../third_party/yasm/source/patched-yasm/modules/objfmts/coff/win64-nasm.mac
+  description = ACTION //third_party/yasm:compile_win64_nasm(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/gen_include/win64-nasm.c: __third_party_yasm_compile_win64_nasm___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ../../../third_party/yasm/source/patched-yasm/modules/objfmts/coff/win64-nasm.mac ./genmacro
+
+build obj/third_party/yasm/compile_win64_nasm.stamp: stamp gen/third_party/yasm/gen_include/win64-nasm.c
+rule __third_party_yasm_generate_license___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genstring license_msg gen/third_party/yasm/gen_include/license.c ../../../third_party/yasm/source/patched-yasm/COPYING
+  description = ACTION //third_party/yasm:generate_license(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/gen_include/license.c: __third_party_yasm_generate_license___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ../../../third_party/yasm/source/patched-yasm/COPYING ./genstring
+
+build obj/third_party/yasm/generate_license.stamp: stamp gen/third_party/yasm/gen_include/license.c
+rule __third_party_yasm_generate_module___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genmodule ../../../third_party/yasm/source/patched-yasm/libyasm/module.in ../../../third_party/yasm/source/config/Makefile gen/third_party/yasm/module.c
+  description = ACTION //third_party/yasm:generate_module(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/module.c: __third_party_yasm_generate_module___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ../../../third_party/yasm/source/patched-yasm/libyasm/module.in ../../../third_party/yasm/source/config/Makefile ./genmodule
+
+build obj/third_party/yasm/generate_module.stamp: stamp gen/third_party/yasm/module.c
+rule __third_party_yasm_generate_version___build_toolchain_linux_clang_x64__rule
+  command = python ../../../build/gn_run_binary.py genversion gen/third_party/yasm/version.mac
+  description = ACTION //third_party/yasm:generate_version(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/yasm/version.mac: __third_party_yasm_generate_version___build_toolchain_linux_clang_x64__rule | ../../../build/gn_run_binary.py ./genversion
+
+build obj/third_party/yasm/generate_version.stamp: stamp gen/third_party/yasm/version.mac
+subninja obj/third_party/yasm/genmacro.ninja
+subninja obj/third_party/yasm/genmodule.ninja
+subninja obj/third_party/yasm/genperf.ninja
+subninja obj/third_party/yasm/genstring.ninja
+subninja obj/third_party/yasm/genversion.ninja
+subninja obj/third_party/yasm/re2c.ninja
+subninja obj/third_party/yasm/yasm.ninja
+subninja obj/third_party/yasm/yasm_utils.ninja
+subninja obj/third_party/zlib/minizip.ninja
+subninja obj/third_party/zlib/zlib.ninja
+subninja obj/third_party/zlib/zlib_adler32_simd.ninja
+subninja obj/third_party/zlib/zlib_bench.ninja
+subninja obj/third_party/zlib/zlib_crc32_simd.ninja
+subninja obj/third_party/zlib/zlib_inflate_chunk_simd.ninja
+subninja obj/third_party/zlib/zlib_x86_simd.ninja
