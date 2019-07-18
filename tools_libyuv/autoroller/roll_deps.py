@@ -494,7 +494,7 @@ def main():
 
   _CreateRollBranch(opts.dry_run)
   UpdateDepsFile(deps_filename, current_cr_rev, new_cr_rev, changed_deps)
-  _LocalCommit(commit_msg, opts.dry_run)
+  _LocalCommit(commit_msg, False)
   commit_queue_mode = ChooseCQMode(opts.skip_cq, opts.cq_over,
                                    current_commit_pos, new_commit_pos)
   logging.info('Uploading CL...')
