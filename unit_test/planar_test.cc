@@ -13,7 +13,6 @@
 #include <time.h>
 
 // row.h defines SIMD_ALIGNED, overriding unit_test.h
-// TODO(fbarchard): Remove row.h from unittests.  Test public functions.
 #include "libyuv/row.h" /* For ScaleSumSamples_Neon */
 
 #include "../unit_test/unit_test.h"
@@ -2322,8 +2321,7 @@ TEST_F(LibYUVPlanarTest, TestARGBCopyAlpha) {
 }
 
 TEST_F(LibYUVPlanarTest, TestARGBExtractAlpha) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 4);
   align_buffer_page_end(dst_pixels_opt, kPixels);
   align_buffer_page_end(dst_pixels_c, kPixels);
@@ -2351,8 +2349,7 @@ TEST_F(LibYUVPlanarTest, TestARGBExtractAlpha) {
 }
 
 TEST_F(LibYUVPlanarTest, TestARGBCopyYToAlpha) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(orig_pixels, kPixels);
   align_buffer_page_end(dst_pixels_opt, kPixels * 4);
   align_buffer_page_end(dst_pixels_c, kPixels * 4);
@@ -2485,8 +2482,7 @@ TEST_F(LibYUVPlanarTest, SetPlane_Opt) {
 }
 
 TEST_F(LibYUVPlanarTest, MergeUVPlane_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 2);
   align_buffer_page_end(tmp_pixels_u, kPixels);
   align_buffer_page_end(tmp_pixels_v, kPixels);
@@ -2530,8 +2526,7 @@ TEST_F(LibYUVPlanarTest, MergeUVPlane_Opt) {
 }
 
 TEST_F(LibYUVPlanarTest, SplitUVPlane_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 2);
   align_buffer_page_end(tmp_pixels_u, kPixels);
   align_buffer_page_end(tmp_pixels_v, kPixels);
@@ -2573,39 +2568,8 @@ TEST_F(LibYUVPlanarTest, SplitUVPlane_Opt) {
   free_aligned_buffer_page_end(dst_pixels_c);
 }
 
-TEST_F(LibYUVPlanarTest, SwapUVPlane_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
-  align_buffer_page_end(src_pixels, kPixels * 2);
-  align_buffer_page_end(dst_pixels_opt, kPixels * 2);
-  align_buffer_page_end(dst_pixels_c, kPixels * 2);
-
-  MemRandomize(src_pixels, kPixels * 2);
-  MemRandomize(dst_pixels_opt, kPixels * 2);
-  MemRandomize(dst_pixels_c, kPixels * 2);
-
-  MaskCpuFlags(disable_cpu_flags_);
-  SwapUVPlane(src_pixels, benchmark_width_ * 2, dst_pixels_c,
-              benchmark_width_ * 2, benchmark_width_, benchmark_height_);
-  MaskCpuFlags(benchmark_cpu_info_);
-
-  for (int i = 0; i < benchmark_iterations_; ++i) {
-    SwapUVPlane(src_pixels, benchmark_width_ * 2, dst_pixels_opt,
-                benchmark_width_ * 2, benchmark_width_, benchmark_height_);
-  }
-
-  for (int i = 0; i < kPixels * 2; ++i) {
-    EXPECT_EQ(dst_pixels_c[i], dst_pixels_opt[i]);
-  }
-
-  free_aligned_buffer_page_end(src_pixels);
-  free_aligned_buffer_page_end(dst_pixels_opt);
-  free_aligned_buffer_page_end(dst_pixels_c);
-}
-
 TEST_F(LibYUVPlanarTest, MergeRGBPlane_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 3);
   align_buffer_page_end(tmp_pixels_r, kPixels);
   align_buffer_page_end(tmp_pixels_g, kPixels);
@@ -2653,8 +2617,7 @@ TEST_F(LibYUVPlanarTest, MergeRGBPlane_Opt) {
 }
 
 TEST_F(LibYUVPlanarTest, SplitRGBPlane_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels, kPixels * 3);
   align_buffer_page_end(tmp_pixels_r, kPixels);
   align_buffer_page_end(tmp_pixels_g, kPixels);
@@ -2703,8 +2666,7 @@ TEST_F(LibYUVPlanarTest, SplitRGBPlane_Opt) {
 // TODO(fbarchard): improve test for platforms and cpu detect
 #ifdef HAS_MERGEUVROW_16_AVX2
 TEST_F(LibYUVPlanarTest, MergeUVRow_16_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_u, kPixels * 2);
   align_buffer_page_end(src_pixels_v, kPixels * 2);
   align_buffer_page_end(dst_pixels_uv_opt, kPixels * 2 * 2);
@@ -2748,8 +2710,7 @@ TEST_F(LibYUVPlanarTest, MergeUVRow_16_Opt) {
 // TODO(fbarchard): Improve test for more platforms.
 #ifdef HAS_MULTIPLYROW_16_AVX2
 TEST_F(LibYUVPlanarTest, MultiplyRow_16_Opt) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_y, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_opt, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_c, kPixels * 2);
@@ -2785,8 +2746,7 @@ TEST_F(LibYUVPlanarTest, MultiplyRow_16_Opt) {
 #endif  // HAS_MULTIPLYROW_16_AVX2
 
 TEST_F(LibYUVPlanarTest, Convert16To8Plane) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_y, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_opt, kPixels);
   align_buffer_page_end(dst_pixels_y_c, kPixels);
@@ -2863,8 +2823,7 @@ TEST_F(LibYUVPlanarTest, Convert16To8Row_Opt) {
 #endif  // HAS_CONVERT16TO8ROW_AVX2
 
 TEST_F(LibYUVPlanarTest, Convert8To16Plane) {
-  // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = benchmark_width_ * benchmark_height_;
   align_buffer_page_end(src_pixels_y, kPixels);
   align_buffer_page_end(dst_pixels_y_opt, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_c, kPixels * 2);
@@ -3312,26 +3271,14 @@ TEST_F(LibYUVPlanarTest, TestGaussCol_Opt) {
 
 TEST_F(LibYUVPlanarTest, SwapUVRow) {
   const int kPixels = benchmark_width_ * benchmark_height_;
-  void (*SwapUVRow)(const uint8_t* src_uv, uint8_t* dst_vu, int width) =
-      SwapUVRow_C;
-
   align_buffer_page_end(src_pixels_vu, kPixels * 2);
   align_buffer_page_end(dst_pixels_uv, kPixels * 2);
+
   MemRandomize(src_pixels_vu, kPixels * 2);
   memset(dst_pixels_uv, 1, kPixels * 2);
 
-#if defined(HAS_SWAPUVROW_NEON)
-  if (TestCpuFlag(kCpuHasNEON)) {
-    SwapUVRow = SwapUVRow_Any_NEON;
-    if (IS_ALIGNED(kPixels, 16)) {
-      SwapUVRow = SwapUVRow_NEON;
-    }
-  }
-#endif
+  SwapUVRow_C(src_pixels_vu, dst_pixels_uv, kPixels);
 
-  for (int j = 0; j < benchmark_iterations_; j++) {
-    SwapUVRow(src_pixels_vu, dst_pixels_uv, kPixels);
-  }
   for (int i = 0; i < kPixels; ++i) {
     EXPECT_EQ(dst_pixels_uv[i * 2 + 0], src_pixels_vu[i * 2 + 1]);
     EXPECT_EQ(dst_pixels_uv[i * 2 + 1], src_pixels_vu[i * 2 + 0]);
