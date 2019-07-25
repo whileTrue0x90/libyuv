@@ -1,17 +1,17 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': 'e02114c8fa90f197b41b3309aff3c332dfa05b46',
+  'chromium_revision': '14c942006bd706cedc300b676a17568f0a8d5466',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + 'c98642948c05efca3c0f3baafb076ed53965a3b6',
+    Var('chromium_git') + '/chromium/src/build' + '@' + 'a558f2657bbfcce98dab08c53dfc8d1f3e36b35c',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/src/buildtools' + '@' + '7b7a5c0f25f11f3c5a1ed3935324c2c59fbc24a2',
+    Var('chromium_git') + '/chromium/src/buildtools' + '@' + '74cfb57006f83cfe050817526db359d5c8a11628',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '46959ed82d15b622b3330295ed990ab8bb64a746',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '992203660d0989fff9015b3ac7cdaaaeade1e07a',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '3b2eb39e313bf84d6ef2ab4f4330d45da1c79494',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'd7ffdaf4c8b56ccd81a30e092477c85431c99e86',
 
   'src/buildtools/linux64': {
     'packages': [
@@ -54,13 +54,13 @@ deps = {
     Var('chromium_git') + '/external/llvm.org/libunwind.git' + '@' + '69d9b84cca8354117b9fe9705a4430d789ee599b',
 
   'src/third_party/catapult':
-    Var('chromium_git') + '/catapult.git' + '@' + '42a883d13292b1a8a667ef7be682b7347268ef1c',
+    Var('chromium_git') + '/catapult.git' + '@' + '043256eca6be234f196839d34693d8173b5a1bbd',
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
   'src/third_party/freetype/src':
     Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + 'b110acba9e6f7e40314f0da5d249cb3cb3beeab8',
   'src/third_party/googletest/src':
-    Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '6077f444da944d96d311d358d761164261f1cdd0',
+    Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + 'b77e5c76252bac322bb82c5b444f050bd0d92451',
   'src/third_party/harfbuzz-ng/src':
     Var('chromium_git') + '/external/github.com/harfbuzz/harfbuzz.git' + '@' + '2e7021da7d1726a37822e6a001b9218f82255bc8',
   'src/third_party/libjpeg_turbo':
@@ -68,7 +68,7 @@ deps = {
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + '720b70524a4424b15fc57e82263568c8ba0496ad',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + 'a99b9c5b68d63f61bd69058c5512595c38aa4fa2',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '82f0e4397b3d68959ffcbee3d9f43c0b78d01237',
   'src/tools/swarming_client':
     Var('chromium_git') + '/infra/luci/client-py.git' + '@' + '96f125709acfd0b48fc1e5dae7d6ea42291726ac',
 
@@ -101,9 +101,9 @@ deps = {
     'condition': 'checkout_android',
   },
   'src/third_party/boringssl/src':
-    'https://boringssl.googlesource.com/boringssl.git' + '@' + '09050cb498336655883157c6e6055db9e5542857',
+    'https://boringssl.googlesource.com/boringssl.git' + '@' + '4dfd5af70191b068aebe567b8e29ce108cee85ce',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'ce23ecb4d887d56d648cda12a253129cb6202e62',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '09fe8aa1b86a73c979bd0947ea92fb4897ea22d9',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -256,7 +256,7 @@ deps = {
   },
 
   'src/third_party/icu': {
-    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + 'fd97d4326fac6da84452b2d5fe75ff0949368dab',
+    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '682a230923933a7157a41b88c7804b6b7d2abdfa',
   },
   'src/third_party/icu4j': {
       'packages': [
@@ -375,7 +375,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '9038e03eb16c7e2f02de53225904a9469da19153',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '4940478b2dd6c781cbf7ae375f644104f828c667',
     'condition': 'checkout_ios'
   },
 
