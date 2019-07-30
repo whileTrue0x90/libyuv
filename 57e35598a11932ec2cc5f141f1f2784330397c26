@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fac11ca_3240414d",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2019-07-30T20:35:55Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "57e35598a11932ec2cc5f141f1f2784330397c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d480349_9826b096",
+        "filename": "Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2019-07-30T20:35:55Z",
+      "side": 1,
+      "message": "idem\nThere\u0027s a few like this \"ss\" below\".",
+      "range": {
+        "startLine": 103,
+        "startChar": 31,
+        "endLine": 103,
+        "endChar": 33
+      },
+      "revId": "57e35598a11932ec2cc5f141f1f2784330397c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
