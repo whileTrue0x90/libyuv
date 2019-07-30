@@ -110,26 +110,26 @@ Add to .gclient last line: `target_os=['ios'];`
 armv7
 
     GYP_DEFINES="OS=ios target_arch=armv7 target_subarch=arm32" GYP_CROSSCOMPILE=1 GYP_GENERATOR_FLAGS="output_dir=out_ios" ./gyp_libyuv
-    ninja -j7 -C out_ios/Debug-iphoneos libyuv_unittest
-    ninja -j7 -C out_ios/Release-iphoneos libyuv_unittest
+    ninja -j7 -C out_ios/Debug-iphoneos libyuv_unittests
+    ninja -j7 -C out_ios/Release-iphoneos libyuv_unittests
 
 arm64
 
     GYP_DEFINES="OS=ios target_arch=arm64 target_subarch=arm64" GYP_CROSSCOMPILE=1 GYP_GENERATOR_FLAGS="output_dir=out_ios" ./gyp_libyuv
-    ninja -j7 -C out_ios/Debug-iphoneos libyuv_unittest
-    ninja -j7 -C out_ios/Release-iphoneos libyuv_unittest
+    ninja -j7 -C out_ios/Debug-iphoneos libyuv_unittests
+    ninja -j7 -C out_ios/Release-iphoneos libyuv_unittests
 
 both armv7 and arm64 (fat)
 
     GYP_DEFINES="OS=ios target_arch=armv7 target_subarch=both" GYP_CROSSCOMPILE=1 GYP_GENERATOR_FLAGS="output_dir=out_ios" ./gyp_libyuv
-    ninja -j7 -C out_ios/Debug-iphoneos libyuv_unittest
-    ninja -j7 -C out_ios/Release-iphoneos libyuv_unittest
+    ninja -j7 -C out_ios/Debug-iphoneos libyuv_unittests
+    ninja -j7 -C out_ios/Release-iphoneos libyuv_unittests
 
 simulator
 
     GYP_DEFINES="OS=ios target_arch=ia32 target_subarch=arm32" GYP_CROSSCOMPILE=1 GYP_GENERATOR_FLAGS="output_dir=out_sim" ./gyp_libyuv
-    ninja -j7 -C out_sim/Debug-iphonesimulator libyuv_unittest
-    ninja -j7 -C out_sim/Release-iphonesimulator libyuv_unittest
+    ninja -j7 -C out_sim/Debug-iphonesimulator libyuv_unittests
+    ninja -j7 -C out_sim/Release-iphonesimulator libyuv_unittests
 
 ### Android
 https://code.google.com/p/chromium/wiki/AndroidBuildInstructions
@@ -173,15 +173,15 @@ arm64 disassembly:
 
 Running tests:
 
-    build/android/test_runner.py gtest -s libyuv_unittest -t 7200 --verbose --release --gtest_filter=*
+    build/android/test_runner.py gtest -s libyuv_unittests -t 7200 --verbose --release --gtest_filter=*
 
 Running test as benchmark:
 
-    build/android/test_runner.py gtest -s libyuv_unittest -t 7200 --verbose --release --gtest_filter=* -a "--libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=-1"
+    build/android/test_runner.py gtest -s libyuv_unittests -t 7200 --verbose --release --gtest_filter=* -a "--libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=-1"
 
 Running test with C code:
 
-    build/android/test_runner.py gtest -s libyuv_unittest -t 7200 --verbose --release --gtest_filter=* -a "--libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=1 --libyuv_cpu_info=1"
+    build/android/test_runner.py gtest -s libyuv_unittests -t 7200 --verbose --release --gtest_filter=* -a "--libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=1 --libyuv_cpu_info=1"
 
 #### Building with GN
 
@@ -236,7 +236,7 @@ If you get a compile error for atlthunk.lib on Windows, read http://www.chromium
 ### Build targets
 
     ninja -C out/Debug libyuv
-    ninja -C out/Debug libyuv_unittest
+    ninja -C out/Debug libyuv_unittests
     ninja -C out/Debug compare
     ninja -C out/Debug yuvconvert
     ninja -C out/Debug psnr
@@ -316,19 +316,19 @@ If you get a compile error for atlthunk.lib on Windows, read http://www.chromium
 
 ### Windows
 
-    out\Release\libyuv_unittest.exe --gtest_catch_exceptions=0 --gtest_filter="*"
+    out\Release\libyuv_unittests.exe --gtest_catch_exceptions=0 --gtest_filter="*"
 
 ### OSX
 
-    out/Release/libyuv_unittest --gtest_filter="*"
+    out/Release/libyuv_unittests --gtest_filter="*"
 
 ### Linux
 
-    out/Release/libyuv_unittest --gtest_filter="*"
+    out/Release/libyuv_unittests --gtest_filter="*"
 
 Replace --gtest_filter="*" with specific unittest to run.  May include wildcards. e.g.
 
-    out/Release/libyuv_unittest --gtest_filter=libyuvTest.I420ToARGB_Opt
+    out/Release/libyuv_unittests --gtest_filter=libyuvTest.I420ToARGB_Opt
 
 ## CPU Emulator tools
 
@@ -338,7 +338,7 @@ Pre-requisite: Install IntelSDE for Windows: http://software.intel.com/en-us/art
 
 Then run:
 
-    c:\intelsde\sde -hsw -- out\release\libyuv_unittest.exe --gtest_filter=*
+    c:\intelsde\sde -hsw -- out\release\libyuv_unittests.exe --gtest_filter=*
 
 
 ## Memory tools
@@ -350,7 +350,7 @@ Pre-requisite: Install Dr Memory for Windows and add it to your path: http://www
     set GYP_DEFINES=build_for_tool=drmemory target_arch=ia32
     call python gyp_libyuv -fninja -G msvs_version=2013
     ninja -C out\Debug
-    drmemory out\Debug\libyuv_unittest.exe --gtest_catch_exceptions=0 --gtest_filter=*
+    drmemory out\Debug\libyuv_unittests.exe --gtest_catch_exceptions=0 --gtest_filter=*
 
 ### Running UBSan
 
@@ -383,7 +383,7 @@ Then run:
 
     GYP_DEFINES="clang=0 target_arch=x64 build_for_tool=memcheck" python gyp_libyuv
     ninja -C out/Debug
-    valgrind out/Debug/libyuv_unittest
+    valgrind out/Debug/libyuv_unittests
 
 
 For more information, see http://www.chromium.org/developers/how-tos/using-valgrind
@@ -392,7 +392,7 @@ For more information, see http://www.chromium.org/developers/how-tos/using-valgr
 
     GYP_DEFINES="clang=0 target_arch=x64 build_for_tool=tsan" python gyp_libyuv
     ninja -C out/Debug
-    valgrind out/Debug/libyuv_unittest
+    valgrind out/Debug/libyuv_unittests
 
 For more info, see http://www.chromium.org/developers/how-tos/using-valgrind/threadsanitizer
 
@@ -400,7 +400,7 @@ For more info, see http://www.chromium.org/developers/how-tos/using-valgrind/thr
 
     GYP_DEFINES="clang=0 target_arch=x64 build_for_tool=asan" python gyp_libyuv
     ninja -C out/Debug
-    valgrind out/Debug/libyuv_unittest
+    valgrind out/Debug/libyuv_unittests
 
 For more info, see http://dev.chromium.org/developers/testing/addresssanitizer
 
@@ -414,12 +414,12 @@ The unittests can be used to benchmark.
     set LIBYUV_HEIGHT=720
     set LIBYUV_REPEAT=999
     set LIBYUV_FLAGS=-1
-    out\Release\libyuv_unittest.exe --gtest_filter=*I420ToARGB_Opt
+    out\Release\libyuv_unittests.exe --gtest_filter=*I420ToARGB_Opt
 
 
 ### Linux and Mac
 
-    LIBYUV_WIDTH=1280 LIBYUV_HEIGHT=720 LIBYUV_REPEAT=1000 out/Release/libyuv_unittest --gtest_filter=*I420ToARGB_Opt
+    LIBYUV_WIDTH=1280 LIBYUV_HEIGHT=720 LIBYUV_REPEAT=1000 out/Release/libyuv_unittests --gtest_filter=*I420ToARGB_Opt
 
     libyuvTest.I420ToARGB_Opt (547 ms)
 

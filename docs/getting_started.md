@@ -90,15 +90,15 @@ arm64
 
     gn gen out/Release "--args=is_debug=false target_os=\"ios\" ios_enable_code_signing=false target_cpu=\"arm64\""
     gn gen out/Debug "--args=is_debug=true target_os=\"ios\" ios_enable_code_signing=false target_cpu=\"arm64\""
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 ios simulator
 
     gn gen out/Release "--args=is_debug=false target_os=\"ios\" ios_enable_code_signing=false use_xcode_clang=true target_cpu=\"x86\""
     gn gen out/Debug "--args=is_debug=true target_os=\"ios\" ios_enable_code_signing=false use_xcode_clang=true target_cpu=\"x86\""
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 ios disassembly
 
@@ -113,29 +113,29 @@ arm64
 
     gn gen out/Release "--args=is_debug=false target_os=\"android\" target_cpu=\"arm64\""
     gn gen out/Debug "--args=is_debug=true target_os=\"android\" target_cpu=\"arm64\""
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 armv7
 
     gn gen out/Release "--args=is_debug=false target_os=\"android\" target_cpu=\"arm\""
     gn gen out/Debug "--args=is_debug=true target_os=\"android\" target_cpu=\"arm\""
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 ia32
 
     gn gen out/Release "--args=is_debug=false target_os=\"android\" target_cpu=\"x86\""
     gn gen out/Debug "--args=is_debug=true target_os=\"android\" target_cpu=\"x86\""
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 mips
 
     gn gen out/Release "--args=is_debug=false target_os=\"android\" target_cpu=\"mips64el\" mips_arch_variant=\"r6\" mips_use_msa=true is_component_build=true"
     gn gen out/Debug "--args=is_debug=true target_os=\"android\" target_cpu=\"mips64el\" mips_arch_variant=\"r6\" mips_use_msa=true is_component_build=true"
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 arm disassembly:
 
@@ -149,20 +149,20 @@ arm disassembly:
 
 Running tests:
 
-    out/Release/bin/run_libyuv_unittest -vv --gtest_filter=*
+    out/Release/bin/run_libyuv_unittests -vv --gtest_filter=*
 
 Running test as benchmark:
 
-    out/Release/bin/run_libyuv_unittest -vv --gtest_filter=* --libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=-1  --libyuv_cpu_info=-1
+    out/Release/bin/run_libyuv_unittests -vv --gtest_filter=* --libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=-1  --libyuv_cpu_info=-1
 
 Running test with C code:
 
-    out/Release/bin/run_libyuv_unittest -vv --gtest_filter=* --libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=1 --libyuv_cpu_info=1
+    out/Release/bin/run_libyuv_unittests -vv --gtest_filter=* --libyuv_width=1280 --libyuv_height=720 --libyuv_repeat=999 --libyuv_flags=1 --libyuv_cpu_info=1
 
 ### Build targets
 
     ninja -C out/Debug libyuv
-    ninja -C out/Debug libyuv_unittest
+    ninja -C out/Debug libyuv_unittests
     ninja -C out/Debug compare
     ninja -C out/Debug yuvconvert
     ninja -C out/Debug psnr
@@ -172,8 +172,8 @@ Running test with C code:
 
     gn gen out/Release "--args=is_debug=false target_cpu=\"arm64\""
     gn gen out/Debug "--args=is_debug=true target_cpu=\"arm64\""
-    ninja -v -C out/Debug libyuv_unittest
-    ninja -v -C out/Release libyuv_unittest
+    ninja -v -C out/Debug libyuv_unittests
+    ninja -v -C out/Release libyuv_unittests
 
 ### MIPS Linux
 
@@ -181,8 +181,8 @@ mips
 
    gn gen out/Release "--args=is_debug=false target_os=\"linux\" target_cpu=\"mips64el\" mips_arch_variant=\"loongson3\" mips_use_mmi=true is_component_build=false use_sysroot=false use_gold=false"
    gn gen out/Debug "--args=is_debug=true target_os=\"linux\" target_cpu=\"mips64el\" mips_arch_variant=\"loongson3\" mips_use_mmi=true is_component_build=false use_sysroot=false use_gold=false"
-   ninja -v -C out/Debug libyuv_unittest
-   ninja -v -C out/Release libyuv_unittest
+   ninja -v -C out/Debug libyuv_unittests
+   ninja -v -C out/Release libyuv_unittests
 
 ## Building the Library with make
 
@@ -241,14 +241,14 @@ See also https://www.ccoderun.ca/programming/2015-12-20_CrossCompiling/index.htm
 
 ### Windows
 
-    out\Release\libyuv_unittest.exe --gtest_catch_exceptions=0 --gtest_filter="*"
+    out\Release\libyuv_unittests.exe --gtest_catch_exceptions=0 --gtest_filter="*"
 
 ### macOS and Linux
 
-    out/Release/libyuv_unittest --gtest_filter="*"
+    out/Release/libyuv_unittests --gtest_filter="*"
 
 Replace --gtest_filter="*" with specific unittest to run.  May include wildcards.
-    out/Release/libyuv_unittest --gtest_filter=*I420ToARGB_Opt
+    out/Release/libyuv_unittests --gtest_filter=*I420ToARGB_Opt
 
 ## CPU Emulator tools
 
@@ -258,9 +258,9 @@ Pre-requisite: Install IntelSDE: http://software.intel.com/en-us/articles/intel-
 
 Then run:
 
-    c:\intelsde\sde -hsw -- out\Release\libyuv_unittest.exe --gtest_filter=*
+    c:\intelsde\sde -hsw -- out\Release\libyuv_unittests.exe --gtest_filter=*
 
-    ~/intelsde/sde -skx -- out/Release/libyuv_unittest --gtest_filter=**I420ToARGB_Opt
+    ~/intelsde/sde -skx -- out/Release/libyuv_unittests --gtest_filter=**I420ToARGB_Opt
 
 ### Intel Architecture Code Analyzer
 
@@ -281,4 +281,4 @@ Sanitizers available: asan, msan, tsan, ubsan, lsan, ubsan_vptr
 
 Pre-requisite: Install Dr Memory for Windows and add it to your path: http://www.drmemory.org/docs/page_install_windows.html
 
-    drmemory out\Debug\libyuv_unittest.exe --gtest_catch_exceptions=0 --gtest_filter=*
+    drmemory out\Debug\libyuv_unittests.exe --gtest_catch_exceptions=0 --gtest_filter=*
