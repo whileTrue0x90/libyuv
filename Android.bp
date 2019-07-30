@@ -74,7 +74,7 @@ cc_library_static {
 }
 
 cc_test {
-    name: "libyuv_unittest",
+    name: "libyuv_unittestss",
     static_libs: ["libyuv"],
     shared_libs: ["libjpeg"],
     cflags: ["-Wall", "-Werror"],
