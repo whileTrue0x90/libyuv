@@ -694,11 +694,11 @@ extern const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants);  // BT.709
 #endif
 
 // Intel Code Analizer markers.  Insert IACA_START IACA_END around code to be
-// measured and then run with iaca -64 libyuv_unittest.
+// measured and then run with iaca -64 libyuv_unittests.
 // IACA_ASM_START amd IACA_ASM_END are equivalents that can be used within
 // inline assembly blocks.
 // example of iaca:
-// ~/iaca-lin64/bin/iaca.sh -64 -analysis LATENCY out/Release/libyuv_unittest
+// ~/iaca-lin64/bin/iaca.sh -64 -analysis LATENCY out/Release/libyuv_unittests
 
 #if defined(__x86_64__) || defined(__i386__)
 

@@ -6,8 +6,8 @@
 # in the file PATENTS. All contributing project authors may
 # be found in the AUTHORS file in the root of the source tree.
 
-import("libyuv.gni")
 import("//testing/test.gni")
+import("libyuv.gni")
 
 declare_args() {
   # Set to false to disable building with gflags.
@@ -39,7 +39,7 @@ group("default") {
     deps += [
       ":compare",
       ":cpuid",
-      ":libyuv_unittest",
+      ":libyuv_unittests",
       ":psnr",
       ":yuvconvert",
     ]
@@ -252,7 +252,7 @@ if (libyuv_use_mmi) {
 }
 
 if (libyuv_include_tests) {
-  config("libyuv_unittest_warnings_config") {
+  config("libyuv_unittests_warnings_config") {
     if (!is_win) {
       cflags = [
         # TODO(fbarchard): Fix sign and unused variable warnings.
@@ -267,11 +267,11 @@ if (libyuv_include_tests) {
       ]
     }
   }
-  config("libyuv_unittest_config") {
+  config("libyuv_unittests_config") {
     defines = [ "GTEST_RELATIVE_PATH" ]
   }
 
-  test("libyuv_unittest") {
+  test("libyuv_unittests") {
     testonly = true
 
     sources = [
@@ -305,12 +305,12 @@ if (libyuv_include_tests) {
       deps += [ "//third_party/gflags" ]
     }
 
-    configs += [ ":libyuv_unittest_warnings_config" ]
+    configs += [ ":libyuv_unittests_warnings_config" ]
 
     public_deps = [
       "//testing/gtest",
     ]
-    public_configs = [ ":libyuv_unittest_config" ]
+    public_configs = [ ":libyuv_unittests_config" ]
 
     if (is_linux) {
       cflags = [ "-fexceptions" ]

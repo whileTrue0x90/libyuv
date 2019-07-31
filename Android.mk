@@ -100,5 +100,5 @@ LOCAL_SRC_FILES := \
     unit_test/scale_test.cc       \
     unit_test/video_common_test.cc
 
-LOCAL_MODULE := libyuv_unittest
+LOCAL_MODULE := libyuv_unittests
 include $(BUILD_NATIVE_TEST)
