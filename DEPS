@@ -1,17 +1,17 @@
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '8f1ff9dfcaccee3bdadcae8ebeca9d6228cd21f0',
+  'chromium_revision': '9105672b2e613a12e6faeb531ff28ceb99758098',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '58bc7764d7af24c22ed5c819771da63bc1bf58f0',
+    Var('chromium_git') + '/chromium/src/build' + '@' + 'dd999d8f53c20b3b480ae3e8e59ef213db0695ec',
   'src/buildtools':
     Var('chromium_git') + '/chromium/src/buildtools' + '@' + '74cfb57006f83cfe050817526db359d5c8a11628',
   'src/testing':
     Var('chromium_git') + '/chromium/src/testing' + '@' + '77d64cea02d7bd224af995572c1c17264a3865d5',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '3241af801920402ef2efeab0baea99960d25c77e',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'b13ef8b6e4a5c5e5f77d8cd5910927545c1c7fb5',
 
   'src/buildtools/linux64': {
     'packages': [
