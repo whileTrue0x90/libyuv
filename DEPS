@@ -144,7 +144,7 @@ deps = {
       'packages': [
           {
               'package': 'chromium/third_party/android_sdk/public/build-tools',
-              'version': 'DLK621q5_Bga5EsOr7cp6bHWWxFKx6UHLu_Ix_m3AckC',
+              'version': '5DL7LQQjVMLClXLzLgmGysccPGsGcjJdvH9z5-uetiIC',
           },
           {
               'package': 'chromium/third_party/android_sdk/public/emulator',
