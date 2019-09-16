@@ -6034,6 +6034,213 @@ void ARGBCopyYToAlphaRow_MMI(const uint8_t* src, uint8_t* dst, int width) {
       : "memory");
 }
 
+// Fill YUV -> RGB conversion constants into vectors
+#define YUVTORGB_SETUP                                                \
+  "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t" \
+  "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t" \
+  "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t" \
+  "or         %[ub],           %[ub],             %[mask1]      \n\t" \
+  "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t" \
+  "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t" \
+  "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t" \
+  "pshufh     %[ug],           %[ug],             %[zero]       \n\t" \
+  "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t" \
+  "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t" \
+  "pshufh     %[vg],           %[vg],             %[five]       \n\t" \
+  "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t" \
+  "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t" \
+  "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t" \
+  "pshufh     %[vr],           %[vr],             %[five]       \n\t" \
+  "or         %[vr],           %[vr],             %[mask1]      \n\t"
+
+#define READYUV444                                                    \
+  "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t" \
+  "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t" \
+  "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t" \
+  "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t" \
+  "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t" \
+  "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t" \
+  "punpcklbh  %[y],            %[y],              %[y]          \n\t" \
+  "punpcklbh  %[u],            %[u],              %[zero]       \n\t" \
+  "punpcklbh  %[v],            %[v],              %[zero]       \n\t" \
+  "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t" \
+  "daddiu     %[u_ptr],        %[u_ptr],          0x04          \n\t" \
+  "daddiu     %[v_ptr],        %[v_ptr],          0x04          \n\t"
+
+#define READYUV422                                                    \
+  "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t" \
+  "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t" \
+  "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t" \
+  "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t" \
+  "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t" \
+  "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t" \
+  "punpcklbh  %[y],            %[y],              %[y]          \n\t" \
+  "punpcklbh  %[u],            %[u],              %[u]          \n\t" \
+  "punpcklbh  %[v],            %[v],              %[v]          \n\t" \
+  "punpcklbh  %[u],            %[u],              %[zero]       \n\t" \
+  "punpcklbh  %[v],            %[v],              %[zero]       \n\t" \
+  "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t" \
+  "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t" \
+  "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
+
+#define READYUV210                                                    \
+  "gsldlc1    %[y],            0x07(%[y_ptr])                   \n\t" \
+  "gsldrc1    %[y],            0x00(%[y_ptr])                   \n\t" \
+  "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t" \
+  "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t" \
+  "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t" \
+  "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t" \
+  "daddiu     %[y_ptr],        %[y_ptr],          0x08          \n\t" \
+  "daddiu     %[u_ptr],        %[u_ptr],          0x04          \n\t" \
+  "daddiu     %[v_ptr],        %[v_ptr],          0x04          \n\t"
+
+#define READYUVA422                                                   \
+  "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t" \
+  "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t" \
+  "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t" \
+  "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t" \
+  "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t" \
+  "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t" \
+  "gslwlc1    %[alpha],        0x03(%[a_ptr])                   \n\t" \
+  "gslwrc1    %[alpha],        0x00(%[a_ptr])                   \n\t" \
+  "punpcklbh  %[y],            %[y],              %[y]          \n\t" \
+  "punpcklbh  %[u],            %[u],              %[u]          \n\t" \
+  "punpcklbh  %[v],            %[v],              %[v]          \n\t" \
+  "punpcklbh  %[u],            %[u],              %[zero]       \n\t" \
+  "punpcklbh  %[v],            %[v],              %[zero]       \n\t" \
+  "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t" \
+  "daddiu     %[a_ptr],        %[a_ptr],          0x04          \n\t" \
+  "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t" \
+  "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t" \
+
+#define READNV12                                                      \
+  "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t" \
+  "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t" \
+  "gslwlc1    %[u],            0x03(%[uv_ptr])                  \n\t" \
+  "gslwrc1    %[u],            0x00(%[uv_ptr])                  \n\t" \
+  "punpcklbh  %[u],            %[u],              %[zero]       \n\t" \
+  "pshufh     %[v],            %[u],              %[vshu]       \n\t" \
+  "pshufh     %[u],            %[u],              %[ushu]       \n\t" \
+  "punpcklbh  %[y],            %[y],              %[y]          \n\t" \
+  "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t" \
+  "daddiu     %[uv_ptr],       %[uv_ptr],         0x04          \n\t"
+
+#define READNV21                                                      \
+  "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t" \
+  "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t" \
+  "gslwlc1    %[u],            0x03(%[vu_ptr])                  \n\t" \
+  "gslwrc1    %[u],            0x00(%[vu_ptr])                  \n\t" \
+  "punpcklbh  %[u],            %[u],              %[zero]       \n\t" \
+  "pshufh     %[v],            %[u],              %[ushu]       \n\t" \
+  "pshufh     %[u],            %[u],              %[vshu]       \n\t" \
+  "punpcklbh  %[y],            %[y],              %[y]          \n\t" \
+  "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t" \
+  "daddiu     %[vu_ptr],       %[vu_ptr],         0x04          \n\t"
+
+#define READYUY2                                                      \
+  "gsldlc1    %[y],            0x07(%[yuy2_ptr])                \n\t" \
+  "gsldrc1    %[y],            0x00(%[yuy2_ptr])                \n\t" \
+  "psrlh      %[temp],         %[y],              %[eight]      \n\t" \
+  "pshufh     %[u],            %[temp],           %[ushu]       \n\t" \
+  "pshufh     %[v],            %[temp],           %[vshu]       \n\t" \
+  "psrlh      %[temp],         %[mask1],          %[eight]      \n\t" \
+  "and        %[y],            %[y],              %[temp]       \n\t" \
+  "psllh      %[temp],         %[y],              %[eight]      \n\t" \
+  "or         %[y],            %[y],              %[temp]       \n\t" \
+  "daddiu     %[yuy2_ptr],     %[yuy2_ptr],       0x08          \n\t"
+
+#define READUYVY                                                      \
+  "gsldlc1    %[y],            0x07(%[uyvy_ptr])                \n\t" \
+  "gsldrc1    %[y],            0x00(%[uyvy_ptr])                \n\t" \
+  "psrlh      %[temp],         %[mask1],          %[eight]      \n\t" \
+  "and        %[temp],         %[y],              %[temp]       \n\t" \
+  "pshufh     %[u],            %[temp],           %[ushu]       \n\t" \
+  "pshufh     %[v],            %[temp],           %[vshu]       \n\t" \
+  "psrlh      %[y],            %[y],              %[eight]      \n\t" \
+  "psllh      %[temp],         %[y],              %[eight]      \n\t" \
+  "or         %[y],            %[y],              %[temp]       \n\t" \
+  "daddiu     %[uyvy_ptr],     %[uyvy_ptr],       0x08          \n\t"
+
+#define YUVTORGB(yuvconstants)                                        \
+  "pmulhuh    %[y],            %[y],              %[yg]         \n\t" \
+  "paddsh     %[b_vec],        %[y],              %[bb]         \n\t" \
+  "pmullh     %[temp],         %[u],              %[ub]         \n\t" \
+  "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t" \
+  "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t" \
+  "paddsh     %[g_vec],        %[y],              %[bg]         \n\t" \
+  "pmullh     %[temp],         %[u],              %[ug]         \n\t" \
+  "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t" \
+  "pmullh     %[temp],         %[v],              %[vg]         \n\t" \
+  "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t" \
+  "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t" \
+  "paddsh     %[r_vec],        %[y],              %[br]         \n\t" \
+  "pmullh     %[temp],         %[v],              %[vr]         \n\t" \
+  "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t" \
+  "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t" \
+  "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t" \
+  "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
+
+#define YUVTORGB_10(yuvconstants)                                     \
+  "psllh      %[y],            %[y],              %[six]        \n\t" \
+  "pmulhuh    %[y],            %[y],              %[yg]         \n\t" \
+  "punpcklhw  %[u],            %[u],              %[u]          \n\t" \
+  "psrah      %[u],            %[u],              %[two]        \n\t" \
+  "punpcklhw  %[v],            %[v],              %[v]          \n\t" \
+  "psrah      %[v],            %[v],              %[two]        \n\t" \
+  "pminsh     %[u],            %[u],              %[mask2]      \n\t" \
+  "pminsh     %[v],            %[v],              %[mask2]      \n\t" \
+  "paddsh     %[b_vec],        %[y],              %[bb]         \n\t" \
+  "pmullh     %[temp],         %[u],              %[ub]         \n\t" \
+  "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t" \
+  "paddsh     %[g_vec],        %[y],              %[bg]         \n\t" \
+  "pmullh     %[temp],         %[u],              %[ug]         \n\t" \
+  "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t" \
+  "pmullh     %[temp],         %[v],              %[vg]         \n\t" \
+  "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t" \
+  "paddsh     %[r_vec],        %[y],              %[br]         \n\t" \
+  "pmullh     %[temp],         %[v],              %[vr]         \n\t" \
+  "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t" \
+  "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t" \
+  "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t" \
+  "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t" \
+  "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t" \
+  "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
+
+#define STOREARGB                                                     \
+  "punpcklwd  %[g_vec],        %[g_vec],          %[alpha]      \n\t" \
+  "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t" \
+  "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t" \
+  "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t" \
+  "punpckhhw  %[temp],         %[b_vec],          %[r_vec]      \n\t" \
+  "gssdlc1    %[g_vec],        0x07(%[rgbbuf_ptr])              \n\t" \
+  "gssdrc1    %[g_vec],        0x00(%[rgbbuf_ptr])              \n\t" \
+  "gssdlc1    %[temp],         0x0f(%[rgbbuf_ptr])              \n\t" \
+  "gssdrc1    %[temp],         0x08(%[rgbbuf_ptr])              \n\t" \
+  "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+
+#define STORERGB24                                                    \
+  "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t" \
+  "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t" \
+  "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t" \
+  "punpckhhw  %[temp],         %[b_vec],          %[r_vec]      \n\t" \
+  "punpckhwd  %[r_vec],        %[g_vec],          %[g_vec]      \n\t" \
+  "psllw      %[b_vec],        %[r_vec],          %[lmove1]     \n\t" \
+  "or         %[g_vec],        %[g_vec],          %[b_vec]      \n\t" \
+  "psrlw      %[b_vec],        %[r_vec],          %[rmove1]     \n\t" \
+  "pextrh     %[b_vec],        %[b_vec],          %[zero]       \n\t" \
+  "pinsrh_2   %[g_vec],        %[g_vec],          %[b_vec]      \n\t" \
+  "pextrh     %[r_vec],        %[temp],           %[zero]       \n\t" \
+  "pinsrh_3   %[g_vec],        %[g_vec],          %[r_vec]      \n\t" \
+  "pextrh     %[r_vec],        %[temp],           %[one]        \n\t" \
+  "punpckhwd  %[temp],         %[temp],           %[temp]       \n\t" \
+  "psllw      %[temp],         %[temp],           %[rmove1]     \n\t" \
+  "or         %[temp],         %[temp],           %[r_vec]      \n\t" \
+  "gssdlc1    %[g_vec],        0x07(%[rgbbuf_ptr])              \n\t" \
+  "gssdrc1    %[g_vec],        0x00(%[rgbbuf_ptr])              \n\t" \
+  "gsswlc1    %[temp],         0x0b(%[rgbbuf_ptr])              \n\t" \
+  "gsswrc1    %[temp],         0x08(%[rgbbuf_ptr])              \n\t" \
+  "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x0c          \n\t"
+
 void I444ToARGBRow_MMI(const uint8_t* src_y,
                        const uint8_t* src_u,
                        const uint8_t* src_v,
@@ -6041,90 +6248,24 @@ void I444ToARGBRow_MMI(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   uint64_t y,u,v;
-  uint64_t b_vec[2],g_vec[2],r_vec[2];
-  uint64_t mask = 0xff00ff00ff00ff00ULL;
+  uint64_t b_vec, g_vec, r_vec, temp;
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
   __asm__ volatile (
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"//yg
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"//bb
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"//ub
-    "or         %[ub],           %[ub],             %[mask]       \n\t"//must sign extension
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"//bg
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"//ug
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"//vg
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"//br
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"//vr
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask]       \n\t"//sign extension
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"//y*0x0101
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"//y1
-
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"//u
-    "paddsh     %[b_vec0],       %[y],              %[bb]         \n\t"
-    "pmullh     %[b_vec1],       %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec0],       %[b_vec0],         %[b_vec1]     \n\t"
-    "psrah      %[b_vec0],       %[b_vec0],         %[six]        \n\t"
-
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"//v
-    "paddsh     %[g_vec0],       %[y],              %[bg]         \n\t"
-    "pmullh     %[g_vec1],       %[u],              %[ug]         \n\t"//u*ug
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "pmullh     %[g_vec1],       %[v],              %[vg]         \n\t"//v*vg
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "psrah      %[g_vec0],       %[g_vec0],         %[six]        \n\t"
-
-    "paddsh     %[r_vec0],       %[y],              %[br]         \n\t"
-    "pmullh     %[r_vec1],       %[v],              %[vr]         \n\t"//v*vr
-    "psubsh     %[r_vec0],       %[r_vec0],         %[r_vec1]     \n\t"
-    "psrah      %[r_vec0],       %[r_vec0],         %[six]        \n\t"
-
-    "packushb   %[r_vec0],       %[b_vec0],         %[r_vec0]     \n\t"//rrrrbbbb
-    "packushb   %[g_vec0],       %[g_vec0],         %[alpha]      \n\t"//ffffgggg
-    "punpcklwd  %[g_vec0],       %[g_vec0],         %[alpha]      \n\t"
-    "punpcklbh  %[b_vec0],       %[r_vec0],         %[g_vec0]     \n\t"//gbgbgbgb
-    "punpckhbh  %[r_vec0],       %[r_vec0],         %[g_vec0]     \n\t"//frfrfrfr
-    "punpcklhw  %[g_vec0],       %[b_vec0],         %[r_vec0]     \n\t"//frgbfrgb
-    "punpckhhw  %[g_vec1],       %[b_vec0],         %[r_vec0]     \n\t"//frgbfrgb
-    "gssdlc1    %[g_vec0],       0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec0],       0x00(%[rgbbuf_ptr])              \n\t"
-    "gssdlc1    %[g_vec1],       0x0f(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec1],       0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x04          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x04          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READYUV444
+    YUVTORGB(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
-    : [y]"=&f"(y),
-      [u]"=&f"(u),                         [v]"=&f"(v),
-      [b_vec0]"=&f"(b_vec[0]),             [b_vec1]"=&f"(b_vec[1]),
-      [g_vec0]"=&f"(g_vec[0]),             [g_vec1]"=&f"(g_vec[1]),
-      [r_vec0]"=&f"(r_vec[0]),             [r_vec1]"=&f"(r_vec[1]),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [alpha]"f"(-1),
-      [six]"f"(0x6),                       [five]"f"(0x55),
-      [mask]"f"(mask)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [rgbbuf_ptr]"r"(rgb_buf), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [alpha]"f"(-1),
+      [six]"f"(0x6), [five]"f"(0x55), [mask1]"f"(0xff00ff00ff00ff00)
     : "memory"
   );
 }
@@ -6137,96 +6278,26 @@ void I422ToARGBRow_MMI(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   uint64_t y,u,v;
-  uint64_t b_vec[2],g_vec[2],r_vec[2];
-  uint64_t mask = 0xff00ff00ff00ff00ULL;
+  uint64_t b_vec, g_vec, r_vec, temp;
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"//yg
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"//bb
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"//ub
-    "or         %[ub],           %[ub],             %[mask]       \n\t"//must sign extension
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"//bg
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"//ug
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"//vg
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"//br
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"//vr
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask]       \n\t"//sign extension
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"//y*0x0101
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"//y1
-
-    //u3|u2|u1|u0 --> u1|u1|u0|u0
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"//u
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec0],       %[y],              %[bb]         \n\t"
-    "pmullh     %[b_vec1],       %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec0],       %[b_vec0],         %[b_vec1]     \n\t"
-    "psrah      %[b_vec0],       %[b_vec0],         %[six]        \n\t"
-
-    //v3|v2|v1|v0 --> v1|v1|v0|v0
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"//v
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec0],       %[y],              %[bg]         \n\t"
-    "pmullh     %[g_vec1],       %[u],              %[ug]         \n\t"//u*ug
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "pmullh     %[g_vec1],       %[v],              %[vg]         \n\t"//v*vg
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "psrah      %[g_vec0],       %[g_vec0],         %[six]        \n\t"
-
-    "paddsh     %[r_vec0],       %[y],              %[br]         \n\t"
-    "pmullh     %[r_vec1],       %[v],              %[vr]         \n\t"//v*vr
-    "psubsh     %[r_vec0],       %[r_vec0],         %[r_vec1]     \n\t"
-    "psrah      %[r_vec0],       %[r_vec0],         %[six]        \n\t"
-
-    "packushb   %[r_vec0],       %[b_vec0],         %[r_vec0]     \n\t"//rrrrbbbb
-    "packushb   %[g_vec0],       %[g_vec0],         %[alpha]      \n\t"//ffffgggg
-    "punpcklwd  %[g_vec0],       %[g_vec0],         %[alpha]      \n\t"
-    "punpcklbh  %[b_vec0],       %[r_vec0],         %[g_vec0]     \n\t"//gbgbgbgb
-    "punpckhbh  %[r_vec0],       %[r_vec0],         %[g_vec0]     \n\t"//frfrfrfr
-    "punpcklhw  %[g_vec0],       %[b_vec0],         %[r_vec0]     \n\t"//frgbfrgb
-    "punpckhhw  %[g_vec1],       %[b_vec0],         %[r_vec0]     \n\t"//frgbfrgb
-    "gssdlc1    %[g_vec0],       0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec0],       0x00(%[rgbbuf_ptr])              \n\t"
-    "gssdlc1    %[g_vec1],       0x0f(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec1],       0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READYUV422
+    YUVTORGB(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),
-      [u]"=&f"(u),                         [v]"=&f"(v),
-      [b_vec0]"=&f"(b_vec[0]),             [b_vec1]"=&f"(b_vec[1]),
-      [g_vec0]"=&f"(g_vec[0]),             [g_vec1]"=&f"(g_vec[1]),
-      [r_vec0]"=&f"(r_vec[0]),             [r_vec1]"=&f"(r_vec[1]),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [alpha]"f"(-1),
-      [six]"f"(0x6),                       [five]"f"(0x55),
-      [mask]"f"(mask)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [rgbbuf_ptr]"r"(rgb_buf), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [alpha]"f"(-1),
+      [six]"f"(0x6), [five]"f"(0x55), [mask1]"f"(0xff00ff00ff00ff00)
     : "memory"
   );
 }
@@ -6239,99 +6310,27 @@ void I210ToARGBRow_MMI(const uint16_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   uint64_t y,u,v;
-  uint64_t b_vec[2],g_vec[2],r_vec[2];
-  uint64_t mask = 0xff00ff00ff00ff00ULL;
+  uint64_t b_vec, g_vec, r_vec, temp;
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask]       \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask]       \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gsldlc1    %[y],            0x07(%[y_ptr])                   \n\t"
-    "gsldrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
-
-    "psllh      %[y],            %[y],              %[six]        \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "punpcklhw  %[u],            %[u],              %[u]          \n\t"
-    "psrah      %[u],            %[u],              %[two]        \n\t"
-    "punpcklhw  %[v],            %[v],              %[v]          \n\t"
-    "psrah      %[v],            %[v],              %[two]        \n\t"
-    "pminsh     %[u],            %[u],              %[mask1]      \n\t"
-    "pminsh     %[v],            %[v],              %[mask1]      \n\t"
-
-    "paddsh     %[b_vec0],       %[y],              %[bb]         \n\t"
-    "pmullh     %[b_vec1],       %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec0],       %[b_vec0],         %[b_vec1]     \n\t"
-
-    "paddsh     %[g_vec0],       %[y],              %[bg]         \n\t"
-    "pmullh     %[g_vec1],       %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "pmullh     %[g_vec1],       %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-
-    "paddsh     %[r_vec0],       %[y],              %[br]         \n\t"
-    "pmullh     %[r_vec1],       %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec0],       %[r_vec0],         %[r_vec1]     \n\t"
-
-    "psrah      %[b_vec0],       %[b_vec0],         %[six]        \n\t"
-    "psrah      %[g_vec0],       %[g_vec0],         %[six]        \n\t"
-    "psrah      %[r_vec0],       %[r_vec0],         %[six]        \n\t"
-
-    "packushb   %[r_vec0],       %[b_vec0],         %[r_vec0]     \n\t"
-    "packushb   %[g_vec0],       %[g_vec0],         %[alpha]      \n\t"
-    "punpcklwd  %[g_vec0],       %[g_vec0],         %[alpha]      \n\t"
-    "punpcklbh  %[b_vec0],       %[r_vec0],         %[g_vec0]     \n\t"
-    "punpckhbh  %[r_vec0],       %[r_vec0],         %[g_vec0]     \n\t"
-    "punpcklhw  %[g_vec0],       %[b_vec0],         %[r_vec0]     \n\t"
-    "punpckhhw  %[g_vec1],       %[b_vec0],         %[r_vec0]     \n\t"
-    "gssdlc1    %[g_vec0],       0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec0],       0x00(%[rgbbuf_ptr])              \n\t"
-    "gssdlc1    %[g_vec1],       0x0f(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec1],       0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x08          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x04          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x04          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READYUV210
+    YUVTORGB_10(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),
-      [u]"=&f"(u),                         [v]"=&f"(v),
-      [b_vec0]"=&f"(b_vec[0]),             [b_vec1]"=&f"(b_vec[1]),
-      [g_vec0]"=&f"(g_vec[0]),             [g_vec1]"=&f"(g_vec[1]),
-      [r_vec0]"=&f"(r_vec[0]),             [r_vec1]"=&f"(r_vec[1]),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [alpha]"f"(-1),
-      [six]"f"(0x6),                       [five]"f"(0x55),
-      [mask]"f"(mask),                     [two]"f"(0x02),
-      [mask1]"f"(0x00ff00ff00ff00ff)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [rgbbuf_ptr]"r"(rgb_buf), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [alpha]"f"(-1),
+      [six]"f"(0x6), [five]"f"(0x55), [two]"f"(0x02),
+      [mask1]"f"(0xff00ff00ff00ff00), [mask2]"f"(0x00ff00ff00ff00ff)
     : "memory"
   );
 }
@@ -6344,99 +6343,27 @@ void I422AlphaToARGBRow_MMI(const uint8_t* src_y,
                             const struct YuvConstants* yuvconstants,
                             int width) {
   uint64_t y,u,v,a;
-  uint64_t b_vec[2],g_vec[2],r_vec[2];
-  uint64_t mask = 0xff00ff00ff00ff00ULL;
+  uint64_t b_vec, g_vec, r_vec, temp;
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask]       \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask]       \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
-    "gslwlc1    %[a],            0x03(%[a_ptr])                   \n\t"
-    "gslwrc1    %[a],            0x00(%[a_ptr])                   \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"//y*0x0101
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"//y1
-
-    //u3|u2|u1|u0 --> u1|u1|u0|u0
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"//u
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec0],       %[y],              %[bb]         \n\t"
-    "pmullh     %[b_vec1],       %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec0],       %[b_vec0],         %[b_vec1]     \n\t"
-    "psrah      %[b_vec0],       %[b_vec0],         %[six]        \n\t"
-
-    //v3|v2|v1|v0 --> v1|v1|v0|v0
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec0],       %[y],              %[bg]         \n\t"
-    "pmullh     %[g_vec1],       %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "pmullh     %[g_vec1],       %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "psrah      %[g_vec0],       %[g_vec0],         %[six]        \n\t"
-
-    "paddsh     %[r_vec0],       %[y],              %[br]         \n\t"
-    "pmullh     %[r_vec1],       %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec0],       %[r_vec0],         %[r_vec1]     \n\t"
-    "psrah      %[r_vec0],       %[r_vec0],         %[six]        \n\t"
-
-    "packushb   %[r_vec0],       %[b_vec0],         %[r_vec0]     \n\t"//rrrrbbbb
-    "packushb   %[g_vec0],       %[g_vec0],         %[a]          \n\t"
-    "punpcklwd  %[g_vec0],       %[g_vec0],         %[a]          \n\t"//aaaagggg
-    "punpcklbh  %[b_vec0],       %[r_vec0],         %[g_vec0]     \n\t"
-    "punpckhbh  %[r_vec0],       %[r_vec0],         %[g_vec0]     \n\t"
-    "punpcklhw  %[g_vec0],       %[b_vec0],         %[r_vec0]     \n\t"
-    "punpckhhw  %[g_vec1],       %[b_vec0],         %[r_vec0]     \n\t"
-    "gssdlc1    %[g_vec0],       0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec0],       0x00(%[rgbbuf_ptr])              \n\t"
-    "gssdlc1    %[g_vec1],       0x0f(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec1],       0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[a_ptr],        %[a_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READYUVA422
+    YUVTORGB(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),                         [a]"=&f"(a),
-      [b_vec0]"=&f"(b_vec[0]),             [b_vec1]"=&f"(b_vec[1]),
-      [g_vec0]"=&f"(g_vec[0]),             [g_vec1]"=&f"(g_vec[1]),
-      [r_vec0]"=&f"(r_vec[0]),             [r_vec1]"=&f"(r_vec[1]),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [a_ptr]"r"(src_a),                   [zero]"f"(0x00),
-      [six]"f"(0x6),                       [five]"f"(0x55),
-      [mask]"f"(mask)
+    : [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v), [alpha]"=&f"(a),
+      [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug),
+      [vg]"=&f"(vg), [vr]"=&f"(vr), [bb]"=&f"(bb),
+      [bg]"=&f"(bg), [br]"=&f"(br), [yg]"=&f"(yg)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [rgbbuf_ptr]"r"(rgb_buf), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [a_ptr]"r"(src_a), [zero]"f"(0x00),
+      [six]"f"(0x6), [five]"f"(0x55), [mask1]"f"(0xff00ff00ff00ff00)
     : "memory"
   );
 }
@@ -6448,110 +6375,27 @@ void I422ToRGB24Row_MMI(const uint8_t* src_y,
                         const struct YuvConstants* yuvconstants,
                         int width) {
   uint64_t y,u,v;
-  uint64_t b_vec[2],g_vec[2],r_vec[2];
-  uint64_t mask = 0xff00ff00ff00ff00ULL;
+  uint64_t b_vec, g_vec, r_vec, temp;
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask]       \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask]       \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"//y*0x0101
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"//y1
-
-    //u3|u2|u1|u0 --> u1|u1|u0|u0
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"//u
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec0],       %[y],              %[bb]         \n\t"
-    "pmullh     %[b_vec1],       %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec0],       %[b_vec0],         %[b_vec1]     \n\t"
-    "psrah      %[b_vec0],       %[b_vec0],         %[six]        \n\t"
-
-    //v3|v2|v1|v0 --> v1|v1|v0|v0
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec0],       %[y],              %[bg]         \n\t"
-    "pmullh     %[g_vec1],       %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "pmullh     %[g_vec1],       %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec0],       %[g_vec0],         %[g_vec1]     \n\t"
-    "psrah      %[g_vec0],       %[g_vec0],         %[six]        \n\t"
-
-    "paddsh     %[r_vec0],       %[y],              %[br]         \n\t"
-    "pmullh     %[r_vec1],       %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec0],       %[r_vec0],         %[r_vec1]     \n\t"
-    "psrah      %[r_vec0],       %[r_vec0],         %[six]        \n\t"
-
-    "packushb   %[r_vec0],       %[b_vec0],         %[r_vec0]     \n\t"
-    "packushb   %[g_vec0],       %[g_vec0],         %[zero]       \n\t"
-    "punpcklbh  %[b_vec0],       %[r_vec0],         %[g_vec0]     \n\t"
-    "punpckhbh  %[r_vec0],       %[r_vec0],         %[g_vec0]     \n\t"
-    "punpcklhw  %[g_vec0],       %[b_vec0],         %[r_vec0]     \n\t"
-    "punpckhhw  %[g_vec1],       %[b_vec0],         %[r_vec0]     \n\t"
-
-    "punpckhwd  %[r_vec0],       %[g_vec0],         %[g_vec0]     \n\t"
-    "psllw      %[r_vec1],       %[r_vec0],         %[lmove1]     \n\t"
-    "or         %[g_vec0],       %[g_vec0],         %[r_vec1]     \n\t"
-    "psrlw      %[r_vec1],       %[r_vec0],         %[rmove1]     \n\t"
-    "pextrh     %[r_vec1],       %[r_vec1],         %[zero]       \n\t"
-    "pinsrh_2   %[g_vec0],       %[g_vec0],         %[r_vec1]     \n\t"
-    "pextrh     %[r_vec1],       %[g_vec1],         %[zero]       \n\t"
-    "pinsrh_3   %[g_vec0],       %[g_vec0],         %[r_vec1]     \n\t"
-    "pextrh     %[r_vec1],       %[g_vec1],         %[one]        \n\t"
-    "punpckhwd  %[g_vec1],       %[g_vec1],         %[g_vec1]     \n\t"
-    "psllw      %[g_vec1],       %[g_vec1],         %[rmove1]     \n\t"
-    "or         %[g_vec1],       %[g_vec1],         %[r_vec1]     \n\t"
-    "gssdlc1    %[g_vec0],       0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec0],       0x00(%[rgbbuf_ptr])              \n\t"
-    "gsswlc1    %[g_vec1],       0x0b(%[rgbbuf_ptr])              \n\t"
-    "gsswrc1    %[g_vec1],       0x08(%[rgbbuf_ptr])              \n\t"
-
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x0c          \n\t"
+    READYUV422
+    YUVTORGB(yuvconstants)
+    STORERGB24
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec0]"=&f"(b_vec[0]),             [b_vec1]"=&f"(b_vec[1]),
-      [g_vec0]"=&f"(g_vec[0]),             [g_vec1]"=&f"(g_vec[1]),
-      [r_vec0]"=&f"(r_vec[0]),             [r_vec1]"=&f"(r_vec[1]),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask]"f"(mask),
-      [lmove1]"f"(0x18),                   [rmove1]"f"(0x8),
-      [one]"f"(0x1)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [rgbbuf_ptr]"r"(rgb_buf), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [five]"f"(0x55),
+      [six]"f"(0x6), [mask1]"f"(0xff00ff00ff00ff00),
+      [lmove1]"f"(0x18), [rmove1]"f"(0x8), [one]"f"(0x1)
     : "memory"
   );
 }
@@ -6567,73 +6411,25 @@ void I422ToARGB4444Row_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask]       \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask]       \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
+    READYUV422
+    YUVTORGB(yuvconstants)
 
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"//y*0x0101
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"//y1
-
-    //u3|u2|u1|u0 --> u1|u1|u0|u0
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"//u
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    //v3|v2|v1|v0 --> v1|v1|v0|v0
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
     "punpcklwd  %[g_vec],        %[g_vec],          %[alpha]      \n\t"
     "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
     "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
 
-    "and        %[g_vec],        %[g_vec],          %[mask1]      \n\t"
+    "and        %[g_vec],        %[g_vec],          %[mask2]      \n\t"
     "psrlw      %[g_vec],        %[g_vec],          %[four]       \n\t"
     "psrlw      %[r_vec],        %[g_vec],          %[four]       \n\t"
     "or         %[g_vec],        %[g_vec],          %[r_vec]      \n\t"
     "punpcklbh  %[r_vec],        %[alpha],          %[zero]       \n\t"
     "and        %[g_vec],        %[g_vec],          %[r_vec]      \n\t"
 
-    "and        %[b_vec],        %[b_vec],          %[mask1]      \n\t"
+    "and        %[b_vec],        %[b_vec],          %[mask2]      \n\t"
     "psrlw      %[b_vec],        %[b_vec],          %[four]       \n\t"
     "psrlw      %[r_vec],        %[b_vec],          %[four]       \n\t"
     "or         %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
@@ -6644,28 +6440,19 @@ void I422ToARGB4444Row_MMI(const uint8_t* src_y,
     "gssdlc1    %[g_vec],        0x07(%[dst_argb4444])            \n\t"
     "gssdrc1    %[g_vec],        0x00(%[dst_argb4444])            \n\t"
 
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
     "daddiu     %[dst_argb4444], %[dst_argb4444],   0x08          \n\t"
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [dst_argb4444]"r"(dst_argb4444),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask]"f"(0xff00ff00ff00ff00),
-      [four]"f"(0x4),                      [mask1]"f"(0xf0f0f0f0f0f0f0f0),
-      [alpha]"f"(-1)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [dst_argb4444]"r"(dst_argb4444), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [five]"f"(0x55), [six]"f"(0x6),
+      [mask1]"f"(0xff00ff00ff00ff00), [mask2]"f"(0xf0f0f0f0f0f0f0f0),
+      [four]"f"(0x4), [alpha]"f"(-1)
     : "memory"
   );
 }
@@ -6681,59 +6468,11 @@ void I422ToARGB1555Row_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
+    READYUV422
+    YUVTORGB(yuvconstants)
 
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    //u3|u2|u1|u0 --> u1|u1|u0|u0
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    //v3|v2|v1|v0 --> v1|v1|v0|v0
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
     "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
@@ -6772,29 +6511,20 @@ void I422ToARGB1555Row_MMI(const uint8_t* src_y,
     "gssdlc1    %[g_vec],        0x07(%[dst_argb1555])            \n\t"
     "gssdrc1    %[g_vec],        0x00(%[dst_argb1555])            \n\t"
 
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
     "daddiu     %[dst_argb1555], %[dst_argb1555],   0x08          \n\t"
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [dst_argb1555]"r"(dst_argb1555),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [three]"f"(0x3),                     [mask2]"f"(0x1f0000001f),
-      [eight]"f"(0x8),                     [mask3]"f"(0x800000008000),
-      [lmove5]"f"(0x5)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [dst_argb1555]"r"(dst_argb1555), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [five]"f"(0x55),
+      [mask1]"f"(0xff00ff00ff00ff00), [mask2]"f"(0x1f0000001f),
+      [eight]"f"(0x8), [mask3]"f"(0x800000008000),
+      [three]"f"(0x3), [six]"f"(0x6), [lmove5]"f"(0x5)
     : "memory"
   );
 }
@@ -6810,59 +6540,11 @@ void I422ToRGB565Row_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
+    READYUV422
+    YUVTORGB(yuvconstants)
 
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    //u3|u2|u1|u0 --> u1|u1|u0|u0
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    //v3|v2|v1|v0 --> v1|v1|v0|v0
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
     "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
@@ -6903,29 +6585,20 @@ void I422ToRGB565Row_MMI(const uint8_t* src_y,
     "gssdlc1    %[g_vec],        0x07(%[dst_rgb565])             \n\t"
     "gssdrc1    %[g_vec],        0x00(%[dst_rgb565])             \n\t"
 
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
     "daddiu     %[dst_rgb565],   %[dst_rgb565],     0x08          \n\t"
-    "daddi      %[width],        %[width],          -0x04         \n\t"
+    "daddi      %[width],        %[width],         -0x04          \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [dst_rgb565]"r"(dst_rgb565),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [three]"f"(0x3),                     [mask2]"f"(0x1f0000001f),
-      [eight]"f"(0x8),                     [seven]"f"(0x7),
-      [lmove5]"f"(0x5)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [dst_rgb565]"r"(dst_rgb565), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [five]"f"(0x55),
+      [mask1]"f"(0xff00ff00ff00ff00), [mask2]"f"(0x1f0000001f),
+      [eight]"f"(0x8), [seven]"f"(0x7), [three]"f"(0x3),
+      [six]"f"(0x6), [lmove5]"f"(0x5)
     : "memory"
   );
 }
@@ -6940,86 +6613,23 @@ void NV12ToARGBRow_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[uv_ptr])                  \n\t"
-    "gslwrc1    %[u],            0x00(%[uv_ptr])                  \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "pshufh     %[v],            %[u],              %[vshu]       \n\t"
-    "pshufh     %[u],            %[u],              %[ushu]       \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
-    "punpcklwd  %[g_vec],        %[g_vec],          %[alpha]      \n\t"
-    "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
-
-    "gssdlc1    %[g_vec],       0x07(%[rgbbuf_ptr])               \n\t"
-    "gssdrc1    %[g_vec],       0x00(%[rgbbuf_ptr])               \n\t"
-    "gssdlc1    %[b_vec],       0x0f(%[rgbbuf_ptr])               \n\t"
-    "gssdrc1    %[b_vec],       0x08(%[rgbbuf_ptr])               \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[uv_ptr],       %[uv_ptr],         0x04          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READNV12
+    YUVTORGB(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [uv_ptr]"r"(src_uv),
-      [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [alpha]"f"(-1)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [uv_ptr]"r"(src_uv), [rgbbuf_ptr]"r"(rgb_buf),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width),
+      [zero]"f"(0x00), [five]"f"(0x55), [six]"f"(0x6),
+      [mask1]"f"(0xff00ff00ff00ff00), [ushu]"f"(0xA0),
+      [vshu]"f"(0xf5), [alpha]"f"(-1)
     : "memory"
   );
 }
@@ -7034,86 +6644,22 @@ void NV21ToARGBRow_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[vu_ptr])                  \n\t"
-    "gslwrc1    %[u],            0x00(%[vu_ptr])                  \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "pshufh     %[v],            %[u],              %[ushu]       \n\t"
-    "pshufh     %[u],            %[u],              %[vshu]       \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
-    "punpcklwd  %[g_vec],        %[g_vec],          %[alpha]      \n\t"
-    "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
-
-    "gssdlc1    %[g_vec],       0x07(%[rgbbuf_ptr])               \n\t"
-    "gssdrc1    %[g_vec],       0x00(%[rgbbuf_ptr])               \n\t"
-    "gssdlc1    %[b_vec],       0x0f(%[rgbbuf_ptr])               \n\t"
-    "gssdrc1    %[b_vec],       0x08(%[rgbbuf_ptr])               \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[vu_ptr],       %[vu_ptr],         0x04          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READNV21
+    YUVTORGB(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [vu_ptr]"r"(src_vu),
-      [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [alpha]"f"(-1)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [vu_ptr]"r"(src_vu), [rgbbuf_ptr]"r"(rgb_buf),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width), [zero]"f"(0x00),
+      [five]"f"(0x55), [six]"f"(0x6), [mask1]"f"(0xff00ff00ff00ff00),
+      [ushu]"f"(0xA0), [vshu]"f"(0xf5), [alpha]"f"(-1)
     : "memory"
   );
 }
@@ -7128,98 +6674,23 @@ void NV12ToRGB24Row_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[uv_ptr])                  \n\t"
-    "gslwrc1    %[u],            0x00(%[uv_ptr])                  \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "pshufh     %[v],            %[u],              %[vshu]       \n\t"
-    "pshufh     %[u],            %[u],              %[ushu]       \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
-    "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
-
-    "punpckhwd  %[r_vec],        %[g_vec],          %[g_vec]      \n\t"
-    "psllw      %[temp],         %[r_vec],          %[lmove1]     \n\t"
-    "or         %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrlw      %[temp],         %[r_vec],          %[rmove1]     \n\t"
-    "pextrh     %[temp],         %[temp],           %[zero]       \n\t"
-    "pinsrh_2   %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pextrh     %[temp],         %[b_vec],          %[zero]       \n\t"
-    "pinsrh_3   %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pextrh     %[temp],         %[b_vec],          %[one]        \n\t"
-    "punpckhwd  %[b_vec],        %[b_vec],          %[b_vec]      \n\t"
-    "psllw      %[b_vec],        %[b_vec],          %[rmove1]     \n\t"
-    "or         %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "gssdlc1    %[g_vec],        0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec],        0x00(%[rgbbuf_ptr])              \n\t"
-    "gsswlc1    %[b_vec],        0x0b(%[rgbbuf_ptr])              \n\t"
-    "gsswrc1    %[b_vec],        0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[uv_ptr],       %[uv_ptr],         0x04          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x0C          \n\t"
+    READNV12
+    YUVTORGB(yuvconstants)
+    STORERGB24
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [uv_ptr]"r"(src_uv),
-      [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [alpha]"f"(-1),                      [lmove1]"f"(0x18),
-      [one]"f"(0x1),                       [rmove1]"f"(0x8)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [uv_ptr]"r"(src_uv), [rgbbuf_ptr]"r"(rgb_buf),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width), [zero]"f"(0x00),
+      [five]"f"(0x55), [six]"f"(0x6), [mask1]"f"(0xff00ff00ff00ff00),
+      [ushu]"f"(0xA0), [vshu]"f"(0xf5), [alpha]"f"(-1),
+      [lmove1]"f"(0x18), [one]"f"(0x1), [rmove1]"f"(0x8)
     : "memory"
   );
 }
@@ -7234,98 +6705,23 @@ void NV21ToRGB24Row_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[vu_ptr])                  \n\t"
-    "gslwrc1    %[u],            0x00(%[vu_ptr])                  \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "pshufh     %[v],            %[u],              %[ushu]       \n\t"
-    "pshufh     %[u],            %[u],              %[vshu]       \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
-    "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
-
-    "punpckhwd  %[r_vec],        %[g_vec],          %[g_vec]      \n\t"
-    "psllw      %[temp],         %[r_vec],          %[lmove1]     \n\t"
-    "or         %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrlw      %[temp],         %[r_vec],          %[rmove1]     \n\t"
-    "pextrh     %[temp],         %[temp],           %[zero]       \n\t"
-    "pinsrh_2   %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pextrh     %[temp],         %[b_vec],          %[zero]       \n\t"
-    "pinsrh_3   %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pextrh     %[temp],         %[b_vec],          %[one]        \n\t"
-    "punpckhwd  %[b_vec],        %[b_vec],          %[b_vec]      \n\t"
-    "psllw      %[b_vec],        %[b_vec],          %[rmove1]     \n\t"
-    "or         %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "gssdlc1    %[g_vec],        0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec],        0x00(%[rgbbuf_ptr])              \n\t"
-    "gsswlc1    %[b_vec],        0x0b(%[rgbbuf_ptr])              \n\t"
-    "gsswrc1    %[b_vec],        0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[vu_ptr],       %[vu_ptr],         0x04          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x0C          \n\t"
+    READNV21
+    YUVTORGB(yuvconstants)
+    STORERGB24
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [vu_ptr]"r"(src_vu),
-      [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [lmove1]"f"(0x18),                   [rmove1]"f"(0x8),
-      [one]"f"(0x1)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [vu_ptr]"r"(src_vu), [rgbbuf_ptr]"r"(rgb_buf),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width), [zero]"f"(0x00),
+      [five]"f"(0x55), [six]"f"(0x6), [mask1]"f"(0xff00ff00ff00ff00),
+      [ushu]"f"(0xA0), [vshu]"f"(0xf5), [lmove1]"f"(0x18),
+      [rmove1]"f"(0x8), [one]"f"(0x1)
     : "memory"
   );
 }
@@ -7340,54 +6736,10 @@ void NV12ToRGB565Row_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[uv_ptr])                  \n\t"
-    "gslwrc1    %[u],            0x00(%[uv_ptr])                  \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "pshufh     %[v],            %[u],              %[vshu]       \n\t"
-    "pshufh     %[u],            %[u],              %[ushu]       \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
+    READNV12
+    YUVTORGB(yuvconstants)
     "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
     "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
@@ -7430,28 +6782,19 @@ void NV12ToRGB565Row_MMI(const uint8_t* src_y,
     "gssdlc1    %[g_vec],        0x07(%[dst_rgb565])             \n\t"
     "gssdrc1    %[g_vec],        0x00(%[dst_rgb565])             \n\t"
 
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-	"daddiu     %[uv_ptr],       %[uv_ptr],         0x04          \n\t"
     "daddiu     %[dst_rgb565],   %[dst_rgb565],     0x08          \n\t"
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [uv_ptr]"r"(src_uv),
-      [dst_rgb565]"r"(dst_rgb565),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [three]"f"(0x3),                     [mask2]"f"(0x1f0000001f),
-      [eight]"f"(0x8),                     [seven]"f"(0x7)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [uv_ptr]"r"(src_uv), [dst_rgb565]"r"(dst_rgb565),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width), [zero]"f"(0x00),
+      [five]"f"(0x55), [six]"f"(0x6), [mask1]"f"(0xff00ff00ff00ff00),
+      [ushu]"f"(0xA0), [vshu]"f"(0xf5), [three]"f"(0x3),
+      [mask2]"f"(0x1f0000001f), [eight]"f"(0x8), [seven]"f"(0x7)
     : "memory"
   );
 }
@@ -7465,85 +6808,23 @@ void YUY2ToARGBRow_MMI(const uint8_t* src_yuy2,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gsldlc1    %[y],            0x07(%[yuy2_ptr])                \n\t"
-    "gsldrc1    %[y],            0x00(%[yuy2_ptr])                \n\t"
-    "psrlh      %[temp],         %[y],              %[eight]      \n\t"
-    "pshufh     %[u],            %[temp],           %[ushu]       \n\t"
-    "pshufh     %[v],            %[temp],           %[vshu]       \n\t"
-
-    "psrlh      %[temp],         %[mask1],          %[eight]      \n\t"
-    "and        %[y],            %[y],              %[temp]       \n\t"
-    "psllh      %[temp],         %[y],              %[eight]      \n\t"
-    "or         %[y],            %[y],              %[temp]       \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
-    "punpcklwd  %[g_vec],        %[g_vec],          %[alpha]      \n\t"
-    "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
-
-    "gssdlc1    %[g_vec],        0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec],        0x00(%[rgbbuf_ptr])              \n\t"
-    "gssdlc1    %[b_vec],        0x0f(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[b_vec],        0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[yuy2_ptr],     %[yuy2_ptr],       0x08          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
+    READYUY2
+    YUVTORGB(yuvconstants)
+    STOREARGB
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [yuy2_ptr]"r"(src_yuy2),             [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [alpha]"f"(-1),                      [eight]"f"(0x8)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [yuy2_ptr]"r"(src_yuy2), [rgbbuf_ptr]"r"(rgb_buf),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width),
+      [zero]"f"(0x00), [five]"f"(0x55), [six]"f"(0x6),
+      [mask1]"f"(0xff00ff00ff00ff00), [ushu]"f"(0xA0),
+      [vshu]"f"(0xf5), [alpha]"f"(-1), [eight]"f"(0x8)
     : "memory"
   );
 }
@@ -7557,85 +6838,24 @@ void UYVYToARGBRow_MMI(const uint8_t* src_uyvy,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gsldlc1    %[y],            0x07(%[uyvy_ptr])                \n\t"
-    "gsldrc1    %[y],            0x00(%[uyvy_ptr])                \n\t"
-    "psrlh      %[temp],         %[mask1],          %[eight]      \n\t"
-    "and        %[temp],         %[y],              %[temp]       \n\t"
-    "pshufh     %[u],            %[temp],           %[ushu]       \n\t"
-    "pshufh     %[v],            %[temp],           %[vshu]       \n\t"
+    READUYVY
+    YUVTORGB(yuvconstants)
+    STOREARGB
 
-    "psrlh      %[y],            %[y],              %[eight]      \n\t"
-    "psllh      %[temp],         %[y],              %[eight]      \n\t"
-    "or         %[y],            %[y],              %[temp]       \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
-    "punpcklwd  %[g_vec],        %[g_vec],          %[alpha]      \n\t"
-    "punpcklbh  %[b_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpckhbh  %[r_vec],        %[r_vec],          %[g_vec]      \n\t"
-    "punpcklhw  %[g_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "punpckhhw  %[b_vec],        %[b_vec],          %[r_vec]      \n\t"
-
-    "gssdlc1    %[g_vec],        0x07(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[g_vec],        0x00(%[rgbbuf_ptr])              \n\t"
-    "gssdlc1    %[b_vec],        0x0f(%[rgbbuf_ptr])              \n\t"
-    "gssdrc1    %[b_vec],        0x08(%[rgbbuf_ptr])              \n\t"
-
-    "daddiu     %[uyvy_ptr],     %[uyvy_ptr],       0x08          \n\t"
-    "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [uyvy_ptr]"r"(src_uyvy),             [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [ushu]"f"(0xA0),                     [vshu]"f"(0xf5),
-      [alpha]"f"(-1),                      [eight]"f"(0x8)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [uyvy_ptr]"r"(src_uyvy), [rgbbuf_ptr]"r"(rgb_buf),
+      [yuvcons_ptr]"r"(yuvconstants), [width]"r"(width),
+      [zero]"f"(0x00), [five]"f"(0x55), [six]"f"(0x6),
+      [mask1]"f"(0xff00ff00ff00ff00), [ushu]"f"(0xA0),
+      [vshu]"f"(0xf5), [alpha]"f"(-1), [eight]"f"(0x8)
     : "memory"
   );
 }
@@ -7651,57 +6871,10 @@ void I422ToRGBARow_MMI(const uint8_t* src_y,
   uint64_t ub,ug,vg,vr,bb,bg,br,yg;
 
   __asm__ volatile(
-    "ldc1       %[yg],           0xc0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[bb],           0x60(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ub],           0x00(%[yuvcons_ptr])             \n\t"
-    "or         %[ub],           %[ub],             %[mask1]      \n\t"
-    "ldc1       %[bg],           0x80(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[ug],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[ug],           %[ug],             %[zero]       \n\t"
-    "pshufh     %[ug],           %[ug],             %[zero]       \n\t"
-    "ldc1       %[vg],           0x20(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vg],           %[vg],             %[zero]       \n\t"
-    "pshufh     %[vg],           %[vg],             %[five]       \n\t"
-    "ldc1       %[br],           0xa0(%[yuvcons_ptr])             \n\t"
-    "ldc1       %[vr],           0x40(%[yuvcons_ptr])             \n\t"
-    "punpcklbh  %[vr],           %[vr],             %[zero]       \n\t"
-    "pshufh     %[vr],           %[vr],             %[five]       \n\t"
-    "or         %[vr],           %[vr],             %[mask1]      \n\t"
-
+    YUVTORGB_SETUP
     "1:                                                           \n\t"
-    "gslwlc1    %[y],            0x03(%[y_ptr])                   \n\t"
-    "gslwrc1    %[y],            0x00(%[y_ptr])                   \n\t"
-    "gslwlc1    %[u],            0x03(%[u_ptr])                   \n\t"
-    "gslwrc1    %[u],            0x00(%[u_ptr])                   \n\t"
-    "gslwlc1    %[v],            0x03(%[v_ptr])                   \n\t"
-    "gslwrc1    %[v],            0x00(%[v_ptr])                   \n\t"
-
-    "punpcklbh  %[y],            %[y],              %[y]          \n\t"
-    "pmulhuh    %[y],            %[y],              %[yg]         \n\t"
-
-    "punpcklbh  %[u],            %[u],              %[u]          \n\t"
-    "punpcklbh  %[u],            %[u],              %[zero]       \n\t"
-    "paddsh     %[b_vec],        %[y],              %[bb]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ub]         \n\t"
-    "psubsh     %[b_vec],        %[b_vec],          %[temp]       \n\t"
-    "psrah      %[b_vec],        %[b_vec],          %[six]        \n\t"
-
-    "punpcklbh  %[v],            %[v],              %[v]          \n\t"
-    "punpcklbh  %[v],            %[v],              %[zero]       \n\t"
-    "paddsh     %[g_vec],        %[y],              %[bg]         \n\t"
-    "pmullh     %[temp],         %[u],              %[ug]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "pmullh     %[temp],         %[v],              %[vg]         \n\t"
-    "psubsh     %[g_vec],        %[g_vec],          %[temp]       \n\t"
-    "psrah      %[g_vec],        %[g_vec],          %[six]        \n\t"
-
-    "paddsh     %[r_vec],        %[y],              %[br]         \n\t"
-    "pmullh     %[temp],         %[v],              %[vr]         \n\t"
-    "psubsh     %[r_vec],        %[r_vec],          %[temp]       \n\t"
-    "psrah      %[r_vec],        %[r_vec],          %[six]        \n\t"
-
-    "packushb   %[r_vec],        %[b_vec],          %[r_vec]      \n\t"
-    "packushb   %[g_vec],        %[g_vec],          %[zero]       \n\t"
+    READYUV422
+    YUVTORGB(yuvconstants)
     "punpcklwd  %[g_vec],        %[alpha],          %[g_vec]      \n\t"
     "punpcklbh  %[b_vec],        %[g_vec],          %[r_vec]      \n\t"
     "punpckhbh  %[r_vec],        %[g_vec],          %[r_vec]      \n\t"
@@ -7713,27 +6886,18 @@ void I422ToRGBARow_MMI(const uint8_t* src_y,
     "gssdlc1    %[b_vec],       0x0f(%[rgbbuf_ptr])               \n\t"
     "gssdrc1    %[b_vec],       0x08(%[rgbbuf_ptr])               \n\t"
 
-    "daddiu     %[y_ptr],        %[y_ptr],          0x04          \n\t"
-    "daddiu     %[u_ptr],        %[u_ptr],          0x02          \n\t"
-    "daddiu     %[v_ptr],        %[v_ptr],          0x02          \n\t"
     "daddiu     %[rgbbuf_ptr],   %[rgbbuf_ptr],     0x10          \n\t"
     "daddi      %[width],        %[width],          -0x04         \n\t"
     "bnez       %[width],        1b                               \n\t"
 
-    : [y]"=&f"(y),                         [u]"=&f"(u),
-      [v]"=&f"(v),
-      [b_vec]"=&f"(b_vec),                 [g_vec]"=&f"(g_vec),
-      [r_vec]"=&f"(r_vec),                 [temp]"=&f"(temp),
-      [ub]"=&f"(ub),                       [ug]"=&f"(ug),
-      [vg]"=&f"(vg),                       [vr]"=&f"(vr),
-      [bb]"=&f"(bb),                       [bg]"=&f"(bg),
-      [br]"=&f"(br),                       [yg]"=&f"(yg)
-    : [y_ptr]"r"(src_y),                   [u_ptr]"r"(src_u),
-      [v_ptr]"r"(src_v),                   [rgbbuf_ptr]"r"(rgb_buf),
-      [yuvcons_ptr]"r"(yuvconstants),      [width]"r"(width),
-      [zero]"f"(0x00),                     [five]"f"(0x55),
-      [six]"f"(0x6),                       [mask1]"f"(0xff00ff00ff00ff00),
-      [alpha]"f"(-1)
+    : [b_vec]"=&f"(b_vec), [g_vec]"=&f"(g_vec), [r_vec]"=&f"(r_vec),
+      [temp]"=&f"(temp), [ub]"=&f"(ub), [ug]"=&f"(ug), [vg]"=&f"(vg),
+      [vr]"=&f"(vr), [bb]"=&f"(bb), [bg]"=&f"(bg), [br]"=&f"(br),
+      [yg]"=&f"(yg), [y]"=&f"(y), [u]"=&f"(u), [v]"=&f"(v)
+    : [y_ptr]"r"(src_y), [u_ptr]"r"(src_u), [v_ptr]"r"(src_v),
+      [rgbbuf_ptr]"r"(rgb_buf), [yuvcons_ptr]"r"(yuvconstants),
+      [width]"r"(width), [zero]"f"(0x00), [five]"f"(0x55),
+      [six]"f"(0x6), [mask1]"f"(0xff00ff00ff00ff00), [alpha]"f"(-1)
     : "memory"
   );
 }
