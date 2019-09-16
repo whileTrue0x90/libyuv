@@ -28,6 +28,9 @@ static const vec8 kARGBToY = {13, 65, 33, 0, 13, 65, 33, 0,
 // JPeg full range.
 static const vec8 kARGBToYJ = {15, 75, 38, 0, 15, 75, 38, 0,
                                15, 75, 38, 0, 15, 75, 38, 0};
+
+static const vec8 kRGBAToYJ = {0, 15, 75, 38, 0, 15, 75, 38,
+                               0, 15, 75, 38, 0, 15, 75, 38};
 #endif  // defined(HAS_ARGBTOYROW_SSSE3) || defined(HAS_ARGBGRAYROW_SSSE3)
 
 #if defined(HAS_ARGBTOYROW_SSSE3) || defined(HAS_I422TOARGBROW_SSSE3)
@@ -1110,6 +1113,45 @@ void ARGBToYJRow_SSSE3(const uint8_t* src_argb, uint8_t* dst_y, int width) {
 }
 #endif  // HAS_ARGBTOYJROW_SSSE3
 
+#ifdef HAS_RGBATOYJROW_SSSE3
+// Convert 16 ARGB pixels (64 bytes) to 16 YJ values.
+// Same as ARGBToYRow but different coefficients, no add 16, but do rounding.
+void RGBAToYJRow_SSSE3(const uint8_t* src_rgba, uint8_t* dst_y, int width) {
+  asm volatile(
+      "movdqa    %3,%%xmm4                       \n"
+      "movdqa    %4,%%xmm5                       \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "movdqu    (%0),%%xmm0                     \n"
+      "movdqu    0x10(%0),%%xmm1                 \n"
+      "movdqu    0x20(%0),%%xmm2                 \n"
+      "movdqu    0x30(%0),%%xmm3                 \n"
+      "pmaddubsw %%xmm4,%%xmm0                   \n"
+      "pmaddubsw %%xmm4,%%xmm1                   \n"
+      "pmaddubsw %%xmm4,%%xmm2                   \n"
+      "pmaddubsw %%xmm4,%%xmm3                   \n"
+      "lea       0x40(%0),%0                     \n"
+      "phaddw    %%xmm1,%%xmm0                   \n"
+      "phaddw    %%xmm3,%%xmm2                   \n"
+      "paddw     %%xmm5,%%xmm0                   \n"
+      "paddw     %%xmm5,%%xmm2                   \n"
+      "psrlw     $0x7,%%xmm0                     \n"
+      "psrlw     $0x7,%%xmm2                     \n"
+      "packuswb  %%xmm2,%%xmm0                   \n"
+      "movdqu    %%xmm0,(%1)                     \n"
+      "lea       0x10(%1),%1                     \n"
+      "sub       $0x10,%2                        \n"
+      "jg        1b                              \n"
+      : "+r"(src_rgba),  // %0
+        "+r"(dst_y),     // %1
+        "+r"(width)      // %2
+      : "m"(kRGBAToYJ),  // %3
+        "m"(kAddYJ64)    // %4
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5");
+}
+#endif  // HAS_RGBATOYJROW_SSSE3
+
 #ifdef HAS_ARGBTOYROW_AVX2
 // vpermd for vphaddw + vpackuswb vpermd.
 static const lvec32 kPermdARGBToY_AVX = {0, 4, 1, 5, 2, 6, 3, 7};
@@ -1237,6 +1279,48 @@ void ARGBToYJRow_AVX2(const uint8_t* src_argb, uint8_t* dst_y, int width) {
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
 }
 #endif  // HAS_ARGBTOYJROW_AVX2
+
+#ifdef HAS_RGBATOYJROW_AVX2
+// Convert 32 ARGB pixels (128 bytes) to 32 Y values.
+void RGBAToYJRow_AVX2(const uint8_t* src_rgba, uint8_t* dst_y, int width) {
+  asm volatile(
+      "vbroadcastf128 %3,%%ymm4                  \n"
+      "vbroadcastf128 %4,%%ymm5                  \n"
+      "vmovdqu    %5,%%ymm6                      \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "vmovdqu    (%0),%%ymm0                    \n"
+      "vmovdqu    0x20(%0),%%ymm1                \n"
+      "vmovdqu    0x40(%0),%%ymm2                \n"
+      "vmovdqu    0x60(%0),%%ymm3                \n"
+      "vpmaddubsw %%ymm4,%%ymm0,%%ymm0           \n"
+      "vpmaddubsw %%ymm4,%%ymm1,%%ymm1           \n"
+      "vpmaddubsw %%ymm4,%%ymm2,%%ymm2           \n"
+      "vpmaddubsw %%ymm4,%%ymm3,%%ymm3           \n"
+      "lea       0x80(%0),%0                     \n"
+      "vphaddw    %%ymm1,%%ymm0,%%ymm0           \n"  // mutates.
+      "vphaddw    %%ymm3,%%ymm2,%%ymm2           \n"
+      "vpaddw     %%ymm5,%%ymm0,%%ymm0           \n"  // Add .5 for rounding.
+      "vpaddw     %%ymm5,%%ymm2,%%ymm2           \n"
+      "vpsrlw     $0x7,%%ymm0,%%ymm0             \n"
+      "vpsrlw     $0x7,%%ymm2,%%ymm2             \n"
+      "vpackuswb  %%ymm2,%%ymm0,%%ymm0           \n"  // mutates.
+      "vpermd     %%ymm0,%%ymm6,%%ymm0           \n"  // unmutate.
+      "vmovdqu    %%ymm0,(%1)                    \n"
+      "lea       0x20(%1),%1                     \n"
+      "sub       $0x20,%2                        \n"
+      "jg        1b                              \n"
+      "vzeroupper                                \n"
+      : "+r"(src_rgba),         // %0
+        "+r"(dst_y),            // %1
+        "+r"(width)             // %2
+      : "m"(kRGBAToYJ),         // %3
+        "m"(kAddYJ64),          // %4
+        "m"(kPermdARGBToY_AVX)  // %5
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
+}
+#endif  // HAS_RGBATOYJROW_AVX2
 
 #ifdef HAS_ARGBTOUVROW_SSSE3
 void ARGBToUVRow_SSSE3(const uint8_t* src_argb0,
