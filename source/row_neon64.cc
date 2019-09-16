@@ -1322,6 +1322,27 @@ void ARGBToYJRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
       : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6");
 }
 
+void RGBAToYJRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
+  asm volatile(
+      "movi       v4.8b, #15                     \n"  // B * 0.11400 coefficient
+      "movi       v5.8b, #75                     \n"  // G * 0.58700 coefficient
+      "movi       v6.8b, #38                     \n"  // R * 0.29900 coefficient
+      "1:                                        \n"
+      "ld4        {v0.8b,v1.8b,v2.8b,v3.8b}, [%0], #32 \n"  // load 8 RGBA
+      "subs       %w2, %w2, #8                   \n"  // 8 processed per loop.
+      "umull      v0.8h, v1.8b, v4.8b            \n"  // B
+      "umlal      v0.8h, v2.8b, v5.8b            \n"  // G
+      "umlal      v0.8h, v3.8b, v6.8b            \n"  // R
+      "sqrshrun   v3.8b, v0.8h, #7               \n"  // 15 bit to 8 bit Y
+      "st1        {v3.8b}, [%1], #8              \n"  // store 8 pixels Y.
+      "b.gt       1b                             \n"
+      : "+r"(src_argb),  // %0
+        "+r"(dst_y),     // %1
+        "+r"(width)      // %2
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6");
+}
+
 // 8x1 pixels.
 void ARGBToUV444Row_NEON(const uint8_t* src_argb,
                          uint8_t* dst_u,
