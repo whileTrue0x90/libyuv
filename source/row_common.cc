@@ -382,7 +382,9 @@ void ARGBToAR30Row_C(const uint8_t* src_argb, uint8_t* dst_ar30, int width) {
 }
 
 static __inline int RGBToY(uint8_t r, uint8_t g, uint8_t b) {
-  return (66 * r + 129 * g + 25 * b + 0x1080) >> 8;
+  return (66 * (int)r + 129 * (int)g + 25 * (int)b + 0x1080) >> 8;
+
+//  return (66 * ((int)r - 128) + 129 * ((int)g - 128) + 25 * ((int)b - 128) + 0x7e80) >> 8;
 }
 
 static __inline int RGBToU(uint8_t r, uint8_t g, uint8_t b) {
@@ -448,14 +450,10 @@ MAKEROWY(RAW, 0, 1, 2, 3)
 // b 0.1016 * 255 = 25.908 = 25
 // g 0.5078 * 255 = 129.489 = 129
 // r 0.2578 * 255 = 65.739 = 66
-// JPeg 8 bit Y (not used):
+// JPeg 8 bit Y:
 // b 0.11400 * 256 = 29.184 = 29
 // g 0.58700 * 256 = 150.272 = 150
 // r 0.29900 * 256 = 76.544 = 77
-// JPeg 7 bit Y:
-// b 0.11400 * 128 = 14.592 = 15
-// g 0.58700 * 128 = 75.136 = 75
-// r 0.29900 * 128 = 38.272 = 38
 // JPeg 8 bit U:
 // b  0.50000 * 255 = 127.5 = 127
 // g -0.33126 * 255 = -84.4713 = -84
@@ -466,7 +464,7 @@ MAKEROWY(RAW, 0, 1, 2, 3)
 // r  0.50000 * 255 = 127.5 = 127
 
 static __inline int RGBToYJ(uint8_t r, uint8_t g, uint8_t b) {
-  return (38 * r + 75 * g + 15 * b + 64) >> 7;
+  return (77 * r + 150 * g + 29 * b + 128) >> 8;
 }
 
 static __inline int RGBToUJ(uint8_t r, uint8_t g, uint8_t b) {
@@ -516,6 +514,7 @@ static __inline int RGBToVJ(uint8_t r, uint8_t g, uint8_t b) {
   }
 
 MAKEROWYJ(ARGB, 2, 1, 0, 4)
+MAKEROWYJ(RGBA, 3, 2, 1, 4)
 #undef MAKEROWYJ
 
 void RGB565ToYRow_C(const uint8_t* src_rgb565, uint8_t* dst_y, int width) {

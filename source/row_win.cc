@@ -126,8 +126,8 @@ void I422AlphaToARGBRow_SSSE3(const uint8_t* y_buf,
 #ifdef HAS_ARGBTOYROW_SSSE3
 
 // Constants for ARGB.
-static const vec8 kARGBToY = {13, 65, 33, 0, 13, 65, 33, 0,
-                              13, 65, 33, 0, 13, 65, 33, 0};
+static const vec8 kARGBToY = {25u, 129u, 66u, 0u, 25u, 129u, 66u, 0u,
+                              25u, 129u, 66u, 0u, 25u, 129u, 66u, 0u};
 
 // JPeg full range.
 static const vec8 kARGBToYJ = {15, 75, 38, 0, 15, 75, 38, 0,
@@ -152,8 +152,8 @@ static const lvec8 kShufARGBToUV_AVX = {
     0, 1, 8, 9, 2, 3, 10, 11, 4, 5, 12, 13, 6, 7, 14, 15};
 
 // Constants for BGRA.
-static const vec8 kBGRAToY = {0, 33, 65, 13, 0, 33, 65, 13,
-                              0, 33, 65, 13, 0, 33, 65, 13};
+static const vec8 kBGRAToY = {0u, 66u, 129u, 25u, 0u, 66u, 129u, 25u,
+                              0u, 66u, 129u, 25u, 0u, 66u, 129u, 25u};
 
 static const vec8 kBGRAToU = {0, -38, -74, 112, 0, -38, -74, 112,
                               0, -38, -74, 112, 0, -38, -74, 112};
@@ -162,8 +162,8 @@ static const vec8 kBGRAToV = {0, 112, -94, -18, 0, 112, -94, -18,
                               0, 112, -94, -18, 0, 112, -94, -18};
 
 // Constants for ABGR.
-static const vec8 kABGRToY = {33, 65, 13, 0, 33, 65, 13, 0,
-                              33, 65, 13, 0, 33, 65, 13, 0};
+static const vec8 kABGRToY = {66u, 129u, 25u, 0u, 66u, 129u, 25u, 0u,
+                              66u, 129u, 25u, 0u, 66u, 129u, 25u, 0u};
 
 static const vec8 kABGRToU = {-38, -74, 112, 0, -38, -74, 112, 0,
                               -38, -74, 112, 0, -38, -74, 112, 0};
@@ -172,8 +172,8 @@ static const vec8 kABGRToV = {112, -94, -18, 0, 112, -94, -18, 0,
                               112, -94, -18, 0, 112, -94, -18, 0};
 
 // Constants for RGBA.
-static const vec8 kRGBAToY = {0, 13, 65, 33, 0, 13, 65, 33,
-                              0, 13, 65, 33, 0, 13, 65, 33};
+static const vec8 kRGBAToY = {0u, 25u, 129u, 66u, 0u, 25u, 129u, 66u,
+                              0u, 25u, 129u, 66u, 0u, 25u, 129u, 66u};
 
 static const vec8 kRGBAToU = {0, 112, -74, -38, 0, 112, -74, -38,
                               0, 112, -74, -38, 0, 112, -74, -38};
