@@ -1246,16 +1246,37 @@ void ARGBExtractAlphaRow_NEON(const uint8_t* src_argb,
 
 void ARGBToYJRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
   asm volatile(
-      "vmov.u8    d24, #15                       \n"  // B * 0.11400 coefficient
-      "vmov.u8    d25, #75                       \n"  // G * 0.58700 coefficient
-      "vmov.u8    d26, #38                       \n"  // R * 0.29900 coefficient
+      "vmov.u8    d24, #29                       \n"  // B * 0.11400 coefficient
+      "vmov.u8    d25, #150                      \n"  // G * 0.58700 coefficient
+      "vmov.u8    d26, #77                       \n"  // R * 0.29900 coefficient
       "1:                                        \n"
       "vld4.8     {d0, d1, d2, d3}, [%0]!        \n"  // load 8 ARGB pixels.
       "subs       %2, %2, #8                     \n"  // 8 processed per loop.
       "vmull.u8   q2, d0, d24                    \n"  // B
       "vmlal.u8   q2, d1, d25                    \n"  // G
       "vmlal.u8   q2, d2, d26                    \n"  // R
-      "vqrshrun.s16 d0, q2, #7                   \n"  // 15 bit to 8 bit Y
+      "vqrshrn.u16 d0, q2, #8                    \n"  // 16 bit to 8 bit Y
+      "vst1.8     {d0}, [%1]!                    \n"  // store 8 pixels Y.
+      "bgt        1b                             \n"
+      : "+r"(src_argb),  // %0
+        "+r"(dst_y),     // %1
+        "+r"(width)      // %2
+      :
+      : "cc", "memory", "q0", "q1", "q2", "q12", "q13");
+}
+
+void RGBAToYJRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
+  asm volatile(
+      "vmov.u8    d24, #29                       \n"  // B * 0.11400 coefficient
+      "vmov.u8    d25, #150                      \n"  // G * 0.58700 coefficient
+      "vmov.u8    d26, #77                       \n"  // R * 0.29900 coefficient
+      "1:                                        \n"
+      "vld4.8     {d0, d1, d2, d3}, [%0]!        \n"  // load 8 RGBA pixels.
+      "subs       %2, %2, #8                     \n"  // 8 processed per loop.
+      "vmull.u8   q2, d1, d24                    \n"  // B
+      "vmlal.u8   q2, d2, d25                    \n"  // G
+      "vmlal.u8   q2, d3, d26                    \n"  // R
+      "vqrshrn.u16 d0, q2, #8                    \n"  // 16 bit to 8 bit Y
       "vst1.8     {d0}, [%1]!                    \n"  // store 8 pixels Y.
       "bgt        1b                             \n"
       : "+r"(src_argb),  // %0
@@ -2251,19 +2272,19 @@ void ARGBShadeRow_NEON(const uint8_t* src_argb,
 
 // Convert 8 ARGB pixels (64 bytes) to 8 Gray ARGB pixels
 // Similar to ARGBToYJ but stores ARGB.
-// C code is (15 * b + 75 * g + 38 * r + 64) >> 7;
+// C code is (29 * b + 150 * g + 77 * r + 128) >> 8;
 void ARGBGrayRow_NEON(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
   asm volatile(
-      "vmov.u8    d24, #15                       \n"  // B * 0.11400 coefficient
-      "vmov.u8    d25, #75                       \n"  // G * 0.58700 coefficient
-      "vmov.u8    d26, #38                       \n"  // R * 0.29900 coefficient
+      "vmov.u8    d24, #29                       \n"  // B * 0.11400 coefficient
+      "vmov.u8    d25, #150                      \n"  // G * 0.58700 coefficient
+      "vmov.u8    d26, #77                       \n"  // R * 0.29900 coefficient
       "1:                                        \n"
       "vld4.8     {d0, d1, d2, d3}, [%0]!        \n"  // load 8 ARGB pixels.
       "subs       %2, %2, #8                     \n"  // 8 processed per loop.
       "vmull.u8   q2, d0, d24                    \n"  // B
       "vmlal.u8   q2, d1, d25                    \n"  // G
       "vmlal.u8   q2, d2, d26                    \n"  // R
-      "vqrshrun.s16 d0, q2, #7                   \n"  // 15 bit to 8 bit B
+      "vqrshrn.u16 d0, q2, #8                    \n"  // 16 bit to 8 bit B
       "vmov       d1, d0                         \n"  // G
       "vmov       d2, d0                         \n"  // R
       "vst4.8     {d0, d1, d2, d3}, [%1]!        \n"  // store 8 ARGB pixels.

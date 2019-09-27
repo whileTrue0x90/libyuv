@@ -1303,17 +1303,38 @@ void ARGBExtractAlphaRow_NEON(const uint8_t* src_argb,
 
 void ARGBToYJRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
   asm volatile(
-      "movi       v4.8b, #15                     \n"  // B * 0.11400 coefficient
-      "movi       v5.8b, #75                     \n"  // G * 0.58700 coefficient
-      "movi       v6.8b, #38                     \n"  // R * 0.29900 coefficient
+      "movi       v4.8b, #29                     \n"  // B * 0.11400 coefficient
+      "movi       v5.8b, #150                    \n"  // G * 0.58700 coefficient
+      "movi       v6.8b, #77                     \n"  // R * 0.29900 coefficient
       "1:                                        \n"
       "ld4        {v0.8b,v1.8b,v2.8b,v3.8b}, [%0], #32 \n"  // load 8 ARGB
       "subs       %w2, %w2, #8                   \n"  // 8 processed per loop.
       "umull      v3.8h, v0.8b, v4.8b            \n"  // B
       "umlal      v3.8h, v1.8b, v5.8b            \n"  // G
       "umlal      v3.8h, v2.8b, v6.8b            \n"  // R
-      "sqrshrun   v0.8b, v3.8h, #7               \n"  // 15 bit to 8 bit Y
+      "uqrshrn    v0.8b, v3.8h, #8               \n"  // 16 bit to 8 bit Y
       "st1        {v0.8b}, [%1], #8              \n"  // store 8 pixels Y.
+      "b.gt       1b                             \n"
+      : "+r"(src_argb),  // %0
+        "+r"(dst_y),     // %1
+        "+r"(width)      // %2
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6");
+}
+
+void RGBAToYJRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
+  asm volatile(
+      "movi       v4.8b, #29                     \n"  // B * 0.11400 coefficient
+      "movi       v5.8b, #150                    \n"  // G * 0.58700 coefficient
+      "movi       v6.8b, #77                     \n"  // R * 0.29900 coefficient
+      "1:                                        \n"
+      "ld4        {v0.8b,v1.8b,v2.8b,v3.8b}, [%0], #32 \n"  // load 8 RGBA
+      "subs       %w2, %w2, #8                   \n"  // 8 processed per loop.
+      "umull      v0.8h, v1.8b, v4.8b            \n"  // B
+      "umlal      v0.8h, v2.8b, v5.8b            \n"  // G
+      "umlal      v0.8h, v3.8b, v6.8b            \n"  // R
+      "uqrshrn    v3.8b, v0.8h, #8               \n"  // 16 bit to 8 bit Y
+      "st1        {v3.8b}, [%1], #8              \n"  // store 8 pixels Y.
       "b.gt       1b                             \n"
       : "+r"(src_argb),  // %0
         "+r"(dst_y),     // %1
@@ -2292,19 +2313,19 @@ void ARGBShadeRow_NEON(const uint8_t* src_argb,
 
 // Convert 8 ARGB pixels (64 bytes) to 8 Gray ARGB pixels
 // Similar to ARGBToYJ but stores ARGB.
-// C code is (15 * b + 75 * g + 38 * r + 64) >> 7;
+// C code is (29 * b + 150 * g + 77 * r + 128) >> 8;
 void ARGBGrayRow_NEON(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
   asm volatile(
-      "movi       v24.8b, #15                    \n"  // B * 0.11400 coefficient
-      "movi       v25.8b, #75                    \n"  // G * 0.58700 coefficient
-      "movi       v26.8b, #38                    \n"  // R * 0.29900 coefficient
+      "movi       v24.8b, #29                    \n"  // B * 0.11400 coefficient
+      "movi       v25.8b, #150                   \n"  // G * 0.58700 coefficient
+      "movi       v26.8b, #77                    \n"  // R * 0.29900 coefficient
       "1:                                        \n"
       "ld4        {v0.8b,v1.8b,v2.8b,v3.8b}, [%0], #32 \n"  // load 8 ARGB
       "subs       %w2, %w2, #8                   \n"  // 8 processed per loop.
       "umull      v4.8h, v0.8b, v24.8b           \n"  // B
       "umlal      v4.8h, v1.8b, v25.8b           \n"  // G
       "umlal      v4.8h, v2.8b, v26.8b           \n"  // R
-      "sqrshrun   v0.8b, v4.8h, #7               \n"  // 15 bit to 8 bit B
+      "uqrshrn    v0.8b, v4.8h, #8               \n"  // 16 bit to 8 bit B
       "orr        v1.8b, v0.8b, v0.8b            \n"  // G
       "orr        v2.8b, v0.8b, v0.8b            \n"  // R
       "st4        {v0.8b,v1.8b,v2.8b,v3.8b}, [%1], #32 \n"  // store 8 pixels.
