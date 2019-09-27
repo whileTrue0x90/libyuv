@@ -123,15 +123,33 @@ void I422AlphaToARGBRow_SSSE3(const uint8_t* y_buf,
 
 // 32 bit
 #else  // defined(_M_X64)
-#ifdef HAS_ARGBTOYROW_SSSE3
-
-// Constants for ARGB.
-static const vec8 kARGBToY = {13, 65, 33, 0, 13, 65, 33, 0,
-                              13, 65, 33, 0, 13, 65, 33, 0};
 
 // JPeg full range.
 static const vec8 kARGBToYJ = {15, 75, 38, 0, 15, 75, 38, 0,
                                15, 75, 38, 0, 15, 75, 38, 0};
+// 7 bit fixed point 0.5.
+static const vec16 kAddYJ64 = {64, 64, 64, 64, 64, 64, 64, 64};
+
+#ifdef HAS_ARGBTOYROW_SSSE3
+
+// Constants for ARGB.
+static const vec8 kARGBToY = {25u, 129u, 66u, 0u, 25u, 129u, 66u, 0u,
+                              25u, 129u, 66u, 0u, 25u, 129u, 66u, 0u};
+
+// JPeg full range.
+static const vec8 kARGBToYJ = {15, 75, 38, 0, 15, 75, 38, 0,
+                               15, 75, 38, 0, 15, 75, 38, 0};
+static const vec8 kBGRAToY = {0u, 66u, 129u, 25u, 0u, 66u, 129u, 25u,
+                              0u, 66u, 129u, 25u, 0u, 66u, 129u, 25u};
+static const vec8 kABGRToY = {66u, 129u, 25u, 0u, 66u, 129u, 25u, 0u,
+                              66u, 129u, 25u, 0u, 66u, 129u, 25u, 0u};
+static const vec8 kRGBAToY = {0u, 25u, 129u, 66u, 0u, 25u, 129u, 66u,
+                              0u, 25u, 129u, 66u, 0u, 25u, 129u, 66u};
+
+static const uvec8 kAddY16 = {16u, 16u, 16u, 16u, 16u, 16u, 16u, 16u,
+                              16u, 16u, 16u, 16u, 16u, 16u, 16u, 16u};
+
+#endif  // HAS_ARGBTOYROW_SSSE3
 
 static const vec8 kARGBToU = {112, -74, -38, 0, 112, -74, -38, 0,
                               112, -74, -38, 0, 112, -74, -38, 0};
@@ -152,8 +170,6 @@ static const lvec8 kShufARGBToUV_AVX = {
     0, 1, 8, 9, 2, 3, 10, 11, 4, 5, 12, 13, 6, 7, 14, 15};
 
 // Constants for BGRA.
-static const vec8 kBGRAToY = {0, 33, 65, 13, 0, 33, 65, 13,
-                              0, 33, 65, 13, 0, 33, 65, 13};
 
 static const vec8 kBGRAToU = {0, -38, -74, 112, 0, -38, -74, 112,
                               0, -38, -74, 112, 0, -38, -74, 112};
@@ -162,8 +178,6 @@ static const vec8 kBGRAToV = {0, 112, -94, -18, 0, 112, -94, -18,
                               0, 112, -94, -18, 0, 112, -94, -18};
 
 // Constants for ABGR.
-static const vec8 kABGRToY = {33, 65, 13, 0, 33, 65, 13, 0,
-                              33, 65, 13, 0, 33, 65, 13, 0};
 
 static const vec8 kABGRToU = {-38, -74, 112, 0, -38, -74, 112, 0,
                               -38, -74, 112, 0, -38, -74, 112, 0};
@@ -172,20 +186,12 @@ static const vec8 kABGRToV = {112, -94, -18, 0, 112, -94, -18, 0,
                               112, -94, -18, 0, 112, -94, -18, 0};
 
 // Constants for RGBA.
-static const vec8 kRGBAToY = {0, 13, 65, 33, 0, 13, 65, 33,
-                              0, 13, 65, 33, 0, 13, 65, 33};
 
 static const vec8 kRGBAToU = {0, 112, -74, -38, 0, 112, -74, -38,
                               0, 112, -74, -38, 0, 112, -74, -38};
 
 static const vec8 kRGBAToV = {0, -18, -94, 112, 0, -18, -94, 112,
                               0, -18, -94, 112, 0, -18, -94, 112};
-
-static const uvec8 kAddY16 = {16u, 16u, 16u, 16u, 16u, 16u, 16u, 16u,
-                              16u, 16u, 16u, 16u, 16u, 16u, 16u, 16u};
-
-// 7 bit fixed point 0.5.
-static const vec16 kAddYJ64 = {64, 64, 64, 64, 64, 64, 64, 64};
 
 static const uvec8 kAddUV128 = {128u, 128u, 128u, 128u, 128u, 128u, 128u, 128u,
                                 128u, 128u, 128u, 128u, 128u, 128u, 128u, 128u};
@@ -248,11 +254,8 @@ static const lvec8 kShuffleUYVYUV = {0,  2,  0,  2,  4,  6,  4,  6,  8,  10, 8,
                                      10, 12, 14, 12, 14, 0,  2,  0,  2,  4,  6,
                                      4,  6,  8,  10, 8,  10, 12, 14, 12, 14};
 
-// NV21 shuf 8 VU to 16 UV.
-static const lvec8 kShuffleNV21 = {
-    1, 0, 1, 0, 3, 2, 3, 2, 5, 4, 5, 4, 7, 6, 7, 6,
-    1, 0, 1, 0, 3, 2, 3, 2, 5, 4, 5, 4, 7, 6, 7, 6,
-};
+// vpermd for vphaddw + vpackuswb vpermd.
+static const lvec32 kPermdARGBToY_AVX = {0, 4, 1, 5, 2, 6, 3, 7};
 
 // Duplicates gray value 3 times and fills in alpha opaque.
 __declspec(naked) void J400ToARGBRow_SSE2(const uint8_t* src_y,
@@ -1108,6 +1111,9 @@ __declspec(naked) void ARGBToARGB4444Row_AVX2(const uint8_t* src_argb,
 }
 #endif  // HAS_ARGBTOARGB4444ROW_AVX2
 
+#ifdef HAS_ARGBTOYROW_SSSE3
+
+// Obsolete.  This is old 7 bit non-rounding.
 // Convert 16 ARGB pixels (64 bytes) to 16 Y values.
 __declspec(naked) void ARGBToYRow_SSSE3(const uint8_t* src_argb,
                                         uint8_t* dst_y,
@@ -1181,8 +1187,6 @@ __declspec(naked) void ARGBToYJRow_SSSE3(const uint8_t* src_argb,
 }
 
 #ifdef HAS_ARGBTOYROW_AVX2
-// vpermd for vphaddw + vpackuswb vpermd.
-static const lvec32 kPermdARGBToY_AVX = {0, 4, 1, 5, 2, 6, 3, 7};
 
 // Convert 32 ARGB pixels (128 bytes) to 32 Y values.
 __declspec(naked) void ARGBToYRow_AVX2(const uint8_t* src_argb,
@@ -1366,6 +1370,8 @@ __declspec(naked) void RGBAToYRow_SSSE3(const uint8_t* src_argb,
     ret
   }
 }
+
+#endif  // HAS_ARGBTOYROW_SSSE3
 
 __declspec(naked) void ARGBToUVRow_SSSE3(const uint8_t* src_argb0,
                                          int src_stride_argb,
@@ -1922,7 +1928,12 @@ __declspec(naked) void RGBAToUVRow_SSSE3(const uint8_t* src_argb0,
     ret
   }
 }
-#endif  // HAS_ARGBTOYROW_SSSE3
+
+// NV21 shuf 8 VU to 16 UV.
+static const lvec8 kShuffleNV21 = {
+    1, 0, 1, 0, 3, 2, 3, 2, 5, 4, 5, 4, 7, 6, 7, 6,
+    1, 0, 1, 0, 3, 2, 3, 2, 5, 4, 5, 4, 7, 6, 7, 6,
+};
 
 // Read 16 UV from 444
 #define READYUV444_AVX2 \
