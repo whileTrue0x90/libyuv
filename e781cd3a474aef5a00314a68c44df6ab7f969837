@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8db5ac9_5807799a",
+        "filename": "docs/formats.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2019-10-28T22:31:44Z",
+      "side": 1,
+      "message": "Consider H210, H410, U210 and U410 while we\u0027re at it.",
+      "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab7e85d_df25225a",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2019-10-28T22:31:44Z",
+      "side": 1,
+      "message": "in the end you only used AB30?   if so we can skip the AR30 versions",
+      "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995dec2d_527a9909",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2019-10-28T22:31:44Z",
+      "side": 1,
+      "message": "off by 7% - add todo to improve accuracy on B channel",
+      "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
