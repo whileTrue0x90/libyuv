@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a53b43c_2256e6d9",
+        "filename": "docs/formats.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2019-10-29T19:31:36Z",
+      "side": 1,
+      "message": "Will add these in a followup patch set.",
+      "parentUuid": "c8db5ac9_5807799a",
+      "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab7e85d_df25225a",
         "filename": "source/convert_argb.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d4dc8e28_138ab001",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2019-10-29T19:31:36Z",
+      "side": 1,
+      "message": "We use either AR30 or AB30 depending on the platform.",
+      "parentUuid": "2ab7e85d_df25225a",
+      "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "995dec2d_527a9909",
         "filename": "source/row_common.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c5ecbe_055976e2",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2019-10-29T19:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "995dec2d_527a9909",
+      "revId": "e781cd3a474aef5a00314a68c44df6ab7f969837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
