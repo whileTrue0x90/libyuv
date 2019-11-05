@@ -567,6 +567,19 @@ int H010ToAR30(const uint16_t* src_y,
                int width,
                int height);
 
+// Convert U010 to AR30.
+LIBYUV_API
+int U010ToAR30(const uint16_t* src_y,
+               int src_stride_y,
+               const uint16_t* src_u,
+               int src_stride_u,
+               const uint16_t* src_v,
+               int src_stride_v,
+               uint8_t* dst_ar30,
+               int dst_stride_ar30,
+               int width,
+               int height);
+
 // Convert I010 to AB30.
 LIBYUV_API
 int I010ToAB30(const uint16_t* src_y,
@@ -583,6 +596,19 @@ int I010ToAB30(const uint16_t* src_y,
 // Convert H010 to AB30.
 LIBYUV_API
 int H010ToAB30(const uint16_t* src_y,
+               int src_stride_y,
+               const uint16_t* src_u,
+               int src_stride_u,
+               const uint16_t* src_v,
+               int src_stride_v,
+               uint8_t* dst_ab30,
+               int dst_stride_ab30,
+               int width,
+               int height);
+
+// Convert U010 to AB30.
+LIBYUV_API
+int U010ToAB30(const uint16_t* src_y,
                int src_stride_y,
                const uint16_t* src_u,
                int src_stride_u,
