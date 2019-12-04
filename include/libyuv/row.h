@@ -601,6 +601,7 @@ extern "C" {
 #endif
 typedef __declspec(align(16)) int16_t vec16[8];
 typedef __declspec(align(16)) int32_t vec32[4];
+typedef __declspec(align(16)) float vecf32[4];
 typedef __declspec(align(16)) int8_t vec8[16];
 typedef __declspec(align(16)) uint16_t uvec16[8];
 typedef __declspec(align(16)) uint32_t uvec32[4];
@@ -620,6 +621,7 @@ typedef __declspec(align(32)) uint8_t ulvec8[32];
 #endif
 typedef int16_t __attribute__((vector_size(16))) vec16;
 typedef int32_t __attribute__((vector_size(16))) vec32;
+typedef float __attribute__((vector_size(16))) vecf32;
 typedef int8_t __attribute__((vector_size(16))) vec8;
 typedef uint16_t __attribute__((vector_size(16))) uvec16;
 typedef uint32_t __attribute__((vector_size(16))) uvec32;
@@ -634,6 +636,7 @@ typedef uint8_t __attribute__((vector_size(32))) ulvec8;
 #define SIMD_ALIGNED(var) var
 typedef int16_t vec16[8];
 typedef int32_t vec32[4];
+typedef float vecf32[4];
 typedef int8_t vec8[16];
 typedef uint16_t uvec16[8];
 typedef uint32_t uvec32[4];
