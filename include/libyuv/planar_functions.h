@@ -725,7 +725,6 @@ int ARGBComputeCumulativeSum(const uint8_t* src_argb,
                              int dst_stride32_cumsum,
                              int width,
                              int height);
-
 // Blur ARGB image.
 // dst_cumsum table of width * (height + 1) * 16 bytes aligned to
 //   16 byte boundary.
@@ -742,6 +741,19 @@ int ARGBBlur(const uint8_t* src_argb,
              int width,
              int height,
              int radius);
+
+// Gaussian 5x5 blur a float plane.
+// Coefficients of 1, 4, 6, 4, 1.
+// Each destination pixel is a blur of the 5x5
+// pixels from the source.
+// Source edges are clamped.
+LIBYUV_API
+int GaussPlane_F32(const float* src,
+                   int src_stride,
+                   float* dst,
+                   int dst_stride,
+                   int width,
+                   int height);
 
 // Multiply ARGB image by ARGB value.
 LIBYUV_API
