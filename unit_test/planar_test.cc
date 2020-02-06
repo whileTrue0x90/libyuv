@@ -22,6 +22,7 @@
 #include "libyuv/planar_functions.h"
 #include "libyuv/rotate.h"
 
+#define ENABLE_ROW_TESTS 1
 #ifdef ENABLE_ROW_TESTS
 // row.h defines SIMD_ALIGNED, overriding unit_test.h
 // TODO(fbarchard): Remove row.h from unittests.  Test public functions.
