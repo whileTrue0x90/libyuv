@@ -1101,6 +1101,7 @@ void ABGRToAR30Row_AVX2(const uint8_t* src, uint8_t* dst, int width) {
   "lea       0x40(%0),%0                     \n" \
   "phaddw    %%xmm0,%%xmm6                   \n" \
   "phaddw    %%xmm2,%%xmm1                   \n" \
+  "prefetcht0 2560(%0)                        \n" \
   "paddw     %%" #round ",%%xmm6             \n" \
   "paddw     %%" #round ",%%xmm1             \n" \
   "psrlw     $0x8,%%xmm6                     \n" \
@@ -1128,6 +1129,7 @@ void ABGRToAR30Row_AVX2(const uint8_t* src, uint8_t* dst, int width) {
   "lea       0x80(%0),%0                     \n"                            \
   "vphaddw    %%ymm1,%%ymm0,%%ymm0           \n" /* mutates. */             \
   "vphaddw    %%ymm3,%%ymm2,%%ymm2           \n"                            \
+  "prefetcht0 2560(%0)                        \n"                            \
   "vpaddw     %%" #round ",%%ymm0,%%ymm0     \n" /* Add .5 for rounding. */ \
   "vpaddw     %%" #round ",%%ymm2,%%ymm2     \n"                            \
   "vpsrlw     $0x8,%%ymm0,%%ymm0             \n"                            \
