@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "046ca284_5f4493f5",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-02-25T13:33:45Z",
+      "side": 1,
+      "message": "changes here wil invalidate the runtime check.\nprevious: msa/mmi can be enabled only when both build and runtime checks passed.\nnow: msa/mmi will be enabled  if any one of build and runtime checks passed.",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 6
+      },
+      "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
