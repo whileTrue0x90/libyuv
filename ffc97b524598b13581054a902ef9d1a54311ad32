@@ -46,6 +46,30 @@
       "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cb90ea_958de382",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-02-25T14:06:46Z",
+      "side": 1,
+      "message": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n[yinsy@localhost ~]$ gcc -dM -E - \u003c/dev/null | grep msa\n[yinsy@localhost ~]$ gcc -mmsa -dM -E - \u003c/dev/null | grep msa\n#define __mips_msa 1\n#define __mips_msa_width 128\n[yinsy@localhost ~]$ cat /proc/cpuinfo | grep \"ASEs implemented\"\nASEs implemented\t: vz msa\nASEs implemented\t: vz msa\nASEs implemented\t: vz msa\nASEs implemented\t: vz msa\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nIf baseline cflags has no -mmsa, the previous code will not to check cpuinfo, but now it will. For reference only, I havn\u0027t tested yet.",
+      "parentUuid": "fcb197e3_81384f7d",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 6
+      },
+      "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
