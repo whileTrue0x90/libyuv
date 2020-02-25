@@ -65,7 +65,7 @@ int TestCpuEnv(int cpu_info) {
     cpu_info &= ~libyuv::kCpuHasNEON;
   }
 #endif
-#if defined(__mips__) && defined(__linux__)
+#if defined(__mips__)
   if (TestEnv("LIBYUV_DISABLE_MSA")) {
     cpu_info &= ~libyuv::kCpuHasMSA;
   }

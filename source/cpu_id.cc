@@ -164,43 +164,39 @@ LIBYUV_API SAFEBUFFERS int ArmCpuCaps(const char* cpuinfo_name) {
 
 // TODO(fbarchard): Consider read_msa_ir().
 // TODO(fbarchard): Add unittest.
-LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name,
-                                       const char ase[]) {
+LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name) {
   char cpuinfo_line[512];
+  int flag = 0x0;
+  char* p;
   FILE* f = fopen(cpuinfo_name, "r");
   if (!f) {
-    // ase enabled if /proc/cpuinfo is unavailable.
-    if (strcmp(ase, " msa") == 0) {
-      return kCpuHasMSA;
-    }
-    if (strcmp(ase, " mmi") == 0) {
-      return kCpuHasMMI;
-    }
+    // Assume nothing if /proc/cpuinfo is unavailable.
+    // This will occur for Chrome sandbox for Pepper or Render process.
     return 0;
   }
   while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+    if (memcmp(cpuinfo_line, "cpu model", 9) == 0) {
+      // Workaround early kernel without mmi in ASEs line.
+      p = strstr(cpuinfo_line, "Loongson-3");
+      if (p) {
+        flag |= kCpuHasMMI;
+      }
+    }
     if (memcmp(cpuinfo_line, "ASEs implemented", 16) == 0) {
-      char* p = strstr(cpuinfo_line, ase);
+      p = strstr(cpuinfo_line, " msa");
       if (p) {
-        fclose(f);
-        if (strcmp(ase, " msa") == 0) {
-          return kCpuHasMSA;
-        }
-        return 0;
+        flag |= kCpuHasMSA;
       }
-    } else if (memcmp(cpuinfo_line, "cpu model", 9) == 0) {
-      char* p = strstr(cpuinfo_line, "Loongson-3");
+      p = strstr(cpuinfo_line, " loongson-mmi");
       if (p) {
-        fclose(f);
-        if (strcmp(ase, " mmi") == 0) {
-          return kCpuHasMMI;
-        }
-        return 0;
+        flag |= kCpuHasMMI;
       }
+      // ASEs is the last line, so we can break here.
+      break;
     }
   }
   fclose(f);
-  return 0;
+  return flag;
 }
 
 static SAFEBUFFERS int GetCpuFlags(void) {
@@ -241,13 +237,17 @@ static SAFEBUFFERS int GetCpuFlags(void) {
     }
   }
 #endif
-#if defined(__mips__) && defined(__linux__)
-#if defined(__mips_msa)
-  cpu_info = MipsCpuCaps("/proc/cpuinfo", " msa");
-#elif defined(_MIPS_ARCH_LOONGSON3A)
-  cpu_info = MipsCpuCaps("/proc/cpuinfo", " mmi");
+#if defined(__mips__)
+  cpu_info = kCpuHasMIPS;
+#if defined(_MIPS_ARCH_LOONGSON3A)
+  cpu_info |= kCpuHasMMI;
 #endif
-  cpu_info |= kCpuHasMIPS;
+#if defined (__mips_msa)
+  cpu_info |= kCpuHasMSA;
+#endif
+#if defined(__linux__)
+  cpu_info |= MipsCpuCaps("/proc/cpuinfo");
+#endif
 #endif
 #if defined(__arm__) || defined(__aarch64__)
 // gcc -mfpu=neon defines __ARM_NEON__
