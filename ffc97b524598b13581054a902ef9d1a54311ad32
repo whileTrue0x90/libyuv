@@ -22,6 +22,30 @@
       "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb197e3_81384f7d",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1314732
+      },
+      "writtenOn": "2020-02-25T13:43:52Z",
+      "side": 1,
+      "message": "That\u0027s expected behavior.\ncpu_id.cc is compiled with the baseline cflag, if the baseline indicated it support MSA/MMI, then we don\u0027t have to doubt it.\n\nThat\u0027s why in lines below, #if defined(__ARM_NEON__) will mark cpu_info \u003d kCpuHasNEON.",
+      "parentUuid": "046ca284_5f4493f5",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 6
+      },
+      "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
