@@ -70,6 +70,30 @@
       "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665d3add_1e3ee54a",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-02-28T01:05:09Z",
+      "side": 1,
+      "message": "Caveat if you compile with -mmsa this enables MSA for all code as a requirement and you should expect a failure of the code is run on a device without MSA.\nOn Neon this was done mostly for the benefit of chromium sandbox, which prevents reading the file /proc/cpuinfo.  Since neon is available on all modern devices, it is enabled by default with the compile flag.\nIf libyuv is compiled without neon, it can still attempt to detect neon via /proc/cpuinfo.\nOn Intel the cpuid can be read without sandbox restrictions.\nIt would be better in the future to find a sandbox friendly way to detect cpu instruction extensions.",
+      "parentUuid": "40cb90ea_958de382",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 6
+      },
+      "revId": "ffc97b524598b13581054a902ef9d1a54311ad32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
