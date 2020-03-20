@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b515b27e_c794ef28",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1405684
+      },
+      "writtenOn": "2020-03-20T22:41:13Z",
+      "side": 1,
+      "message": "I know we up the version when change the code in google3. Why not only change it when we need to update the public codebase?",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "6321c5d88fa88520b8acdd0c4168783b9766c5a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
