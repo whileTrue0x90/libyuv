@@ -22,6 +22,30 @@
       "revId": "6321c5d88fa88520b8acdd0c4168783b9766c5a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcf7575_2e79641b",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-03-21T20:20:58Z",
+      "side": 1,
+      "message": "Ack.  In general I always update the version when there is a code change, but with emphasis on a bump when the public API changes.  This allows user code to ifdef based on the version being new enough to have the new functionality.  In this case, the MirrorPlane function added to the public API.\nIn early chromium we used SVN version control, and a check in automatically updated the version from the SVN revision.\nBut as we move and mirror different version controls, its bumped manually.",
+      "parentUuid": "b515b27e_c794ef28",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "6321c5d88fa88520b8acdd0c4168783b9766c5a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
