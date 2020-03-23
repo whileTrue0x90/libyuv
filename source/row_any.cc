@@ -1197,6 +1197,12 @@ ANY11M(ARGBMirrorRow_Any_MSA, ARGBMirrorRow_MSA, 4, 15)
 #ifdef HAS_ARGBMIRRORROW_MMI
 ANY11M(ARGBMirrorRow_Any_MMI, ARGBMirrorRow_MMI, 4, 1)
 #endif
+#ifdef HAS_RGB24MIRRORROW_SSSE3
+ANY11M(RGB24MirrorRow_Any_SSSE3, RGB24MirrorRow_SSSE3, 3, 15)
+#endif
+#ifdef HAS_RGB24MIRRORROW_NEON
+ANY11M(RGB24MirrorRow_Any_NEON, RGB24MirrorRow_NEON, 3, 15)
+#endif
 #undef ANY11M
 
 // Any 1 plane. (memset)

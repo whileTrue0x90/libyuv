@@ -2065,7 +2065,6 @@ void RAWToYRow_NEON(const uint8_t* src_raw, uint8_t* dst_y, int width) {
       : "cc", "memory", "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "q8");
 }
 
-
 void RGB24ToYJRow_NEON(const uint8_t* src_rgb24, uint8_t* dst_yj, int width) {
   asm volatile(
       "vmov.u8    d4, #29                        \n"  // B * 0.1140 coefficient

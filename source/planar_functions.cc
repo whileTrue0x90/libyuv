@@ -1179,6 +1179,52 @@ int ARGBMirror(const uint8_t* src_argb,
   return 0;
 }
 
+// RGB24 mirror.
+LIBYUV_API
+int RGB24Mirror(const uint8_t* src_rgb24,
+               int src_stride_rgb24,
+               uint8_t* dst_rgb24,
+               int dst_stride_rgb24,
+               int width,
+               int height) {
+  int y;
+  void (*RGB24MirrorRow)(const uint8_t* src, uint8_t* dst, int width) =
+      RGB24MirrorRow_C;
+  if (!src_rgb24 || !dst_rgb24 || width <= 0 || height == 0) {
+    return -1;
+  }
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src_rgb24 = src_rgb24 + (height - 1) * src_stride_rgb24;
+    src_stride_rgb24 = -src_stride_rgb24;
+  }
+#if defined(HAS_RGB24MIRRORROW_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+    RGB24MirrorRow = RGB24MirrorRow_Any_NEON;
+    if (IS_ALIGNED(width, 4)) {
+      RGB24MirrorRow = RGB24MirrorRow_NEON;
+    }
+  }
+#endif
+#if defined(HAS_RGB24MIRRORROW_SSSE3)
+  if (TestCpuFlag(kCpuHasSSSE3)) {
+    RGB24MirrorRow = RGB24MirrorRow_Any_SSSE3;
+    if (IS_ALIGNED(width, 16)) {
+      RGB24MirrorRow = RGB24MirrorRow_SSSE3;
+    }
+  }
+#endif
+
+  // Mirror plane
+  for (y = 0; y < height; ++y) {
+    RGB24MirrorRow(src_rgb24, dst_rgb24, width);
+    src_rgb24 += src_stride_rgb24;
+    dst_rgb24 += dst_stride_rgb24;
+  }
+  return 0;
+}
+
 // Get a blender that optimized for the CPU and pixel count.
 // As there are 6 blenders to choose from, the caller should try to use
 // the same blend function for all pixels if possible.
