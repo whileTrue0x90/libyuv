@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f6aa84_a324cede",
+        "filename": "include/libyuv/convert.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-03-23T10:37:43Z",
+      "side": 0,
+      "message": "This method is defined in convert_jpeg.cc which includes a header needed by the funciton only if HAVE_JPEG is defined (https://cs.chromium.org/chromium/src/third_party/libyuv/source/convert_jpeg.cc?l\u003d14-16\u0026rcl\u003d12f9b5f351256d617a4cf4a071db7da7b673b0a3). Is this a problem?\n\nIIUC MJpegDecoder will not be defined in that case.",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 14
+      },
+      "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
