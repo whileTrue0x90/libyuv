@@ -94,6 +94,30 @@
       "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e1305f_f97f8491",
+        "filename": "include/libyuv/convert.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-03-23T19:03:00Z",
+      "side": 0,
+      "message": "Ack.  The client wont need to define HAVE_JPEG.  But they may need to mimic its behavior.\nThe client that requested the change only runs on the server, so they can simply build against libyuv and call the code unconditionally.\nIf they required some portability they would first need to ifdef their source code to only call it on linux and/or Windows.  And if they care, they could remove the libyuv dependency on platforms that dont support it.\n\nIf they really require this functionality on other platforms, short term they would have to copy the source/function into their project, since there is no fallback.  But that would be bad.  I think it would be better for them to report the link error when that bridge is crossed, and we would look into how to enable the function on additional platforms.\n\nI\u0027m not a blaze expert and its not clear to me how the libyuv_jpeg target is intended to work, but if all jpeg functionality is put into that library, but it is made optional, there should be minimal drawback.\n\nMy general preference is not to find how to make libyuv work well without jpeg, its to make jpeg always available if desired.  Including a future encoder, which people are writing on their own.  Its should be as easy as I420ToJPEG()",
+      "parentUuid": "f8c2d460_1922994a",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 14
+      },
+      "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
