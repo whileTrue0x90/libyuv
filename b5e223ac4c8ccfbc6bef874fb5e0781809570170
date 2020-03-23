@@ -46,6 +46,30 @@
       "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e885d1d_07707a7d",
+        "filename": "include/libyuv/convert.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-03-23T10:50:34Z",
+      "side": 0,
+      "message": "Ok, but don\u0027t client have to use a similar mechanism to call it only when libyuv provides the implementation?\n\nI suspect this will duplicate the logic of defining HAVE_JPEG in clients.\n\nMaybe we should #define LIBYUV_HAVE_JPEG in a libyuv header and tell them to use it?",
+      "parentUuid": "e60624f3_85a42410",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 14
+      },
+      "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
