@@ -22,6 +22,30 @@
       "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60624f3_85a42410",
+        "filename": "include/libyuv/convert.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-03-23T10:46:27Z",
+      "side": 0,
+      "message": "libyuv BUILD file defines HAVE_JPEG depending on the platform, so the library itself will build ok.\nHAVE_JPEG is an internal macro, set by the BUILD file and used when libyuv is built.\nThe user of libyuv is not intended to define it.  But the caller will need to only call the function on platforms where it is supported.\nA better long term solution would be to make the function always available, but only link it in if called.",
+      "parentUuid": "26f6aa84_a324cede",
+      "range": {
+        "startLine": 434,
+        "startChar": 4,
+        "endLine": 434,
+        "endChar": 14
+      },
+      "revId": "b5e223ac4c8ccfbc6bef874fb5e0781809570170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
