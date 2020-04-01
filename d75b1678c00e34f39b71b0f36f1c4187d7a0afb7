@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff53237b_3ddc569d",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-01T04:26:08Z",
+      "side": 1,
+      "message": "Would you be able to add a unittest with sample data, similar to \nTEST_F(LibYUVBaseTest, TestLinuxNeon) {\nunit_test/cpu_test.cc",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a319a10b_a573b57d",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-01T04:26:08Z",
+      "side": 1,
+      "message": "space after //",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 53
+      },
+      "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2537aa35_e7027fbe",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-01T04:26:08Z",
+      "side": 1,
+      "message": "Did you mean || ?",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 89
+      },
+      "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
