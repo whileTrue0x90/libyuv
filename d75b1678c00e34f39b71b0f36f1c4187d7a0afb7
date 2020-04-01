@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87e113b4_15b9b643",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-04-01T05:42:45Z",
+      "side": 1,
+      "message": "okay, will try to add it.",
+      "parentUuid": "ff53237b_3ddc569d",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a319a10b_a573b57d",
         "filename": "source/cpu_id.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2020-04-01T04:26:08Z",
       "side": 1,
       "message": "space after //",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 53
+      },
+      "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a2a3cd_31d7b937",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-04-01T05:42:45Z",
+      "side": 1,
+      "message": "will update.",
+      "parentUuid": "a319a10b_a573b57d",
       "range": {
         "startLine": 172,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52723cb3_6f349a9f",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-04-01T05:42:45Z",
+      "side": 1,
+      "message": "No, loongson mmi optimizations used loongosn extention instructions two.\nSo \u0027\u0026\u0026\u0027 is needed.",
+      "parentUuid": "2537aa35_e7027fbe",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 89
+      },
+      "revId": "d75b1678c00e34f39b71b0f36f1c4187d7a0afb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
