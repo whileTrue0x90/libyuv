@@ -743,7 +743,8 @@ void ARGBMirrorRow_NEON(const uint8_t* src, uint8_t* dst, int width) {
       : "cc", "memory", "q0");
 }
 
-void RGB24MirrorRow_NEON(const uint8_t* src_rgb24, uint8_t* dst_rgb24,
+void RGB24MirrorRow_NEON(const uint8_t* src_rgb24,
+                         uint8_t* dst_rgb24,
                          int width) {
   src_rgb24 += width * 3 - 24;
   asm volatile(
@@ -762,7 +763,8 @@ void RGB24MirrorRow_NEON(const uint8_t* src_rgb24, uint8_t* dst_rgb24,
       : "cc", "memory", "d0", "d1", "d2");
 }
 
-void RGB24ToARGBRow_NEON(const uint8_t* src_rgb24, uint8_t* dst_argb,
+void RGB24ToARGBRow_NEON(const uint8_t* src_rgb24,
+                         uint8_t* dst_argb,
                          int width) {
   asm volatile(
       "vmov.u8    d4, #255                       \n"  // Alpha

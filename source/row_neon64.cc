@@ -786,8 +786,7 @@ void MirrorUVRow_NEON(const uint8_t* src_uv,
       : "cc", "memory", "v0", "v1");
 }
 
-void ARGBMirrorRow_NEON(const uint8_t* src_argb, uint8_t* dst_argb,
-                         int width) {
+void ARGBMirrorRow_NEON(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
   asm volatile(
       "ld1        {v4.16b}, [%4]                 \n"  // shuffler
       "add        %0, %0, %w2, sxtw #2           \n"  // Start at end of row.
@@ -801,15 +800,16 @@ void ARGBMirrorRow_NEON(const uint8_t* src_argb, uint8_t* dst_argb,
       "tbl        v3.16b, {v3.16b}, v4.16b       \n"
       "st4        {v0.16b, v1.16b, v2.16b, v3.16b}, [%1], #64 \n"  // dst += 64
       "b.gt       1b                             \n"
-      : "+r"(src_argb),      // %0
-        "+r"(dst_argb),      // %1
+      : "+r"(src_argb),       // %0
+        "+r"(dst_argb),       // %1
         "+r"(width)           // %2
       : "r"((ptrdiff_t)-64),  // %3
         "r"(&kShuffleMirror)  // %4
       : "cc", "memory", "v0", "v1", "v2", "v3", "v4");
 }
 
-void RGB24MirrorRow_NEON(const uint8_t* src_rgb24, uint8_t* dst_rgb24,
+void RGB24MirrorRow_NEON(const uint8_t* src_rgb24,
+                         uint8_t* dst_rgb24,
                          int width) {
   src_rgb24 += width * 3 - 48;
   asm volatile(
@@ -817,7 +817,7 @@ void RGB24MirrorRow_NEON(const uint8_t* src_rgb24, uint8_t* dst_rgb24,
 
       "1:                                        \n"
       "ld3        {v0.16b, v1.16b, v2.16b}, [%0], %3\n"  // src -= 48
-      "subs       %w2, %w2, #16                  \n"  // 16 pixels per loop.
+      "subs       %w2, %w2, #16                  \n"     // 16 pixels per loop.
       "tbl        v0.16b, {v0.16b}, v3.16b       \n"
       "tbl        v1.16b, {v1.16b}, v3.16b       \n"
       "tbl        v2.16b, {v2.16b}, v3.16b       \n"
