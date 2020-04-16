@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8c9b9a6_009e2762",
+        "filename": "tools_libyuv/ubsan/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-16T19:24:05Z",
+      "side": 1,
+      "message": "fbarchard@chromium.org",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "998a4804f4725913b6c6308c0e06df7abf8cd2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

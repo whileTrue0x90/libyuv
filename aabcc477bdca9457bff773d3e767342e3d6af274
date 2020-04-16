@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40af4ad_e12f8916",
+        "filename": "tools_libyuv/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-16T19:24:05Z",
+      "side": 0,
+      "message": "empty seems dangerous.  Could you replace all entries with mbonadei@chromium.org ?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "aabcc477bdca9457bff773d3e767342e3d6af274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
