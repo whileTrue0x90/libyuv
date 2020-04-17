@@ -401,6 +401,7 @@ extern "C" {
 #define HAS_YUY2TOUV422ROW_NEON
 #define HAS_YUY2TOUVROW_NEON
 #define HAS_YUY2TOYROW_NEON
+#define HAS_HALFMERGEUVROW_NEON
 
 // Effects:
 #define HAS_ARGBADDROW_NEON
@@ -1711,6 +1712,20 @@ void MergeUVRow_Any_MMI(const uint8_t* y_buf,
                         const uint8_t* uv_buf,
                         uint8_t* dst_ptr,
                         int width);
+
+void HalfMergeUVRow_C(const uint8_t* src_u,
+                      int src_stride_u,
+                      const uint8_t* src_v,
+                      int src_stride_v,
+                      uint8_t* dst_uv,
+                      int width);
+
+void HalfMergeUVRow_NEON(const uint8_t* src_u,
+                         int src_stride_u,
+                         const uint8_t* src_v,
+                         int src_stride_v,
+                         uint8_t* dst_uv,
+                         int width);
 
 void SplitRGBRow_C(const uint8_t* src_rgb,
                    uint8_t* dst_r,
