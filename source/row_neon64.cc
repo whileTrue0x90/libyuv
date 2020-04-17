@@ -3265,6 +3265,41 @@ void SwapUVRow_NEON(const uint8_t* src_uv, uint8_t* dst_vu, int width) {
       : "cc", "memory", "v0", "v1", "v2");
 }
 
+void HalfMergeUVRow_NEON(const uint8_t* src_u,
+                         int src_stride_u,
+                         const uint8_t* src_v,
+                         int src_stride_v,
+                         uint8_t* dst_uv,
+                         int width) {
+  const uint8_t* src_u_1 = src_u + src_stride_u;
+  const uint8_t* src_v_1 = src_v + src_stride_v;
+  asm volatile(
+      "1:                                        \n"
+      "ld1        {v0.16b}, [%0], #16            \n"  // load 16 U values
+      "ld1        {v1.16b}, [%2], #16            \n"  // load 16 V values
+      "ld1        {v2.16b}, [%1], #16            \n"
+      "ld1        {v3.16b}, [%3], #16            \n"
+      "uaddlp     v0.8h, v0.16b                  \n"  // half size
+      "uaddlp     v1.8h, v1.16b                  \n"
+      "prfm       pldl1keep, [%0, 448]           \n"  // prefetch 7 lines ahead
+      "uadalp     v0.8h, v2.16b                  \n"
+      "uadalp     v1.8h, v3.16b                  \n"
+      "prfm       pldl1keep, [%2, 448]           \n"
+      "uqrshrn    v0.8b, v0.8h, #2               \n"
+      "uqrshrn    v1.8b, v1.8h, #2               \n"
+      "subs       %w5, %w5, #16                  \n"  // 16 src pixels per loop
+      "st2        {v0.8b, v1.8b}, [%4], #16      \n"  // store 8 UV pixels
+      "b.gt       1b                             \n"
+      : "+r"(src_u),    // %0
+        "+r"(src_u_1),  // %1
+        "+r"(src_v),    // %2
+        "+r"(src_v_1),  // %3
+        "+r"(dst_uv),   // %4
+        "+r"(width)     // %5
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3");
+}
+
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
 
 #ifdef __cplusplus
