@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86058a9a_9d1e0265",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "Consider combining #if and use 1 TestCpuFlag(kCpuHasMMI)\nSame for MSA below.\n#if defined(HAS_BGRATOYROW_MMI) \u0026\u0026 defined(HAS_BGRATOUVROW_MMI)",
+      "range": {
+        "startLine": 1208,
+        "startChar": 0,
+        "endLine": 1208,
+        "endChar": 32
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8917ec_25979562",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "ditto.  consider combining #if and if (TestCpu...",
+      "range": {
+        "startLine": 1302,
+        "startChar": 0,
+        "endLine": 1302,
+        "endChar": 32
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75c6e94_3ce59004",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "This really needs a rewrite so all platforms have a direct RGB24ToI420/J420.\nRGB24 is increasingly important and easy to support on NEON.  Complicated on Intel, but 1 pass would be better.",
+      "range": {
+        "startLine": 1680,
+        "startChar": 0,
+        "endLine": 1680,
+        "endChar": 65
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3be2a6ec_2c804c1e",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "ditto.  upper case preferred for MMI and MSA",
+      "range": {
+        "startLine": 1959,
+        "startChar": 0,
+        "endLine": 1959,
+        "endChar": 49
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff3ef98_e2a93442",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2118,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "Prefer SIMD instruction sets be upper case.\n// MMI and MSA versions does direct ARGB1555 to YUV.",
+      "range": {
+        "startLine": 2118,
+        "startChar": 0,
+        "endLine": 2118,
+        "endChar": 51
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7304c0bd_ea1d234a",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "These 2 step conversions complicate the code for benefit of Intel verions.\nBut RGB565 was done directly and didnt affect performance much.\nARGBToI420_Opt (262 ms)\nARGB1555ToI420_Opt (398 ms)\nARGB4444ToI420_Opt (280 ms)\nRGB24ToI420_Opt (261 ms)\nRGB565ToI420_Opt (301 ms)\nRGBAToI420_Opt (292 ms)",
+      "range": {
+        "startLine": 2198,
+        "startChar": 0,
+        "endLine": 2198,
+        "endChar": 75
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f20e1491_9f752db8",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "Avoid #else and keep MSA after MMI.  This function does not have MMI so move is not necessary.  Prefer have NEON, then Intel then Mips SIMD.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a907f9_06a53693",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-21T19:40:14Z",
+      "side": 1,
+      "message": "prefer avoid #else and put MSA just before MMI",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 5
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
