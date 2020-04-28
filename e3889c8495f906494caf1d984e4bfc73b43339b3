@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "0f63f540_116d900f",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-04-28T10:02:16Z",
+      "side": 1,
+      "message": "ok.  note that I plan to refactor rotation, to allow 16 and 32 bit bit channels.",
+      "parentUuid": "e79eb1c5_e0cc087d",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "e3889c8495f906494caf1d984e4bfc73b43339b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8a907f9_06a53693",
         "filename": "source/rotate.cc",
         "patchSetId": 1
