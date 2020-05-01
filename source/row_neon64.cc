@@ -765,6 +765,33 @@ void MirrorRow_NEON(const uint8_t* src, uint8_t* dst, int width) {
       : "cc", "memory", "v0", "v1", "v2", "v3");
 }
 
+// Shuffle table for reversing the UV.
+static const uvec8 kShuffleMirrorUV = {14u, 15u, 12u, 13u, 10u, 11u, 8u, 9u,
+                                        6u,  7u,  4u,  5u,  2u,  3u, 0u, 1u};
+
+void MirrorUVRow_NEON(const uint8_t* src_uv,
+                      uint8_t* dst_uv,
+                      int width) {
+  asm volatile(
+      // Start at end of source row.
+      "ld1        {v4.16b}, [%3]                 \n"  // shuffler
+      "add        %0, %0, %w2, sxtw #1           \n"
+      "sub        %0, %0, #32                    \n"
+      "1:                                        \n"
+      "ldr        q1, [%0, 16]                   \n"
+      "ldr        q0, [%0], -32                  \n"  // src -= 32
+      "subs       %w2, %w2, #16                  \n"  // 16 pixels per loop.
+      "tbl        v2.16b, {v1.16b}, v4.16b       \n"
+      "tbl        v3.16b, {v0.16b}, v4.16b       \n"
+      "st1        {v2.16b, v3.16b}, [%1], #32    \n"  // dst += 32
+      "b.gt       1b                             \n"
+      : "+r"(src_uv),           // %0
+        "+r"(dst_uv),           // %1
+        "+r"(width)             // %2
+      : "r"(&kShuffleMirrorUV)  // %3
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4");
+}
+
 void MirrorSplitUVRow_NEON(const uint8_t* src_uv,
                            uint8_t* dst_u,
                            uint8_t* dst_v,

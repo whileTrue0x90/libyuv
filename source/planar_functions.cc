@@ -1049,6 +1049,56 @@ void MirrorPlane(const uint8_t* src_y,
   }
 }
 
+// Mirror a plane of UV data.
+// See Also I400MirrorUV
+LIBYUV_API
+void MirrorUVPlane(const uint8_t* src_uv,
+                   int src_stride_uv,
+                   uint8_t* dst_uv,
+                   int dst_stride_uv,
+                   int width,
+                   int height) {
+  int y;
+  void (*MirrorUVRow)(const uint8_t* src, uint8_t* dst, int width) = MirrorUVRow_C;
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src_uv = src_uv + (height - 1) * src_stride_uv;
+    src_stride_uv = -src_stride_uv;
+  }
+#if defined(HAS_MIRRORUVROW_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+//    MirrorUVRow = MirrorUVRow_Any_NEON;
+    if (IS_ALIGNED(width, 32)) {
+      MirrorUVRow = MirrorUVRow_NEON;
+    }
+  }
+#endif
+#if defined(HAS_MIRRORUVROW_SSSE3)
+  if (TestCpuFlag(kCpuHasSSSE3)) {
+    MirrorUVRow = MirrorUVRow_Any_SSSE3;
+    if (IS_ALIGNED(width, 16)) {
+      MirrorUVRow = MirrorUVRow_SSSE3;
+    }
+  }
+#endif
+#if defined(HAS_MIRRORUVROW_AVX2)
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    MirrorUVRow = MirrorUVRow_Any_AVX2;
+    if (IS_ALIGNED(width, 32)) {
+      MirrorUVRow = MirrorUVRow_AVX2;
+    }
+  }
+#endif
+
+  // MirrorUV plane
+  for (y = 0; y < height; ++y) {
+    MirrorUVRow(src_uv, dst_uv, width);
+    src_uv += src_stride_uv;
+    dst_uv += dst_stride_uv;
+  }
+}
+
 // Mirror I400 with optional flipping
 LIBYUV_API
 int I400Mirror(const uint8_t* src_y,
