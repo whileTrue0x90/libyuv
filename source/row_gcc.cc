@@ -3229,10 +3229,62 @@ void MirrorRow_AVX2(const uint8_t* src, uint8_t* dst, int width) {
 }
 #endif  // HAS_MIRRORROW_AVX2
 
+#ifdef HAS_MIRRORUVROW_SSSE3
+// Shuffle table for reversing the UV.
+static const uvec8 kShuffleMirrorUV = {14u, 15u, 12u, 13u, 10u, 11u, 8u, 9u,
+                                       6u,  7u,  4u,  5u,  2u,  3u,  0u, 1u};
+
+void MirrorUVRow_SSSE3(const uint8_t* src_uv, uint8_t* dst_uv, int width) {
+  intptr_t temp_width = (intptr_t)(width);
+  asm volatile(
+
+      "movdqa    %3,%%xmm5                       \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "movdqu    -0x10(%0,%2,2),%%xmm0           \n"
+      "pshufb    %%xmm5,%%xmm0                   \n"
+      "movdqu    %%xmm0,(%1)                     \n"
+      "lea       0x10(%1),%1                     \n"
+      "sub       $0x8,%2                         \n"
+      "jg        1b                              \n"
+      : "+r"(src_uv),          // %0
+        "+r"(dst_uv),          // %1
+        "+r"(temp_width)       // %2
+      : "m"(kShuffleMirrorUV)  // %3
+      : "memory", "cc", "xmm0", "xmm5");
+}
+#endif  // HAS_MIRRORUVROW_SSSE3
+
+#ifdef HAS_MIRRORUVROW_AVX2
+void MirrorUVRow_AVX2(const uint8_t* src_uv, uint8_t* dst_uv, int width) {
+  intptr_t temp_width = (intptr_t)(width);
+  asm volatile(
+
+      "vbroadcastf128 %3,%%ymm5                  \n"
+
+      LABELALIGN
+      "1:                                        \n"
+      "vmovdqu    -0x20(%0,%2,2),%%ymm0          \n"
+      "vpshufb    %%ymm5,%%ymm0,%%ymm0           \n"
+      "vpermq     $0x4e,%%ymm0,%%ymm0            \n"
+      "vmovdqu    %%ymm0,(%1)                    \n"
+      "lea       0x20(%1),%1                     \n"
+      "sub       $0x10,%2                        \n"
+      "jg        1b                              \n"
+      "vzeroupper                                \n"
+      : "+r"(src_uv),          // %0
+        "+r"(dst_uv),          // %1
+        "+r"(temp_width)       // %2
+      : "m"(kShuffleMirrorUV)  // %3
+      : "memory", "cc", "xmm0", "xmm5");
+}
+#endif  // HAS_MIRRORUVROW_AVX2
+
 #ifdef HAS_MIRRORSPLITUVROW_SSSE3
 // Shuffle table for reversing the bytes of UV channels.
-static const uvec8 kShuffleMirrorUV = {14u, 12u, 10u, 8u, 6u, 4u, 2u, 0u,
-                                       15u, 13u, 11u, 9u, 7u, 5u, 3u, 1u};
+static const uvec8 kShuffleMirrorSplitUV = {14u, 12u, 10u, 8u, 6u, 4u, 2u, 0u,
+                                            15u, 13u, 11u, 9u, 7u, 5u, 3u, 1u};
 void MirrorSplitUVRow_SSSE3(const uint8_t* src,
                             uint8_t* dst_u,
                             uint8_t* dst_v,
@@ -3253,11 +3305,11 @@ void MirrorSplitUVRow_SSSE3(const uint8_t* src,
       "lea       0x8(%1),%1                      \n"
       "sub       $8,%3                           \n"
       "jg        1b                              \n"
-      : "+r"(src),             // %0
-        "+r"(dst_u),           // %1
-        "+r"(dst_v),           // %2
-        "+r"(temp_width)       // %3
-      : "m"(kShuffleMirrorUV)  // %4
+      : "+r"(src),                  // %0
+        "+r"(dst_u),                // %1
+        "+r"(dst_v),                // %2
+        "+r"(temp_width)            // %3
+      : "m"(kShuffleMirrorSplitUV)  // %4
       : "memory", "cc", "xmm0", "xmm1");
 }
 #endif  // HAS_MIRRORSPLITUVROW_SSSE3
