@@ -822,6 +822,29 @@ TEST_F(LibYUVPlanarTest, TestMirrorPlane) {
   }
 }
 
+TEST_F(LibYUVPlanarTest, TestMirrorUVPlane) {
+  SIMD_ALIGNED(uint8_t orig_pixels[1280 * 2]);
+  SIMD_ALIGNED(uint8_t dst_pixels[1280 * 2]);
+
+  for (int i = 0; i < 1280 * 2; ++i) {
+    orig_pixels[i] = i;
+  }
+  MirrorUVPlane(&orig_pixels[0], 0, &dst_pixels[0], 0, 1280, 1);
+
+  EXPECT_EQ(0, dst_pixels[1280 * 2 - 2]);
+  EXPECT_EQ(1, dst_pixels[1280 * 2 - 1]);
+  EXPECT_EQ(2, dst_pixels[1280 * 2 - 4]);
+  EXPECT_EQ(3, dst_pixels[1280 * 2 - 3]);
+
+  for (int i = 0; i < 1280; i += 2) {
+    EXPECT_EQ(i & 255, dst_pixels[1280 * 2 - 2 - i]);
+    EXPECT_EQ((i + 1) & 255, dst_pixels[1280 * 2 - 1 - i]);
+  }
+  for (int i = 0; i < benchmark_pixels_div1280_; ++i) {
+    MirrorUVPlane(&orig_pixels[0], 0, &dst_pixels[0], 0, 1280, 1);
+  }
+}
+
 TEST_F(LibYUVPlanarTest, TestShade) {
   SIMD_ALIGNED(uint8_t orig_pixels[1280][4]);
   SIMD_ALIGNED(uint8_t shade_pixels[1280][4]);
