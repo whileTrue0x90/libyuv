@@ -347,6 +347,15 @@ void MirrorPlane(const uint8_t* src_y,
                  int width,
                  int height);
 
+// Mirror a plane of UV data.
+LIBYUV_API
+void MirrorUVPlane(const uint8_t* src_uv,
+                   int src_stride_uv,
+                   uint8_t* dst_uv,
+                   int dst_stride_uv,
+                   int width,
+                   int height);
+
 // Convert NV12 to RGB565.
 LIBYUV_API
 int NV12ToRGB565(const uint8_t* src_y,
