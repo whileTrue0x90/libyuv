@@ -7111,10 +7111,15 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
                          uint8_t* dst_uv,
                          int width) {
   asm volatile(
-      "vpcmpeqb    %%ymm4,%%ymm4,%%ymm4          \n"
-      "vpsrlw      $0xf,%%ymm4,%%ymm4            \n"
-      "vpackuswb   %%ymm4,%%ymm4,%%ymm4          \n"
-      "vpxor       %%ymm5,%%ymm5,%%ymm5          \n"
+
+      "mov        $0x40404040,%%eax              \n"  // 0x4040
+      "vmovd      %%eax,%%xmm4                   \n"
+      "vbroadcastss %%xmm4,%%ymm4                \n"
+      "mov        $0x00800080,%%eax              \n"  // 0x0080
+      "vmovd      %%eax,%%xmm5                   \n"
+      "vbroadcastss %%xmm5,%%ymm5                \n"
+      "vpcmpeqb   %%ymm6,%%ymm6,%%ymm6           \n"  // 0xff00
+      "vpsllw     $0x8,%%ymm6,%%ymm6             \n"
       "1:                                        \n"
 
       LABELALIGN
@@ -7131,13 +7136,11 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
       "lea        0x20(%1),%1                    \n"
       "vpaddw     %%ymm2,%%ymm0,%%ymm0           \n"
       "vpaddw     %%ymm3,%%ymm1,%%ymm1           \n"
-      "vpsrlw     $0x1,%%ymm0,%%ymm0             \n"
-      "vpsrlw     $0x1,%%ymm1,%%ymm1             \n"
-      "vpavgw     %%ymm5,%%ymm0,%%ymm0           \n"
-      "vpavgw     %%ymm5,%%ymm1,%%ymm1           \n"
-      "vpackuswb  %%ymm0,%%ymm0,%%ymm0           \n"
-      "vpackuswb  %%ymm1,%%ymm1,%%ymm1           \n"
-      "vpunpcklbw %%ymm1,%%ymm0,%%ymm0           \n"
+      "vpaddw     %%ymm5,%%ymm0,%%ymm0           \n"  // round
+      "vpaddw     %%ymm5,%%ymm1,%%ymm1           \n"
+      "vpsrlw     $0x8,%%ymm0,%%ymm0             \n"  // shift U
+      "vpand      %%ymm6,%%ymm1,%%ymm1           \n"  // mask V
+      "vpaddw     %%ymm0,%%ymm1,%%ymm0           \n"  // combine UV
       "vmovdqu    %%ymm0,(%2)                    \n"  // store 16 UV pixels
       "lea        0x20(%2),%2                    \n"
       "sub        $0x20,%3                       \n"  // 32 src pixels per loop
@@ -7149,7 +7152,8 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
         "+r"(width)                     // %3
       : "r"((intptr_t)(src_stride_u)),  // %4
         "r"((intptr_t)(src_stride_v))   // %5
-      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5");
+      : "memory", "cc", "eax",
+        "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
 }
 
 #endif  // defined(__x86_64__) || defined(__i386__)
