@@ -7111,10 +7111,9 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
                          uint8_t* dst_uv,
                          int width) {
   asm volatile(
-      "vpcmpeqb    %%ymm4,%%ymm4,%%ymm4          \n"
-      "vpsrlw      $0xf,%%ymm4,%%ymm4            \n"
-      "vpackuswb   %%ymm4,%%ymm4,%%ymm4          \n"
-      "vpxor       %%ymm5,%%ymm5,%%ymm5          \n"
+      "vbroadcastf128 %6,%%ymm4                  \n"  // 0x80808080
+      "pcmpeqb   %%xmm5,%%xmm5                   \n"  // 0xff00ff00
+      "pslld     $0x18,%%xmm5                    \n"
       "1:                                        \n"
 
       LABELALIGN
@@ -7129,15 +7128,12 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
       "vpmaddubsw %%ymm4,%%ymm2,%%ymm2           \n"
       "vpmaddubsw %%ymm4,%%ymm3,%%ymm3           \n"
       "lea        0x20(%1),%1                    \n"
-      "vpaddw     %%ymm2,%%ymm0,%%ymm0           \n"
-      "vpaddw     %%ymm3,%%ymm1,%%ymm1           \n"
-      "vpsrlw     $0x1,%%ymm0,%%ymm0             \n"
-      "vpsrlw     $0x1,%%ymm1,%%ymm1             \n"
-      "vpavgw     %%ymm5,%%ymm0,%%ymm0           \n"
-      "vpavgw     %%ymm5,%%ymm1,%%ymm1           \n"
-      "vpackuswb  %%ymm0,%%ymm0,%%ymm0           \n"
-      "vpackuswb  %%ymm1,%%ymm1,%%ymm1           \n"
-      "vpunpcklbw %%ymm1,%%ymm0,%%ymm0           \n"
+      "vpavgw     %%ymm2,%%ymm0,%%ymm0           \n"  // round
+      "vpavgw     %%ymm3,%%ymm1,%%ymm1           \n"
+      "vpand      %%ymm5,%%ymm2,%%ymm2           \n"  // mask U
+      "vpsrlw     $0x8,%%ymm3,%%ymm3             \n"  // shift V
+      "vpaddw     %%ymm2,%%ymm3,%%ymm0           \n"  // combine UV
+      "vpaddw     %%ymm4,%%ymm0,%%ymm0           \n"  // add 128 for unsigned
       "vmovdqu    %%ymm0,(%2)                    \n"  // store 16 UV pixels
       "lea        0x20(%2),%2                    \n"
       "sub        $0x20,%3                       \n"  // 32 src pixels per loop
@@ -7148,7 +7144,8 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
         "+r"(dst_uv),                   // %2
         "+r"(width)                     // %3
       : "r"((intptr_t)(src_stride_u)),  // %4
-        "r"((intptr_t)(src_stride_v))   // %5
+        "r"((intptr_t)(src_stride_v)),  // %5
+        "m"(kSub128)                    // %6
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5");
 }
 
