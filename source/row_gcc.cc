@@ -7064,34 +7064,31 @@ void HalfMergeUVRow_SSSE3(const uint8_t* src_u,
                           uint8_t* dst_uv,
                           int width) {
   asm volatile(
-      "pcmpeqb    %%xmm4,%%xmm4                  \n"
-      "psrlw      $0xf,%%xmm4                    \n"
-      "packuswb   %%xmm4,%%xmm4                  \n"
-      "pxor       %%xmm5,%%xmm5                  \n"
-      "1:                                        \n"
+      "pcmpeqb    %%xmm0,%%xmm0                  \n"  // 0xff00
+      "pcmpeqb    %%xmm5,%%xmm5                  \n"  // 0x4040
+      "psrlw      $0xf,%%xmm5                    \n"
+      "psllw      $0x8,%%xmm0                    \n"
+      "packuswb   %%xmm5,%%xmm5                  \n"
+      "psllw      $0x6,%%xmm5                    \n"
 
       LABELALIGN
       "1:                                        \n"
-      "movdqu    (%0),%%xmm0                     \n"  // load 16 U values
-      "movdqu    (%1),%%xmm1                     \n"  // load 16 V values
+      "movdqu    (%0),%%xmm1                     \n"  // load 16 U values
       "movdqu    0(%0,%4,1),%%xmm2               \n"  // 16 from next row
-      "movdqu    0(%1,%5,1),%%xmm3               \n"
+      "movdqu    (%1),%%xmm3                     \n"  // load 16 V values
+      "movdqu    0(%1,%5,1),%%xmm4               \n"
       "lea       0x10(%0),%0                     \n"
-      "pmaddubsw %%xmm4,%%xmm0                   \n"  // half size
-      "pmaddubsw %%xmm4,%%xmm1                   \n"
-      "pmaddubsw %%xmm4,%%xmm2                   \n"
-      "pmaddubsw %%xmm4,%%xmm3                   \n"
+      "pmaddubsw %%xmm5,%%xmm1                   \n"  // half size
+      "pmaddubsw %%xmm5,%%xmm2                   \n"
+      "pmaddubsw %%xmm5,%%xmm3                   \n"
+      "pmaddubsw %%xmm5,%%xmm4                   \n"
       "lea       0x10(%1),%1                     \n"
-      "paddw     %%xmm2,%%xmm0                   \n"
-      "paddw     %%xmm3,%%xmm1                   \n"
-      "psrlw     $0x1,%%xmm0                     \n"
-      "psrlw     $0x1,%%xmm1                     \n"
-      "pavgw     %%xmm5,%%xmm0                   \n"
-      "pavgw     %%xmm5,%%xmm1                   \n"
-      "packuswb  %%xmm0,%%xmm0                   \n"
-      "packuswb  %%xmm1,%%xmm1                   \n"
-      "punpcklbw %%xmm1,%%xmm0                   \n"
-      "movdqu    %%xmm0,(%2)                     \n"  // store 8 UV pixels
+      "pavgw     %%xmm2,%%xmm1                   \n"
+      "pavgw     %%xmm4,%%xmm3                   \n"
+      "psrlw     $0x7,%%xmm1                     \n"
+      "paddw     %%xmm3,%%xmm3                   \n"
+      "pblendvb  %%xmm3,%%xmm1                   \n"
+      "movdqu    %%xmm1,(%2)                     \n"  // store 8 UV pixels
       "lea       0x10(%2),%2                     \n"
       "sub       $0x10,%3                        \n"  // 16 src pixels per loop
       "jg        1b                              \n"
@@ -7111,34 +7108,30 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
                          uint8_t* dst_uv,
                          int width) {
   asm volatile(
-      "vpcmpeqb    %%ymm4,%%ymm4,%%ymm4          \n"
-      "vpsrlw      $0xf,%%ymm4,%%ymm4            \n"
-      "vpackuswb   %%ymm4,%%ymm4,%%ymm4          \n"
-      "vpxor       %%ymm5,%%ymm5,%%ymm5          \n"
-      "1:                                        \n"
+      "vpcmpeqb    %%ymm0,%%ymm0,%%ymm0          \n"  // 0xff00
+      "vpsrlw      $0xf,%%ymm0,%%ymm5            \n"  // 0x4040
+      "vpsllw      $0x8,%%ymm0,%%ymm0            \n"
+      "vpackuswb   %%ymm5,%%ymm5,%%ymm5          \n"
+      "vpsllw      $0x6,%%ymm5,%%ymm5            \n"
 
       LABELALIGN
       "1:                                        \n"
-      "vmovdqu    (%0),%%ymm0                    \n"  // load 32 U values
-      "vmovdqu    (%1),%%ymm1                    \n"  // load 32 V values
+      "vmovdqu    (%0),%%ymm1                    \n"  // load 32 U values
       "vmovdqu    0(%0,%4,1),%%ymm2              \n"  // 32 from next row
-      "vmovdqu    0(%1,%5,1),%%ymm3              \n"
+      "vmovdqu    (%1),%%ymm3                    \n"  // load 32 V values
+      "vmovdqu    0(%1,%5,1),%%ymm4              \n"
       "lea        0x20(%0),%0                    \n"
-      "vpmaddubsw %%ymm4,%%ymm0,%%ymm0           \n"  // half size
-      "vpmaddubsw %%ymm4,%%ymm1,%%ymm1           \n"
-      "vpmaddubsw %%ymm4,%%ymm2,%%ymm2           \n"
-      "vpmaddubsw %%ymm4,%%ymm3,%%ymm3           \n"
+      "vpmaddubsw %%ymm5,%%ymm1,%%ymm1           \n"  // half size
+      "vpmaddubsw %%ymm5,%%ymm2,%%ymm2           \n"
+      "vpmaddubsw %%ymm5,%%ymm3,%%ymm3           \n"
+      "vpmaddubsw %%ymm5,%%ymm4,%%ymm4           \n"
       "lea        0x20(%1),%1                    \n"
-      "vpaddw     %%ymm2,%%ymm0,%%ymm0           \n"
-      "vpaddw     %%ymm3,%%ymm1,%%ymm1           \n"
-      "vpsrlw     $0x1,%%ymm0,%%ymm0             \n"
-      "vpsrlw     $0x1,%%ymm1,%%ymm1             \n"
-      "vpavgw     %%ymm5,%%ymm0,%%ymm0           \n"
-      "vpavgw     %%ymm5,%%ymm1,%%ymm1           \n"
-      "vpackuswb  %%ymm0,%%ymm0,%%ymm0           \n"
-      "vpackuswb  %%ymm1,%%ymm1,%%ymm1           \n"
-      "vpunpcklbw %%ymm1,%%ymm0,%%ymm0           \n"
-      "vmovdqu    %%ymm0,(%2)                    \n"  // store 16 UV pixels
+      "vpavgw     %%ymm2,%%ymm1,%%ymm1           \n"
+      "vpavgw     %%ymm4,%%ymm3,%%ymm3           \n"
+      "vpsrlw     $0x7,%%ymm1,%%ymm1             \n"
+      "vpaddw     %%ymm3,%%ymm3,%%ymm3           \n"
+      "vpblendvb  %%ymm0,%%ymm3,%%ymm1,%%ymm1    \n"
+      "vmovdqu    %%ymm1,(%2)                    \n"  // store 16 UV pixels
       "lea        0x20(%2),%2                    \n"
       "sub        $0x20,%3                       \n"  // 32 src pixels per loop
       "jg         1b                             \n"
