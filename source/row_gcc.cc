@@ -4950,36 +4950,43 @@ void ARGBAttenuateRow_AVX2(const uint8_t* src_argb,
                            uint8_t* dst_argb,
                            int width) {
   asm volatile(
-      "vbroadcastf128 %3,%%ymm4                  \n"
-      "vpcmpeqb   %%ymm5,%%ymm5,%%ymm5           \n"
-      "vpslld     $0x18,%%ymm5,%%ymm5            \n"
-      "sub        %0,%1                          \n"
+      "vbroadcastf128 %3,%%ymm5                  \n"  // alpha shuffler
+      "vpxor       %%ymm6,%%ymm6,%%ymm6          \n"
+
+      "vpcmpeqb    %%ymm7,%%ymm7,%%ymm7          \n"  // 0x0080
+      "vpsllw      $0xf,%%ymm7,%%ymm7            \n"
+      "vpsrlw      $0x8,%%ymm7,%%ymm7            \n"
+
+      "vpcmpeqb  %%ymm8,%%ymm8,%%ymm8            \n"
+      "vpsrld    $0x8,%%ymm8,%%ymm8              \n"  // 0x00ffffff
 
       // 8 pixel loop.
       LABELALIGN
       "1:                                        \n"
-      "vmovdqu    (%0),%%ymm6                    \n"
-      "vpunpcklbw %%ymm6,%%ymm6,%%ymm0           \n"
-      "vpunpckhbw %%ymm6,%%ymm6,%%ymm1           \n"
-      "vpshufb    %%ymm4,%%ymm0,%%ymm2           \n"
-      "vpshufb    %%ymm4,%%ymm1,%%ymm3           \n"
-      "vpmulhuw   %%ymm2,%%ymm0,%%ymm0           \n"
-      "vpmulhuw   %%ymm3,%%ymm1,%%ymm1           \n"
-      "vpand      %%ymm5,%%ymm6,%%ymm6           \n"
-      "vpsrlw     $0x8,%%ymm0,%%ymm0             \n"
+      "vmovdqu    (%0),%%ymm0                    \n"
+      "lea        0x20(%0),%0                    \n"
+      "vpunpcklbw %%ymm6,%%ymm0,%%ymm1           \n"
+      "vpunpckhbw %%ymm6,%%ymm0,%%ymm2           \n"
+      "vpshufb    %%ymm5,%%ymm1,%%ymm3           \n"
+      "vpshufb    %%ymm5,%%ymm2,%%ymm4           \n"
+      "vpmullw    %%ymm3,%%ymm1,%%ymm1           \n"
+      "vpmullw    %%ymm4,%%ymm2,%%ymm2           \n"
+      "vpaddw     %%ymm7,%%ymm1,%%ymm1           \n"
+      "vpaddw     %%ymm7,%%ymm2,%%ymm2           \n"
       "vpsrlw     $0x8,%%ymm1,%%ymm1             \n"
-      "vpackuswb  %%ymm1,%%ymm0,%%ymm0           \n"
-      "vpor       %%ymm6,%%ymm0,%%ymm0           \n"
-      "vmovdqu    %%ymm0,0x00(%0,%1,1)           \n"
-      "lea       0x20(%0),%0                     \n"
+      "vpsrlw     $0x8,%%ymm2,%%ymm2             \n"
+      "vpackuswb  %%ymm2,%%ymm1,%%ymm1           \n"
+      "vpblendvb  %%ymm8,%%ymm0,%%ymm1,%%ymm0    \n"
+      "vmovdqu    %%ymm0,(%1)                    \n"
+      "lea        0x20(%1),%1                    \n"
       "sub        $0x8,%2                        \n"
-      "jg        1b                              \n"
+      "jg         1b                             \n"
       "vzeroupper                                \n"
       : "+r"(src_argb),          // %0
         "+r"(dst_argb),          // %1
         "+r"(width)              // %2
       : "m"(kShuffleAlpha_AVX2)  // %3
-      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7", "xmm8");
 }
 #endif  // HAS_ARGBATTENUATEROW_AVX2
 
@@ -7068,7 +7075,6 @@ void HalfMergeUVRow_SSSE3(const uint8_t* src_u,
       "psrlw      $0xf,%%xmm4                    \n"
       "packuswb   %%xmm4,%%xmm4                  \n"
       "pxor       %%xmm5,%%xmm5                  \n"
-      "1:                                        \n"
 
       LABELALIGN
       "1:                                        \n"
@@ -7111,11 +7117,10 @@ void HalfMergeUVRow_AVX2(const uint8_t* src_u,
                          uint8_t* dst_uv,
                          int width) {
   asm volatile(
-      "vpcmpeqb    %%ymm4,%%ymm4,%%ymm4          \n"
+      "vpcmpeqb    %%ymm4,%%ymm4,%%ymm4          \n"  // 0x0101
       "vpsrlw      $0xf,%%ymm4,%%ymm4            \n"
       "vpackuswb   %%ymm4,%%ymm4,%%ymm4          \n"
       "vpxor       %%ymm5,%%ymm5,%%ymm5          \n"
-      "1:                                        \n"
 
       LABELALIGN
       "1:                                        \n"
