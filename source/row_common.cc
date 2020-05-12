@@ -2681,7 +2681,7 @@ void UYVYToYRow_C(const uint8_t* src_uyvy, uint8_t* dst_y, int width) {
   }
 }
 
-#define BLEND(f, b, a) (((256 - a) * b) >> 8) + f
+#define BLEND(f, b, a) clamp255((((256 - a) * b) >> 8) + f)
 
 // Blend src_argb0 over src_argb1 and store to dst_argb.
 // dst_argb may be src_argb0 or src_argb1.
@@ -2757,12 +2757,7 @@ void BlendPlaneRow_C(const uint8_t* src0,
 }
 #undef UBLEND
 
-#if defined(__aarch64__) || defined(__arm__)
 #define ATTENUATE(f, a) (f * a + 128) >> 8
-#else
-// This code mimics the SSSE3 version for better testability.
-#define ATTENUATE(f, a) (a | (a << 8)) * (f | (f << 8)) >> 24
-#endif
 
 // Multiply source RGB by alpha and store to destination.
 void ARGBAttenuateRow_C(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
