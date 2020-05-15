@@ -24,6 +24,16 @@ namespace libyuv {
 extern "C" {
 #endif
 
+// Compile with -DLEGACY_NV12_BT601=1 to keep old behavior.
+#ifdef LEGACY_NV12_BT601
+#error I601 constraints used
+#define kYuvNV12Constants kYuvI601Constants
+#define kYvuNV12Constants kYvuI601Constants
+#else
+#define kYuvNV12Constants kYuvJPEGConstants
+#define kYvuNV12Constants kYvuJPEGConstants
+#endif
+
 // Copy ARGB with optional flipping
 LIBYUV_API
 int ARGBCopy(const uint8_t* src_argb,
@@ -2439,7 +2449,7 @@ int NV12ToARGB(const uint8_t* src_y,
                int width,
                int height) {
   return NV12ToARGBMatrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_argb,
-                          dst_stride_argb, &kYuvI601Constants, width, height);
+                          dst_stride_argb, &kYuvNV12Constants, width, height);
 }
 
 // Convert NV21 to ARGB.
@@ -2453,7 +2463,7 @@ int NV21ToARGB(const uint8_t* src_y,
                int width,
                int height) {
   return NV21ToARGBMatrix(src_y, src_stride_y, src_vu, src_stride_vu, dst_argb,
-                          dst_stride_argb, &kYuvI601Constants, width, height);
+                          dst_stride_argb, &kYuvNV12Constants, width, height);
 }
 
 // Convert NV12 to ABGR.
@@ -2469,7 +2479,7 @@ int NV12ToABGR(const uint8_t* src_y,
                int width,
                int height) {
   return NV21ToARGBMatrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_abgr,
-                          dst_stride_abgr, &kYvuI601Constants, width, height);
+                          dst_stride_abgr, &kYvuNV12Constants, width, height);
 }
 
 // Convert NV21 to ABGR.
@@ -2483,7 +2493,7 @@ int NV21ToABGR(const uint8_t* src_y,
                int width,
                int height) {
   return NV12ToARGBMatrix(src_y, src_stride_y, src_vu, src_stride_vu, dst_abgr,
-                          dst_stride_abgr, &kYvuI601Constants, width, height);
+                          dst_stride_abgr, &kYvuNV12Constants, width, height);
 }
 
 // TODO(fbarchard): Consider SSSE3 2 step conversion.
@@ -2632,7 +2642,7 @@ int NV12ToRGB24(const uint8_t* src_y,
                 int width,
                 int height) {
   return NV12ToRGB24Matrix(src_y, src_stride_y, src_uv, src_stride_uv,
-                           dst_rgb24, dst_stride_rgb24, &kYuvI601Constants,
+                           dst_rgb24, dst_stride_rgb24, &kYuvNV12Constants,
                            width, height);
 }
 
@@ -2647,7 +2657,7 @@ int NV21ToRGB24(const uint8_t* src_y,
                 int width,
                 int height) {
   return NV21ToRGB24Matrix(src_y, src_stride_y, src_vu, src_stride_vu,
-                           dst_rgb24, dst_stride_rgb24, &kYuvI601Constants,
+                           dst_rgb24, dst_stride_rgb24, &kYuvNV12Constants,
                            width, height);
 }
 
@@ -2662,7 +2672,7 @@ int NV12ToRAW(const uint8_t* src_y,
               int width,
               int height) {
   return NV21ToRGB24Matrix(src_y, src_stride_y, src_uv, src_stride_uv, dst_raw,
-                           dst_stride_raw, &kYvuI601Constants, width, height);
+                           dst_stride_raw, &kYvuNV12Constants, width, height);
 }
 
 // Convert NV21 to RAW.
@@ -2676,7 +2686,7 @@ int NV21ToRAW(const uint8_t* src_y,
               int width,
               int height) {
   return NV12ToRGB24Matrix(src_y, src_stride_y, src_vu, src_stride_vu, dst_raw,
-                           dst_stride_raw, &kYvuI601Constants, width, height);
+                           dst_stride_raw, &kYvuNV12Constants, width, height);
 }
 
 // Convert NV21 to YUV24
@@ -2791,15 +2801,15 @@ int M420ToARGB(const uint8_t* src_m420,
 
   for (y = 0; y < height - 1; y += 2) {
     NV12ToARGBRow(src_m420, src_m420 + src_stride_m420 * 2, dst_argb,
-                  &kYuvI601Constants, width);
+                  &kYuvNV12Constants, width);
     NV12ToARGBRow(src_m420 + src_stride_m420, src_m420 + src_stride_m420 * 2,
-                  dst_argb + dst_stride_argb, &kYuvI601Constants, width);
+                  dst_argb + dst_stride_argb, &kYuvNV12Constants, width);
     dst_argb += dst_stride_argb * 2;
     src_m420 += src_stride_m420 * 3;
   }
   if (height & 1) {
     NV12ToARGBRow(src_m420, src_m420 + src_stride_m420 * 2, dst_argb,
-                  &kYuvI601Constants, width);
+                  &kYuvNV12Constants, width);
   }
   return 0;
 }
@@ -2872,7 +2882,7 @@ int YUY2ToARGB(const uint8_t* src_yuy2,
   }
 #endif
   for (y = 0; y < height; ++y) {
-    YUY2ToARGBRow(src_yuy2, dst_argb, &kYuvI601Constants, width);
+    YUY2ToARGBRow(src_yuy2, dst_argb, &kYuvNV12Constants, width);
     src_yuy2 += src_stride_yuy2;
     dst_argb += dst_stride_argb;
   }
@@ -2947,7 +2957,7 @@ int UYVYToARGB(const uint8_t* src_uyvy,
   }
 #endif
   for (y = 0; y < height; ++y) {
-    UYVYToARGBRow(src_uyvy, dst_argb, &kYuvI601Constants, width);
+    UYVYToARGBRow(src_uyvy, dst_argb, &kYuvNV12Constants, width);
     src_uyvy += src_stride_uyvy;
     dst_argb += dst_stride_argb;
   }
@@ -3046,7 +3056,7 @@ int Android420ToARGB(const uint8_t* src_y,
                      int height) {
   return Android420ToARGBMatrix(src_y, src_stride_y, src_u, src_stride_u, src_v,
                                 src_stride_v, src_pixel_stride_uv, dst_argb,
-                                dst_stride_argb, &kYuvI601Constants, width,
+                                dst_stride_argb, &kYuvNV12Constants, width,
                                 height);
 }
 
@@ -3065,7 +3075,7 @@ int Android420ToABGR(const uint8_t* src_y,
                      int height) {
   return Android420ToARGBMatrix(src_y, src_stride_y, src_v, src_stride_v, src_u,
                                 src_stride_u, src_pixel_stride_uv, dst_abgr,
-                                dst_stride_abgr, &kYvuI601Constants, width,
+                                dst_stride_abgr, &kYvuNV12Constants, width,
                                 height);
 }
 
