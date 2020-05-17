@@ -10,6 +10,8 @@
 
 #include "libyuv/row.h"
 
+#include "libyuv/convert_argb.h"  // For kYuvI601Constants
+
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
