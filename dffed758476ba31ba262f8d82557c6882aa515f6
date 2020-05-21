@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2f5a0a4_84fd5f58",
+        "filename": "source/convert.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-05-21T23:32:58Z",
+      "side": 1,
+      "message": "This change to flip the source instead of destination, impacts performance on ARM:\nWas\nNV12ToI420_Any (646 ms)\nNV12ToI420_Unaligned (642 ms)\nNV12ToI420_Invert (645 ms)\nNV12ToI420_Opt (646 ms)\nNV12ToI420_NullY (113 ms)\n\nNow\nNV12ToI420_Any (647 ms)\nNV12ToI420_Unaligned (646 ms)\nNV12ToI420_Invert (971 ms)\nNV12ToI420_Opt (645 ms)\nNV12ToI420_NullY (94 ms)",
+      "range": {
+        "startLine": 564,
+        "startChar": 0,
+        "endLine": 564,
+        "endChar": 19
+      },
+      "revId": "dffed758476ba31ba262f8d82557c6882aa515f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
