@@ -32,6 +32,12 @@ LIBYUV_API extern const struct YuvConstants kYvuJPEGConstants;  // JPeg
 LIBYUV_API extern const struct YuvConstants kYvuH709Constants;  // BT.709
 LIBYUV_API extern const struct YuvConstants kYvu2020Constants;  // BT.2020
 
+#define kYuvJPEGConstantsVU kYvuJPEGConstantsApple
+#define NV12ToABGRMatrix(a, b, c, d, e, f, g, h, i)   NV21ToARGBMatrix(a, b, c, d, e, f, g##VU, h, i)
+#define NV21ToABGRMatrix(a, b, c, d, e, f, g, h, i)   NV12ToARGBMatrix(a, b, c, d, e, f, g##VU, h, i)
+#define NV12ToRAWMatrix(a, b, c, d, e, f, g, h, i)    NV21ToRGB24Matrix(a, b, c, d, e, f, g##VU, h, i)
+#define NV21ToRAWMatrix(a, b, c, d, e, f, g, h, i)    NV12ToRGB24Matrix(a, b, c, d, e, f, g##VU, h, i)
+
 // Alias.
 #define ARGBToARGB ARGBCopy
 
