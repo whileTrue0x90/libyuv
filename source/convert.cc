@@ -608,11 +608,9 @@ int NV21ToI420(const uint8_t* src_y,
                int dst_stride_v,
                int width,
                int height) {
-  return NV12ToI420(src_y, src_stride_y,
-                    src_vu, src_stride_vu,
-                    dst_y, dst_stride_y,
-                    dst_v, dst_stride_v,
-                    dst_u, dst_stride_u, width, height);
+  return NV12ToI420(src_y, src_stride_y, src_vu, src_stride_vu, dst_y,
+                    dst_stride_y, dst_v, dst_stride_v, dst_u, dst_stride_u,
+                    width, height);
 }
 
 // Convert YUY2 to I420.
