@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "623ac1ae_a9714772",
+        "filename": "source/row_mmi.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-06-04T03:57:34Z",
+      "side": 1,
+      "message": "Note that these constants will go into a structure soon.\nYou can put whatever you want in the structure, and have MMI and MSA different if you like.\nThe constants from the structure can be passed, so the assembly itself wont need to change.\ne.g. yuvconstants.mask_u\nThis will allow ARGB, ABGR, BGRA and RGBA to share the same \nmatrix function with different constants.  And ARGBToJ420 and ARGBToI420 will be the same low level with different constants.\nInternally you should try to use 16 bit math, so the ARGB format can handle AB30 which is 2:10:10:10, and the output could be 10 bit yuv such as H010 which is H420 bit 10 bits per channel.",
+      "range": {
+        "startLine": 1013,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 45
+      },
+      "revId": "ed24bcad32edebfc5640eaf13c383149aad6cc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
