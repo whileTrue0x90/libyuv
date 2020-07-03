@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1be4a6_662e8cd6",
+        "filename": "luci-scheduler.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-03T17:55:55Z",
+      "side": 0,
+      "message": "With .star files it seems only the service_account of the parent builder are added in the acls.\nThis plus the acl from the builder bucket.\nAny idea where this gpu account comes from ?",
+      "revId": "c954809e86b66e5bb2e5ea11cae1bb0395f2b20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

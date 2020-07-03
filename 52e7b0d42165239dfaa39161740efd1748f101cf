@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c6c7af_2994e843",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-03T17:55:55Z",
+      "side": 1,
+      "message": "Is this bucket used ?",
+      "revId": "52e7b0d42165239dfaa39161740efd1748f101cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d14946_214a330e",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-03T17:55:55Z",
+      "side": 1,
+      "message": "This is needed for the command lucicfg semantic-diff to run.",
+      "revId": "52e7b0d42165239dfaa39161740efd1748f101cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
