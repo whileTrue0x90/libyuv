@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "febeef4c_bb562488",
+        "filename": "main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-07-06T06:50:42Z",
+      "side": 1,
+      "message": "Let\u0027s extract this into a constant (e.g. https://webrtc.googlesource.com/src/+/refs/heads/infra/config/config.star#13).",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "7b103b2529d0697f2e009a66e0dd9e062a7e2fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7ebb68_d198f3c8",
+        "filename": "main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-07-06T06:50:42Z",
+      "side": 1,
+      "message": "Let\u0027s extract this one as well in a constant like https://webrtc.googlesource.com/src/+/refs/heads/infra/config/config.star#14.\n\nBoth are called \"repo\" in the luci code but one is the git repo while the other is a code review site.",
+      "range": {
+        "startLine": 104,
+        "startChar": 20,
+        "endLine": 104,
+        "endChar": 74
+      },
+      "revId": "7b103b2529d0697f2e009a66e0dd9e062a7e2fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4aeafa_b2a3f778",
+        "filename": "main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-07-06T06:50:42Z",
+      "side": 1,
+      "message": "If this keeps the semantic diff to an empty set let\u0027s keep this but I am wondering why do we need it since we already have the \"try\" bucket.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 1
+      },
+      "revId": "7b103b2529d0697f2e009a66e0dd9e062a7e2fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c00464c_bbcce022",
+        "filename": "main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-07-06T06:50:42Z",
+      "side": 1,
+      "message": "Can we centralize the goma config (so this default + the updates for win and linux) in a function that returns a new dict?\n\nI would like to have it somewhere centralized since both CI and try use the same goma config and it is nice to have all the goma changes in one place.",
+      "range": {
+        "startLine": 217,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 10
+      },
+      "revId": "7b103b2529d0697f2e009a66e0dd9e062a7e2fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
