@@ -158,6 +158,30 @@
       "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777ffc71_1468f351",
+        "filename": "main.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-07T09:59:53Z",
+      "side": 1,
+      "message": "Indeed it was a bit confusing.",
+      "parentUuid": "015d0b4f_c986c829",
+      "range": {
+        "startLine": 264,
+        "startChar": 78,
+        "endLine": 264,
+        "endChar": 85
+      },
+      "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
