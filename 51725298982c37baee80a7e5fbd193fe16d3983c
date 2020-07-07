@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c54d8a05_6e8ff84b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-07-07T09:49:50Z",
+      "side": 1,
+      "message": "Hhm, I don\u0027t see any LED ACL for libyuv (differently from WebRTC) so maybe we need to set up something for it.\n\nCan you send an email to luci-eng@ and mention both errors? I have no idea how to fix them but it looks we are steps closer than before.",
+      "parentUuid": "b779ee61_374d75f9",
+      "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2909ebc_4fa45da3",
         "filename": "main.star",
         "patchSetId": 1
@@ -89,6 +107,30 @@
       "side": 1,
       "message": "I can put Debug, at the end it generates the same code.",
       "parentUuid": "f2909ebc_4fa45da3",
+      "range": {
+        "startLine": 264,
+        "startChar": 78,
+        "endLine": 264,
+        "endChar": 85
+      },
+      "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015d0b4f_c986c829",
+        "filename": "main.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-07-07T09:49:50Z",
+      "side": 1,
+      "message": "It is just because I have seen it in the diff (we were using Debug before), if this is a no-op no need to change.",
+      "parentUuid": "c44c8641_4ad62982",
       "range": {
         "startLine": 264,
         "startChar": 78,
