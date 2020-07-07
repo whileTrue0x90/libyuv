@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b779ee61_374d75f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-07T09:42:18Z",
+      "side": 1,
+      "message": "So I get an Error 403 for the presubmit\nIt\u0027s probably unrelated but I also get an error 403 with led.\n\nled get-builder luci.webrtc.try:presubmit | led edit-recipe-bundle | led launch\n\noriginal error: googleapi: Error 403: User \"user:jleconte@google.com\" is not allowed to schedule tasks in the pool \"luci.flex.try\", see pools.cfg",
+      "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2909ebc_4fa45da3",
         "filename": "main.star",
         "patchSetId": 1
@@ -30,6 +47,30 @@
       "writtenOn": "2020-07-07T09:33:27Z",
       "side": 1,
       "message": "Should this be Debug?",
+      "range": {
+        "startLine": 264,
+        "startChar": 78,
+        "endLine": 264,
+        "endChar": 85
+      },
+      "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44c8641_4ad62982",
+        "filename": "main.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-07T09:42:18Z",
+      "side": 1,
+      "message": "I can put Debug, at the end it generates the same code.",
+      "parentUuid": "f2909ebc_4fa45da3",
       "range": {
         "startLine": 264,
         "startChar": 78,
