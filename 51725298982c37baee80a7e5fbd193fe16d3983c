@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9a19e05_9bf6e46b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2020-07-07T09:24:49Z",
+      "side": 1,
+      "message": "Also cleaned up main.star a bit.",
+      "revId": "51725298982c37baee80a7e5fbd193fe16d3983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
