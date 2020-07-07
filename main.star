@@ -8,6 +8,17 @@ lucicfg.check_version("1.15.0")
 LIBYUV_GIT = "https://chromium.googlesource.com/libyuv/libyuv"
 LIBYUV_GERRIT = "https://chromium-review.googlesource.com/libyuv/libyuv"
 
+GOMA_BACKEND_RBE_PROD = {
+    "server_host": "goma.chromium.org",
+    "use_luci_auth": True,
+}
+
+GOMA_BACKEND_RBE_ATS_PROD = {
+    "server_host": "goma.chromium.org",
+    "use_luci_auth": True,
+    "enable_ats": True,
+}
+
 lucicfg.config(
     lint_checks = ["default"],
     config_dir = ".",
@@ -188,14 +199,27 @@ luci.bucket(
     ],
 )
 
-def get_goma_properties(enable_ats = False):
-    goma_properties = {
-        "server_host": "goma.chromium.org",
-        "use_luci_auth": True,
-    }
-    if enable_ats:
-        goma_properties["enable_ats"] = True
-    return {"$build/goma": goma_properties}
+def get_os_dimensions(os):
+    if os == "android":
+        return {"device_type": "bullhead"}
+    if os == "mac":
+        return {"os": "Mac-10.13", "cpu": "x86-64"}
+    elif os == "win":
+        return {"os": "Windows-10", "cores": "8", "cpu": "x86-64"}
+    elif os == "linux":
+        return {"os": "Ubuntu-16.04", "cores": "8", "cpu": "x86-64"}
+    return {}
+
+def get_os_properties(os):
+    if os == "android":
+        return {"$build/goma": GOMA_BACKEND_RBE_PROD}
+    elif os == "mac":
+        return {"$build/goma": GOMA_BACKEND_RBE_PROD}
+    elif os == "win":
+        return {"$build/goma": GOMA_BACKEND_RBE_ATS_PROD}
+    elif os == "linux":
+        return {"$build/goma": GOMA_BACKEND_RBE_ATS_PROD}
+    return {}
 
 def libyuv_ci_builder(name, dimensions, properties, triggered_by):
     return luci.builder(
@@ -231,47 +255,27 @@ def libyuv_try_builder(name, dimensions, properties, recipe_name = "libyuv/libyu
     )
 
 def ci_builder(name, os, category, short_name = None):
-    dimensions = {"pool": "luci.flex.ci"}
-    properties = {"mastername": "client.libyuv"}
-    if os == "android":
-        dimensions.update({"device_type": "bullhead"})
-        properties.update(get_goma_properties())
-        triggered_by = ["Android Debug"]
-    if os == "mac":
-        dimensions.update({"os": "Mac-10.13", "cpu": "x86-64"})
-        properties.update(get_goma_properties())
-        triggered_by = ["master-gitiles-trigger"]
-    elif os == "win":
-        dimensions.update({"os": "Windows-10", "cores": "8", "cpu": "x86-64"})
-        properties.update(get_goma_properties(enable_ats = True))
-        triggered_by = ["master-gitiles-trigger"]
-    elif os == "linux":
-        dimensions.update({"os": "Ubuntu-16.04", "cores": "8", "cpu": "x86-64"})
-        properties.update(get_goma_properties(enable_ats = True))
-        triggered_by = ["master-gitiles-trigger"]
+    dimensions = get_os_dimensions(os)
+    properties = get_os_properties(os)
 
+    dimensions["pool"] = "luci.flex.ci"
+    properties["mastername"] = "client.libyuv"
+
+    triggered_by = ["master-gitiles-trigger" if os != "android" else "Android Release"]
     libyuv_ci_view(name, category, short_name)
     return libyuv_ci_builder(name, dimensions, properties, triggered_by)
 
 def try_builder(name, os, experiment_percentage = None):
-    dimensions = {"pool": "luci.flex.try"}
-    properties = {"mastername": "tryserver.libyuv"}
-    if os == "android":
-        dimensions.update({"device_type": "bullhead"})
-        properties.update(get_goma_properties())
-    if os == "mac":
-        dimensions.update({"os": "Mac-10.13", "cpu": "x86-64"})
-        properties.update(get_goma_properties())
-    elif os == "win":
-        dimensions.update({"os": "Windows-10", "cores": "8", "cpu": "x86-64"})
-        properties.update(get_goma_properties(enable_ats = True))
-    elif os == "linux":
-        dimensions.update({"os": "Ubuntu-16.04", "cores": "8", "cpu": "x86-64"})
-        properties.update(get_goma_properties(enable_ats = True))
+    dimensions = get_os_dimensions(os)
+    properties = get_os_properties(os)
+
+    dimensions["pool"] = "luci.flex.try"
+    properties["mastername"] = "tryserver.libyuv"
 
     if name == "presubmit":
         recipe_name = "run_presubmit"
-        properties.update({"repo_name": "libyuv", "runhooks": True})
+        properties["repo_name"] = "libyuv"
+        properties["runhooks"] = True
         libyuv_try_job_verifier(name, "config", experiment_percentage)
         return libyuv_try_builder(name, dimensions, properties, recipe_name)
 
