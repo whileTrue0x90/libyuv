@@ -93,6 +93,30 @@
       "revId": "7050e079828891cd1bb84823cf3c30b52960ba2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8e8555_2aeba721",
+        "filename": "source/row_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4261,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-07-13T21:52:09Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a6e3e685_7ae5cbd8",
+      "range": {
+        "startLine": 4260,
+        "startChar": 0,
+        "endLine": 4261,
+        "endChar": 47
+      },
+      "revId": "7050e079828891cd1bb84823cf3c30b52960ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -220,6 +220,24 @@
       "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce1ad25_074e749d",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-07-13T21:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e814d1f1_d46310b2",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
