@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b55218_35e34054",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "LGTM. Thanks for the rollback CL. I noted some changes that we can choose to exclude from the rollback:\n- Improved comments.\n- Reformatting changes",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8225b406_42f12394",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "Frank: In the internal rollback CL, this comment is deleted. In this CL, this comment is added. Which one is right?",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 15
+      },
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94d6023_e4b3b7f3",
+        "filename": "README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "Same question: not sure if \"Version\" should be 1761 or 1762.",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e01bf41_b4f6298f",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "Would you like to not add this blank line back?",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463a3a4f_2ad2ba8e",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "Should the new version be 1761 or 1762? (I don\u0027t know the answer.)",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95aedd43_1761fda6",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2614,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "All the changes in this file seem to be reformatting changes. So you can choose to keep them, especially if they were the results of clang-format.",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e814d1f1_d46310b2",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2020-07-13T16:17:00Z",
+      "side": 1,
+      "message": "We can exclude this file from the rollback because it\u0027s just a reformatting change.",
+      "revId": "b177f1044157dbb3f36a42abb2ae79e90e9d8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
