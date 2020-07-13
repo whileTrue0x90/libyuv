@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8176a3bb_5e9d2e7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-07-13T04:12:53Z",
+      "side": 1,
+      "message": "Rollback of ARGBAttentuate to make rolling into chromium easier.\nThe newer version has different results than the old one on Intel.  It was designed to be compatible with Neon and C code.  But the existing skia unittest expects the Intel specific results, preventing an update.\nThe newer version is also faster.  So it would be good to follow up with the change in the future.",
+      "revId": "97a2dd286bb95c69e37542ef7e304c5115ebe1b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
