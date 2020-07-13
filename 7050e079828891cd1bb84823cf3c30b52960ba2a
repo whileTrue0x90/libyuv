@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dbb287b0_c47e87e1",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4891,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-07-13T21:39:28Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3f838904_ea712f6e",
+      "range": {
+        "startLine": 4891,
+        "startChar": 34,
+        "endLine": 4891,
+        "endChar": 35
+      },
+      "revId": "7050e079828891cd1bb84823cf3c30b52960ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663ff6e1_cb73fc4f",
         "filename": "source/row_win.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-07-13T16:17:00Z",
       "side": 0,
       "message": "Should we keep this comment?",
+      "range": {
+        "startLine": 4260,
+        "startChar": 0,
+        "endLine": 4261,
+        "endChar": 47
+      },
+      "revId": "7050e079828891cd1bb84823cf3c30b52960ba2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e3e685_7ae5cbd8",
+        "filename": "source/row_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4261,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-07-13T21:39:28Z",
+      "side": 0,
+      "message": "yes the comment should be removed.  the rolled back code supports win32",
+      "parentUuid": "663ff6e1_cb73fc4f",
       "range": {
         "startLine": 4260,
         "startChar": 0,
