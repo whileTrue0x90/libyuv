@@ -12,7 +12,7 @@
 
 #include "libyuv/cpu_id.h"
 
-#if defined(__clang__)
+#if defined(__clang__) && !defined(__wasm__)
 #if __has_include(<pthread.h>)
 #define LIBYUV_HAVE_PTHREAD 1
 #endif
