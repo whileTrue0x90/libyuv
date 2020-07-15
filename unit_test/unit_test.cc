@@ -145,8 +145,10 @@ LibYUVConvertTest::LibYUVConvertTest()
       disable_cpu_flags_(1),
       benchmark_cpu_info_(-1) {
   const char* repeat = getenv("LIBYUV_REPEAT");
+  printf("LIBYUV_REPEAT %s\n", repeat);
   if (repeat) {
     benchmark_iterations_ = atoi(repeat);  // NOLINT
+    printf("LIBYUV_REPEAT benchmark_iterations_ %d\n", benchmark_iterations_);
   }
   if (FLAGS_libyuv_repeat) {
     benchmark_iterations_ = FLAGS_libyuv_repeat;
@@ -533,6 +535,7 @@ LibYUVCompareTest::LibYUVCompareTest()
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
 #ifdef LIBYUV_USE_GFLAGS
+  printf("args %d %s", argc, argv[1]);
   // AllowCommandLineParsing allows us to ignore flags passed on to us by
   // Chromium build bots without having to explicitly disable them.
   google::AllowCommandLineReparsing();

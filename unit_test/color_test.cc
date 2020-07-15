@@ -21,8 +21,10 @@
 namespace libyuv {
 
 // TODO(fbarchard): Port high accuracy YUV to RGB to Neon.
-#if !defined(LIBYUV_DISABLE_NEON) && \
-    (defined(__aarch64__) || defined(__ARM_NEON__) || defined(LIBYUV_NEON))
+#if !defined(LIBYUV_DISABLE_NEON) &&                      \
+        (defined(__aarch64__) || defined(__ARM_NEON__) || \
+         defined(LIBYUV_NEON)) ||                         \
+    defined(__wasm__)
 #define ERROR_R 1
 #define ERROR_G 1
 #define ERROR_B 3
@@ -404,7 +406,11 @@ static void YUVHToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
 }
 
 // BT.2020 YUV to RGB reference
-static void YUVRec2020ToRGBReference(int y, int u, int v, int* r, int* g,
+static void YUVRec2020ToRGBReference(int y,
+                                     int u,
+                                     int v,
+                                     int* r,
+                                     int* g,
                                      int* b) {
   *r = RoundToByte((y - 16) * 1.164384 - (v - 128) * -1.67867);
   *g = RoundToByte((y - 16) * 1.164384 - (u - 128) * 0.187326 -
