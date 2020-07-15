@@ -49,6 +49,7 @@ luci.project(
         acl.entry(acl.SCHEDULER_READER, groups = ["all"]),
         acl.entry(acl.SCHEDULER_OWNER, groups = ["project-libyuv-admins"]),
         acl.entry(acl.BUILDBUCKET_READER, groups = ["all"]),
+        acl.entry(acl.BUILDBUCKET_OWNER, groups = ["project-libyuv-admins"]),
     ],
 )
 
@@ -156,9 +157,6 @@ luci.cq_group(
 luci.bucket(
     name = "ci",
     acls = [
-        acl.entry(acl.BUILDBUCKET_OWNER, groups = [
-            "project-libyuv-admins",
-        ]),
         acl.entry(acl.BUILDBUCKET_TRIGGERER, users = [
             "luci-scheduler@appspot.gserviceaccount.com",
         ]),
@@ -167,9 +165,6 @@ luci.bucket(
 luci.bucket(
     name = "try",
     acls = [
-        acl.entry(acl.BUILDBUCKET_OWNER, groups = [
-            "project-libyuv-admins",
-        ]),
         acl.entry(acl.BUILDBUCKET_TRIGGERER, groups = [
             "project-libyuv-tryjob-access",
             "service-account-cq",
@@ -179,22 +174,8 @@ luci.bucket(
 luci.bucket(
     name = "cron",
     acls = [
-        acl.entry(acl.BUILDBUCKET_OWNER, groups = [
-            "project-libyuv-admins",
-        ]),
         acl.entry(acl.BUILDBUCKET_TRIGGERER, users = [
             "luci-scheduler@appspot.gserviceaccount.com",
-        ]),
-    ],
-)
-luci.bucket(
-    name = "master.tryserver.libyuv",
-    acls = [
-        acl.entry(acl.BUILDBUCKET_OWNER, users = [
-            "libyuv@chrome-infra-auth.iam.gserviceaccount.com",
-        ]),
-        acl.entry(acl.BUILDBUCKET_TRIGGERER, groups = [
-            "project-libyuv-tryjob-access",
         ]),
     ],
 )
