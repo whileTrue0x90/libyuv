@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ca2ca5_6670f63f",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2840,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-08-12T17:33:54Z",
+      "side": 1,
+      "message": "ARM code isnt used on MIPS.  But its okay if you want to keep it, to document the difference.\nIn this case you\u0027re using the structure defined for Intel.  We should be careful to ifdef any code like this, to consistently check for arm, else intel and everything else.\nUnless you prefer switch mips to use the ARM versions.\nThe arm versions would normally be simplier, but currently 32 bit and 64 bit are different.  I plan to use the 32 bit arm style constants for 64 bit as well, in the future, so there will just be 1 arm.",
+      "range": {
+        "startLine": 2840,
+        "startChar": 0,
+        "endLine": 2840,
+        "endChar": 44
+      },
+      "revId": "daa255dc123d24d2a123d250e6dff5f496424729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
