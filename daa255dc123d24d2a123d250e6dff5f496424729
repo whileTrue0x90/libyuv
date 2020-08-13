@@ -22,6 +22,30 @@
       "revId": "daa255dc123d24d2a123d250e6dff5f496424729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba208d7_1bc1806c",
+        "filename": "source/row_msa.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2840,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-08-13T12:40:31Z",
+      "side": 1,
+      "message": "Sorry for the oversight, will remove the ifdef here.\nAt present, we just trying to ensure that the implementation of MSA is consistent with C version, so that the libyuv_unittest can pass.",
+      "parentUuid": "a7ca2ca5_6670f63f",
+      "range": {
+        "startLine": 2840,
+        "startChar": 0,
+        "endLine": 2840,
+        "endChar": 44
+      },
+      "revId": "daa255dc123d24d2a123d250e6dff5f496424729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

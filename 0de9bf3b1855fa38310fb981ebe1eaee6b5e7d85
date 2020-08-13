@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "543193ba_edc8708b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2020-08-13T12:40:31Z",
+      "side": 1,
+      "message": "My reply was late and it has been merged.\n\nI will reimplement this function once you unified the constant for 32-bits and 64-bits.",
+      "revId": "0de9bf3b1855fa38310fb981ebe1eaee6b5e7d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
