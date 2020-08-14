@@ -16,6 +16,23 @@
       "revId": "0de9bf3b1855fa38310fb981ebe1eaee6b5e7d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1613674_d6fecff6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-08-14T00:35:16Z",
+      "side": 1,
+      "message": "unrelated, but does mips have a prefetch instruction?\nI\u0027ve found it very effective on arm, and it looks like a win for Intel Atom, so if you have the instruction, I\u0027d suggest adding it to MSA at least.\nOn ARM I did my first pass by replacing every branch done for loops, with a prefetch and branch.  It wasnt the ideal placement, but it let me do all the functions and run a benchmark.\nThen I tried different offsets and found 448 (7 cache lines of 64 byte) was on average the best performance.\n",
+      "revId": "0de9bf3b1855fa38310fb981ebe1eaee6b5e7d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
