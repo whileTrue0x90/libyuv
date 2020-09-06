@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8839188c_d4ccdeaa",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-09-06T08:37:57Z",
+      "side": 1,
+      "message": "I wonder if we should set up something like https://ci.chromium.org/p/webrtc/builders/cron/Auto-roll%20-%20WebRTC%20DEPS to auto-roll Chromium into libyuv daily and leverage the fact that similar errors happens on the Chromium roll into WebRTC so they should be easy to fix when they happen.",
+      "revId": "cf8284c7cd774e10f843ed82ba890e73cb252079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
