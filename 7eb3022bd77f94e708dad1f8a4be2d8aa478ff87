@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6817775_c4e3093d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2020-09-08T16:30:14Z",
+      "side": 1,
+      "message": "led w/o crrev.com/c/2384320: https://chromium-swarm.appspot.com/task?id\u003d4e8739ac714b9f10\nled w/ crrev.com/c/2384320:  https://chromium-swarm.appspot.com/task?id\u003d4e871457aa95db10",
+      "revId": "7eb3022bd77f94e708dad1f8a4be2d8aa478ff87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
