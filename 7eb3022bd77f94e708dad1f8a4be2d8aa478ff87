@@ -33,6 +33,24 @@
       "revId": "7eb3022bd77f94e708dad1f8a4be2d8aa478ff87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a40d8a50_7c075d3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2020-09-09T14:25:53Z",
+      "side": 1,
+      "message": "Unfortunately, I must\u0027ve misremembered -- I thought they were treated as an OR, but that doesn\u0027t appear to be the case here. (Maybe in infradata.)\n\nReverting, then will fix over the next few days.",
+      "parentUuid": "388acc5c_89499d2c",
+      "revId": "7eb3022bd77f94e708dad1f8a4be2d8aa478ff87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
