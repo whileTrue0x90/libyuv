@@ -242,7 +242,7 @@ def ci_builder(name, os, category, short_name = None):
     properties = get_os_properties(os)
 
     dimensions["pool"] = "luci.flex.ci"
-    properties["mastername"] = "client.libyuv"
+    properties["builder_group"] = "client.libyuv"
 
     triggered_by = ["master-gitiles-trigger" if os != "android" else "Android Debug"]
     libyuv_ci_view(name, category, short_name)
@@ -253,7 +253,7 @@ def try_builder(name, os, experiment_percentage = None):
     properties = get_os_properties(os)
 
     dimensions["pool"] = "luci.flex.try"
-    properties["mastername"] = "tryserver.libyuv"
+    properties["builder_group"] = "tryserver.libyuv"
 
     if name == "presubmit":
         recipe_name = "run_presubmit"
