@@ -183,8 +183,6 @@ luci.bucket(
 def get_os_dimensions(os):
     if os == "android":
         return {"device_type": "bullhead"}
-    if os == "ios":
-        return {"os": ["Mac-10.14", "Mac-10.15"], "cpu": "x86-64"}
     if os == "mac":
         return {"os": "Mac-10.13", "cpu": "x86-64"}
     elif os == "win":
@@ -196,7 +194,7 @@ def get_os_dimensions(os):
 def get_os_properties(os):
     if os == "android":
         return {"$build/goma": GOMA_BACKEND_RBE_PROD}
-    elif os in ("ios", "mac"):
+    elif os == "mac":
         return {"$build/goma": GOMA_BACKEND_RBE_PROD}
     elif os == "win":
         return {"$build/goma": GOMA_BACKEND_RBE_ATS_PROD}
@@ -313,8 +311,8 @@ ci_builder("Win64 Debug", "win", "Win|64|Debug", "clg")
 ci_builder("Win64 Debug (Clang)", "win", "Win|64|Debug", "clg")
 ci_builder("Win64 Release", "win", "Win|64|Release")
 ci_builder("Win64 Release (Clang)", "win", "Win|64|Release", "clg")
-ci_builder("iOS ARM64 Debug", "ios", "iOS|ARM64", "dbg")
-ci_builder("iOS ARM64 Release", "ios", "iOS|ARM64", "rel")
+ci_builder("iOS ARM64 Debug", "mac", "iOS|ARM64", "dbg")
+ci_builder("iOS ARM64 Release", "mac", "iOS|ARM64", "rel")
 ci_builder("iOS Debug", "mac", "iOS", "dbg")
 ci_builder("iOS Release", "mac", "iOS", "rel")
 
@@ -323,10 +321,10 @@ try_builder("android_arm64", "android")
 try_builder("android_rel", "android")
 try_builder("android_x64", "linux")
 try_builder("android_x86", "linux")
-try_builder("ios", "ios")
-try_builder("ios_arm64", "ios")
-try_builder("ios_arm64_rel", "ios")
-try_builder("ios_rel", "ios")
+try_builder("ios", "mac")
+try_builder("ios_arm64", "mac")
+try_builder("ios_arm64_rel", "mac")
+try_builder("ios_rel", "mac")
 try_builder("linux", "linux")
 try_builder("linux_asan", "linux")
 try_builder("linux_gcc", "linux", experiment_percentage = 100)
