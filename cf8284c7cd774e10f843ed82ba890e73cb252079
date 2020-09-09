@@ -16,6 +16,24 @@
       "revId": "cf8284c7cd774e10f843ed82ba890e73cb252079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528f554c_ed5cf715",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2020-09-09T02:06:48Z",
+      "side": 1,
+      "message": "I think that exists as https://ci.chromium.org/p/libyuv/builders/cron/DEPS%20Autoroller but it\u0027s been broken for a year.",
+      "parentUuid": "8839188c_d4ccdeaa",
+      "revId": "cf8284c7cd774e10f843ed82ba890e73cb252079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
