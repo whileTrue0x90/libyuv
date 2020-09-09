@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f11ee820_6372f608",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2020-09-09T09:42:36Z",
+      "side": 1,
+      "message": "PTAL.\n\nFYI: This includes style fixes warned by presubmit check. Please let me know if I should revert that part.\nThank you for review in advance,\n- hidehiko",
+      "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
