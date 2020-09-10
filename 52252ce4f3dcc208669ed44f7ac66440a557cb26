@@ -16,6 +16,23 @@
       "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c7cb68_204d36d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2020-09-10T01:16:00Z",
+      "side": 1,
+      "message": "Oh, looks like I mistakenly didn\u0027t add R... Jungshik, could you take a look?\n\nAs for android/ios bot failures, I think they are independent from this CL (because it does not touch any about android/ios part other than \"gn format\"), but if so, please let me know.\nJust in case, re-running CQ+1.\n\nThanks\n- hidehiko",
+      "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
