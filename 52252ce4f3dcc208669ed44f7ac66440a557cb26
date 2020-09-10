@@ -33,6 +33,23 @@
       "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af3ab55a_fc988cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2020-09-10T01:18:16Z",
+      "side": 1,
+      "message": "Oops, totally my bad....\nJungshik, very sorry for spamming. I made another mistake because I\u0027m making similar CLs in mutiple thirdparty repositories...\n\nPatrik, could you take a look as an OWNER?",
+      "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
