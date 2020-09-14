@@ -16,6 +16,23 @@
       "revId": "0ddfdd87642a59b1197cf4d87c023e6ebc2bb965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cff2938f_26be4ad0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1114299
+      },
+      "writtenOn": "2020-09-14T16:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t have Code-Review label permissions",
+      "revId": "0ddfdd87642a59b1197cf4d87c023e6ebc2bb965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
