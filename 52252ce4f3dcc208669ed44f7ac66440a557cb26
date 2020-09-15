@@ -67,6 +67,23 @@
       "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ff6b57c_bd8cb6fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2020-09-15T00:39:47Z",
+      "side": 1,
+      "message": "Hello Frank,\n\nCould you help to review this CL as an OWNER of libyuv?\n\nThanks,\nhidehiko",
+      "revId": "52252ce4f3dcc208669ed44f7ac66440a557cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
