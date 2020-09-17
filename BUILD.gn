@@ -9,6 +9,12 @@
 import("//testing/test.gni")
 import("libyuv.gni")
 
+# Reset sources_assignment_filter for the BUILD.gn file to prevent
+# regression during the migration of Chromium away from the feature.
+# See docs/no_sources_assignment_filter.md for more information.
+# TODO(crbug.com/1018739): remove this when migration is done.
+set_sources_assignment_filter([])
+
 declare_args() {
   # Set to false to disable building with gflags.
   libyuv_use_gflags = true
@@ -104,8 +110,6 @@ static_library("libyuv_internal") {
     # Source Files
     "source/compare.cc",
     "source/compare_common.cc",
-    "source/compare_gcc.cc",
-    "source/compare_win.cc",
     "source/convert.cc",
     "source/convert_argb.cc",
     "source/convert_from.cc",
@@ -121,24 +125,34 @@ static_library("libyuv_internal") {
     "source/rotate_any.cc",
     "source/rotate_argb.cc",
     "source/rotate_common.cc",
-    "source/rotate_gcc.cc",
-    "source/rotate_win.cc",
     "source/row_any.cc",
     "source/row_common.cc",
-    "source/row_gcc.cc",
-    "source/row_win.cc",
     "source/scale.cc",
     "source/scale_any.cc",
     "source/scale_argb.cc",
     "source/scale_common.cc",
-    "source/scale_gcc.cc",
-    "source/scale_win.cc",
     "source/video_common.cc",
   ]
 
   configs += [ ":libyuv_config" ]
   defines = []
   deps = []
+
+  if (is_win) {
+    sources += [
+      "source/compare_win.cc",
+      "source/rotate_win.cc",
+      "source/row_win.cc",
+      "source/scale_win.cc",
+    ]
+  } else {
+    sources += [
+      "source/compare_gcc.cc",
+      "source/rotate_gcc.cc",
+      "source/row_gcc.cc",
+      "source/scale_gcc.cc",
+    ]
+  }
 
   if (libyuv_symbols_visible) {
     configs -= [ "//build/config/gcc:symbol_visibility_hidden" ]
@@ -373,9 +387,7 @@ if (libyuv_include_tests) {
       # sources
       "util/i444tonv12_eg.cc",
     ]
-    deps = [
-      ":libyuv",
-    ]
+    deps = [ ":libyuv" ]
   }
 
   executable("cpuid") {
