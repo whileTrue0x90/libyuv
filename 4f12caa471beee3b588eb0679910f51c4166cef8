@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "eab8de02_9cc2b707",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2020-09-18T08:57:49Z",
+      "side": 1,
+      "message": "Thank you for the review.\n\nHowever, I think I can abandon this CL since we\u0027ve decided to move to an opt-in mechanism in Chromium soon (which will make the addition of set_sources_assignment_filter([]) unnecessary).\n\nSee https://bugs.chromium.org/p/chromium/issues/detail?id\u003d1018739#c69 for details.",
+      "revId": "4f12caa471beee3b588eb0679910f51c4166cef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b006fb90_0fa3a4b3",
         "filename": "BUILD.gn",
         "patchSetId": 1
@@ -33,6 +50,24 @@
       "revId": "4f12caa471beee3b588eb0679910f51c4166cef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f95e8f5_91eb7c11",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2020-09-18T08:57:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b006fb90_0fa3a4b3",
+      "revId": "4f12caa471beee3b588eb0679910f51c4166cef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +91,30 @@
       "revId": "4f12caa471beee3b588eb0679910f51c4166cef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49039f6e_0dc11767",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2020-09-18T08:57:49Z",
+      "side": 1,
+      "message": "Indeed, I think calling set_sources_assignment_filter([]) should be enough for libyuv.\n\nI\u0027m going to soon change Chromium source from an opt-out to an opt-in model with regards set_sources_assignment_filter(). This means that libyuv will soon not inherit global sources assignment filter from Chromium.\n\nThus I think this CL can be abandonned.",
+      "parentUuid": "655752d2_d80246ba",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 3
+      },
+      "revId": "4f12caa471beee3b588eb0679910f51c4166cef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
