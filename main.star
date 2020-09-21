@@ -183,10 +183,8 @@ luci.bucket(
 def get_os_dimensions(os):
     if os == "android":
         return {"device_type": "bullhead"}
-    if os == "ios":
+    if os == "ios" or os == "mac":
         return {"os": "Mac-10.14|Mac-10.15", "cpu": "x86-64"}
-    if os == "mac":
-        return {"os": "Mac-10.13", "cpu": "x86-64"}
     elif os == "win":
         return {"os": "Windows-10", "cores": "8", "cpu": "x86-64"}
     elif os == "linux":
@@ -315,8 +313,8 @@ ci_builder("Win64 Release", "win", "Win|64|Release")
 ci_builder("Win64 Release (Clang)", "win", "Win|64|Release", "clg")
 ci_builder("iOS ARM64 Debug", "ios", "iOS|ARM64", "dbg")
 ci_builder("iOS ARM64 Release", "ios", "iOS|ARM64", "rel")
-ci_builder("iOS Debug", "mac", "iOS", "dbg")
-ci_builder("iOS Release", "mac", "iOS", "rel")
+ci_builder("iOS Debug", "ios", "iOS", "dbg")
+ci_builder("iOS Release", "ios", "iOS", "rel")
 
 try_builder("android", "android")
 try_builder("android_arm64", "android")
