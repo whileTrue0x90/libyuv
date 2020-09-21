@@ -16,6 +16,29 @@
       "revId": "c6c0f5234d60e3f1c8f9ee5c17ed1dd5a533f192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d087965a_8ce4ca9d",
+        "filename": "main.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-09-21T21:00:10Z",
+      "side": 1,
+      "message": "Is this expected to change as well?\n\n(from the CL description I was only expecting the changes above)",
+      "range": {
+        "startLine": 316,
+        "startChar": 24,
+        "endLine": 316,
+        "endChar": 29
+      },
+      "revId": "c6c0f5234d60e3f1c8f9ee5c17ed1dd5a533f192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
