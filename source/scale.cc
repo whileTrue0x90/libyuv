@@ -1670,7 +1670,7 @@ void ScalePlane_16(const uint16_t* src,
   }
   if (dst_width == src_width && filtering != kFilterBox) {
     int dy = FixedDiv(src_height, dst_height);
-    // Arbitrary scale vertically, but unscaled vertically.
+    // Arbitrary scale vertically, but unscaled horizontally.
     ScalePlaneVertical_16(src_height, dst_width, dst_height, src_stride,
                           dst_stride, src, dst, 0, 0, dy, 1, filtering);
     return;
