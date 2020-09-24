@@ -33,6 +33,23 @@
       "revId": "ff11935ac3e610801ae36255580684728f565ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1206dae_0d013140",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-09-24T08:04:36Z",
+      "side": 1,
+      "message": "Benchmark of NV12Scale to half size compared to others\n\nlibyuv_test \u0027--gunit_filter\u003d*DownBy2_Bilinear\u0027 --libyuv_width\u003d640 --libyuv_height\u003d360 --libyuv_repeat\u003d4000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\nNote: Google Test filter \u003d *DownBy2_Bilinear\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 4 tests from 1 test suite.\n[----------] Global test environment set-up.\n[----------] 4 tests from LibYUVScaleTest\n[ RUN      ] LibYUVScaleTest.I420ScaleDownBy2_Bilinear\nfilter 2 -      384 us C -       60 us OPT\n[       OK ] LibYUVScaleTest.I420ScaleDownBy2_Bilinear (243 ms)\n[ RUN      ] LibYUVScaleTest.I444ScaleDownBy2_Bilinear\nfilter 2 -      442 us C -      128 us OPT\n[       OK ] LibYUVScaleTest.I444ScaleDownBy2_Bilinear (520 ms)\n[ RUN      ] LibYUVScaleTest.NV12ScaleDownBy2_Bilinear\nfilter 2 -      272 us C -      131 us OPT\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy2_Bilinear (530 ms)\n[ RUN      ] LibYUVScaleTest.ARGBScaleDownBy2_Bilinear\nfilter 2 -      170 us C -      171 us OPT\n[       OK ] LibYUVScaleTest.ARGBScaleDownBy2_Bilinear (692 ms)\n[----------] 4 tests from LibYUVScaleTest (1987 ms total)\n\n[----------] Global test environment tear-down\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 4 tests from 1 test suite ran. (1988 ms total)\n[  PASSED  ] 4 tests.\n\nThe speed once optimized should be faster than I420\nThis is a profile:\n\nOverhead  Command      Shared Object     Symbol\n  66.68%  libyuv_test  libyuv_test       [.] ScaleUVRowDown2Box_C\n  31.73%  libyuv_test  libyuv_test       [.] ScaleRowDown2Box_AVX2\n   1.09%  libyuv_test  libyuv_test       [.] libyuv::NV12TestFilter\n   0.09%  libyuv_test  libyuv_test       [.] ScalePlane",
+      "revId": "ff11935ac3e610801ae36255580684728f565ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
