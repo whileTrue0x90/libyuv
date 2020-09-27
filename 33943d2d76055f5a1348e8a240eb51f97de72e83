@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6683813_d0dce765",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-09-27T01:06:40Z",
+      "side": 1,
+      "message": "disregard the 32 bit arm build bot failure.  The code is tested on 32 bit arm ok, but not optimized\n\n32 bit on A53\nadbrun -- taskset c0 /google/src/cloud/fbarchard/nv12/google3/blaze-bin/third_party/libyuv/libyuv_test \u0027--gunit_filter\u003d*NV12Scale*Bilinear\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 10 tests from 1 test suite ran. (32578 ms total)\n[----------] 10 tests from LibYUVScaleTest (32577 ms total)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy4_Bilinear (9520 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy3by8_Bilinear (8938 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy3by4_Bilinear (3637 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy2_Bilinear (3031 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy3_Bilinear (3027 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo569x480_Bilinear (2272 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo640x360_Bilinear (915 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo1280x720_Bilinear (713 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo320x240_Bilinear (516 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo1x1_Bilinear (5 ms)\n\n64 bit\nadbrun -- taskset c0 /google/src/cloud/fbarchard/nv12/google3/blaze-bin/third_party/libyuv/libyuv_test \u0027--gunit_filter\u003d*NV12Scale*Bilinear\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n[----------] 11 tests from LibYUVScaleTest (38512 ms total)\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 11 tests from 1 test suite ran. (38512 ms total)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy4_Bilinear (9249 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo1920x1080_Bilinear (8998 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy3by8_Bilinear (6263 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy3_Bilinear (3818 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy3by4_Bilinear (3367 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleDownBy2_Bilinear (2521 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo569x480_Bilinear (2267 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo640x360_Bilinear (804 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo1280x720_Bilinear (654 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo320x240_Bilinear (560 ms)\n[       OK ] LibYUVScaleTest.NV12ScaleTo1x1_Bilinear (5 ms)\n",
+      "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
