@@ -51,6 +51,23 @@
       "revId": "6df715e30f23e907eda5d50ebcfd664fb658c0ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b7633e_2d350141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-09-28T17:58:39Z",
+      "side": 1,
+      "message": "The android 32 bit build breaks on my other CL which implements this very differently.\n\nBut when I look at build history I see a unittest crash on ARGBRect_Unaligned.\nThe function works okay on my android 32 bit builds with blaze, and looking at the code I dont see an issue, but its more plausible.\n",
+      "revId": "6df715e30f23e907eda5d50ebcfd664fb658c0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
