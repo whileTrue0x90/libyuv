@@ -16,6 +16,24 @@
       "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bb600de_dd0946ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-09-28T13:01:56Z",
+      "side": 1,
+      "message": "\u003e disregard the 32 bit arm build bot failure.  The code is tested on 32 bit arm ok, but not optimized\n\u003e \n\u003e 32 bit on A53\n\nFrank, do you think this is a device issue? I see green builds not on this CL https://ci.chromium.org/p/libyuv/builders/try/android/2153.",
+      "parentUuid": "b6683813_d0dce765",
+      "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
