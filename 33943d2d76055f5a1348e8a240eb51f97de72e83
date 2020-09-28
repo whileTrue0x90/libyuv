@@ -70,6 +70,24 @@
       "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fbcb66_b53e9f20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-09-28T19:00:36Z",
+      "side": 1,
+      "message": "This is what I had\ncat ../.gclient\nsolutions \u003d [\n  { \"name\"        : \"src\",\n    \"url\"         : \"https://chromium.googlesource.com/libyuv/libyuv\",\n    \"deps_file\"   : \"DEPS\",\n    \"managed\"     : True,\n    \"custom_deps\" : {\n    },\n    \"safesync_url\": \"\",\n  },\n];\ntarget_os \u003d [\"android\", \"linux\"];\n\nSame error switching to your .gclient\ngn gen out/Release \"--args\u003dis_debug\u003dfalse target_os\u003d\\\"android\\\" target_cpu\u003d\\\"arm64\\\"\"\nERROR at //build/config/python.gni:189:23: Unknown function.\n    _pydeps_entries \u003d filter_exclude(_pydeps_lines, [ \"#*\" ])\n                      ^-------------\nSee //build/config/android/rules.gni:625:5: whence it was called.\n    action_with_pydeps(target_name) {\n    ^--------------------------------\nSee //build/config/android/rules.gni:3894:7: whence it was called.\n      jinja_template(\"${target_name}_manifest\") {\n      ^------------------------------------------\nSee //testing/test.gni:160:7: whence it was called.\n      unittest_apk(_apk_target) {\n      ^--------------------------\nSee //BUILD.gn:266:3: whence it was called.\n  test(\"libyuv_unittest\") {\n  ^------------------------",
+      "parentUuid": "0421d912_1ca8fca0",
+      "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
