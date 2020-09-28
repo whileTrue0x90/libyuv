@@ -52,6 +52,24 @@
       "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0421d912_1ca8fca0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-09-28T18:14:20Z",
+      "side": 1,
+      "message": "I suspect this is because in the .gclient file you don\u0027t have \"android\" in the target OS, here is mine:\n\n$ cat ../.gclient\nsolutions \u003d [\n  { \"name\"        : \"src\",\n    \"url\"         : \"https://chromium.googlesource.com/libyuv/libyuv\",\n    \"deps_file\"   : \"DEPS\",\n    \"managed\"     : True,\n    \"custom_deps\" : {\n    },\n    \"custom_vars\": {},\n  },\n];\ntarget_os \u003d [\"android\", \"unix\"];\n\nCan you try to add \"android\" in the \"target_os\" list and run `gclient sync` before trying to create a new Android out folder with `gn gen`?",
+      "parentUuid": "146dd8f5_863464d9",
+      "revId": "33943d2d76055f5a1348e8a240eb51f97de72e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
