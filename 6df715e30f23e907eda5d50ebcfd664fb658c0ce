@@ -33,6 +33,24 @@
       "revId": "6df715e30f23e907eda5d50ebcfd664fb658c0ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a46d863_5405470a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-09-28T13:05:23Z",
+      "side": 1,
+      "message": "\u003e The android 32 bit bot is broken, but tested manually.  This is 32 bit on Cortex A53\n\nI am not sure it is broken. I see a green build on another CL. We can ask for a reboot of the device but that crash looks real.",
+      "parentUuid": "0c8a0145_150de871",
+      "revId": "6df715e30f23e907eda5d50ebcfd664fb658c0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
