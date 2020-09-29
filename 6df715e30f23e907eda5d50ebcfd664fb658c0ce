@@ -121,6 +121,24 @@
       "revId": "6df715e30f23e907eda5d50ebcfd664fb658c0ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d65d430d_53484d94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-09-29T11:30:26Z",
+      "side": 1,
+      "message": "We need to update Chromium\u0027s DEPS file (at this line https://source.chromium.org/chromium/chromium/src/+/master:DEPS;l\u003d1163;drc\u003d53373bfc90b7266308151a15f1e4564b717c7912) to point at this commit. Usually Frank does that, see for example https://chromium-review.googlesource.com/c/chromium/src/+/1686596.\n\nJust create a Chromium CL with:\n\n$ roll-dep src/third_party/libyuv\n\nAnd it should do everything you need % Frank\u0027s LGTM and a comment in the DEPS file.\n\nWhen it lands, the next Chromium roll into WebRTC will roll it as well.",
+      "parentUuid": "72dd769e_a51ca64c",
+      "revId": "6df715e30f23e907eda5d50ebcfd664fb658c0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
