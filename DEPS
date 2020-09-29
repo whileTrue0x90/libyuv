@@ -5,20 +5,20 @@ gclient_gn_args = [
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '4eeee824110e5613b565b7a51948b63595892f11',
+  'chromium_revision': '0732bcc5d459cc537c05d477f444cc5c29f26248',
   'gn_version': 'git_revision:6f13aaac55a977e1948910942675c69f2b4f7a94',
   'mac_xcode_version': 'default',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '82c761c4fc56c0b2c178e91cb21f19247e2fadb2',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '43b644eec4c1f2cf13aa7759e32a65437408abf2',
   'src/buildtools':
     Var('chromium_git') + '/chromium/src/buildtools' + '@' + '3ff4f5027b4b81a6c9c36d64d71444f2709a4896',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '39aee3c82382a53f63585550c1ff6f818feb046e',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '4d7c5968737dc71979ba8a5ac0f543c214aca56f',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '31389c15391d67343ab466f23793808453c4bb88',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '143232bfac0e822e7c61f82990ffa5ea11fb2aa0',
 
   'src/buildtools/linux64': {
     'packages': [
@@ -61,11 +61,11 @@ deps = {
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + 'd999d54f4bca789543a2eb6c995af2d9b5a1f3ed',
 
   'src/third_party/catapult':
-    Var('chromium_git') + '/catapult.git' + '@' + '0de9874718993c990ed13321720d6065a2f7dcaa',
+    Var('chromium_git') + '/catapult.git' + '@' + '0f6ed710764d9858eb9d2ad2a2f92fde89d1634b',
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'd1580d53b7bc1f244d4eaf797aca0d066fad166c',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '991ead187c148de57990cbeecb9ad35767987a7c',
   'src/third_party/freetype/src':
     Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + '20186d1be6415d1bd7cb79ac56f1b806c26b677c',
   'src/third_party/googletest/src':
@@ -79,7 +79,7 @@ deps = {
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + '720b70524a4424b15fc57e82263568c8ba0496ad',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + 'e11b041f6ee5f60d1f8ba774403dc3fe39ee6046',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + 'd217c44522a7dc2f60da5769858970238211d135',
   'src/tools/swarming_client':
     Var('chromium_git') + '/infra/luci/client-py.git' + '@' + '44c13d73156581ea09b9389001e58c23a4b8d70a',
 
@@ -112,9 +112,9 @@ deps = {
     'condition': 'checkout_android',
   },
   'src/third_party/boringssl/src':
-    'https://boringssl.googlesource.com/boringssl.git' + '@' + 'c947efabcbc38dcf93e8ad0e6a76206cf0ec8072',
+    'https://boringssl.googlesource.com/boringssl.git' + '@' + '3743aafdacff2f7b083615a043a37101f740fa53',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'a278448812fc8edbcbbac000a81ad1337ac93cd0',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '4e5904669f3a02941dafd060685280298dd4ee8d',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -370,7 +370,7 @@ deps = {
       'dep_type': 'cipd',
   },
   'src/third_party/robolectric/robolectric': {
-    'url': Var('chromium_git') + '/external/robolectric.git' + '@' + '5a6468b4525099ebb3e91323894b04d43cf2ae63',
+    'url': Var('chromium_git') + '/external/robolectric.git' + '@' + '96aedab88800adedc6fc5514a6b5654eab71472c',
     'condition': 'checkout_android',
   },
   'src/third_party/sqlite4java': {
@@ -414,7 +414,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + 'fd2ca05612555aadc080dd1e21b790a55a5160ae',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + 'd95b89e41aa9022164867f6c450a5167e7676906',
     'condition': 'checkout_ios'
   },
 
