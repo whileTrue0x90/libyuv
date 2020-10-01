@@ -21,8 +21,6 @@ extern "C" {
 // This module is for Mips MMI.
 #if !defined(LIBYUV_DISABLE_MMI) && defined(_MIPS_ARCH_LOONGSON3A)
 
-// clang-format off
-
 void RGB24ToARGBRow_MMI(const uint8_t* src_rgb24,
                         uint8_t* dst_argb,
                         int width) {
@@ -690,15 +688,12 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
                      uint8_t* dst_v,
                      int width) {
   uint64_t src_rgb1;
-  uint64_t ftmp[13];
-  uint64_t tmp[1];
+  uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0013002500380002;
-  const uint64_t mask_v = 0x00020038002f0009;
+  const uint64_t mask_u = 0x0026004a00700002;
+  const uint64_t mask_v = 0x00020070005e0012;
 
   __asm__ volatile(
-      "dli        %[tmp0],         0x0001000100010001                   \n\t"
-      "dmtc1      %[tmp0],         %[ftmp12]                            \n\t"
       "1:                                                               \n\t"
       "daddu      %[src_rgb1],     %[src_rgb0],       %[src_stride_rgb] \n\t"
       "gsldrc1    %[src0],         0x00(%[src_rgb0])                    \n\t"
@@ -712,8 +707,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest0_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest0_u],      %[dest0_u],        %[value]          \n\t"
       "pinsrh_3   %[dest0_v],      %[src0],           %[value]          \n\t"
@@ -731,8 +725,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -759,8 +752,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest1_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest1_u],      %[dest1_u],        %[value]          \n\t"
       "pinsrh_3   %[dest1_v],      %[src0],           %[value]          \n\t"
@@ -778,8 +770,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -806,8 +797,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest2_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest2_u],      %[dest2_u],        %[value]          \n\t"
       "pinsrh_3   %[dest2_v],      %[src0],           %[value]          \n\t"
@@ -825,8 +815,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -853,8 +842,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest3_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest3_u],      %[dest3_u],        %[value]          \n\t"
       "pinsrh_3   %[dest3_v],      %[src0],           %[value]          \n\t"
@@ -872,8 +860,7 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -911,12 +898,11 @@ void ARGBToUVRow_MMI(const uint8_t* src_rgb0,
         [dest0_u] "=&f"(ftmp[4]), [dest0_v] "=&f"(ftmp[5]),
         [dest1_u] "=&f"(ftmp[6]), [dest1_v] "=&f"(ftmp[7]),
         [dest2_u] "=&f"(ftmp[8]), [dest2_v] "=&f"(ftmp[9]),
-        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11]),
-        [ftmp12] "=&f"(ftmp[12]), [tmp0] "=&r"(tmp[0])
+        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11])
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08), [one] "f"(0x01),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -1006,15 +992,12 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
                      uint8_t* dst_v,
                      int width) {
   uint64_t src_rgb1;
-  uint64_t ftmp[13];
-  uint64_t tmp[1];
+  uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0002003800250013;
-  const uint64_t mask_v = 0x0009002f00380002;
+  const uint64_t mask_u = 0x00020070004a0026;
+  const uint64_t mask_v = 0x0012005e00700002;
 
   __asm__ volatile(
-      "dli        %[tmp0],         0x0001000100010001                   \n\t"
-      "dmtc1      %[tmp0],         %[ftmp12]                            \n\t"
       "1:                                                               \n\t"
       "daddu      %[src_rgb1],     %[src_rgb0],       %[src_stride_rgb] \n\t"
       "gsldrc1    %[src0],         0x00(%[src_rgb0])                    \n\t"
@@ -1028,8 +1011,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[dest0_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest0_u],      %[dest0_u],        %[value]          \n\t"
       "pinsrh_0   %[dest0_v],      %[src0],           %[value]          \n\t"
@@ -1047,8 +1029,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_0   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -1075,8 +1056,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[dest1_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest1_u],      %[dest1_u],        %[value]          \n\t"
       "pinsrh_0   %[dest1_v],      %[src0],           %[value]          \n\t"
@@ -1094,8 +1074,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_0   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -1122,8 +1101,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[dest2_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest2_u],      %[dest2_u],        %[value]          \n\t"
       "pinsrh_0   %[dest2_v],      %[src0],           %[value]          \n\t"
@@ -1141,8 +1119,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]        \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_0   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -1169,8 +1146,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[dest3_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest3_u],      %[dest3_u],        %[value]          \n\t"
       "pinsrh_0   %[dest3_v],      %[src0],           %[value]          \n\t"
@@ -1188,8 +1164,7 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsrl       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_0   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -1227,12 +1202,11 @@ void BGRAToUVRow_MMI(const uint8_t* src_rgb0,
         [dest0_u] "=&f"(ftmp[4]), [dest0_v] "=&f"(ftmp[5]),
         [dest1_u] "=&f"(ftmp[6]), [dest1_v] "=&f"(ftmp[7]),
         [dest2_u] "=&f"(ftmp[8]), [dest2_v] "=&f"(ftmp[9]),
-        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11]),
-        [ftmp12] "=&f"(ftmp[12]), [tmp0] "=&r"(tmp[0])
+        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11])
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08), [one] "f"(0x01),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -1322,15 +1296,12 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
                      uint8_t* dst_v,
                      int width) {
   uint64_t src_rgb1;
-  uint64_t ftmp[13];
-  uint64_t tmp[1];
+  uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0002003800250013;
-  const uint64_t mask_v = 0x0009002F00380002;
+  const uint64_t mask_u = 0x00020070004a0026;
+  const uint64_t mask_v = 0x0012005e00700002;
 
   __asm__ volatile(
-      "dli        %[tmp0],         0x0001000100010001                   \n\t"
-      "dmtc1      %[tmp0],         %[ftmp12]                            \n\t"
       "1:                                                               \n\t"
       "daddu      %[src_rgb1],     %[src_rgb0],       %[src_stride_rgb] \n\t"
       "gsldrc1    %[src0],         0x00(%[src_rgb0])                    \n\t"
@@ -1344,8 +1315,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest0_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest0_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest0_v],      %[dest0_v],        %[value]          \n\t"
@@ -1363,8 +1333,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1391,8 +1360,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest1_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest1_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest1_v],      %[dest1_v],        %[value]          \n\t"
@@ -1410,8 +1378,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1438,8 +1405,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest2_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest2_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest2_v],      %[dest2_v],        %[value]          \n\t"
@@ -1457,8 +1423,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1485,8 +1450,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest3_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest3_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest3_v],      %[dest3_v],        %[value]          \n\t"
@@ -1504,8 +1468,7 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1543,12 +1506,11 @@ void ABGRToUVRow_MMI(const uint8_t* src_rgb0,
         [dest0_u] "=&f"(ftmp[4]), [dest0_v] "=&f"(ftmp[5]),
         [dest1_u] "=&f"(ftmp[6]), [dest1_v] "=&f"(ftmp[7]),
         [dest2_u] "=&f"(ftmp[8]), [dest2_v] "=&f"(ftmp[9]),
-        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11]),
-        [ftmp12] "=&f"(ftmp[12]), [tmp0] "=&r"(tmp[0])
+        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11])
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08), [one] "f"(0x01),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -1638,15 +1600,12 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
                      uint8_t* dst_v,
                      int width) {
   uint64_t src_rgb1;
-  uint64_t ftmp[13];
-  uint64_t tmp[1];
+  uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0013002500380002;
-  const uint64_t mask_v = 0x00020038002f0009;
+  const uint64_t mask_u = 0x0026004a00700002;
+  const uint64_t mask_v = 0x00020070005e0012;
 
   __asm__ volatile(
-      "dli        %[tmp0],         0x0001000100010001                   \n\t"
-      "dmtc1      %[tmp0],         %[ftmp12]                            \n\t"
       "1:                                                               \n\t"
       "daddu      %[src_rgb1],     %[src_rgb0],       %[src_stride_rgb] \n\t"
       "gsldrc1    %[src0],         0x00(%[src_rgb0])                    \n\t"
@@ -1660,8 +1619,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[dest0_u],      %[src0],           %[value]          \n\t"
       "dsrl       %[dest0_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest0_v],      %[dest0_v],        %[value]          \n\t"
@@ -1679,8 +1637,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsrl       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1707,8 +1664,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[dest1_u],      %[src0],           %[value]          \n\t"
       "dsrl       %[dest1_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest1_v],      %[dest1_v],        %[value]          \n\t"
@@ -1726,8 +1682,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsrl       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1754,8 +1709,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[dest2_u],      %[src0],           %[value]          \n\t"
       "dsrl       %[dest2_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest2_v],      %[dest2_v],        %[value]          \n\t"
@@ -1773,8 +1727,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsrl       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1801,8 +1754,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[dest3_u],      %[src0],           %[value]          \n\t"
       "dsrl       %[dest3_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[dest3_v],      %[dest3_v],        %[value]          \n\t"
@@ -1820,8 +1772,7 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
       "paddh      %[src0],         %[src0],           %[src_lo]         \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_0   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsrl       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_3   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -1859,12 +1810,11 @@ void RGBAToUVRow_MMI(const uint8_t* src_rgb0,
         [dest0_u] "=&f"(ftmp[4]), [dest0_v] "=&f"(ftmp[5]),
         [dest1_u] "=&f"(ftmp[6]), [dest1_v] "=&f"(ftmp[7]),
         [dest2_u] "=&f"(ftmp[8]), [dest2_v] "=&f"(ftmp[9]),
-        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11]),
-        [ftmp12] "=&f"(ftmp[12]), [tmp0] "=&r"(tmp[0])
+        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11])
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08), [one] "f"(0x01),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -1958,15 +1908,12 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
                       uint8_t* dst_v,
                       int width) {
   uint64_t src_rgb1;
-  uint64_t ftmp[13];
-  uint64_t tmp[1];
+  uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0013002500380002;
-  const uint64_t mask_v = 0x00020038002f0009;
+  const uint64_t mask_u = 0x0026004a00700002;
+  const uint64_t mask_v = 0x00020070005e0012;
 
   __asm__ volatile(
-      "dli        %[tmp0],         0x0001000100010001                   \n\t"
-      "dmtc1      %[tmp0],         %[ftmp12]                            \n\t"
       "1:                                                               \n\t"
       "daddu      %[src_rgb1],     %[src_rgb0],       %[src_stride_rgb] \n\t"
       "gsldrc1    %[src0],         0x00(%[src_rgb0])                    \n\t"
@@ -1982,8 +1929,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest0_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest0_u],      %[dest0_u],        %[value]          \n\t"
       "pinsrh_3   %[dest0_v],      %[src0],           %[value]          \n\t"
@@ -2003,8 +1949,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -2033,8 +1978,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest1_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest1_u],      %[dest1_u],        %[value]          \n\t"
       "pinsrh_3   %[dest1_v],      %[src0],           %[value]          \n\t"
@@ -2054,8 +1998,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -2084,8 +2027,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest2_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest2_u],      %[dest2_u],        %[value]          \n\t"
       "pinsrh_3   %[dest2_v],      %[src0],           %[value]          \n\t"
@@ -2105,8 +2047,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -2135,8 +2076,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[dest3_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest3_u],      %[dest3_u],        %[value]          \n\t"
       "pinsrh_3   %[dest3_v],      %[src0],           %[value]          \n\t"
@@ -2156,8 +2096,7 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
       "pinsrh_3   %[src_hi],       %[src0],           %[value]          \n\t"
@@ -2195,12 +2134,11 @@ void RGB24ToUVRow_MMI(const uint8_t* src_rgb0,
         [dest0_u] "=&f"(ftmp[4]), [dest0_v] "=&f"(ftmp[5]),
         [dest1_u] "=&f"(ftmp[6]), [dest1_v] "=&f"(ftmp[7]),
         [dest2_u] "=&f"(ftmp[8]), [dest2_v] "=&f"(ftmp[9]),
-        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11]),
-        [ftmp12] "=&f"(ftmp[12]), [tmp0] "=&r"(tmp[0])
+        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11])
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08), [one] "f"(0x01),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -2294,15 +2232,12 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
                     uint8_t* dst_v,
                     int width) {
   uint64_t src_rgb1;
-  uint64_t ftmp[13];
-  uint64_t tmp[1];
+  uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0002003800250013;
-  const uint64_t mask_v = 0x0009002f00380002;
+  const uint64_t mask_u = 0x00020070004a0026;
+  const uint64_t mask_v = 0x0012005e00700002;
 
   __asm__ volatile(
-      "dli        %[tmp0],         0x0001000100010001                   \n\t"
-      "dmtc1      %[tmp0],         %[ftmp12]                            \n\t"
       "1:                                                               \n\t"
       "daddu      %[src_rgb1],     %[src_rgb0],       %[src_stride_rgb] \n\t"
       "gsldrc1    %[src0],         0x00(%[src_rgb0])                    \n\t"
@@ -2318,8 +2253,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest0_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest0_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest0_v],      %[dest0_v],        %[value]          \n\t"
@@ -2339,8 +2273,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -2369,8 +2302,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest1_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest1_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest1_v],      %[dest1_v],        %[value]          \n\t"
@@ -2390,8 +2322,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -2420,8 +2351,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest2_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest2_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest2_v],      %[dest2_v],        %[value]          \n\t"
@@ -2441,8 +2371,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -2471,8 +2400,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[dest3_u],      %[src0],           %[value]          \n\t"
       "dsll       %[dest3_v],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest3_v],      %[dest3_v],        %[value]          \n\t"
@@ -2492,8 +2420,7 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
       "dsll       %[src1],         %[src1],           %[eight]          \n\t"
       "punpckhbh  %[src_hi],       %[src1],           %[zero]           \n\t"
       "paddh      %[src0],         %[src0],           %[src_hi]         \n\t"
-      "paddh      %[src0],         %[src0],           %[ftmp12]         \n\t"
-      "psrlh      %[src0],         %[src0],           %[one]            \n\t"
+      "psrlh      %[src0],         %[src0],           %[two]            \n\t"
       "pinsrh_3   %[src_lo],       %[src0],           %[value]          \n\t"
       "dsll       %[src_hi],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_hi],       %[src_hi],         %[value]          \n\t"
@@ -2531,12 +2458,11 @@ void RAWToUVRow_MMI(const uint8_t* src_rgb0,
         [dest0_u] "=&f"(ftmp[4]), [dest0_v] "=&f"(ftmp[5]),
         [dest1_u] "=&f"(ftmp[6]), [dest1_v] "=&f"(ftmp[7]),
         [dest2_u] "=&f"(ftmp[8]), [dest2_v] "=&f"(ftmp[9]),
-        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11]),
-        [ftmp12] "=&f"(ftmp[12]), [tmp0] "=&r"(tmp[0])
+        [dest3_u] "=&f"(ftmp[10]), [dest3_v] "=&f"(ftmp[11])
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08), [one] "f"(0x01),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -2545,10 +2471,10 @@ void ARGBToYJRow_MMI(const uint8_t* src_argb0, uint8_t* dst_y, int width) {
   uint64_t src, src_hi, src_lo;
   uint64_t dest, dest0, dest1, dest2, dest3;
   uint64_t tmp0, tmp1;
-  const uint64_t shift = 0x08;
-  const uint64_t value = 0x80;
+  const uint64_t shift = 0x07;
+  const uint64_t value = 0x0040;
   const uint64_t mask0 = 0x0;
-  const uint64_t mask1 = 0x0001004D0096001DULL;
+  const uint64_t mask1 = 0x00010026004B000FULL;
 
   __asm__ volatile(
       "1:                                                           \n\t"
@@ -2632,8 +2558,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
   uint64_t src_rgb1;
   uint64_t ftmp[12];
   const uint64_t value = 0x4040;
-  const uint64_t mask_u = 0x0015002a003f0002;
-  const uint64_t mask_v = 0x0002003f0035000a;
+  const uint64_t mask_u = 0x002b0054007f0002;
+  const uint64_t mask_v = 0x0002007f006b0014;
 
   __asm__ volatile(
       "1:                                                               \n\t"
@@ -2646,8 +2572,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[dest0_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest0_u],      %[dest0_u],        %[value]          \n\t"
@@ -2663,8 +2589,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
@@ -2689,8 +2615,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[dest1_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest1_u],      %[dest1_u],        %[value]          \n\t"
@@ -2706,8 +2632,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
@@ -2732,8 +2658,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[dest2_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest2_u],      %[dest2_u],        %[value]          \n\t"
@@ -2749,8 +2675,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
@@ -2775,8 +2701,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[dest3_u],      %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[dest3_u],      %[dest3_u],        %[value]          \n\t"
@@ -2792,8 +2718,8 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       "punpckhbh  %[src_hi],       %[src0],           %[zero]           \n\t"
       "punpcklbh  %[src0],         %[src1],           %[zero]           \n\t"
       "punpckhbh  %[src1],         %[src1],           %[zero]           \n\t"
-      "paddh      %[src0],         %[src_lo],         %[src0]           \n\t"
-      "paddh      %[src1],         %[src_hi],         %[src1]           \n\t"
+      "pavgh      %[src0],         %[src_lo],         %[src0]           \n\t"
+      "pavgh      %[src1],         %[src_hi],         %[src1]           \n\t"
       "pavgh      %[src0],         %[src0],           %[src1]           \n\t"
       "dsll       %[src_lo],       %[src0],           %[sixteen]        \n\t"
       "pinsrh_0   %[src_lo],       %[src_lo],         %[value]          \n\t"
@@ -2836,7 +2762,7 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb0,
       : [src_rgb0] "r"(src_rgb0), [src_stride_rgb] "r"(src_stride_rgb),
         [dst_u] "r"(dst_u), [dst_v] "r"(dst_v), [width] "r"(width),
         [mask_u] "f"(mask_u), [mask_v] "f"(mask_v), [value] "f"(value),
-        [zero] "f"(0x00), [eight] "f"(0x08),
+        [zero] "f"(0x00), [eight] "f"(0x08), [two] "f"(0x02),
         [sixteen] "f"(0x10)
       : "memory");
 }
@@ -4126,10 +4052,10 @@ void ARGBGrayRow_MMI(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
   uint64_t tmp0, tmp1;
   const uint64_t mask0 = 0x0;
   const uint64_t mask1 = 0x01;
-  const uint64_t mask2 = 0x0080004D0096001DULL;
+  const uint64_t mask2 = 0x00400026004B000FULL;
   const uint64_t mask3 = 0xFF000000FF000000ULL;
   const uint64_t mask4 = ~mask3;
-  const uint64_t shift = 0x08;
+  const uint64_t shift = 0x07;
 
   __asm__ volatile(
       "1:                                                           \n\t"
@@ -4852,9 +4778,7 @@ void J400ToARGBRow_MMI(const uint8_t* src_y, uint8_t* dst_argb, int width) {
       : "memory");
 }
 
-// TODO - respect YuvConstants
-void I400ToARGBRow_MMI(const uint8_t* src_y, uint8_t* rgb_buf,
-                       const struct YuvConstants*, int width) {
+void I400ToARGBRow_MMI(const uint8_t* src_y, uint8_t* rgb_buf, int width) {
   uint64_t src, src_lo, src_hi, dest, dest_lo, dest_hi;
   const uint64_t mask0 = 0x0;
   const uint64_t mask1 = 0x55;
@@ -4988,10 +4912,10 @@ void MirrorRow_MMI(const uint8_t* src, uint8_t* dst, int width) {
       : "memory");
 }
 
-void MirrorSplitUVRow_MMI(const uint8_t* src_uv,
-                          uint8_t* dst_u,
-                          uint8_t* dst_v,
-                          int width) {
+void MirrorUVRow_MMI(const uint8_t* src_uv,
+                     uint8_t* dst_u,
+                     uint8_t* dst_v,
+                     int width) {
   uint64_t src0, src1, dest0, dest1;
   const uint64_t mask0 = 0x00ff00ff00ff00ffULL;
   const uint64_t mask1 = 0x1b;
@@ -7831,7 +7755,6 @@ void ARGBSetRow_MMI(uint8_t* dst_argb, uint32_t v32, int width) {
     : "memory"
   );
 }
-// clang-format on
 
 // 10 bit YUV to ARGB
 #endif  // !defined(LIBYUV_DISABLE_MMI) && defined(_MIPS_ARCH_LOONGSON3A)

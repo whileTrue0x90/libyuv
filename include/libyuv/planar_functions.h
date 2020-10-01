@@ -105,19 +105,6 @@ void MergeUVPlane(const uint8_t* src_u,
                   int width,
                   int height);
 
-// Scale U and V to half width and height and merge into interleaved UV plane.
-// width and height are source size, allowing odd sizes.
-// Use for converting I444 or I422 to NV12.
-LIBYUV_API
-void HalfMergeUVPlane(const uint8_t* src_u,
-                      int src_stride_u,
-                      const uint8_t* src_v,
-                      int src_stride_v,
-                      uint8_t* dst_uv,
-                      int dst_stride_uv,
-                      int width,
-                      int height);
-
 // Swap U and V channels in interleaved UV plane.
 LIBYUV_API
 void SwapUVPlane(const uint8_t* src_uv,
@@ -315,22 +302,6 @@ int I400Mirror(const uint8_t* src_y,
                int height);
 
 // Alias
-#define NV12ToNV12Mirror NV12Mirror
-
-// NV12 mirror.
-LIBYUV_API
-int NV12Mirror(const uint8_t* src_y,
-               int src_stride_y,
-               const uint8_t* src_uv,
-               int src_stride_uv,
-               uint8_t* dst_y,
-               int dst_stride_y,
-               uint8_t* dst_uv,
-               int dst_stride_uv,
-               int width,
-               int height);
-
-// Alias
 #define ARGBToARGBMirror ARGBMirror
 
 // ARGB mirror.
@@ -342,35 +313,56 @@ int ARGBMirror(const uint8_t* src_argb,
                int width,
                int height);
 
-// Alias
-#define RGB24ToRGB24Mirror RGB24Mirror
-
-// RGB24 mirror.
+// Convert NV12 to RGB565.
 LIBYUV_API
-int RGB24Mirror(const uint8_t* src_rgb24,
-                int src_stride_rgb24,
-                uint8_t* dst_rgb24,
-                int dst_stride_rgb24,
-                int width,
-                int height);
-
-// Mirror a plane of data.
-LIBYUV_API
-void MirrorPlane(const uint8_t* src_y,
+int NV12ToRGB565(const uint8_t* src_y,
                  int src_stride_y,
-                 uint8_t* dst_y,
-                 int dst_stride_y,
+                 const uint8_t* src_uv,
+                 int src_stride_uv,
+                 uint8_t* dst_rgb565,
+                 int dst_stride_rgb565,
                  int width,
                  int height);
 
-// Mirror a plane of UV data.
+// I422ToARGB is in convert_argb.h
+// Convert I422 to BGRA.
 LIBYUV_API
-void MirrorUVPlane(const uint8_t* src_uv,
-                   int src_stride_uv,
-                   uint8_t* dst_uv,
-                   int dst_stride_uv,
-                   int width,
-                   int height);
+int I422ToBGRA(const uint8_t* src_y,
+               int src_stride_y,
+               const uint8_t* src_u,
+               int src_stride_u,
+               const uint8_t* src_v,
+               int src_stride_v,
+               uint8_t* dst_bgra,
+               int dst_stride_bgra,
+               int width,
+               int height);
+
+// Convert I422 to ABGR.
+LIBYUV_API
+int I422ToABGR(const uint8_t* src_y,
+               int src_stride_y,
+               const uint8_t* src_u,
+               int src_stride_u,
+               const uint8_t* src_v,
+               int src_stride_v,
+               uint8_t* dst_abgr,
+               int dst_stride_abgr,
+               int width,
+               int height);
+
+// Convert I422 to RGBA.
+LIBYUV_API
+int I422ToRGBA(const uint8_t* src_y,
+               int src_stride_y,
+               const uint8_t* src_u,
+               int src_stride_u,
+               const uint8_t* src_v,
+               int src_stride_v,
+               uint8_t* dst_rgba,
+               int dst_stride_rgba,
+               int width,
+               int height);
 
 // Alias
 #define RGB24ToRAW RAWToRGB24

@@ -32,12 +32,13 @@ config("libyuv_config") {
 # This target is built when no specific target is specified on the command line.
 group("default") {
   testonly = true
-  deps = [ ":libyuv" ]
+  deps = [
+    ":libyuv",
+  ]
   if (libyuv_include_tests) {
     deps += [
       ":compare",
       ":cpuid",
-      ":i444tonv12_eg",
       ":libyuv_unittest",
       ":psnr",
       ":yuvconvert",
@@ -51,9 +52,13 @@ group("libyuv") {
 
   if (is_win && target_cpu == "x64") {
     # Compile with clang in order to get inline assembly
-    public_deps = [ ":libyuv_internal(//build/toolchain/win:win_clang_x64)" ]
+    public_deps = [
+      ":libyuv_internal(//build/toolchain/win:win_clang_x64)",
+    ]
   } else {
-    public_deps = [ ":libyuv_internal" ]
+    public_deps = [
+      ":libyuv_internal",
+    ]
   }
 
   if (libyuv_use_neon) {
@@ -97,7 +102,6 @@ static_library("libyuv_internal") {
     "include/libyuv/row.h",
     "include/libyuv/scale.h",
     "include/libyuv/scale_argb.h",
-    "include/libyuv/scale_uv.h",
     "include/libyuv/scale_row.h",
     "include/libyuv/version.h",
     "include/libyuv/video_common.h",
@@ -131,7 +135,6 @@ static_library("libyuv_internal") {
     "source/scale.cc",
     "source/scale_any.cc",
     "source/scale_argb.cc",
-    "source/scale_uv.cc",
     "source/scale_common.cc",
     "source/scale_gcc.cc",
     "source/scale_win.cc",
@@ -173,9 +176,6 @@ static_library("libyuv_internal") {
       "-ffp-contract=fast",  # Enable fma vectorization for NEON.
     ]
   }
-  if (!libyuv_use_mmi) {
-    defines += [ "LIBYUV_DISABLE_MMI" ]
-  }
 }
 
 if (libyuv_use_neon) {
@@ -192,7 +192,9 @@ if (libyuv_use_neon) {
       "source/scale_neon64.cc",
     ]
 
-    deps = [ ":libyuv_internal" ]
+    deps = [
+      ":libyuv_internal",
+    ]
 
     public_configs = [ ":libyuv_config" ]
 
@@ -223,7 +225,9 @@ if (libyuv_use_msa) {
       "source/scale_msa.cc",
     ]
 
-    deps = [ ":libyuv_internal" ]
+    deps = [
+      ":libyuv_internal",
+    ]
 
     public_configs = [ ":libyuv_config" ]
   }
@@ -239,7 +243,9 @@ if (libyuv_use_mmi) {
       "source/scale_mmi.cc",
     ]
 
-    deps = [ ":libyuv_internal" ]
+    deps = [
+      ":libyuv_internal",
+    ]
 
     public_configs = [ ":libyuv_config" ]
   }
@@ -269,6 +275,8 @@ if (libyuv_include_tests) {
     testonly = true
 
     sources = [
+      # sources
+      # headers
       "unit_test/basictypes_test.cc",
       "unit_test/color_test.cc",
       "unit_test/compare_test.cc",
@@ -280,7 +288,6 @@ if (libyuv_include_tests) {
       "unit_test/rotate_argb_test.cc",
       "unit_test/rotate_test.cc",
       "unit_test/scale_argb_test.cc",
-      "unit_test/scale_uv_test.cc",
       "unit_test/scale_test.cc",
       "unit_test/unit_test.cc",
       "unit_test/unit_test.h",
@@ -300,10 +307,12 @@ if (libyuv_include_tests) {
 
     configs += [ ":libyuv_unittest_warnings_config" ]
 
-    public_deps = [ "//testing/gtest" ]
+    public_deps = [
+      "//testing/gtest",
+    ]
     public_configs = [ ":libyuv_unittest_config" ]
 
-    if (is_linux || is_chromeos) {
+    if (is_linux) {
       cflags = [ "-fexceptions" ]
     }
     if (is_ios) {
@@ -340,8 +349,10 @@ if (libyuv_include_tests) {
       # sources
       "util/compare.cc",
     ]
-    deps = [ ":libyuv" ]
-    if (is_linux || is_chromeos) {
+    deps = [
+      ":libyuv",
+    ]
+    if (is_linux) {
       cflags = [ "-fexceptions" ]
     }
   }
@@ -351,8 +362,10 @@ if (libyuv_include_tests) {
       # sources
       "util/yuvconvert.cc",
     ]
-    deps = [ ":libyuv" ]
-    if (is_linux || is_chromeos) {
+    deps = [
+      ":libyuv",
+    ]
+    if (is_linux) {
       cflags = [ "-fexceptions" ]
     }
   }
@@ -364,21 +377,13 @@ if (libyuv_include_tests) {
       "util/psnr_main.cc",
       "util/ssim.cc",
     ]
-    deps = [ ":libyuv" ]
+    deps = [
+      ":libyuv",
+    ]
 
     if (!is_ios && !libyuv_disable_jpeg) {
       defines = [ "HAVE_JPEG" ]
     }
-  }
-
-  executable("i444tonv12_eg") {
-    sources = [
-      # sources
-      "util/i444tonv12_eg.cc",
-    ]
-    deps = [
-      ":libyuv",
-    ]
   }
 
   executable("cpuid") {
@@ -386,6 +391,8 @@ if (libyuv_include_tests) {
       # sources
       "util/cpuid.c",
     ]
-    deps = [ ":libyuv" ]
+    deps = [
+      ":libyuv",
+    ]
   }
 }
