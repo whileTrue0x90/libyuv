@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d93041_06f2777c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-10-01T23:06:11Z",
+      "side": 1,
+      "message": "improves performance of scaling a little in cases of small image that is already cached.",
+      "revId": "bc9ceb91a5dee3a3fd973fec950e7e9d0a40e188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
