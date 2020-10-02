@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c266e02_8e77cf19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1234969
+      },
+      "writtenOn": "2020-10-02T07:49:16Z",
+      "side": 1,
+      "message": "LGTM\nHovewer, I can\u0027t Code-Review this one for some reason.\n",
+      "revId": "76542c949ba0007bc26acf519a65855665024ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
