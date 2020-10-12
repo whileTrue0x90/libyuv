@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0440fc6_bc1b1d5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-10-12T19:49:40Z",
+      "side": 1,
+      "message": "On Intel Skylake X\nWas\nUVScaleDownBy2_None (357 ms)\nUVScaleDownBy2_Linear (888 ms)\nUVScaleDownBy2_Bilinear (1425 ms)\nUVScaleDownBy2_Box (1420 ms)\nNow\nUVScaleDownBy2_None (355 ms)\nUVScaleDownBy2_Linear (346 ms)\nUVScaleDownBy2_Bilinear (370 ms)\nUVScaleDownBy2_Box (371 ms)\n",
+      "revId": "ce9ba8bba15d40a7e2ca25fc22a68b34af7017b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
