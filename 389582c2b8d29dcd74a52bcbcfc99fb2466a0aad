@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8770679_5e28fd03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-10-13T21:57:48Z",
+      "side": 1,
+      "message": "gn gen out/Release --args\u003dis_debug\u003dfalse\nninja -v -C out/Release\nout/Release/libyuv_unittest \u0027--gtest_filter\u003d*ScaleDownBy4_Box\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n\nProfile of NV12 shows\n  57.50%  libyuv_unittest  libyuv_unittest     [.] ScaleRowDown4Box_AVX2\n  40.05%  libyuv_unittest  libyuv_unittest     [.] ScaleUVRowDown2Box_SSSE3\n",
+      "revId": "389582c2b8d29dcd74a52bcbcfc99fb2466a0aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
