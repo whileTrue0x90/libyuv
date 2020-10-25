@@ -5,20 +5,20 @@ gclient_gn_args = [
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': 'df9aecfc0bf31d97548418ca67e694f57c153c65',
+  'chromium_revision': 'f21d56e193b440016da5205cdb3449ed660cba51',
   'gn_version': 'git_revision:6f13aaac55a977e1948910942675c69f2b4f7a94',
   'mac_xcode_version': 'default',
 }
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + 'aef2923289390336e7ec8c1570453c9eee3cd475',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '14dc45bec730e9132e0f5aab1acbd4dce40954f0',
   'src/buildtools':
     Var('chromium_git') + '/chromium/src/buildtools' + '@' + '4be464e050b3d05060471788f926b34c641db9fd',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '6965df0f40c027d10c30cdf9e842cdc0ae57022c',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '3a9713b0fd0d519e77aa86a0c1ef15d6de94effd',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'f5ac67cb854ec30c396d27f526981099093165f9',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '4b3e1d4ff49ce4a3b2b9285fe51e192798d00b7f',
 
   'src/buildtools/linux64': {
     'packages': [
@@ -79,7 +79,7 @@ deps = {
   'src/third_party/yasm/source/patched-yasm':
     Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + '720b70524a4424b15fc57e82263568c8ba0496ad',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + '45ad2894c39466d26700ec811f0f7c22f8bc97f5',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '730b69855b20c3b90b1e4d7ad052f11ed3c2bc38',
   'src/tools/swarming_client':
     Var('chromium_git') + '/infra/luci/client-py.git' + '@' + 'd46ea7635f2911208268170512cb611412488fd8',
 
@@ -114,7 +114,7 @@ deps = {
   'src/third_party/boringssl/src':
     'https://boringssl.googlesource.com/boringssl.git' + '@' + 'a673d02458b1b7d897084266b93d5c610e36bd17',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'e54b164faf7ec01ecbaa5d59b289f0a5aeb51a09',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '65cd5ddb35251b39c58e21031e7d652b8f32c3b0',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
