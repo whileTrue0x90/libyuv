@@ -76,8 +76,6 @@ deps = {
     Var('chromium_git') + '/chromium/deps/libjpeg_turbo.git' + '@' + 'd5148db386ceb4a608058320071cbed890bd6ad2',
   'src/third_party/nasm':
     Var('chromium_git') + '/chromium/deps/nasm.git' + '@' + '19f3fad68da99277b2882939d3b2fa4c4b8d51d9',
-  'src/third_party/yasm/source/patched-yasm':
-    Var('chromium_git') + '/chromium/deps/yasm/patched-yasm.git' + '@' + '720b70524a4424b15fc57e82263568c8ba0496ad',
   'src/tools':
     Var('chromium_git') + '/chromium/src/tools' + '@' + '72035b43be1620ac058061bfb6f58d3a51d3bcc3',
   'src/tools/swarming_client':
@@ -416,13 +414,6 @@ deps = {
   'src/ios': {
     'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '5900cb114e36aeff8db416b8436aa0e91632afa5',
     'condition': 'checkout_ios'
-  },
-
-  # Win deps:
-  # Dependencies used by libjpeg-turbo
-  'src/third_party/yasm/binaries': {
-    'url': Var('chromium_git') + '/chromium/deps/yasm/binaries.git' + '@' + '52f9b3f4b0aa06da24ef8b123058bb61ee468881',
-    'condition': 'checkout_win',
   },
 
   # === ANDROID_DEPS Generated Code Start ===
