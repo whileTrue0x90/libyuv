@@ -16,6 +16,23 @@
       "message": "Hello, I wrote a small patch to fix DEPS. PTAL.",
       "revId": "73435b3f04d1f8f3027e749827a13a7656599db3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9caae56c_5af1bff0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-11-03T19:28:12Z",
+      "side": 1,
+      "message": "LGTM.  Thanks!  Left overs from when we considered using yasm for win64 assembly.",
+      "revId": "73435b3f04d1f8f3027e749827a13a7656599db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
