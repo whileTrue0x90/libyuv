@@ -44,6 +44,7 @@ LOCAL_OBJ_FILES := \
 	source/row_gcc.o           \
 	source/row_mmi.o           \
 	source/row_msa.o           \
+	source/row_lasx.o          \
 	source/row_neon.o          \
 	source/row_neon64.o        \
 	source/row_win.o           \
