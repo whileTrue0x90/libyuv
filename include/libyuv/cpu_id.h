@@ -51,6 +51,11 @@ static const int kCpuHasMIPS = 0x400000;
 static const int kCpuHasMSA = 0x800000;
 static const int kCpuHasMMI = 0x1000000;
 
+// These flags are only valid on LOONGARCH processors.
+static const int kCpuHasLOONGARCH = 0x2000000;
+static const int kCpuHasLSX = 0x4000000;
+static const int kCpuHasLASX = 0x8000000;
+
 // Optional init function. TestCpuFlag does an auto-init.
 // Returns cpu_info flags.
 LIBYUV_API
