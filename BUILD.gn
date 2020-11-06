@@ -69,6 +69,14 @@ group("libyuv") {
     deps += [ ":libyuv_mmi" ]
   }
 
+  if (libyuv_use_lsx) {
+    deps += [ ":libyuv_lsx" ]
+  }
+
+  if (libyuv_use_lasx) {
+    deps += [ ":libyuv_lasx" ]
+  }
+
   if (!is_ios && !libyuv_disable_jpeg) {
     # Make sure that clients of libyuv link with libjpeg. This can't go in
     # libyuv_internal because in Windows x64 builds that will generate a clang
@@ -238,6 +246,31 @@ if (libyuv_use_mmi) {
       "source/rotate_mmi.cc",
       "source/row_mmi.cc",
       "source/scale_mmi.cc",
+    ]
+
+    deps = [ ":libyuv_internal" ]
+
+    public_configs = [ ":libyuv_config" ]
+  }
+}
+
+if (libyuv_use_lsx) {
+  static_library("libyuv_lsx") {
+    sources = [
+      # LASX Source Files
+    ]
+
+    deps = [ ":libyuv_internal" ]
+
+    public_configs = [ ":libyuv_config" ]
+  }
+}
+
+if (libyuv_use_lasx) {
+  static_library("libyuv_lasx") {
+    sources = [
+      # LASX Source Files
+      "source/row_lasx.cc",
     ]
 
     deps = [ ":libyuv_internal" ]
