@@ -65,8 +65,16 @@ group("libyuv") {
     deps += [ ":libyuv_msa" ]
   }
 
+  if (libyuv_use_lasx) {
+    deps += [ ":libyuv_lasx" ]
+  }
+
   if (libyuv_use_mmi) {
     deps += [ ":libyuv_mmi" ]
+  }
+
+  if (libyuv_use_lsx) {
+    deps += [ ":libyuv_lsx" ]
   }
 
   if (!is_ios && !libyuv_disable_jpeg) {
@@ -230,6 +238,19 @@ if (libyuv_use_msa) {
   }
 }
 
+if (libyuv_use_lasx) {
+  static_library("libyuv_lasx") {
+    sources = [
+      # LASX Source Files
+      "source/row_lasx.cc",
+    ]
+
+    deps = [ ":libyuv_internal" ]
+
+    public_configs = [ ":libyuv_config" ]
+  }
+}
+
 if (libyuv_use_mmi) {
   static_library("libyuv_mmi") {
     sources = [
@@ -238,6 +259,18 @@ if (libyuv_use_mmi) {
       "source/rotate_mmi.cc",
       "source/row_mmi.cc",
       "source/scale_mmi.cc",
+    ]
+
+    deps = [ ":libyuv_internal" ]
+
+    public_configs = [ ":libyuv_config" ]
+  }
+}
+
+if (libyuv_use_lsx) {
+  static_library("libyuv_lsx") {
+    sources = [
+      # LASX Source Files
     ]
 
     deps = [ ":libyuv_internal" ]

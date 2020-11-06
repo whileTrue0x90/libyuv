@@ -197,6 +197,28 @@ LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name) {
   return flag;
 }
 
+// TODO(fbarchard): Consider read_loongarch_ir().
+LIBYUV_API SAFEBUFFERS int LoongarchCpuCaps(const char* cpuinfo_name) {
+  char cpuinfo_line[512];
+  int flag = 0x0;
+  FILE* f = fopen(cpuinfo_name, "r");
+  if (!f) {
+    // Assume nothing if /proc/cpuinfo is unavailable.
+    // This will occur for Chrome sandbox for Pepper or Render process.
+    return 0;
+  }
+  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+    if (memcmp(cpuinfo_line, "model name", 10) == 0) {
+      if (strstr(cpuinfo_line, "Loongson-3A5000")) {
+         flag |= kCpuHasLSX | kCpuHasLASX;
+         break;
+      }
+    }
+  }
+  fclose(f);
+  return flag;
+}
+
 static SAFEBUFFERS int GetCpuFlags(void) {
   int cpu_info = 0;
 #if !defined(__pnacl__) && !defined(__CLR_VER) &&                   \
@@ -238,6 +260,10 @@ static SAFEBUFFERS int GetCpuFlags(void) {
 #if defined(__mips__) && defined(__linux__)
   cpu_info = MipsCpuCaps("/proc/cpuinfo");
   cpu_info |= kCpuHasMIPS;
+#endif
+#if defined(__loongarch__) && defined(__linux__)
+  cpu_info = LoongarchCpuCaps("/proc/cpuinfo");
+  cpu_info |= kCpuHasLOONGARCH;
 #endif
 #if defined(__arm__) || defined(__aarch64__)
 // gcc -mfpu=neon defines __ARM_NEON__
