@@ -9,6 +9,7 @@
 import("//build_overrides/build.gni")
 import("//build/config/arm.gni")
 import("//build/config/mips.gni")
+import("//build/config/loongarch.gni")
 
 declare_args() {
   libyuv_include_tests = !build_with_chromium
@@ -20,4 +21,8 @@ declare_args() {
       (current_cpu == "mips64el" || current_cpu == "mipsel") && mips_use_msa
   libyuv_use_mmi =
       (current_cpu == "mips64el" || current_cpu == "mipsel") && mips_use_mmi
+  libyuv_use_lsx =
+      (current_cpu == "loongarch32" || current_cpu == "loongarch64") && loongarch_use_lsx
+  libyuv_use_lasx =
+      (current_cpu == "loongarch32" || current_cpu == "loongarch64") && loongarch_use_lasx
 }

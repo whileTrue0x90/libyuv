@@ -70,6 +70,15 @@ TEST_F(LibYUVBaseTest, TestCpuHas) {
   int has_mmi = TestCpuFlag(kCpuHasMMI);
   printf("Has MMI %d\n", has_mmi);
 #endif
+
+#if defined(__loongarch__)
+  int has_loongarch = TestCpuFlag(kCpuHasLOONGARCH);
+  printf("Has LOONGARCH %d\n", has_loongarch);
+  int has_lsx = TestCpuFlag(kCpuHasLSX);
+  printf("Has LSX %d\n", has_lsx);
+  int has_lasx = TestCpuFlag(kCpuHasLASX);
+  printf("Has LASX %d\n", has_lasx);
+#endif
 }
 
 TEST_F(LibYUVBaseTest, TestCompilerMacros) {
@@ -148,6 +157,9 @@ TEST_F(LibYUVBaseTest, TestCompilerMacros) {
 #endif
 #ifdef _MIPS_ARCH_LOONGSON3A
   printf("_MIPS_ARCH_LOONGSON3A %d\n", _MIPS_ARCH_LOONGSON3A);
+#endif
+#ifdef __loongarch__
+  printf("__loongarch__ %d\n", __loongarch__);
 #endif
 #ifdef _WIN32
   printf("_WIN32 %d\n", _WIN32);
