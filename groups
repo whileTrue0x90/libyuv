@@ -4,3 +4,4 @@
 global:Registered-Users                 	Logged-in Public Users
 ldap:eng                                	ldap/eng
 mdb:chrome-git-admins                   	mdb/chrome-git-admins
+4d4288efd7d780ff5a35b8cc13fa6ff0f62c06cc	chrome-commit-bot
