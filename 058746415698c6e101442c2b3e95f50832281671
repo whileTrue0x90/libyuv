@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b73f3cbf_94615f7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002030
+      },
+      "writtenOn": "2020-12-24T17:20:23Z",
+      "side": 1,
+      "message": "Looks good wonder why the buffer was initialized the way it was with the for loop?  Could unroll?",
+      "revId": "058746415698c6e101442c2b3e95f50832281671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
