@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a41080b_bed67236",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2020-12-25T20:33:40Z",
+      "side": 1,
+      "message": "Fix for box filter logic switches to bilinear when scaling up vertically.\nPreviously it did switch ti bilinear, but after choosing stepping values, which causes bilinear to step outside the image.\n\nThis change will subtly change the visual quality of upscaling with box filter when down sampling horizontally, and may require adjustments to tests.\n\nSeveral try bots are known to not be working at the moment for libyuv.\nThey can be tested manually, or when this change is rolled into chromium. (next step)",
+      "revId": "074296b2147e7b6dbfb58f179526a5e8130d149e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
