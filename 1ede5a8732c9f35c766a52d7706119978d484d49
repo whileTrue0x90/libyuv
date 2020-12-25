@@ -16,6 +16,23 @@
       "message": "Several try bots are broken.  Rolling deps which hasnt been done in awhile.",
       "revId": "1ede5a8732c9f35c766a52d7706119978d484d49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc8b9cb2_be1feb54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-12-25T20:27:00Z",
+      "side": 1,
+      "message": "We probably need to add more deps to DEPS to fix remaining errors, I can take a look in the next days.",
+      "revId": "1ede5a8732c9f35c766a52d7706119978d484d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
