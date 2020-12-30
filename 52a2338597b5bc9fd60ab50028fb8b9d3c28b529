@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9000239_715f1c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2020-12-30T13:10:15Z",
+      "side": 1,
+      "message": "I tried to refresh more deps, but the situation is still far away form the working state.",
+      "revId": "52a2338597b5bc9fd60ab50028fb8b9d3c28b529",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
