@@ -10,6 +10,7 @@
 
 #include "libyuv/row.h"
 
+#include <math.h>  // For isnan, isinf
 #include <stdio.h>
 #include <string.h>  // For memcpy and memset.
 
@@ -1327,351 +1328,300 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
   }
 }
 
-// TODO(fbarchard): Unify these structures to be platform independent.
-// TODO(fbarchard): Generate SIMD structures from float matrix.
+static __inline constexpr float ClampYuvCoefficient8(float v) noexcept {
+  return (v > 127) ? 127 : ((v < -128) ? -128 : v);
+}
+
+static __inline constexpr int32_t CeilYuvCoefficient(float v) noexcept {
+  return (static_cast<float>(static_cast<int32_t>(v)) == v)
+             ? (static_cast<int32_t>(v))
+             : (static_cast<int32_t>(v) + ((v > 0) ? 1 : 0));
+}
+
+static __inline constexpr int32_t FloorYuvCoefficient(float v) noexcept {
+  return (static_cast<float>(static_cast<int32_t>(v)) == v)
+             ? (static_cast<int32_t>(v))
+             : (static_cast<int32_t>(v) + ((v > 0) ? 0 : 1));
+}
+
+static __inline constexpr int32_t RoundYuvCoefficient(float v) noexcept {
+  return (v > 0) ? FloorYuvCoefficient(v + 0.5f) : CeilYuvCoefficient(v - 0.5f);
+}
+
+// If GCC 4.x, Clang and MSVC inline and repeat the computation
+// for each element, so prevent them inlining these functions.
+#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ <= 4))
+#define PREVENT_INLINE __attribute__((noinline))
+#elif defined(_MSV_VER)
+#define PREVENT_INLINE __declspec(noinline)
+#else
+#define PREVENT_INLINE
+#endif
+
+PREVENT_INLINE
+static constexpr int16_t YuvConstantsKY(float ky) noexcept {
+  return (int16_t)RoundYuvCoefficient(ky * 64 * 256 * 256 / 257);
+}
+
+PREVENT_INLINE
+static constexpr int8_t YuvConstantsKUV(float kuv) noexcept {
+  return (int8_t)RoundYuvCoefficient(ClampYuvCoefficient8(kuv * 64));
+}
+
+PREVENT_INLINE
+static constexpr int16_t YuvConstantsBY(float ky, float by) noexcept {
+  return (int16_t)RoundYuvCoefficient(-ky * by * 64 * 255 + 32);
+}
+
+PREVENT_INLINE
+static constexpr int16_t YuvConstantsBRGB(int16_t by,
+                                          int8_t ku,
+                                          float bu,
+                                          int8_t kv,
+                                          float bv) noexcept {
+  return (int16_t)(by + (int16_t)RoundYuvCoefficient(
+                            (bu * (float)(ku) + bv * (float)(kv)) * 255));
+}
+
+#undef PREVENT_INLINE
+
+// Y contribution to R,G,B.  Scale and bias.
+#define YG YuvConstantsKY(matrix[0][0])
+#define YGB YuvConstantsBY(matrix[0][0], bias[0])
+
+// U and V contributions to R,G,B.
+#define UR YuvConstantsKUV(matrix[0][1])
+#define VR YuvConstantsKUV(matrix[0][2])
+#define UG YuvConstantsKUV(matrix[1][1])
+#define VG YuvConstantsKUV(matrix[1][2])
+#define UB YuvConstantsKUV(matrix[2][1])
+#define VB YuvConstantsKUV(matrix[2][2])
+
+// Bias values to subtract 16 from Y and 128 from U and V.
+#define BR YuvConstantsBRGB(YGB, UR, bias[1], VR, bias[2])
+#define BG YuvConstantsBRGB(YGB, UG, bias[1], VG, bias[2])
+#define BB YuvConstantsBRGB(YGB, UB, bias[1], VB, bias[2])
+
+#if defined(__aarch64__)  // 64 bit arm
+#define URU (uint16_t)(-UR)
+#define VRU (uint16_t)(-VR)
+#define UGU (uint16_t)(UG)
+#define VGU (uint16_t)(VG)
+#define UBU (uint16_t)(-UB)
+#define VBU (uint16_t)(-VB)
+#elif defined(__arm__)  // 32 bit arm
+#define URU (uint8_t)(-UR)
+#define VRU (uint8_t)(-VR)
+#define UGU (uint8_t)(UG)
+#define VGU (uint8_t)(VG)
+#define UBU (uint8_t)(-UB)
+#define VBU (uint8_t)(-VB)
+#endif
+
+// init YuvConstants with matrix and bias that converts YUV to RGB as if using
+// the following code with RGB and YUV within range [0, 1].
+//
+// R = (Y - bias[0]) * matrix[0][0] +
+//     (U - bias[1]) * matrix[0][1] +
+//     (V - bias[2]) * matrix[0][2];
+// G = (Y - bias[0]) * matrix[1][0] +
+//     (U - bias[1]) * matrix[1][1] +
+//     (V - bias[2]) * matrix[1][2];
+// B = (Y - bias[0]) * matrix[2][0] +
+//     (U - bias[1]) * matrix[2][1] +
+//     (V - bias[2]) * matrix[2][2];
+static __inline constexpr struct YuvConstants YuvConstantsFromMatrix(
+    const float matrix[3][3],
+    const float bias[3]) noexcept {
+  // TODO(fbarchard): Unify these structures to be platform independent.
+#if defined(__aarch64__)  // 64 bit arm
+  return {{UBU, VRU, UBU, VRU, UBU, VRU, UBU, VRU},
+          {UBU, VRU, UBU, VRU, UBU, VRU, UBU, VRU},
+          {UGU, VGU, UGU, VGU, UGU, VGU, UGU, VGU},
+          {UGU, VGU, UGU, VGU, UGU, VGU, UGU, VGU},
+          {BB, BG, BR, YGB, 0, 0, 0, 0},
+          {0x0101 * YG, YG, 0, 0}};
+#elif defined(__arm__)  // 32 bit arm
+  return {{UBU, UBU, UBU, UBU, VRU, VRU, VRU, VRU, 0, 0, 0, 0, 0, 0, 0, 0},
+          {UGU, UGU, UGU, UGU, VGU, VGU, VGU, VGU, 0, 0, 0, 0, 0, 0, 0, 0},
+          {BB, BG, BR, YGB, 0, 0, 0, 0},
+          {0x0101 * YG, YG, 0, 0}};
+#else
+  return {{UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB,
+           UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB},
+          {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,
+           UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},
+          {UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR,
+           UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR},
+          {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
+          {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
+          {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
+          {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
+          {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
+           YGB, YGB}};
+#endif
+}
+
+// init YuvConstants with matrix and bias that converts YVU to BGR
+static __inline constexpr struct YuvConstants YvuConstantsFromMatrix(
+    const float matrix[3][3],
+    const float bias[3]) noexcept {
+#if defined(__aarch64__)  // 64 bit arm
+  return {{VRU, UBU, VRU, UBU, VRU, UBU, VRU, UBU},
+          {VRU, UBU, VRU, UBU, VRU, UBU, VRU, UBU},
+          {VGU, UGU, VGU, UGU, VGU, UGU, VGU, UGU},
+          {VGU, UGU, VGU, UGU, VGU, UGU, VGU, UGU},
+          {BR, BG, BB, YGB, 0, 0, 0, 0},
+          {0x0101 * YG, YG, 0, 0}};
+#elif defined(__arm__)  // 32 bit arm
+  return {{VRU, VRU, VRU, VRU, UBU, UBU, UBU, UBU, 0, 0, 0, 0, 0, 0, 0, 0},
+          {VGU, VGU, VGU, VGU, UGU, UGU, UGU, UGU, 0, 0, 0, 0, 0, 0, 0, 0},
+          {BR, BG, BB, YGB, 0, 0, 0, 0},
+          {0x0101 * YG, YG, 0, 0}};
+#else
+  return {{VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR,
+           VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR},
+          {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,
+           VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},
+          {VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB,
+           VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB},
+          {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
+          {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
+          {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
+          {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
+          {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
+           YGB, YGB}};
+#endif
+}
+
+#undef YG
+#undef YGB
+#undef UR
+#undef VR
+#undef UG
+#undef VG
+#undef UB
+#undef VB
+#undef BR
+#undef BG
+#undef BB
+
+#if defined(__aarch64__) || defined(__arm__)
+#undef URU
+#undef VRU
+#undef UGU
+#undef VGU
+#undef UBU
+#undef VBU
+#endif
+
+// Init YuvConstants with custom matrix
+int InitYuvConstantsWithMatrix(struct YuvConstants* yuvconstants,
+                               const float matrix[3][3],
+                               const float bias[3],
+                               int mirror) {
+#if defined(__aarch64__) || defined(__arm__) ||            \
+    (!defined(GCC_HAS_AVX2) && !defined(CLANG_HAS_AVX2) && \
+     !defined(VISUALC_HAS_AVX2))
+  if (!IS_ALIGNED(yuvconstants, 16)) {
+    return -1;
+  }
+#else
+  if (!IS_ALIGNED(yuvconstants, 32)) {
+    return -1;
+  }
+#endif
+
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      if (isnan(matrix[i][j]) || isinf(matrix[i][j])) {
+        return -1;
+      }
+    }
+    if (isnan(bias[i]) || isinf(bias[i])) {
+      return -1;
+    }
+  }
+
+  // currently we require Y contribution to RGB the same
+  if (fabsf(matrix[0][0] - matrix[1][0]) > 0.001 ||
+      fabsf(matrix[0][0] - matrix[2][0]) > 0.001 ||
+      fabsf(matrix[1][0] - matrix[2][0]) > 0.001) {
+    return -1;
+  }
+
+#if defined(__aarch64__) || defined(__arm__)
+  // currently we require U contribution to R and
+  // V contribution to B is 0 on arm
+  if (fabsf(matrix[0][1]) > 0.001 || fabsf(matrix[2][2]) > 0.001) {
+    return -1;
+  }
+#endif
+
+  if (mirror) {
+    *yuvconstants = YvuConstantsFromMatrix(matrix, bias);
+  } else {
+    *yuvconstants = YuvConstantsFromMatrix(matrix, bias);
+  }
+
+  return 0;
+}
 
 // BT.601 YUV to RGB reference
 //  R = (Y - 16) * 1.164              - V * -1.596
 //  G = (Y - 16) * 1.164 - U *  0.391 - V *  0.813
 //  B = (Y - 16) * 1.164 - U * -2.018
-
-// Y contribution to R,G,B.  Scale and bias.
-#define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
-#define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
-
-// U and V contributions to R,G,B.
-#define UB -128 /* max(-128, round(-2.018 * 64)) */
-#define UG 25   /* round(0.391 * 64) */
-#define VG 52   /* round(0.813 * 64) */
-#define VR -102 /* round(-1.596 * 64) */
-
-// Bias values to subtract 16 from Y and 128 from U and V.
-#define BB (UB * 128 + YGB)
-#define BG (UG * 128 + VG * 128 + YGB)
-#define BR (VR * 128 + YGB)
-
-#if defined(__aarch64__)  // 64 bit arm
-const struct YuvConstants SIMD_ALIGNED(kYuvI601Constants) = {
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvuI601Constants) = {
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#elif defined(__arm__)  // 32 bit arm
-const struct YuvConstants SIMD_ALIGNED(kYuvI601Constants) = {
-    {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0},
-    {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvuI601Constants) = {
-    {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0},
-    {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#else
-const struct YuvConstants SIMD_ALIGNED(kYuvI601Constants) = {
-    {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,
-     UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},
-    {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,
-     UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},
-    {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,
-     0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-const struct YuvConstants SIMD_ALIGNED(kYvuI601Constants) = {
-    {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,
-     VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},
-    {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,
-     VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},
-    {0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB,
-     0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-#endif
-
-#undef BB
-#undef BG
-#undef BR
-#undef YGB
-#undef UB
-#undef UG
-#undef VG
-#undef VR
-#undef YG
+const static float I601Matrix[3][3]{{1.164f, 0, -1.596f},
+                                    {1.164f, 0.391f, 0.813f},
+                                    {1.164f, -2.018f, 0}};
+const static float I601Bias[3]{16.0f / 255.0f, 128.0f / 255.0f,
+                               128.0f / 255.0f};
+const struct YuvConstants SIMD_ALIGNED(kYuvI601Constants) =
+    YuvConstantsFromMatrix(I601Matrix, I601Bias);
+const struct YuvConstants SIMD_ALIGNED(kYvuI601Constants) =
+    YvuConstantsFromMatrix(I601Matrix, I601Bias);
 
 // JPEG YUV to RGB reference
 // *  R = Y                - V * -1.40200
 // *  G = Y - U *  0.34414 - V *  0.71414
 // *  B = Y - U * -1.77200
-
-// Y contribution to R,G,B.  Scale and bias.
-#define YG 16320 /* round(1.000 * 64 * 256 * 256 / 257) */
-#define YGB 32   /* 64 / 2 */
-
-// U and V contributions to R,G,B.
-#define UB -113 /* round(-1.77200 * 64) */
-#define UG 22   /* round(0.34414 * 64) */
-#define VG 46   /* round(0.71414  * 64) */
-#define VR -90  /* round(-1.40200 * 64) */
-
-// Bias values to round, and subtract 128 from U and V.
-#define BB (UB * 128 + YGB)
-#define BG (UG * 128 + VG * 128 + YGB)
-#define BR (VR * 128 + YGB)
-
-#if defined(__aarch64__)
-const struct YuvConstants SIMD_ALIGNED(kYuvJPEGConstants) = {
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvuJPEGConstants) = {
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#elif defined(__arm__)
-const struct YuvConstants SIMD_ALIGNED(kYuvJPEGConstants) = {
-    {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0},
-    {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvuJPEGConstants) = {
-    {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0},
-    {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#else
-const struct YuvConstants SIMD_ALIGNED(kYuvJPEGConstants) = {
-    {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,
-     UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},
-    {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,
-     UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},
-    {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,
-     0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-const struct YuvConstants SIMD_ALIGNED(kYvuJPEGConstants) = {
-    {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,
-     VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},
-    {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,
-     VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},
-    {0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB,
-     0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-#endif
-
-#undef BB
-#undef BG
-#undef BR
-#undef YGB
-#undef UB
-#undef UG
-#undef VG
-#undef VR
-#undef YG
+const static float JPEGMatrix[3][3]{{1, 0, -1.40200f},
+                                    {1, 0.34414f, 0.71414f},
+                                    {1, -1.77200f, 0}};
+const static float JPEGBias[3]{0, 128.0f / 255.0f, 128.0f / 255.0f};
+const struct YuvConstants SIMD_ALIGNED(kYuvJPEGConstants) =
+    YuvConstantsFromMatrix(JPEGMatrix, JPEGBias);
+const struct YuvConstants SIMD_ALIGNED(kYvuJPEGConstants) =
+    YvuConstantsFromMatrix(JPEGMatrix, JPEGBias);
 
 // BT.709 YUV to RGB reference
 //  R = (Y - 16) * 1.164              - V * -1.793
 //  G = (Y - 16) * 1.164 - U *  0.213 - V *  0.533
 //  B = (Y - 16) * 1.164 - U * -2.112
 // See also http://www.equasys.de/colorconversion.html
-
-// Y contribution to R,G,B.  Scale and bias.
-#define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
-#define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
-
-// TODO(fbarchard): Find way to express 2.112 instead of 2.0.
-// U and V contributions to R,G,B.
-#define UB -128 /* max(-128, round(-2.112 * 64)) */
-#define UG 14   /* round(0.213 * 64) */
-#define VG 34   /* round(0.533  * 64) */
-#define VR -115 /* round(-1.793 * 64) */
-
-// Bias values to round, and subtract 128 from U and V.
-#define BB (UB * 128 + YGB)
-#define BG (UG * 128 + VG * 128 + YGB)
-#define BR (VR * 128 + YGB)
-
-#if defined(__aarch64__)
-const struct YuvConstants SIMD_ALIGNED(kYuvH709Constants) = {
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants) = {
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#elif defined(__arm__)
-const struct YuvConstants SIMD_ALIGNED(kYuvH709Constants) = {
-    {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0},
-    {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants) = {
-    {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0},
-    {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#else
-const struct YuvConstants SIMD_ALIGNED(kYuvH709Constants) = {
-    {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,
-     UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},
-    {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,
-     UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},
-    {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,
-     0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants) = {
-    {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,
-     VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},
-    {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,
-     VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},
-    {0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB,
-     0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-#endif
-
-#undef BB
-#undef BG
-#undef BR
-#undef YGB
-#undef UB
-#undef UG
-#undef VG
-#undef VR
-#undef YG
+const static float H709Matrix[3][3]{{1.164f, 0, -1.793f},
+                                    {1.164f, 0.213f, 0.533f},
+                                    {1.164f, -2.112f, 0}};
+const static float H709Bias[3]{16.0f / 255.0f, 128.0f / 255.0f,
+                               128.0f / 255.0f};
+const struct YuvConstants SIMD_ALIGNED(kYuvH709Constants) =
+    YuvConstantsFromMatrix(H709Matrix, H709Bias);
+const struct YuvConstants SIMD_ALIGNED(kYvuH709Constants) =
+    YvuConstantsFromMatrix(H709Matrix, H709Bias);
 
 // BT.2020 YUV to RGB reference
 //  R = (Y - 16) * 1.164384                - V * -1.67867
 //  G = (Y - 16) * 1.164384 - U * 0.187326 - V *  0.65042
 //  B = (Y - 16) * 1.164384 - U * -2.14177
-
-// Y contribution to R,G,B.  Scale and bias.
-#define YG 19003  /* round(1.164384 * 64 * 256 * 256 / 257) */
-#define YGB -1160 /* 1.164384 * 64 * -16 + 64 / 2 */
-
-// TODO(fbarchard): Improve accuracy; the B channel is off by 7%.
-// U and V contributions to R,G,B.
-#define UB -128 /* max(-128, round(-2.142 * 64)) */
-#define UG 12   /* round(0.187326 * 64) */
-#define VG 42   /* round(0.65042 * 64) */
-#define VR -107 /* round(-1.67867 * 64) */
-
-// Bias values to round, and subtract 128 from U and V.
-#define BB (UB * 128 + YGB)
-#define BG (UG * 128 + VG * 128 + YGB)
-#define BR (VR * 128 + YGB)
-
-#if defined(__aarch64__)
-const struct YuvConstants SIMD_ALIGNED(kYuv2020Constants) = {
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {UG, VG, UG, VG, UG, VG, UG, VG},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvu2020Constants) = {
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {VG, UG, VG, UG, VG, UG, VG, UG},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#elif defined(__arm__)
-const struct YuvConstants SIMD_ALIGNED(kYuv2020Constants) = {
-    {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0},
-    {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BB, BG, BR, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-const struct YuvConstants SIMD_ALIGNED(kYvu2020Constants) = {
-    {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0},
-    {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},
-    {BR, BG, BB, YGB, 0, 0, 0, 0},
-    {0x0101 * YG, YG, 0, 0}};
-#else
-const struct YuvConstants SIMD_ALIGNED(kYuv2020Constants) = {
-    {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,
-     UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},
-    {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,
-     UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},
-    {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,
-     0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-const struct YuvConstants SIMD_ALIGNED(kYvu2020Constants) = {
-    {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,
-     VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},
-    {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,
-     VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},
-    {0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB,
-     0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB},
-    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
-    {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
-    {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
-    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
-    {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
-     YGB}};
-#endif
-
-#undef BB
-#undef BG
-#undef BR
-#undef YGB
-#undef UB
-#undef UG
-#undef VG
-#undef VR
-#undef YG
+const static float U2020Matrix[3][3]{{1.164384f, 0, -1.67867f},
+                                     {1.164384f, 0.187326f, 0.65042f},
+                                     {1.164384f, -2.14177f, 0}};
+const static float U2020Bias[3]{16.0f / 255.0f, 128.0f / 255.0f,
+                                128.0f / 255.0f};
+const struct YuvConstants SIMD_ALIGNED(kYuv2020Constants) =
+    YuvConstantsFromMatrix(U2020Matrix, U2020Bias);
+const struct YuvConstants SIMD_ALIGNED(kYvu2020Constants) =
+    YvuConstantsFromMatrix(U2020Matrix, U2020Bias);
 
 // C reference code that mimics the YUV assembly.
 // Reads 8 bit YUV and leaves result as 16 bit.
