@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <math.h>  // For isnan, isinf, roundf
+
 #include "libyuv/convert_argb.h"
 
 #include "libyuv/cpu_id.h"
@@ -23,6 +25,271 @@
 namespace libyuv {
 extern "C" {
 #endif
+
+static __inline float ClampYuvCoefficient(float v) {
+  return (v > 128) ? 128 : (v < -128 ? -128 : v);
+}
+
+// Init conversion matrix satisfies following equation:
+// matrix {yg, ub, ug, vg, vr}
+static int InitYuvConstantsWithMatrix(struct YuvConstants* yuvconstants,
+                                      const float matrix[5],
+                                      int full_range,
+                                      int yuv) {
+  const float ygf = matrix[0] * 64 * 256 * 256 / 257;
+  const float ygbf = matrix[0] * 64 * (full_range ? 0.f : -16.f) + 32;
+
+  float ubf = matrix[1] * 64;
+  float ugf = matrix[2] * 64;
+  float vgf = matrix[3] * 64;
+  float vrf = matrix[4] * 64;
+
+  if (isnan(ygf) || isnan(ygbf) || isnan(ubf) || isnan(ugf) || isnan(vgf) ||
+      isnan(vrf) || isinf(ygf) || isinf(ygbf) || isinf(ubf) || isinf(ugf) ||
+      isinf(vgf) || isinf(vrf)) {
+    return -1;
+  }
+
+  ubf = ClampYuvCoefficient(ubf);
+  ugf = ClampYuvCoefficient(ugf);
+  vgf = ClampYuvCoefficient(vgf);
+  vrf = ClampYuvCoefficient(vrf);
+
+  const int16_t YG = roundf(ygf);
+  const int16_t YGB = roundf(ygbf);
+  const int8_t UB = roundf(ubf);
+  const int8_t UG = roundf(ugf);
+  const int8_t VG = roundf(vgf);
+  const int8_t VR = roundf(vrf);
+
+  const int16_t BR = (int16_t)VR * 128 + YGB;
+  const int16_t BG = (int16_t)UG * 128 + (int16_t)VG * 128 + YGB;
+  const int16_t BB = (int16_t)UB * 128 + YGB;
+
+#if defined(__aarch64__) || defined(__arm__)
+  if (!IS_ALIGNED(yuvconstants, 16)) {
+    return -1;
+  }
+#else
+  if (!IS_ALIGNED(yuvconstants, 32)) {
+    return -1;
+  }
+#endif
+
+  if (yuv) {
+#if defined(__aarch64__)  // 64 bit arm
+    *yuvconstants = {{-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
+                     {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},
+                     {UG, VG, UG, VG, UG, VG, UG, VG},
+                     {UG, VG, UG, VG, UG, VG, UG, VG},
+                     {BB, BG, BR, YGB, 0, 0, 0, 0},
+                     {0x0101 * YG, YG, 0, 0}};
+#elif defined(__arm__)  // 32 bit arm
+    *yuvconstants = {
+        {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0},
+        {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},
+        {BB, BG, BR, YGB, 0, 0, 0, 0},
+        {0x0101 * YG, YG, 0, 0}};
+#else
+    *yuvconstants = {
+        {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,
+         UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},
+        {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,
+         UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},
+        {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,
+         0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},
+        {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
+        {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
+        {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
+        {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
+        {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
+         YGB, YGB}};
+#endif
+  } else {
+#if defined(__aarch64__)  // 64 bit arm
+    *yuvconstants = {{-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
+                     {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},
+                     {VG, UG, VG, UG, VG, UG, VG, UG},
+                     {VG, UG, VG, UG, VG, UG, VG, UG},
+                     {BR, BG, BB, YGB, 0, 0, 0, 0},
+                     {0x0101 * YG, YG, 0, 0}};
+#elif defined(__arm__)  // 32 bit arm
+    *yuvconstants = {
+        {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0},
+        {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},
+        {BR, BG, BB, YGB, 0, 0, 0, 0},
+        {0x0101 * YG, YG, 0, 0}};
+#else
+    *yuvconstants = {
+        {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,
+         VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},
+        {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,
+         VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},
+        {0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB,
+         0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB},
+        {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},
+        {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},
+        {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},
+        {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},
+        {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB,
+         YGB, YGB}};
+#endif
+  }
+
+  return 0;
+}
+// Init conversion matrix using coefficients of R and B when computing Y
+LIBYUV_API
+int InitYuvConstantsWithKrKb(struct YuvConstants* yuvconstants,
+                             float kr,
+                             float kb,
+                             int full_range,
+                             int yuv) {
+  if (isnan(kr) || isnan(kb) || isinf(kr) || isinf(kb)) {
+    return -1;
+  }
+
+  float matrix[5];
+  if (full_range) {
+    matrix[0] = 1.f;
+    matrix[1] = -2.f * (1.f - kb);
+    matrix[2] = (2.f * kb * (1.f - kb)) / (1.f - kb - kr);
+    matrix[3] = (2.f * kr * (1.f - kr)) / (1.f - kb - kr);
+    matrix[4] = -2.f * (1.f - kr);
+  } else {
+    matrix[0] = 85.f / 73.f;
+    matrix[1] = -255.f / 112.f + (255.f * kb) / 112.f;
+    matrix[2] = (255.f * kb * (1.f - kb)) / (112.f * (1.f - kb - kr));
+    matrix[3] = (255.f * kr * (1.f - kr)) / (112.f * (1.f - kb - kr));
+    matrix[4] = -255.f / 112.f + (255.f * kr) / 112.f;
+  }
+
+  return InitYuvConstantsWithMatrix(yuvconstants, matrix, full_range, yuv);
+}
+
+// Init conversion matrix using color primaries.
+LIBYUV_API
+int InitYuvConstantsWithColorPrimaries(struct YuvConstants* yuvconstants,
+                                       const float primaries[8],
+                                       int full_range,
+                                       int yuv) {
+  const float rX = primaries[0];
+  const float rY = primaries[1];
+  const float gX = primaries[2];
+  const float gY = primaries[3];
+  const float bX = primaries[4];
+  const float bY = primaries[5];
+  const float wX = primaries[6];
+  const float wY = primaries[7];
+
+  if (isnan(rX) || isnan(rY) || isnan(gX) || isnan(gY) || isnan(bX) ||
+      isnan(bY) || isnan(wX) || isnan(wY) || isinf(rX) || isinf(rY) ||
+      isinf(gX) || isinf(gY) || isinf(bX) || isinf(bY) || isinf(wX) ||
+      isinf(wY)) {
+    return -1;
+  }
+
+  const float rZ = 1.0f - (rX + rY);
+  const float gZ = 1.0f - (gX + gY);
+  const float bZ = 1.0f - (bX + bY);
+  const float wZ = 1.0f - (wX + wY);
+  const float kr = (rY * (wX * (gY * bZ - bY * gZ) + wY * (bX * gZ - gX * bZ) +
+                          wZ * (gX * bY - bX * gY))) /
+                   (wY * (rX * (gY * bZ - bY * gZ) + gX * (bY * rZ - rY * bZ) +
+                          bX * (rY * gZ - gY * rZ)));
+  const float kb = (bY * (wX * (rY * gZ - gY * rZ) + wY * (gX * rZ - rX * gZ) +
+                          wZ * (rX * gY - gX * rY))) /
+                   (wY * (rX * (gY * bZ - bY * gZ) + gX * (bY * rZ - rY * bZ) +
+                          bX * (rY * gZ - gY * rZ)));
+
+  return InitYuvConstantsWithKrKb(yuvconstants, kr, kb, full_range, yuv);
+}
+
+// Init conversion matrix using matrix coefficients code point.
+LIBYUV_API
+int InitYuvConstantsWithMCCodePoint(struct YuvConstants* yuvconstants,
+                                    uint8_t code_point,
+                                    int full_range,
+                                    int yuv) {
+  static float MCCodePointToKrKb[][2] = {
+      {},
+      {0.2126, 0.0722},
+      {},
+      {},
+      {0.30, 0.11},
+      {0.299, 0.114},
+      {0.299, 0.114},
+      {0.212, 0.087},
+      {},
+      {0.2627, 0.0593},
+  };
+
+  switch (code_point) {
+    case 1:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 9: {
+      float* KrKb = MCCodePointToKrKb[code_point];
+      return InitYuvConstantsWithKrKb(yuvconstants, KrKb[0], KrKb[1],
+                                      full_range, yuv);
+    }
+    default:
+      return -1;
+  }
+}
+
+// Init conversion matrix using color primaries code point.
+LIBYUV_API
+int InitYuvConstantsWithCPCodePoint(struct YuvConstants* yuvconstants,
+                                    uint8_t code_point,
+                                    int full_range,
+                                    int yuv) {
+  static float CPCodePointToCP[][8] = {
+      {},
+      {0.640, 0.330, 0.300, 0.600, 0.150, 0.060, 0.3127, 0.3290},
+      {},
+      {},
+      {0.67, 0.33, 0.21, 0.71, 0.14, 0.08, 0.310, 0.316},
+      {0.64, 0.33, 0.29, 0.60, 0.15, 0.06, 0.3127, 0.3290},
+      {0.630, 0.340, 0.310, 0.595, 0.155, 0.070, 0.3127, 0.3290},
+      {0.630, 0.340, 0.310, 0.595, 0.155, 0.070, 0.3127, 0.3290},
+      {0.681, 0.319, 0.243, 0.692, 0.145, 0.049, 0.310, 0.316},
+      {0.708, 0.292, 0.170, 0.797, 0.131, 0.046, 0.3127, 0.3290},
+      {1, 0, 0, 1, 0, 0, 1. / 3., 1. / 3.},
+      {0.680, 0.320, 0.265, 0.690, 0.150, 0.060, 0.314, 0.351},
+      {0.680, 0.320, 0.265, 0.690, 0.150, 0.060, 0.3127, 0.3290},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {0.630, 0.340, 0.295, 0.605, 0.155, 0.077, 0.3127, 0.3290},
+  };
+
+  switch (code_point) {
+    case 1:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 22:
+      return InitYuvConstantsWithColorPrimaries(
+          yuvconstants, CPCodePointToCP[code_point], full_range, yuv);
+    default:
+      return -1;
+  }
+}
 
 // Copy ARGB with optional flipping
 LIBYUV_API
