@@ -10,6 +10,9 @@
 
 #include <stdlib.h>
 
+// use SIMD_ALIGNED macro from row.h
+#include "libyuv/row.h"
+
 #include "../unit_test/unit_test.h"
 #include "libyuv/basic_types.h"
 #include "libyuv/convert.h"
@@ -517,7 +520,7 @@ static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
       printf("\t%8d", i - 128);
     }
   }
-  printf("\nred");
+  printf("\nred ");
   for (i = 0; i < 256; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
       printf("\t%8d", rh[i]);
@@ -546,6 +549,7 @@ static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
 #define FASTSTEP 5
 #endif
 TEST_F(LibYUVColorTest, TestFullYUV) {
+  printf("Test kYuvI601Constants:\n");
   int rh[256] = {
       0,
   };
@@ -575,6 +579,7 @@ TEST_F(LibYUVColorTest, TestFullYUV) {
 }
 
 TEST_F(LibYUVColorTest, TestFullYUVJ) {
+  printf("Test kYuvJPEGConstants:\n");
   int rh[256] = {
       0,
   };
@@ -604,6 +609,7 @@ TEST_F(LibYUVColorTest, TestFullYUVJ) {
 }
 
 TEST_F(LibYUVColorTest, TestFullYUVH) {
+  printf("Test kYuvH709Constants:\n");
   int rh[256] = {
       0,
   };
@@ -634,6 +640,7 @@ TEST_F(LibYUVColorTest, TestFullYUVH) {
 }
 
 TEST_F(LibYUVColorTest, TestFullYUVRec2020) {
+  printf("Test kYuv2020Constants:\n");
   int rh[256] = {
       0,
   };
@@ -663,6 +670,44 @@ TEST_F(LibYUVColorTest, TestFullYUVRec2020) {
   PrintHistogram(rh, gh, bh);
 }
 #undef FASTSTEP
+
+TEST_F(LibYUVColorTest, TestInitYuvConstants) {
+  float customMatrices[4][3][3]{
+      {{1.164f, 0, -1.596f}, {1.164f, 0.391f, 0.813f}, {1.164f, -2.018f, 0}},
+      {{1, 0, -1.40200f}, {1, 0.34414f, 0.71414f}, {1, -1.77200f, 0}},
+      {{1.164f, 0, -1.793f}, {1.164f, 0.213f, 0.533f}, {1.164f, -2.112f, 0}},
+      {{1.164384f, 0, -1.67867f},
+       {1.164384f, 0.187326f, 0.65042f},
+       {1.164384f, -2.14177f, 0}}};
+  float customBiases[4][3]{{16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                           {0, 128.0f / 255.0f, 128.0f / 255.0f},
+                           {16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                           {16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f}};
+
+  struct YuvConstants presetYuvConstants[4]{
+      kYuvI601Constants, kYuvJPEGConstants, kYuvH709Constants,
+      kYuv2020Constants};
+
+  struct YuvConstants presetYvuConstants[4]{
+      kYvuI601Constants, kYvuJPEGConstants, kYvuH709Constants,
+      kYvu2020Constants};
+
+  struct YuvConstants SIMD_ALIGNED(customConstants) {};
+
+  for (int i = 0; i < 4; ++i) {
+    InitYuvConstantsWithMatrix(&customConstants, customMatrices[i],
+                               customBiases[i], 0);
+    EXPECT_EQ(memcmp(&customConstants, &presetYuvConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+
+    InitYuvConstantsWithMatrix(&customConstants, customMatrices[i],
+                               customBiases[i], 1);
+    EXPECT_EQ(memcmp(&customConstants, &presetYvuConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+  }
+}
 
 TEST_F(LibYUVColorTest, TestGreyYUVJ) {
   int r0, g0, b0, r1, g1, b1, r2, g2, b2;
