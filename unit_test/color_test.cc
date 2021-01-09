@@ -10,6 +10,9 @@
 
 #include <stdlib.h>
 
+// use SIMD_ALIGNED macro from row.h
+#include "libyuv/row.h"
+
 #include "../unit_test/unit_test.h"
 #include "libyuv/basic_types.h"
 #include "libyuv/convert.h"
@@ -30,8 +33,8 @@ namespace libyuv {
 #define ERROR_FULL 6
 #define ERROR_J420 6
 #endif
-#define ERROR_R 1
-#define ERROR_G 1
+#define ERROR_R 2
+#define ERROR_G 2
 #define ERROR_B 3
 
 #define TESTCS(TESTNAME, YUVTOARGB, ARGBTOYUV, HS1, HS, HN, DIFF)              \
@@ -231,6 +234,36 @@ static void YUVRec2020ToRGB(int y, int u, int v, int* r, int* g, int* b) {
   *r = orig_pixels[2];
 }
 
+static void YUVMatrixToRGB(int y,
+                           int u,
+                           int v,
+                           int* r,
+                           int* g,
+                           int* b,
+                           const struct YuvConstants* yuvconstants) {
+  const int kWidth = 16;
+  const int kHeight = 1;
+  const int kPixels = kWidth * kHeight;
+  const int kHalfPixels = ((kWidth + 1) / 2) * ((kHeight + 1) / 2);
+
+  SIMD_ALIGNED(uint8_t orig_y[16]);
+  SIMD_ALIGNED(uint8_t orig_u[8]);
+  SIMD_ALIGNED(uint8_t orig_v[8]);
+  SIMD_ALIGNED(uint8_t orig_pixels[16 * 4]);
+  memset(orig_y, y, kPixels);
+  memset(orig_u, u, kHalfPixels);
+  memset(orig_v, v, kHalfPixels);
+
+  /* YUV converted to ARGB. */
+  I422ToARGBMatrix(orig_y, kWidth, orig_u, (kWidth + 1) / 2, orig_v,
+                   (kWidth + 1) / 2, orig_pixels, kWidth * 4, yuvconstants,
+                   kWidth, kHeight);
+
+  *b = orig_pixels[0];
+  *g = orig_pixels[1];
+  *r = orig_pixels[2];
+}
+
 static void YToRGB(int y, int* r, int* g, int* b) {
   const int kWidth = 16;
   const int kHeight = 1;
@@ -414,6 +447,267 @@ static void YUVRec2020ToRGBReference(int y,
   *b = RoundToByte((y - 16) * 1.164384 - (u - 128) * -2.14177);
 }
 
+// Pre-computed coefficients for YUV to RGB conversion
+
+static float MatrixFromMCCodePointFull[][3][4] = {
+    // Identity (not supported currently)
+    {{0, 0, 1, 0}, {1, 0, 0, 0}, {0, 1, 0, 0}},
+    // BT.709
+    {{1, 0, 1.5748, -201.5744},
+     {1, -0.18732427293064876957, -0.46812427293064876957,
+      83.89741387024608501},
+     {1, 1.8556, 0, -237.5168}},
+    // Unspecified
+    {},
+    // Reserved
+    {},
+    // FCC
+    {{1, 0, 1.4, -179.2},
+     {1, -0.33186440677966101695, -0.7118644067796610169,
+      133.59728813559322034},
+     {1, 1.78, 0, -227.84}},
+    // BT.601 625
+    {{1, 0, 1.402, -179.456},
+     {1, -0.34413628620102214651, -0.7141362862010221465,
+      135.45888926746166951},
+     {1, 1.772, 0, -226.816}},
+    // BT.601 525
+    {{1, 0, 1.402, -179.456},
+     {1, -0.34413628620102214651, -0.7141362862010221465,
+      135.45888926746166951},
+     {1, 1.772, 0, -226.816}},
+    // SMPTE 240M
+    {{1, 0, 1.576, -201.728},
+     {1, -0.22662196861626248217, -0.47662196861626248217,
+      90.01522396576319544},
+     {1, 1.826, 0, -233.728}},
+    // YCgCo (not supported currently)
+    {{1, -1, 1, 0}, {1, 1, 0, -128}, {1, -1, -1, 256}},
+    // BT.2020 (non-constant luminance)
+    {{1, 0, 1.4746, -188.7488},
+     {1, -0.16455312684365781711, -0.5713531268436578171, 94.19600047197640118},
+     {1, 1.8814, 0, -240.8192}},
+    // BT.2020 (constant luminance) (not linear transformation)
+    {},
+    // SMPTE ST 2085 (not supported currently)
+    {{0.991902, 0, 2, -256},
+     {1, 0, 0, 0},
+     {1.0136169298354088829, 2.0272338596708177659, 0, -259.48593403786467403}},
+    // Chromaticity-derived non-constant luminance (see other)
+    {},
+    // Chromaticity-derived constant luminance (not linear transformation)
+    {},
+    // ICtCp (not linear transformation)
+    {},
+};
+
+static float MatrixFromMCCodePointLimited[][3][4] = {
+    // Identity (not supported currently)
+    {{0, 0, 85. / 73., -1360. / 73.},
+     {85. / 73., 0, 0, -1360. / 73.},
+     {0, 85. / 73., 0, -1360. / 73.}},
+    // BT.709
+    {{85. / 73., 0, 1.79274107142857142857, -248.100994129158512720},
+     {85. / 73., -0.21324861427372962608, -0.53290932855944391179,
+      76.87807969634484298},
+     {85. / 73., 2.11240178571428571429, 0, -289.017565557729941292}},
+    // Unspecified
+    {},
+    // Reserved
+    {},
+    // FCC
+    {{85. / 73., 0, 1.59375, -222.630136986301369863},
+     {85. / 73., -0.37779207021791767554, -0.8103813559322033898,
+      133.45606156091412651},
+     {85. / 73., 2.02633928571428571429, 0, -278.001565557729941292}},
+    // BT.601 625
+    {{85. / 73., 0, 1.59602678571428571429, -222.921565557729941292},
+     {85. / 73., -0.39176229009491360428, -0.8129676472377707471,
+      135.57529499228222712},
+     {85. / 73., 2.01723214285714285714, 0, -276.835851272015655577}},
+    // BT.601 525
+    {{85. / 73., 0, 1.59602678571428571429, -222.921565557729941292},
+     {85. / 73., -0.39176229009491360428, -0.8129676472377707471,
+      135.57529499228222712},
+     {85. / 73., 2.01723214285714285714, 0, -276.835851272015655577}},
+    // SMPTE 240M
+    {{85. / 73., 0, 1.79410714285714285714, -248.275851272015655577},
+     {85. / 73., -0.25798483034440595068, -0.54258304463012023640,
+      83.84255101043798208},
+     {85. / 73., 2.07870535714285714286, 0, -284.704422700587084149}},
+    // YCgCo (not supported currently)
+    {{85. / 73., -85. / 73., 85. / 73., -1360. / 73.},
+     {85. / 73., 85. / 73., 0, -12240. / 73.},
+     {85. / 73., -85. / 73., -85. / 73., 20400. / 73.}},
+    // BT.2020 (non-constant luminance)
+    {{85. / 73., 0, 1.67867410714285714286, -233.500422700587084149},
+     {85. / 73., -0.18732610421934260430, -0.65042431850505689,
+      88.60191712242176541},
+     {85. / 73., 2.14177232142857142857, 0, -292.776994129158512720}},
+    // BT.2020 (constant luminance) (not linear transformation)
+    {},
+    // SMPTE ST 2085 (not supported currently)
+    {{1.1549543835616438356, 0, 2.2767857142857142857, -309.90784156555772994},
+     {1.1643835616438356164, 0, 0, -18.630136986301369863},
+     {1.1802388909042432199, 2.3077885456074041531, 0, -314.28075609221562312}},
+    // Chromaticity-derived non-constant luminance (see other)
+    {},
+    // Chromaticity-derived constant luminance (not linear transformation)
+    {},
+    // ICtCp (not linear transformation)
+    {},
+};
+
+static float MatrixFromCPCodePointFull[][3][4] = {
+    // Reserved
+    {},
+    // BT.709
+    {{1, 0, 1.5747219882569792849, -201.5644144968933485},
+     {1, -0.1873140895347889792, -0.468207470556342264, 83.9067596916647992},
+     {1, 1.8556153692785325700, 0, -237.51876726765216896}},
+    // Unspecified
+    {},
+    // Reserved
+    {},
+    // FCC
+    {{1, 0, 1.4020667637504200739, -179.4645457600537695},
+     {1, -0.3460864650777044737, -0.714795357842831136, 135.7928733338285580},
+     {1, 1.7707756565155467362, 0, -226.65928403398998224}},
+    // BT.601 625
+    {{1, 0, 1.5559913800035380582, -199.1668966404528715},
+     {1, -0.1875071104675869672, -0.488833882311076136, 86.5716470756688772},
+     {1, 1.8573181518470272270, 0, -237.73672343641948505}},
+    // BT.601 525
+    {{1, 0, 1.575247278589864846, -201.6316516595027003},
+     {1, -0.2255741593817236071, -0.477199316053439653, 89.9550048557008972},
+     {1, 1.8268724352615808913, 0, -233.83967171348235409}},
+    // SMPTE 240M
+    {{1, 0, 1.575247278589864846, -201.6316516595027003},
+     {1, -0.2255741593817236071, -0.477199316053439653, 89.9550048557008972},
+     {1, 1.8268724352615808913, 0, -233.83967171348235409}},
+    // Generic Film
+    {{1, 0, 1.4928292731325306765, -191.08214696096392659},
+     {1, -0.1870581851792938231, -0.558071190308177901, 95.3765600623963807},
+     {1, 1.8638422782614147547, 0, -238.57181161746108860}},
+    // BT.2020
+    {{1, 0, 1.4745995759774659384, -188.74874572511564011},
+     {1, -0.1645580577201903188, -0.571355048803000488, 94.1968776349684232},
+     {1, 1.8813965670602761071, 0, -240.81876058371534171}},
+    // SMPTE ST 428-1 (XYZ)
+    {{1, 0, 2, -256}, {1, 0, 0, 0}, {1, 2, 0, -256}},
+    // SMPTE RP 431-2
+    {{1, 0, 1.5810166441745389114, -202.37013045434098066},
+     {1, -0.1778394650608421271, -0.458996685033851574, 81.5150272121207937},
+     {1, 1.8621738641475483581, 0, -238.35825461088618983}},
+    // SMPTE EG 432-1
+    {{1, 0, 1.5420508718605023196, -197.38251159814429691},
+     {1, -0.2110638544559469287, -0.510439154407954607, 92.3523851345793966},
+     {1, 1.8414261718125099984, 0, -235.70254999200127980}},
+    // Reserved
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    // EBU Tech. 3213-E
+    {{1, 0, 1.536498908655781539, -196.6718603079400370},
+     {1, -0.2581861953299589906, -0.529689923627720535, 100.8481432265829792},
+     {1, 1.8080026369535430832, 0, -231.42433753005351465}},
+};
+
+static float MatrixFromCPCodePointLimited[][3][4] = {
+    // Reserved
+    {},
+    // BT.709
+    {{85. / 73., 0, 1.792652263417543382, -248.0896267037469228},
+     {85. / 73., -0.2132370215686213826, -0.533004040142264631,
+      76.8887189126920399},
+     {85. / 73., 2.1124192819911866310, 0, -289.01980508117325863}},
+    // Unspecified
+    {},
+    // Reserved
+    {},
+    // FCC
+    {{85. / 73., 0, 1.5961027890908799949, -222.9312939899340092},
+     {85. / 73., -0.393982359798279646, -0.813717929687151516,
+      135.9555000678338190},
+     {85. / 73., 2.0158383589797518649, 0, -276.65744693570960857}},
+    // BT.601 625
+    {{85. / 73., 0, 1.771329472771884843, -245.3603095011026298},
+     {85. / 73., -0.2134567552197976635, -0.556484999952341137,
+      79.9224076757323966},
+     {85. / 73., 2.1143577175044283164, 0, -289.26792482686819436}},
+    // BT.601 525
+    {{85. / 73., 0, 1.793250250180426499, -248.1661690093959617},
+     {85. / 73., -0.2567920117961585706, -0.543240292828692462,
+      83.7739980056795623},
+     {85. / 73., 2.0796985312129603897, 0, -284.83154898156029974}},
+    // SMPTE 240M
+    {{85. / 73., 0, 1.793250250180426499, -248.1661690093959617},
+     {85. / 73., -0.2567920117961585706, -0.543240292828692462,
+      83.7739980056795623},
+     {85. / 73., 2.0796985312129603897, 0, -284.83154898156029974}},
+    // Generic Film
+    {{85. / 73., 0, 1.6994261814678362612, -236.1566882141844113},
+     {85. / 73., -0.2129457018782139504, -0.635304256824041807,
+      89.9458577275873671},
+     {85. / 73., 2.1217847364136641181, 0, -290.21858324725037698}},
+    // BT.2020
+    {{85. / 73., 0, 1.6786736244386330995, -233.50036091444640660},
+     {85. / 73., -0.1873317174939666576, -0.650426506449844305,
+      88.6029156785064334},
+     {85. / 73., 2.1417684133945107469, 0, -292.77649390079874547}},
+    // SMPTE ST 428-1 (XYZ)
+    {{85. / 73., 0, 255. / 112., -158440. / 511.},
+     {85. / 73., 0, 0, -1360. / 73.},
+     {85. / 73., 255. / 112., 0, -158440. / 511.}},
+    // SMPTE RP 431-2
+    {{85. / 73., 0, 1.7998180547522652786, -249.0068479945913255},
+     {85. / 73., -0.2024511767433693857, -0.522518547694786390,
+      74.1659877417825694},
+     {85. / 73., 2.1198854257036822826, 0, -289.97547147637270204}},
+    // SMPTE EG 432-1
+    {{85. / 73., 0, 1.7554596978769111228, -243.3289783145459936},
+     {85. / 73., -0.2402735843136895840, -0.581080287384055468,
+      86.5031585910099968},
+     {85. / 73., 2.0962664009472770071, 0, -286.95223630755282677}},
+    // Reserved
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    // EBU Tech. 3213-E
+    {{85. / 73., 0, 1.749139382621537020, -242.5199779618581084},
+     {85. / 73., -0.2939173205765158152, -0.602995225558342573,
+      96.1746689189605038},
+     {85. / 73., 2.0582172876033637777, 0, -282.08194979953193341}},
+};
+
+// YUV to RGB custom coefficient reference
+static void YUVMatrixToRGBReference(int y,
+                                    int u,
+                                    int v,
+                                    int* r,
+                                    int* g,
+                                    int* b,
+                                    const float matrix[3][4]) {
+  *r = RoundToByte(matrix[0][0] * y + matrix[0][1] * u + matrix[0][2] * v +
+                   matrix[0][3]);
+  *g = RoundToByte(matrix[1][0] * y + matrix[1][1] * u + matrix[1][2] * v +
+                   matrix[1][3]);
+  *b = RoundToByte(matrix[2][0] * y + matrix[2][1] * u + matrix[2][2] * v +
+                   matrix[2][3]);
+}
+
 TEST_F(LibYUVColorTest, TestYUV) {
   int r0, g0, b0, r1, g1, b1;
 
@@ -517,7 +811,7 @@ static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
       printf("\t%8d", i - 128);
     }
   }
-  printf("\nred");
+  printf("\nred ");
   for (i = 0; i < 256; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
       printf("\t%8d", rh[i]);
@@ -546,6 +840,7 @@ static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
 #define FASTSTEP 5
 #endif
 TEST_F(LibYUVColorTest, TestFullYUV) {
+  printf("Test kYuvI601Constants:\n");
   int rh[256] = {
       0,
   };
@@ -575,6 +870,7 @@ TEST_F(LibYUVColorTest, TestFullYUV) {
 }
 
 TEST_F(LibYUVColorTest, TestFullYUVJ) {
+  printf("Test kYuvJPEGConstants:\n");
   int rh[256] = {
       0,
   };
@@ -604,6 +900,7 @@ TEST_F(LibYUVColorTest, TestFullYUVJ) {
 }
 
 TEST_F(LibYUVColorTest, TestFullYUVH) {
+  printf("Test kYuvH709Constants:\n");
   int rh[256] = {
       0,
   };
@@ -634,6 +931,7 @@ TEST_F(LibYUVColorTest, TestFullYUVH) {
 }
 
 TEST_F(LibYUVColorTest, TestFullYUVRec2020) {
+  printf("Test kYuv2020Constants:\n");
   int rh[256] = {
       0,
   };
@@ -661,6 +959,424 @@ TEST_F(LibYUVColorTest, TestFullYUVRec2020) {
     }
   }
   PrintHistogram(rh, gh, bh);
+}
+
+// cross test between matrix derived constants and hardcoded constants
+TEST_F(LibYUVColorTest, TestFullYUVWithMatrix) {
+  printf("Test kYuvI601Constants with Matrix:\n");
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVMatrixToRGBReference(y, u, v, &r0, &g0, &b0,
+                                MatrixFromMCCodePointLimited[6]);
+        YUVToRGB(y, u, v, &r1, &g1, &b1);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        EXPECT_NEAR(b0, b1, ERROR_B);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVJWithMatrix) {
+  printf("Test kYuvJPEGConstants with Matrix:\n");
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVMatrixToRGBReference(y, u, v, &r0, &g0, &b0,
+                                MatrixFromMCCodePointFull[6]);
+        YUVJToRGB(y, u, v, &r1, &g1, &b1);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        EXPECT_NEAR(b0, b1, ERROR_B);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVHWithMatrix) {
+  printf("Test kYuvH709Constants with Matrix:\n");
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVMatrixToRGBReference(y, u, v, &r0, &g0, &b0,
+                                MatrixFromMCCodePointLimited[1]);
+        YUVHToRGB(y, u, v, &r1, &g1, &b1);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_R);
+        // TODO(crbug.com/libyuv/862): Reduce the errors in the B channel.
+        EXPECT_NEAR(b0, b1, 15);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVRec2020WithMatrix) {
+  printf("Test kYuv2020Constants with Matrix:\n");
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVMatrixToRGBReference(y, u, v, &r0, &g0, &b0,
+                                MatrixFromMCCodePointLimited[9]);
+        YUVRec2020ToRGB(y, u, v, &r1, &g1, &b1);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        // TODO(crbug.com/libyuv/863): Reduce the errors in the B channel.
+        EXPECT_NEAR(b0, b1, 18);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVMatrixWithI601) {
+  printf("Test BT.601 Limited Matrix:\n");
+  struct YuvConstants SIMD_ALIGNED(constants) {};
+  auto result = InitYuvConstantsWithMCCodePoint(&constants,
+                                                kMatrixCoefficientsBT601, 0, 1);
+  ASSERT_EQ(0, result);
+
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVToRGBReference(y, u, v, &r0, &g0, &b0);
+        YUVMatrixToRGB(y, u, v, &r1, &g1, &b1, &constants);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        EXPECT_NEAR(b0, b1, ERROR_B);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVMatrixWithJPEG) {
+  printf("Test JPEG (BT.601 Full) Matrix:\n");
+  struct YuvConstants SIMD_ALIGNED(constants) {};
+  auto result = InitYuvConstantsWithMCCodePoint(&constants,
+                                                kMatrixCoefficientsBT601, 1, 1);
+  ASSERT_EQ(0, result);
+
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVJToRGBReference(y, u, v, &r0, &g0, &b0);
+        YUVMatrixToRGB(y, u, v, &r1, &g1, &b1, &constants);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        EXPECT_NEAR(b0, b1, ERROR_B);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVMatrixWithH709) {
+  printf("Test BT.709 Limited Matrix:\n");
+  struct YuvConstants SIMD_ALIGNED(constants) {};
+  auto result = InitYuvConstantsWithMCCodePoint(&constants,
+                                                kMatrixCoefficientsBT709, 0, 1);
+  ASSERT_EQ(0, result);
+
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVHToRGBReference(y, u, v, &r0, &g0, &b0);
+        YUVMatrixToRGB(y, u, v, &r1, &g1, &b1, &constants);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        // TODO(crbug.com/libyuv/862): Reduce the errors in the B channel.
+        EXPECT_NEAR(b0, b1, 15);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVMatrixWith2020) {
+  printf("Test BT.2020 Limited Matrix:\n");
+  struct YuvConstants SIMD_ALIGNED(constants) {};
+  auto result = InitYuvConstantsWithMCCodePoint(
+      &constants, kMatrixCoefficientsBT2020NCL, 0, 1);
+  ASSERT_EQ(0, result);
+
+  int rh[256] = {
+      0,
+  };
+  int gh[256] = {
+      0,
+  };
+  int bh[256] = {
+      0,
+  };
+  for (int u = 0; u < 256; ++u) {
+    for (int v = 0; v < 256; ++v) {
+      for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+        int r0, g0, b0, r1, g1, b1;
+        int y = RANDOM256(y2);
+        YUVRec2020ToRGBReference(y, u, v, &r0, &g0, &b0);
+        YUVMatrixToRGB(y, u, v, &r1, &g1, &b1, &constants);
+        EXPECT_NEAR(r0, r1, ERROR_R);
+        EXPECT_NEAR(g0, g1, ERROR_G);
+        // TODO(crbug.com/libyuv/863): Reduce the errors in the B channel.
+        EXPECT_NEAR(b0, b1, 18);
+        ++rh[r1 - r0 + 128];
+        ++gh[g1 - g0 + 128];
+        ++bh[b1 - b0 + 128];
+      }
+    }
+  }
+  PrintHistogram(rh, gh, bh);
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVMatrixWithMatrixCoefficients) {
+  printf("Test Matrix from MatrixCoefficients code point:\n");
+  const MatrixCoefficientsEnum MC[] = {
+      kMatrixCoefficientsBT709,    kMatrixCoefficientsFCC,
+      kMatrixCoefficientsBT470BG,  kMatrixCoefficientsBT601,
+      kMatrixCoefficientsSMPTE240, kMatrixCoefficientsBT2020NCL,
+  };
+  const int full[] = {0, 1};
+
+  for (auto f : full) {
+    if (f) {
+      printf("Test full range:\n");
+    } else {
+      printf("Test limited range:\n");
+    }
+
+    for (auto code_point : MC) {
+      int rh[256] = {
+          0,
+      };
+      int gh[256] = {
+          0,
+      };
+      int bh[256] = {
+          0,
+      };
+
+      float(*mat)[3][4];
+      if (f) {
+        mat = &MatrixFromMCCodePointFull[code_point];
+      } else {
+        mat = &MatrixFromMCCodePointLimited[code_point];
+      }
+
+      struct YuvConstants SIMD_ALIGNED(constants) {};
+      auto result =
+          InitYuvConstantsWithMCCodePoint(&constants, code_point, f, 1);
+      ASSERT_EQ(0, result);
+
+      // if coefficient > 2, loosen restrict for now
+      const int error_r_loosen = static_cast<int>(((*mat)[0][2] - 2) * 160);
+      const int error_b_loosen = static_cast<int>(((*mat)[2][1] - 2) * 160);
+
+      printf("Result for MC=%d:\n", code_point);
+      for (int u = 0; u < 256; ++u) {
+        for (int v = 0; v < 256; ++v) {
+          for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+            int r0, g0, b0, r1, g1, b1;
+            int y = RANDOM256(y2);
+            YUVMatrixToRGBReference(y, u, v, &r0, &g0, &b0, *mat);
+            YUVMatrixToRGB(y, u, v, &r1, &g1, &b1, &constants);
+            if (error_r_loosen > ERROR_R) {
+              EXPECT_NEAR(r0, r1, error_r_loosen);
+            } else {
+              EXPECT_NEAR(r0, r1, ERROR_R);
+            }
+            EXPECT_NEAR(g0, g1, ERROR_G);
+            if (error_b_loosen > ERROR_B) {
+              EXPECT_NEAR(b0, b1, error_b_loosen);
+            } else {
+              EXPECT_NEAR(b0, b1, ERROR_B);
+            }
+            ++rh[r1 - r0 + 128];
+            ++gh[g1 - g0 + 128];
+            ++bh[b1 - b0 + 128];
+          }
+        }
+      }
+      PrintHistogram(rh, gh, bh);
+    }
+  }
+}
+
+TEST_F(LibYUVColorTest, TestFullYUVMatrixWithColorPrimaries) {
+  printf("Test Matrix from ColorPrimaries code point:\n");
+  const ColorPrimariesEnum CP[] = {
+      kColorPrimariesBT709,    kColorPrimariesBT470M,
+      kColorPrimariesBT470BG,  kColorPrimariesBT601,
+      kColorPrimariesSMPTE240, kColorPrimariesGenericFilm,
+      kColorPrimariesBT2020,   kColorPrimariesXYZ,
+      kColorPrimariesSMPTE431, kColorPrimariesSMPTE432,
+      kColorPrimariesEBU3213,
+  };
+  const int full[] = {0, 1};
+
+  for (auto f : full) {
+    if (f) {
+      printf("Test full range:\n");
+    } else {
+      printf("Test limited range:\n");
+    }
+
+    for (auto code_point : CP) {
+      int rh[256] = {
+          0,
+      };
+      int gh[256] = {
+          0,
+      };
+      int bh[256] = {
+          0,
+      };
+
+      float(*mat)[3][4];
+      if (f) {
+        mat = &MatrixFromCPCodePointFull[code_point];
+      } else {
+        mat = &MatrixFromCPCodePointLimited[code_point];
+      }
+
+      struct YuvConstants SIMD_ALIGNED(constants) {};
+      auto result =
+          InitYuvConstantsWithCPCodePoint(&constants, code_point, f, 1);
+      ASSERT_EQ(0, result);
+
+      // if coefficient > 2, loosen restrict for now
+      const int error_r_loosen = static_cast<int>(((*mat)[0][2] - 2) * 160);
+      const int error_b_loosen = static_cast<int>(((*mat)[2][1] - 2) * 160);
+
+      printf("Result for CP=%d:\n", code_point);
+      for (int u = 0; u < 256; ++u) {
+        for (int v = 0; v < 256; ++v) {
+          for (int y2 = 0; y2 < 256; y2 += FASTSTEP) {
+            int r0, g0, b0, r1, g1, b1;
+            int y = RANDOM256(y2);
+            YUVMatrixToRGBReference(y, u, v, &r0, &g0, &b0, *mat);
+            YUVMatrixToRGB(y, u, v, &r1, &g1, &b1, &constants);
+            if (error_r_loosen > ERROR_R) {
+              EXPECT_NEAR(r0, r1, error_r_loosen);
+            } else {
+              EXPECT_NEAR(r0, r1, ERROR_R);
+            }
+            EXPECT_NEAR(g0, g1, ERROR_G);
+            if (error_b_loosen > ERROR_B) {
+              EXPECT_NEAR(b0, b1, error_b_loosen);
+            } else {
+              EXPECT_NEAR(b0, b1, ERROR_B);
+            }
+            ++rh[r1 - r0 + 128];
+            ++gh[g1 - g0 + 128];
+            ++bh[b1 - b0 + 128];
+          }
+        }
+      }
+      PrintHistogram(rh, gh, bh);
+    }
+  }
 }
 #undef FASTSTEP
 

@@ -21,16 +21,125 @@ extern "C" {
 #endif
 
 // Conversion matrix for YUV to RGB
-LIBYUV_API extern const struct YuvConstants kYuvI601Constants;  // BT.601
-LIBYUV_API extern const struct YuvConstants kYuvJPEGConstants;  // JPeg
-LIBYUV_API extern const struct YuvConstants kYuvH709Constants;  // BT.709
-LIBYUV_API extern const struct YuvConstants kYuv2020Constants;  // BT.2020
+// BT.601 Limited range
+LIBYUV_API extern const struct YuvConstants kYuvI601Constants;
+// JPeg (BT.601 Full range)
+LIBYUV_API extern const struct YuvConstants kYuvJPEGConstants;
+// BT.709 Limited range
+LIBYUV_API extern const struct YuvConstants kYuvH709Constants;
+// BT.2020(non-constant luminance) Limited range
+LIBYUV_API extern const struct YuvConstants kYuv2020Constants;
 
 // Conversion matrix for YVU to BGR
-LIBYUV_API extern const struct YuvConstants kYvuI601Constants;  // BT.601
-LIBYUV_API extern const struct YuvConstants kYvuJPEGConstants;  // JPeg
-LIBYUV_API extern const struct YuvConstants kYvuH709Constants;  // BT.709
-LIBYUV_API extern const struct YuvConstants kYvu2020Constants;  // BT.2020
+// BT.601 Limited range
+LIBYUV_API extern const struct YuvConstants kYvuI601Constants;
+// JPeg (BT.601 Full range)
+LIBYUV_API extern const struct YuvConstants kYvuJPEGConstants;
+// BT.709 Limited range
+LIBYUV_API extern const struct YuvConstants kYvuH709Constants;
+// BT.2020(non-constant luminance) Limited range
+LIBYUV_API extern const struct YuvConstants kYvu2020Constants;
+
+// Helper functions for init custom conversion matrix
+
+// Init conversion matrix using coefficients of R and B when computing Y:
+//
+// Y = kr * R + kb * B + (1 - kr - kb) * G;
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// if yuv = 0, init matrix convert from YVU to BGR, otherwise from YUV to RGB
+LIBYUV_API
+int InitYuvConstantsWithKrKb(struct YuvConstants* yuvconstants,
+                             float kr,
+                             float kb,
+                             int full_range,
+                             int yuv);
+
+// Init conversion matrix using color primaries.
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// primaries should contains chromaticity coordinates of R, G, B, and White,
+// in terms of the CIE 1931 definition of x and y as specified by ISO 11664-1,
+// in order rX, rY, gX, gY, bX, bY, wX, wY.
+// if yuv = 0, init matrix convert from YVU to BGR, otherwise from YUV to RGB
+LIBYUV_API
+int InitYuvConstantsWithColorPrimaries(struct YuvConstants* yuvconstants,
+                                       const float primaries[8],
+                                       int full_range,
+                                       int yuv);
+
+typedef enum MatrixCoefficients {
+  kMatrixCoefficientsIdentity = 0,
+  kMatrixCoefficientsBT709 = 1,
+  kMatrixCoefficientsUnspecified = 2,
+  kMatrixCoefficientsFCC = 4,
+  kMatrixCoefficientsBT470BG = 5,
+  kMatrixCoefficientsBT601 = 6,
+  kMatrixCoefficientsSMPTE240 = 7,
+  kMatrixCoefficientsYCgCo = 8,
+  kMatrixCoefficientsBT2020NCL = 9,
+  kMatrixCoefficientsBT2020CL = 10,
+  kMatrixCoefficientsSMPTE2085 = 11,
+  kMatrixCoefficientsChromaDerivedNCL = 12,
+  kMatrixCoefficientsChromaDerivedCL = 13,
+  kMatrixCoefficientsICtCp = 14
+} MatrixCoefficientsEnum;
+
+// Init conversion matrix using matrix coefficients code point
+// as specified by ITU-T Rec H.273:
+// https://www.itu.int/rec/T-REC-H.273-201612-I/en
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// code_point is MatrixCoefficients in H.273
+// full_range is VideoFullRangeFlag in H.273
+// if yuv = 0, init matrix convert from YVU to BGR, otherwise from YUV to RGB
+// Note that libyuv does NOT support all matrix coefficients in H.273.
+LIBYUV_API
+int InitYuvConstantsWithMCCodePoint(struct YuvConstants* yuvconstants,
+                                    MatrixCoefficientsEnum code_point,
+                                    int full_range,
+                                    int yuv);
+
+typedef enum ColorPrimaries {
+  kColorPrimariesBT709 = 1,
+  kColorPrimariesUnspecified = 2,
+  kColorPrimariesBT470M = 4,
+  kColorPrimariesBT470BG = 5,
+  kColorPrimariesBT601 = 6,
+  kColorPrimariesSMPTE240 = 7,
+  kColorPrimariesGenericFilm = 8,
+  kColorPrimariesBT2020 = 9,
+  kColorPrimariesXYZ = 10,
+  kColorPrimariesSMPTE431 = 11,
+  kColorPrimariesSMPTE432 = 12,
+  kColorPrimariesEBU3213 = 22
+} ColorPrimariesEnum;
+
+// Init conversion matrix using color primaries code point
+// as specified by ITU-T Rec H.273:
+// https://www.itu.int/rec/T-REC-H.273-201612-I/en
+// This function should only be used if matrix coefficients
+// code point = 12 (Chromaticity-derived non-constant luminance system)
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// code_point is ColourPrimaries in H.273
+// full_range is VideoFullRangeFlag in H.273
+// if yuv = 0, init matrix convert from YVU to BGR, otherwise from YUV to RGB
+// Note that libyuv does NOT support all matrix coefficients in H.273.
+LIBYUV_API
+int InitYuvConstantsWithCPCodePoint(struct YuvConstants* yuvconstants,
+                                    ColorPrimariesEnum code_point,
+                                    int full_range,
+                                    int yuv);
+
 
 // Macros for end swapped destination Matrix conversions.
 // Swap UV and pass mirrored kYvuJPEGConstants matrix.
