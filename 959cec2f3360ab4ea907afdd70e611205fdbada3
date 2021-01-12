@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4937bf2_dff376c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-12T22:18:44Z",
+      "side": 1,
+      "message": "Bug fix in NV12Scale that manifested as a segfault in InterpolateRow_AVX2",
+      "revId": "959cec2f3360ab4ea907afdd70e611205fdbada3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
