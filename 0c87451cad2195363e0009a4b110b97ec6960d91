@@ -16,6 +16,24 @@
       "message": "What\u0027s going on? Why all these changes need to be done twice?",
       "revId": "0c87451cad2195363e0009a4b110b97ec6960d91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3502b2f7_3dfc39c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-12T22:38:20Z",
+      "side": 1,
+      "message": "2 repositories.  This is git.  Ideally an automated upstream would occur but its a small project so its a manual process.  This upstream also includes unittest updates that were not upstreamed previously.\nTheres 1 final step for git, which is to roll the new git revision into chromium.",
+      "parentUuid": "0baf3998_f6551009",
+      "revId": "0c87451cad2195363e0009a4b110b97ec6960d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
