@@ -34,6 +34,23 @@
       "parentUuid": "0baf3998_f6551009",
       "revId": "0c87451cad2195363e0009a4b110b97ec6960d91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "558593c1_42f0092a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-12T23:10:31Z",
+      "side": 1,
+      "message": "build bot failures are unrelated to this change",
+      "revId": "0c87451cad2195363e0009a4b110b97ec6960d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
