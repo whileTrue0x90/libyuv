@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93fe6783_e35a1657",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "Thanks for the code.  This is really impressive that you were able to port Neon and AVX and even Visual C.  I dont see any bugs, and you\u0027ve done tests, so if they pass, this is great.\n\nWhen theres a public API change, its good to bump the version.h to allow users to ifdef/assert the version they have is new enough.\n\nIn the future it will be nice to have HDR version of these?  H010AlphaToARGB etc.  The code would be relatively similar.\nInstead of fully implementing row functions, it would be possible to copy the alpha into the ARGB.\n",
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e69ddb9_8926a851",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "attenuation is optional so this comment should probably change.\nIf attenuate\u003d0 the alpha is passed thru as is.  The intent is that it is unattenuated in both YUVA source, and in ARGB for use with GPU.  But if the YUV image format had pre-attenuated A thats fine... it would pass thru.\nIf attenuate\u003d1 the RGB value gets multiplied by the alpha.  The intent is the YUVA had unattenuated alpha but the ARGB wants preattenuated ARGB for use with software rendering.\nThe flag may depend on the canvas type.\nThere is no option to unattenuate.  It would be easy implement.\nAlthough the current implementation simply calls ARGBAttenuate row by row, which you could do, its part of the API because I had in mind that the attenuation could be done in the row function.",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 569,
+        "endChar": 49
+      },
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b47d912_6cab2a6c",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "This is fine, but note that this function is the same as 420 except these 2 increments, and for some functions I used a common function with a flag instead.",
+      "range": {
+        "startLine": 1642,
+        "startChar": 0,
+        "endLine": 1642,
+        "endChar": 26
+      },
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d7765b7_5519f7e7",
+        "filename": "source/row_any.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "This is fine but really each function should have an ifdef, so a single function can be disabled.",
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74d91c6a_308c91b3",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2605,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "This code is correct but its inefficient having a vpermq for each channel.  It would be good to revisit the approach to see if lanes could be implemented without vpermq.\nAt least this code would port to avx512 though... just 8 lanes instead of 4.",
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1fee8da_08927efa",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "too easy!  You gotta love ARM right?\nI think the YUVTORGB_SETUP initialized d23 to 255 which is wasted, but no big deal.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69123437_de2b95dc",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "Looks right.  It would be nice to unify 32 and 64 bit ARM.  I think the low level implementation of YUVTORGB() is better in arm32, but its handy that this version accepts registers for the RGB, avoiding a swap to store different RGB formats.\nOn newer ARM cpus, using 16b would be faster.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 1
+      },
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84dceeae_2172fd11",
+        "filename": "source/row_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2759,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-22T23:42:22Z",
+      "side": 1,
+      "message": "nicely done.  I wouldnt have bothered with old style 32 bit visual c specific code, as clangcl uses the gcc version for both 32 and 64 bit.  And its getting hard to test real visual c.",
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
