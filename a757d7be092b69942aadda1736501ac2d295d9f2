@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a46162cd_8dea3bcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-23T02:30:57Z",
+      "side": 1,
+      "message": "It\u0027s actually simpler than it looks like. By comparing those READYUV422 and READYUVA422 I can know the part of code to read A, then apply it to READYUV444 I can get a working READYUVA444.\n\nI thought version number will be bumped after the change is reviewed and  just before being committed to prevent collision.\n\nLooks like you provided some change advice below but the patch is already submitted. Do you want me to change them? If so, should I continue upload patch to this CL or open a new one?",
+      "parentUuid": "93fe6783_e35a1657",
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e69ddb9_8926a851",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-01-22T23:42:22Z",
       "side": 1,
       "message": "attenuation is optional so this comment should probably change.\nIf attenuate\u003d0 the alpha is passed thru as is.  The intent is that it is unattenuated in both YUVA source, and in ARGB for use with GPU.  But if the YUV image format had pre-attenuated A thats fine... it would pass thru.\nIf attenuate\u003d1 the RGB value gets multiplied by the alpha.  The intent is the YUVA had unattenuated alpha but the ARGB wants preattenuated ARGB for use with software rendering.\nThe flag may depend on the canvas type.\nThere is no option to unattenuate.  It would be easy implement.\nAlthough the current implementation simply calls ARGBAttenuate row by row, which you could do, its part of the API because I had in mind that the attenuation could be done in the row function.",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 569,
+        "endChar": 49
+      },
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "895c69ca_a6db7bec",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-23T02:30:57Z",
+      "side": 1,
+      "message": "I\u0027m simply duplicating the already exist I420AlphaToARGBMatrix. It would be better to write \"Convert I4xx with Alpha to (optionally) preattenuated ARGB with matrix.\"",
+      "parentUuid": "7e69ddb9_8926a851",
       "range": {
         "startLine": 569,
         "startChar": 0,
@@ -83,6 +125,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ebac0889_0e4e8935",
+        "filename": "source/row_any.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-23T02:30:57Z",
+      "side": 1,
+      "message": "These are I422* functions but in \u0027#ifdef HAS_I444TOARGBROW_SSSE3\u0027 before. I was feeling it a bit weird, so moved them into \u0027#ifdef HAS_I422TOARGBROW_SSSE3\u0027, which seems like a better place. Maybe add their own ifdef?",
+      "parentUuid": "9d7765b7_5519f7e7",
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "74d91c6a_308c91b3",
         "filename": "source/row_gcc.cc",
         "patchSetId": 2
@@ -111,6 +171,30 @@
       "writtenOn": "2021-01-22T23:42:22Z",
       "side": 1,
       "message": "too easy!  You gotta love ARM right?\nI think the YUVTORGB_SETUP initialized d23 to 255 which is wasted, but no big deal.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "a757d7be092b69942aadda1736501ac2d295d9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba62a2cb_92436c52",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-23T02:30:57Z",
+      "side": 1,
+      "message": "I don\u0027t see YUVTORGB_SETUP touched d23? In opaque-alpha version d23 is initialized after YUVTORGB_SETUP.",
+      "parentUuid": "e1fee8da_08927efa",
       "range": {
         "startLine": 172,
         "startChar": 0,
