@@ -16,6 +16,23 @@
       "message": "Add kYuvF709Constants for full range BT.709\n\nFix for I444AlphaToARGB on ARM unittest.  The C version is adjusted to match the Neon, which subsamples I444 to I422 internally.\n\n",
       "revId": "6db408117e4f868f3091213bf7ca63a5409c99b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2550f87b_cc631ad2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-24T15:24:02Z",
+      "side": 1,
+      "message": "clang-format applied.  makes a bit of a mess of assembly, but as long as it isnt too bad I let it have its way.\n",
+      "revId": "6db408117e4f868f3091213bf7ca63a5409c99b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
