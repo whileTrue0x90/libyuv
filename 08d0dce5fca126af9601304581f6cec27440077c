@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d3c0f3a_048e9ea2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002325
+      },
+      "writtenOn": "2021-01-24T09:40:47Z",
+      "side": 1,
+      "message": "This actually broke libyuv_unittest on arm platforms (and the CI status here in gerrit shows almost every configuration failing - or is that a permanent state?).",
+      "revId": "08d0dce5fca126af9601304581f6cec27440077c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
