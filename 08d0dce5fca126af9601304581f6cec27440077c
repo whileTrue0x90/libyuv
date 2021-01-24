@@ -52,6 +52,24 @@
       "parentUuid": "26a6f358_f53376c4",
       "revId": "08d0dce5fca126af9601304581f6cec27440077c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6db7c55_0a85ba1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-24T12:41:25Z",
+      "side": 1,
+      "message": "I see the case. NEON SIMD Code subsamples UV on I444, but C Code doesn\u0027t mimic this behavior. It\u0027s OK to use the current code, and I will fix the test.",
+      "parentUuid": "d8b9c3f7_cdf8e841",
+      "revId": "08d0dce5fca126af9601304581f6cec27440077c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
