@@ -33,6 +33,23 @@
       "message": "FYI mirko, previous CL had unittest failure on arm that we didnt catch due to try bots being broken.\n\nThis CL fixes ARM tests.\n\nIn future CL\u0027s I expect legitimate Visual C and mips failures.",
       "revId": "3e437e410864c0898cd8276b38287cfc7f5d2d08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12923293_ffe6f1f9",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-24T16:27:13Z",
+      "side": 1,
+      "message": "These coefficients are wrong. Correct coefficients are:\nR \u003d Y -                              V * -1.5748\nG \u003d Y - U * 0.1873242729306487695  - V * 0.46812427293064876957\nB \u003d Y - U * -1.8556\n\nGenerally, with WR and WB given, the equations are:\nR \u003d Y + (2 * (1 - WR)) * V;\nG \u003d Y - ((2 * ((WR * (1 - WR) * V) + (WB * (1 - WB) * U))) / (1 - WB - WR));\nB \u003d Y + (2 * (1 - WB)) * U;",
+      "revId": "3e437e410864c0898cd8276b38287cfc7f5d2d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
