@@ -185,8 +185,8 @@ void I444AlphaToARGBRow_NEON(const uint8_t* src_y,
       "prfm        pldl1keep, [%0, 448]          \n"
     YUVTORGB(v22, v21, v20)
       "ld1         {v23.8b}, [%3], #8            \n"
-      "prfm        pldl1keep, [%1, 128]          \n"
-      "prfm        pldl1keep, [%2, 128]          \n"
+      "prfm        pldl1keep, [%1, 448]          \n"
+      "prfm        pldl1keep, [%2, 448]          \n"
       "prfm        pldl1keep, [%3, 448]          \n"
       "subs        %w5, %w5, #8                  \n"
       "st4         {v20.8b,v21.8b,v22.8b,v23.8b}, [%4], #32 \n"

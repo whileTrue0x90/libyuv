@@ -1875,6 +1875,36 @@ void I444ToARGBRow_C(const uint8_t* src_y,
     rgb_buf[3] = 255;
   }
 }
+
+void I444AlphaToARGBRow_C(const uint8_t* src_y,
+                          const uint8_t* src_u,
+                          const uint8_t* src_v,
+                          const uint8_t* src_a,
+                          uint8_t* rgb_buf,
+                          const struct YuvConstants* yuvconstants,
+                          int width) {
+  int x;
+  for (x = 0; x < width - 1; x += 2) {
+    uint8_t u = (src_u[0] + src_u[1] + 1) >> 1;
+    uint8_t v = (src_v[0] + src_v[1] + 1) >> 1;
+    YuvPixel(src_y[0], u, v, rgb_buf + 0, rgb_buf + 1, rgb_buf + 2,
+             yuvconstants);
+    rgb_buf[3] = src_a[0];
+    YuvPixel(src_y[1], u, v, rgb_buf + 4, rgb_buf + 5, rgb_buf + 6,
+             yuvconstants);
+    rgb_buf[7] = src_a[1];
+    src_y += 2;
+    src_u += 2;
+    src_v += 2;
+    src_a += 2;
+    rgb_buf += 8;  // Advance 2 pixels.
+  }
+  if (width & 1) {
+    YuvPixel(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
+             rgb_buf + 2, yuvconstants);
+    rgb_buf[3] = 255;
+  }
+}
 #else
 void I444ToARGBRow_C(const uint8_t* src_y,
                      const uint8_t* src_u,
@@ -1890,6 +1920,26 @@ void I444ToARGBRow_C(const uint8_t* src_y,
     src_y += 1;
     src_u += 1;
     src_v += 1;
+    rgb_buf += 4;  // Advance 1 pixel.
+  }
+}
+
+void I444AlphaToARGBRow_C(const uint8_t* src_y,
+                          const uint8_t* src_u,
+                          const uint8_t* src_v,
+                          const uint8_t* src_a,
+                          uint8_t* rgb_buf,
+                          const struct YuvConstants* yuvconstants,
+                          int width) {
+  int x;
+  for (x = 0; x < width; ++x) {
+    YuvPixel(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
+             rgb_buf + 2, yuvconstants);
+    rgb_buf[3] = src_a[0];
+    src_y += 1;
+    src_u += 1;
+    src_v += 1;
+    src_a += 1;
     rgb_buf += 4;  // Advance 1 pixel.
   }
 }
@@ -2013,26 +2063,6 @@ void I422ToAR30Row_C(const uint8_t* src_y,
   if (width & 1) {
     YuvPixel8_16(src_y[0], src_u[0], src_v[0], &b, &g, &r, yuvconstants);
     StoreAR30(rgb_buf, b, g, r);
-  }
-}
-
-void I444AlphaToARGBRow_C(const uint8_t* src_y,
-                          const uint8_t* src_u,
-                          const uint8_t* src_v,
-                          const uint8_t* src_a,
-                          uint8_t* rgb_buf,
-                          const struct YuvConstants* yuvconstants,
-                          int width) {
-  int x;
-  for (x = 0; x < width; ++x) {
-    YuvPixel(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
-             rgb_buf + 2, yuvconstants);
-    rgb_buf[3] = src_a[0];
-    src_y += 1;
-    src_u += 1;
-    src_v += 1;
-    src_a += 1;
-    rgb_buf += 4;  // Advance 1 pixel.
   }
 }
 
