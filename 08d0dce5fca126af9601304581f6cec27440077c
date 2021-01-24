@@ -16,6 +16,24 @@
       "message": "This actually broke libyuv_unittest on arm platforms (and the CI status here in gerrit shows almost every configuration failing - or is that a permanent state?).",
       "revId": "08d0dce5fca126af9601304581f6cec27440077c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a6f358_f53376c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-24T10:11:15Z",
+      "side": 1,
+      "message": "This is weird... The NEON version did pass the test, it\u0027s the C version broke the test. But C version pass the test on x86.\nMost configurations broke at setting up env so I just get bored checking each one. The android and android_arm64 configuration indeed shows it was broken.",
+      "parentUuid": "3d3c0f3a_048e9ea2",
+      "revId": "08d0dce5fca126af9601304581f6cec27440077c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
