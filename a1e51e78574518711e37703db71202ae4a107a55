@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "500dc961_41aa49d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T03:06:39Z",
+      "side": 1,
+      "message": "Overall this API is workable, but it will need tweaks to compile with C89, or an ifdef.\nNeed to merge in with my CL that changes row_common color matrix macros.\n\nThe API uses 3 floats, which is hard to optimize into SIMD.  Consider 3 rows of 4 floats.\nroughly a simd version would load a vector of 4 floats, multiply by 64 and convert to int.\nFor sure we dont want to optimize it now... its just good to be able to.\n\n\n",
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48dd1570_23e2c01a",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T03:06:39Z",
+      "side": 1,
+      "message": "constexpr wont build with C.  Pass a pointer to YuvConstants.\nOr make this api only available if built with C++",
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e375b4ba_9f6928ae",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T03:06:39Z",
+      "side": 1,
+      "message": "passing a matrix will likely give a warning in C?",
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f36b753_76c91a80",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T03:06:39Z",
+      "side": 1,
+      "message": "this \u0027yuv\u0027 parameter could use a more descriptive name and/or comment.  Its unclear how to use it.",
+      "range": {
+        "startLine": 1506,
+        "startChar": 40,
+        "endLine": 1506,
+        "endChar": 41
+      },
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
