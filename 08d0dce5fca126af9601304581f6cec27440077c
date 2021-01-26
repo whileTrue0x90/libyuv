@@ -70,6 +70,23 @@
       "parentUuid": "d8b9c3f7_cdf8e841",
       "revId": "08d0dce5fca126af9601304581f6cec27440077c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cd71743_852ed9c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T20:18:29Z",
+      "side": 1,
+      "message": "ARM unittest fixed (by changing row_common.cc to match Neon)",
+      "revId": "08d0dce5fca126af9601304581f6cec27440077c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
