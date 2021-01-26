@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0d39fd8_e49b364c",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-26T04:31:45Z",
+      "side": 1,
+      "message": "From here: https://godbolt.org/z/baPjEj\nYou can see static init variable kYuvI601Constants has precomputed coefficients in assembly; dynamic inited variable kYuvJPEGConstants will be computed and filled at runtime.\nNote: I didn\u0027t expected clang will repeat the computation for each element even under -O3 (You can switch compiler to see that). Force noinline on YuvConstantsKY, YuvConstantsKUV, YuvConstantsBY, YuvConstantsBRGB seems to help. I will update this.",
+      "parentUuid": "0ccd07db_4abc2d2e",
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e375b4ba_9f6928ae",
         "filename": "source/row_common.cc",
         "patchSetId": 5
