@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7b3ac02_97a53e2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-26T03:48:31Z",
+      "side": 1,
+      "message": "C89 doesn\u0027t have isnan and isinf. We may:\n1. remove these checks. (Maybe ok, but can\u0027t catch invalid input preemptively)\n2. Assume IEEE 754 float and do some bit level detect: ((float_as_uint32 \u0026 0x7fffffff) \u003e\u003d 0x7f800000)\n3. Use things like x !\u003d x (many sources says this might be optimized out)\n\nI believe we don\u0027t need to optimize it at all anyway? At least for each image this init function should only be called once, and in optimized version for one init call \u0027multiply by 64 and convert to int\u0027 should only do 6 times.",
+      "parentUuid": "500dc961_41aa49d7",
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48dd1570_23e2c01a",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-01-26T03:06:39Z",
       "side": 1,
       "message": "constexpr wont build with C.  Pass a pointer to YuvConstants.\nOr make this api only available if built with C++",
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ccd07db_4abc2d2e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-26T03:48:31Z",
+      "side": 1,
+      "message": "constexpr is to make the same code works for both static init and dynamic init. If the parameter is known at compile time, compiler is able to generate the constants at compile time instead of runtime, otherwise this logic will be executed during runtime just fine.\n\nI was not expecting the code itself may be compiled as C, because \u0027*.cc\u0027 extension indicates these are C++ source files. Isn\u0027t libyuv a C++ library that expose its functions as C API?\n\nIf we are limited to C, then we may just use macro based method.",
+      "parentUuid": "48dd1570_23e2c01a",
       "revId": "a1e51e78574518711e37703db71202ae4a107a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -65,6 +101,30 @@
       "writtenOn": "2021-01-26T03:06:39Z",
       "side": 1,
       "message": "this \u0027yuv\u0027 parameter could use a more descriptive name and/or comment.  Its unclear how to use it.",
+      "range": {
+        "startLine": 1506,
+        "startChar": 40,
+        "endLine": 1506,
+        "endChar": 41
+      },
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "859b5450_22533f0c",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-26T03:48:31Z",
+      "side": 1,
+      "message": "I can\u0027t come up with a good name for it... swapping U and V coefficients to get BGR output itself sounds a bit hackish. Do you have some advice?",
+      "parentUuid": "5f36b753_76c91a80",
       "range": {
         "startLine": 1506,
         "startChar": 40,
