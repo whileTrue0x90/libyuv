@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8cb915a_7a65e46a",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T20:32:56Z",
+      "side": 1,
+      "message": "+32 only works for positive values.  This can be used on negatives?",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39896a00_182e0e06",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T20:32:56Z",
+      "side": 1,
+      "message": "mirror is better.  at least theres no preconceived meaning.  A comment on what it means would be good.   Its a flag, and it produces a YvuConstant.",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbcbc9fb_c596c98a",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T20:32:56Z",
+      "side": 1,
+      "message": "Note alignment isnt strictly required for Neon and AVX2.  It improves performance.",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b29fe4b_90f50bec",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T20:32:56Z",
+      "side": 1,
+      "message": "other cpus like mips would use this?  as far as I know, they would want 16 byte alignment.",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c9a0c96_44bd01ed",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T20:32:56Z",
+      "side": 1,
+      "message": "row.h will not work in general for some weird build configurations where very different compilers/compile options are used for the library vs the unittest.\n\nrow.h is considered internal, and used to live in the source/ folder, but that had include path errors, so it was moved to simplify build scripts.  It should only be used if actually doing a row.h function test.\n\nSee if you can use a different mechanism for aligning memory.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
