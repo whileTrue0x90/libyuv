@@ -151,6 +151,29 @@
       },
       "revId": "a1e51e78574518711e37703db71202ae4a107a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35fc5f51_3b368f4a",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T17:48:11Z",
+      "side": 1,
+      "message": "best to avoid using this header, as its considered internal.\nYou could allocate the memory to ensure alignment?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "a1e51e78574518711e37703db71202ae4a107a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
