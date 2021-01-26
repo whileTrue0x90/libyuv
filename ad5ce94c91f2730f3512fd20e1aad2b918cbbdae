@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4281a480_001c87d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "Thanks for the change!  Overall great.  Theres a bug in the row_neon.cc with registers declared for clobber.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b7cdb87_22d1cb36",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "nit: (not important) with so many pointers it is probably worth using an index.",
+      "range": {
+        "startLine": 4102,
+        "startChar": 0,
+        "endLine": 4102,
+        "endChar": 52
+      },
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0faaac7f_b282a322",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4175,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "interesting... I havent seen this instruction used before.  nice",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d3bd4a0_e09e7f8e",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "best call the parameter src_argb.\nlibyuv does support all 4 common variations of argb, bgra, abgr and rgba so the names help clarify which format we\u0027re talking about.  argb (as a register) is b,g,r,a in memory.\nthe name of the function (ARGB) and the parameter should match.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8daa9ef_d7c604eb",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "nice.  Didn\u0027t think you\u0027d pick up on this trick to make it work with 16 at a time.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b62dd222_d0153d23",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "clobber list should be q0 to q3",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1828a0be_10cf3913",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "clobber list is incomplete.  it should be q0 to q3 or d0 to d7.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91617cfd_439736ac",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:12:04Z",
+      "side": 1,
+      "message": "more accurate comment would be load 16 BGRA since thats the order expected.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
