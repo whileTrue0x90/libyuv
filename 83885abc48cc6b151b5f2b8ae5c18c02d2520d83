@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "928bd8cb_8b8fa4cb",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561635c2_3b32401b",
+      "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dda92ba7_268953c4",
@@ -52,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fca1e38_23d72426",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:31:50Z",
+      "side": 1,
+      "message": "Done.  Note there are 4 reasons for the renaming here:\n1 plan to add full range bt.2020.  Will likely assign it the letter V\n2 names that start with numbers are problematic\n3 consistency with other yuv conversions.\n4 this color space is now more often named bt.2020 not rec 2020",
+      "parentUuid": "dda92ba7_268953c4",
+      "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37f339ea_eb4c829e",
@@ -65,6 +101,30 @@
       "writtenOn": "2021-01-26T18:16:32Z",
       "side": 1,
       "message": "Nit: Similarly, should this test be renamed \"TestFullYUVU\"?",
+      "range": {
+        "startLine": 693,
+        "startChar": 24,
+        "endLine": 693,
+        "endChar": 42
+      },
+      "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74b5548b_468a2723",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-26T18:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f339ea_eb4c829e",
       "range": {
         "startLine": 693,
         "startChar": 24,
