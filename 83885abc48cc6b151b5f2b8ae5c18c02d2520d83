@@ -16,6 +16,63 @@
       "message": "added color test that does an error histogram",
       "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "561635c2_3b32401b",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-01-26T18:16:32Z",
+      "side": 1,
+      "message": "Nit: Add the \"BT.709 full range\" comment (see line 124). You can do this in a separate CL.",
+      "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dda92ba7_268953c4",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-01-26T18:16:32Z",
+      "side": 1,
+      "message": "Nit: Since \"YUVRec2020ToRGBReference\" is renamed \"YUVUToRGBReference\" (line 438), should this function be renamed \"YUVUToRGB\" for consistency?\n\n(We can deal with this in a separate CL.)",
+      "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37f339ea_eb4c829e",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-01-26T18:16:32Z",
+      "side": 1,
+      "message": "Nit: Similarly, should this test be renamed \"TestFullYUVU\"?",
+      "range": {
+        "startLine": 693,
+        "startChar": 24,
+        "endLine": 693,
+        "endChar": 42
+      },
+      "revId": "83885abc48cc6b151b5f2b8ae5c18c02d2520d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
