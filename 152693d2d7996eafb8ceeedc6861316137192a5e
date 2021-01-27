@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8790a43_2616c6ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-27T18:57:55Z",
+      "side": 1,
+      "message": "Overall this is unsafe to check in as is due to C++ semantics that will break C only builds.\nThe simpliest solution is to guard the code with an ifdef and only make the function available to C++\n\nOr as a first step move the function into color_test.cc to at least demonstrate how to fill in the yuv constants.  Tests can be C++.  Its just the core library that retains C compatability.\n",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8cb915a_7a65e46a",
@@ -137,6 +154,24 @@
       "side": 1,
       "message": "I\u0027m strictly following what SIMD_ALIGNED is defined to be. If mips only need 16, then we may need to update both.",
       "parentUuid": "5b29fe4b_90f50bec",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb832c43_d95d4ead",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-27T18:57:55Z",
+      "side": 1,
+      "message": "For AVX2, it wont crash if misaligned, and I\u0027m pretty sure I reduced all the yuvconstant structures down to 16 byte vectors using a broadcast to make it SSE/AVX interoperable.  So 16 byte alignment is sufficient for full efficiency on all CPUs.\nThere is a concern that 32 bit x86 SSE will crash for math operations that use memory.\nIts okay to reduce the test to 16 bytes, or remove it entirely and put the requirement on the caller.",
+      "parentUuid": "556c6f45_94087451",
       "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
