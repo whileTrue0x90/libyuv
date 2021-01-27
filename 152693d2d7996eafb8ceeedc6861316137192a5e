@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f673e3_b426eb52",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T02:12:22Z",
+      "side": 1,
+      "message": "`RoundYuvCoefficient` is mimicing the behavior of `roundf`. +32 is not mean to round the constant itself, but to round the result RGB value, which is always positive.",
+      "parentUuid": "a8cb915a_7a65e46a",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39896a00_182e0e06",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-01-26T20:32:56Z",
       "side": 1,
       "message": "mirror is better.  at least theres no preconceived meaning.  A comment on what it means would be good.   Its a flag, and it produces a YvuConstant.",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21cfca6b_90e11869",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T02:12:22Z",
+      "side": 1,
+      "message": "I put the explanation in header file.(convert_argb.h#L65)",
+      "parentUuid": "39896a00_182e0e06",
       "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5223f0d4_5ca104a3",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T02:12:22Z",
+      "side": 1,
+      "message": "Maybe remove / loosen this check? I\u0027m a bit worried if user didn\u0027t pay attention to this and then complains about the speed.",
+      "parentUuid": "dbcbc9fb_c596c98a",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b29fe4b_90f50bec",
         "filename": "source/row_common.cc",
         "patchSetId": 7
@@ -71,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "556c6f45_94087451",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T02:12:22Z",
+      "side": 1,
+      "message": "I\u0027m strictly following what SIMD_ALIGNED is defined to be. If mips only need 16, then we may need to update both.",
+      "parentUuid": "5b29fe4b_90f50bec",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c9a0c96_44bd01ed",
         "filename": "unit_test/color_test.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2021-01-26T20:32:56Z",
       "side": 1,
       "message": "row.h will not work in general for some weird build configurations where very different compilers/compile options are used for the library vs the unittest.\n\nrow.h is considered internal, and used to live in the source/ folder, but that had include path errors, so it was moved to simplify build scripts.  It should only be used if actually doing a row.h function test.\n\nSee if you can use a different mechanism for aligning memory.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd8b407c_7562f5d9",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T02:12:22Z",
+      "side": 1,
+      "message": "Maybe we can just pull out the definition of SIMD_ALIGNED macro.\nAs memtioned above I\u0027m strictly following SIMD_ALIGNED during checking so this is needed. If we don\u0027t need such a strict check we can simply remove this include.",
+      "parentUuid": "7c9a0c96_44bd01ed",
       "range": {
         "startLine": 14,
         "startChar": 0,
