@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6131c5a9_75eb92ce",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T01:11:38Z",
+      "side": 1,
+      "message": "Maybe like this?",
+      "parentUuid": "9b7cdb87_22d1cb36",
+      "range": {
+        "startLine": 4102,
+        "startChar": 0,
+        "endLine": 4102,
+        "endChar": 52
+      },
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0faaac7f_b282a322",
         "filename": "source/row_gcc.cc",
         "patchSetId": 2
@@ -71,6 +95,24 @@
       "writtenOn": "2021-01-26T18:12:04Z",
       "side": 1,
       "message": "best call the parameter src_argb.\nlibyuv does support all 4 common variations of argb, bgra, abgr and rgba so the names help clarify which format we\u0027re talking about.  argb (as a register) is b,g,r,a in memory.\nthe name of the function (ARGB) and the parameter should match.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfb20d69_29430fbf",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T01:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d3bd4a0_e09e7f8e",
       "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -109,6 +151,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09f8807d_2ccfe865",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T01:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b62dd222_d0153d23",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1828a0be_10cf3913",
@@ -126,6 +186,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c38882e8_13558642",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T01:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1828a0be_10cf3913",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91617cfd_439736ac",
@@ -139,6 +217,24 @@
       "writtenOn": "2021-01-26T18:12:04Z",
       "side": 1,
       "message": "more accurate comment would be load 16 BGRA since thats the order expected.",
+      "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75cd145_3d04b0a3",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-27T01:11:38Z",
+      "side": 1,
+      "message": "Done. I changed to use ARGB everywhere.",
+      "parentUuid": "91617cfd_439736ac",
       "revId": "ad5ce94c91f2730f3512fd20e1aad2b918cbbdae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
