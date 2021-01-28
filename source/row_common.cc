@@ -1330,64 +1330,47 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
 // Macros to create SIMD specific yuv to rgb conversion constants.
 
 #if defined(__aarch64__)
-#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR) \
-  const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = { \
-      {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},                     \
-      {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},                     \
-      {UG, VG, UG, VG, UG, VG, UG, VG},                             \
-      {UG, VG, UG, VG, UG, VG, UG, VG},                             \
-      {BB, BG, BR, YGB, 0, 0, 0, 0},                                \
-      {0x0101 * YG, YG, 0, 0}};                                     \
-  const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = { \
-      {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},                     \
-      {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},                     \
-      {VG, UG, VG, UG, VG, UG, VG, UG},                             \
-      {VG, UG, VG, UG, VG, UG, VG, UG},                             \
-      {BR, BG, BB, YGB, 0, 0, 0, 0},                                \
-      {0x0101 * YG, YG, 0, 0}};
-
+#define YUVCONSTANTSBODY(YG, YGB, UB, VB, UG, VG, UR, VR, BB, BG, BR)    \
+  {{(uint16_t)(-UB), (uint16_t)(-VR), (uint16_t)(-UB), (uint16_t)(-VR),  \
+    (uint16_t)(-UB), (uint16_t)(-VR), (uint16_t)(-UB), (uint16_t)(-VR)}, \
+   {(uint16_t)(-UB), (uint16_t)(-VR), (uint16_t)(-UB), (uint16_t)(-VR),  \
+    (uint16_t)(-UB), (uint16_t)(-VR), (uint16_t)(-UB), (uint16_t)(-VR)}, \
+   {(uint16_t)(UG), (uint16_t)(VG), (uint16_t)(UG), (uint16_t)(VG),      \
+    (uint16_t)(UG), (uint16_t)(VG), (uint16_t)(UG), (uint16_t)(VG)},     \
+   {(uint16_t)(UG), (uint16_t)(VG), (uint16_t)(UG), (uint16_t)(VG),      \
+    (uint16_t)(UG), (uint16_t)(VG), (uint16_t)(UG), (uint16_t)(VG)},     \
+   {BB, BG, BR, YGB, 0, 0, 0, 0},                                        \
+   {0x0101 * YG, YG, 0, 0}};
 #elif defined(__arm__)
-#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR)     \
-  const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = {     \
-      {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0}, \
-      {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},         \
-      {BB, BG, BR, YGB, 0, 0, 0, 0},                                    \
-      {0x0101 * YG, YG, 0, 0}};                                         \
-  const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = {     \
-      {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0}, \
-      {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},         \
-      {BR, BG, BB, YGB, 0, 0, 0, 0},                                    \
-      {0x0101 * YG, YG, 0, 0}};
-
+#define YUVCONSTANTSBODY(YG, YGB, UB, VB, UG, VG, UR, VR, BB, BG, BR)          \
+  {{(uint8_t)(-UB), (uint8_t)(-UB), (uint8_t)(-UB), (uint8_t)(-UB),            \
+    (uint8_t)(-VR), (uint8_t)(-VR), (uint8_t)(-VR), (uint8_t)(-VR), 0, 0, 0,   \
+    0, 0, 0, 0, 0},                                                            \
+   {(uint8_t)(UG), (uint8_t)(UG), (uint8_t)(UG), (uint8_t)(UG), (uint8_t)(VG), \
+    (uint8_t)(VG), (uint8_t)(VG), (uint8_t)(VG), 0, 0, 0, 0, 0, 0, 0, 0},      \
+   {BB, BG, BR, YGB, 0, 0, 0, 0},                                              \
+   {0x0101 * YG, YG, 0, 0}};
 #else
-#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR)          \
-  const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = {          \
-      {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,               \
-       UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},              \
-      {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,       \
-       UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},      \
-      {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,               \
-       0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},              \
-      {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},      \
-      {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},      \
-      {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},      \
-      {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},      \
-      {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, \
-       YGB, YGB}};                                                           \
-  const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = {          \
-      {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,               \
-       VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},              \
-      {VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG,       \
-       VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG},      \
-      {0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB,               \
-       0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB},              \
-      {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},      \
-      {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},      \
-      {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},      \
-      {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},      \
-      {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, \
-       YGB, YGB}};
+#define YUVCONSTANTSBODY(YG, YGB, UB, VB, UG, VG, UR, VR, BB, BG, BR)          \
+  {{UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB,            \
+    UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB, UB, VB},           \
+   {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,            \
+    UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG},           \
+   {UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR,            \
+    UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR, UR, VR},           \
+   {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},           \
+   {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG},           \
+   {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},           \
+   {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},           \
+   {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, \
+    YGB}};
 #endif
+
+#define MAKEYUVCONSTANTS(name, YG, YGB, UB, VB, UG, VG, UR, VR, BB, BG, BR) \
+  const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) =           \
+      YUVCONSTANTSBODY(YG, YGB, UB, VB, UG, VG, UR, VR, BB, BG, BR)         \
+  const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) =           \
+      YUVCONSTANTSBODY(YG, YGB, VR, UR, VG, UG, VB, UB, BR, BG, BB)
 
 // TODO(fbarchard): Generate SIMD structures from float matrix.
 
@@ -1411,7 +1394,7 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(I601, YG, YGB, UB, 0, UG, VG, 0, VR, BB, BG, BR)
 
 #undef BB
 #undef BG
@@ -1443,7 +1426,7 @@ MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, 0, UG, VG, 0, VR, BB, BG, BR)
 
 #undef BB
 #undef BG
@@ -1476,7 +1459,7 @@ MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(H709, YG, YGB, UB, 0, UG, VG, 0, VR, BB, BG, BR)
 
 #undef BB
 #undef BG
@@ -1514,7 +1497,7 @@ MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(F709, YG, YGB, UB, 0, UG, VG, 0, VR, BB, BG, BR)
 
 #undef BB
 #undef BG
@@ -1547,7 +1530,7 @@ MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(2020, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(2020, YG, YGB, UB, 0, UG, VG, 0, VR, BB, BG, BR)
 
 #undef BB
 #undef BG
@@ -1559,6 +1542,117 @@ MAKEYUVCONSTANTS(2020, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #undef VR
 #undef YG
 
+static __inline float ClampYuvCoefficient8(float v) {
+  return (v > 127) ? 127 : ((v < -128) ? -128 : v);
+}
+
+static __inline int32_t CeilYuvCoefficient(float v) {
+  return ((float)(int32_t)(v) == v) ? ((int32_t)(v))
+                                    : ((int32_t)(v) + ((v > 0) ? 1 : 0));
+}
+
+static __inline int32_t FloorYuvCoefficient(float v) {
+  return ((float)(int32_t)(v) == v) ? ((int32_t)(v))
+                                    : ((int32_t)(v) + ((v > 0) ? 0 : 1));
+}
+
+static __inline int32_t RoundYuvCoefficient(float v) {
+  return (v > 0) ? FloorYuvCoefficient(v + 0.5f) : CeilYuvCoefficient(v - 0.5f);
+}
+
+static __inline int YuvCoefficientIsValid(float v) {
+  return v == v && v != (1.0f / 0.0f) && v != (-1.0f / 0.0f);
+}
+
+static __inline int16_t YuvConstantsKY(float ky) {
+  return (int16_t)RoundYuvCoefficient(ky * 64 * 256 * 256 / 257);
+}
+
+static __inline int8_t YuvConstantsKUV(float kuv) {
+  return (int8_t)RoundYuvCoefficient(ClampYuvCoefficient8(kuv * 64));
+}
+
+static __inline int16_t YuvConstantsBY(float ky, float by) {
+  return (int16_t)RoundYuvCoefficient(-ky * by * 64 * 255 + 32);
+}
+
+static __inline int16_t YuvConstantsBRGB(int16_t by,
+                                         int8_t ku,
+                                         float bu,
+                                         int8_t kv,
+                                         float bv) {
+  return (int16_t)(by + (int16_t)RoundYuvCoefficient(
+                            (bu * (float)(ku) + bv * (float)(kv)) * 255));
+}
+
+int InitYuvConstantsWithMatrix(struct YuvConstants* yuvconstants,
+                               const float matrix[3][3],
+                               const float bias[3],
+                               int mirror) {
+  if (!IS_ALIGNED(yuvconstants, 16)) {
+    return -1;
+  }
+
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
+      if (!YuvCoefficientIsValid(matrix[i][j])) {
+        return -1;
+      }
+    }
+    if (!YuvCoefficientIsValid(bias[i])) {
+      return -1;
+    }
+  }
+
+  // currently we require Y contribution to RGB the same
+  if (((matrix[0][0] - matrix[1][0]) > 0.001f) ||
+      ((matrix[0][0] - matrix[2][0]) > 0.001f) ||
+      ((matrix[1][0] - matrix[2][0]) > 0.001f) ||
+      ((matrix[0][0] - matrix[1][0]) < -0.001f) ||
+      ((matrix[0][0] - matrix[2][0]) < -0.001f) ||
+      ((matrix[1][0] - matrix[2][0]) < -0.001f)) {
+    return -1;
+  }
+
+#if defined(__aarch64__) || defined(__arm__)
+  // currently we require U contribution to R and
+  // V contribution to B is 0 on arm
+  if (matrix[0][1] > 0.001f || matrix[2][2] > 0.001f ||
+      matrix[0][1] < -0.001f || matrix[2][2] < -0.001f) {
+    return -1;
+  }
+#endif
+
+  // Y contribution to R,G,B.  Scale and bias.
+  int16_t YG = YuvConstantsKY(matrix[0][0]);
+  int16_t YGB = YuvConstantsBY(matrix[0][0], bias[0]);
+
+  // U and V contributions to R,G,B.
+  int8_t UR = YuvConstantsKUV(matrix[0][1]);
+  int8_t VR = YuvConstantsKUV(matrix[0][2]);
+  int8_t UG = YuvConstantsKUV(matrix[1][1]);
+  int8_t VG = YuvConstantsKUV(matrix[1][2]);
+  int8_t UB = YuvConstantsKUV(matrix[2][1]);
+  int8_t VB = YuvConstantsKUV(matrix[2][2]);
+
+  // Bias values to subtract 16 from Y and 128 from U and V.
+  int16_t BR = YuvConstantsBRGB(YGB, UR, bias[1], VR, bias[2]);
+  int16_t BG = YuvConstantsBRGB(YGB, UG, bias[1], VG, bias[2]);
+  int16_t BB = YuvConstantsBRGB(YGB, UB, bias[1], VB, bias[2]);
+
+  // C compatible way
+  if (mirror) {
+    struct YuvConstants temp = YUVCONSTANTSBODY(YG, YGB, VR, UR, VG, UG, VB, UB, BR, BG, BB)
+    *yuvconstants = temp;
+  } else {
+    struct YuvConstants temp = YUVCONSTANTSBODY(YG, YGB, UB, VB, UG, VG, UR, VR, BB, BG, BR)
+    *yuvconstants = temp;
+  }
+
+  return 0;
+}
+
+#undef YUVCONSTANTSBODY
 #undef MAKEYUVCONSTANTS
 
 // C reference code that mimics the YUV assembly.

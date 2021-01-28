@@ -683,7 +683,7 @@ void SplitARGBRow_NEON(const uint8_t* src_argb,
       "vst1.8      {q2}, [%1]!                   \n"  // store R
       "vst1.8      {q3}, [%4]!                   \n"  // store A
       "bgt         1b                            \n"
-      : "+r"(src_rgba),                         // %0
+      : "+r"(src_argb),                         // %0
         "+r"(dst_r),                            // %1
         "+r"(dst_g),                            // %2
         "+r"(dst_b),                            // %3
@@ -737,7 +737,7 @@ void SplitXRGBRow_NEON(const uint8_t* src_argb,
       "vst1.8      {q1}, [%2]!                   \n"  // store G
       "vst1.8      {q2}, [%1]!                   \n"  // store R
       "bgt         1b                            \n"
-      : "+r"(src_rgba),                         // %0
+      : "+r"(src_argb),                         // %0
         "+r"(dst_r),                            // %1
         "+r"(dst_g),                            // %2
         "+r"(dst_b),                            // %3
