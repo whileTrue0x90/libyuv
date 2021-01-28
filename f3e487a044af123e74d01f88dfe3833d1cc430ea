@@ -33,6 +33,24 @@
       "message": "I guess it wants you to review my change from subq to sub?",
       "revId": "f3e487a044af123e74d01f88dfe3833d1cc430ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e995fdb_36693ae1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002325
+      },
+      "writtenOn": "2021-01-28T08:09:52Z",
+      "side": 1,
+      "message": "There seems to have been a couple subq left, because this broke compilation with clang for 32 bit x86. (GCC/binutils seems to accept it silently though.)\n\nlibyuv/src/source/row_gcc.cc:4253:7: error: invalid operand for instruction\n      \"subq        %1,%2                         \\n\"\n      ^\n\u003cinline asm\u003e:1:14: note: instantiated into assembly here\n        subq        %ecx,%edx                         \n                    ^~~~~\n\nThe same on lines 4254, 4255, 4354, 4355, 4356, 4438, 4439, 4440.",
+      "parentUuid": "1d4aa3df_c0853dab",
+      "revId": "f3e487a044af123e74d01f88dfe3833d1cc430ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
