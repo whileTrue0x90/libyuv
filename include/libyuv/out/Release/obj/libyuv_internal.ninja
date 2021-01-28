@@ -1,0 +1,46 @@
+defines = -DHAVE_JPEG -DLIBYUV_DISABLE_MMI -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DUSE_X11=1 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-12-init-10666-gc9f69ee7-1\" -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -D_LIBCPP_ABI_UNSTABLE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCPP_ENABLE_NODISCARD -DCR_LIBCXX_REVISION=375504 -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+include_dirs = -I../../../.. -Igen -I../../../../include -I../../../../third_party/libjpeg_turbo
+cflags = -ffp-contract=fast -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fcrash-diagnostics-dir=../../../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -enable-dse-memoryssa=false -fcomplete-member-pointers -m64 -march=x86-64 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -Xclang -fdebug-compilation-dir -Xclang . -no-canonical-prefixes -Wall -Werror -Wextra -Wimplicit-fallthrough -Wunreachable-code -Wthread-safety -Wextra-semi -Wno-missing-field-initializers -Wno-unused-parameter -Wno-c++11-narrowing -Wno-unneeded-internal-declaration -Wno-undefined-var-template -Wno-psabi -Wno-ignored-pragma-optimize -Wno-implicit-int-float-conversion -Wno-final-dtor-non-final-class -Wno-builtin-assume-aligned-alignment -Wno-deprecated-copy -Wno-non-c-typedef-for-linkage -Wmax-tokens -fno-omit-frame-pointer -g0 -ftrivial-auto-var-init=pattern -fvisibility=hidden -Xclang -add-plugin -Xclang find-bad-constructs -Xclang -plugin-arg-find-bad-constructs -Xclang check-ipc -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -O2 -fno-ident -fdata-sections -ffunction-sections
+cflags_cc = -std=c++14 -fno-trigraphs -Wno-trigraphs -fno-exceptions -fno-rtti -nostdinc++ -isystem../../../../buildtools/third_party/libc++/trunk/include -isystem../../../../buildtools/third_party/libc++abi/trunk/include --sysroot=../../../../build/linux/debian_sid_amd64-sysroot -fvisibility-inlines-hidden
+label_name = libyuv_internal
+target_out_dir = obj
+target_output_name = libyuv_internal
+
+build obj/libyuv_internal/compare.o: cxx ../../../../source/compare.cc
+build obj/libyuv_internal/compare_common.o: cxx ../../../../source/compare_common.cc
+build obj/libyuv_internal/compare_gcc.o: cxx ../../../../source/compare_gcc.cc
+build obj/libyuv_internal/compare_win.o: cxx ../../../../source/compare_win.cc
+build obj/libyuv_internal/convert.o: cxx ../../../../source/convert.cc
+build obj/libyuv_internal/convert_argb.o: cxx ../../../../source/convert_argb.cc
+build obj/libyuv_internal/convert_from.o: cxx ../../../../source/convert_from.cc
+build obj/libyuv_internal/convert_from_argb.o: cxx ../../../../source/convert_from_argb.cc
+build obj/libyuv_internal/convert_jpeg.o: cxx ../../../../source/convert_jpeg.cc
+build obj/libyuv_internal/convert_to_argb.o: cxx ../../../../source/convert_to_argb.cc
+build obj/libyuv_internal/convert_to_i420.o: cxx ../../../../source/convert_to_i420.cc
+build obj/libyuv_internal/cpu_id.o: cxx ../../../../source/cpu_id.cc
+build obj/libyuv_internal/mjpeg_decoder.o: cxx ../../../../source/mjpeg_decoder.cc
+build obj/libyuv_internal/mjpeg_validate.o: cxx ../../../../source/mjpeg_validate.cc
+build obj/libyuv_internal/planar_functions.o: cxx ../../../../source/planar_functions.cc
+build obj/libyuv_internal/rotate.o: cxx ../../../../source/rotate.cc
+build obj/libyuv_internal/rotate_any.o: cxx ../../../../source/rotate_any.cc
+build obj/libyuv_internal/rotate_argb.o: cxx ../../../../source/rotate_argb.cc
+build obj/libyuv_internal/rotate_common.o: cxx ../../../../source/rotate_common.cc
+build obj/libyuv_internal/rotate_gcc.o: cxx ../../../../source/rotate_gcc.cc
+build obj/libyuv_internal/rotate_win.o: cxx ../../../../source/rotate_win.cc
+build obj/libyuv_internal/row_any.o: cxx ../../../../source/row_any.cc
+build obj/libyuv_internal/row_common.o: cxx ../../../../source/row_common.cc
+build obj/libyuv_internal/row_gcc.o: cxx ../../../../source/row_gcc.cc
+build obj/libyuv_internal/row_win.o: cxx ../../../../source/row_win.cc
+build obj/libyuv_internal/scale.o: cxx ../../../../source/scale.cc
+build obj/libyuv_internal/scale_any.o: cxx ../../../../source/scale_any.cc
+build obj/libyuv_internal/scale_argb.o: cxx ../../../../source/scale_argb.cc
+build obj/libyuv_internal/scale_common.o: cxx ../../../../source/scale_common.cc
+build obj/libyuv_internal/scale_gcc.o: cxx ../../../../source/scale_gcc.cc
+build obj/libyuv_internal/scale_uv.o: cxx ../../../../source/scale_uv.cc
+build obj/libyuv_internal/scale_win.o: cxx ../../../../source/scale_win.cc
+build obj/libyuv_internal/video_common.o: cxx ../../../../source/video_common.cc
+
+build obj/libyuv_internal.a: alink obj/libyuv_internal/compare.o obj/libyuv_internal/compare_common.o obj/libyuv_internal/compare_gcc.o obj/libyuv_internal/compare_win.o obj/libyuv_internal/convert.o obj/libyuv_internal/convert_argb.o obj/libyuv_internal/convert_from.o obj/libyuv_internal/convert_from_argb.o obj/libyuv_internal/convert_jpeg.o obj/libyuv_internal/convert_to_argb.o obj/libyuv_internal/convert_to_i420.o obj/libyuv_internal/cpu_id.o obj/libyuv_internal/mjpeg_decoder.o obj/libyuv_internal/mjpeg_validate.o obj/libyuv_internal/planar_functions.o obj/libyuv_internal/rotate.o obj/libyuv_internal/rotate_any.o obj/libyuv_internal/rotate_argb.o obj/libyuv_internal/rotate_common.o obj/libyuv_internal/rotate_gcc.o obj/libyuv_internal/rotate_win.o obj/libyuv_internal/row_any.o obj/libyuv_internal/row_common.o obj/libyuv_internal/row_gcc.o obj/libyuv_internal/row_win.o obj/libyuv_internal/scale.o obj/libyuv_internal/scale_any.o obj/libyuv_internal/scale_argb.o obj/libyuv_internal/scale_common.o obj/libyuv_internal/scale_gcc.o obj/libyuv_internal/scale_uv.o obj/libyuv_internal/scale_win.o obj/libyuv_internal/video_common.o || obj/third_party/jpeg_includes.stamp
+  arflags = -T
+  output_extension = .a
+  output_dir = obj

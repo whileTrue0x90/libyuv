@@ -1,0 +1,4 @@
+./libyuv_unittest
+../../../../testing/test_env.py
+../../../../.vpython
+bin/run_libyuv_unittest

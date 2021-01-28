@@ -1,0 +1,383 @@
+rule solink
+  command = python "../../../../build/toolchain/gcc_solink_wrapper.py" --readelf="readelf" --nm="nm"  --sofile="${output_dir}/${target_output_name}${output_extension}" --tocfile="${output_dir}/${target_output_name}${output_extension}.TOC" --output="${output_dir}/${target_output_name}${output_extension}" -- ../../../../third_party/llvm-build/Release+Asserts/bin/clang++ -shared -Wl,-soname="${target_output_name}${output_extension}" ${ldflags} -o "${output_dir}/${target_output_name}${output_extension}" @"${output_dir}/${target_output_name}${output_extension}.rsp"
+  description = SOLINK ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = -Wl,--whole-archive ${in} ${solibs} -Wl,--no-whole-archive ${libs}
+  pool = build_toolchain_link_pool
+  restat = 1
+rule alink
+  command = rm -f ${out} && "../../../../third_party/llvm-build/Release+Asserts/bin/llvm-ar" ${arflags} -r -c -s -D ${out} @"${out}.rsp"
+  description = AR ${out}
+  rspfile = ${out}.rsp
+  rspfile_content = ${in}
+rule stamp
+  command = touch ${out}
+  description = STAMP ${out}
+rule link
+  command = python "../../../../build/toolchain/gcc_link_wrapper.py" --output="${output_dir}/${target_output_name}${output_extension}" -- ../../../../third_party/llvm-build/Release+Asserts/bin/clang++ ${ldflags} -o "${output_dir}/${target_output_name}${output_extension}" -Wl,--start-group @"${output_dir}/${target_output_name}${output_extension}.rsp" ${solibs} -Wl,--end-group  ${libs}
+  description = LINK ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = ${in}
+  pool = build_toolchain_link_pool
+rule cxx
+  command =  ../../../../third_party/llvm-build/Release+Asserts/bin/clang++ -MMD -MF ${out}.d ${defines} ${include_dirs} ${cflags} ${cflags_cc} -c ${in} -o ${out}
+  description = CXX ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule solink_module
+  command = ../../../../third_party/llvm-build/Release+Asserts/bin/clang++ -shared ${ldflags} -o "${output_dir}/${target_output_name}${output_extension}" -Wl,-soname="${target_output_name}${output_extension}" @"${output_dir}/${target_output_name}${output_extension}.rsp"
+  description = SOLINK_MODULE ${output_dir}/${target_output_name}${output_extension}
+  rspfile = ${output_dir}/${target_output_name}${output_extension}.rsp
+  rspfile_content = -Wl,--whole-archive ${in} ${solibs} -Wl,--no-whole-archive ${libs}
+  pool = build_toolchain_link_pool
+rule cc
+  command =  ../../../../third_party/llvm-build/Release+Asserts/bin/clang -MMD -MF ${out}.d ${defines} ${include_dirs} ${cflags} ${cflags_c} -c ${in} -o ${out}
+  description = CC ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule asm
+  command =  ../../../../third_party/llvm-build/Release+Asserts/bin/clang -MMD -MF ${out}.d ${defines} ${include_dirs} ${asmflags} -c ${in} -o ${out}
+  description = ASM ${out}
+  depfile = ${out}.d
+  deps = gcc
+rule copy
+  command = ln -f ${in} ${out} 2>/dev/null || (rm -rf ${out} && cp -af ${in} ${out})
+  description = COPY ${in} ${out}
+
+subninja obj/compare.ninja
+subninja obj/cpuid.ninja
+build obj/default.stamp: stamp obj/libyuv.stamp ./compare ./cpuid ./i444tonv12_eg ./libyuv_unittest ./psnr ./yuvconvert
+subninja obj/i444tonv12_eg.ninja
+build obj/libyuv.stamp: stamp obj/libyuv_internal.a obj/third_party/jpeg.stamp
+subninja obj/libyuv_internal.ninja
+subninja obj/libyuv_unittest.ninja
+rule ___libyuv_unittest__runner___build_toolchain_linux_clang_x64__rule
+  command = python ../../../../build/util/generate_wrapper.py --executable @WrappedPath\(../../../../testing/test_env.py\) --wrapper-script bin/run_libyuv_unittest --output-directory . --script-language bash -- @WrappedPath\(./libyuv_unittest\) --test-launcher-bot-mode
+  description = ACTION //:libyuv_unittest__runner(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build bin/run_libyuv_unittest: ___libyuv_unittest__runner___build_toolchain_linux_clang_x64__rule | ../../../../build/util/generate_wrapper.py
+
+build obj/libyuv_unittest__runner.stamp: stamp bin/run_libyuv_unittest
+subninja obj/psnr.ninja
+subninja obj/yuvconvert.ninja
+rule __build_branding_buildflags___build_toolchain_linux_clang_x64__rule
+  rspfile = __build_branding_buildflags___build_toolchain_linux_clang_x64__rule.rsp
+  rspfile_content = --flags CHROMIUM_BRANDING=1 GOOGLE_CHROME_BRANDING=0
+  command = python ../../../../build/write_buildflag_header.py --output build/branding_buildflags.h --rulename //build$:branding_buildflags --gen-dir gen --definitions ${rspfile}
+  description = ACTION //build:branding_buildflags(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/build/branding_buildflags.h: __build_branding_buildflags___build_toolchain_linux_clang_x64__rule | ../../../../build/write_buildflag_header.py obj/build/buildflag_header_h.stamp
+
+build obj/build/branding_buildflags.stamp: stamp gen/build/branding_buildflags.h
+subninja obj/build/buildflag_header_h.ninja
+rule __build_chromecast_buildflags___build_toolchain_linux_clang_x64__rule
+  rspfile = __build_chromecast_buildflags___build_toolchain_linux_clang_x64__rule.rsp
+  rspfile_content = --flags IS_CHROMECAST=false
+  command = python ../../../../build/write_buildflag_header.py --output build/chromecast_buildflags.h --rulename //build$:chromecast_buildflags --gen-dir gen --definitions ${rspfile}
+  description = ACTION //build:chromecast_buildflags(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/build/chromecast_buildflags.h: __build_chromecast_buildflags___build_toolchain_linux_clang_x64__rule | ../../../../build/write_buildflag_header.py obj/build/buildflag_header_h.stamp
+
+build obj/build/chromecast_buildflags.stamp: stamp gen/build/chromecast_buildflags.h
+rule __build_chromeos_buildflags___build_toolchain_linux_clang_x64__rule
+  rspfile = __build_chromeos_buildflags___build_toolchain_linux_clang_x64__rule.rsp
+  rspfile_content = --flags IS_CHROMEOS_DEVICE=false IS_LACROS=false IS_ASH=false IS_CHROMEOS_LACROS=false IS_CHROMEOS_ASH=false
+  command = python ../../../../build/write_buildflag_header.py --output build/chromeos_buildflags.h --rulename //build$:chromeos_buildflags --gen-dir gen --definitions ${rspfile}
+  description = ACTION //build:chromeos_buildflags(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/build/chromeos_buildflags.h: __build_chromeos_buildflags___build_toolchain_linux_clang_x64__rule | ../../../../build/write_buildflag_header.py obj/build/buildflag_header_h.stamp
+
+build obj/build/chromeos_buildflags.stamp: stamp gen/build/chromeos_buildflags.h
+build obj/build/config/common_deps.stamp: stamp obj/buildtools/third_party/libc++/libc++.stamp
+build obj/build/config/executable_deps.stamp: stamp obj/build/config/common_deps.stamp
+build obj/build/config/loadable_module_deps.stamp: stamp obj/build/config/common_deps.stamp
+build obj/build/config/shared_library_deps.stamp: stamp obj/build/config/common_deps.stamp
+rule __build_config_compiler_compiler_buildflags___build_toolchain_linux_clang_x64__rule
+  rspfile = __build_config_compiler_compiler_buildflags___build_toolchain_linux_clang_x64__rule.rsp
+  rspfile_content = --flags CLANG_PGO=0
+  command = python ../../../../build/write_buildflag_header.py --output build/config/compiler/compiler_buildflags.h --rulename //build/config/compiler$:compiler_buildflags --gen-dir gen --definitions ${rspfile}
+  description = ACTION //build/config/compiler:compiler_buildflags(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/build/config/compiler/compiler_buildflags.h: __build_config_compiler_compiler_buildflags___build_toolchain_linux_clang_x64__rule | ../../../../build/write_buildflag_header.py obj/build/buildflag_header_h.stamp
+
+build obj/build/config/compiler/compiler_buildflags.stamp: stamp gen/build/config/compiler/compiler_buildflags.h
+build obj/build/config/linux/linux.stamp: stamp
+build obj/build/config/posix/posix.stamp: stamp
+build obj/build/config/sanitizers/deps.stamp: stamp
+subninja obj/build/config/sanitizers/options_sources.ninja
+build obj/build/win/default_exe_manifest.stamp: stamp
+subninja obj/buildtools/third_party/libc++/libc++.ninja
+subninja obj/buildtools/third_party/libc++abi/libc++abi.ninja
+subninja obj/testing/gtest/gtest.ninja
+subninja obj/testing/gtest/gtest_main.ninja
+subninja obj/third_party/freetype_harfbuzz.ninja
+build obj/third_party/jpeg.stamp: stamp obj/third_party/libjpeg_turbo/libjpeg.a
+build obj/third_party/jpeg_includes.stamp: stamp
+subninja obj/third_party/abseil-cpp/absl.ninja
+build obj/third_party/abseil-cpp/absl_component_deps.stamp: stamp obj/third_party/abseil-cpp/absl/algorithm/container.stamp obj/third_party/abseil-cpp/absl/base/base.stamp obj/third_party/abseil-cpp/absl/base/config.stamp obj/third_party/abseil-cpp/absl/base/core_headers.stamp obj/third_party/abseil-cpp/absl/container/btree.stamp obj/third_party/abseil-cpp/absl/container/fixed_array.stamp obj/third_party/abseil-cpp/absl/container/flat_hash_map.stamp obj/third_party/abseil-cpp/absl/container/flat_hash_set.stamp obj/third_party/abseil-cpp/absl/container/inlined_vector.stamp obj/third_party/abseil-cpp/absl/container/node_hash_map.stamp obj/third_party/abseil-cpp/absl/container/node_hash_set.stamp obj/third_party/abseil-cpp/absl/debugging/failure_signal_handler.stamp obj/third_party/abseil-cpp/absl/debugging/stacktrace.stamp obj/third_party/abseil-cpp/absl/debugging/symbolize.stamp obj/third_party/abseil-cpp/absl/functional/bind_front.stamp obj/third_party/abseil-cpp/absl/hash/hash.stamp obj/third_party/abseil-cpp/absl/memory/memory.stamp obj/third_party/abseil-cpp/absl/meta/type_traits.stamp obj/third_party/abseil-cpp/absl/numeric/int128.stamp obj/third_party/abseil-cpp/absl/status/status.stamp obj/third_party/abseil-cpp/absl/status/statusor.stamp obj/third_party/abseil-cpp/absl/strings/strings.stamp obj/third_party/abseil-cpp/absl/strings/str_format.stamp obj/third_party/abseil-cpp/absl/synchronization/synchronization.stamp obj/third_party/abseil-cpp/absl/time/time.stamp obj/third_party/abseil-cpp/absl/types/optional.stamp obj/third_party/abseil-cpp/absl/types/span.stamp obj/third_party/abseil-cpp/absl/types/variant.stamp
+build obj/third_party/abseil-cpp/default.stamp: stamp obj/third_party/abseil-cpp/absl/types/any.stamp obj/third_party/abseil-cpp/absl/types/bad_any_cast.stamp obj/third_party/abseil-cpp/absl/types/bad_optional_access.stamp obj/third_party/abseil-cpp/absl/types/optional.stamp obj/third_party/abseil-cpp/absl/types/span.stamp
+rule __third_party_abseil-cpp_generate_def_file___build_toolchain_linux_clang_x64__rule
+  command = python ../../../../third_party/abseil-cpp/generate_def_file.py gen/third_party/abseil-cpp/absl.def 
+  description = ACTION //third_party/abseil-cpp:generate_def_file(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+
+build gen/third_party/abseil-cpp/absl.def: __third_party_abseil-cpp_generate_def_file___build_toolchain_linux_clang_x64__rule | ../../../../third_party/abseil-cpp/generate_def_file.py obj/third_party/abseil-cpp/absl_component_deps.stamp
+
+build obj/third_party/abseil-cpp/generate_def_file.stamp: stamp gen/third_party/abseil-cpp/absl.def
+subninja obj/third_party/abseil-cpp/absl/algorithm/algorithm.ninja
+subninja obj/third_party/abseil-cpp/absl/algorithm/algorithm_test.ninja
+subninja obj/third_party/abseil-cpp/absl/algorithm/container.ninja
+subninja obj/third_party/abseil-cpp/absl/algorithm/container_test.ninja
+subninja obj/third_party/abseil-cpp/absl/base/atomic_hook.ninja
+subninja obj/third_party/abseil-cpp/absl/base/base.ninja
+subninja obj/third_party/abseil-cpp/absl/base/base_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/base/bits.ninja
+subninja obj/third_party/abseil-cpp/absl/base/config.ninja
+subninja obj/third_party/abseil-cpp/absl/base/config_test.ninja
+subninja obj/third_party/abseil-cpp/absl/base/core_headers.ninja
+subninja obj/third_party/abseil-cpp/absl/base/dynamic_annotations.ninja
+subninja obj/third_party/abseil-cpp/absl/base/endian.ninja
+subninja obj/third_party/abseil-cpp/absl/base/errno_saver.ninja
+subninja obj/third_party/abseil-cpp/absl/base/exception_testing.ninja
+subninja obj/third_party/abseil-cpp/absl/base/exponential_biased.ninja
+subninja obj/third_party/abseil-cpp/absl/base/fast_type_id.ninja
+subninja obj/third_party/abseil-cpp/absl/base/log_severity.ninja
+subninja obj/third_party/abseil-cpp/absl/base/malloc_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/base/periodic_sampler.ninja
+subninja obj/third_party/abseil-cpp/absl/base/pretty_function.ninja
+subninja obj/third_party/abseil-cpp/absl/base/raw_logging_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/base/scoped_set_env.ninja
+subninja obj/third_party/abseil-cpp/absl/base/spinlock_test_common.ninja
+subninja obj/third_party/abseil-cpp/absl/base/spinlock_wait.ninja
+subninja obj/third_party/abseil-cpp/absl/base/strerror.ninja
+subninja obj/third_party/abseil-cpp/absl/base/throw_delegate.ninja
+subninja obj/third_party/abseil-cpp/absl/container/btree.ninja
+subninja obj/third_party/abseil-cpp/absl/container/common.ninja
+subninja obj/third_party/abseil-cpp/absl/container/compressed_tuple.ninja
+subninja obj/third_party/abseil-cpp/absl/container/container_memory.ninja
+subninja obj/third_party/abseil-cpp/absl/container/counting_allocator.ninja
+subninja obj/third_party/abseil-cpp/absl/container/fixed_array.ninja
+subninja obj/third_party/abseil-cpp/absl/container/flat_hash_map.ninja
+subninja obj/third_party/abseil-cpp/absl/container/flat_hash_set.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hash_function_defaults.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hash_generator_testing.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hash_policy_testing.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hash_policy_traits.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hashtable_debug.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hashtable_debug_hooks.ninja
+subninja obj/third_party/abseil-cpp/absl/container/hashtablez_sampler.ninja
+subninja obj/third_party/abseil-cpp/absl/container/have_sse.ninja
+subninja obj/third_party/abseil-cpp/absl/container/inlined_vector.ninja
+subninja obj/third_party/abseil-cpp/absl/container/inlined_vector_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/container/inlined_vector_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/layout.ninja
+subninja obj/third_party/abseil-cpp/absl/container/node_hash_map.ninja
+subninja obj/third_party/abseil-cpp/absl/container/node_hash_policy.ninja
+subninja obj/third_party/abseil-cpp/absl/container/node_hash_set.ninja
+subninja obj/third_party/abseil-cpp/absl/container/raw_hash_map.ninja
+subninja obj/third_party/abseil-cpp/absl/container/raw_hash_set.ninja
+subninja obj/third_party/abseil-cpp/absl/container/test_instance_tracker.ninja
+subninja obj/third_party/abseil-cpp/absl/container/tracked.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_map_constructor_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_map_lookup_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_map_members_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_map_modifiers_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_set_constructor_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_set_lookup_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_set_members_test.ninja
+subninja obj/third_party/abseil-cpp/absl/container/unordered_set_modifiers_test.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/debugging_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/demangle_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/examine_stack.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/failure_signal_handler.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/leak_check.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/leak_check_api_disabled_for_testing.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/leak_check_disable.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/stack_consumption.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/stacktrace.ninja
+subninja obj/third_party/abseil-cpp/absl/debugging/symbolize.ninja
+subninja obj/third_party/abseil-cpp/absl/functional/bind_front.ninja
+subninja obj/third_party/abseil-cpp/absl/functional/function_ref.ninja
+subninja obj/third_party/abseil-cpp/absl/hash/city.ninja
+subninja obj/third_party/abseil-cpp/absl/hash/hash.ninja
+subninja obj/third_party/abseil-cpp/absl/hash/hash_testing.ninja
+subninja obj/third_party/abseil-cpp/absl/hash/spy_hash_state.ninja
+subninja obj/third_party/abseil-cpp/absl/memory/memory.ninja
+subninja obj/third_party/abseil-cpp/absl/memory/memory_test.ninja
+subninja obj/third_party/abseil-cpp/absl/meta/type_traits.ninja
+subninja obj/third_party/abseil-cpp/absl/meta/type_traits_test.ninja
+subninja obj/third_party/abseil-cpp/absl/numeric/int128.ninja
+subninja obj/third_party/abseil-cpp/absl/status/status.ninja
+subninja obj/third_party/abseil-cpp/absl/status/statusor.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/ascii_test.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/cord.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/cord_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/cord_test_helpers.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/internal.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/match_test.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/pow10_helper.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/str_format.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/str_format_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/str_replace_test.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/string_view_test.ninja
+subninja obj/third_party/abseil-cpp/absl/strings/strings.ninja
+subninja obj/third_party/abseil-cpp/absl/synchronization/graphcycles_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal.ninja
+subninja obj/third_party/abseil-cpp/absl/synchronization/per_thread_sem_test_common.ninja
+subninja obj/third_party/abseil-cpp/absl/synchronization/synchronization.ninja
+subninja obj/third_party/abseil-cpp/absl/synchronization/thread_pool.ninja
+subninja obj/third_party/abseil-cpp/absl/time/test_util.ninja
+subninja obj/third_party/abseil-cpp/absl/time/time.ninja
+subninja obj/third_party/abseil-cpp/absl/time/internal/cctz/civil_time.ninja
+subninja obj/third_party/abseil-cpp/absl/time/internal/cctz/time_zone.ninja
+subninja obj/third_party/abseil-cpp/absl/types/any.ninja
+subninja obj/third_party/abseil-cpp/absl/types/bad_any_cast.ninja
+subninja obj/third_party/abseil-cpp/absl/types/bad_any_cast_impl.ninja
+subninja obj/third_party/abseil-cpp/absl/types/bad_optional_access.ninja
+subninja obj/third_party/abseil-cpp/absl/types/bad_variant_access.ninja
+subninja obj/third_party/abseil-cpp/absl/types/compare.ninja
+subninja obj/third_party/abseil-cpp/absl/types/optional.ninja
+subninja obj/third_party/abseil-cpp/absl/types/optional_test.ninja
+subninja obj/third_party/abseil-cpp/absl/types/span.ninja
+subninja obj/third_party/abseil-cpp/absl/types/variant.ninja
+subninja obj/third_party/abseil-cpp/absl/types/variant_test.ninja
+subninja obj/third_party/abseil-cpp/absl/utility/utility.ninja
+subninja obj/third_party/freetype/freetype_source.ninja
+subninja obj/third_party/gflags/gflags.ninja
+subninja obj/third_party/googletest/gmock.ninja
+subninja obj/third_party/googletest/gmock_main.ninja
+subninja obj/third_party/googletest/gtest.ninja
+subninja obj/third_party/googletest/gtest_main.ninja
+subninja obj/third_party/harfbuzz-ng/harfbuzz_source.ninja
+subninja obj/third_party/harfbuzz-ng/hb_scoped_util.ninja
+build obj/third_party/harfbuzz-ng/hb_shape_fuzzer.stamp: stamp
+build obj/third_party/harfbuzz-ng/hb_subset_fuzzer.stamp: stamp
+build icudtl_extra.dat: copy ../../../../third_party/icu/android_small/icudtl_extra.dat
+
+build obj/third_party/icu/extra_icudata.stamp: stamp icudtl_extra.dat
+build obj/third_party/icu/icu.stamp: stamp obj/third_party/icu/libicui18n.a obj/third_party/icu/libicuuc.a
+build icudtl.dat: copy ../../../../third_party/icu/common/icudtl.dat
+
+build obj/third_party/icu/icudata.stamp: stamp icudtl.dat
+subninja obj/third_party/icu/icui18n.ninja
+subninja obj/third_party/icu/icui18n_hidden_visibility.ninja
+subninja obj/third_party/icu/icuuc.ninja
+subninja obj/third_party/icu/icuuc_hidden_visibility.ninja
+subninja obj/third_party/libjpeg_turbo/libjpeg.ninja
+subninja obj/third_party/libjpeg_turbo/libjpeg_headers.ninja
+subninja obj/third_party/libjpeg_turbo/simd.ninja
+subninja obj/third_party/libjpeg_turbo/simd_asm.ninja
+rule __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule
+  command = python ../../../../build/gn_run_binary.py nasm -DPIC -felf64 -I../../../../third_party/libjpeg_turbo/simd/nasm// -I../../../../third_party/libjpeg_turbo/simd/x86_64// -I./ -I../../../../ -Igen/ -D__x86_64__ -DPIC -DELF -MD obj/third_party/libjpeg_turbo/simd_asm/${source_name_part}.o.d -o obj/third_party/libjpeg_turbo/simd_asm/${source_name_part}.o ${in}
+  description = ACTION //third_party/libjpeg_turbo:simd_asm_action(//build/toolchain/linux:clang_x64)
+  restat = 1
+  pool = build_toolchain_action_pool
+build obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp: stamp ../../../../build/gn_run_binary.py ./nasm
+
+build obj/third_party/libjpeg_turbo/simd_asm/jccolor-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jccolor-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jccolor-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jccolor-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jccolor-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jccolor-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jccolor-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jccolor-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcgray-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jcgray-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcgray-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcgray-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcgray-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jcgray-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcgray-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcgray-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jchuff-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jchuff-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jchuff-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jchuff-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcphuff-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jcphuff-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcphuff-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcphuff-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcsample-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jcsample-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcsample-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcsample-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jcsample-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jcsample-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jcsample-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jcsample-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdcolor-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jdcolor-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdcolor-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdcolor-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdcolor-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jdcolor-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdcolor-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdcolor-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdmerge-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jdmerge-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdmerge-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdmerge-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdmerge-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jdmerge-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdmerge-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdmerge-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdsample-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jdsample-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdsample-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdsample-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jdsample-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jdsample-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jdsample-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jdsample-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctflt-sse.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jfdctflt-sse.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctflt-sse
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctflt-sse.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctfst-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jfdctfst-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctfst-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctfst-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctint-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jfdctint-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctint-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctint-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jfdctint-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jfdctint-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jfdctint-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jfdctint-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctflt-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jidctflt-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctflt-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctflt-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctfst-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jidctfst-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctfst-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctfst-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctint-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jidctint-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctint-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctint-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctint-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jidctint-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctint-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctint-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jidctred-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jidctred-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jidctred-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jidctred-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jquantf-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jquantf-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jquantf-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jquantf-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jquanti-avx2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jquanti-avx2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jquanti-avx2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jquanti-avx2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jquanti-sse2.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jquanti-sse2.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jquanti-sse2
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jquanti-sse2.o.d
+build obj/third_party/libjpeg_turbo/simd_asm/jsimdcpu.o: __third_party_libjpeg_turbo_simd_asm_action___build_toolchain_linux_clang_x64__rule ../../../../third_party/libjpeg_turbo/simd/x86_64/jsimdcpu.asm | obj/third_party/libjpeg_turbo/simd_asm_action.inputdeps.stamp
+  source_name_part = jsimdcpu
+  depfile = obj/third_party/libjpeg_turbo/simd_asm/jsimdcpu.o.d
+
+build obj/third_party/libjpeg_turbo/simd_asm_action.stamp: stamp obj/third_party/libjpeg_turbo/simd_asm/jccolor-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jccolor-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jcgray-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jcgray-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jchuff-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jcphuff-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jcsample-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jcsample-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jdcolor-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jdcolor-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jdmerge-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jdmerge-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jdsample-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jdsample-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jfdctflt-sse.o obj/third_party/libjpeg_turbo/simd_asm/jfdctfst-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jfdctint-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jfdctint-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jidctflt-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jidctfst-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jidctint-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jidctint-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jidctred-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jquantf-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jquanti-avx2.o obj/third_party/libjpeg_turbo/simd_asm/jquanti-sse2.o obj/third_party/libjpeg_turbo/simd_asm/jsimdcpu.o
+subninja obj/third_party/libjpeg_turbo/turbojpeg.ninja
+build obj/third_party/libpng/libpng.stamp: stamp obj/third_party/libpng/libpng_sources.stamp
+build obj/third_party/libpng/libpng_read_fuzzer.stamp: stamp
+subninja obj/third_party/libpng/libpng_sources.ninja
+subninja obj/third_party/nasm/nasm.ninja
+subninja obj/third_party/zlib/minizip.ninja
+subninja obj/third_party/zlib/zlib.ninja
+subninja obj/third_party/zlib/zlib_adler32_simd.ninja
+subninja obj/third_party/zlib/zlib_bench.ninja
+subninja obj/third_party/zlib/zlib_common_headers.ninja
+subninja obj/third_party/zlib/zlib_crc32_simd.ninja
+subninja obj/third_party/zlib/zlib_inflate_chunk_simd.ninja
+subninja obj/third_party/zlib/zlib_x86_simd.ninja
