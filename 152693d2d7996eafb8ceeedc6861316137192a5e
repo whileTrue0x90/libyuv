@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a96c3289_1ed47c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-28T04:27:11Z",
+      "side": 1,
+      "message": "If this is the case, I will simply switch to macro based solution.",
+      "parentUuid": "c8790a43_2616c6ac",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21b0d688_f134ee3f",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "543cb27f_f606be44",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-28T04:27:11Z",
+      "side": 1,
+      "message": "When we say 128, this implies we are talking about 8 bit, and we are actually saying 128/255(0.501961). But for higher depth, for example, 10bit, this is going to be 512/1023(0.500489).\nThese bias are expecting floats in [0,1], to be extensible for higher bitdepth.",
+      "parentUuid": "21b0d688_f134ee3f",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b12d5db_0dbe9857",
         "filename": "include/libyuv/convert_argb.h",
         "patchSetId": 7
@@ -48,6 +84,24 @@
       "writtenOn": "2021-01-28T02:28:59Z",
       "side": 1,
       "message": "its really hard to optimize 3 floats with SIMD.  consider using matrix[3][4]",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e567279_56d19864",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-28T04:27:11Z",
+      "side": 1,
+      "message": "But why do you even want to optimize it...\nUser only need to call it once for each image, and result can be reused if user stored it somewhere.\n\nThere\u0027s no variable length loop in this function, and the compiled assembly, even with all function calls inlined and loops unrolled, has less than 1000 instructions. There\u0027s not going to be any noticeable improvement, if even any.\n\nCombining matrix and bias to get a matrix[3][4] doesn\u0027t make sense, because to compute YuvConstants we need bias on YUV but not RGB, and the 3 rows of matrix are for RGB respectively. Or you just want some padding?",
+      "parentUuid": "8b12d5db_0dbe9857",
       "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
