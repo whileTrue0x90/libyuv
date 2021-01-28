@@ -21,18 +21,56 @@ extern "C" {
 #endif
 
 // Conversion matrix for YUV to RGB
-LIBYUV_API extern const struct YuvConstants kYuvI601Constants;  // BT.601
-LIBYUV_API extern const struct YuvConstants kYuvJPEGConstants;  // JPeg
-LIBYUV_API extern const struct YuvConstants kYuvF709Constants;  // BT.709 full
-LIBYUV_API extern const struct YuvConstants kYuvH709Constants;  // BT.709
-LIBYUV_API extern const struct YuvConstants kYuv2020Constants;  // BT.2020
+// BT.601 Limited range
+LIBYUV_API extern const struct YuvConstants kYuvI601Constants;
+// JPeg (BT.601 Full range)
+LIBYUV_API extern const struct YuvConstants kYuvJPEGConstants;
+// BT.709 Full range
+LIBYUV_API extern const struct YuvConstants kYuvF709Constants;
+// BT.709 Limited range
+LIBYUV_API extern const struct YuvConstants kYuvH709Constants;
+// BT.2020(non-constant luminance) Limited range
+LIBYUV_API extern const struct YuvConstants kYuv2020Constants;
 
 // Conversion matrix for YVU to BGR
-LIBYUV_API extern const struct YuvConstants kYvuI601Constants;  // BT.601
-LIBYUV_API extern const struct YuvConstants kYvuJPEGConstants;  // JPeg
-LIBYUV_API extern const struct YuvConstants kYvuF709Constants;  // BT.709 full
-LIBYUV_API extern const struct YuvConstants kYvuH709Constants;  // BT.709
-LIBYUV_API extern const struct YuvConstants kYvu2020Constants;  // BT.2020
+// BT.601 Limited range
+LIBYUV_API extern const struct YuvConstants kYvuI601Constants;
+// JPeg (BT.601 Full range)
+LIBYUV_API extern const struct YuvConstants kYvuJPEGConstants;
+// BT.709 Full range
+LIBYUV_API extern const struct YuvConstants kYvuF709Constants;
+// BT.709 Limited range
+LIBYUV_API extern const struct YuvConstants kYvuH709Constants;
+// BT.2020(non-constant luminance) Limited range
+LIBYUV_API extern const struct YuvConstants kYvu2020Constants;
+
+// Init YuvConstants with custom matrix
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// the yuvconstants is initialized to convert YUV to RGB as if
+// using the following code with RGB and YUV in range [0, 1].
+//
+// R = (Y - bias[0]) * matrix[0][0] +
+//     (U - bias[1]) * matrix[0][1] +
+//     (V - bias[2]) * matrix[0][2];
+// G = (Y - bias[0]) * matrix[1][0] +
+//     (U - bias[1]) * matrix[1][1] +
+//     (V - bias[2]) * matrix[1][2];
+// B = (Y - bias[0]) * matrix[2][0] +
+//     (U - bias[1]) * matrix[2][1] +
+//     (V - bias[2]) * matrix[2][2];
+// set mirror to 1 to get the mirrored constant.
+// you can swap the UV pointer and use mirrored constant to get ABGR output
+// from convert function.
+//
+// return -1 if the given matrix is not representable.
+LIBYUV_API extern int InitYuvConstantsWithMatrix(
+    struct YuvConstants* yuvconstants,
+    const float matrix[3][3],
+    const float bias[3],
+    int mirror);
 
 // Macros for end swapped destination Matrix conversions.
 // Swap UV and pass mirrored kYvuJPEGConstants matrix.
