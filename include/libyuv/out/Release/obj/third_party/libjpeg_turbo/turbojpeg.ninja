@@ -1,0 +1,21 @@
+defines = -DWITH_SIMD -DBMP_SUPPORTED -DPPM_SUPPORTED -DUSE_UDEV -DUSE_AURA=1 -DUSE_GLIB=1 -DUSE_NSS_CERTS=1 -DUSE_OZONE=1 -DUSE_X11=1 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DCR_CLANG_REVISION=\"llvmorg-12-init-10666-gc9f69ee7-1\" -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE=2 -D_LIBCPP_ABI_UNSTABLE -D_LIBCPP_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCXXABI_DISABLE_VISIBILITY_ANNOTATIONS -D_LIBCPP_ENABLE_NODISCARD -DCR_LIBCXX_REVISION=375504 -DCR_SYSROOT_HASH=5f64b417e1018dcf8fcc81dc2714e0f264b9b911 -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED=0
+include_dirs = -I../../../.. -Igen -I../../../../third_party/libjpeg_turbo
+cflags = -fno-strict-aliasing --param=ssp-buffer-size=4 -fstack-protector -funwind-tables -fPIC -pthread -fcolor-diagnostics -fmerge-all-constants -fcrash-diagnostics-dir=../../../../tools/clang/crashreports -mllvm -instcombine-lower-dbg-declare=0 -mllvm -enable-dse-memoryssa=false -fcomplete-member-pointers -m64 -march=x86-64 -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -Xclang -fdebug-compilation-dir -Xclang . -no-canonical-prefixes -Wall -Werror -Wextra -Wimplicit-fallthrough -Wunreachable-code -Wthread-safety -Wextra-semi -Wno-missing-field-initializers -Wno-unused-parameter -Wno-c++11-narrowing -Wno-unneeded-internal-declaration -Wno-undefined-var-template -Wno-psabi -Wno-ignored-pragma-optimize -Wno-implicit-int-float-conversion -Wno-final-dtor-non-final-class -Wno-builtin-assume-aligned-alignment -Wno-deprecated-copy -Wno-non-c-typedef-for-linkage -Wmax-tokens -O2 -fno-ident -fdata-sections -ffunction-sections -fno-omit-frame-pointer -g0 -ftrivial-auto-var-init=pattern -fvisibility=hidden -Xclang -add-plugin -Xclang find-bad-constructs -Xclang -plugin-arg-find-bad-constructs -Xclang check-ipc -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare
+cflags_c = -std=c11 -Wno-implicit-fallthrough --sysroot=../../../../build/linux/debian_sid_amd64-sysroot
+label_name = turbojpeg
+target_out_dir = obj/third_party/libjpeg_turbo
+target_output_name = libturbojpeg
+
+build obj/third_party/libjpeg_turbo/turbojpeg/turbojpeg.o: cc ../../../../third_party/libjpeg_turbo/turbojpeg.c
+build obj/third_party/libjpeg_turbo/turbojpeg/transupp.o: cc ../../../../third_party/libjpeg_turbo/transupp.c
+build obj/third_party/libjpeg_turbo/turbojpeg/jdatadst-tj.o: cc ../../../../third_party/libjpeg_turbo/jdatadst-tj.c
+build obj/third_party/libjpeg_turbo/turbojpeg/jdatasrc-tj.o: cc ../../../../third_party/libjpeg_turbo/jdatasrc-tj.c
+build obj/third_party/libjpeg_turbo/turbojpeg/rdbmp.o: cc ../../../../third_party/libjpeg_turbo/rdbmp.c
+build obj/third_party/libjpeg_turbo/turbojpeg/rdppm.o: cc ../../../../third_party/libjpeg_turbo/rdppm.c
+build obj/third_party/libjpeg_turbo/turbojpeg/wrbmp.o: cc ../../../../third_party/libjpeg_turbo/wrbmp.c
+build obj/third_party/libjpeg_turbo/turbojpeg/wrppm.o: cc ../../../../third_party/libjpeg_turbo/wrppm.c
+
+build obj/third_party/libjpeg_turbo/libturbojpeg.a: alink obj/third_party/libjpeg_turbo/turbojpeg/turbojpeg.o obj/third_party/libjpeg_turbo/turbojpeg/transupp.o obj/third_party/libjpeg_turbo/turbojpeg/jdatadst-tj.o obj/third_party/libjpeg_turbo/turbojpeg/jdatasrc-tj.o obj/third_party/libjpeg_turbo/turbojpeg/rdbmp.o obj/third_party/libjpeg_turbo/turbojpeg/rdppm.o obj/third_party/libjpeg_turbo/turbojpeg/wrbmp.o obj/third_party/libjpeg_turbo/turbojpeg/wrppm.o || obj/third_party/libjpeg_turbo/libjpeg.a obj/third_party/libjpeg_turbo/libjpeg_headers.stamp obj/third_party/libjpeg_turbo/libsimd.a obj/third_party/libjpeg_turbo/libsimd_asm.a
+  arflags = -T
+  output_extension = .a
+  output_dir = obj/third_party/libjpeg_turbo
