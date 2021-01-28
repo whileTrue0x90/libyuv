@@ -20,6 +20,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "21b0d688_f134ee3f",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-28T02:28:59Z",
+      "side": 1,
+      "message": "bias for y is always 0 or 16 as far as I know.\nbut bias for UV is always 128?",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b12d5db_0dbe9857",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-28T02:28:59Z",
+      "side": 1,
+      "message": "its really hard to optimize 3 floats with SIMD.  consider using matrix[3][4]",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a8cb915a_7a65e46a",
         "filename": "source/row_common.cc",
         "patchSetId": 7
@@ -119,6 +153,24 @@
       "side": 1,
       "message": "Maybe remove / loosen this check? I\u0027m a bit worried if user didn\u0027t pay attention to this and then complains about the speed.",
       "parentUuid": "dbcbc9fb_c596c98a",
+      "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef40e816_04987605",
+        "filename": "source/row_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-28T02:28:59Z",
+      "side": 1,
+      "message": "Ack.  It is just speed - it will crash for 32 bit x86 and likely mips.  But its okay to relax the check.",
+      "parentUuid": "5223f0d4_5ca104a3",
       "revId": "152693d2d7996eafb8ceeedc6861316137192a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
