@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4827c664_13cb2fc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-28T19:34:12Z",
+      "side": 1,
+      "message": "caveat this fixes 32 bit arm and intel clang builds, but visual c builds are currently broken.",
+      "revId": "34d7b54855f4472b36eab3b71137513b9c8907a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
