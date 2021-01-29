@@ -721,6 +721,149 @@ TEST_F(LibYUVColorTest, TestFullYUVU) {
 }
 #undef FASTSTEP
 
+// Following are copied from row.h
+#ifdef SIMD_ALIGNED
+#define SIMD_ALIGNED_BACKUP(var) SIMD_ALIGNED(var)
+#undef SIMD_ALIGNED
+#endif
+
+#if defined(_MSC_VER) && !defined(__CLR_VER) && !defined(__clang__)
+#if defined(VISUALC_HAS_AVX2)
+#define SIMD_ALIGNED(var) __declspec(align(32)) var
+#else
+#define SIMD_ALIGNED(var) __declspec(align(16)) var
+#endif
+typedef __declspec(align(16)) int16_t vec16[8];
+typedef __declspec(align(16)) int32_t vec32[4];
+typedef __declspec(align(16)) float vecf32[4];
+typedef __declspec(align(16)) int8_t vec8[16];
+typedef __declspec(align(16)) uint16_t uvec16[8];
+typedef __declspec(align(16)) uint32_t uvec32[4];
+typedef __declspec(align(16)) uint8_t uvec8[16];
+typedef __declspec(align(32)) int16_t lvec16[16];
+typedef __declspec(align(32)) int32_t lvec32[8];
+typedef __declspec(align(32)) int8_t lvec8[32];
+typedef __declspec(align(32)) uint16_t ulvec16[16];
+typedef __declspec(align(32)) uint32_t ulvec32[8];
+typedef __declspec(align(32)) uint8_t ulvec8[32];
+#elif !defined(__pnacl__) && (defined(__GNUC__) || defined(__clang__))
+// Caveat GCC 4.2 to 4.7 have a known issue using vectors with const.
+#if defined(CLANG_HAS_AVX2) || defined(GCC_HAS_AVX2)
+#define SIMD_ALIGNED(var) var __attribute__((aligned(32)))
+#else
+#define SIMD_ALIGNED(var) var __attribute__((aligned(16)))
+#endif
+typedef int16_t __attribute__((vector_size(16))) vec16;
+typedef int32_t __attribute__((vector_size(16))) vec32;
+typedef float __attribute__((vector_size(16))) vecf32;
+typedef int8_t __attribute__((vector_size(16))) vec8;
+typedef uint16_t __attribute__((vector_size(16))) uvec16;
+typedef uint32_t __attribute__((vector_size(16))) uvec32;
+typedef uint8_t __attribute__((vector_size(16))) uvec8;
+typedef int16_t __attribute__((vector_size(32))) lvec16;
+typedef int32_t __attribute__((vector_size(32))) lvec32;
+typedef int8_t __attribute__((vector_size(32))) lvec8;
+typedef uint16_t __attribute__((vector_size(32))) ulvec16;
+typedef uint32_t __attribute__((vector_size(32))) ulvec32;
+typedef uint8_t __attribute__((vector_size(32))) ulvec8;
+#else
+#define SIMD_ALIGNED(var) var
+typedef int16_t vec16[8];
+typedef int32_t vec32[4];
+typedef float vecf32[4];
+typedef int8_t vec8[16];
+typedef uint16_t uvec16[8];
+typedef uint32_t uvec32[4];
+typedef uint8_t uvec8[16];
+typedef int16_t lvec16[16];
+typedef int32_t lvec32[8];
+typedef int8_t lvec8[32];
+typedef uint16_t ulvec16[16];
+typedef uint32_t ulvec32[8];
+typedef uint8_t ulvec8[32];
+#endif
+
+#if defined(__aarch64__)
+// This struct is for Arm64 color conversion.
+struct YuvConstants {
+  uvec16 kUVToRB;
+  uvec16 kUVToRB2;
+  uvec16 kUVToG;
+  uvec16 kUVToG2;
+  vec16 kUVBiasBGR;
+  vec32 kYToRgb;
+};
+#elif defined(__arm__)
+// This struct is for ArmV7 color conversion.
+struct YuvConstants {
+  uvec8 kUVToRB;
+  uvec8 kUVToG;
+  vec16 kUVBiasBGR;
+  vec32 kYToRgb;
+};
+#else
+// This struct is for Intel color conversion.
+struct YuvConstants {
+  int8_t kUVToB[32];
+  int8_t kUVToG[32];
+  int8_t kUVToR[32];
+  int16_t kUVBiasB[16];
+  int16_t kUVBiasG[16];
+  int16_t kUVBiasR[16];
+  int16_t kYToRgb[16];
+  int16_t kYBiasToRgb[16];
+};
+#endif
+
+TEST_F(LibYUVColorTest, TestInitYuvConstants) {
+  float customMatrices[][3][3]{
+      {{1.164f, 0, -1.596f}, {1.164f, 0.391f, 0.813f}, {1.164f, -2.018f, 0}},
+      {{1, 0, -1.40200f}, {1, 0.34414f, 0.71414f}, {1, -1.77200f, 0}},
+      {{1, 0, -1.5748f}, {1, 0.18732f, 0.46812f}, {1, -1.8556f, 0}},
+      {{1.164f, 0, -1.793f}, {1.164f, 0.213f, 0.533f}, {1.164f, -2.112f, 0}},
+      {{1.164384f, 0, -1.67867f},
+       {1.164384f, 0.187326f, 0.65042f},
+       {1.164384f, -2.14177f, 0}}};
+  float customBiases[][3]{{16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {0, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {0, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f}};
+
+  struct YuvConstants presetYuvConstants[] {
+    kYuvI601Constants, kYuvJPEGConstants, kYuvF709Constants, kYuvH709Constants,
+        kYuv2020Constants
+  };
+
+  struct YuvConstants presetYvuConstants[] {
+    kYvuI601Constants, kYvuJPEGConstants, kYvuF709Constants, kYvuH709Constants,
+        kYvu2020Constants
+  };
+
+  struct YuvConstants SIMD_ALIGNED(customConstants) {};
+
+  for (int i = 0; i < (sizeof(customMatrices) / sizeof(customMatrices[0]));
+       ++i) {
+    InitYuvConstantsWithMatrix(&customConstants, customMatrices[i],
+                               customBiases[i], 0);
+    EXPECT_EQ(memcmp(&customConstants, &presetYuvConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+
+    InitYuvConstantsWithMatrix(&customConstants, customMatrices[i],
+                               customBiases[i], 1);
+    EXPECT_EQ(memcmp(&customConstants, &presetYvuConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+  }
+}
+
+#ifdef SIMD_ALIGNED_BACKUP
+#undef SIMD_ALIGNED
+#define SIMD_ALIGNED(var) SIMD_ALIGNED_BACKUP(var)
+#undef SIMD_ALIGNED_BACKUP
+#endif
+
 TEST_F(LibYUVColorTest, TestGreyYUVJ) {
   int r0, g0, b0, r1, g1, b1, r2, g2, b2;
 
