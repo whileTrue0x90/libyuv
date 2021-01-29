@@ -234,7 +234,7 @@ static void YUVFToRGB(int y, int u, int v, int* r, int* g, int* b) {
   *r = orig_pixels[2];
 }
 
-static void YUVUToRGB(int y, int u, int v, int* r, int* g, int* b) {
+static void YUVRec2020ToRGB(int y, int u, int v, int* r, int* g, int* b) {
   const int kWidth = 16;
   const int kHeight = 1;
   const int kPixels = kWidth * kHeight;
@@ -690,7 +690,7 @@ TEST_F(LibYUVColorTest, TestFullYUVF) {
   PrintHistogram(rh, gh, bh);
 }
 
-TEST_F(LibYUVColorTest, TestFullYUVU) {
+TEST_F(LibYUVColorTest, TestFullYUVRec2020) {
   int rh[256] = {
       0,
   };
@@ -706,7 +706,7 @@ TEST_F(LibYUVColorTest, TestFullYUVU) {
         int r0, g0, b0, r1, g1, b1;
         int y = RANDOM256(y2);
         YUVUToRGBReference(y, u, v, &r0, &g0, &b0);
-        YUVUToRGB(y, u, v, &r1, &g1, &b1);
+        YUVRec2020ToRGB(y, u, v, &r1, &g1, &b1);
         EXPECT_NEAR(r0, r1, ERROR_R);
         EXPECT_NEAR(g0, g1, ERROR_G);
         // TODO(crbug.com/libyuv/863): Reduce the errors in the B channel.

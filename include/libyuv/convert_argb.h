@@ -134,7 +134,7 @@ int F420ToARGB(const uint8_t* src_y,
                int width,
                int height);
 
-// Convert F420 to ABGR. BT.709 full range
+// Convert F420 to ABGR.
 LIBYUV_API
 int F420ToABGR(const uint8_t* src_y,
                int src_stride_y,
