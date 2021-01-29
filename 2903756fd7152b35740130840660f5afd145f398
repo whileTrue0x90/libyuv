@@ -16,6 +16,23 @@
       "message": "Theres a bot warning\n\n[253/457] CXX obj/libyuv_unittest/convert_test.o\n../../unit_test/convert_test.cc: In function \u0027void __static_initialization_and_destruction_0(int, int)\u0027:\n../../unit_test/convert_test.cc:3539:1: note: variable tracking size limit exceeded with -fvar-tracking-assignments, retrying without\n }  // namespace libyuv\n ^\nninja: build stopped: subcommand failed.\n\n",
       "revId": "2903756fd7152b35740130840660f5afd145f398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b0a826c_0b5efa32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-01-29T09:50:26Z",
+      "side": 1,
+      "message": "Errors are caused because we need to roll some infra changes (https://chromium-review.googlesource.com/c/libyuv/libyuv/+/2603876 should fix when it lands).",
+      "revId": "2903756fd7152b35740130840660f5afd145f398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
