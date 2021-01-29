@@ -1161,6 +1161,213 @@ TEST_F(LibYUVScaleTest, PlaneTest4x) {
   free_aligned_buffer_page_end(orig_pixels);
 }
 
+TEST_F(LibYUVScaleTest, ScaleI422ToI444Linear) {
+  const int kSrcStride = (benchmark_width_ + 1) / 2;
+  const int kDstStride = 2 * kSrcStride;
+  const int kHeight = benchmark_height_;
+  const int kSrcSize = kSrcStride * kHeight;
+  const int kDstSize = kDstStride * kHeight;
+  align_buffer_page_end(src_u, kSrcSize);
+  align_buffer_page_end(src_v, kSrcSize);
+  align_buffer_page_end(dest_c_u, kDstSize);
+  align_buffer_page_end(dest_c_v, kDstSize);
+  align_buffer_page_end(dest_opt_u, kDstSize);
+  align_buffer_page_end(dest_opt_v, kDstSize);
+
+  MemRandomize(src_u, kSrcSize);
+  MemRandomize(src_v, kSrcSize);
+  MemRandomize(dest_c_u, kDstSize);
+  MemRandomize(dest_c_v, kDstSize);
+  MemRandomize(dest_opt_u, kDstSize);
+  MemRandomize(dest_opt_v, kDstSize);
+
+  MaskCpuFlags(disable_cpu_flags_);  // Disable all CPU optimization.
+  ScaleI422ToI444Linear(src_u, kSrcStride, src_v, kSrcStride, kSrcStride,
+                        kHeight, dest_c_u, kDstStride, dest_c_v, kDstStride);
+
+  MaskCpuFlags(benchmark_cpu_info_);  // Enable all CPU optimization.
+  for (int i = 0; i < benchmark_iterations_; ++i) {
+    ScaleI422ToI444Linear(src_u, kSrcStride, src_v, kSrcStride, kSrcStride,
+                          kHeight, dest_opt_u, kDstStride, dest_opt_v,
+                          kDstStride);
+  }
+
+  for (int i = 0; i < kDstSize; ++i) {
+    EXPECT_EQ(dest_c_u[i], dest_opt_u[i]);
+    EXPECT_EQ(dest_c_v[i], dest_opt_v[i]);
+  }
+
+  free_aligned_buffer_page_end(src_u);
+  free_aligned_buffer_page_end(src_v);
+  free_aligned_buffer_page_end(dest_c_u);
+  free_aligned_buffer_page_end(dest_c_v);
+  free_aligned_buffer_page_end(dest_opt_u);
+  free_aligned_buffer_page_end(dest_opt_v);
+}
+
+TEST_F(LibYUVScaleTest, ScaleI420ToI444Bilinear) {
+  const int kSrcStride = (benchmark_width_ + 1) / 2;
+  const int kDstStride = 2 * kSrcStride;
+  const int kSrcHeight = (benchmark_height_ + 1) / 2;
+  const int kDstHeight = kSrcHeight * 2;
+  const int kSrcSize = kSrcStride * kSrcHeight;
+  const int kDstSize = kDstStride * kDstHeight;
+  align_buffer_page_end(src_u, kSrcSize);
+  align_buffer_page_end(src_v, kSrcSize);
+  align_buffer_page_end(dest_c_u, kDstSize);
+  align_buffer_page_end(dest_c_v, kDstSize);
+  align_buffer_page_end(dest_opt_u, kDstSize);
+  align_buffer_page_end(dest_opt_v, kDstSize);
+
+  MemRandomize(src_u, kSrcSize);
+  MemRandomize(src_v, kSrcSize);
+  MemRandomize(dest_c_u, kDstSize);
+  MemRandomize(dest_c_v, kDstSize);
+  MemRandomize(dest_opt_u, kDstSize);
+  MemRandomize(dest_opt_v, kDstSize);
+
+  MaskCpuFlags(disable_cpu_flags_);  // Disable all CPU optimization.
+  ScaleI420ToI444Bilinear(src_u, kSrcStride, src_v, kSrcStride, kSrcStride,
+                          kSrcHeight, dest_c_u, kDstStride, dest_c_v,
+                          kDstStride);
+
+  MaskCpuFlags(benchmark_cpu_info_);  // Enable all CPU optimization.
+  for (int i = 0; i < benchmark_iterations_; ++i) {
+    ScaleI420ToI444Bilinear(src_u, kSrcStride, src_v, kSrcStride, kSrcStride,
+                            kSrcHeight, dest_opt_u, kDstStride, dest_opt_v,
+                            kDstStride);
+  }
+
+  for (int i = 0; i < kDstSize; ++i) {
+    EXPECT_EQ(dest_c_u[i], dest_opt_u[i]);
+    EXPECT_EQ(dest_c_v[i], dest_opt_v[i]);
+  }
+
+  free_aligned_buffer_page_end(src_u);
+  free_aligned_buffer_page_end(src_v);
+  free_aligned_buffer_page_end(dest_c_u);
+  free_aligned_buffer_page_end(dest_c_v);
+  free_aligned_buffer_page_end(dest_opt_u);
+  free_aligned_buffer_page_end(dest_opt_v);
+}
+
+TEST_F(LibYUVScaleTest, ScaleI210ToI410Linear) {
+  const int kSrcStride = (benchmark_width_ + 1) / 2;
+  const int kDstStride = 2 * kSrcStride;
+  const int kHeight = benchmark_height_;
+  const int kSrcSize = kSrcStride * kHeight * 2;
+  const int kDstSize = kDstStride * kHeight * 2;
+  align_buffer_page_end(src_u, kSrcSize);
+  align_buffer_page_end(src_v, kSrcSize);
+  align_buffer_page_end(dest_c_u, kDstSize);
+  align_buffer_page_end(dest_c_v, kDstSize);
+  align_buffer_page_end(dest_opt_u, kDstSize);
+  align_buffer_page_end(dest_opt_v, kDstSize);
+
+  MemRandomize(src_u, kSrcSize);
+  MemRandomize(src_v, kSrcSize);
+  MemRandomize(dest_c_u, kDstSize);
+  MemRandomize(dest_c_v, kDstSize);
+  MemRandomize(dest_opt_u, kDstSize);
+  MemRandomize(dest_opt_v, kDstSize);
+
+  uint16_t* src_u_16 = (uint16_t*)src_u;
+  uint16_t* src_v_16 = (uint16_t*)src_v;
+  uint16_t* dest_c_u_16 = (uint16_t*)dest_c_u;
+  uint16_t* dest_c_v_16 = (uint16_t*)dest_c_v;
+  uint16_t* dest_opt_u_16 = (uint16_t*)dest_opt_u;
+  uint16_t* dest_opt_v_16 = (uint16_t*)dest_opt_v;
+
+  // limit the value within 10bit range
+  for (int i = 0; i < kSrcSize / 2; ++i) {
+    src_u_16[i] = src_u_16[i] & ((1 << 10) - 1);
+    src_v_16[i] = src_v_16[i] & ((1 << 10) - 1);
+  }
+
+  MaskCpuFlags(disable_cpu_flags_);  // Disable all CPU optimization.
+  ScaleI210ToI410Linear(src_u_16, kSrcStride, src_v_16, kSrcStride, kSrcStride,
+                        kHeight, dest_c_u_16, kDstStride, dest_c_v_16,
+                        kDstStride);
+
+  MaskCpuFlags(benchmark_cpu_info_);  // Enable all CPU optimization.
+  for (int i = 0; i < benchmark_iterations_; ++i) {
+    ScaleI210ToI410Linear(src_u_16, kSrcStride, src_v_16, kSrcStride,
+                          kSrcStride, kHeight, dest_opt_u_16, kDstStride,
+                          dest_opt_v_16, kDstStride);
+  }
+
+  for (int i = 0; i < kDstSize / 2; ++i) {
+    EXPECT_EQ(dest_c_u_16[i], dest_opt_u_16[i]);
+    EXPECT_EQ(dest_c_v_16[i], dest_opt_v_16[i]);
+  }
+
+  free_aligned_buffer_page_end(src_u);
+  free_aligned_buffer_page_end(src_v);
+  free_aligned_buffer_page_end(dest_c_u);
+  free_aligned_buffer_page_end(dest_c_v);
+  free_aligned_buffer_page_end(dest_opt_u);
+  free_aligned_buffer_page_end(dest_opt_v);
+}
+
+TEST_F(LibYUVScaleTest, ScaleI010ToI410Bilinear) {
+  const int kSrcStride = (benchmark_width_ + 1) / 2;
+  const int kDstStride = kSrcStride * 2;
+  const int kSrcHeight = (benchmark_height_ + 1) / 2;
+  const int kDstHeight = kSrcHeight * 2;
+  const int kSrcSize = kSrcStride * kSrcHeight * 2;
+  const int kDstSize = kDstStride * kDstHeight * 2;
+  align_buffer_page_end(src_u, kSrcSize);
+  align_buffer_page_end(src_v, kSrcSize);
+  align_buffer_page_end(dest_c_u, kDstSize);
+  align_buffer_page_end(dest_c_v, kDstSize);
+  align_buffer_page_end(dest_opt_u, kDstSize);
+  align_buffer_page_end(dest_opt_v, kDstSize);
+
+  MemRandomize(src_u, kSrcSize);
+  MemRandomize(src_v, kSrcSize);
+  MemRandomize(dest_c_u, kDstSize);
+  MemRandomize(dest_c_v, kDstSize);
+  MemRandomize(dest_opt_u, kDstSize);
+  MemRandomize(dest_opt_v, kDstSize);
+
+  uint16_t* src_u_16 = (uint16_t*)src_u;
+  uint16_t* src_v_16 = (uint16_t*)src_v;
+  uint16_t* dest_c_u_16 = (uint16_t*)dest_c_u;
+  uint16_t* dest_c_v_16 = (uint16_t*)dest_c_v;
+  uint16_t* dest_opt_u_16 = (uint16_t*)dest_opt_u;
+  uint16_t* dest_opt_v_16 = (uint16_t*)dest_opt_v;
+
+  // limit the value within 10bit range
+  for (int i = 0; i < kSrcSize / 2; ++i) {
+    src_u_16[i] = src_u_16[i] & ((1 << 10) - 1);
+    src_v_16[i] = src_v_16[i] & ((1 << 10) - 1);
+  }
+
+  MaskCpuFlags(disable_cpu_flags_);  // Disable all CPU optimization.
+  ScaleI010ToI410Bilinear(src_u_16, kSrcStride, src_v_16, kSrcStride,
+                          kSrcStride, kSrcHeight, dest_c_u_16, kDstStride,
+                          dest_c_v_16, kDstStride);
+
+  MaskCpuFlags(benchmark_cpu_info_);  // Enable all CPU optimization.
+  for (int i = 0; i < benchmark_iterations_; ++i) {
+    ScaleI010ToI410Bilinear(src_u_16, kSrcStride, src_v_16, kSrcStride,
+                            kSrcStride, kSrcHeight, dest_opt_u_16, kDstStride,
+                            dest_opt_v_16, kDstStride);
+  }
+
+  for (int i = 0; i < kDstSize / 2; ++i) {
+    EXPECT_EQ(dest_c_u_16[i], dest_opt_u_16[i]);
+    EXPECT_EQ(dest_c_v_16[i], dest_opt_v_16[i]);
+  }
+
+  free_aligned_buffer_page_end(src_u);
+  free_aligned_buffer_page_end(src_v);
+  free_aligned_buffer_page_end(dest_c_u);
+  free_aligned_buffer_page_end(dest_c_v);
+  free_aligned_buffer_page_end(dest_opt_u);
+  free_aligned_buffer_page_end(dest_opt_v);
+}
+
 // Intent is to test 200x50 to 50x200 but width and height can be parameters.
 TEST_F(LibYUVScaleTest, PlaneTestRotate_None) {
   const int kSize = benchmark_width_ * benchmark_height_;

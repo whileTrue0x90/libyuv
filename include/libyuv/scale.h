@@ -170,6 +170,66 @@ int NV12Scale(const uint8_t* src_y,
               int dst_height,
               enum FilterMode filtering);
 
+// Scales the U and V planes of a YUV 4:2:0 image using bilinear filter,
+// to get a YUV 4:4:4 image.
+LIBYUV_API
+int ScaleI420ToI444Bilinear(const uint8_t* src_u,
+                            int src_stride_u,
+                            const uint8_t* src_v,
+                            int src_stride_v,
+                            int src_width,
+                            int src_height,
+                            uint8_t* dst_u,
+                            int dst_stride_u,
+                            uint8_t* dst_v,
+                            int dst_stride_v);
+
+// Scales the U and V planes of a YUV 4:2:2 image using linear filter,
+// to get a YUV 4:4:4 image.
+LIBYUV_API
+int ScaleI422ToI444Linear(const uint8_t* src_u,
+                          int src_stride_u,
+                          const uint8_t* src_v,
+                          int src_stride_v,
+                          int src_width,
+                          int src_height,
+                          uint8_t* dst_u,
+                          int dst_stride_u,
+                          uint8_t* dst_v,
+                          int dst_stride_v);
+
+// Scales the U and V planes of a 10 bit or 12 bit YUV 4:2:0 image
+// using bilinear filter, to get a YUV 4:4:4 image.
+LIBYUV_API
+int ScaleI010ToI410Bilinear(const uint16_t* src_u,
+                            int src_stride_u,
+                            const uint16_t* src_v,
+                            int src_stride_v,
+                            int src_width,
+                            int src_height,
+                            uint16_t* dst_u,
+                            int dst_stride_u,
+                            uint16_t* dst_v,
+                            int dst_stride_v);
+
+// Scales the U and V planes of a 10 bit or 12 bit YUV 4:2:2 image
+// using linear filter, to get a YUV 4:4:4 image.
+LIBYUV_API
+int ScaleI210ToI410Linear(const uint16_t* src_u,
+                          int src_stride_u,
+                          const uint16_t* src_v,
+                          int src_stride_v,
+                          int src_width,
+                          int src_height,
+                          uint16_t* dst_u,
+                          int dst_stride_u,
+                          uint16_t* dst_v,
+                          int dst_stride_v);
+
+// the same function works for 10bit and 12bit
+#define ScaleI012ToI412Bilinear ScaleI010ToI410Bilinear
+#define ScaleI212ToI412Linear ScaleI210ToI410Linear
+
 #ifdef __cplusplus
 // Legacy API.  Deprecated.
 LIBYUV_API

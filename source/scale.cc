@@ -1336,6 +1336,174 @@ void ScalePlaneBilinearUp(int src_width,
   }
 }
 
+// Scale plane, horizontally 2 times.
+// This is an optimized version for scaling up a plane to 2 times of
+// its original width, using linear interpolation.
+// This is used to scale U and V planes of I422 to I444.
+void ScalePlaneHorizontalUp2_Linear(const uint8_t* src_ptr,
+                                    int src_stride,
+                                    int src_width,
+                                    int src_height,
+                                    uint8_t* dst_ptr,
+                                    int dst_stride) {
+  void (*ScaleRowUp)(const uint8_t* src_ptr, uint8_t* dst_ptr, int dst_width) =
+      ScaleRowHorizontalUp2_Linear_C;
+  int x;
+
+  assert(src_width > 0 && src_height > 0);
+
+#ifdef HAS_SCALEROWUP2LINEAR_SSE2
+  if (TestCpuFlag(kCpuHasSSE2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_SSE2;
+  }
+#endif
+
+#ifdef HAS_SCALEROWUP2LINEAR_AVX2
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_AVX2;
+  }
+#endif
+
+  for (x = 0; x < src_height; ++x) {
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+    src_ptr += src_stride;
+    dst_ptr += dst_stride;
+  }
+}
+
+// Scale plane, 2 times.
+// This is an optimized version for scaling up a plane to 2 times of
+// its original size, using bilinear interpolation.
+// This is used to scale U and V planes of I420 to I444.
+void ScalePlaneUp2_Bilinear(const uint8_t* src_ptr,
+                            int src_stride,
+                            int src_width,
+                            int src_height,
+                            uint8_t* dst_ptr,
+                            int dst_stride) {
+  void (*ScaleRowUp)(const uint8_t* src_ptr, uint8_t* dst_ptr, int dst_width) =
+      ScaleRowHorizontalUp2_Linear_C;
+  void (*Scale2RowUp)(const uint8_t* src_ptr, ptrdiff_t src_stride,
+                      uint8_t* dst_ptr, ptrdiff_t dst_stride, int dst_width) =
+      ScaleRowUp2_Bilinear_C;
+  int x;
+
+  assert(src_width > 0 && src_height > 0);
+
+#ifdef HAS_SCALEROWUP2LINEAR_SSE2
+  if (TestCpuFlag(kCpuHasSSE2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_SSE2;
+    Scale2RowUp = ScaleRowUp2_Bilinear_SSE2;
+  }
+#endif
+
+#ifdef HAS_SCALEROWUP2LINEAR_AVX2
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_AVX2;
+    Scale2RowUp = ScaleRowUp2_Bilinear_AVX2;
+  }
+#endif
+
+  if (src_height == 1) {
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+    memcpy(dst_ptr + dst_stride, dst_ptr, src_width * 2);
+  } else {
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+    dst_ptr += dst_stride;
+    for (x = 0; x < src_height - 1; ++x) {
+      Scale2RowUp(src_ptr, src_stride, dst_ptr, dst_stride, src_width * 2);
+      src_ptr += src_stride;
+      dst_ptr += 2 * dst_stride;
+    }
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+  }
+}
+
+// Scale at most 14bit plane, horizontally 2 times.
+// This is an optimized version for scaling up a plane to 2 times of
+// its original width, using linear interpolation.
+// stride is in count of uint16_t.
+// This is used to scale U and V planes of I210 to I410 and I212 to I412.
+void ScalePlaneHorizontalUp2_16_Linear(const uint16_t* src_ptr,
+                                       int src_stride,
+                                       int src_width,
+                                       int src_height,
+                                       uint16_t* dst_ptr,
+                                       int dst_stride) {
+  void (*ScaleRowUp)(const uint16_t* src_ptr, uint16_t* dst_ptr,
+                     int dst_width) = ScaleRowHorizontalUp2_Linear_16_C;
+  int x;
+
+  assert(src_width > 0 && src_height > 0);
+
+#ifdef HAS_SCALEROWUP2LINEAR_SSE2
+  if (TestCpuFlag(kCpuHasSSE2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_16_SSE2;
+  }
+#endif
+
+#ifdef HAS_SCALEROWUP2LINEAR_AVX2
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_16_AVX2;
+  }
+#endif
+
+  for (x = 0; x < src_height; ++x) {
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+    src_ptr += src_stride;
+    dst_ptr += dst_stride;
+  }
+}
+
+// Scale at most 12bit plane, up 2 times.
+// This is an optimized version for scaling up a plane to 2 times of
+// its original size, using bilinear interpolation.
+// stride is in count of uint16_t.
+// This is used to scale U and V planes of I010 to I410 and I012 to I412.
+void ScalePlaneUp2_16_Bilinear(const uint16_t* src_ptr,
+                               int src_stride,
+                               int src_width,
+                               int src_height,
+                               uint16_t* dst_ptr,
+                               int dst_stride) {
+  void (*ScaleRowUp)(const uint16_t* src_ptr, uint16_t* dst_ptr,
+                     int dst_width) = ScaleRowHorizontalUp2_Linear_16_C;
+  void (*Scale2RowUp)(const uint16_t* src_ptr, ptrdiff_t src_stride,
+                      uint16_t* dst_ptr, ptrdiff_t dst_stride, int dst_width) =
+      ScaleRowUp2_Bilinear_16_C;
+  int x;
+
+  assert(src_width > 0 && src_height > 0);
+
+#ifdef HAS_SCALEROWUP2LINEAR_SSE2
+  if (TestCpuFlag(kCpuHasSSE2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_16_SSE2;
+    Scale2RowUp = ScaleRowUp2_Bilinear_16_SSE2;
+  }
+#endif
+
+#ifdef HAS_SCALEROWUP2LINEAR_AVX2
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    ScaleRowUp = ScaleRowHorizontalUp2_Linear_16_AVX2;
+    Scale2RowUp = ScaleRowUp2_Bilinear_16_AVX2;
+  }
+#endif
+
+  if (src_height == 1) {
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+    memcpy(dst_ptr + dst_stride, dst_ptr, src_width * 4);
+  } else {
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+    dst_ptr += dst_stride;
+    for (x = 0; x < src_height - 1; ++x) {
+      Scale2RowUp(src_ptr, src_stride, dst_ptr, dst_stride, src_width * 2);
+      src_ptr += src_stride;
+      dst_ptr += 2 * dst_stride;
+    }
+    ScaleRowUp(src_ptr, dst_ptr, src_width * 2);
+  }
+}
+
 void ScalePlaneBilinearUp_16(int src_width,
                              int src_height,
                              int dst_width,
@@ -1627,6 +1795,17 @@ void ScalePlane(const uint8_t* src,
                   dst_stride, src, dst);
     return;
   }
+  if (dst_height == src_height && dst_width == 2 * src_width && filtering) {
+    ScalePlaneHorizontalUp2_Linear(src, src_stride, src_width, src_height, dst,
+                                   dst_stride);
+    return;
+  }
+  if (dst_height == 2 * src_height && dst_width == 2 * src_width &&
+      (filtering == kFilterBilinear || filtering == kFilterBox)) {
+    ScalePlaneUp2_Bilinear(src, src_stride, src_width, src_height, dst,
+                           dst_stride);
+    return;
+  }
   if (filtering && dst_height > src_height) {
     ScalePlaneBilinearUp(src_width, src_height, dst_width, dst_height,
                          src_stride, dst_stride, src, dst, filtering);
@@ -1901,6 +2080,92 @@ int NV12Scale(const uint8_t* src_y,
              dst_width, dst_height, filtering);
   UVScale(src_uv, src_stride_uv, src_halfwidth, src_halfheight, dst_uv,
           dst_stride_uv, dst_halfwidth, dst_halfheight, filtering);
+  return 0;
+}
+
+// Scale U and V planes of an I420 image to get an I444 image
+// using bilinear filter.
+// This function in turn calls a scaling function for each plane.
+LIBYUV_API
+int ScaleI420ToI444Bilinear(const uint8_t* src_u,
+                            int src_stride_u,
+                            const uint8_t* src_v,
+                            int src_stride_v,
+                            int src_width,
+                            int src_height,
+                            uint8_t* dst_u,
+                            int dst_stride_u,
+                            uint8_t* dst_v,
+                            int dst_stride_v) {
+  ScalePlaneUp2_Bilinear(src_u, src_stride_u, src_width, src_height, dst_u,
+                         dst_stride_u);
+  ScalePlaneUp2_Bilinear(src_v, src_stride_v, src_width, src_height, dst_v,
+                         dst_stride_v);
+  return 0;
+}
+
+// Scale U and V planes of an I422 image to get an I444 image
+// using linear filter.
+// This function in turn calls a scaling function for each plane.
+LIBYUV_API
+int ScaleI422ToI444Linear(const uint8_t* src_u,
+                          int src_stride_u,
+                          const uint8_t* src_v,
+                          int src_stride_v,
+                          int src_width,
+                          int src_height,
+                          uint8_t* dst_u,
+                          int dst_stride_u,
+                          uint8_t* dst_v,
+                          int dst_stride_v) {
+  ScalePlaneHorizontalUp2_Linear(src_u, src_stride_u, src_width, src_height,
+                                 dst_u, dst_stride_u);
+  ScalePlaneHorizontalUp2_Linear(src_v, src_stride_v, src_width, src_height,
+                                 dst_v, dst_stride_v);
+  return 0;
+}
+
+// Scale U and V planes of an I010 / I012 image to get an I410 / I412 image
+// using bilinear filter.
+// stride is in count of uint16_t.
+// This function in turn calls a scaling function for each plane.
+LIBYUV_API
+int ScaleI010ToI410Bilinear(const uint16_t* src_u,
+                            int src_stride_u,
+                            const uint16_t* src_v,
+                            int src_stride_v,
+                            int src_width,
+                            int src_height,
+                            uint16_t* dst_u,
+                            int dst_stride_u,
+                            uint16_t* dst_v,
+                            int dst_stride_v) {
+  ScalePlaneUp2_16_Bilinear(src_u, src_stride_u, src_width, src_height, dst_u,
+                         dst_stride_u);
+  ScalePlaneUp2_16_Bilinear(src_v, src_stride_v, src_width, src_height, dst_v,
+                         dst_stride_v);
+  return 0;
+}
+
+// Scale U and V planes of an I210 / I212 image to get an I410 / I412 image
+// using linear filter.
+// stride is in count of uint16_t.
+// This function in turn calls a scaling function for each plane.
+LIBYUV_API
+int ScaleI210ToI410Linear(const uint16_t* src_u,
+                          int src_stride_u,
+                          const uint16_t* src_v,
+                          int src_stride_v,
+                          int src_width,
+                          int src_height,
+                          uint16_t* dst_u,
+                          int dst_stride_u,
+                          uint16_t* dst_v,
+                          int dst_stride_v) {
+  ScalePlaneHorizontalUp2_16_Linear(src_u, src_stride_u, src_width, src_height,
+                                 dst_u, dst_stride_u);
+  ScalePlaneHorizontalUp2_16_Linear(src_v, src_stride_v, src_width, src_height,
+                                 dst_v, dst_stride_v);
   return 0;
 }
 
