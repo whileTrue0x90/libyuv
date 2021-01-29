@@ -609,6 +609,119 @@ CANY(ScaleARGBFilterCols_Any_MSA,
 #endif
 #undef CANY
 
+// Scale up horizontally 2 times using linear filter.
+#define SUH2L(NAME, SIMD, C, MASK, PTYPE)                          \
+  void NAME(const PTYPE* src_ptr, PTYPE* dst_ptr, int dst_width) { \
+    int work_width = dst_width - 2;                                \
+    int r = work_width & MASK;                                     \
+    int n = work_width & ~MASK;                                    \
+    dst_ptr[0] = src_ptr[0];                                       \
+    dst_ptr[dst_width - 1] = src_ptr[(dst_width / 2) - 1];         \
+    if (work_width > 0) {                                          \
+      if (n != 0) {                                                \
+        SIMD(src_ptr, dst_ptr + 1, n);                             \
+      }                                                            \
+      C(src_ptr + (n / 2), dst_ptr + n + 1, r);                    \
+    }                                                              \
+  }
+
+// Even the C version need to be wrapped, because boundary pixels have to
+// be handled differently
+
+SUH2L(ScaleRowHorizontalUp2_Linear_C,
+      ScaleRowHorizontalUp2_Core_Linear_C,
+      ScaleRowHorizontalUp2_Core_Linear_C,
+      0, uint8_t)
+
+SUH2L(ScaleRowHorizontalUp2_Linear_16_C,
+      ScaleRowHorizontalUp2_Core_Linear_16_C,
+      ScaleRowHorizontalUp2_Core_Linear_16_C,
+      0, uint16_t)
+
+#ifdef HAS_SCALEROWUP2LINEAR_SSE2
+SUH2L(ScaleRowHorizontalUp2_Linear_SSE2,
+      ScaleRowHorizontalUp2_Core_Linear_SSE2,
+      ScaleRowHorizontalUp2_Core_Linear_C,
+      15, uint8_t)
+
+SUH2L(ScaleRowHorizontalUp2_Linear_16_SSE2,
+      ScaleRowHorizontalUp2_Core_Linear_16_SSE2,
+      ScaleRowHorizontalUp2_Core_Linear_16_C,
+      15, uint16_t)
+#endif
+
+#ifdef HAS_SCALEROWUP2LINEAR_AVX2
+SUH2L(ScaleRowHorizontalUp2_Linear_AVX2,
+      ScaleRowHorizontalUp2_Core_Linear_AVX2,
+      ScaleRowHorizontalUp2_Core_Linear_C,
+      31, uint8_t)
+
+SUH2L(ScaleRowHorizontalUp2_Linear_16_AVX2,
+      ScaleRowHorizontalUp2_Core_Linear_16_AVX2,
+      ScaleRowHorizontalUp2_Core_Linear_16_C,
+      15, uint16_t)
+#endif
+
+// Scale up 2 times using bilinear filter.
+// This function produces 2 rows at a time
+#define SU2BL(NAME, SIMD, C, MASK, PTYPE)                               \
+  void NAME(const PTYPE* src_ptr, ptrdiff_t src_stride, PTYPE* dst_ptr, \
+            ptrdiff_t dst_stride, int dst_width) {                      \
+    int work_width = dst_width - 2;                                     \
+    int r = work_width & MASK;                                          \
+    int n = work_width & ~MASK;                                         \
+    const PTYPE* sa = src_ptr;                                          \
+    const PTYPE* sb = src_ptr + src_stride;                             \
+    PTYPE* da = dst_ptr;                                                \
+    PTYPE* db = dst_ptr + dst_stride;                                   \
+    da[0] = (3 * sa[0] + sb[0]) >> 2;                                   \
+    db[0] = (sa[0] + 3 * sb[0]) >> 2;                                   \
+    da[dst_width - 1] =                                                 \
+        (3 * sa[(dst_width / 2) - 1] + sb[(dst_width / 2) - 1]) >> 2;   \
+    db[dst_width - 1] =                                                 \
+        (sa[(dst_width / 2) - 1] + 3 * sb[(dst_width / 2) - 1]) >> 2;   \
+    if (work_width > 0) {                                               \
+      if (n != 0) {                                                     \
+        SIMD(sa, sb - sa, da + 1, db - da, n);                          \
+      }                                                                 \
+      C(sa + (n / 2), sb - sa, da + n + 1, db - da, r);                 \
+    }                                                                   \
+  }
+
+SU2BL(ScaleRowUp2_Bilinear_C,
+      ScaleRowUp2_Core_Bilinear_C,
+      ScaleRowUp2_Core_Bilinear_C,
+      0, uint8_t)
+
+SU2BL(ScaleRowUp2_Bilinear_16_C,
+      ScaleRowUp2_Core_Bilinear_16_C,
+      ScaleRowUp2_Core_Bilinear_16_C,
+      0, uint16_t)
+
+#ifdef HAS_SCALEROWUP2LINEAR_SSE2
+SU2BL(ScaleRowUp2_Bilinear_SSE2,
+      ScaleRowUp2_Core_Bilinear_SSE2,
+      ScaleRowUp2_Core_Bilinear_C,
+      15, uint8_t)
+
+SU2BL(ScaleRowUp2_Bilinear_16_SSE2,
+      ScaleRowUp2_Core_Bilinear_16_SSE2,
+      ScaleRowUp2_Core_Bilinear_16_C,
+      15, uint16_t)
+#endif
+
+#ifdef HAS_SCALEROWUP2LINEAR_AVX2
+SU2BL(ScaleRowUp2_Bilinear_AVX2,
+      ScaleRowUp2_Core_Bilinear_AVX2,
+      ScaleRowUp2_Core_Bilinear_C,
+      31, uint8_t)
+
+SU2BL(ScaleRowUp2_Bilinear_16_AVX2,
+      ScaleRowUp2_Core_Bilinear_16_AVX2,
+      ScaleRowUp2_Core_Bilinear_16_C,
+      15, uint16_t)
+#endif
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
