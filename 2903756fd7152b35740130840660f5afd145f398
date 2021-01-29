@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9295d365_29d37eab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T08:12:05Z",
+      "side": 1,
+      "message": "Theres a bot warning\n\n[253/457] CXX obj/libyuv_unittest/convert_test.o\n../../unit_test/convert_test.cc: In function \u0027void __static_initialization_and_destruction_0(int, int)\u0027:\n../../unit_test/convert_test.cc:3539:1: note: variable tracking size limit exceeded with -fvar-tracking-assignments, retrying without\n }  // namespace libyuv\n ^\nninja: build stopped: subcommand failed.\n\n",
+      "revId": "2903756fd7152b35740130840660f5afd145f398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
