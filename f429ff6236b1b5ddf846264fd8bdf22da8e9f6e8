@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f383f0_74319116",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-29T12:18:44Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with NEON, so I only implemented x86 SIMD.\n\nThe core logic can be ported to work on 10bit and 12bit easily, so I added them. But it\u0027s not suitable for 16bit. (Intermediate value can reach 16*maxValue, so 12bit is the limit)\n\nCurrently there\u0027s only row functions and API functions work on plane. Should we change the current I420ToARGB function or have another function like I420ToARGBBilinear?",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
