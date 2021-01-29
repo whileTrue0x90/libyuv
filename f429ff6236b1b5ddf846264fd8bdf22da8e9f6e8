@@ -16,6 +16,148 @@
       "message": "I\u0027m not very familiar with NEON, so I only implemented x86 SIMD.\n\nThe core logic can be ported to work on 10bit and 12bit easily, so I added them. But it\u0027s not suitable for 16bit. (Intermediate value can reach 16*maxValue, so 12bit is the limit)\n\nCurrently there\u0027s only row functions and API functions work on plane. Should we change the current I420ToARGB function or have another function like I420ToARGBBilinear?",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c65d5f0_8391bfb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "These seem like they should be exposed publically a conversions, not scaling.\n\nConversions allow odd width destination, which you may want to handle via \u0027row_any\u0027 wrappers.\n\ne.g. I420ToI444 of an odd width image 639x480 should filter the UV similar to 640x480 but handle the last pixel with clamping.  One way to implement edge clamping is copy the row to a buffer and extrude the first and last pixel out, allowing the low level to process 2 pixels at a time.\n\nThe next level lower can be implemented as planar scaling, and ensure the low levels have specialized upsampling of 2x vertically and/or horizontally.\n\nLinear support is low priority - it can be implemented as Bilinear with a row stride of 0, and will still be a performance win.  I\u0027m tempted to remove linear row functions, but chroma upsampling is one usecase where it may still make sense.  I422ToI444 where the height is already full height, just needs horizontal upsample.\n\nAlso note there is uv_scale functions for NV12 scaling.  Many applications are moving toward NV12 instead of planar, and it has scaling performance advantages.\nWe\u0027ll need optimized filtering and 16 bit UV channels.\nUV scale is based on ARGB scale, and I anticipate RGB scale, and rotate for UV and RGB, with all row functions implemented in SIMD.\nThe API, both publically and low level row functions, needs to stay low to be feasible / maintainable / optimizable. ",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff3727f8_80edf9c7",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "api issues\n-public functions take enum FilterMode filtering to support bilinear vs linear.\n-public api change should not be necessary?  make sure low level ScalePlane with dest width \u003d source width * 2 works as expected for a specialized low level function.\n-function names are misleading, as they dont accept I420/I444.\nOne way to achieve a 2 plane scale would be pass null for Y.\nAnother way to expose the functionality is via convert API.  I420ToI444()",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68f00c9d_4215d16a",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "For now I plan to support _16() versions of planar functions.  The 9, 10, 12, and 16 bit variants aren\u0027t exposed.  If values go out of range a conversion will need to clamp them.\ne.g. I012ToI010 and/or I010ToI420 would clamp.",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "561ffb41_16271fd1",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "Seems like more row functions than necessary.\nAll row functions should be implemented in assembly for Neon and AVX2.\n\nARM has 1 function for 16 bit channel upsample\nScaleRowUp2_16_NEON",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ea0dbad_28aa868f",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "Names are inconsistent with existing row functions.  RowHorizontal \u003d Col?\nCore_ ?   Remove from name?\nRow functions are broken into their own functions because they get CPU dispatched and are simple APIs.\nI havent looked at implementation but I expect non-core dont need to be row functions?",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e23937e4_c1d31583",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "linear can be implemented as bilinear with stride of 0",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c305f899_0ecdded7",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "conversions and scale allow height \u003c 0 to invert vertically.\nmay want to allow horizontal flip if using a scaling kernel by stepping through source pixels with -1 pixel stride.\nFYI I may move to \u0027check macro\u0027 in future to allow an optimized build to have asserts.\nnon-debug functions typically return.\nthis function is public?   would need LIBYUV to export the symbol.",
+      "range": {
+        "startLine": 1391,
+        "startChar": 0,
+        "endLine": 1391,
+        "endChar": 42
+      },
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8a79c80_cca4e1ed",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T18:32:03Z",
+      "side": 1,
+      "message": "no necessary - use stride of 0",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
