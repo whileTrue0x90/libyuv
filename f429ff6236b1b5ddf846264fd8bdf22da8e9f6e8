@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa918ff9_ffdc939c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T23:53:35Z",
+      "side": 1,
+      "message": "I420ToI444 uses:\n\nScalePlane(src_v, src_stride_v, src_uv_width, src_uv_height, dst_v,\n           dst_stride_v, dst_uv_width, dst_uv_height, kFilterBilinear);\n\ninternally ScalePlane should be checking for 2x upsampling and using a specialized row function if its substantially faster.\n\nIts okay to have I420ToI444 directly call the row functions.",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff3727f8_80edf9c7",
@@ -156,6 +173,69 @@
       "writtenOn": "2021-01-29T18:32:03Z",
       "side": 1,
       "message": "no necessary - use stride of 0",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eab1c358_489abbc2",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T23:53:35Z",
+      "side": 1,
+      "message": "these constants could be generated.  worst case I\u0027ve seen, loading a simd constant from memory is 100 cycles in 32 bit, due to fpic.  if you can generate a constant in 3 instructions its a speed advantage.\n32 bit is becoming lower priority though.  make sure it builds and achieves the same performance as 64 bit if possible.",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "380c24db_8a64629f",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T23:53:35Z",
+      "side": 1,
+      "message": "the functions in this file are what we should have C row functions for.  Anything else can be internal to the higher level.  Try to reduce the number of functions that need to be ported / optimized.  We\u0027ll want ssse3, avx512, neon 32 and 64 bit, and mips msa.  And they may need to be ported to other compilers, like visual c.\nIf theres not a larger performance improvement, consider removing linear and use bilinear to implement it with the source row pointer duplicated.",
+      "range": {
+        "startLine": 793,
+        "startChar": 0,
+        "endLine": 793,
+        "endChar": 67
+      },
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a2ab829_28dba69f",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-01-29T23:53:35Z",
+      "side": 1,
+      "message": "consider vpmaddubsw which will let you multiply by coefficients, add adjacient values, produces 16 bit.\nafter unpacks it should be 2 vpmaddubsw, add the 2 rows, add a rounding value and shift.\narm could be similar but theres a rounding shift, avoiding the add for rounding, and the multiply has an accumulate.",
+      "range": {
+        "startLine": 1175,
+        "startChar": 0,
+        "endLine": 1175,
+        "endChar": 59
+      },
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
