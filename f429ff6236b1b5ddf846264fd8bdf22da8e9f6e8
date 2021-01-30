@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ed95eed_50fb1b5a",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "ScalePlane can dispatch to the specialized version. I may move these into convert API.",
+      "parentUuid": "ff3727f8_80edf9c7",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "68f00c9d_4215d16a",
         "filename": "include/libyuv/scale.h",
         "patchSetId": 2
@@ -82,6 +100,24 @@
       "writtenOn": "2021-01-29T18:32:03Z",
       "side": 1,
       "message": "For now I plan to support _16() versions of planar functions.  The 9, 10, 12, and 16 bit variants aren\u0027t exposed.  If values go out of range a conversion will need to clamp them.\ne.g. I012ToI010 and/or I010ToI420 would clamp.",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "316e170c_a19a2d8a",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "These _16 row functions produce result in the same bitdepth of src so they are for I010ToI410(yuv420p10 to yuv444p10) and I012ToI412(yuv420p12 to yuv444p12) (Did I use the correct four cc?). But these functions interpolate lower 12bits so they are only suitable for \u003c\u003d 12bit. Interpolating higher 12bits is also possible, but very inaccurate for 10/12bit input.",
+      "parentUuid": "68f00c9d_4215d16a",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -105,6 +141,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "349d7682_4753fc32",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Half of them are just wrapped ones, like the Any_ ones. See below for explanation. I agree the names may need some change. \n\nI\u0027ll try do write the neon version.",
+      "parentUuid": "561ffb41_16271fd1",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ea0dbad_28aa868f",
         "filename": "include/libyuv/scale_row.h",
         "patchSetId": 2
@@ -122,6 +176,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "049201b6_95623f1f",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "I see. I\u0027ll change to Col.\n\nThese assumes src pixels are placed at center of dst pixels, so boundary pixels need to be handled differently. Core_ ones don\u0027t do this, a macro wraps Core_ ones to take care of boundary pixels. Naming warpped functions Any_ might be misleading because Core_ ones should never be called directly even if src is aligned.",
+      "parentUuid": "1ea0dbad_28aa868f",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e23937e4_c1d31583",
         "filename": "source/scale.cc",
         "patchSetId": 2
@@ -133,6 +205,24 @@
       "writtenOn": "2021-01-29T18:32:03Z",
       "side": 1,
       "message": "linear can be implemented as bilinear with stride of 0",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5f10efc_22b8a65f",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Bilinear version reads 2 rows and writes 2 rows for each call. Compared with read 2 and write 1, this reduce 40% execution time.\nUsing bilinear to mimic linear doubles execution time. Currently with same output size, time on I422ToI444 and I420ToI444 are roughly the same.",
+      "parentUuid": "e23937e4_c1d31583",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -162,6 +252,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e08331c_1ba04e24",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Invert vertically is easy.\nHorizontal flip may need to duplicate assembly.\nThis is private. ScalePlane will dispatch this function if condition is met. ScaleI420ToI444 also call this internally.",
+      "parentUuid": "c305f899_0ecdded7",
+      "range": {
+        "startLine": 1391,
+        "startChar": 0,
+        "endLine": 1391,
+        "endChar": 42
+      },
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8a79c80_cca4e1ed",
         "filename": "source/scale.cc",
         "patchSetId": 2
@@ -173,6 +287,24 @@
       "writtenOn": "2021-01-29T18:32:03Z",
       "side": 1,
       "message": "no necessary - use stride of 0",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7033afd6_7ecfac59",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8a79c80_cca4e1ed",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -190,6 +322,24 @@
       "writtenOn": "2021-01-29T23:53:35Z",
       "side": 1,
       "message": "these constants could be generated.  worst case I\u0027ve seen, loading a simd constant from memory is 100 cycles in 32 bit, due to fpic.  if you can generate a constant in 3 instructions its a speed advantage.\n32 bit is becoming lower priority though.  make sure it builds and achieves the same performance as 64 bit if possible.",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8748f96_1cbc25a1",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eab1c358_489abbc2",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -219,6 +369,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "042c7219_eb9c4dcd",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Explained above. non-Core_ versions are just wrappers around Core_ versions, just like Any_ versions are. If you think naming the wrapped version Any_ and removing Core_ in names is appropriate I\u0027ll switch to that.\n\nHalf the time should be a large enough performance improvement, right?",
+      "parentUuid": "380c24db_8a64629f",
+      "range": {
+        "startLine": 793,
+        "startChar": 0,
+        "endLine": 793,
+        "endChar": 67
+      },
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a2ab829_28dba69f",
         "filename": "source/scale_gcc.cc",
         "patchSetId": 2
@@ -230,6 +404,30 @@
       "writtenOn": "2021-01-29T23:53:35Z",
       "side": 1,
       "message": "consider vpmaddubsw which will let you multiply by coefficients, add adjacient values, produces 16 bit.\nafter unpacks it should be 2 vpmaddubsw, add the 2 rows, add a rounding value and shift.\narm could be similar but theres a rounding shift, avoiding the add for rounding, and the multiply has an accumulate.",
+      "range": {
+        "startLine": 1175,
+        "startChar": 0,
+        "endLine": 1175,
+        "endChar": 59
+      },
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d098be4_7e65117e",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-01-30T02:51:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a2ab829_28dba69f",
       "range": {
         "startLine": 1175,
         "startChar": 0,
