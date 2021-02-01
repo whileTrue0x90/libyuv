@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39e125fc_d162ff43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-01T23:34:20Z",
+      "side": 1,
+      "message": "With the existing versions I420ToI444 is slow\nout/Release/libyuv_unittest \u0027--gtest_filter\u003d*I4??ToI4??_Opt\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n[----------] 10 tests from LibYUVConvertTest (2123 ms total)\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 10 tests from 1 test suite ran. (2123 ms total)\n[       OK ] LibYUVConvertTest.I420ToI444_Opt (1067 ms)\n[       OK ] LibYUVConvertTest.I444ToI444_Opt (223 ms)\n[       OK ] LibYUVConvertTest.I444ToI420_Opt (166 ms)\n[       OK ] LibYUVConvertTest.I422ToI422_Opt (145 ms)\n[       OK ] LibYUVConvertTest.I420ToI422_Opt (134 ms)\n[       OK ] LibYUVConvertTest.I422ToI420_Opt (116 ms)\n[       OK ] LibYUVConvertTest.I420ToI420_Opt (100 ms)\n[       OK ] LibYUVConvertTest.I400ToI420_Opt (78 ms)\n[       OK ] LibYUVConvertTest.I420ToI400_Opt (48 ms)\n[       OK ] LibYUVConvertTest.I400ToI400_Opt (46 ms)\n\nbut not making any mistakes.  Perf shows \n 83.60%  libyuv_unittest  libyuv_unittest   [.] ScaleFilterCols_SSSE3                                                         \n  8.52%  libyuv_unittest  libyuv_unittest   [.] InterpolateRow_AVX2                                                           \n  5.83%  libyuv_unittest  libyuv_unittest   [.] CopyRow_ERMS                                                                  \n  0.62%  libyuv_unittest  libyuv_unittest   [.] libyuv::LibYUVConvertTest_I420ToI444_Opt_Test::TestBody                       \n  0.44%  libyuv_unittest  libyuv_unittest   [.] testing::internal::EqHelper::Compare\u003cunsigned char, unsigned char, (void*)0\u003e  \n  0.25%  libyuv_unittest  libyuv_unittest   [.] ScalePlaneBilinearUp    \n\nIts even slow compared to ARGB\nout/Release/libyuv_unittest \u0027--gtest_filter\u003d*ToI444_Opt\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\nI420ToI444_Opt (1078 ms)\nARGBToI444_Opt (343 ms)\nI444ToI444_Opt (225 ms)\n\nThe mix of ssse3 and avx2 is potentially a pitfall, but disabling AVX2 shows both functions get slower\nLIBYUV_DISABLE_AVX2\u003d1 out/Release/libyuv_unittest \u0027--gtest_filter\u003d*ToI444_Opt\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\nI420ToI444_Opt (1215 ms)\nARGBToI444_Opt (384 ms)\nI444ToI444_Opt (224 ms)\n\n",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

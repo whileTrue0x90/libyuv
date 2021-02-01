@@ -159,6 +159,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f6b57d7_6b7b13bc",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-01T23:34:20Z",
+      "side": 1,
+      "message": "If they dont need to be assembly, I suggest making them static functions inside the scale.cc",
+      "parentUuid": "349d7682_4753fc32",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ea0dbad_28aa868f",
         "filename": "include/libyuv/scale_row.h",
         "patchSetId": 2
@@ -188,6 +206,24 @@
       "side": 1,
       "message": "I see. I\u0027ll change to Col.\n\nThese assumes src pixels are placed at center of dst pixels, so boundary pixels need to be handled differently. Core_ ones don\u0027t do this, a macro wraps Core_ ones to take care of boundary pixels. Naming warpped functions Any_ might be misleading because Core_ ones should never be called directly even if src is aligned.",
       "parentUuid": "1ea0dbad_28aa868f",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae94703b_44b6628b",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-01T23:34:20Z",
+      "side": 1,
+      "message": "I suggest the assembly functions remove core from the name, and the edge handlers be given a different name.  Only have the avx/sse low levels and the C equivalents in row.h and scale_gcc.cc source.",
+      "parentUuid": "049201b6_95623f1f",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
