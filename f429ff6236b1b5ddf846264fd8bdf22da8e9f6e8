@@ -177,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f7972a3_fa0cfc5c",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T03:56:45Z",
+      "side": 1,
+      "message": "We can call these row functions in I420ToARGB and I422ToARGB directly to reduce memory usage. If we make them static ones, we can\u0027t do that.",
+      "parentUuid": "6f6b57d7_6b7b13bc",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ea0dbad_28aa868f",
         "filename": "include/libyuv/scale_row.h",
         "patchSetId": 2
@@ -224,6 +242,24 @@
       "side": 1,
       "message": "I suggest the assembly functions remove core from the name, and the edge handlers be given a different name.  Only have the avx/sse low levels and the C equivalents in row.h and scale_gcc.cc source.",
       "parentUuid": "049201b6_95623f1f",
+      "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1703b4a8_375416c0",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T03:56:45Z",
+      "side": 1,
+      "message": "I think Any_ is suitable for the wrapped ones - they can handle any case. If Core_ is removed, it might seems these can be called directly if dst_width is aligned, which is not the case.",
+      "parentUuid": "ae94703b_44b6628b",
       "revId": "f429ff6236b1b5ddf846264fd8bdf22da8e9f6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },

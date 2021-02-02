@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ad1b87d_3cf56abc",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T03:56:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9337d8_04daddb8",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54c0958f_ca4a9854",
@@ -65,6 +83,24 @@
       "writtenOn": "2021-02-02T00:11:49Z",
       "side": 1,
       "message": "ScalePlaneColUp2_Linear - renmame to ScalePlaneUp2_Linear",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a63e7ebf_c3b6a393",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T03:56:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54c0958f_ca4a9854",
       "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -92,6 +128,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcc85996_5ee8d0c0",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T03:56:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d45513_c52bbde5",
+      "range": {
+        "startLine": 1456,
+        "startChar": 5,
+        "endLine": 1456,
+        "endChar": 32
+      },
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "351b3b3b_89e5afad",
@@ -105,6 +165,24 @@
       "writtenOn": "2021-02-02T00:11:49Z",
       "side": 1,
       "message": "Consider allowing the user to specify filter\u003d\u003dlinear and dst_height !\u003d src_height.\ne.g. I420ToI444 upsample but with linear to ignore half the rows.  If the low level can respect source stride.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7078eb0_ce38a930",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T03:56:45Z",
+      "side": 1,
+      "message": "Done\nNow it\u0027s able to handle any height, using nearest method.",
+      "parentUuid": "351b3b3b_89e5afad",
       "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
