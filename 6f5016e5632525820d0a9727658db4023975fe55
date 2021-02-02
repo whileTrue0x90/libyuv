@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa1871d1_51b3fb6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "Looks good overall... just minor suggestions.",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "939379cf_7727eebe",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "nit: when bumping the version, the README.chromium file should also be updated.",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29a5c78f_eae9603d",
+        "filename": "source/scale.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "Comments should start with upper case and end with a period.  But a more description comment would be good.  Such as\n// This function can only scale up by 2 times.",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da6442af_bc47599d",
+        "filename": "source/scale.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "This step logic is different than other scale function that use a common function (which uses fixeddiv assembly for efficieny) and 16.16 fixed point which is faster and sufficient accuracy?",
+      "range": {
+        "startLine": 1389,
+        "startChar": 0,
+        "endLine": 1389,
+        "endChar": 65
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abe4c34a_b50ac79e",
+        "filename": "source/scale.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "nit: this is a y coordinate",
+      "range": {
+        "startLine": 1390,
+        "startChar": 0,
+        "endLine": 1390,
+        "endChar": 19
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1745581_26ad1bd7",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "// Only suitable for at most 12bit range.",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 40
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b4ef594_c0b1ee74",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "do same math as bytes - multiplies.  Code is likely identical except for the uint16_t type",
+      "range": {
+        "startLine": 484,
+        "startChar": 0,
+        "endLine": 484,
+        "endChar": 63
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe881130_68e4cc6e",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "consider VPMADDWD which is similar to vpmaddubsw but for 16 bit values.",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "744d88c9_8a2b790e",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T17:31:00Z",
+      "side": 1,
+      "message": "ScaleRowUp2_Linear_NEON - lets call these Row functions, not Col.\nIn 2 pass filters a distinction is needed in row and column functions.  These functions bahave like row functions in a conversion.",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
