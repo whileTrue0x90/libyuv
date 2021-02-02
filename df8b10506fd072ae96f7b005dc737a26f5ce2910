@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30affabf_8771bab6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T12:06:24Z",
+      "side": 1,
+      "message": "Performance on Pixel 3 64 bit\nI010ToI410_Opt (1944 ms)\nI012ToI412_Opt (1750 ms)\nI010ToI420_Opt (1114 ms)\nI212ToI412_Opt (938 ms)\nI420ToI444_Opt (885 ms)\nI210ToI410_Opt (885 ms)\nI422ToI444_Opt (500 ms)\nI444ToI420_Opt (494 ms)\nI420ToI010_Opt (467 ms)\nI444ToI444_Opt (330 ms)\nI422ToI420_Opt (312 ms)\nI010ToI010_Opt (310 ms)\nI420ToI422_Opt (254 ms)\nI422ToI422_Opt (228 ms)\nI420ToI420_Opt (169 ms)\nI400ToI420_Opt (159 ms)\nI420ToI400_Opt (131 ms)\nI400ToI400_Opt (128 ms)\n\nPerformance on Pixel 3 32 bit\nI010ToI410_Opt (2064 ms)\nI012ToI412_Opt (1773 ms)\nI010ToI420_Opt (1029 ms)\nI212ToI412_Opt (866 ms)\nI210ToI410_Opt (854 ms)\nI420ToI444_Opt (850 ms)\nI422ToI444_Opt (609 ms)\nI420ToI010_Opt (523 ms)\nI444ToI420_Opt (447 ms)\nI422ToI420_Opt (364 ms)\nI010ToI010_Opt (352 ms)\nI444ToI444_Opt (338 ms)\nI422ToI422_Opt (218 ms)\nI420ToI422_Opt (196 ms)\nI420ToI420_Opt (171 ms)\nI400ToI420_Opt (148 ms)\nI420ToI400_Opt (123 ms)\nI400ToI400_Opt (112 ms)\n\n",
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3e2213f_ecc4f751",
+        "filename": "source/scale.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T12:06:24Z",
+      "side": 1,
+      "message": "caveat - these asserts and the \u0027Any\u0027 functions dont allow for tiling.\nTheres an example of tiling in the ARGB scale unittest.  Instead of scaling the entire image in one call, only a subregion of the destination is scaled in each call.",
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a427f5b1_41d6674d",
+        "filename": "source/scale.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T12:06:24Z",
+      "side": 1,
+      "message": "in my experience the code is more efficient writing one row of destination at a time.\nThe Scale2RowUp could be refactored to filter 2 rows of source using the coefficients\n3 9\n1 3\non the even rows and flipping the source pointers\n1 3\n3 9\non the odd rows.\nIt means 2x more reads and multiplies, but the contiguous destination memory write combines and streams, while the source caches.\nIts a fair bit of code to try it, so perhaps add it as a comment to consider for future optimization.",
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5fae2f6_7a7edc1b",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T12:06:24Z",
+      "side": 1,
+      "message": "This can be post increment as well, like neon64 version does.  pass ptr + 1 as tmp.",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 518,
+        "endChar": 65
+      },
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3770624_182e960f",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T12:06:24Z",
+      "side": 1,
+      "message": "use d0 for 8 byte register:\nldr         d0, [%0], #8 \n\nq0 is 16 bytes.  aka v0.16b\nd0 is 8 bytes.   aka v0.8b",
+      "range": {
+        "startLine": 547,
+        "startChar": 10,
+        "endLine": 547,
+        "endChar": 19
+      },
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
