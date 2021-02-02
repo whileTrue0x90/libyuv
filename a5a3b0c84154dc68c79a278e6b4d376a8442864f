@@ -185,6 +185,74 @@
       "parentUuid": "351b3b3b_89e5afad",
       "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dab2606_5150056e",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "row function should handle odd width by filtering only with the left pixel.\ntest high level can handle odd with I422ToI444.\nLoop thru dest pixels 2 at a time.\nHandle odd number of dest pixels with if (dst_width \u0026 1)",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20299285_8b8a4047",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "row function should step thru dest pixels and handle odd width out of loop.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cad61025_93df9625",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "this math is unclear and likely not necessary.  You\u0027re attempting to implement multiplies by\n1 3\n3 9\nmodern cpus prefer multiplies and if you keep the code simple, it will autovectorize.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ee20ebb_c70c544d",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "you can post increment by 1.  depending on the instruction you use.  See how SobelXRow_NEON does it.\nconsider ldr instead of ld1.  Some cpus prefer it, such as exynos.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

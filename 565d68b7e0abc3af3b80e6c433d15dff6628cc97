@@ -16,6 +16,57 @@
       "message": "Mostly done. There\u0027s still work to call the upscale row functions internally in I420ToARGB and I422ToARGB. Maybe split into another CL.",
       "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a6d9531_60a7d63d",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "suggest 2 pointers, both post incrementing by 8.",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab2ac9bd_b7cac1e4",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "can you clarify what the 16 bytes are after zip1?\nis it 8h? padded with zeros?\nzip can be slow.  if you\u0027re extending bytes to shorts there are instructions.\nushll   v2.8h, v0.8b, #0\nmovl is probably a pseudo directive.\nfor aarch64.\nvmovl.u8   q2, d0 \nfor aarch32",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6e3991c_fcc0402c",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T08:09:34Z",
+      "side": 1,
+      "message": "replace zip1 + st1 with st2?\nst1         {v2.8b, v3.8b}, [%1], #16",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
