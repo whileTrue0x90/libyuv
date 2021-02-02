@@ -35,6 +35,42 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45e053f8_6b27a97c",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6d9531_60a7d63d",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7a52729_3ae55709",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6d9531_60a7d63d",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab2ac9bd_b7cac1e4",
@@ -52,6 +88,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03a6f9f5_b27dce1f",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "It\u0027s extending u8 to u16. I was mostly translating my sse code into neon. Seems neon has much more stuffs. I will take some time to check the whole list.",
+      "parentUuid": "ab2ac9bd_b7cac1e4",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6e3991c_fcc0402c",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-02-02T08:09:34Z",
       "side": 1,
       "message": "replace zip1 + st1 with st2?\nst1         {v2.8b, v3.8b}, [%1], #16",
+      "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4e06bf_1aa7dc37",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e3991c_fcc0402c",
       "revId": "565d68b7e0abc3af3b80e6c433d15dff6628cc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }

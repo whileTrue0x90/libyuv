@@ -204,6 +204,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e2cfde0_d592d33d",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "Handling odd width is done by _Any functions, and that\u0027s why I tend to name these \u0027row functions\u0027 differently. They are not normal row functions that can be used alone for aligned input.\n\nTake the graph in comment (copy to somewhere using monospace font to read):\n\n// sample position: (O is src sample position, X is dst sample position)\n//      v dst_ptr at here           v stop at here\n//  X O X   X O X   X O X   X O X   X O X\n//    ^ src_ptr at here\n\nThis shows where the non-Any functions starts and ends at. The first and last pixel of dst are simply copied from the first and last pixel of src, which is handled by Any_ function.\n\nIf the dst_width is odd, the case changes to this:\n\n//      v dst_ptr at here           v stop at here\n//  X O X   X O X   X O X   X O X   X O\n//    ^ src_ptr at here\n\nNon-Any_ functions can blindly write the last dst pixel. Any_ function will set it to last pixel of src then. (This part in Any_ function had some mistakes and are corrected now)",
+      "parentUuid": "6dab2606_5150056e",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20299285_8b8a4047",
@@ -217,6 +235,24 @@
       "writtenOn": "2021-02-02T08:09:34Z",
       "side": 1,
       "message": "row function should step thru dest pixels and handle odd width out of loop.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6099f37f_0641c05d",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "See the explanation above.",
+      "parentUuid": "20299285_8b8a4047",
       "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -238,6 +274,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e36e995d_de97d166",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cad61025_93df9625",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ee20ebb_c70c544d",
@@ -251,6 +305,24 @@
       "writtenOn": "2021-02-02T08:09:34Z",
       "side": 1,
       "message": "you can post increment by 1.  depending on the instruction you use.  See how SobelXRow_NEON does it.\nconsider ldr instead of ld1.  Some cpus prefer it, such as exynos.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e92a4c2e_a551070a",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T10:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ee20ebb_c70c544d",
       "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
