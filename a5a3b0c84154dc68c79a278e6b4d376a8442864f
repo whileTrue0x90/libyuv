@@ -16,6 +16,97 @@
       "message": "With the existing versions I420ToI444 is slow\nout/Release/libyuv_unittest \u0027--gtest_filter\u003d*I4??ToI4??_Opt\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n[----------] 10 tests from LibYUVConvertTest (2123 ms total)\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 10 tests from 1 test suite ran. (2123 ms total)\n[       OK ] LibYUVConvertTest.I420ToI444_Opt (1067 ms)\n[       OK ] LibYUVConvertTest.I444ToI444_Opt (223 ms)\n[       OK ] LibYUVConvertTest.I444ToI420_Opt (166 ms)\n[       OK ] LibYUVConvertTest.I422ToI422_Opt (145 ms)\n[       OK ] LibYUVConvertTest.I420ToI422_Opt (134 ms)\n[       OK ] LibYUVConvertTest.I422ToI420_Opt (116 ms)\n[       OK ] LibYUVConvertTest.I420ToI420_Opt (100 ms)\n[       OK ] LibYUVConvertTest.I400ToI420_Opt (78 ms)\n[       OK ] LibYUVConvertTest.I420ToI400_Opt (48 ms)\n[       OK ] LibYUVConvertTest.I400ToI400_Opt (46 ms)\n\nbut not making any mistakes.  Perf shows \n 83.60%  libyuv_unittest  libyuv_unittest   [.] ScaleFilterCols_SSSE3                                                         \n  8.52%  libyuv_unittest  libyuv_unittest   [.] InterpolateRow_AVX2                                                           \n  5.83%  libyuv_unittest  libyuv_unittest   [.] CopyRow_ERMS                                                                  \n  0.62%  libyuv_unittest  libyuv_unittest   [.] libyuv::LibYUVConvertTest_I420ToI444_Opt_Test::TestBody                       \n  0.44%  libyuv_unittest  libyuv_unittest   [.] testing::internal::EqHelper::Compare\u003cunsigned char, unsigned char, (void*)0\u003e  \n  0.25%  libyuv_unittest  libyuv_unittest   [.] ScalePlaneBilinearUp    \n\nIts even slow compared to ARGB\nout/Release/libyuv_unittest \u0027--gtest_filter\u003d*ToI444_Opt\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\nI420ToI444_Opt (1078 ms)\nARGBToI444_Opt (343 ms)\nI444ToI444_Opt (225 ms)\n\nThe mix of ssse3 and avx2 is potentially a pitfall, but disabling AVX2 shows both functions get slower\nLIBYUV_DISABLE_AVX2\u003d1 out/Release/libyuv_unittest \u0027--gtest_filter\u003d*ToI444_Opt\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\nI420ToI444_Opt (1215 ms)\nARGBToI444_Opt (384 ms)\nI444ToI444_Opt (224 ms)\n\n",
       "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ddf9977_6f26b60b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T00:11:49Z",
+      "side": 1,
+      "message": "Overall this CL is close.  The public API changes look ok.\nIf its not too much trouble, it may be nice to break the public API changes into a different CL.\nThose should be ready to go.\nThe try bots are showing some errors.  See if you can address those.\nIt may be good to open a bug for I422ToI444",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd9337d8_04daddb8",
+        "filename": "include/libyuv/scale.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T00:11:49Z",
+      "side": 1,
+      "message": "May want to be clear that the sample is expected to be in the low 12 bits.\nMicrosoft formats expect HDR to be in the upper 12 bits.  Which makes sense in many ways, since you dont need to be all that aware of how many bits are significant.  But most other formats and codecs expect HDR formats to be in the lower bits.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54c0958f_ca4a9854",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T00:11:49Z",
+      "side": 1,
+      "message": "ScalePlaneColUp2_Linear - renmame to ScalePlaneUp2_Linear",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08d45513_c52bbde5",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T00:11:49Z",
+      "side": 1,
+      "message": "rename to ScalePlaneUp2_16_Linear",
+      "range": {
+        "startLine": 1456,
+        "startChar": 5,
+        "endLine": 1456,
+        "endChar": 32
+      },
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "351b3b3b_89e5afad",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1845,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-02T00:11:49Z",
+      "side": 1,
+      "message": "Consider allowing the user to specify filter\u003d\u003dlinear and dst_height !\u003d src_height.\ne.g. I420ToI444 upsample but with linear to ignore half the rows.  If the low level can respect source stride.",
+      "revId": "a5a3b0c84154dc68c79a278e6b4d376a8442864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
