@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0d0dbf6_af16a2aa",
+        "filename": "source/scale.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T13:32:32Z",
+      "side": 1,
+      "message": "Boundaries have to be handled differently, unless we pad 1 pixel to each border of the image, or tolerate some shift on the result.\nIf tiling is really urgent, we can consider split the image into overlapping tiles and discard the boundaries of non-boundary tiles; or use the none-Any version directly and handle the boundary separately.",
+      "parentUuid": "a3e2213f_ecc4f751",
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a427f5b1_41d6674d",
         "filename": "source/scale.cc",
         "patchSetId": 6
@@ -48,6 +66,24 @@
       "writtenOn": "2021-02-02T12:06:24Z",
       "side": 1,
       "message": "in my experience the code is more efficient writing one row of destination at a time.\nThe Scale2RowUp could be refactored to filter 2 rows of source using the coefficients\n3 9\n1 3\non the even rows and flipping the source pointers\n1 3\n3 9\non the odd rows.\nIt means 2x more reads and multiplies, but the contiguous destination memory write combines and streams, while the source caches.\nIts a fair bit of code to try it, so perhaps add it as a comment to consider for future optimization.",
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e30f434e_961a8ed6",
+        "filename": "source/scale.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T13:32:32Z",
+      "side": 1,
+      "message": "My initial version was 2 rows in and 1 row out, and then switched to current version. the performance was about 4500ms versus 2500ms. (I was using 9999 repeat to get more stable result)\n\nThe test was using SSE on 64bit, and the code was both early version, so is not comparable with current result, but I still expect write 1 row to be slower. Anyway, I\u0027ll add the comment.",
+      "parentUuid": "a427f5b1_41d6674d",
       "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -75,6 +111,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9668e66_0192c331",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T13:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5fae2f6_7a7edc1b",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 518,
+        "endChar": 65
+      },
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3770624_182e960f",
@@ -88,6 +148,30 @@
       "writtenOn": "2021-02-02T12:06:24Z",
       "side": 1,
       "message": "use d0 for 8 byte register:\nldr         d0, [%0], #8 \n\nq0 is 16 bytes.  aka v0.16b\nd0 is 8 bytes.   aka v0.8b",
+      "range": {
+        "startLine": 547,
+        "startChar": 10,
+        "endLine": 547,
+        "endChar": 19
+      },
+      "revId": "df8b10506fd072ae96f7b005dc737a26f5ce2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f71c439_53c838d3",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-02T13:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3770624_182e960f",
       "range": {
         "startLine": 547,
         "startChar": 10,
