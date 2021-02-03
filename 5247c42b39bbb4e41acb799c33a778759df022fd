@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b6fe8de_1726b5dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-03T11:47:34Z",
+      "side": 1,
+      "message": "In this CL I replace a shift by 6 with a multiply, to experiment with quality and performance.\nThe initial performance on skylake xeon is slower than expected.\n\npsraw\nI420ToARGB_Opt (3922 ms)\n\npmulhw\nI420ToARGB_Opt (3659 ms)\n",
+      "revId": "5247c42b39bbb4e41acb799c33a778759df022fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
