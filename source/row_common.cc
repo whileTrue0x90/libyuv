@@ -1330,37 +1330,39 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
 // Macros to create SIMD specific yuv to rgb conversion constants.
 
 #if defined(__aarch64__)
-#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR) \
-  const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = { \
-      {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},                     \
-      {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},                     \
-      {UG, VG, UG, VG, UG, VG, UG, VG},                             \
-      {UG, VG, UG, VG, UG, VG, UG, VG},                             \
-      {BB, BG, BR, YGB, 0, 0, 0, 0},                                \
-      {0x0101 * YG, YG, 0, 0}};                                     \
-  const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = { \
-      {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},                     \
-      {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},                     \
-      {VG, UG, VG, UG, VG, UG, VG, UG},                             \
-      {VG, UG, VG, UG, VG, UG, VG, UG},                             \
-      {BR, BG, BB, YGB, 0, 0, 0, 0},                                \
-      {0x0101 * YG, YG, 0, 0}};
-
+#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS) \
+  const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = {     \
+      {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},                         \
+      {-UB, -VR, -UB, -VR, -UB, -VR, -UB, -VR},                         \
+      {UG, VG, UG, VG, UG, VG, UG, VG},                                 \
+      {UG, VG, UG, VG, UG, VG, UG, VG},                                 \
+      {BB, BG, BR, YGB, 0, 0, 0, 0},                                    \
+      {0x0101 * YG, YG, 0, 0},                                          \
+      {YS, YS, YS, YS, YS, YS, YS, YS}};                                \
+  const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = {     \
+      {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},                         \
+      {-VR, -UB, -VR, -UB, -VR, -UB, -VR, -UB},                         \
+      {VG, UG, VG, UG, VG, UG, VG, UG},                                 \
+      {VG, UG, VG, UG, VG, UG, VG, UG},                                 \
+      {BR, BG, BB, YGB, 0, 0, 0, 0},                                    \
+      {0x0101 * YG, YG, 0, 0},                                          \
+      {YS, YS, YS, YS, YS, YS, YS, YS}};
 #elif defined(__arm__)
-#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR)     \
+#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS) \
   const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = {     \
       {-UB, -UB, -UB, -UB, -VR, -VR, -VR, -VR, 0, 0, 0, 0, 0, 0, 0, 0}, \
       {UG, UG, UG, UG, VG, VG, VG, VG, 0, 0, 0, 0, 0, 0, 0, 0},         \
       {BB, BG, BR, YGB, 0, 0, 0, 0},                                    \
-      {0x0101 * YG, YG, 0, 0}};                                         \
+      {0x0101 * YG, YG, 0, 0},                                          \
+      {YS, YS, YS, YS, YS, YS, YS, YS}};                                \
   const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = {     \
       {-VR, -VR, -VR, -VR, -UB, -UB, -UB, -UB, 0, 0, 0, 0, 0, 0, 0, 0}, \
       {VG, VG, VG, VG, UG, UG, UG, UG, 0, 0, 0, 0, 0, 0, 0, 0},         \
       {BR, BG, BB, YGB, 0, 0, 0, 0},                                    \
-      {0x0101 * YG, YG, 0, 0}};
-
+      {0x0101 * YG, YG, 0, 0},                                          \
+      {YS, YS, YS, YS, YS, YS, YS, YS}};
 #else
-#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR)          \
+#define MAKEYUVCONSTANTS(name, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS)      \
   const struct YuvConstants SIMD_ALIGNED(kYuv##name##Constants) = {          \
       {UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,               \
        UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},              \
@@ -1373,7 +1375,8 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
       {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR},      \
       {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},      \
       {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, \
-       YGB, YGB}};                                                           \
+       YGB, YGB},                                                            \
+      {YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS}};     \
   const struct YuvConstants SIMD_ALIGNED(kYvu##name##Constants) = {          \
       {VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0,               \
        VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0},              \
@@ -1386,7 +1389,8 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
       {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB},      \
       {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG},      \
       {YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, YGB, \
-       YGB, YGB}};
+       YGB, YGB},                                                            \
+      {YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS, YS}};
 #endif
 
 // TODO(fbarchard): Generate SIMD structures from float matrix.
@@ -1399,6 +1403,7 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
 #define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
+#define YS 1024
 
 // U and V contributions to R,G,B.
 #define UB -128 /* max(-128, round(-2.018 * 64)) */
@@ -1411,7 +1416,7 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS)
 
 #undef BB
 #undef BG
@@ -1422,6 +1427,7 @@ MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #undef VG
 #undef VR
 #undef YG
+#undef YS
 
 // JPEG YUV to RGB reference
 // *  R = Y                - V * -1.40200
@@ -1431,6 +1437,7 @@ MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 16320 /* round(1.000 * 64 * 256 * 256 / 257) */
 #define YGB 32   /* 64 / 2 */
+#define YS 1024
 
 // U and V contributions to R,G,B.
 #define UB -113 /* round(-1.77200 * 64) */
@@ -1443,7 +1450,7 @@ MAKEYUVCONSTANTS(I601, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS)
 
 #undef BB
 #undef BG
@@ -1454,6 +1461,7 @@ MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #undef VG
 #undef VR
 #undef YG
+#undef YS
 
 // BT.709 YUV to RGB reference
 //  R = (Y - 16) * 1.164              - V * -1.793
@@ -1463,8 +1471,8 @@ MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 18997  /* round(1.164 * 64 * 256 * 256 / 257) */
 #define YGB -1160 /* 1.164 * 64 * -16 + 64 / 2 */
+#define YS 1024
 
-// TODO(fbarchard): Find way to express 2.112 instead of 2.0.
 // U and V contributions to R,G,B.
 #define UB -128 /* max(-128, round(-2.112 * 64)) */
 #define UG 14   /* round(0.213 * 64) */
@@ -1476,7 +1484,7 @@ MAKEYUVCONSTANTS(JPEG, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS)
 
 #undef BB
 #undef BG
@@ -1487,6 +1495,7 @@ MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #undef VG
 #undef VR
 #undef YG
+#undef YS
 
 // BT.709 full range YUV to RGB reference
 //  R = Y                - V * -1.5748
@@ -1502,6 +1511,7 @@ MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 // Y contribution to R,G,B.  Scale and bias.  (same as jpeg)
 #define YG 16320 /* round(1 * 64 * 256 * 256 / 257) */
 #define YGB 32   /* 64 / 2 */
+#define YS 1024
 
 // U and V contributions to R,G,B.
 #define UB -119 /* round(-1.8556 * 64) */
@@ -1514,7 +1524,7 @@ MAKEYUVCONSTANTS(H709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS)
 
 #undef BB
 #undef BG
@@ -1525,6 +1535,7 @@ MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #undef VG
 #undef VR
 #undef YG
+#undef YS
 
 // BT.2020 YUV to RGB reference
 //  R = (Y - 16) * 1.164384                - V * -1.67867
@@ -1534,8 +1545,8 @@ MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 // Y contribution to R,G,B.  Scale and bias.
 #define YG 19003  /* round(1.164384 * 64 * 256 * 256 / 257) */
 #define YGB -1160 /* 1.164384 * 64 * -16 + 64 / 2 */
+#define YS 1024
 
-// TODO(fbarchard): Improve accuracy; the B channel is off by 7%.
 // U and V contributions to R,G,B.
 #define UB -128 /* max(-128, round(-2.142 * 64)) */
 #define UG 12   /* round(0.187326 * 64) */
@@ -1547,7 +1558,7 @@ MAKEYUVCONSTANTS(F709, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #define BG (UG * 128 + VG * 128 + YGB)
 #define BR (VR * 128 + YGB)
 
-MAKEYUVCONSTANTS(2020, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
+MAKEYUVCONSTANTS(2020, YG, YGB, UB, UG, VG, VR, BB, BG, BR, YS)
 
 #undef BB
 #undef BG
@@ -1558,6 +1569,7 @@ MAKEYUVCONSTANTS(2020, YG, YGB, UB, UG, VG, VR, BB, BG, BR)
 #undef VG
 #undef VR
 #undef YG
+#undef YS
 
 #undef MAKEYUVCONSTANTS
 
