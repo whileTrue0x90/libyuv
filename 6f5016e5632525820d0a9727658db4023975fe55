@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97e356e1_56e7e18c",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "939379cf_7727eebe",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29a5c78f_eae9603d",
@@ -52,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22e8005b_31fe8959",
+        "filename": "source/scale.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29a5c78f_eae9603d",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da6442af_bc47599d",
@@ -65,6 +101,30 @@
       "writtenOn": "2021-02-02T17:31:00Z",
       "side": 1,
       "message": "This step logic is different than other scale function that use a common function (which uses fixeddiv assembly for efficieny) and 16.16 fixed point which is faster and sufficient accuracy?",
+      "range": {
+        "startLine": 1389,
+        "startChar": 0,
+        "endLine": 1389,
+        "endChar": 65
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe8e017_044844d8",
+        "filename": "source/scale.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done\nFixedDiv1 is slightly off so I have to use FixedDiv(src_height - 1, dst_height - 1). FixedDiv1(2, 2) (or any same number) gives 65535 but not 65536, which can cause 1 line off for height \u003e 32768.",
+      "parentUuid": "da6442af_bc47599d",
       "range": {
         "startLine": 1389,
         "startChar": 0,
@@ -98,6 +158,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f3ae8e8_c8d453dd",
+        "filename": "source/scale.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe4c34a_b50ac79e",
+      "range": {
+        "startLine": 1390,
+        "startChar": 0,
+        "endLine": 1390,
+        "endChar": 19
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1745581_26ad1bd7",
@@ -111,6 +195,30 @@
       "writtenOn": "2021-02-02T17:31:00Z",
       "side": 1,
       "message": "// Only suitable for at most 12bit range.",
+      "range": {
+        "startLine": 467,
+        "startChar": 0,
+        "endLine": 467,
+        "endChar": 40
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aa849e0_2b4276b4",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1745581_26ad1bd7",
       "range": {
         "startLine": 467,
         "startChar": 0,
@@ -144,6 +252,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4cc8db4_fa950a2e",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b4ef594_c0b1ee74",
+      "range": {
+        "startLine": 484,
+        "startChar": 0,
+        "endLine": 484,
+        "endChar": 63
+      },
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe881130_68e4cc6e",
@@ -161,6 +293,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b07f376d_ef04c7e1",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done\nUsing pmaddwd turns out to be slower, so I only changed avx2 version to use vpmaddwd.\nDirect port from 8bit can handle input of full 16bit range but is slower. I kept them there for future need.",
+      "parentUuid": "fe881130_68e4cc6e",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "744d88c9_8a2b790e",
@@ -174,6 +324,24 @@
       "writtenOn": "2021-02-02T17:31:00Z",
       "side": 1,
       "message": "ScaleRowUp2_Linear_NEON - lets call these Row functions, not Col.\nIn 2 pass filters a distinction is needed in row and column functions.  These functions bahave like row functions in a conversion.",
+      "revId": "6f5016e5632525820d0a9727658db4023975fe55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8efe758_3495d040",
+        "filename": "source/scale_neon64.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-03T06:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "744d88c9_8a2b790e",
       "revId": "6f5016e5632525820d0a9727658db4023975fe55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
