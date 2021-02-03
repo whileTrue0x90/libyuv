@@ -687,6 +687,7 @@ struct YuvConstants {
   uvec16 kUVToG2;
   vec16 kUVBiasBGR;
   vec32 kYToRgb;
+  vec16 kYScale;
 };
 #elif defined(__arm__)
 // This struct is for ArmV7 color conversion.
@@ -695,6 +696,7 @@ struct YuvConstants {
   uvec8 kUVToG;
   vec16 kUVBiasBGR;
   vec32 kYToRgb;
+  vec16 kYScale;
 };
 #else
 // This struct is for Intel color conversion.
@@ -707,9 +709,10 @@ struct YuvConstants {
   int16_t kUVBiasR[16];
   int16_t kYToRgb[16];
   int16_t kYBiasToRgb[16];
+  int16_t kYScale[16];
 };
 
-// Offsets into YuvConstants structure
+// Offsets into Intel YuvConstants structure
 #define KUVTOB 0
 #define KUVTOG 32
 #define KUVTOR 64
@@ -718,7 +721,7 @@ struct YuvConstants {
 #define KUVBIASR 160
 #define KYTORGB 192
 #define KYBIASTORGB 224
-
+#define KYSCALE 256
 #endif
 
 #define IS_ALIGNED(p, a) (!((uintptr_t)(p) & ((a)-1)))
