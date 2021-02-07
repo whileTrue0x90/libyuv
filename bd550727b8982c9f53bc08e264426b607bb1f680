@@ -22,6 +22,30 @@
       },
       "revId": "bd550727b8982c9f53bc08e264426b607bb1f680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea54d6f9_ebfdf4ac",
+        "filename": "DIR_METADATA",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-07T17:52:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44340b3c_86088e80",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "bd550727b8982c9f53bc08e264426b607bb1f680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
