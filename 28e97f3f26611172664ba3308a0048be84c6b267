@@ -16,6 +16,80 @@
       "message": "NV16 is UV interleaved version of I422, and NV24 is UV interleaved version of I444.\n\nIf we plan to implement (bi)linear upsampling for every format, then NV24 might become the new core format in libyuv. (it\u0027s actually the target format in READ* macros on x86, and arm is using NV16)\nFor YUY2 and UYVY, SplitUVPlane can be used to split them into Y plane and UV plane which is NV16.\n",
       "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e76fdab_152f3c3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-08T23:15:01Z",
+      "side": 1,
+      "message": "Thanks!  These formats have been on my low priority todo list.  I think they make a lot of sense, but noone had asked for them.  If we shift toward NV12 style YUV for codecs and graphics, not just cameras, then it makes sense to support 422 and 444 variations.\nThe \u0027matrix\u0027 versions of NV12ToARGB etc allow the various color spaces we\u0027d want for video/images.\n\nYour code looks great.\nDont worry about SSE2.  AVX2 should be the focus... I may start phasing out SSE optimization soon.\nOn ARM, I\u0027m keeping in mind the dot product instruction could be useful in libyuv.  It multiplies all the bytes in 1 vector by another, then adds up 4 adjacent values and produces 4 ints.\n\nWhen changing public header/API its good to bump the version so the user can #if LIBYUV_VERSION \u003e 1234\n",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ff8ad1f_1dbce544",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-08T23:15:01Z",
+      "side": 1,
+      "message": "Can the SSE2 be upgraded to SSSE3 in the future?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 39
+      },
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "832f7180_8e1a2c4c",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-08T23:15:01Z",
+      "side": 1,
+      "message": "instead of mov, consider vmull and vmlal.  the multiplies pipeline so 1 cycle throughput.\ncan be a todo to consider doing it as a future optimization",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7031e22d_94544820",
+        "filename": "source/scale_uv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-08T23:15:01Z",
+      "side": 1,
+      "message": "I guess normally we\u0027d have a _16() version here.  There is such a format, but its by microsoft, so it has the bit in the top bits, not lower bits.  So it would need to be a full 16 bit filter, not 12 bits.\nP010 is the name if I recall. The reason for supporting it would be hardware decoders on Windows can produce this format.",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
