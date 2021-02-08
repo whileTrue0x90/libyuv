@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d2a8750_eeb21f71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-08T07:13:52Z",
+      "side": 1,
+      "message": "NV16 is UV interleaved version of I422, and NV24 is UV interleaved version of I444.\n\nIf we plan to implement (bi)linear upsampling for every format, then NV24 might become the new core format in libyuv. (it\u0027s actually the target format in READ* macros on x86, and arm is using NV16)\nFor YUY2 and UYVY, SplitUVPlane can be used to split them into Y plane and UV plane which is NV16.\n",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
