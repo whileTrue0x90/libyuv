@@ -694,6 +694,107 @@ void ScaleRowUp2_Bilinear_16_NEON(const uint16_t* src_ptr,
   );
 }
 
+void ScaleUVRowUp2_Linear_NEON(const uint8_t* src_ptr,
+                               uint8_t* dst_ptr,
+                               int dst_width) {
+  const uint8_t* src_temp = src_ptr + 2;
+  asm volatile(
+      "vmov.u16    q15, #3                       \n"
+
+      "1:                                        \n"
+      "vld1.8      {d0}, [%0]!                   \n"  // 00112233 (1u1v)
+      "vld1.8      {d2}, [%3]!                   \n"  // 11223344 (1u1v)
+
+      "vmovl.u8    q0, d0                        \n"  // 00112233 (1u1v, 16b)
+      "vmovl.u8    q1, d2                        \n"  // 11223344 (1u1v, 16b)
+      "vmovq       q2, q0                        \n"
+      "vmla.u16    q2, q1, q15                   \n"  // 3*near+far (odd)
+      "vmla.u16    q1, q0, q15                   \n"  // 3*near+far (even)
+
+      "vrshrn.u16  d0, q1, #2                    \n"  // 3/4*near+1/4*far (odd)
+      "vrshrn.u16  d1, q2, #2                    \n"  // 3/4*near+1/4*far (even)
+
+      "vst2.16     {d0, d1}, [%1]!               \n"  // store
+      "subs        %2, %2, #8                    \n"  // 4 uv -> 8 uv
+      "bgt         1b                            \n"
+      : "+r"(src_ptr),    // %0
+        "+r"(dst_ptr),    // %1
+        "+r"(dst_width),  // %2
+        "+r"(src_temp)    // %3
+      :
+      : "memory", "cc", "q0", "q1", "q2", "q15"  // Clobber List
+  );
+}
+
+void ScaleUVRowUp2_Bilinear_NEON(const uint8_t* src_ptr,
+                                 ptrdiff_t src_stride,
+                                 uint8_t* dst_ptr,
+                                 ptrdiff_t dst_stride,
+                                 int dst_width) {
+  const uint8_t* src_ptr1 = src_ptr + src_stride;
+  uint8_t* dst_ptr1 = dst_ptr + dst_stride;
+  const uint8_t* src_temp = src_ptr + 2;
+  const uint8_t* src_temp1 = src_ptr1 + 2;
+
+  asm volatile(
+      "vmov.u16    q15, #3                       \n"
+
+      "1:                                        \n"
+      "vld1.8      {d0}, [%0]!                   \n"
+      "vld1.8      {d2}, [%5]!                   \n"
+
+      "vmovl.u8    q0, d0                        \n"
+      "vmovl.u8    q1, d2                        \n"
+      "vmovq       q2, q0                        \n"
+      "vmla.u16    q0, q1, q15                   \n"  // 3*near+far (1, odd)
+      "vmla.u16    q1, q2, q15                   \n"  // 3*near+far (1, even)
+
+      "vld1.8      {d4}, [%1]!                   \n"
+      "vld1.8      {d6}, [%6]!                   \n"
+
+      "vmovl.u8    q2, d4                        \n"
+      "vmovl.u8    q3, d6                        \n"
+      "vmovq       q4, q2                        \n"
+      "vmla.u16    q2, q3, q15                   \n"  // 3*near+far (2, odd)
+      "vmla.u16    q3, q4, q15                   \n"  // 3*near+far (2, even)
+
+      // e  o
+      // q1 q0
+      // q3 q2
+
+      "vmovq       q4, q2                        \n"
+      "vmovq       q5, q3                        \n"
+      "vmla.u16    q4, q0, q15                   \n"  // 9 3 3 1 (1, odd)
+      "vmla.u16    q5, q1, q15                   \n"  // 9 3 3 1 (1, even)
+      "vmla.u16    q0, q2, q15                   \n"  // 9 3 3 1 (2, odd)
+      "vmla.u16    q1, q3, q15                   \n"  // 9 3 3 1 (2, even)
+
+      // e  o
+      // q5 q4
+      // q1 q0
+
+      "vrshrn.u16  d2, q1, #4                    \n"  // 2, even
+      "vrshrn.u16  d3, q0, #4                    \n"  // 2, odd
+      "vrshrn.u16  d0, q5, #4                    \n"  // 1, even
+      "vrshrn.u16  d1, q4, #4                    \n"  // 1, odd
+
+      "vst2.16     {d0, d1}, [%2]!               \n"  // store
+      "vst2.16     {d2, d3}, [%3]!               \n"  // store
+      "subs        %4, %4, #8                    \n"  // 4 uv -> 8 uv
+      "bgt         1b                            \n"
+      : "+r"(src_ptr),    // %0
+        "+r"(src_ptr1),   // %1
+        "+r"(dst_ptr),    // %2
+        "+r"(dst_ptr1),   // %3
+        "+r"(dst_width),  // %4
+        "+r"(src_temp),   // %5
+        "+r"(src_temp1)   // %6
+      :
+      : "memory", "cc", "q0", "q1", "q2", "q3", "q4", "q5",
+        "q15"  // Clobber List
+  );
+}
+
 // Add a row of bytes to a row of shorts.  Used for box filter.
 // Reads 16 bytes and accumulates to 16 shorts at a time.
 void ScaleAddRow_NEON(const uint8_t* src_ptr,
