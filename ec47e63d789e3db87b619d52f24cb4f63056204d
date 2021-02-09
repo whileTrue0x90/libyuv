@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a8e1d90_c31cbbc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-09T07:38:26Z",
+      "side": 1,
+      "message": "Mirko, there seems to be an Android bot failure.",
+      "revId": "ec47e63d789e3db87b619d52f24cb4f63056204d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
