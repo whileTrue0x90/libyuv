@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d909ac7_c1950c19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-09T05:11:58Z",
+      "side": 1,
+      "message": "Intel\u0027s N series low end chips are used on portable devices and don\u0027t have AVX instructions (even the recently launched models like N5100)...\nAnyway, I understand writing two versions for one platform is annoying.",
+      "parentUuid": "9e76fdab_152f3c3f",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ff8ad1f_1dbce544",
@@ -48,6 +66,30 @@
       "writtenOn": "2021-02-08T23:15:01Z",
       "side": 1,
       "message": "Can the SSE2 be upgraded to SSSE3 in the future?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 39
+      },
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc7f350_b2fcfa6d",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-09T05:11:58Z",
+      "side": 1,
+      "message": "I was planning to write SSSE3 version but after finish it I found I only used SSE2 instructions, so I changed it to SSE2.",
+      "parentUuid": "4ff8ad1f_1dbce544",
       "range": {
         "startLine": 85,
         "startChar": 0,
@@ -75,6 +117,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3094dd6f_860d49f6",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-09T05:11:58Z",
+      "side": 1,
+      "message": "Done\nI did used umlal on 64 bit neon. Can\u0027t remember why I didn\u0027t use it on 32 bit. Now 32 bit also uses vmlal.u8. Planar functions are also updated.",
+      "parentUuid": "832f7180_8e1a2c4c",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7031e22d_94544820",
@@ -88,6 +148,24 @@
       "writtenOn": "2021-02-08T23:15:01Z",
       "side": 1,
       "message": "I guess normally we\u0027d have a _16() version here.  There is such a format, but its by microsoft, so it has the bit in the top bits, not lower bits.  So it would need to be a full 16 bit filter, not 12 bits.\nP010 is the name if I recall. The reason for supporting it would be hardware decoders on Windows can produce this format.",
+      "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f975e9e_8a04e73c",
+        "filename": "source/scale_uv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-09T05:11:58Z",
+      "side": 1,
+      "message": "Yes. I plan to add it in another CL. It requires full 16bit, so might be non-trivial. Port I420 and I422 to NV12 and NV16 are easy so I add them first.",
+      "parentUuid": "7031e22d_94544820",
       "revId": "28e97f3f26611172664ba3308a0048be84c6b267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
