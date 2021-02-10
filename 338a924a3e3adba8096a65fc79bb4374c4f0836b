@@ -266,6 +266,30 @@
       },
       "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75472ac1_cdd0f40f",
+        "filename": "util/color.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:50:42Z",
+      "side": 1,
+      "message": "Ack.  This is a hack tool I plan to clean up.  Those formulas arent quite right for what I needed - I had to multiply by 2.  But I included them for reference.  Its hard to find good documentation on these color space constants.\nI\u0027ll probably make this a more formal tool or unittest in a future update.",
+      "parentUuid": "fa220320_c6761c34",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 135
+      },
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
