@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "209ecd04_2bde0d16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "LGTM. I noted some clang-format issues.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ded37ce_cf2c7cca",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4387,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "Nit/optional: The original comments are aligned with this comment. I will let you decide if you want to preserve the original alignment.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be77236c_aaf88d8f",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7189,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "Nit/optional: I am surprised by what clang-format did here. This comment should be aligned with the comment in line 7187.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc033753_d5d86d5f",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "I am surprised by what clang-format did here.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00262796_d8f13d01",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "Please check this change by clang-format. I wonder if this is correct.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f692b74c_a73e8cc4",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "clang-format did a poor job here. We may want to override it.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6586ebc8_4e9e15a7",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "Nit: I remember I asked about the purpose of this comma. I found a StackOverflow page that discusses this issue:\n\nhttps://stackoverflow.com/questions/201101/how-to-initialize-all-members-of-an-array-to-the-same-value\n\nThe top-rated answer in that page has two relevant examples:\n\n\n  Elements with missing values will be initialized to 0:\n\n  int myArray[10] \u003d { 1, 2 }; // initialize to 1,2,0,0,0...\n\n  So this will initialize all elements to 0:\n\n  int myArray[10] \u003d { 0 }; // all elements 0\n\n  In C++, an empty initialization list will also initialize every element to 0. This is not \n  allowed with C:\n\n  int myArray[10] \u003d {}; // all elements 0 in C++\n\nSo I think we can omit these commas and then clang-format will not format these declarations in three lines.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa220320_c6761c34",
+        "filename": "util/color.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-02-10T17:21:53Z",
+      "side": 1,
+      "message": "Nit/optional: We may want to manually format these comments. For example, line 22 could be displayed in three rows to make it clear it\u0027s a 3x3 array.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 135
+      },
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
