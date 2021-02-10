@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c79dad2_88f42dc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "clang-format doesnt understand inline assembly.  I\u0027ve filed a number of bug reports... hopefully it gets improved in the future.\nThere is also clang-tidy which is more code aware.  I\u0027ve had mixed results with it, as you need to be careful with #ifdef platform or it will think some code is unused.  But its language aware and can \u0027fix\u0027 code.\nThe 2 tools dont always agree on formatting.\n\nFor the initialization, I\u0027ll be working on those color histograms for the improved YUV to RGB, so lets circle back on next review.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ded37ce_cf2c7cca",
@@ -31,6 +48,24 @@
       "writtenOn": "2021-02-10T17:21:53Z",
       "side": 1,
       "message": "Nit/optional: The original comments are aligned with this comment. I will let you decide if you want to preserve the original alignment.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d96066b_e330d531",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4387,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "clang-format did this.  If we want to preserve the original white space we would need to disable clang format around the affected code.\nIts still functional and readable enough.  I\u0027ll let clang-format have its way.  Hopefully it improves in the future.",
+      "parentUuid": "3ded37ce_cf2c7cca",
       "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -54,6 +89,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "585f3167_65f061e5",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7189,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "Ack.  clang-format is misinterpreting asm as a constructor and formatting is a bit chaotic at times.",
+      "parentUuid": "be77236c_aaf88d8f",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bc033753_d5d86d5f",
         "filename": "source/scale_common.cc",
         "patchSetId": 2
@@ -65,6 +118,24 @@
       "writtenOn": "2021-02-10T17:21:53Z",
       "side": 1,
       "message": "I am surprised by what clang-format did here.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90eb88c6_256df4ec",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "ya its weird and not so beautiful sometimes.  It can only get better, right?",
+      "parentUuid": "bc033753_d5d86d5f",
       "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -86,6 +157,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "691a1f28_16dcb173",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "Ack.  sometimes clang-format does this.  In one of my clang-format bug reports I mentioned a blank line at the top of the function helps.\nI think the macro \u0027LABELALIGN\u0027 is making it worse.  The macros were for NaCL to aligned the branch targets to 16 bytes.  We could probably remove them.  On ARM there is some benefit to aligning branches for Cortex A73, but each function would need to be tuned/benchmarked and its just that one CPU that really cares in the ARM family.",
+      "parentUuid": "00262796_d8f13d01",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f692b74c_a73e8cc4",
@@ -103,6 +192,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee2e5d6f_c61ab7d7",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "Ack  It not great, but I\u0027ve seen much worse.",
+      "parentUuid": "f692b74c_a73e8cc4",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6586ebc8_4e9e15a7",
@@ -116,6 +223,24 @@
       "writtenOn": "2021-02-10T17:21:53Z",
       "side": 1,
       "message": "Nit: I remember I asked about the purpose of this comma. I found a StackOverflow page that discusses this issue:\n\nhttps://stackoverflow.com/questions/201101/how-to-initialize-all-members-of-an-array-to-the-same-value\n\nThe top-rated answer in that page has two relevant examples:\n\n\n  Elements with missing values will be initialized to 0:\n\n  int myArray[10] \u003d { 1, 2 }; // initialize to 1,2,0,0,0...\n\n  So this will initialize all elements to 0:\n\n  int myArray[10] \u003d { 0 }; // all elements 0\n\n  In C++, an empty initialization list will also initialize every element to 0. This is not \n  allowed with C:\n\n  int myArray[10] \u003d {}; // all elements 0 in C++\n\nSo I think we can omit these commas and then clang-format will not format these declarations in three lines.",
+      "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b64fd4de_08192038",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-10T18:44:23Z",
+      "side": 1,
+      "message": "Ack.  It will work most of the time.  One of our compilers in pedantic mode will report and issue if the number of elements does not exactly match the array size.\nThe comma works around the issue.\nThe other way to avoid the issue are\n1. initialize all 256 entries to 0\n2. don\u0027t initialize and use memset(array, 0, 256)\nI dont think removing the comma and having a warning is worth it, but I\u0027d consider alternatives",
+      "parentUuid": "6586ebc8_4e9e15a7",
       "revId": "338a924a3e3adba8096a65fc79bb4374c4f0836b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
