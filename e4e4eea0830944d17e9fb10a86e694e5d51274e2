@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae74c086_a59a78c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T05:29:32Z",
+      "side": 1,
+      "message": "vpmaddwd interprets the two operands as signed integers, so we can\u0027t use it unless we only use 15 bit precision. Switching to a series of vpaddd solves this, and also turns out to be faster. I\u0027ll test the performance differences on other functions too.",
+      "revId": "e4e4eea0830944d17e9fb10a86e694e5d51274e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
