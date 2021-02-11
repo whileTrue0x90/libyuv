@@ -16,6 +16,125 @@
       "message": "Replace vpmaddubsw doesn\u0027t make the code faster, but replace vpmaddw has some performance improvement.\n\nBefore:\n  SSE:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (4791 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (4476 ms)\n  AVX:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (3875 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (3931 ms)\n\nAfter:\n  SSE:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (4146 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (3808 ms)\n\n  AVX:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (3223 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (3327 ms)",
       "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57feb5f7_ff7d4ac7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "P010 etc will need some basic conversions before apps can adopt libyuv and P010.\nAll new formats should be able to convert to and from I420 and ARGB.\nPerhaps starting with P010ToI010 so that I010ToARGB could be used.\nP010 is biplanar with msb.  I010 is planar with lsb.\nA shift left is sometimes more efficiently implemented in sse/avx with vpmulhuw, allowing the amount of shift to be a parameter.\n",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c378309_b93c20ad",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "movdqa preferred for constants",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b9613c0_2102d470",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "you can share the vector from SSSE3 and use vbroadcastf128 to duplicate the low into high half",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bb6045c_ee219b74",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "avx functions should all end in vzeroupper\n      \"vzeroupper                                \\n\"\notherwise you take a transition penalty.",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d217857b_d63479b5",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "\"vzeroupper                                \\n\"",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "500bdf58_8516fb20",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2564,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "\"vzeroupper                                \\n\"",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6737c724_d9df1ffe",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T10:06:47Z",
+      "side": 1,
+      "message": "\"vzeroupper                                \\n\"",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
