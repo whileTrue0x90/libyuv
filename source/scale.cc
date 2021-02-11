@@ -1480,9 +1480,9 @@ void ScalePlaneUp2_16_Linear(int src_width,
   // This function can only scale up by 2 times horizontally.
   assert(src_width == ((dst_width + 1) / 2));
 
-#ifdef HAS_SCALEROWUP2LINEAR_16_SSE2
-  if (TestCpuFlag(kCpuHasSSE2)) {
-    ScaleRowUp = ScaleRowUp2_Linear_16_Any_SSE2;
+#ifdef HAS_SCALEROWUP2LINEAR_16_SSSE3
+  if (TestCpuFlag(kCpuHasSSSE3)) {
+    ScaleRowUp = ScaleRowUp2_Linear_16_Any_SSSE3;
   }
 #endif
 
@@ -1534,9 +1534,9 @@ void ScalePlaneUp2_16_Bilinear(int src_width,
   assert(src_width == ((dst_width + 1) / 2));
   assert(src_height == ((dst_height + 1) / 2));
 
-#ifdef HAS_SCALEROWUP2BILINEAR_16_SSE2
-  if (TestCpuFlag(kCpuHasSSE2)) {
-    Scale2RowUp = ScaleRowUp2_Bilinear_16_Any_SSE2;
+#ifdef HAS_SCALEROWUP2BILINEAR_16_SSSE3
+  if (TestCpuFlag(kCpuHasSSSE3)) {
+    Scale2RowUp = ScaleRowUp2_Bilinear_16_Any_SSSE3;
   }
 #endif
 
