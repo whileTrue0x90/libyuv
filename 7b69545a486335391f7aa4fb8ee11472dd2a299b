@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b87bfdf_dc777117",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T07:41:10Z",
+      "side": 1,
+      "message": "Replace vpmaddubsw doesn\u0027t make the code faster, but replace vpmaddw has some performance improvement.\n\nBefore:\n  SSE:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (4791 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (4476 ms)\n  AVX:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (3875 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (3931 ms)\n\nAfter:\n  SSE:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (4146 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (3808 ms)\n\n  AVX:\n[ RUN      ] LibYUVConvertTest.I010ToI410_Opt\n[       OK ] LibYUVConvertTest.I010ToI410_Opt (3223 ms)\n[ RUN      ] LibYUVConvertTest.I210ToI410_Opt\n[       OK ] LibYUVConvertTest.I210ToI410_Opt (3327 ms)",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
