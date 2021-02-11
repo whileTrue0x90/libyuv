@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26ac126b_64345e14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "We have READYUV210 now so READP210 (and P010ToARGB/P010ToAR30) should not be too hard?\nI\u0027m going to add 10 bit planar/biplanar format to ARGB/AR30 function then.",
+      "parentUuid": "57feb5f7_ff7d4ac7",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c378309_b93c20ad",
@@ -48,6 +66,24 @@
       "writtenOn": "2021-02-11T10:06:47Z",
       "side": 1,
       "message": "movdqa preferred for constants",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb8deda5_2789cd8e",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "Done\nI also updated all my old code for this and below.",
+      "parentUuid": "6c378309_b93c20ad",
       "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -69,6 +105,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79cca9bf_b19b3ca6",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9613c0_2102d470",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bb6045c_ee219b74",
@@ -82,6 +136,24 @@
       "writtenOn": "2021-02-11T10:06:47Z",
       "side": 1,
       "message": "avx functions should all end in vzeroupper\n      \"vzeroupper                                \\n\"\notherwise you take a transition penalty.",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f2fef79_716ba143",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bb6045c_ee219b74",
       "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -103,6 +175,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f94719c_a399d2f9",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d217857b_d63479b5",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "500bdf58_8516fb20",
@@ -120,6 +210,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89ed8ff9_fac4f5d3",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2564,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "500bdf58_8516fb20",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6737c724_d9df1ffe",
@@ -133,6 +241,24 @@
       "writtenOn": "2021-02-11T10:06:47Z",
       "side": 1,
       "message": "\"vzeroupper                                \\n\"",
+      "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dea2a9a_9da6fe9e",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-11T11:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6737c724_d9df1ffe",
       "revId": "7b69545a486335391f7aa4fb8ee11472dd2a299b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
