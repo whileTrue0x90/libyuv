@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abf6f286_7a5c2eb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T19:32:06Z",
+      "side": 1,
+      "message": "almost good.  if the avx is disabled in the headers there would be a build error.  move the avx specific variables inside the ifdef\n\nwhen P010 etc are supported, the types should be added to the fourcc codes.\nIts not high priority to support P010 right now, but carry on if you like.  Its the 16 bit equivalent to NV12, so I expect it or a lsb variation on it, will be used in the future.",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfe082ff_1f55e822",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4347,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T19:32:06Z",
+      "side": 1,
+      "message": "avx specific variable should be inside the avx code ifdef incase the compiler does not support avx and the avx code is disabled.  otherwise you get an unused variable.",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5097ae31_83d95fd5",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T19:32:06Z",
+      "side": 1,
+      "message": "You dont really need ifdef on SSE code.  The ifdef\u0027s are to protect against compilers that dont support AVX or AVX512, so they\u0027re needed for advanced instructions.\nThe macro can be turned off and avoids using the function, but its harmless to have the function available but not used.",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a962c449_36af17c7",
+        "filename": "source/scale_uv.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-11T19:32:06Z",
+      "side": 1,
+      "message": "I wonder if dst_height of 1 is allowed in this case?",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
