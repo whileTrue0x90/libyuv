@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2879a65_46de443e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-12T15:57:11Z",
+      "side": 1,
+      "message": "oops.  I noticed too late theres a vzeroupper in an SSE function that can be removed.",
+      "revId": "d4ecb70610325fdaaeec6af074d6e3ceab9866d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
