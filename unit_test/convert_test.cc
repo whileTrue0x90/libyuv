@@ -423,17 +423,17 @@ TESTPLANARTOBP(I400, 2, 2, NV21, 2, 2)
     memset(dst_uv_opt, 102, 2 * kDstHalfWidth * kDstHalfHeight * DST_BPC);     \
     MaskCpuFlags(disable_cpu_flags_);                                          \
     SRC_FMT_PLANAR##To##FMT_PLANAR(                                            \
-        src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                \
+        src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                          \
         DOY ? reinterpret_cast<DST_T*>(dst_y_c) : NULL, kWidth,                \
-        reinterpret_cast<DST_T*>(dst_uv_c), 2 * kDstHalfWidth,       \
-        kWidth, NEG kHeight);                                                  \
+        reinterpret_cast<DST_T*>(dst_uv_c), 2 * kDstHalfWidth, kWidth,         \
+        NEG kHeight);                                                          \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
       SRC_FMT_PLANAR##To##FMT_PLANAR(                                          \
-          src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,              \
+          src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                        \
           DOY ? reinterpret_cast<DST_T*>(dst_y_opt) : NULL, kWidth,            \
-          reinterpret_cast<DST_T*>(dst_uv_opt), 2 * kDstHalfWidth,   \
-          kWidth, NEG kHeight);                                                \
+          reinterpret_cast<DST_T*>(dst_uv_opt), 2 * kDstHalfWidth, kWidth,     \
+          NEG kHeight);                                                        \
     }                                                                          \
     if (DOY) {                                                                 \
       for (int i = 0; i < kHeight; ++i) {                                      \

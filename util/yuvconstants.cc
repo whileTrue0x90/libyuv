@@ -16,24 +16,8 @@
 // white point values.
 // The yuv formulas are tuned for 8 bit YUV channels.
 
-// For those MCs that can be represented as kr and kb:
-// Full range
-// float M[3][3]
-// {{1,0,2*(1-kr)},{1,-((2*kb)/((2-kb)*(1-kb-kr))),-((2*kr)/((2-kr)*(1-kb-kr)))},{1,2*(1-kb),0}};
-// float B[3]
-// {1+(256*(1-kr))/255,1-(256*kb)/(255*(2-kb)*(1-kb-kr))-(256*kr)/(255*(2-kr)*(1-kb-kr)),1+(256*(1-kb))/255};
-// Limited range
-// float M[3][3]
-// {{85/73,0,255/112-(255*kr)/112},{85/73,-((255*kb)/(112*(2-kb)*(1-kb-kr))),-((255*kr)/(112*(2-kr)*(1-kb-kr)))},{85/73,255/112-(255*kb)/112,0}};
-// float B[3]
-// {77662/43435-(1537*kr)/1785,203/219-(1537*kb)/(1785*(2-kb)*(1-kb-kr))-(1537*kr)/(1785*(2-kr)*(1-kb-kr)),77662/43435-(1537*kb)/1785};
-
-// mc bt
-// 1 bt.709      KR = 0.2126; KB = 0.0722
-// 4 fcc         KR = 0.30;   KB = 0.11
-// 6 bt.601      KR = 0.299;  KB = 0.114
-// 7 SMPTE 240M  KR = 0.212;  KB = 0.087
-// 10 bt2020     KR = 0.2627; KB = 0.0593
+// See Also
+// https://mymusing.co/bt601-yuv-to-rgb-conversion-color/
 
 // BT.709 full range YUV to RGB reference
 //  R = Y               + V * 1.5748
@@ -41,8 +25,6 @@
 //  B = Y + U * 1.8556
 //  KR = 0.2126
 //  KB = 0.0722
-
-// https://mymusing.co/bt601-yuv-to-rgb-conversion-color/
 
 // // Y contribution to R,G,B.  Scale and bias.
 // #define YG 16320 /* round(1.000 * 64 * 256 * 256 / 257) */
@@ -59,13 +41,19 @@
 // #define BG (UG * 128 + VG * 128 + YB)
 // #define BR (-VR * 128 + YB)
 
-int round(float v) {
+static int round(float v) {
   return (int)(v + 0.5);
 }
 
 int main(int argc, const char* argv[]) {
   if (argc < 2) {
-    printf("color kr kb\n");
+    printf("yuvconstants Kr Kb\n");
+    printf("  MC BT          KR = 0.2126; KB = 0.0722\n");
+    printf("  1  BT.709      KR = 0.2126; KB = 0.0722\n");
+    printf("  4  FCC         KR = 0.30;   KB = 0.11\n");
+    printf("  6  BT.601      KR = 0.299;  KB = 0.114\n");
+    printf("  7  SMPTE 240M  KR = 0.212;  KB = 0.087\n");
+    printf("  9  BT.2020     KR = 0.2627; KB = 0.0593\n");
     return -1;
   }
   float kr = atof(argv[1]);
@@ -84,37 +72,37 @@ int main(int argc, const char* argv[]) {
 
   printf("KR = %4f; ", kr);
   printf("KB = %4f\n", kb);
-  //  printf("KG = %4f\n", kg);
+  // printf("KG = %4f\n", kg);
   // #define YG 16320 /* round(1.000 * 64 * 256 * 256 / 257) */
   // #define YB 32    /* 64 / 2 */
   //
   // // U and V contributions to R,G,B.
 
-  printf("UB %-3d /* round(%f * 64) */\n", round(ub * 64), ub);
-  printf("UG %-3d /* round(%f * 64) */\n", round(ug * 64), ug);
-  printf("VG %-3d /* round(%f * 64) */\n", round(vg * 64), vg);
-  printf("VR %-3d /* round(%f * 64) */\n", round(vr * 64), vr);
+  printf("UB %-3d /* round(%f * 64 = %f) */\n", round(ub * 64), ub, ub * 64);
+  printf("UG %-3d /* round(%f * 64 = %f) */\n", round(ug * 64), ug, ug * 64);
+  printf("VG %-3d /* round(%f * 64 = %f) */\n", round(vg * 64), vg, vg * 64);
+  printf("VR %-3d /* round(%f * 64 = %f) */\n", round(vr * 64), vr, vr * 64);
 
   vr = 255.f / 224.f * 2 * (1 - kr);
   ug = 255.f / 224.f * 2 * ((1 - kb) * kb / kg);
   vg = 255.f / 224.f * 2 * ((1 - kr) * kr / kg);
   ub = 255.f / 224.f * 2 * (1 - kb);
 
-  printf("Limited range\n");
+  printf("\nLimited range\n");
   printf("R = (Y - 16) * 1.164                + V * %5f\n", vr);
   printf("G = (Y - 16) * 1.164 - U * %6f - V * %6f\n", ug, vg);
   printf("B = (Y - 16) * 1.164 + U * %5f\n", ub);
 
-  //  printf("KG = %4f\n", kg);
+  // printf("KG = %4f\n", kg);
   // #define YG 16320 /* round(1.000 * 64 * 256 * 256 / 257) */
   // #define YB 32    /* 64 / 2 */
   //
   // // U and V contributions to R,G,B.
 
-  printf("UB %-3d /* round(%f * 64) */\n", round(ub * 64), ub);
-  printf("UG %-3d /* round(%f * 64) */\n", round(ug * 64), ug);
-  printf("VG %-3d /* round(%f * 64) */\n", round(vg * 64), vg);
-  printf("VR %-3d /* round(%f * 64) */\n", round(vr * 64), vr);
+  printf("UB %-3d /* round(%f * 64 = %f) */\n", round(ub * 64), ub, ub * 64);
+  printf("UG %-3d /* round(%f * 64 = %f) */\n", round(ug * 64), ug, ug * 64);
+  printf("VG %-3d /* round(%f * 64 = %f) */\n", round(vg * 64), vg, vg * 64);
+  printf("VR %-3d /* round(%f * 64 = %f) */\n", round(vr * 64), vr, vr * 64);
 
   return 0;
 }
