@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2193096_c1e830a6",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4347,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-12T02:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfe082ff_1f55e822",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5097ae31_83d95fd5",
@@ -54,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "940122d7_ae65555d",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-12T02:53:11Z",
+      "side": 1,
+      "message": "I\u0027m following what other functions do. If there\u0027s no need, would it better to remove all of them?",
+      "parentUuid": "5097ae31_83d95fd5",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a962c449_36af17c7",
         "filename": "source/scale_uv.cc",
         "patchSetId": 4
@@ -65,6 +101,24 @@
       "writtenOn": "2021-02-11T19:32:06Z",
       "side": 1,
       "message": "I wonder if dst_height of 1 is allowed in this case?",
+      "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf205bd9_8f39abd7",
+        "filename": "source/scale_uv.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-12T02:53:11Z",
+      "side": 1,
+      "message": "Done\nThe logic has some problems, but if dst_height is 1, src_height is also 1 so ScaleUVLinearUp2_16 will be called instead. There\u0027s no need to have this branch and I removed it.",
+      "parentUuid": "a962c449_36af17c7",
       "revId": "025c6d11ae2ee39d81bc8daf4505ff5595ad3383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
