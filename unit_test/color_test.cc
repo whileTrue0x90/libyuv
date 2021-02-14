@@ -790,6 +790,184 @@ TEST_F(LibYUVColorTest, TestFullYUVV) {
 }
 #undef FASTSTEP
 
+// necessary definitions pulled out from row.h
+#if defined(_MSC_VER) && !defined(__CLR_VER) && !defined(__clang__)
+#define SIMD_ALIGNED(var) __declspec(align(16)) var
+typedef __declspec(align(16)) int16_t vec16[8];
+typedef __declspec(align(16)) int32_t vec32[4];
+typedef __declspec(align(16)) uint16_t uvec16[8];
+typedef __declspec(align(16)) uint8_t uvec8[16];
+#elif !defined(__pnacl__) && (defined(__GNUC__) || defined(__clang__))
+#define SIMD_ALIGNED(var) var __attribute__((aligned(16)))
+typedef int16_t __attribute__((vector_size(16))) vec16;
+typedef int32_t __attribute__((vector_size(16))) vec32;
+typedef uint16_t __attribute__((vector_size(16))) uvec16;
+typedef uint8_t __attribute__((vector_size(16))) uvec8;
+#else
+#define SIMD_ALIGNED(var) var
+typedef int16_t vec16[8];
+typedef int32_t vec32[4];
+typedef uint16_t uvec16[8];
+typedef uint8_t uvec8[16];
+#endif
+
+#if defined(__aarch64__)
+// This struct is for Arm64 color conversion.
+struct YuvConstants {
+  uvec16 kUVToRB;
+  uvec16 kUVToRB2;
+  uvec16 kUVToG;
+  uvec16 kUVToG2;
+  vec16 kUVBiasBGR;
+  vec32 kYToRgb;
+};
+#elif defined(__arm__)
+// This struct is for ArmV7 color conversion.
+struct YuvConstants {
+  uvec8 kUVToRB;
+  uvec8 kUVToG;
+  vec16 kUVBiasBGR;
+  vec32 kYToRgb;
+};
+#else
+// This struct is for Intel color conversion.
+struct YuvConstants {
+  int8_t kUVToB[32];
+  int8_t kUVToG[32];
+  int8_t kUVToR[32];
+  int16_t kUVBiasB[16];
+  int16_t kUVBiasG[16];
+  int16_t kUVBiasR[16];
+  int16_t kYToRgb[16];
+  int16_t kYBiasToRgb[16];
+};
+#endif
+
+TEST_F(LibYUVColorTest, TestInitYuvConstantsWithMatrix) {
+  float customMatrices[][3][3]{
+      {{1.164f, 0, 1.596f}, {1.164f, -0.391f, -0.813f}, {1.164f, 2.018f, 0}},
+      {{1, 0, 1.40200f}, {1, -0.34414f, -0.71414f}, {1, 1.77200f, 0}},
+      {{1, 0, 1.5748f}, {1, -0.18732f, -0.46812f}, {1, 1.8556f, 0}},
+      {{1.164f, 0, 1.793f}, {1.164f, -0.213f, -0.533f}, {1.164f, 2.112f, 0}},
+      {{1.164384f, 0, 1.67867f},
+       {1.164384f, -0.187326f, -0.65042f},
+       {1.164384f, 2.14177f, 0}},
+      {{1, 0, 1.474600f}, {1, -0.164553f, -0.571353f}, {1, 1.881400f, 0}}};
+  float customBiases[][3]{{16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {0, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {0, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {16.0f / 255.0f, 128.0f / 255.0f, 128.0f / 255.0f},
+                          {0, 128.0f / 255.0f, 128.0f / 255.0f}};
+
+  struct YuvConstants presetYuvConstants[] {
+    kYuvI601Constants, kYuvJPEGConstants, kYuvF709Constants, kYuvH709Constants,
+        kYuv2020Constants, kYuvV2020Constants
+  };
+
+  struct YuvConstants presetYvuConstants[] {
+    kYvuI601Constants, kYvuJPEGConstants, kYvuF709Constants, kYvuH709Constants,
+        kYvu2020Constants, kYvuV2020Constants
+  };
+
+  struct YuvConstants SIMD_ALIGNED(customConstants) {};
+
+  for (int i = 0; i < (sizeof(customMatrices) / sizeof(customMatrices[0]));
+       ++i) {
+    InitYuvConstantsWithMatrix(&customConstants, customMatrices[i],
+                               customBiases[i], 0);
+    EXPECT_EQ(memcmp(&customConstants, &presetYuvConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+
+    InitYuvConstantsWithMatrix(&customConstants, customMatrices[i],
+                               customBiases[i], 1);
+    EXPECT_EQ(memcmp(&customConstants, &presetYvuConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+  }
+}
+
+TEST_F(LibYUVColorTest, TestInitYuvConstantsWithKrKb) {
+  // constants obtained from H.273, Table 4
+  const struct {
+    float kr;
+    float kb;
+    int depth;
+    int range;
+  } KrKb[]{{0.299f, 0.114f, 8, 1},
+                {0.2126f, 0.0722f, 8, 1},
+                {0.2627f, 0.0593f, 8, 0},
+                {0.2627f, 0.0593f, 8, 1}};
+
+  struct YuvConstants presetYuvConstants[] {
+    kYuvJPEGConstants, kYuvF709Constants, kYuv2020Constants, kYuvV2020Constants
+  };
+
+  struct YuvConstants presetYvuConstants[] {
+    kYvuJPEGConstants, kYvuF709Constants, kYvu2020Constants, kYvuV2020Constants
+  };
+
+  struct YuvConstants SIMD_ALIGNED(customConstants) {};
+
+  for (int i = 0; i < (sizeof(KrKb) / sizeof(KrKb[0])); ++i) {
+    InitYuvConstantsWithKrKb(&customConstants, KrKb[i].kr, KrKb[i].kb,
+                             KrKb[i].depth, KrKb[i].range, 0);
+    EXPECT_EQ(memcmp(&customConstants, &presetYuvConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+
+    InitYuvConstantsWithKrKb(&customConstants, KrKb[i].kr, KrKb[i].kb,
+                             KrKb[i].depth, KrKb[i].range, 1);
+    EXPECT_EQ(memcmp(&customConstants, &presetYvuConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+  }
+}
+
+TEST_F(LibYUVColorTest, TestInitYuvConstantsWithPrimaries) {
+  // constants obtained from H.273, Table 2
+  const struct {
+    float primaries[8];
+    int depth;
+    int range;
+  } Primaries[]{
+      {{0.67f, 0.33f, 0.21f, 0.71f, 0.14f, 0.08f, 0.310f, 0.316f}, 8, 1},
+      {{0.640f, 0.330f, 0.300f, 0.600f, 0.150f, 0.060f, 0.3127f, 0.3290f},
+       8,
+       1},
+      {{0.708f, 0.292f, 0.170f, 0.797f, 0.131f, 0.046f, 0.3127f, 0.3290f},
+       8,
+       0},
+      {{0.708f, 0.292f, 0.170f, 0.797f, 0.131f, 0.046f, 0.3127f, 0.3290f},
+       8,
+       1}};
+
+  struct YuvConstants presetYuvConstants[] {
+    kYuvJPEGConstants, kYuvF709Constants, kYuv2020Constants, kYuvV2020Constants
+  };
+
+  struct YuvConstants presetYvuConstants[] {
+    kYvuJPEGConstants, kYvuF709Constants, kYvu2020Constants, kYvuV2020Constants
+  };
+
+  struct YuvConstants SIMD_ALIGNED(customConstants) {};
+
+  for (int i = 0; i < (sizeof(Primaries) / sizeof(Primaries[0])); ++i) {
+    InitYuvConstantsWithPrimaries(&customConstants, Primaries[i].primaries,
+                                  Primaries[i].depth, Primaries[i].range, 0);
+    EXPECT_EQ(memcmp(&customConstants, &presetYuvConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+
+    InitYuvConstantsWithPrimaries(&customConstants, Primaries[i].primaries,
+                                  Primaries[i].depth, Primaries[i].range, 1);
+    EXPECT_EQ(memcmp(&customConstants, &presetYvuConstants[i],
+                     sizeof(struct YuvConstants)),
+              0);
+  }
+}
+
 TEST_F(LibYUVColorTest, TestGreyYUVJ) {
   int r0, g0, b0, r1, g1, b1, r2, g2, b2;
 

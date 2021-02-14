@@ -36,6 +36,81 @@ LIBYUV_API extern const struct YuvConstants kYvuF709Constants;   // BT.709 full
 LIBYUV_API extern const struct YuvConstants kYvu2020Constants;   // BT.2020
 LIBYUV_API extern const struct YuvConstants kYvuV2020Constants;  // BT.2020 full
 
+// Init YuvConstants with custom matrix
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// the yuvconstants is initialized to convert YUV to RGB as if
+// using the following code with RGB and YUV in range [0, 1].
+//
+// R = (Y - bias[0]) * matrix[0][0] +
+//     (U - bias[1]) * matrix[0][1] +
+//     (V - bias[2]) * matrix[0][2];
+// G = (Y - bias[0]) * matrix[1][0] +
+//     (U - bias[1]) * matrix[1][1] +
+//     (V - bias[2]) * matrix[1][2];
+// B = (Y - bias[0]) * matrix[2][0] +
+//     (U - bias[1]) * matrix[2][1] +
+//     (V - bias[2]) * matrix[2][2];
+// Set mirror to 1 to get the mirrored constant.
+// You can swap the UV pointer and use mirrored constant to get ABGR output
+// from convert function.
+//
+// return -1 if the given matrix is not representable.
+LIBYUV_API extern int InitYuvConstantsWithMatrix(
+    struct YuvConstants* yuvconstants,
+    const float matrix[3][3],
+    const float bias[3],
+    int mirror);
+
+// Init YuvConstants with custom coefficients
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// The yuvconstants is initialized to convert YUV to RGB in which Y is
+// calculated from RGB using following code where Y and RGB are in range [0, 1].
+//
+// Y = kr * R + (1 - kr - kb) * G + kb * B;
+//
+// depth is the sample depth of input.
+// If range = 0, init limited range constants, otherwise full range constants.
+// Set mirror to 1 to get the mirrored constant.
+// You can swap the UV pointer and use mirrored constant to get ABGR output
+// from convert function.
+//
+// return -1 if the given kr,kb is not representable.
+LIBYUV_API extern int InitYuvConstantsWithKrKb(
+    struct YuvConstants* yuvconstants,
+    float kr,
+    float kb,
+    int depth,
+    int range,
+    int mirror);
+
+// Init YuvConstants with custom primaries
+//
+// yuvconstants should be properly aligned.
+// Use `struct YuvConstants SIMD_ALIGNED(yuvconstants);` to declare aligned
+// yuvconstants struct.
+// This function calculates kr and kb from primaries, and call
+// InitYuvConstantsWithKrKb internally.
+//
+// depth is the sample depth of input.
+// If range = 0, init limited range constants, otherwise full range constants.
+// Set mirror to 1 to get the mirrored constant.
+// You can swap the UV pointer and use mirrored constant to get ABGR output
+// from convert function.
+//
+// return -1 if the given kr,kb is not representable.
+LIBYUV_API extern int InitYuvConstantsWithPrimaries(
+    struct YuvConstants* yuvconstants,
+    const float primaries[8],
+    int depth,
+    int range,
+    int mirror);
+
 // Macros for end swapped destination Matrix conversions.
 // Swap UV and pass mirrored kYvuJPEGConstants matrix.
 // TODO(fbarchard): Add macro for each Matrix function.
