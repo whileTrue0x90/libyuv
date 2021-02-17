@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "702f5f4d_3c85483c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-02-17T20:33:04Z",
+      "side": 0,
+      "message": "Do we need support for absl/flags here or it is fine to let cmake users rely on env variables and eventually file a CL?",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "d7687742995c4cb004fbbc5cffc7c9e0d22ec7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
