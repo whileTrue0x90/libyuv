@@ -22,6 +22,30 @@
       },
       "revId": "d7687742995c4cb004fbbc5cffc7c9e0d22ec7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0525e1_e14f7ed1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-17T22:45:55Z",
+      "side": 0,
+      "message": "Ack.  The cmake code is contributed, so I think we\u0027ll need to remove it, if the source no longer supports it, and rely on someone to add it if needed.\nAdd a todo that someone should consider adding absl for cmake?\nFor libyuv specifics you can use environment variables as a work around, except for the test filter.\nFor unittests I\u0027m thinking it might be good to create different executables for each category of libyuv function.  The API attempts to have clear sections\nconvert\nscale\nrotate\ncompare\nfilter\nbase\nwhen working in one of these areas, running the tests wouldnt need a filter nearly as much if broken down more like that.",
+      "parentUuid": "702f5f4d_3c85483c",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "d7687742995c4cb004fbbc5cffc7c9e0d22ec7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
