@@ -41,7 +41,9 @@
 // #define BG (UG * 128 + VG * 128 + YB)
 // #define BR (-VR * 128 + YB)
 
-#define round(v) ((int)(v + 0.5))
+static int round(float v) {
+  return (int)(v + 0.5);
+}
 
 int main(int argc, const char* argv[]) {
   if (argc < 2) {
