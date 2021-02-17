@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f472b8f7_553bdc04",
+        "filename": "unit_test/unit_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-02-17T08:11:18Z",
+      "side": 1,
+      "message": "Let\u0027s talk tonight about this.\n\nIn Chromium third_party (the submodule pulled by libyuv), absl is at //third_party/abseil-cpp/absl/..., my advice is to include \"absl/flags/flag.h\" and depend on //third_party/abseil-cpp/absl/flags:flag.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "a314795e22cf6eb5b546b7c26b01683b5851a8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
