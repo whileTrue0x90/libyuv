@@ -16,6 +16,23 @@
       "message": "Linux should be fixed by https://chromium-review.googlesource.com/c/chromium/tools/build/+/2703513.",
       "revId": "cabb63002cd840915ac8c0940f61826bdf620817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f701beb_e90893d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-02-18T10:12:25Z",
+      "side": 1,
+      "message": "win_clang should be fixed by https://chromium-review.googlesource.com/c/chromium/tools/build/+/2703515.",
+      "revId": "cabb63002cd840915ac8c0940f61826bdf620817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
