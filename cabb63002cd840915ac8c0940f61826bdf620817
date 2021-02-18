@@ -50,6 +50,24 @@
       "message": "I suggest opening an issue, reporting this CL fixes it, but in the bug mention that some builds dont have absl",
       "revId": "cabb63002cd840915ac8c0940f61826bdf620817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8a2a4cb_f6341aa2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-02-18T16:49:33Z",
+      "side": 1,
+      "message": "Sounds good, I will do it here https://bugs.chromium.org/p/libyuv/issues/detail?id\u003d883.",
+      "parentUuid": "3059013d_591d42d0",
+      "revId": "cabb63002cd840915ac8c0940f61826bdf620817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
