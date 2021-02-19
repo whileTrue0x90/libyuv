@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0743d408_ef4ec679",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-19T14:16:20Z",
+      "side": 1,
+      "message": "Some notes:\nIn YUVToRGB functions all registers are already used, and generating constant for pmulhuw each time / place constant in memory is slower than psraw, so I didn\u0027t adopt pmulhuw in READYUV41X.\nI didn\u0027t add functions like I410AlphaToAR30, 2 bit alpha in AR30 is too inaccurate to be useful. We probably want something like I410AlphaToAR64, and then use FloatPlane to convert it into ARGBF16, which is used by GPU.\n",
+      "revId": "9905e0b874b79185a1d5f92bc3eda57f9073104a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
