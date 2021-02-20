@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e30777a7_18b5f98f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-20T19:08:46Z",
+      "side": 1,
+      "message": "Overall code looks ok, with minor concerns\n\nIts a large number of public functions and formats.  Do you plan to use them?\nTo avoid technical debt its best to only add functions that apps need, not aim for 100% complete conversions of anything to anything, which would quickly bloat.\nHistorically the goal was new formats require 4 conversions\nXXXXToI420\nI420ToXXXX\nXXXXToARGB\nARGBToXXXX\nIf formats all have this, you can convert from anything to anything in a maximum of 3 steps\nXXXXToI420\nI420ToARGB\nARGBToYYYY\nThe highest complexity is assembly, and this CL does not contain too much assembly, so thats good.\n\nThe header these are in, convert.h, is intended for anything to I420.\nBut these are 10 bit versions, and 2 or 3 planes, so I guess this is the best match for now.\n\nThe function name \u0027DivideRow\u0027 scares me, but it implements with a multiply.  Can\u0027t think of a better name off hand.\n\nSome of the function names are not ideal, but I dont have strong suggestions.\nPx1x for example, internally, doesnt allow for 9 bit.  Which is fine.\nMerge and Split do a shift in a hard coded way.  In future may want unshifted versions.  But we can defer on that until needed.",
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c584e8d_063e91b6",
+        "filename": "include/libyuv/video_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-20T19:08:46Z",
+      "side": 1,
+      "message": "each fourcc also has a BPP define below",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3431186_9bfbd899",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3551,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-20T19:08:46Z",
+      "side": 1,
+      "message": "nit: align comments",
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
