@@ -60,7 +60,7 @@ enum FourCC {
   FOURCC_YUY2 = FOURCC('Y', 'U', 'Y', '2'),
   FOURCC_UYVY = FOURCC('U', 'Y', 'V', 'Y'),
   FOURCC_I010 = FOURCC('I', '0', '1', '0'),  // bt.601 10 bit 420
-  FOURCC_I210 = FOURCC('I', '0', '1', '0'),  // bt.601 10 bit 422
+  FOURCC_I210 = FOURCC('I', '2', '1', '0'),  // bt.601 10 bit 422
 
   // 1 Secondary YUV format: row biplanar.  deprecated.
   FOURCC_M420 = FOURCC('M', '4', '2', '0'),
@@ -109,6 +109,8 @@ enum FourCC {
   FOURCC_F210 = FOURCC('F', '2', '1', '0'),  // bt.709 full range 10 bit 422
   FOURCC_H210 = FOURCC('H', '2', '1', '0'),  // bt.709 10 bit 422
   FOURCC_U210 = FOURCC('U', '2', '1', '0'),  // bt.2020 10 bit 422
+  FOURCC_P010 = FOURCC('P', '0', '1', '0'),
+  FOURCC_P210 = FOURCC('P', '2', '1', '0'),
 
   // 14 Auxiliary aliases.  CanonicalFourCC() maps these to canonical fourcc.
   FOURCC_IYUV = FOURCC('I', 'Y', 'U', 'V'),  // Alias for I420.

@@ -3526,6 +3526,36 @@ void HalfMergeUVRow_NEON(const uint8_t* src_u,
       : "cc", "memory", "v0", "v1", "v2", "v3");
 }
 
+void SplitUVRow_16_NEON(const uint16_t* src_uv,
+                        uint16_t* dst_u,
+                        uint16_t* dst_v,
+                        int scale,
+                        int width) {
+  asm volatile(
+    "dup         v4.8h, %w3                    \n"
+
+    "1:                                        \n"
+    "ld2         {v0.8h, v1.8h}, [%0], #32     \n"  // load 8 UV values
+    "umull       v2.4s, v0.4h, v4.4h           \n"
+    "umull2      v3.4s, v0.8h, v4.8h           \n"
+    "shrn        v0.4h, v2.4s, #16             \n"
+    "shrn2       v0.8h, v3.4s, #16             \n"
+    "umull       v2.4s, v1.4h, v4.4h           \n"
+    "umull2      v3.4s, v1.8h, v4.8h           \n"
+    "shrn        v1.4h, v2.4s, #16             \n"
+    "shrn2       v1.8h, v3.4s, #16             \n"
+    "st1         {v0.8h}, [%1], #16            \n"
+    "st1         {v1.8h}, [%2], #16            \n"
+    "subs        %w4, %w4, #8                  \n"  // 8 UV per loop
+    "b.gt        1b                            \n"
+  : "+r"(src_uv),    // %0
+    "+r"(dst_u),  // %1
+    "+r"(dst_v)    // %2
+  : "r"(scale),  // %3
+    "r"(width)    // %4
+  : "cc", "memory", "v0", "v1", "v2", "v3", "v4");
+}
+
 #endif  // !defined(LIBYUV_DISABLE_NEON) && defined(__aarch64__)
 
 #ifdef __cplusplus
