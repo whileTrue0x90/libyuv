@@ -2545,6 +2545,30 @@ void MergeUVRow_16_C(const uint16_t* src_u,
   }
 }
 
+// Use scale to convert msb formats to lsb, depending how many bits there are:
+// 512 = 9 bits
+// 1024 = 10 bits
+// 4096 = 12 bits
+// 65536 = 16 bits
+void SplitUVRow_16_C(const uint16_t* src_uv,
+                     uint16_t* dst_u,
+                     uint16_t* dst_v,
+                     int scale,
+                     int width) {
+  int x;
+  for (x = 0; x < width - 1; x += 2) {
+    dst_u[x] = (src_uv[0] * scale) >> 16;
+    dst_v[x] = (src_uv[1] * scale) >> 16;
+    dst_u[x + 1] = (src_uv[2] * scale) >> 16;
+    dst_v[x + 1] = (src_uv[3] * scale) >> 16;
+    src_uv += 4;
+  }
+  if (width & 1) {
+    dst_u[width - 1] = (src_uv[0] * scale) >> 16;
+    dst_v[width - 1] = (src_uv[1] * scale) >> 16;
+  }
+}
+
 void MultiplyRow_16_C(const uint16_t* src_y,
                       uint16_t* dst_y,
                       int scale,
@@ -2552,6 +2576,16 @@ void MultiplyRow_16_C(const uint16_t* src_y,
   int x;
   for (x = 0; x < width; ++x) {
     dst_y[x] = src_y[x] * scale;
+  }
+}
+
+void DivideRow_16_C(const uint16_t* src_y,
+                    uint16_t* dst_y,
+                    int scale,
+                    int width) {
+  int x;
+  for (x = 0; x < width; ++x) {
+    dst_y[x] = (src_y[x] * scale) >> 16;
   }
 }
 

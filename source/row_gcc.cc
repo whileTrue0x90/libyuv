@@ -3700,6 +3700,60 @@ void MergeUVRow_16_AVX2(const uint16_t* src_u,
 }
 #endif  // HAS_MERGEUVROW_AVX2
 
+// Use scale to convert msb formats to lsb, depending how many bits there are:
+// 512 = 9 bits
+// 1024 = 10 bits
+// 4096 = 12 bits
+// 65536 = 16 bits
+#ifdef HAS_MERGEUVROW_16_AVX2
+const uvec8 kSplitUVShuffle16 = {0, 1, 4, 5, 8,  9,  12, 13,
+                                 2, 3, 6, 7, 10, 11, 14, 15};
+void SplitUVRow_16_AVX2(const uint16_t* src_uv,
+                        uint16_t* dst_u,
+                        uint16_t* dst_v,
+                        int scale,
+                        int width) {
+  // clang-format off
+  asm volatile (
+    "vmovd       %4,%%xmm3                     \n"
+    "vpunpcklwd  %%xmm3,%%xmm3,%%xmm3          \n"
+    "vbroadcastss %%xmm3,%%ymm3                \n"
+    "vbroadcastf128 %5,%%ymm4                  \n"
+    "sub         %1,%2                         \n"
+
+    // 16 pixels per loop.
+    LABELALIGN
+    "1:                                        \n"
+    "vmovdqu     (%0),%%ymm0                   \n"
+    "vmovdqu     0x20(%0),%%ymm1               \n"
+    "add         $0x40,%0                      \n"
+
+    "vpmulhuw    %%ymm3,%%ymm0,%%ymm0          \n"
+    "vpmulhuw    %%ymm3,%%ymm1,%%ymm1          \n"
+    "vpshufb     %%ymm4,%%ymm0,%%ymm0          \n"
+    "vpshufb     %%ymm4,%%ymm1,%%ymm1          \n"
+    "vpermq      $0xd8,%%ymm0,%%ymm0           \n"
+    "vpermq      $0xd8,%%ymm1,%%ymm1           \n"
+    "vextractf128 $0x0,%%ymm0,(%1)             \n"
+    "vextractf128 $0x0,%%ymm1,0x10(%1)         \n"
+    "vextractf128 $0x1,%%ymm0,(%1,%2)          \n"
+    "vextractf128 $0x1,%%ymm1,0x10(%1,%2)      \n"
+    "add         $0x20,%1                      \n"
+    "sub         $0x10,%3                      \n"
+    "jg          1b                            \n"
+    "vzeroupper                                \n"
+  : "+r"(src_uv),   // %0
+    "+r"(dst_u),   // %1
+    "+r"(dst_v),  // %2
+    "+r"(width),    // %3
+  "+r"(scale)     // %4
+  :
+    "m"(kSplitUVShuffle16) // %5
+  : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4");
+  // clang-format on
+}
+#endif  // HAS_MERGEUVROW_AVX2
+
 // Use scale to convert lsb formats to msb, depending how many bits there are:
 // 128 = 9 bits
 // 64 = 10 bits
@@ -3717,7 +3771,7 @@ void MultiplyRow_16_AVX2(const uint16_t* src_y,
       "vbroadcastss %%xmm3,%%ymm3                \n"
       "sub         %0,%1                         \n"
 
-    // 16 pixels per loop.
+    // 32 pixels per loop.
     LABELALIGN
       "1:                                        \n"
       "vmovdqu     (%0),%%ymm0                   \n"
@@ -3734,6 +3788,46 @@ void MultiplyRow_16_AVX2(const uint16_t* src_y,
     "+r"(dst_y),   // %1
     "+r"(width)    // %2
   : "r"(scale)     // %3
+  : "memory", "cc", "xmm0", "xmm1", "xmm3");
+  // clang-format on
+}
+#endif  // HAS_MULTIPLYROW_16_AVX2
+
+// Use scale to convert msb formats to lsb, depending how many bits there are:
+// 512 = 9 bits
+// 1024 = 10 bits
+// 4096 = 12 bits
+// 65536 = 16 bits
+#ifdef HAS_DIVIDEROW_16_AVX2
+void DivideRow_16_AVX2(const uint16_t* src_y,
+                       uint16_t* dst_y,
+                       int scale,
+                       int width) {
+  // clang-format off
+  asm volatile (
+    "vmovd       %3,%%xmm3                     \n"
+    "vpunpcklwd  %%xmm3,%%xmm3,%%xmm3          \n"
+    "vbroadcastss %%xmm3,%%ymm3                \n"
+    "sub         %0,%1                         \n"
+
+    // 32 pixels per loop.
+    LABELALIGN
+    "1:                                        \n"
+    "vmovdqu     (%0),%%ymm0                   \n"
+    "vmovdqu     0x20(%0),%%ymm1               \n"
+    "vpmulhuw    %%ymm3,%%ymm0,%%ymm0          \n"
+    "vpmulhuw    %%ymm3,%%ymm1,%%ymm1          \n"
+    "vmovdqu     %%ymm0,(%0,%1)                \n"
+    "vmovdqu     %%ymm1,0x20(%0,%1)            \n"
+    "add         $0x40,%0                      \n"
+    "sub         $0x20,%2                      \n"
+    "jg          1b                            \n"
+    "vzeroupper                                \n"
+  : "+r"(src_y),   // %0
+    "+r"(dst_y),   // %1
+    "+r"(width),    // %2
+    "+r"(scale)     // %3
+  :
   : "memory", "cc", "xmm0", "xmm1", "xmm3");
   // clang-format on
 }
