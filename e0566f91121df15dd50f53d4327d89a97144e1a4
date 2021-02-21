@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5142b1_94d38141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-21T04:40:40Z",
+      "side": 1,
+      "message": "My main goal is to optimize AVIF display, which needs to retain quality. So I need I010ToP010, I210ToP210, I012ToP012, I212ToP212, I010/I210 To I410, I012/I212 To I412, I410 To ARGB/AR30, I412 To ARGB/AR30/AR64, I410Alpha/I412Alpha To ARGB/AR64, and ideally I010/I012/I210/I212 To ARGB/AR30/AR64 with interpolation on chroma internally. I really want to avoid I420 as intermediate format, it has the worst quality both on depth and subsampling.\n\nI\u0027m considering making I010 as the 10bit intermediate format. Content delivered in 10 bit usually looks bad in 8 bit, so users probably won\u0027t use I420 as intermediate format even if it\u0027s there. If one really want, I010\u003c-\u003eI420 is to fill the gap between 8 bit and 10 bit. I210\u003c-\u003eI422 and I410\u003c-\u003eI444 are easy to implement and can avoid scaling, so I added them. \n\nIxxxToPxxx are for direct YUV rendering, PxxxToIxxx are for completeness so that we can say we support Pxxx. P41x can be removed.\n\nWould like to hear your opinion on what to keep.\n\nMaybe we can add a new header dedicated to \u003e8 bit formats.\n\nI believe it\u0027s well known that integer division can be implemented as multiply + right shift for optimization? And it\u0027s the inverse of \u0027MultiplyRow\u0027.\n\nPx1x stands for P410,P210,P010,P412,P212,P012. It\u0027s not likely to have things like P009 so maybe it\u0027s fine?",
+      "parentUuid": "e30777a7_18b5f98f",
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c584e8d_063e91b6",
@@ -75,6 +93,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91d5ae83_416a07b2",
+        "filename": "include/libyuv/video_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-21T04:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c584e8d_063e91b6",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3431186_9bfbd899",
@@ -88,6 +130,24 @@
       "writtenOn": "2021-02-20T19:08:46Z",
       "side": 1,
       "message": "nit: align comments",
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0032464b_6a69af4f",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3551,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-21T04:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3431186_9bfbd899",
       "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
