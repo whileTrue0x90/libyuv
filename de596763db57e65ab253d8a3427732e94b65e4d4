@@ -33,6 +33,109 @@
       "message": "There are clangtidy warnings.  Can you clean them up?  I\u0027ll point them all out if you dont have a way to get them.\n\nSome documentation on P010 would be good.\n",
       "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74269870_5a321b46",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2039,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T11:37:17Z",
+      "side": 1,
+      "message": "function \u0027libyuv::SplitUVRow_16_Any_AVX2\u0027 has a definition with different parameter names\n\nthird_party/libyuv/files/source/row_any.cc:1463:9: the definition seen here\n\nthird_party/libyuv/files/include/libyuv/row.h:2039:6: differing parameters are named here: (\u0027src_uv\u0027, \u0027dst_u\u0027, \u0027dst_v\u0027), in definition: (\u0027uv_buf\u0027, \u0027u_buf\u0027, \u0027v_buf\u0027)",
+      "range": {
+        "startLine": 2039,
+        "startChar": 5,
+        "endLine": 2039,
+        "endChar": 27
+      },
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dd79c98_652336c5",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2059,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T11:37:17Z",
+      "side": 1,
+      "message": "function \u0027libyuv::MultiplyRow_16_Any_AVX2\u0027 has a definition with different parameter names\n\nthird_party/libyuv/files/source/row_any.cc:1153:8: the definition seen here\n\nthird_party/libyuv/files/include/libyuv/row.h:2059:6: differing parameters are named here: (\u0027src_y\u0027, \u0027dst_y\u0027), in definition: (\u0027src_ptr\u0027, \u0027dst_ptr\u0027)",
+      "range": {
+        "startLine": 2059,
+        "startChar": 45,
+        "endLine": 2059,
+        "endChar": 50
+      },
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bde2aa23_e39e2d4e",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T11:37:17Z",
+      "side": 1,
+      "message": "function \u0027libyuv::DivideRow_16_Any_AVX2\u0027 has a definition with different parameter names\n\nthird_party/libyuv/files/source/row_any.cc:1162:8: the definition seen here\n\nthird_party/libyuv/files/include/libyuv/row.h:2071:6: differing parameters are named here: (\u0027src_y\u0027, \u0027dst_y\u0027), in definition: (\u0027src_ptr\u0027, \u0027dst_ptr\u0027)",
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49a293d8_3fb161fa",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2559,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T11:37:17Z",
+      "side": 1,
+      "message": "Feel free to remove the unrolled code if theres no clear benefit.",
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79c5bbd4_2d73c051",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T11:37:17Z",
+      "side": 1,
+      "message": "consider implement Split and Merge using shifts.  On SSE/AVX the variable shift appears to be faster.\nThe multiply can potentially be interesting if there are non-power of 2 shifts, or to replicate bits, but I dont see Split or Merge being able to do this.\nMicrosoft clearly states that its formats are intended to be padded with zeros, not replicated bits.\ne.g. 0xffc0 is the maximum 10 bit value.",
+      "range": {
+        "startLine": 2567,
+        "startChar": 0,
+        "endLine": 2567,
+        "endChar": 49
+      },
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
