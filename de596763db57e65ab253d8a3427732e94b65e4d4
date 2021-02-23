@@ -16,6 +16,23 @@
       "message": "My plan is to remove all functions about P410/P412, and PxxxToIxxx. If it\u0027s OK I\u0027ll upload another patch.",
       "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aff3300_d1caa13d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T00:38:19Z",
+      "side": 1,
+      "message": "There are clangtidy warnings.  Can you clean them up?  I\u0027ll point them all out if you dont have a way to get them.\n\nSome documentation on P010 would be good.\n",
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

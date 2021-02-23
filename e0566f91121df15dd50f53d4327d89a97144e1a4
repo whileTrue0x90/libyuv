@@ -70,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69b4467d_f1bfd776",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T00:38:19Z",
+      "side": 1,
+      "message": "TLDR  Re completeness\nfunctions live in libyuv for 2 reasons\n1. they can be implemented (in assembly) substantially higher performance than if they are not in libyuv.  Typically an app could implement them in C or with multiple libyuv conversions to work around a missing function.  e.g. theres no RGBScale().  You could convert RGB to ARGB and use libyuv ARGBScale.  or you could write a scale yourself.  Can libyuv implement it more efficiently?  RGB being 3 bytes, thats difficult to say if theres an efficient way to do it for intel, but for ARM yes.  The loads can be ld3().  It would be substantially faster than the alternative.  Its difficult to say if its even possible to do for intel so I\u0027ve deferred.\n\n2. they\u0027re used in production.  If not the function, at least the format. e.g. is P410 used by an app.  What libyuv function will it require?  It may make sense to support additional P410 if it makes testing P410 easier, but in general only functions actually needed by apps are in libyuv.  It reduced technical debt of future support.\nWith the RGBScale example above, the answer is a clear yes, they implement RGB scaling themselves using a 2 step convert and scale.  RGB is increasingly popular for TFLite users.  But mainly on Intel, so its unclear I can do substantially better.  The core function thats needed in AVX2 is an 8x8 transpose. Feel free to write one :-)\n\nRe intermediate\nTo improve color conversion, I\u0027ll be putting emphasis on I444 and I410.\nThose are the 2 yuv formats its important to get the highest quality on, if a tradeoff needs to be made.  I412 is likely important and could be optimized for instead.  I416 would be a more versatile format to aim for so we dont care about msb vs lsb but I expect we\u0027ll use half floats when 16 bits becomes popular.\nNV12 is becoming almost as common as I420 so there will be more conversions to/from NV12.\nI420 with BT.601 limited range is unfortunately a lowest common denominator.\nSo unfortunately everything needs a fallback to this format.\n\nARGB is the common format for rgb.  AR30 is 2:10:10:10 is currently whats supported for 10 bit.\nThere is demand for an fp16 argb format.  fp16 is easy to implement on ARM cpus that have fp16 (Pixel 4 and later).  Its often supported on GPUs.  Its difficult to do efficiently on Intel.\n\nAR64 is likely interesting.  I suggest filing a bug and exploring that with a simple conversion.\nThe yuv conversions, in theory, lend themselves to a \u0027simple\u0027 STOREAR64() macro.  The values are planar - 4 registers, containing 16 bit integer values.  So the conversion to AR64 is relatively high quality and efficient, for a function like I412ToAR64.  There is a half float low level library we could use.",
+      "parentUuid": "be5142b1_94d38141",
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c584e8d_063e91b6",
@@ -113,6 +131,23 @@
         "endLine": 113,
         "endChar": 43
       },
+      "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de6b83b_f349e9a1",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3800,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-23T00:38:19Z",
+      "side": 1,
+      "message": "The value 65536 wont work with unsigned short.  65535 might be close enough?\n65535×65535÷65536 \u003d 65534\nNote In the future I\u0027m thinking, despite this being inline asm, we could use assert for some parameter checks.  eg. assert(scale \u003c 65536)\nThis can also be implemented with a shift, which in my recent tests, is faster than vpmulhuw",
       "revId": "e0566f91121df15dd50f53d4327d89a97144e1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
