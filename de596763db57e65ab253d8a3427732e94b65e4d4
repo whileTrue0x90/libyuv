@@ -199,6 +199,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39c62fdf_d7ba8112",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2559,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-24T19:25:59Z",
+      "side": 1,
+      "message": "\u003e Done\n\u003e Interestingly, removing the unrolling makes code faster instead.\n\nYes with simple code and the right options, clang will autovectorize it.  It typically starts by unrolling to 4.  If it can find the pattern, it vectorizes.  manually unrolling can complicate it.\nOn compilers that dont unroll or vectorize, the win is about 40%... well worth it.\nBut on those that unroll, no win, and those that vectorize will gain about 4x with vectors vs scalar code.\nAlthough the default options dont always vectorize, nor would we want it to, its best to compare your assembly against the best the compiler can do.  If you dont have a win, look at what the compiler did and improve your assembly.\nWe dont necessarily want large/fast C code in the final production code, since ARM and Intel have assembly, so the C should not be used.  It would be okay to build with -Os to save size, not hurting performance of libyuv assembly.\nFor bazel I do command line options to add optimizations --cpu\u003dhaswell --copt\u003d-O3 --copt\u003d-mprefer-vector-width\u003d256 --copt\u003d-mavx2 --copt\u003d-mfma --copt\u003d-ffp-contract\u003dfast \nFor Ninja I add compile options in the build.gn \n  # To enable AVX2 or other cpu optimization, pass flag here\n  if (!is_win) {\n    cflags \u003d [\n      # \"-mpopcnt\",\n      # \"-mavx2\",\n      # \"-mfma\",\n      \"-ffp-contract\u003dfast\",  # Enable fma vectorization for NEON.\n    ]",
+      "parentUuid": "7223c5e4_20f40a65",
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79c5bbd4_2d73c051",

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cf42f84_790f0942",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2547,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-24T19:25:59Z",
+      "side": 1,
+      "message": "nit this comment can be removed or changed.",
+      "revId": "14a9e4a4f62bae3ebc445016f30fc9459e41979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
