@@ -235,6 +235,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b6c5f4b_07d5d8bf",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2559,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-02-25T21:22:12Z",
+      "side": 1,
+      "message": "As long as the Neon is faster than the best C its fine.  We would never want Neon that is slower.",
+      "parentUuid": "79ad0699_0f4bc191",
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79c5bbd4_2d73c051",
