@@ -217,6 +217,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79ad0699_0f4bc191",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2559,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-25T07:33:17Z",
+      "side": 1,
+      "message": "I saw the C version on arm runs fast enough so I removed the assembly. I found it\u0027s clang auto vectorized it so I added neon assembly back, for the -Os usage you mentioned.",
+      "parentUuid": "39c62fdf_d7ba8112",
+      "revId": "de596763db57e65ab253d8a3427732e94b65e4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79c5bbd4_2d73c051",

@@ -16,6 +16,24 @@
       "message": "nit this comment can be removed or changed.",
       "revId": "14a9e4a4f62bae3ebc445016f30fc9459e41979f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "063c36e9_0c692995",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2547,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-25T07:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf42f84_790f0942",
+      "revId": "14a9e4a4f62bae3ebc445016f30fc9459e41979f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
