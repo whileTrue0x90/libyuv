@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf02ee2_6ca6c6cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-02-28T08:20:11Z",
+      "side": 1,
+      "message": "12bit variants can be added with little effort on the assembly level, but this CL is already quite big  so I didn\u0027t add them now.\nI see there are many API functions that only differ in yuvConstants to use. As we are supporting a growing amount of colorspaces, the amount can bloat quickly. Can we drop these functions for newly added formats and encourage users to use *Matrix APIs instead?",
+      "revId": "9ddb3a6fa0cc0058bae303e7bf311c5ca4f5c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
