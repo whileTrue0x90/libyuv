@@ -3653,18 +3653,22 @@ void MergeUVRow_SSE2(const uint8_t* src_u,
 }
 #endif  // HAS_MERGEUVROW_SSE2
 
+// Use scale to convert lsb formats to msb, depending how many bits there are:
+// 128 = 9 bits
+// 64 = 10 bits
+// 16 = 12 bits
+// 1 = 16 bits
 #ifdef HAS_MERGEUVROW_16_AVX2
 void MergeUVRow_16_AVX2(const uint16_t* src_u,
                         const uint16_t* src_v,
                         uint16_t* dst_uv,
-                        int depth,
+                        int scale,
                         int width) {
-  depth = 16 - depth;
   // clang-format off
   asm volatile (
       "vmovd       %4,%%xmm3                     \n"
       "vpunpcklwd  %%xmm3,%%xmm3,%%xmm3          \n"
-      "vbroadcastss %%xmm3,%%xmm3                \n"
+      "vbroadcastss %%xmm3,%%ymm3                \n"
       "sub         %0,%1                         \n"
 
     // 16 pixels per loop.
@@ -3674,8 +3678,8 @@ void MergeUVRow_16_AVX2(const uint16_t* src_u,
       "vmovdqu     (%0,%1,1),%%ymm1              \n"
       "add         $0x20,%0                      \n"
 
-      "vpsllw      %%xmm3,%%ymm0,%%ymm0          \n"
-      "vpsllw      %%xmm3,%%ymm1,%%ymm1          \n"
+      "vpmullw     %%ymm3,%%ymm0,%%ymm0          \n"
+      "vpmullw     %%ymm3,%%ymm1,%%ymm1          \n"
       "vpunpcklwd  %%ymm1,%%ymm0,%%ymm2          \n"  // mutates
       "vpunpckhwd  %%ymm1,%%ymm0,%%ymm0          \n"
       "vextractf128 $0x0,%%ymm2,(%2)             \n"
@@ -3690,58 +3694,8 @@ void MergeUVRow_16_AVX2(const uint16_t* src_u,
     "+r"(src_v),   // %1
     "+r"(dst_uv),  // %2
     "+r"(width)    // %3
-  : "r"(depth)     // %4
+  : "r"(scale)     // %4
   : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3");
-  // clang-format on
-}
-#endif  // HAS_MERGEUVROW_AVX2
-
-#ifdef HAS_MERGEUVROW_16_AVX2
-const uvec8 kSplitUVShuffle16 = {0, 1, 4, 5, 8,  9,  12, 13,
-                                 2, 3, 6, 7, 10, 11, 14, 15};
-void SplitUVRow_16_AVX2(const uint16_t* src_uv,
-                        uint16_t* dst_u,
-                        uint16_t* dst_v,
-                        int depth,
-                        int width) {
-  depth = 16 - depth;
-  // clang-format off
-  asm volatile (
-    "vmovd       %4,%%xmm3                     \n"
-    "vpunpcklwd  %%xmm3,%%xmm3,%%xmm3          \n"
-    "vbroadcastss %%xmm3,%%xmm3                \n"
-    "vbroadcastf128 %5,%%ymm4                  \n"
-    "sub         %1,%2                         \n"
-
-    // 16 pixels per loop.
-    LABELALIGN
-    "1:                                        \n"
-    "vmovdqu     (%0),%%ymm0                   \n"
-    "vmovdqu     0x20(%0),%%ymm1               \n"
-    "add         $0x40,%0                      \n"
-
-    "vpsrlw      %%xmm3,%%ymm0,%%ymm0          \n"
-    "vpsrlw      %%xmm3,%%ymm1,%%ymm1          \n"
-    "vpshufb     %%ymm4,%%ymm0,%%ymm0          \n"
-    "vpshufb     %%ymm4,%%ymm1,%%ymm1          \n"
-    "vpermq      $0xd8,%%ymm0,%%ymm0           \n"
-    "vpermq      $0xd8,%%ymm1,%%ymm1           \n"
-    "vextractf128 $0x0,%%ymm0,(%1)             \n"
-    "vextractf128 $0x0,%%ymm1,0x10(%1)         \n"
-    "vextractf128 $0x1,%%ymm0,(%1,%2)          \n"
-    "vextractf128 $0x1,%%ymm1,0x10(%1,%2)      \n"
-    "add         $0x20,%1                      \n"
-    "sub         $0x10,%3                      \n"
-    "jg          1b                            \n"
-    "vzeroupper                                \n"
-  : "+r"(src_uv),   // %0
-    "+r"(dst_u),   // %1
-    "+r"(dst_v),  // %2
-    "+r"(width),    // %3
-    "+r"(depth)     // %4
-  :
-    "m"(kSplitUVShuffle16) // %5
-  : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4");
   // clang-format on
 }
 #endif  // HAS_MERGEUVROW_AVX2
@@ -3763,7 +3717,7 @@ void MultiplyRow_16_AVX2(const uint16_t* src_y,
       "vbroadcastss %%xmm3,%%ymm3                \n"
       "sub         %0,%1                         \n"
 
-    // 32 pixels per loop.
+    // 16 pixels per loop.
     LABELALIGN
       "1:                                        \n"
       "vmovdqu     (%0),%%ymm0                   \n"
@@ -3780,46 +3734,6 @@ void MultiplyRow_16_AVX2(const uint16_t* src_y,
     "+r"(dst_y),   // %1
     "+r"(width)    // %2
   : "r"(scale)     // %3
-  : "memory", "cc", "xmm0", "xmm1", "xmm3");
-  // clang-format on
-}
-#endif  // HAS_MULTIPLYROW_16_AVX2
-
-// Use scale to convert msb formats to lsb, depending how many bits there are:
-// 512 = 9 bits
-// 1024 = 10 bits
-// 4096 = 12 bits
-// 65536 = 16 bits
-#ifdef HAS_DIVIDEROW_16_AVX2
-void DivideRow_16_AVX2(const uint16_t* src_y,
-                       uint16_t* dst_y,
-                       int scale,
-                       int width) {
-  // clang-format off
-  asm volatile (
-    "vmovd       %3,%%xmm3                     \n"
-    "vpunpcklwd  %%xmm3,%%xmm3,%%xmm3          \n"
-    "vbroadcastss %%xmm3,%%ymm3                \n"
-    "sub         %0,%1                         \n"
-
-    // 32 pixels per loop.
-    LABELALIGN
-    "1:                                        \n"
-    "vmovdqu     (%0),%%ymm0                   \n"
-    "vmovdqu     0x20(%0),%%ymm1               \n"
-    "vpmulhuw    %%ymm3,%%ymm0,%%ymm0          \n"
-    "vpmulhuw    %%ymm3,%%ymm1,%%ymm1          \n"
-    "vmovdqu     %%ymm0,(%0,%1)                \n"
-    "vmovdqu     %%ymm1,0x20(%0,%1)            \n"
-    "add         $0x40,%0                      \n"
-    "sub         $0x20,%2                      \n"
-    "jg          1b                            \n"
-    "vzeroupper                                \n"
-  : "+r"(src_y),   // %0
-    "+r"(dst_y),   // %1
-    "+r"(width),    // %2
-    "+r"(scale)     // %3
-  :
   : "memory", "cc", "xmm0", "xmm1", "xmm3");
   // clang-format on
 }
@@ -4276,7 +4190,6 @@ void MergeARGBRow_AVX2(const uint8_t* src_r,
       "lea         64(%4),%4                     \n"
       "sub         $0x10,%5                      \n"
       "jg          1b                            \n"
-      "vzeroupper                                \n"
       : "+r"(src_r),     // %0
         "+r"(src_g),     // %1
         "+r"(src_b),     // %2
@@ -4318,7 +4231,6 @@ void MergeXRGBRow_AVX2(const uint8_t* src_r,
       "lea         64(%3),%3                     \n"
       "sub         $0x10,%4                      \n"
       "jg          1b                            \n"
-      "vzeroupper                                \n"
       : "+r"(src_r),     // %0
         "+r"(src_g),     // %1
         "+r"(src_b),     // %2
@@ -4428,9 +4340,9 @@ void SplitXRGBRow_SSE2(const uint8_t* src_argb,
 }
 #endif
 
-static const uvec8 kShuffleMaskARGBSplit = {0, 4, 8,  12, 1, 5, 9,  13,
-                                            2, 6, 10, 14, 3, 7, 11, 15};
 #ifdef HAS_SPLITARGBROW_SSSE3
+static const uvec8 kShuffleMaskARGBSplit = {0u, 4u, 8u,  12u, 1u, 5u, 9u,  13u,
+                                            2u, 6u, 10u, 14u, 3u, 7u, 11u, 15u};
 void SplitARGBRow_SSSE3(const uint8_t* src_argb,
                         uint8_t* dst_r,
                         uint8_t* dst_g,
@@ -4439,7 +4351,6 @@ void SplitARGBRow_SSSE3(const uint8_t* src_argb,
                         int width) {
   asm volatile(
 
-      "movdqa      %6,%%xmm3                     \n"
       "sub         %1,%2                         \n"
       "sub         %1,%3                         \n"
       "sub         %1,%4                         \n"
@@ -4449,8 +4360,8 @@ void SplitARGBRow_SSSE3(const uint8_t* src_argb,
 
       "movdqu      (%0),%%xmm0                   \n"  // 00-0F
       "movdqu      16(%0),%%xmm1                 \n"  // 10-1F
-      "pshufb      %%xmm3,%%xmm0                 \n"  // 048C159D26AE37BF (lo)
-      "pshufb      %%xmm3,%%xmm1                 \n"  // 048C159D26AE37BF (hi)
+      "pshufb      %6,%%xmm0                     \n"  // 048C159D26AE37BF (lo)
+      "pshufb      %6,%%xmm1                     \n"  // 048C159D26AE37BF (hi)
       "movdqa      %%xmm0,%%xmm2                 \n"
       "punpckldq   %%xmm1,%%xmm0                 \n"  // 048C048C159D159D (BG)
       "punpckhdq   %%xmm1,%%xmm2                 \n"  // 26AE26AE37BF37BF (RA)
@@ -4474,7 +4385,7 @@ void SplitARGBRow_SSSE3(const uint8_t* src_argb,
         "+rm"(width)  // %5
 #endif
       : "m"(kShuffleMaskARGBSplit)  // %6
-      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3");
+      : "memory", "cc", "xmm0", "xmm1", "xmm2");
 }
 
 void SplitXRGBRow_SSSE3(const uint8_t* src_argb,
@@ -4484,15 +4395,13 @@ void SplitXRGBRow_SSSE3(const uint8_t* src_argb,
                         int width) {
   asm volatile(
 
-      "movdqa      %5,%%xmm3                     \n"
-
       LABELALIGN
       "1:                                        \n"
 
       "movdqu      (%0),%%xmm0                   \n"  // 00-0F
       "movdqu      16(%0),%%xmm1                 \n"  // 10-1F
-      "pshufb      %%xmm3,%%xmm0                 \n"  // 048C159D26AE37BF (lo)
-      "pshufb      %%xmm3,%%xmm1                 \n"  // 048C159D26AE37BF (hi)
+      "pshufb      %5,%%xmm0                     \n"  // 048C159D26AE37BF (lo)
+      "pshufb      %5,%%xmm1                     \n"  // 048C159D26AE37BF (hi)
       "movdqa      %%xmm0,%%xmm2                 \n"
       "punpckldq   %%xmm1,%%xmm0                 \n"  // 048C048C159D159D (BG)
       "punpckhdq   %%xmm1,%%xmm2                 \n"  // 26AE26AE37BF37BF (RA)
@@ -4512,12 +4421,16 @@ void SplitXRGBRow_SSSE3(const uint8_t* src_argb,
         "+r"(dst_b),                // %3
         "+r"(width)                 // %4
       : "m"(kShuffleMaskARGBSplit)  // %5
-      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3");
+      : "memory", "cc", "xmm0", "xmm1", "xmm2");
 }
 #endif
 
 #ifdef HAS_SPLITARGBROW_AVX2
-static const ulvec32 kShuffleMaskARGBPermute = {0, 4, 1, 5, 2, 6, 3, 7};
+static const lvec8 kShuffleMaskARGBSplit_AVX2 = {
+    0u, 4u, 8u, 12u, 1u, 5u, 9u, 13u, 2u, 6u, 10u, 14u, 3u, 7u, 11u, 15u,
+    0u, 4u, 8u, 12u, 1u, 5u, 9u, 13u, 2u, 6u, 10u, 14u, 3u, 7u, 11u, 15u};
+static const ulvec32 kShuffleMaskARGBPermute_AVX2 = {0u, 4u, 1u, 5u,
+                                                     2u, 6u, 3u, 7u};
 void SplitARGBRow_AVX2(const uint8_t* src_argb,
                        uint8_t* dst_r,
                        uint8_t* dst_g,
@@ -4529,8 +4442,7 @@ void SplitARGBRow_AVX2(const uint8_t* src_argb,
       "sub         %1,%2                         \n"
       "sub         %1,%3                         \n"
       "sub         %1,%4                         \n"
-      "vmovdqa     %7,%%ymm3                     \n"
-      "vbroadcastf128 %6,%%ymm4                  \n"
+      "vmovdqu     %7,%%ymm3                     \n"
 
       LABELALIGN
       "1:                                        \n"
@@ -4539,8 +4451,8 @@ void SplitARGBRow_AVX2(const uint8_t* src_argb,
       "vmovdqu     16(%0),%%xmm1                 \n"  // 10-1F
       "vinserti128 $1,32(%0),%%ymm0,%%ymm0       \n"  // 00-0F 20-2F
       "vinserti128 $1,48(%0),%%ymm1,%%ymm1       \n"  // 10-1F 30-3F
-      "vpshufb     %%ymm4,%%ymm0,%%ymm0          \n"
-      "vpshufb     %%ymm4,%%ymm1,%%ymm1          \n"
+      "vpshufb     %6,%%ymm0,%%ymm0              \n"
+      "vpshufb     %6,%%ymm1,%%ymm1              \n"
       "vpermd      %%ymm0,%%ymm3,%%ymm0          \n"
       "vpermd      %%ymm1,%%ymm3,%%ymm1          \n"
       "vpunpckhdq  %%ymm1,%%ymm0,%%ymm2          \n"  // GA
@@ -4553,7 +4465,6 @@ void SplitARGBRow_AVX2(const uint8_t* src_argb,
       "lea         16(%1),%1                     \n"
       "subl        $0x10,%5                      \n"
       "jg          1b                            \n"
-      "vzeroupper                                \n"
       : "+r"(src_argb),  // %0
         "+r"(dst_r),     // %1
         "+r"(dst_g),     // %2
@@ -4564,9 +4475,9 @@ void SplitARGBRow_AVX2(const uint8_t* src_argb,
 #else
         "+rm"(width)  // %5
 #endif
-      : "m"(kShuffleMaskARGBSplit),   // %6
-        "m"(kShuffleMaskARGBPermute)  // %7
-      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4");
+      : "m"(kShuffleMaskARGBSplit_AVX2),   // %6
+        "m"(kShuffleMaskARGBPermute_AVX2)  // %7
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3");
 }
 
 void SplitXRGBRow_AVX2(const uint8_t* src_argb,
@@ -4576,18 +4487,15 @@ void SplitXRGBRow_AVX2(const uint8_t* src_argb,
                        int width) {
   asm volatile(
 
-      "vmovdqa     %6,%%ymm3                     \n"
-      "vbroadcastf128 %5,%%ymm4                  \n"
-
-      LABELALIGN
+      "vmovdqu     %6,%%ymm3                     \n" LABELALIGN
       "1:                                        \n"
 
       "vmovdqu     (%0),%%xmm0                   \n"  // 00-0F
       "vmovdqu     16(%0),%%xmm1                 \n"  // 10-1F
       "vinserti128 $1,32(%0),%%ymm0,%%ymm0       \n"  // 00-0F 20-2F
       "vinserti128 $1,48(%0),%%ymm1,%%ymm1       \n"  // 10-1F 30-3F
-      "vpshufb     %%ymm4,%%ymm0,%%ymm0          \n"
-      "vpshufb     %%ymm4,%%ymm1,%%ymm1          \n"
+      "vpshufb     %5,%%ymm0,%%ymm0              \n"
+      "vpshufb     %5,%%ymm1,%%ymm1              \n"
       "vpermd      %%ymm0,%%ymm3,%%ymm0          \n"
       "vpermd      %%ymm1,%%ymm3,%%ymm1          \n"
       "vpunpckhdq  %%ymm1,%%ymm0,%%ymm2          \n"  // GA
@@ -4602,14 +4510,13 @@ void SplitXRGBRow_AVX2(const uint8_t* src_argb,
       "lea         16(%3),%3                     \n"
       "sub         $0x10,%4                      \n"
       "jg          1b                            \n"
-      "vzeroupper                                \n"
-      : "+r"(src_argb),               // %0
-        "+r"(dst_r),                  // %1
-        "+r"(dst_g),                  // %2
-        "+r"(dst_b),                  // %3
-        "+r"(width)                   // %4
-      : "m"(kShuffleMaskARGBSplit),   // %5
-        "m"(kShuffleMaskARGBPermute)  // %6
+      : "+r"(src_argb),                    // %0
+        "+r"(dst_r),                       // %1
+        "+r"(dst_g),                       // %2
+        "+r"(dst_b),                       // %3
+        "+r"(width)                        // %4
+      : "m"(kShuffleMaskARGBSplit_AVX2),   // %5
+        "m"(kShuffleMaskARGBPermute_AVX2)  // %6
       : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3");
 }
 #endif
