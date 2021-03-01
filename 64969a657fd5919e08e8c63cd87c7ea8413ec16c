@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b518f14_d99bfb0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Thank you for documenting the fourcc codes!\n\nI have some questions.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdc107a6_63caff98",
+        "filename": "docs/formats.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Optional: If this \"J\" comes from \"JPEG\", it would be good to mention this connection to help people memorize this.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be62c64b_42b4f425",
+        "filename": "docs/formats.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "What is the \"m\" in \"I012m\", \"I212m\", and \"I412m\"?",
+      "range": {
+        "startLine": 126,
+        "startChar": 14,
+        "endLine": 126,
+        "endChar": 19
+      },
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6e8aabc_b24eddc8",
+        "filename": "docs/formats.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Did you mean \"see above\"?",
+      "range": {
+        "startLine": 130,
+        "startChar": 30,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c648a386_d75147f7",
+        "filename": "docs/formats.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Optional: I believe these are the last digits of 4:2:0, 4:2:2, and 4:4:4, respectively. If so, it would be good to mention this connection to help people memorize these.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "290311f1_43dff168",
+        "filename": "docs/formats.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Nit: Would it be possible to document \u0027P\u0027 immediately after \u0027I\u0027 (line 130)? That order seems more natural because \u0027I\u0027 and \u0027P\u0027 are the first letters in these fourcc codes.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75168c1d_a8ba1cd0",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Nit/optional: It would be helpful to explain why uint8_t instead of int8_t is used in the LIBYUV_UNLIMITED_DATA case. We could copy the comment from row_common.cc:\n\n  // These 2 macros control YUV to RGB using unsigned math to extend range.\n\nThe reason I was confused is that the macro name \"LIBYUV_UNLIMITED_DATA\" does not immediately explain why the use of unsigned type means unlimited data.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "304dddf7_6f9f7208",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Does this mean src_uv_width and src_uv_height can be negative?\n\nI am also curious why we don\u0027t validate src_y_width and src_y_height?",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "282744d2_4e59d439",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "[Just a question] The LIBYUV_UNLIMITED_CODE macro is not used, right? I don\u0027t see it in the libyuv source tree.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a7abdf_7fe24ec2",
+        "filename": "source/scale_uv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "Nit: Use lowercase \"uv\" in these parameter names?",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4efd85c_914c4d82",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:33:22Z",
+      "side": 1,
+      "message": "IMPORTANT: These four changes look incorrect.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
