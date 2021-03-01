@@ -134,6 +134,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb9caf4e_d9484101",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-03-01T17:45:31Z",
+      "side": 1,
+      "message": "I just realized that I asked the same (or similar) questions in the internal version of this CL. Sorry about the repeated questions.\n\nThis does mean a comment that explains what \"UNLIMITED\" means here would be helpful. I think it means \"unlimited range coefficients\", as opposed the limited range coefficients, which are clamped to 128. Maybe your following answer to be question in the internal code review could be adapted as a comment?\n\n  The limited range coefficients are clamped to 128.  This change removed the\n  clamping, allowing the proper coefficient to be stored.",
+      "parentUuid": "75168c1d_a8ba1cd0",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "304dddf7_6f9f7208",
         "filename": "source/convert.cc",
         "patchSetId": 1
