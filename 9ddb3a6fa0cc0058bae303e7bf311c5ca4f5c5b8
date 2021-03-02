@@ -16,6 +16,23 @@
       "message": "12bit variants can be added with little effort on the assembly level, but this CL is already quite big  so I didn\u0027t add them now.\nI see there are many API functions that only differ in yuvConstants to use. As we are supporting a growing amount of colorspaces, the amount can bloat quickly. Can we drop these functions for newly added formats and encourage users to use *Matrix APIs instead?",
       "revId": "9ddb3a6fa0cc0058bae303e7bf311c5ca4f5c5b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03b34ace_53343648",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:39:18Z",
+      "side": 1,
+      "message": "Overall ok... Just a few general comments til I have time to fully review\n1. its a lot of entry points, and I expect new users will gravitate to \u0027Matrix\u0027 functions?\n2. I\u0027ve done 12 bit conversions... need to get reviewed.  It does yearn for a 12+ bit RGB format.\nYou mentioned AB64.  Can you\na.  open an issue to request it\nb.  refer to what you know about the format.\nI cant find that name.  There are 2 ways to go - int16 or fp16.  And then variations on those.\n3. there is an ASAN failure in MergeUV_16, likely from I010ToP010.  Best to disable the code until a fix it found.\n4. I\u0027ve got a few changed I\u0027m trying to upstream, but need to merge with git.\nOne is the start of new matrix low levels to address the 2.0 coefficient limit.\n5. 10/12 bit functions are lacking ARM.  They should really be done, assuming the 10/12 bit will be using on ARM devices.  The initial motivation was Intel based laptops.\n",
+      "revId": "9ddb3a6fa0cc0058bae303e7bf311c5ca4f5c5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
