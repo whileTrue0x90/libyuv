@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20ec7d9d_d3f26ac8",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:41:44Z",
+      "side": 1,
+      "message": "do SSSE3 when you can.  The compiler typically has SSE2 enabled by default but sometimes not SSSE3 and the SSSE3 adds pshufb and pmadd instructions that are compelling wins.\nIts getting to the point that its almost not worth doing SSE of any type, as AVX2 is common.\nAlmost...",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03a170a6_85b6b963",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:41:44Z",
+      "side": 1,
+      "message": "wrong macro?  The macro should match the function name with HAS_ infront of it.",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb4b4c0e_f3b89856",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:41:44Z",
+      "side": 1,
+      "message": "macro doesnt match function.  is it SSE2 or SSSE3?",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4c7b3b7_c911b7dc",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:41:44Z",
+      "side": 1,
+      "message": "Did you consider pmaddwd?",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba0f069a_a5fb35c6",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:41:44Z",
+      "side": 1,
+      "message": "vst4.16 if you meant to weave all 4 values.  The first value in the instruction should match the number of registers you pass.  If you mean vst2\n \"vst2.16     {q0, q1}, [%1]!",
+      "range": {
+        "startLine": 719,
+        "startChar": 7,
+        "endLine": 719,
+        "endChar": 14
+      },
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b95d1e4_73798062",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T00:41:44Z",
+      "side": 1,
+      "message": "vld1.16 ?  Its not important when its vld1, but your data is 16 bit.",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
