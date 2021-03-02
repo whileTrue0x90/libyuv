@@ -16,6 +16,97 @@
       "message": "looks like I still missed something. I\u0027ll fix it and do other changes tomorrow.",
       "revId": "bb9bfe8db8dda79aff0b28203c017b7cf140f15b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2952fe4b_0197aa4a",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T16:36:45Z",
+      "side": 1,
+      "message": "Can probably skip MMI.  Most of their code is based on Neon as well, which we dont have.",
+      "revId": "bb9bfe8db8dda79aff0b28203c017b7cf140f15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2f16734_c65f2eba",
+        "filename": "source/row_any.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T16:36:45Z",
+      "side": 1,
+      "message": "Confusing comment.  Perhaps\n// Any 4 planes to 1 plane of 8 bit with yuvconstants",
+      "revId": "bb9bfe8db8dda79aff0b28203c017b7cf140f15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93b633e8_19f0db78",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T16:36:45Z",
+      "side": 1,
+      "message": "nit: add spaces\n// I410 shuffle 8 U + 8 V to 8 UV",
+      "revId": "bb9bfe8db8dda79aff0b28203c017b7cf140f15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f289ac1_41f38008",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T16:36:45Z",
+      "side": 1,
+      "message": "Isnt this achievable with unpack instead?\nA reference to constants can be very slow in 32 bit x86 with fpic.  Up to 100 cycle stall.\nThis can be avoided by putting the struct into yuvconstants and reduced by putting it into registers.  Or generated, but this constant is hard to generate.",
+      "revId": "bb9bfe8db8dda79aff0b28203c017b7cf140f15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eea26d19_e6a2cb13",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-02T16:36:45Z",
+      "side": 1,
+      "message": "X in names is hard to understand.  Perhaps READYUV422_16() ?\nCalling macros with parameters is also unclear though, so my inclination macros that match the function format name as much as possible.\nREADI410 and they can use a common helper that takes shift parameters.\nThe shifts are likely to change in the future.\nI\u0027ve already implemented 12 bit using READYUV212",
+      "range": {
+        "startLine": 1948,
+        "startChar": 18,
+        "endLine": 1948,
+        "endChar": 19
+      },
+      "revId": "bb9bfe8db8dda79aff0b28203c017b7cf140f15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
