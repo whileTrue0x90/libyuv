@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc96755b_64fcb9a6",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-02T15:41:58Z",
+      "side": 1,
+      "message": "I didn\u0027t see any useful SSSE3 instruction, so I made it SSE2.\nWe are dealing with 32 bit intermediate values so pshufd from SSE2 is sufficient. pmaddwd is also SSE2, but simple as x * 3 + y is faster using add directly, at least on my platform.\nI can use SSE4.1\u0027s packusdw to be more \u0027correct\u0027, but SSE2\u0027s packssdw works just fine there.",
+      "parentUuid": "20ec7d9d_d3f26ac8",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03a170a6_85b6b963",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-03-02T00:41:44Z",
       "side": 1,
       "message": "wrong macro?  The macro should match the function name with HAS_ infront of it.",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaddbd1c_153b1a5a",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-02T15:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a170a6_85b6b963",
       "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -52,6 +88,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "087490bc_44c5e0ff",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-02T15:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4b4c0e_f3b89856",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4c7b3b7_c911b7dc",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-03-02T00:41:44Z",
       "side": 1,
       "message": "Did you consider pmaddwd?",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "007d6577_0fd3c316",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-02T15:41:58Z",
+      "side": 1,
+      "message": "pmaddwd was slower when I\u0027m implementing the UV_16 functions.",
+      "parentUuid": "b4c7b3b7_c911b7dc",
       "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -92,6 +164,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "407cf5e2_41a4d151",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-02T15:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba0f069a_a5fb35c6",
+      "range": {
+        "startLine": 719,
+        "startChar": 7,
+        "endLine": 719,
+        "endChar": 14
+      },
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b95d1e4_73798062",
@@ -105,6 +201,24 @@
       "writtenOn": "2021-03-02T00:41:44Z",
       "side": 1,
       "message": "vld1.16 ?  Its not important when its vld1, but your data is 16 bit.",
+      "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cad81ef9_2c9e8f6a",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-02T15:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b95d1e4_73798062",
       "revId": "4361b30ff8fe760871163949967a05d99718c0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
