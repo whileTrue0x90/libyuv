@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46412f1d_2ce8f2e8",
+        "filename": "include/libyuv/convert_argb.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-03T15:45:29Z",
+      "side": 1,
+      "message": "This defines are confusing.  A single comment that explains P formats use the upper bits would help.",
+      "revId": "20469525721975b13f57107b1de99d2e63c8615e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
