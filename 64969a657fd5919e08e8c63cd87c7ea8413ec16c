@@ -252,6 +252,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "edd032a7_6fc0bf91",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-04T20:38:32Z",
+      "side": 1,
+      "message": "Ack.  This is an internal header so documentation here is for the benefit of the libyuv authors.  As this feature is incomplete I\u0027ll defer documenting it and will likely change it, and eventually remove it.",
+      "parentUuid": "bb9caf4e_d9484101",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "304dddf7_6f9f7208",
@@ -286,6 +304,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d145e720_a0c4c383",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-04T20:38:32Z",
+      "side": 1,
+      "message": "correct.  The intent is the new code will allow the new data or the old data, and we can roll out the new code but keep the old data that is clamped for awhile.\nI had hoped the old code would work with the new data for C and NEON, but its not working.  I think for the C code on intel it mimics the x86, but I was expecting C code for ARM to basically use unsigned coefficients already.",
+      "parentUuid": "282744d2_4e59d439",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0a7abdf_7fe24ec2",
@@ -316,6 +352,24 @@
       "writtenOn": "2021-03-01T17:33:22Z",
       "side": 1,
       "message": "IMPORTANT: These four changes look incorrect.",
+      "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d6c1a30_1f722d59",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-04T20:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4efd85c_914c4d82",
       "revId": "64969a657fd5919e08e8c63cd87c7ea8413ec16c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
