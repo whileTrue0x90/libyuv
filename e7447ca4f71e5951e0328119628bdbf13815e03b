@@ -33,6 +33,24 @@
       "message": "if you can think of any tricks for making the assembly actually work for 32 bit, that would be good.\nIt would build if fpic were turned off, and fpic is not relevant to code that has no global memory variables.\nfor functions that are almost out of GPR registers I start by making the loop counter a \"m\" parameter (stack).",
       "revId": "e7447ca4f71e5951e0328119628bdbf13815e03b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3da3e30_8f25c4d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-05T07:29:11Z",
+      "side": 1,
+      "message": "Is there any reason we can\u0027t use C style intrinsic functions? That would simplify many things.",
+      "parentUuid": "24e74c4b_8dc3a991",
+      "revId": "e7447ca4f71e5951e0328119628bdbf13815e03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
