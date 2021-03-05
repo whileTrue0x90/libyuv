@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24e74c4b_8dc3a991",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-05T02:48:02Z",
+      "side": 1,
+      "message": "perfect!  thanks.  I have a script for applying clang tidy --fix so no worries.\nThe plan is to switch win32 builds to row_gcc.cc clangcl the same as win64.\nAnd then remove the visual c specific assembly, but perhaps keep intrinsics around for actual visual cl, as long as theres a way to test it.\nI\u0027m hoping windows arm builds can also do the same.\nFor now, keep it working until theres a good reason to break it.",
+      "revId": "e7447ca4f71e5951e0328119628bdbf13815e03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
