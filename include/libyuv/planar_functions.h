@@ -955,6 +955,17 @@ int ARGBShuffle(const uint8_t* src_bgra,
                 int width,
                 int height);
 
+// Shuffle AR64 channel order.  e.g. AR64 to AB64.
+// shuffler is 16 bytes and must be aligned.
+LIBYUV_API
+int AR64Shuffle(const uint16_t* src_ar64,
+                int src_stride_ar64,
+                uint16_t* dst_ar64,
+                int dst_stride_ar64,
+                const uint8_t* shuffler,
+                int width,
+                int height);
+
 // Sobel ARGB effect with planar output.
 LIBYUV_API
 int ARGBSobelToPlane(const uint8_t* src_argb,

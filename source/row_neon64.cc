@@ -1565,6 +1565,99 @@ void ARGBToARGB4444Row_NEON(const uint8_t* src_argb,
       : "cc", "memory", "v0", "v1", "v4", "v20", "v21", "v22", "v23");
 }
 
+static const uvec8 kShuffleARGBToABGR = {2,  1, 0, 3,  6,  5,  4,  7,
+                                         10, 9, 8, 11, 14, 13, 12, 15};
+
+void ARGBToAR64Row_NEON(const uint8_t* src_argb,
+                        uint16_t* dst_ar64,
+                        int width) {
+  asm volatile(
+      "1:                                        \n"
+      "ldp         q0, q2, [%0], #32             \n"  // load 8 pixels
+      "mov         v1.16b, v0.16b                \n"
+      "mov         v3.16b, v2.16b                \n"
+      "prfm        pldl1keep, [%0, 448]          \n"
+      "subs        %w2, %w2, #8                  \n"  // 8 processed per loop.
+      "st2         {v0.16b, v1.16b}, [%1], #32   \n"  // store 4 pixels
+      "st2         {v2.16b, v3.16b}, [%1], #32   \n"  // store 4 pixels
+      "b.gt        1b                            \n"
+      : "+r"(src_argb),  // %0
+        "+r"(dst_ar64),  // %1
+        "+r"(width)      // %2
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3");
+}
+
+void ARGBToAB64Row_NEON(const uint8_t* src_argb,
+                        uint16_t* dst_ab64,
+                        int width) {
+  asm volatile(
+      "ld1         {v4.16b}, %3                  \n"  // shuffler
+      "1:                                        \n"
+      "ldp         q0, q2, [%0], #32             \n"  // load 8 pixels
+      "tbl         v0.16b, {v0.16b}, v4.16b      \n"
+      "tbl         v2.16b, {v2.16b}, v4.16b      \n"
+      "mov         v1.16b, v0.16b                \n"
+      "mov         v3.16b, v2.16b                \n"
+      "prfm        pldl1keep, [%0, 448]          \n"
+      "subs        %w2, %w2, #8                  \n"  // 8 processed per loop.
+      "st2         {v0.16b, v1.16b}, [%1], #32   \n"  // store 4 pixels
+      "st2         {v2.16b, v3.16b}, [%1], #32   \n"  // store 4 pixels
+      "b.gt        1b                            \n"
+      : "+r"(src_argb),          // %0
+        "+r"(dst_ab64),          // %1
+        "+r"(width)              // %2
+      : "m"(kShuffleARGBToABGR)  // %3
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4");
+}
+
+void AR64ToARGBRow_NEON(const uint16_t* src_ar64,
+                        uint8_t* dst_argb,
+                        int width) {
+  asm volatile(
+      "1:                                        \n"
+      "ldp         q0, q1, [%0], #32             \n"  // load 4 pixels
+      "ldp         q2, q3, [%0], #32             \n"  // load 4 pixels
+      "prfm        pldl1keep, [%0, 448]          \n"
+      "shrn        v0.8b, v0.8h, #8              \n"
+      "shrn        v2.8b, v2.8h, #8              \n"
+      "shrn2       v0.16b, v1.8h, #8             \n"
+      "shrn2       v2.16b, v3.8h, #8             \n"
+      "subs        %w2, %w2, #8                  \n"  // 8 processed per loop.
+      "stp         q0, q2, [%1], #32             \n"  // store 8 pixels
+      "b.gt        1b                            \n"
+      : "+r"(src_ar64),  // %0
+        "+r"(dst_argb),  // %1
+        "+r"(width)      // %2
+      :
+      : "cc", "memory", "v0", "v1", "v2", "v3");
+}
+
+void AB64ToARGBRow_NEON(const uint16_t* src_ab64,
+                        uint8_t* dst_argb,
+                        int width) {
+  asm volatile(
+      "ld1         {v4.16b}, %3                  \n"  // shuffler
+      "1:                                        \n"
+      "ldp         q0, q1, [%0], #32             \n"  // load 4 pixels
+      "ldp         q2, q3, [%0], #32             \n"  // load 4 pixels
+      "prfm        pldl1keep, [%0, 448]          \n"
+      "shrn        v0.8b, v0.8h, #8              \n"
+      "shrn        v2.8b, v2.8h, #8              \n"
+      "shrn2       v0.16b, v1.8h, #8             \n"
+      "shrn2       v2.16b, v3.8h, #8             \n"
+      "tbl         v0.16b, {v0.16b}, v4.16b      \n"
+      "tbl         v2.16b, {v2.16b}, v4.16b      \n"
+      "subs        %w2, %w2, #8                  \n"  // 8 processed per loop.
+      "stp         q0, q2, [%1], #32             \n"  // store 8 pixels
+      "b.gt        1b                            \n"
+      : "+r"(src_ab64),          // %0
+        "+r"(dst_argb),          // %1
+        "+r"(width)              // %2
+      : "m"(kShuffleARGBToABGR)  // %3
+      : "cc", "memory", "v0", "v1", "v2", "v3", "v4");
+}
+
 void ARGBToYRow_NEON(const uint8_t* src_argb, uint8_t* dst_y, int width) {
   asm volatile(
       "movi        v4.8b, #25                    \n"  // B * 0.1016 coefficient
