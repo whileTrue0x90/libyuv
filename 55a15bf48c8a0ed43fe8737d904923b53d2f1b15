@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c54a96_d7f45b13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-10T03:37:20Z",
+      "side": 1,
+      "message": "This is the first step for AR64 support.\nI\u0027m not sure if there\u0027s need to convert between AR30 and AR64 formats. It\u0027s not added in this CL.\nThe following steps are merging / splitting support for AR64, and converting from 10/12 bit YUV(A) to AR64.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
