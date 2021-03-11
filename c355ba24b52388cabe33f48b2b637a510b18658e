@@ -16,6 +16,23 @@
       "message": "Overall running benchmarks on libyuv is slow, so I\u0027ve wrapped tests that are not optimized with ifdefs.",
       "revId": "c355ba24b52388cabe33f48b2b637a510b18658e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bccc08a3_58374c1e",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3605,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T10:33:13Z",
+      "side": 1,
+      "message": "These conversions are also only optimized for x86.",
+      "revId": "c355ba24b52388cabe33f48b2b637a510b18658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
