@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98a6e995_a0a17fa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T19:51:35Z",
+      "side": 1,
+      "message": "Note that all SLOW functions should be considered a bug.  They should be optimized or removed.\n\nThe easiest way to make a function faster is a 2 or 3 step ROW function.\nFind 2 steps that are optimized and call them once per row.  e.g.\nP010ToARGB could be P010ToI420, I420ToARGB and ensure both steps are NEON.\nBut a READP010 would be relatively easy.\n\nThe slowest benchmark is currently Cortex A55 (at 1.6 Ghz) in 32 bit mode\n8 tests from LibYUVBaseTest (1 ms total)\n12 tests from LibYUVColorTest (26986 ms total)\n12 tests from LibYUVCompareTest (16164 ms total)\n962 tests from LibYUVConvertTest (4297586 ms total)\n1 test from LibYUVCpuThreadTest (0 ms total)\n124 tests from LibYUVPlanarTest (1058087 ms total)\n25 tests from LibYUVRotateTest (155204 ms total)\n341 tests from LibYUVScaleTest (2905401 ms total)\n1485 tests from 8 test suites ran. (8459431 ms total)\nAs its slow, I havent run it in awhile and there are new convert tests.\nSurprisingly krait in Nexus5 is faster.  A55 is a little core, Krait is a big core.\nI\u0027ve got a Cortex A7 that should be slower, but it isnt running the tests due to not enough memory?\nMay need to break the unittests up by category.  A7 is closer to whats run in wearables.\nA55\nI420ToARGB_Opt (3210 ms)\n\nA7\nI420ToARGB_Opt (8658 ms)\n\nIts good A55 is the slow because its available on most new phones as the little core, has lots of memory, is easy to optimize for, and includes new instructions like fp16 and dotproduct.\nThere are 1894 ConvertTests now, so those times will be about 2x higher with the latest 16 bpc tests.\nIt becomes problematic if the tests takes more than a few hours, as it will overheat and/or battery will die before the test completes.\n\nNearly all \u0027slow\u0027 tests are not very good tests, because they run the function comparing C code to \u0027Opt\u0027 which is also C code.  It is assumed the functions work because they were also tested on x86 which has AVX versions.\n\nThe known areas lacking optimization\nNV12Scale\nP010\nI010\nAR30\n\n",
+      "revId": "bb70db895444ed80eaa0d7a97631da776930cbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
