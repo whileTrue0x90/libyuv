@@ -123,6 +123,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8010986_fb0b4d87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T21:14:52Z",
+      "side": 1,
+      "message": "These are the row functions implemented for AR30:\nI422ToAR30Row_AVX2\nI210ToAR30Row_AVX2\nI212ToAR30Row_AVX2\nI410ToAR30Row_AVX2\nP210ToAR30Row_AVX2\nP410ToAR30Row_AVX2\nNote AB30 is done with mirrored matrix\nSo these are the priority to do AR4H versions.  They should be done with a macro to STOREAR4H\nAR64 likely doesnt need full support.  AB30, AB4H and P010 are display formats for HDR, so we\u0027ll need conversions from what codecs (av1) output, to these.\n\nThe NEON code needs work, but it should be deferred until its easier to do it, than to not.\n1. the 32 bit version is cleaner.  refactor the 64 bit to use the 32 bit yuvconstants.\n2. use macros to load and store, like the Intel code\n3. remove subsampling.  internals should be 4:4:4 based.\n4. the neon and C code should be able to handle unsigned yuvconstants and unsigned pixels, so see if \u0027old code\u0027 can handle unlimited yuvconstants.\n\nRe AR64 name\nIf possible find an existing name.  I havent found one, but it seems likely there is a name for it.\nAR30 refers to 30 bits of RGB.  The 2 bit alpha is implied.  So AR48 would be the equivalent.  But I think that name would be more confusing than helpful.  What the internals of YUVTORGB use is 2.14 representing a signed value of -2 to 1.99.  If this were given a name it might be 14*3 \u003d 42 bits to AR42, as opposed to AR48 which is full 16 bits.  So if we needed to differentiate different integer 64 bpp formats, those sorts of names would help.  It could still be done as 14*4 \u003d 56, so AR56\nThe 64 doesnt extend to 4 int, since 128 it too many digits.  3*32 \u003d 96.  So AR96 would work.\nI expect we want unsigned, but if the digits represent the fractional bits, AR48 would be unsigned, and AR45 would be signed",
+      "parentUuid": "442d00ed_aaf5fde9",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8271bfe_15c52ae8",
