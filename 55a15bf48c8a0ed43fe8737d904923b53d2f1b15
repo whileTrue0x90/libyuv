@@ -16,6 +16,23 @@
       "message": "This is the first step for AR64 support.\nI\u0027m not sure if there\u0027s need to convert between AR30 and AR64 formats. It\u0027s not added in this CL.\nThe following steps are merging / splitting support for AR64, and converting from 10/12 bit YUV(A) to AR64.",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff89b117_823fe35d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T01:22:27Z",
+      "side": 1,
+      "message": "Could you add documentation on AB64 / AR64?\nAdd fourcc to video_common.h\nThis implements uint16_t channels 0 to 65535.\nFor future formats, fp16 would be nice.  Thats AB4H as a fourcc.\nWhere does AR64 and AB64 fourcc names come from?\nThe next step is YUV to RGB with a macro to write AR64 for row_gcc.  Ideally do the same on Neon but its a simple function on Neon... shift the 2.14 ARGB values up, and ST4 to store.\nFor all future conversions ensure there is Neon, but dont do mips.\nIts not essential to do AR30, but at the moment there is no YUV to AR64 so a 2 step conversion would ideally use YUV to AR30 and AR30 to AR64.\nor on neon where AR30 is not supported natively, a 2 step could be done with YUV to AR64 and AR64 to AR30.  If both steps are Neon thats faster than a 1 step C function.\nAR64 is substantially simplier to implement than AR4H in libyuv, but AB4H seems to be the most popular texture format.  A conversion from AR64 to AR4H can be done in place.\nI suggest opening a new bug for AB4H and use the existing bug for AB64.\n",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
