@@ -33,6 +33,24 @@
       "message": "Could you add documentation on AB64 / AR64?\nAdd fourcc to video_common.h\nThis implements uint16_t channels 0 to 65535.\nFor future formats, fp16 would be nice.  Thats AB4H as a fourcc.\nWhere does AR64 and AB64 fourcc names come from?\nThe next step is YUV to RGB with a macro to write AR64 for row_gcc.  Ideally do the same on Neon but its a simple function on Neon... shift the 2.14 ARGB values up, and ST4 to store.\nFor all future conversions ensure there is Neon, but dont do mips.\nIts not essential to do AR30, but at the moment there is no YUV to AR64 so a 2 step conversion would ideally use YUV to AR30 and AR30 to AR64.\nor on neon where AR30 is not supported natively, a 2 step could be done with YUV to AR64 and AR64 to AR30.  If both steps are Neon thats faster than a 1 step C function.\nAR64 is substantially simplier to implement than AR4H in libyuv, but AB4H seems to be the most popular texture format.  A conversion from AR64 to AR4H can be done in place.\nI suggest opening a new bug for AB4H and use the existing bug for AB64.\n",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1718914_d9866cd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T04:16:21Z",
+      "side": 1,
+      "message": "I didn\u0027t find anywhere using AR64/AB64, and it seems most libraries just give up naming every format using 4 characters. We already have AR30 and AB30, so I think it\u0027s natural to call them AR64 and AB64.\n\nFor NEON we should first remove the subsampling in LOAD* macros, and change them to load samples as Y16UV8 in register.\n\nDo we want to do the u16-\u003efp16 in YUVToRGB Row function, or as a separated step like what we do on alpha attenuate?",
+      "parentUuid": "ff89b117_823fe35d",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
