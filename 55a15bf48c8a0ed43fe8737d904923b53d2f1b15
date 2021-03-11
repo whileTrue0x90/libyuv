@@ -51,6 +51,269 @@
       "parentUuid": "ff89b117_823fe35d",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "442d00ed_aaf5fde9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "\u0027completeness\u0027 is not a design goal for libyuv, so we could forego AR64 and AR4H and just do the AB64 and AB4H versions.  Its not clear anyone will use the AB64.. its not as common.  But the implementation is easy, so I\u0027m okay with adding it.\n\nRe neon.  agreed that is a major issue with the Neon for 444.\nFixing it isnt necessarily a prerequisite before adding  \n\nYUVToRGB in 1 step is always the goal.  The attenuate was meant to become a row function.  The row function itself could be done in row_common.cc as a 2 step row function... there are a few in row_common like that.\nThe attenuate itself is not perfectly accurate.  I made an attempt to improve it and make it portable, but it broke and had to be rolled back.  So best not to integrate it until its sorted out.\nThe attentuate feature is not that commonly needed anymore.  GPUs expect unattentuated.",
+      "parentUuid": "f1718914_d9866cd5",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73dee367_b60ead5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "overall pretty clean.\nNeon looks good.\nIntel would likely be faster using shuffle instead",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8271bfe_15c52ae8",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "it may make sense to relax the alignment constraint.  It still makes sense to align when defining them, but on westmere and beyond its 1 cycle for movdqu.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46c515d5_65775673",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "as a user, it seems odd that this is uint8 and not uint16.  But I guess for both ARM and Intel the implementation are best with bytes",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9381fa5_4c3d8887",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2615,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "if you get a feeling that SSSE3 is taking more time than its worth, consider dropping it.  Old CPUs will still work with C.\nIf there is a compelling win, we\u0027ll add AVX512 in the future.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0f8d7ee_27252e2b",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2879,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "the () around this is not necessary in C:\n(const uint8_t*)\u0026kShuffleMaskAR64ToAB64",
+      "range": {
+        "startLine": 2879,
+        "startChar": 39,
+        "endLine": 2879,
+        "endChar": 61
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efccdf71_b9637da2",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "remove all mips from new code;  mips folks will add it if they want it.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f28fb56_faa60fa6",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "there are 2 other ways to do this.  shift/or and multiple byte stores.\nI would choose whichever autovectorizes.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c2e4db5_c1b90533",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "this feels wrong.  Its not compatible with how the SIMD versions work.\nThe performance of the C code is not critical, since assembly should always be used.\nHaving functions that exactly match C and SIMD is useful for testing and to understand the code.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ecf6183_aa4c4007",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "Consider PMOVZXBW and pshufb?",
+      "range": {
+        "startLine": 1091,
+        "startChar": 26,
+        "endLine": 1091,
+        "endChar": 30
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14600d8e_f0755f47",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "consider\nVPMOVZXBW\nVPMOVZXBW\nVPSHUFB\nVPSHUFB\nvmovdqu \nvmovdqu \n6 instructions, same as now, but vpshufb is faster than vpunpcklbw and fewer dependencies.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1fcc85e_da387a0b",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "Consider remove unpack - have vpshufb replicate the bytes.",
+      "range": {
+        "startLine": 1222,
+        "startChar": 0,
+        "endLine": 1222,
+        "endChar": 52
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d8aa7b1_35845a22",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "FYI  VPMOVUSWB would make this easier.",
+      "range": {
+        "startLine": 1239,
+        "startChar": 0,
+        "endLine": 1239,
+        "endChar": 49
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bee45869_44372e0a",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-11T07:44:13Z",
+      "side": 1,
+      "message": "the above macros might be cleaner if \u0027STRIDE_A\u0027 were expressed as 4 elements instead of 8 bytes?",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
