@@ -88,6 +88,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfe797df_c66774ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "CPU can do little things to half float, so programs using CPU to manipulate pixels use AB64 (e.g. libpng uses AB64 for 16BPC png images).\n\nRe neon: removing subsample requires rewrite the code to load pixels, so I\u0027d like it finished first. Are you working on it? If not I may try to do it.",
+      "parentUuid": "442d00ed_aaf5fde9",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8271bfe_15c52ae8",
@@ -101,6 +119,24 @@
       "writtenOn": "2021-03-11T07:44:13Z",
       "side": 1,
       "message": "it may make sense to relax the alignment constraint.  It still makes sense to align when defining them, but on westmere and beyond its 1 cycle for movdqu.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "951903f5_04cc942c",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8271bfe_15c52ae8",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -122,6 +158,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "783db515_aafac008",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "It uses pshufb underlying, so we want a uvec8 here.\nAlso there\u0027s no new assembly for this function. I\u0027m just reusing the assembly of ARGBShuffle.",
+      "parentUuid": "46c515d5_65775673",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9381fa5_4c3d8887",
@@ -135,6 +189,24 @@
       "writtenOn": "2021-03-11T07:44:13Z",
       "side": 1,
       "message": "if you get a feeling that SSSE3 is taking more time than its worth, consider dropping it.  Old CPUs will still work with C.\nIf there is a compelling win, we\u0027ll add AVX512 in the future.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a20457cb_c0e2ec4e",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2615,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Do we now generally accept AVX512? If so I may try to write some AVX512 version functions.",
+      "parentUuid": "f9381fa5_4c3d8887",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -162,6 +234,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a193b77_0892a069",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2879,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f8d7ee_27252e2b",
+      "range": {
+        "startLine": 2879,
+        "startChar": 39,
+        "endLine": 2879,
+        "endChar": 61
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efccdf71_b9637da2",
@@ -175,6 +271,24 @@
       "writtenOn": "2021-03-11T07:44:13Z",
       "side": 1,
       "message": "remove all mips from new code;  mips folks will add it if they want it.",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c269cd6_6eeddaba",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "I\u0027m just changing the macro name from ANY11T to ANY11I. T for Type, I for Interpolate. I\u0027m adding ANY11T(ype) so this is renamed to the more suitable ANY11I(nterpolate).",
+      "parentUuid": "efccdf71_b9637da2",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -196,6 +310,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03740d98_6154ca38",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Compilers knows to convert this to shift so maybe it\u0027s fine, and this form looks clearer.\nClang doesn\u0027t autovectorize both ways, unless using avx512. Shift is faster than multiple byte stores under pure C.\nMore compilers autovectorize the shift version. So maybe left this as is.",
+      "parentUuid": "3f28fb56_faa60fa6",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c2e4db5_c1b90533",
@@ -213,6 +345,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "056389ee_2fa6d4f1",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "We can only shuffle byte or dword, so to shuffle word we have to shuffle byte (pshufb).\nThis should be the way to extract index in uint_16 from shuffler used by pshufb.",
+      "parentUuid": "8c2e4db5_c1b90533",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ecf6183_aa4c4007",
@@ -226,6 +376,30 @@
       "writtenOn": "2021-03-11T07:44:13Z",
       "side": 1,
       "message": "Consider PMOVZXBW and pshufb?",
+      "range": {
+        "startLine": 1091,
+        "startChar": 26,
+        "endLine": 1091,
+        "endChar": 30
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "054b340f_3e281656",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Use pshufb in ARGBToAB64 is slightly faster, and others are almost same speed on my machine.",
+      "parentUuid": "7ecf6183_aa4c4007",
       "range": {
         "startLine": 1091,
         "startChar": 26,
@@ -255,6 +429,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "431116a7_80488ce7",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Performance is the same on my machine (Coffee lake). Is it actually faster on some CPU?",
+      "parentUuid": "14600d8e_f0755f47",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b1fcc85e_da387a0b",
         "filename": "source/row_gcc.cc",
         "patchSetId": 1
@@ -266,6 +458,30 @@
       "writtenOn": "2021-03-11T07:44:13Z",
       "side": 1,
       "message": "Consider remove unpack - have vpshufb replicate the bytes.",
+      "range": {
+        "startLine": 1222,
+        "startChar": 0,
+        "endLine": 1222,
+        "endChar": 52
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bc9a9da_98a27a9c",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1fcc85e_da387a0b",
       "range": {
         "startLine": 1222,
         "startChar": 0,
@@ -299,6 +515,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5521b39_4d7d90d2",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "It\u0027s AVX512...",
+      "parentUuid": "0d8aa7b1_35845a22",
+      "range": {
+        "startLine": 1239,
+        "startChar": 0,
+        "endLine": 1239,
+        "endChar": 49
+      },
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bee45869_44372e0a",
@@ -312,6 +552,24 @@
       "writtenOn": "2021-03-11T07:44:13Z",
       "side": 1,
       "message": "the above macros might be cleaner if \u0027STRIDE_A\u0027 were expressed as 4 elements instead of 8 bytes?",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "481f75b5_48797957",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-11T15:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee45869_44372e0a",
       "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
