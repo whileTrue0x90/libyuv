@@ -50,6 +50,23 @@
       "message": "LGTM",
       "revId": "bb70db895444ed80eaa0d7a97631da776930cbb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38e644c4_41fd3d49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-12T01:25:25Z",
+      "side": 1,
+      "message": "Note the commit via CQ wont work until Mac and Windows try bots are fixed.",
+      "revId": "bb70db895444ed80eaa0d7a97631da776930cbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
