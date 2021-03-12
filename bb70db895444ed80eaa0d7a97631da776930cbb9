@@ -33,6 +33,23 @@
       "message": "Disables tests that are slow with a macro.\nall platforms 16 bit per channel Scale functions are slow (C code)\nARM P010, I010 and AR30 conversions are slow.\n\nNV12Scale and ARGBBlur are slow - will followup on those\n\nIf enabled, the slowest ARM device takes 12 hours to run at 1280x720 1000 iterations.\nDevices that support 64 bit run twice, so worst case is currently 24 hours.\n\nTypical fast tests take 2 seconds or less per test.\nTypical slow tests take 30 seconds or more.\n\nSome slow tests are still present, but create \u0027disabled\u0027 tests that can still be run\n--gunit_also_run_disabled_tests\n\n",
       "revId": "bb70db895444ed80eaa0d7a97631da776930cbb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e19b3c0f_35903dd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-12T01:14:36Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "bb70db895444ed80eaa0d7a97631da776930cbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
