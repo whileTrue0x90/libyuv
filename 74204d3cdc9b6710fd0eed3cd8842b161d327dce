@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7d123d0_6f41773d",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-12T10:58:46Z",
+      "side": 1,
+      "message": "The comment is misleading.  AR64 is ARGB as a register or BGRA in memory.\nAB64 is ABGR as a register or RGBA in memory.\nlibyuv uses register ordering for names, so its ARGB to ABGR, not BGRA to ARGB.\nBut the comment should probably read:\n// Shuffle table for converting AR64 to AB64.",
+      "revId": "74204d3cdc9b6710fd0eed3cd8842b161d327dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8712730a_a1b03390",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2870,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-12T10:58:46Z",
+      "side": 1,
+      "message": "consider an alias in future.  there will be more of these for AR4HToAB4H",
+      "revId": "74204d3cdc9b6710fd0eed3cd8842b161d327dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

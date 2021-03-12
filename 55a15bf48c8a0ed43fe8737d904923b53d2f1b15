@@ -246,6 +246,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44f1e63d_5dcc451e",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2615,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-12T10:58:46Z",
+      "side": 1,
+      "message": "Ack.  We would if there is a compelling performance improvement.\nMost AVX512 hardware will disable an execution unit, effectively running at half the speed of AVX.\nAnd some will reduce the clockrate of ALL code, not just the AVX512.\nSo one way to avoid both issues is focus on new instructions but use them on AVX registers.\nI\u0027ve got a skylakex, which has a pretty good avx512 implementation.\nIf you dont have a cpu to test on, intelsde is great for trying new and old cpus on code\ne.g.\n~/intelsde/sde -cnl -- out/Release/libyuv_unittest --gtest_filter\u003d*P010ToARGB_Opt\ncnl \u003d canonlake.\nThe short answer is yes.",
+      "parentUuid": "a20457cb_c0e2ec4e",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0f8d7ee_27252e2b",
