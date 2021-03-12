@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47b00acb_4d2c4799",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-12T17:53:01Z",
+      "side": 1,
+      "message": "Mark Clip Scale tests as slow\n\nlibyuv_test --gunit_also_run_disabled_tests \u0027--gunit_filter\u003d**ARGBScaleDown*By3by8_Box\u0027 --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\nWas 8x8 tiles\n[ RUN      ] LibYUVScaleTest.ARGBScaleDownBy3by8_Box\nfilter 3 -    15351 us C -    15381 us OPT\n[       OK ] LibYUVScaleTest.ARGBScaleDownBy3by8_Box (15546 ms)\n[ RUN      ] LibYUVScaleTest.ARGBScaleDownClipBy3by8_Box\nfilter 3 -    15510 us Full -    28289 us Tiled\n[       OK ] LibYUVScaleTest.ARGBScaleDownClipBy3by8_Box (28505 ms)\n\nNow 64x64 tiles and disabled\n[----------] 2 tests from LibYUVScaleTest\n[ RUN      ] LibYUVScaleTest.ARGBScaleDownBy3by8_Box\nfilter 3 -    15394 us C -    15385 us OPT\n[       OK ] LibYUVScaleTest.ARGBScaleDownBy3by8_Box (15550 ms)\n[ RUN      ] LibYUVScaleTest.DISABLED_ARGBScaleDownClipBy3by8_Box\nfilter 3 -    15344 us Full -    21153 us Tiled\n[       OK ] LibYUVScaleTest.DISABLED_ARGBScaleDownClipBy3by8_Box (21368 ms)\n",
+      "revId": "5fa23e63fc09b6894f6eee610fca28abb689d2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
