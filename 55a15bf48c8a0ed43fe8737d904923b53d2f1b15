@@ -498,6 +498,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "880ae1f0_40507661",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-13T20:55:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "431116a7_80488ce7",
+      "revId": "55a15bf48c8a0ed43fe8737d904923b53d2f1b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1fcc85e_da387a0b",
