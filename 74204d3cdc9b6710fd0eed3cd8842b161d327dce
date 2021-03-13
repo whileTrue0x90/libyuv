@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98426f4_2d887c1f",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2794,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-13T09:30:46Z",
+      "side": 1,
+      "message": "Done\nCopy pasted but I forgot to change it.",
+      "parentUuid": "e7d123d0_6f41773d",
+      "revId": "74204d3cdc9b6710fd0eed3cd8842b161d327dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8712730a_a1b03390",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-03-12T10:58:46Z",
       "side": 1,
       "message": "consider an alias in future.  there will be more of these for AR4HToAB4H",
+      "revId": "74204d3cdc9b6710fd0eed3cd8842b161d327dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6990ea7b_bdd2cbdb",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2870,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-13T09:30:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8712730a_a1b03390",
       "revId": "74204d3cdc9b6710fd0eed3cd8842b161d327dce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
