@@ -1229,7 +1229,7 @@ TESTATOBIPLANAR(AYUV, 1, 4, NV21, 2, 2)
                           kStrideA* kHeightA * sizeof(TYPE_A) + OFF);          \
     align_buffer_page_end(dst_argb_c, kStrideB* kHeightB * sizeof(TYPE_B));    \
     align_buffer_page_end(dst_argb_opt, kStrideB* kHeightB * sizeof(TYPE_B));  \
-    for (int i = 0; i < kStrideA * kHeightA * sizeof(TYPE_A); ++i) {           \
+    for (int i = 0; i < kStrideA * kHeightA * (int)sizeof(TYPE_A); ++i) {      \
       src_argb[i + OFF] = (fastrand() & 0xff);                                 \
     }                                                                          \
     memset(dst_argb_c, 1, kStrideB* kHeightB);                                 \
@@ -1242,7 +1242,7 @@ TESTATOBIPLANAR(AYUV, 1, 4, NV21, 2, 2)
       FMT_A##To##FMT_B((TYPE_A*)(src_argb + OFF), kStrideA,                    \
                        (TYPE_B*)dst_argb_opt, kStrideB, kWidth, NEG kHeight);  \
     }                                                                          \
-    for (int i = 0; i < kStrideB * kHeightB * sizeof(TYPE_B); ++i) {           \
+    for (int i = 0; i < kStrideB * kHeightB * (int)sizeof(TYPE_B); ++i) {      \
       EXPECT_EQ(dst_argb_c[i], dst_argb_opt[i]);                               \
     }                                                                          \
     free_aligned_buffer_page_end(src_argb);                                    \
@@ -1266,7 +1266,7 @@ TESTATOBIPLANAR(AYUV, 1, 4, NV21, 2, 2)
       align_buffer_page_end(dst_argb_c, kStrideB* kHeightB * sizeof(TYPE_B)); \
       align_buffer_page_end(dst_argb_opt,                                     \
                             kStrideB* kHeightB * sizeof(TYPE_B));             \
-      for (int i = 0; i < kStrideA * kHeightA * sizeof(TYPE_A); ++i) {        \
+      for (int i = 0; i < kStrideA * kHeightA * (int)sizeof(TYPE_A); ++i) {   \
         src_argb[i] = 0xfe;                                                   \
       }                                                                       \
       memset(dst_argb_c, 123, kStrideB* kHeightB);                            \
@@ -1277,7 +1277,7 @@ TESTATOBIPLANAR(AYUV, 1, 4, NV21, 2, 2)
       MaskCpuFlags(benchmark_cpu_info_);                                      \
       FMT_A##To##FMT_B((TYPE_A*)src_argb, kStrideA, (TYPE_B*)dst_argb_opt,    \
                        kStrideB, kWidth, kHeight);                            \
-      for (int i = 0; i < kStrideB * kHeightB * sizeof(TYPE_B); ++i) {        \
+      for (int i = 0; i < kStrideB * kHeightB * (int)sizeof(TYPE_B); ++i) {   \
         EXPECT_EQ(dst_argb_c[i], dst_argb_opt[i]);                            \
       }                                                                       \
       free_aligned_buffer_page_end(src_argb);                                 \
@@ -1467,7 +1467,7 @@ TESTATOBD(ARGB, 4, 4, 1, RGB565, 2, 2, 1)
                           kStrideA* kHeightA * sizeof(TYPE_A) + OFF);          \
     align_buffer_page_end(dst_argb_c, kStrideA* kHeightA * sizeof(TYPE_A));    \
     align_buffer_page_end(dst_argb_opt, kStrideA* kHeightA * sizeof(TYPE_A));  \
-    for (int i = 0; i < kStrideA * kHeightA * sizeof(TYPE_A); ++i) {           \
+    for (int i = 0; i < kStrideA * kHeightA * (int)sizeof(TYPE_A); ++i) {      \
       src_argb[i + OFF] = (fastrand() & 0xff);                                 \
     }                                                                          \
     memset(dst_argb_c, 1, kStrideA* kHeightA);                                 \
@@ -1486,7 +1486,7 @@ TESTATOBD(ARGB, 4, 4, 1, RGB565, 2, 2, 1)
     MaskCpuFlags(benchmark_cpu_info_);                                         \
     FMT_ATOB((TYPE_A*)dst_argb_opt, kStrideA, (TYPE_A*)dst_argb_opt, kStrideA, \
              kWidth, NEG kHeight);                                             \
-    for (int i = 0; i < kStrideA * kHeightA * sizeof(TYPE_A); ++i) {           \
+    for (int i = 0; i < kStrideA * kHeightA * (int)sizeof(TYPE_A); ++i) {      \
       EXPECT_EQ(src_argb[i + OFF], dst_argb_opt[i]);                           \
       EXPECT_EQ(dst_argb_c[i], dst_argb_opt[i]);                               \
     }                                                                          \
