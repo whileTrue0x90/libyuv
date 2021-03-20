@@ -3010,6 +3010,106 @@ void MergeARGBRow_C(const uint8_t* src_r,
   }
 }
 
+void MergeXR30Row_C(const uint16_t* src_r,
+                    const uint16_t* src_g,
+                    const uint16_t* src_b,
+                    uint8_t* dst_ar30,
+                    int depth,
+                    int width) {
+  assert(depth >= 9);
+  assert(depth <= 16);
+  int x;
+  uint32_t r;
+  uint32_t g;
+  uint32_t b;
+  int shift = depth - 10;
+  uint32_t* dst_ar30_32 = (uint32_t*)dst_ar30;
+  for (x = 0; x < width; ++x) {
+    r = src_r[x] >> shift;
+    g = src_g[x] >> shift;
+    b = src_b[x] >> shift;
+    dst_ar30_32[x] = b | (g << 10) | (r << 20) | 0xc0000000;
+  }
+}
+
+void MergeAR64Row_C(const uint16_t* src_r,
+                    const uint16_t* src_g,
+                    const uint16_t* src_b,
+                    const uint16_t* src_a,
+                    uint16_t* dst_ar64,
+                    int depth,
+                    int width) {
+  assert(depth >= 1);
+  assert(depth <= 16);
+  int x;
+  int shift = 16 - depth;
+  for (x = 0; x < width; ++x) {
+    dst_ar64[0] = src_b[x] << shift;
+    dst_ar64[1] = src_g[x] << shift;
+    dst_ar64[2] = src_r[x] << shift;
+    dst_ar64[3] = src_a[x] << shift;
+    dst_ar64 += 4;
+  }
+}
+
+void MergeARGB16To8Row_C(const uint16_t* src_r,
+                         const uint16_t* src_g,
+                         const uint16_t* src_b,
+                         const uint16_t* src_a,
+                         uint8_t* dst_argb,
+                         int depth,
+                         int width) {
+  assert(depth >= 8);
+  assert(depth <= 16);
+  int x;
+  int shift = depth - 8;
+  for (x = 0; x < width; ++x) {
+    dst_argb[0] = src_b[x] >> shift;
+    dst_argb[1] = src_g[x] >> shift;
+    dst_argb[2] = src_r[x] >> shift;
+    dst_argb[3] = src_a[x] >> shift;
+    dst_argb += 4;
+  }
+}
+
+void MergeXR64Row_C(const uint16_t* src_r,
+                    const uint16_t* src_g,
+                    const uint16_t* src_b,
+                    uint16_t* dst_ar64,
+                    int depth,
+                    int width) {
+  assert(depth >= 1);
+  assert(depth <= 16);
+  int x;
+  int shift = 16 - depth;
+  for (x = 0; x < width; ++x) {
+    dst_ar64[0] = src_b[x] << shift;
+    dst_ar64[1] = src_g[x] << shift;
+    dst_ar64[2] = src_r[x] << shift;
+    dst_ar64[3] = 0xffff;
+    dst_ar64 += 4;
+  }
+}
+
+void MergeXRGB16To8Row_C(const uint16_t* src_r,
+                         const uint16_t* src_g,
+                         const uint16_t* src_b,
+                         uint8_t* dst_argb,
+                         int depth,
+                         int width) {
+  assert(depth >= 8);
+  assert(depth <= 16);
+  int x;
+  int shift = depth - 8;
+  for (x = 0; x < width; ++x) {
+    dst_argb[0] = src_b[x] >> shift;
+    dst_argb[1] = src_g[x] >> shift;
+    dst_argb[2] = src_r[x] >> shift;
+    dst_argb[3] = 0xff;
+    dst_argb += 4;
+  }
+}
+
 void SplitXRGBRow_C(const uint8_t* src_argb,
                     uint8_t* dst_r,
                     uint8_t* dst_g,
