@@ -2259,10 +2259,12 @@ float TestByteToFloat(int benchmark_width,
                       float scale) {
   int i, j;
   const int y_plane_size = benchmark_width * benchmark_height;
+  // make sure float is 4 bytes aligned
+  const int y_plane_memory = (y_plane_size + 3) & (~3);
 
-  align_buffer_page_end(orig_y, y_plane_size * (1 + 4 + 4));
-  float* dst_opt = reinterpret_cast<float*>(orig_y + y_plane_size);
-  float* dst_c = reinterpret_cast<float*>(orig_y + y_plane_size * 5);
+  align_buffer_page_end(orig_y, y_plane_memory * (1 + 4 + 4));
+  float* dst_opt = reinterpret_cast<float*>(orig_y + y_plane_memory);
+  float* dst_c = reinterpret_cast<float*>(orig_y + y_plane_memory * 5);
 
   MemRandomize(orig_y, y_plane_size);
   memset(dst_c, 0, y_plane_size * 4);
@@ -3152,7 +3154,7 @@ TESTQPLANARTOP(MergeARGB16To8, uint16_t, uint8_t, 16)
 #define TESTTPLANARTOPI(FUNC, STYPE, DTYPE, DEPTH, W1280, N, NEG, OFF)      \
   TEST_F(LibYUVPlanarTest, FUNC##Plane_##DEPTH##N) {                        \
     const int kWidth = ((W1280) > 0) ? (W1280) : 1;                         \
-    const int kPixels = (kWidth * benchmark_height_ + 15) & ~15;            \
+    const int kPixels = kWidth * benchmark_height_;                         \
     align_buffer_page_end(src_memory_r, kPixels * sizeof(STYPE) + OFF);     \
     align_buffer_page_end(src_memory_g, kPixels * sizeof(STYPE) + OFF);     \
     align_buffer_page_end(src_memory_b, kPixels * sizeof(STYPE) + OFF);     \
@@ -3249,7 +3251,7 @@ TEST_F(LibYUVPlanarTest, MergeUVRow_16_Opt) {
 #ifdef HAS_MULTIPLYROW_16_AVX2
 TEST_F(LibYUVPlanarTest, MultiplyRow_16_Opt) {
   // Round count up to multiple of 16
-  const int kPixels = (benchmark_width_ * benchmark_height_ + 15) & ~15;
+  const int kPixels = (benchmark_width_ * benchmark_height_ + 31) & ~31;
 
   align_buffer_page_end(src_pixels_y, kPixels * 2);
   align_buffer_page_end(dst_pixels_y_opt, kPixels * 2);

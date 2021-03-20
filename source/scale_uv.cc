@@ -1152,6 +1152,11 @@ int UVScale_16(const uint16_t* src_uv,
   filtering = ScaleFilterReduce(src_width, src_height, dst_width, dst_height,
                                 filtering);
 
+  // UV only support no filter on same dimension. Revert simplification above.
+  if (src_width == 1 && dst_width <= 2 && filtering == kFilterNone) {
+    filtering = kFilterLinear;
+  }
+
   // Negative src_height means invert the image.
   if (src_height < 0) {
     src_height = -src_height;
