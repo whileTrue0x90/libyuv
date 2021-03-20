@@ -5766,7 +5766,8 @@ void MergeAR64Row_AVX2(const uint16_t* src_r,
       "sub         %0,%3                         \n"
       "vmovdqa     %8,%%ymm5                     \n"
       "vmovd       %6,%%xmm6                     \n"
-      "vbroadcastss %7,%%ymm7                    \n"
+      "vmovd       %7,%%xmm7                     \n"
+      "vbroadcastss %%xmm7,%%ymm7                \n"
 
       LABELALIGN
       "1:                                        \n"
@@ -5839,7 +5840,8 @@ void MergeXR64Row_AVX2(const uint16_t* src_r,
       "sub         %0,%2                         \n"
       "vmovdqa     %7,%%ymm5                     \n"
       "vmovd       %5,%%xmm6                     \n"
-      "vbroadcastss %6,%%ymm7                    \n"
+      "vmovd       %6,%%xmm7                     \n"
+      "vbroadcastss %%xmm7,%%ymm7                \n"
 
       LABELALIGN
       "1:                                        \n"
