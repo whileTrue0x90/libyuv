@@ -760,8 +760,8 @@ void MergeXRGBRow_NEON(const uint8_t* src_r,
       "vld1.8      {q1}, [%1]!                   \n"  // load G
       "vld1.8      {q0}, [%2]!                   \n"  // load B
       "subs        %4, %4, #16                   \n"  // 16 processed per loop
-      "vst4.8      {d0, d2, d4, d6}, [%4]!       \n"  // store 8 ARGB
-      "vst4.8      {d1, d3, d5, d7}, [%4]!       \n"  // next 8 ARGB
+      "vst4.8      {d0, d2, d4, d6}, [%3]!       \n"  // store 8 ARGB
+      "vst4.8      {d1, d3, d5, d7}, [%3]!       \n"  // next 8 ARGB
       "bgt         1b                            \n"
       : "+r"(src_r),                            // %0
         "+r"(src_g),                            // %1
@@ -771,6 +771,231 @@ void MergeXRGBRow_NEON(const uint8_t* src_r,
       :                                         // Input registers
       : "cc", "memory", "q0", "q1", "q2", "q3"  // Clobber List
   );
+}
+
+void MergeAR30Row_NEON(const uint16_t* src_r,
+                       const uint16_t* src_g,
+                       const uint16_t* src_b,
+                       uint8_t* dst_ar30,
+                       int depth,
+                       int width) {
+  int shift = depth - 10;
+  asm volatile(
+      "cbz         %5, 2f                        \n"
+      "vdup.32     q15, %5                       \n"
+      "vneg.s32    q15, q15                      \n"
+      "1:                                        \n"
+      "vld1.16     {d0}, [%0]!                   \n"  // R
+      "vld1.16     {d2}, [%1]!                   \n"  // G
+      "vld1.16     {d4}, [%2]!                   \n"  // B
+      "vmovl.u16   q0, d0                        \n"  // R
+      "vmovl.u16   q1, d2                        \n"  // G
+      "vmovl.u16   q2, d4                        \n"  // B
+      "vshl.u32    q0, q0, q15                   \n"
+      "vshl.u32    q1, q1, q15                   \n"
+      "vshl.u32    q2, q2, q15                   \n"
+      "vshl.u32    q0, q0, #20                   \n"  // R
+      "vshl.u32    q1, q1, #10                   \n"  // G
+      "vorr.u32    q0, #0xc0000000               \n"  // AR
+      "vorr        q1, q1, q2                    \n"  // GB
+      "vorr        q0, q0, q1                    \n"  // ARGB (AR30)
+      "subs        %4, %4, #4                    \n"
+      "vst1.8      {q0}, [%3]!                   \n"
+      "bgt         1b                            \n"
+      "b           3f                            \n"
+
+      "2:                                        \n"
+      "vld1.16     {d0}, [%0]!                   \n"  // R
+      "vld1.16     {d2}, [%1]!                   \n"  // G
+      "vld1.16     {d4}, [%2]!                   \n"  // B
+      "vmovl.u16   q0, d0                        \n"  // R
+      "vshll.u16   q1, d2, #10                   \n"  // G
+      "vshl.u32    q0, q0, #20                   \n"  // R
+      "vmovl.u16   q2, d4                        \n"  // B
+      "vorr.u32    q0, #0xc0000000               \n"  // AR
+      "vorr        q1, q1, q2                    \n"  // GB
+      "vorr        q0, q0, q1                    \n"  // ARGB (AR30)
+      "subs        %4, %4, #4                    \n"
+      "vst1.8      {q0}, [%3]!                   \n"
+      "bgt         2b                            \n"
+      "3:                                        \n"
+      : "+r"(src_r),     // %0
+        "+r"(src_g),     // %1
+        "+r"(src_b),     // %2
+        "+r"(dst_ar30),  // %3
+        "+r"(width),     // %4
+        "+r"(shift)      // %5
+      :
+      : "memory", "cc", "q0", "q1", "q2", "q15");
+}
+
+void MergeAR64Row_NEON(const uint16_t* src_r,
+                       const uint16_t* src_g,
+                       const uint16_t* src_b,
+                       const uint16_t* src_a,
+                       uint16_t* dst_ar64,
+                       int depth,
+                       int width) {
+  int shift = 16 - depth;
+  asm volatile(
+
+      "cbz         %5, 2f                        \n"
+      "vdup.u16    q15, %5                       \n"
+      "1:                                        \n"
+      "vld1.16     {q2}, [%0]!                   \n"  // R
+      "vld1.16     {q1}, [%1]!                   \n"  // G
+      "vld1.16     {q0}, [%2]!                   \n"  // B
+      "vld1.16     {q3}, [%3]!                   \n"  // A
+      "vshl.u16    q2, q2, q15                   \n"
+      "vshl.u16    q1, q1, q15                   \n"
+      "vshl.u16    q0, q0, q15                   \n"
+      "vshl.u16    q3, q3, q15                   \n"
+      "subs        %6, %6, #8                    \n"
+      "vst4.16     {d0, d2, d4, d6}, [%4]!       \n"
+      "vst4.16     {d1, d3, d5, d7}, [%4]!       \n"
+      "bgt         1b                            \n"
+      "b           3f                            \n"
+
+      "2:                                        \n"
+      "vld1.16     {q2}, [%0]!                   \n"  // R
+      "vld1.16     {q1}, [%1]!                   \n"  // G
+      "vld1.16     {q0}, [%2]!                   \n"  // B
+      "vld1.16     {q3}, [%3]!                   \n"  // A
+      "subs        %6, %6, #8                    \n"
+      "vst4.16     {d0, d2, d4, d6}, [%4]!       \n"
+      "vst4.16     {d1, d3, d5, d7}, [%4]!       \n"
+      "bgt         2b                            \n"
+
+      "3:                                        \n"
+      : "+r"(src_r),     // %0
+        "+r"(src_g),     // %1
+        "+r"(src_b),     // %2
+        "+r"(src_a),     // %3
+        "+r"(dst_ar64),  // %4
+        "+r"(shift),     // %5
+        "+r"(width)      // %6
+
+      :
+      : "memory", "cc", "q0", "q1", "q2", "q3", "q15");
+}
+
+void MergeXR64Row_NEON(const uint16_t* src_r,
+                       const uint16_t* src_g,
+                       const uint16_t* src_b,
+                       uint16_t* dst_ar64,
+                       int depth,
+                       int width) {
+  int shift = 16 - depth;
+  asm volatile(
+
+      "vmov.u8     q3, #0xff                   \n"  // A (0xffff)
+      "cbz         %5, 2f                        \n"
+      "vdup.u16    q15, %5                       \n"
+      "1:                                        \n"
+      "vld1.16     {q2}, [%0]!                   \n"  // R
+      "vld1.16     {q1}, [%1]!                   \n"  // G
+      "vld1.16     {q0}, [%2]!                   \n"  // B
+      "vshl.u16    q2, q2, q15                   \n"
+      "vshl.u16    q1, q1, q15                   \n"
+      "vshl.u16    q0, q0, q15                   \n"
+      "subs        %4, %4, #8                    \n"
+      "vst4.16     {d0, d2, d4, d6}, [%3]!       \n"
+      "vst4.16     {d1, d3, d5, d7}, [%3]!       \n"
+      "bgt         1b                            \n"
+      "b           3f                            \n"
+
+      "2:                                        \n"
+      "vld1.16     {q2}, [%0]!                   \n"  // R
+      "vld1.16     {q1}, [%1]!                   \n"  // G
+      "vld1.16     {q0}, [%2]!                   \n"  // B
+      "subs        %4, %4, #8                    \n"
+      "vst4.16     {d0, d2, d4, d6}, [%3]!       \n"
+      "vst4.16     {d1, d3, d5, d7}, [%3]!       \n"
+      "bgt         2b                            \n"
+
+      "3:                                        \n"
+      : "+r"(src_r),     // %0
+        "+r"(src_g),     // %1
+        "+r"(src_b),     // %2
+        "+r"(dst_ar64),  // %3
+        "+r"(width),     // %4
+        "+r"(shift)      // %5
+      :
+      : "memory", "cc", "q0", "q1", "q2", "q3", "q15");
+}
+
+void MergeARGB16To8Row_NEON(const uint16_t* src_r,
+                            const uint16_t* src_g,
+                            const uint16_t* src_b,
+                            const uint16_t* src_a,
+                            uint8_t* dst_argb,
+                            int depth,
+                            int width) {
+  int shift = depth - 8;
+  asm volatile(
+
+      "vdup.16     q15, %6                       \n"
+      "vneg.s16    q15, q15                      \n"
+      "1:                                        \n"
+      "vld1.16     {q2}, [%0]!                   \n"  // R
+      "vld1.16     {q1}, [%1]!                   \n"  // G
+      "vld1.16     {q0}, [%2]!                   \n"  // B
+      "vld1.16     {q3}, [%3]!                   \n"  // A
+      "vshl.u16    q2, q2, q15                   \n"
+      "vshl.u16    q1, q1, q15                   \n"
+      "vshl.u16    q0, q0, q15                   \n"
+      "vshl.u16    q3, q3, q15                   \n"
+      "vmovn.u16   d0, q0                        \n"
+      "vmovn.u16   d1, q1                        \n"
+      "vmovn.u16   d2, q2                        \n"
+      "vmovn.u16   d3, q3                        \n"
+      "subs        %5, %5, #8                    \n"
+      "vst4.8      {d0, d1, d2, d3}, [%4]!       \n"
+      "bgt         1b                            \n"
+      : "+r"(src_r),     // %0
+        "+r"(src_g),     // %1
+        "+r"(src_b),     // %2
+        "+r"(src_a),     // %3
+        "+r"(dst_argb),  // %4
+        "+r"(width),     // %5
+        "+r"(shift)      // %6
+      :
+      : "memory", "cc", "q0", "q1", "q2", "q3", "q15");
+}
+
+void MergeXRGB16To8Row_NEON(const uint16_t* src_r,
+                            const uint16_t* src_g,
+                            const uint16_t* src_b,
+                            uint8_t* dst_argb,
+                            int depth,
+                            int width) {
+  int shift = depth - 8;
+  asm volatile(
+
+      "vdup.16     q15, %5                       \n"
+      "vneg.s16    q15, q15                      \n"
+      "vmov.u8     d6, #0xff                     \n"  // A (0xff)
+      "1:                                        \n"
+      "vld1.16     {q2}, [%0]!                   \n"  // R
+      "vld1.16     {q1}, [%1]!                   \n"  // G
+      "vld1.16     {q0}, [%2]!                   \n"  // B
+      "vshl.u16    q2, q2, q15                   \n"
+      "vshl.u16    q1, q1, q15                   \n"
+      "vshl.u16    q0, q0, q15                   \n"
+      "vmovn.u16   d5, q2                        \n"
+      "vmovn.u16   d4, q1                        \n"
+      "vmovn.u16   d3, q0                        \n"
+      "subs        %4, %4, #8                    \n"
+      "vst4.u8     {d3, d4, d5, d6}, [%3]!       \n"
+      "bgt         1b                            \n"
+      : "+r"(src_r),     // %0
+        "+r"(src_g),     // %1
+        "+r"(src_b),     // %2
+        "+r"(dst_argb),  // %3
+        "+r"(width),     // %4
+        "+r"(shift)      // %5
+      :
+      : "memory", "cc", "q0", "q1", "q2", "d6", "q15");
 }
 
 // Copy multiple of 32.  vld4.8  allow unaligned and is fastest on a15.
