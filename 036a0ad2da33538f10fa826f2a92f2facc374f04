@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7af42a30_287d3226",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-24T05:46:32Z",
+      "side": 1,
+      "message": "unclear why planar argb would come up, but I assume you have a use case.  best to create a new bug for the planar support, as its not directly related to AR64.\nI would lean toward supporting the 2 bit alpha in AR30.\nI would lean toward simplifying these planar merge functions not doing shifts... assuming its a full 16 bits, or the msb of each uint16_t.\nThe AR30 conversion is going a bit beyond what \u0027planar\u0027 functions normally do... its really a conversion at that point.\nAR64 is integer and not a priority?  fp16 is the format we\u0027ll want for the RGB side?\nAs overlay formats, AR30 and P010 are supported overlay formats.\nAB4H is a common texture format.",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad93a7a0_ba5afade",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-24T05:46:32Z",
+      "side": 1,
+      "message": "Its unclear why depth is needed?  Remove or document.",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7126f04a_e0441e96",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3012,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-24T05:46:32Z",
+      "side": 1,
+      "message": "Comments in general should start with a capital letter and end with a period.\n\n// Require 10 \u003c\u003d depth \u0026\u0026 depth \u003c\u003d 16.\n\nNow I see the implementation I see what depth is intended to be.  The source planes use the low bits.  I was expecting them AR64 etc formats to use the msb, similar to P010.\nIf supporting lsb is needed, document the public header more.",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43f4771b_d91f53c0",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-24T05:46:32Z",
+      "side": 1,
+      "message": "clarify if this is source or dest depth and what this does.\nit appears youre defining planar argb as lsb but packed argb is msb?",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33bd3097_16c65b26",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-24T05:46:32Z",
+      "side": 1,
+      "message": "cbz    %5, 2f",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
