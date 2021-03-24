@@ -16,6 +16,23 @@
       "message": "Intel shift expects a single value in the XMM?",
       "revId": "f0fc7a82edda5acc0dc723ee32085bbfa7f2cedd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01839bf2_05ed8d0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-24T17:48:32Z",
+      "side": 1,
+      "message": "SplitPlane Neon on Pixel 4\nWas 32 bit shifts. \nSplitUVPlane_16_Opt (504 ms)\nNow 16 bit shifts\nSplitUVPlane_16_Opt (283 ms)\n\n\nSkylakeX\n[ RUN      ] LibYUVPlanarTest.MergeUVPlane_Opt\n[       OK ] LibYUVPlanarTest.MergeUVPlane_Opt (155 ms)\n[ RUN      ] LibYUVPlanarTest.MergeUVPlane_16_Opt\n[       OK ] LibYUVPlanarTest.MergeUVPlane_16_Opt (334 ms)\n[ RUN      ] LibYUVPlanarTest.SplitUVPlane_Opt\n[       OK ] LibYUVPlanarTest.SplitUVPlane_Opt (155 ms)\n[ RUN      ] LibYUVPlanarTest.SplitUVPlane_16_Opt\n[       OK ] LibYUVPlanarTest.SplitUVPlane_16_Opt (314 ms)\n\nPixel 4\n[ RUN      ] LibYUVPlanarTest.MergeUVPlane_Opt\n[       OK ] LibYUVPlanarTest.MergeUVPlane_Opt (121 ms)\n[ RUN      ] LibYUVPlanarTest.MergeUVPlane_16_Opt\n[       OK ] LibYUVPlanarTest.MergeUVPlane_16_Opt (306 ms)\n[ RUN      ] LibYUVPlanarTest.SplitUVPlane_Opt\n[       OK ] LibYUVPlanarTest.SplitUVPlane_Opt (121 ms)\n[ RUN      ] LibYUVPlanarTest.SplitUVPlane_16_Opt\n[       OK ] LibYUVPlanarTest.SplitUVPlane_16_Opt (283 ms)",
+      "revId": "f0fc7a82edda5acc0dc723ee32085bbfa7f2cedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
