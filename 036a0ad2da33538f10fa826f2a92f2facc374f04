@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfec052a_aa13af9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-24T13:29:53Z",
+      "side": 1,
+      "message": "These are for 10/12 bit RGB mode avif (and AV1/HEVC/some future codec). It\u0027s actually just I410/I412, but uses Y plane to store G directly, and U to store B, V to store R. AR64 uses full 16 bit range so shift them to msb.\n\nFor AR30, I wonder if any usage that needs 10 bit precision is fine with 2 bit of alpha, and that\u0027s a few more functions to support it. Choosing between planar and conversion maybe is more a planar function? We need a name for the planar format if that\u0027s a conversion.\n\nAB4H is almost a GPU only thing. For code that processes high precision pixels using CPU, AR64 and AB64 are the most used formats.",
+      "parentUuid": "7af42a30_287d3226",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad93a7a0_ba5afade",
@@ -35,6 +53,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bd5678f_3c662401",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-24T13:29:53Z",
+      "side": 1,
+      "message": "Done\nPlanar format is lsb, and packed (AR64/AB64) is msb.",
+      "parentUuid": "ad93a7a0_ba5afade",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7126f04a_e0441e96",
@@ -48,6 +84,24 @@
       "writtenOn": "2021-03-24T05:46:32Z",
       "side": 1,
       "message": "Comments in general should start with a capital letter and end with a period.\n\n// Require 10 \u003c\u003d depth \u0026\u0026 depth \u003c\u003d 16.\n\nNow I see the implementation I see what depth is intended to be.  The source planes use the low bits.  I was expecting them AR64 etc formats to use the msb, similar to P010.\nIf supporting lsb is needed, document the public header more.",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b376d9d0_fc67ec10",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3012,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-24T13:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7126f04a_e0441e96",
       "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -82,6 +136,24 @@
       "writtenOn": "2021-03-24T05:46:32Z",
       "side": 1,
       "message": "cbz    %5, 2f",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee6e941d_d589578e",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-24T13:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bd3097_16c65b26",
       "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
