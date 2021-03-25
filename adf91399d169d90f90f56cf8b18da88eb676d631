@@ -1,0 +1,238 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c1944b7_aff75d72",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "HAS_ macroname should match the function, which is MergeXRGBRow_NEON;",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bbf9186_67465e5e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3012,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "Change these comments into 2 asserts on depth.  sync to latest code... you\u0027ll see some asserts on depth in row_common.cc",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b012c4ad_6896d48f",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "These might want to be called XR30?\nAB30 is actually more common but I guess the user just swaps the source pointers to get that.",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "130ce749_e0b796a1",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5953,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "pass shift as an input\n        \"+r\"(width)      // %4\n#if defined(__i386__)\n      : \"m\"(shift),      // %5\n#else\n      : \"rm\"(shift),     // %5\n#endif\n        \"m\"(MergeAR64Permute)  // %6",
+      "range": {
+        "startLine": 5947,
+        "startChar": 0,
+        "endLine": 5953,
+        "endChar": 36
+      },
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "804e9cf9_a9f0f942",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "should this be 10 - depth?\nif the depth is 12 you want to shift right by 2.",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fee16764_8eea7e7b",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "use ushll here?  if that works, remove the previous 3 lines.",
+      "range": {
+        "startLine": 896,
+        "startChar": 0,
+        "endLine": 898,
+        "endChar": 58
+      },
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e121c484_a539f3ec",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "consider sri (shift right and insert), sli, or shift with accumulate",
+      "range": {
+        "startLine": 901,
+        "startChar": 0,
+        "endLine": 903,
+        "endChar": 68
+      },
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6247cf64_d7b207f8",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "Make shift an input:\n        \"+r\"(width)      // %4\n      : \"r\"(shift)       // %5\n      : \"memory\", \"cc\", \"v0\", \"v1\", \"v2\", \"v31\");\n\nApply to all row_gcc and row_neon functions as well.",
+      "range": {
+        "startLine": 929,
+        "startChar": 0,
+        "endLine": 932,
+        "endChar": 49
+      },
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa9ff4f5_7418892a",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "put each prfm after one of the ushl instructions below.\nyou can issue a neon instruction and a memory instruction each cycle.",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43eb8317_cd18431b",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "is this faster than with the shifts?",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22daaeca_7b3b7c73",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "this doesnt seem right?  you\u0027ll be converting something like 10 bits in the lsb, to packed argb, so you need a right shift?  To achieve that, the shift value needs to be negative.\nint shift \u003d 8 - depth;",
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2365012_12e20415",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-25T12:35:13Z",
+      "side": 1,
+      "message": "remove it possible.  is there shift with narrow?",
+      "range": {
+        "startLine": 1065,
+        "startChar": 6,
+        "endLine": 1068,
+        "endChar": 52
+      },
+      "revId": "adf91399d169d90f90f56cf8b18da88eb676d631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
