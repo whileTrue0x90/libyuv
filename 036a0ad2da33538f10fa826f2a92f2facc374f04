@@ -123,6 +123,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50684f76_586d5274",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-26T23:20:30Z",
+      "side": 1,
+      "message": "I guess this is fine as long as we stay consistent and document behavior somewhere",
+      "parentUuid": "43f4771b_d91f53c0",
+      "revId": "036a0ad2da33538f10fa826f2a92f2facc374f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33bd3097_16c65b26",
