@@ -16,6 +16,23 @@
       "message": "Overall looks good.\nWhen new functions are added to public headers its good to bump the version.\nAdd Bug: libyuv:886",
       "revId": "820baec5b4623c11d9b3ff2b6ef09adf25d29323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4558cd1c_12c6d7eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-26T23:23:29Z",
+      "side": 1,
+      "message": "Pixel 3 32 bit performance of various MergePlane functions\nMergeXR30Plane_12_Opt (1305 ms)\nMergeXR30Plane_16_Opt (1301 ms)\nMergeAR64Plane_10_Opt (1056 ms)\nMergeAR64Plane_12_Opt (1038 ms)\nMergeARGB16To8Plane_10_Opt (1028 ms)\nMergeARGB16To8Plane_16_Opt (1013 ms)\nMergeAR64Plane_16_Opt (1004 ms)\nMergeARGB16To8Plane_12_Opt (956 ms)\nMergeXR30Plane_10_Opt (864 ms)\nMergeAR64Plane_Opaque_16_Opt (737 ms)\nMergeAR64Plane_Opaque_10_Opt (725 ms)\nMergeAR64Plane_Opaque_12_Opt (709 ms)\nMergeARGB16To8Plane_Opaque_16_Opt (691 ms)\nMergeARGB16To8Plane_Opaque_12_Opt (686 ms)\nMergeARGB16To8Plane_Opaque_10_Opt (683 ms)\nMergeARGBPlane_Opt (596 ms)\nMergeUVPlane_16_Opt (524 ms)\nMergeXRGBPlane_Opt (433 ms)\nMergeRGBPlane_Opt (417 ms)\nHalfMergeUVPlane_Opt (326 ms)\nMergeUVPlane_Opt (227 ms)\n",
+      "revId": "820baec5b4623c11d9b3ff2b6ef09adf25d29323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
