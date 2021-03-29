@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f690e031_0d1819fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-29T17:48:02Z",
+      "side": 1,
+      "message": "Thanks for the change!   Looks good overall.  Your ARM is getting pretty good :-)\nI suggest asserts allow 9 to 16 bits.  Maybe 8 bits will be useful in future as well, so 16 bit code can be used on 8 bit data promoted to 16 bits.  more asserts in the future I expect will catch more bugs easily, but they shouldnt limit useful features.\nThe other nits are optional... we can clean up on another pass if you prefer.\n",
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a9fdf27_ed066577",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-29T17:48:02Z",
+      "side": 1,
+      "message": "nit: normally I wouldnt specialize with a loop invariant branch.  If its a substantial performance win, and a common case, 2 functions could be done.",
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c05540a7_1cdada52",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-29T17:48:02Z",
+      "side": 1,
+      "message": "it would be good to have a version that supports 2 bit alpha, even if its slow.",
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db583f4_57b6b1d6",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-29T17:48:02Z",
+      "side": 1,
+      "message": "vmovn doesnt quantize (clamp) does it?  Usually I end up with vqshrun which clamps 0 to 255.\nOn intel this will be a pack which also clamps.\nYour test should test values out of range for consistency between C and SIMD.  If Intel and ARM can\u0027t match for some reason, the C version in row_common.cc should be ifdef\u0027ed to reflect that.",
+      "range": {
+        "startLine": 912,
+        "startChar": 25,
+        "endLine": 912,
+        "endChar": 49
+      },
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e492bc9a_7e5e0ee3",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3111,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-29T17:48:02Z",
+      "side": 1,
+      "message": "although this is valid, its not a bad idea to test consistency of full range values that are more bits than advertized.",
+      "range": {
+        "startLine": 3111,
+        "startChar": 56,
+        "endLine": 3111,
+        "endChar": 76
+      },
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
