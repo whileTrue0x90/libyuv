@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0888f4b5_ba94369e",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-30T14:23:42Z",
+      "side": 1,
+      "message": "Done\nOnly NEON XR30 is faster on 10 bit case on my devices, so others are removed.",
+      "parentUuid": "4a9fdf27_ed066577",
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c05540a7_1cdada52",
@@ -48,6 +66,24 @@
       "writtenOn": "2021-03-29T17:48:02Z",
       "side": 1,
       "message": "it would be good to have a version that supports 2 bit alpha, even if its slow.",
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42da71fc_98d6f46a",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-30T14:23:42Z",
+      "side": 1,
+      "message": "Maybe when someone asks for it with usage? I personally don\u0027t want it being used, anyway.",
+      "parentUuid": "c05540a7_1cdada52",
       "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -75,6 +111,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8afec8db_1353380e",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-30T14:23:42Z",
+      "side": 1,
+      "message": "Done\nC and SIMD versions are now all clamp input values. No function is slower after adding this.",
+      "parentUuid": "0db583f4_57b6b1d6",
+      "range": {
+        "startLine": 912,
+        "startChar": 25,
+        "endLine": 912,
+        "endChar": 49
+      },
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e492bc9a_7e5e0ee3",
@@ -88,6 +148,30 @@
       "writtenOn": "2021-03-29T17:48:02Z",
       "side": 1,
       "message": "although this is valid, its not a bad idea to test consistency of full range values that are more bits than advertized.",
+      "range": {
+        "startLine": 3111,
+        "startChar": 56,
+        "endLine": 3111,
+        "endChar": 76
+      },
+      "revId": "fc5b2184293395513e41f4f5da1855399a36dace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "438bf4b5_14747fc6",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3111,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-30T14:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e492bc9a_7e5e0ee3",
       "range": {
         "startLine": 3111,
         "startChar": 56,

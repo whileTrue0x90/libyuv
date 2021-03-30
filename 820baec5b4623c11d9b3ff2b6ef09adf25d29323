@@ -50,6 +50,24 @@
       "message": "9 bits is a valid HDR bit depth for some codecs.  The functions should work okay.  asserts should only be for illegal values that indicate a bug.",
       "revId": "820baec5b4623c11d9b3ff2b6ef09adf25d29323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7846dfb5_714df6f2",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3019,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-30T14:23:42Z",
+      "side": 1,
+      "message": "9 bits is right shift by -1 (left shift by 1) so I think this function won\u0027t work?\nIntel SIMD also won\u0027t work, vpsllw is needed instead of vpsrlw. ARM should be fine without change.",
+      "parentUuid": "c37d1a48_8b1f9112",
+      "revId": "820baec5b4623c11d9b3ff2b6ef09adf25d29323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
