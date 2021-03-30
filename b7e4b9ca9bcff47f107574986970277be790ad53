@@ -16,6 +16,63 @@
       "message": "note clang-tidy warnings in row.h\n\u003e function \u0027libyuv::MergeAR64Row_Any_AVX2\u0027 has a definition with different parameter names\n\u003e function \u0027libyuv::MergeXR64Row_Any_AVX2\u0027 has a definition with different parameter names\n\u003e function \u0027libyuv::MergeARGB16To8Row_Any_AVX2\u0027 has a definition with different parameter names\n\u003e function \u0027libyuv::MergeXRGB16To8Row_Any_AVX2\u0027 has a definition with different parameter names\n",
       "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a292f45_4f3d0e54",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-30T18:42:06Z",
+      "side": 1,
+      "message": "Move this outside the if statement so it can be shared",
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3636682_848688a5",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-30T18:42:06Z",
+      "side": 1,
+      "message": "move this outside the if statement so it can be shared",
+      "range": {
+        "startLine": 1443,
+        "startChar": 0,
+        "endLine": 1443,
+        "endChar": 21
+      },
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe4e6a5f_52c42bbd",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-30T18:42:06Z",
+      "side": 1,
+      "message": "nit:  in visual c of the past, functions that contain more than 1 loop did not perform well.  There are 2 possible solutions:\n1. create 2 functions and a single function that calls them.  may require explicit attributes to force the functions not to inline.\n2. make the specialized XRGB row function accept the same parameters as ARGB, so there is only 1 loop.  The XRGB version ignores the A pointer.",
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
