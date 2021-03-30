@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce2dea8c_28c095b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-30T18:47:43Z",
+      "side": 1,
+      "message": "Note that if I request a change and it makes sense, but is low priority, you can add a TODO to fix it up in the future.\nofficial todo format is to file an issue and mention the bug\nTODO(libyuv:886): support 2 bit alpha channel.\nBut I dont like the official stance, because bugs are important, while TODO should be nitty details that are not that important.  Its good to have a way to mention little cleanup tasks that really dont need to be done, but it would be nice.\nIts also fine to submit code with TODO where its fairly important, and then immediately start a followup to improve the code.  If a project needs try a new function, its important to get the new function in asap and followup with improvements.",
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a292f45_4f3d0e54",
