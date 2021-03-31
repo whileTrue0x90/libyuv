@@ -70,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "997992cd_43fba039",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-31T18:41:46Z",
+      "side": 1,
+      "message": "nit.  You still have 2 of these if (height \u003c 0) code blocks.",
+      "parentUuid": "bdffad11_0706a7cd",
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3636682_848688a5",
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "c3636682_848688a5",
+      "range": {
+        "startLine": 1443,
+        "startChar": 0,
+        "endLine": 1443,
+        "endChar": 21
+      },
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00fb6df0_994e414b",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-03-31T18:41:46Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "c31e39fd_58c8e887",
       "range": {
         "startLine": 1443,
         "startChar": 0,
