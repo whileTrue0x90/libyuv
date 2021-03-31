@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdffad11_0706a7cd",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-31T04:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a292f45_4f3d0e54",
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3636682_848688a5",
@@ -75,6 +93,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c31e39fd_58c8e887",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-31T04:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3636682_848688a5",
+      "range": {
+        "startLine": 1443,
+        "startChar": 0,
+        "endLine": 1443,
+        "endChar": 21
+      },
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe4e6a5f_52c42bbd",
@@ -88,6 +130,24 @@
       "writtenOn": "2021-03-30T18:42:06Z",
       "side": 1,
       "message": "nit:  in visual c of the past, functions that contain more than 1 loop did not perform well.  There are 2 possible solutions:\n1. create 2 functions and a single function that calls them.  may require explicit attributes to force the functions not to inline.\n2. make the specialized XRGB row function accept the same parameters as ARGB, so there is only 1 loop.  The XRGB version ignores the A pointer.",
+      "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "527aa013_6a59fd04",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-03-31T04:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe4e6a5f_52c42bbd",
       "revId": "b7e4b9ca9bcff47f107574986970277be790ad53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
