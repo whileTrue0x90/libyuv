@@ -9,26 +9,6 @@
 import os
 
 
-def _RunPythonTests(input_api, output_api):
-  def join(*args):
-    return input_api.os_path.join(input_api.PresubmitLocalPath(), *args)
-
-  test_directories = [
-      root for root, _, files in os.walk(join('tools_libyuv'))
-      if any(f.endswith('_test.py') for f in files)
-  ]
-
-  tests = []
-  for directory in test_directories:
-    tests.extend(
-      input_api.canned_checks.GetUnitTestsInDirectory(
-          input_api,
-          output_api,
-          directory,
-          allowlist=[r'.+_test\.py$']))
-  return input_api.RunTests(tests, parallel=True)
-
-
 def _CommonChecks(input_api, output_api):
   """Checks common to both upload and commit."""
   results = []
@@ -49,7 +29,6 @@ def _CommonChecks(input_api, output_api):
                          'W0232',  # Class has no __init__ method
                         ],
       pylintrc='pylintrc'))
-  results.extend(_RunPythonTests(input_api, output_api))
   return results
 
 
