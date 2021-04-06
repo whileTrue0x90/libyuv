@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34dafca0_d1867b4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-06T21:21:44Z",
+      "side": 1,
+      "message": "Note I did a disassembly of the 64 bit, and for \"r\" it was doing a move from stack into GPR and then movd from register into XMM.  So its better to use \"m\" for parameter 6 and beyond if it is for XMM register.\n\"r\" is okay for GPR registers and required for pointers.",
+      "revId": "eb86cc45b19eb74fd75ae972768ff05890cb2052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
