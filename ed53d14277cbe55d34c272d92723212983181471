@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf4407c2_feec56dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-06T22:31:04Z",
+      "side": 1,
+      "message": "The HammingDistance_AVX2 function does 64 bytes at a time.  Notice:\n      \"sub         $0x40,%2                      \\n\"\n\nin the function.  So round up the size in the test to multiple of 64\nuint32_t HammingDistance_AVX2(const uint8_t* src_a,\n                              const uint8_t* src_b,\n                              int count) {\n  uint32_t diff \u003d 0u;\n\n  asm volatile(\n      \"vbroadcastf128 %4,%%ymm2                  \\n\"\n      \"vbroadcastf128 %5,%%ymm3                  \\n\"\n      \"vpxor       %%ymm0,%%ymm0,%%ymm0          \\n\"\n      \"vpxor       %%ymm1,%%ymm1,%%ymm1          \\n\"\n      \"sub         %0,%1                         \\n\"\n\n      LABELALIGN\n      \"1:                                        \\n\"\n      \"vmovdqa     (%0),%%ymm4                   \\n\"\n      \"vmovdqa     0x20(%0), %%ymm5              \\n\"\n      \"vpxor       (%0,%1), %%ymm4, %%ymm4       \\n\"\n      \"vpand       %%ymm2,%%ymm4,%%ymm6          \\n\"\n      \"vpsrlw      $0x4,%%ymm4,%%ymm4            \\n\"\n      \"vpshufb     %%ymm6,%%ymm3,%%ymm6          \\n\"\n      \"vpand       %%ymm2,%%ymm4,%%ymm4          \\n\"\n      \"vpshufb     %%ymm4,%%ymm3,%%ymm4          \\n\"\n      \"vpaddb      %%ymm4,%%ymm6,%%ymm6          \\n\"\n      \"vpxor       0x20(%0,%1),%%ymm5,%%ymm4     \\n\"\n      \"add         $0x40,%0                      \\n\"\n      \"vpand       %%ymm2,%%ymm4,%%ymm5          \\n\"\n      \"vpsrlw      $0x4,%%ymm4,%%ymm4            \\n\"\n      \"vpshufb     %%ymm5,%%ymm3,%%ymm5          \\n\"\n      \"vpand       %%ymm2,%%ymm4,%%ymm4          \\n\"\n      \"vpshufb     %%ymm4,%%ymm3,%%ymm4          \\n\"\n      \"vpaddb      %%ymm5,%%ymm4,%%ymm4          \\n\"\n      \"vpaddb      %%ymm6,%%ymm4,%%ymm4          \\n\"\n      \"vpsadbw     %%ymm1,%%ymm4,%%ymm4          \\n\"\n      \"vpaddd      %%ymm0,%%ymm4,%%ymm0          \\n\"\n      \"sub         $0x40,%2                      \\n\"\n      \"jg          1b                            \\n\"\n\n      \"vpermq      $0xb1,%%ymm0,%%ymm1           \\n\"\n      \"vpaddd      %%ymm1,%%ymm0,%%ymm0          \\n\"\n      \"vpermq      $0xaa,%%ymm0,%%ymm1           \\n\"\n      \"vpaddd      %%ymm1,%%ymm0,%%ymm0          \\n\"\n      \"vmovd       %%xmm0, %3                    \\n\"\n      \"vzeroupper                                \\n\"\n      : \"+r\"(src_a),       // %0\n        \"+r\"(src_b),       // %1\n        \"+r\"(count),       // %2\n        \"\u003dr\"(diff)         // %3\n      : \"m\"(kNibbleMask),  // %4\n        \"m\"(kBitCount)     // %5\n      : \"memory\", \"cc\", \"xmm0\", \"xmm1\", \"xmm2\", \"xmm3\", \"xmm4\", \"xmm5\", \"xmm6\");\n\n  return diff;\n}",
+      "revId": "ed53d14277cbe55d34c272d92723212983181471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
