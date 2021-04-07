@@ -16,6 +16,23 @@
       "message": "There is an MSan detection on this CL, I suggest we look into it before submitting.",
       "revId": "ba012b56e38dba53fdcdf225f01ad94d46b2e7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2ef572_1c8d3b53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-07T12:31:09Z",
+      "side": 1,
+      "message": "AYUVToUVRow_C and AYUVToVURow_C have issues that cause AYUVToNV12 and AYUVToNV21 failed.\n\nI444ToARGB and others alike failed on ARM due to subsampling. I have a CL https://chromium-review.googlesource.com/c/libyuv/libyuv/+/2810060 which removes subsampling and will fix them.",
+      "revId": "ba012b56e38dba53fdcdf225f01ad94d46b2e7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
