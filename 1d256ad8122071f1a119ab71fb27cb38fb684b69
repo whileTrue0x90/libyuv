@@ -16,6 +16,23 @@
       "message": "Added fix for AYUVToNV12\n\nMergeAR64 has an issue in row_any where it sets BPP to 4, and should be 8.\nBut fixing that doesnt get past the test, so the test is disabled.",
       "revId": "1d256ad8122071f1a119ab71fb27cb38fb684b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b89757_e863c015",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-07T17:37:17Z",
+      "side": 1,
+      "message": "Intel passes msan but ARM has test failures:\n[  PASSED  ] 1908 tests.\n[  FAILED  ] 13 tests, listed below:\n[  FAILED  ] LibYUVConvertTest.I444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.I444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.J444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.J444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.H444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.H444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.F444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.F444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.U444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.U444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.V444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.V444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.AYUVToNV12_Any\n\n13 FAILED TESTS\n",
+      "revId": "1d256ad8122071f1a119ab71fb27cb38fb684b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
