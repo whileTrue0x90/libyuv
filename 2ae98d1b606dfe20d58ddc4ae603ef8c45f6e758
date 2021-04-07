@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0ee5c83_09ac9fa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-07T05:05:03Z",
+      "side": 1,
+      "message": "The new assembly is mainly based on armv7 version. v7 and v8 now unified to use the same YuvConstants struct.\n\nI420ToARGB and I422ToARGB are ~10% slower than before on armv7, but other functions and all functions on armv8 are 10%-20% faster.",
+      "revId": "2ae98d1b606dfe20d58ddc4ae603ef8c45f6e758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
