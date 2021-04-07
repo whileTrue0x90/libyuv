@@ -4386,7 +4386,7 @@ void AYUVToUVRow_C(const uint8_t* src_ayuv,
                    int width) {
   // Output a row of UV values, filtering 2x2 rows of AYUV.
   int x;
-  for (x = 0; x < width; x += 2) {
+  for (x = 0; x < width - 1; x += 2) {
     dst_uv[0] = (src_ayuv[1] + src_ayuv[5] + src_ayuv[src_stride_ayuv + 1] +
                  src_ayuv[src_stride_ayuv + 5] + 2) >>
                 2;
@@ -4413,7 +4413,7 @@ void AYUVToVURow_C(const uint8_t* src_ayuv,
                    int width) {
   // Output a row of VU values, filtering 2x2 rows of AYUV.
   int x;
-  for (x = 0; x < width; x += 2) {
+  for (x = 0; x < width - 1; x += 2) {
     dst_vu[0] = (src_ayuv[0] + src_ayuv[4] + src_ayuv[src_stride_ayuv + 0] +
                  src_ayuv[src_stride_ayuv + 4] + 2) >>
                 2;
