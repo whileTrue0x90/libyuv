@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d661c83_36b137a3",
+        "filename": "source/row_any.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-07T17:48:33Z",
+      "side": 1,
+      "message": "good catch!",
+      "revId": "972c23522d538f8e678f1c5c3c2f203cff40883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7c8318e_53efc5b4",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-07T17:48:33Z",
+      "side": 1,
+      "message": "nit can remove redundent loads and do average of the 2 values.",
+      "range": {
+        "startLine": 4400,
+        "startChar": 42,
+        "endLine": 4400,
+        "endChar": 43
+      },
+      "revId": "972c23522d538f8e678f1c5c3c2f203cff40883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d601f886_8de49258",
+        "filename": "source/scale_uv.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-07T17:48:33Z",
+      "side": 1,
+      "message": "this seems wrong?   linear reads 2 pixels but source is 1 pixel?",
+      "revId": "972c23522d538f8e678f1c5c3c2f203cff40883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f4afe4d_71366e80",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-07T17:48:33Z",
+      "side": 1,
+      "message": "this size is measured in pixels, so it doesnt need to be rounded up.",
+      "revId": "972c23522d538f8e678f1c5c3c2f203cff40883e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
