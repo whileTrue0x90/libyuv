@@ -1246,13 +1246,16 @@ int AYUVToNV12(const uint8_t* src_ayuv,
   }
 #endif
 
+// TODO(fbarchard): Fix AYUVToUVRow_Any_NEON for odd width.
 #if defined(HAS_AYUVTOYROW_NEON)
   if (TestCpuFlag(kCpuHasNEON)) {
     AYUVToYRow = AYUVToYRow_Any_NEON;
-    AYUVToUVRow = AYUVToUVRow_Any_NEON;
-    if (IS_ALIGNED(width, 16)) {
-      AYUVToYRow = AYUVToYRow_NEON;
-      AYUVToUVRow = AYUVToUVRow_NEON;
+    if (IS_ALIGNED(width, 2)) {
+      AYUVToUVRow = AYUVToUVRow_Any_NEON;
+      if (IS_ALIGNED(width, 16)) {
+        AYUVToYRow = AYUVToYRow_NEON;
+        AYUVToUVRow = AYUVToUVRow_NEON;
+      }
     }
   }
 #endif
