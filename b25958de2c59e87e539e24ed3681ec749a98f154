@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "616e004a_02043e61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:18:15Z",
+      "side": 1,
+      "message": "tests pass locally.  Thanks for the fix!",
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19868332_54d76e3e",
@@ -75,6 +92,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a60fd937_e763dfeb",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:18:15Z",
+      "side": 1,
+      "message": "nevermind... it is multichannel, so we need BPP",
+      "parentUuid": "86ccb900_5611325a",
+      "range": {
+        "startLine": 203,
+        "startChar": 55,
+        "endLine": 203,
+        "endChar": 75
+      },
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d27aa943_26b44f92",
@@ -88,6 +129,30 @@
       "writtenOn": "2021-04-08T09:09:16Z",
       "side": 1,
       "message": "suggest memcpy(dst_ptr + n, out, r * BPP);",
+      "range": {
+        "startLine": 493,
+        "startChar": 55,
+        "endLine": 493,
+        "endChar": 75
+      },
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "685b7a17_d78db37a",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:18:15Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "d27aa943_26b44f92",
       "range": {
         "startLine": 493,
         "startChar": 55,
