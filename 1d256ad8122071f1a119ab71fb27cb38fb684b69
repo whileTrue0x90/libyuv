@@ -33,6 +33,29 @@
       "message": "Intel passes msan but ARM has test failures:\n[  PASSED  ] 1908 tests.\n[  FAILED  ] 13 tests, listed below:\n[  FAILED  ] LibYUVConvertTest.I444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.I444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.J444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.J444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.H444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.H444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.F444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.F444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.U444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.U444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.V444AlphaToARGB_Any\n[  FAILED  ] LibYUVConvertTest.V444AlphaToABGR_Any\n[  FAILED  ] LibYUVConvertTest.AYUVToNV12_Any\n\n13 FAILED TESTS\n",
       "revId": "1d256ad8122071f1a119ab71fb27cb38fb684b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "574e76f0_58049e3e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-08T01:34:05Z",
+      "side": 1,
+      "message": "This should be 1 instead of 0.\nAYUV is VUYA order in memory, UV is UV order in memory.",
+      "range": {
+        "startLine": 4400,
+        "startChar": 26,
+        "endLine": 4400,
+        "endChar": 27
+      },
+      "revId": "1d256ad8122071f1a119ab71fb27cb38fb684b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
