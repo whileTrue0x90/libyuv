@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65a52168_68884559",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:09:16Z",
+      "side": 1,
+      "message": "The changes look fine but did it solve the bug?  When I did the change on my end, the odd width still failed.",
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19868332_54d76e3e",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:09:16Z",
+      "side": 1,
+      "message": "consider SplitXRGBPlane as a naming convention instead of Opaque and Alpha variants.",
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43c94205_9c83fd85",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:09:16Z",
+      "side": 1,
+      "message": "this change would be better done as a different CL.  I can\u0027t tell if you found a bug in this function relating to odd width?",
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86ccb900_5611325a",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:09:16Z",
+      "side": 1,
+      "message": "memcpy(dst_ptr + n, out, r * BPP);",
+      "range": {
+        "startLine": 203,
+        "startChar": 55,
+        "endLine": 203,
+        "endChar": 75
+      },
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d27aa943_26b44f92",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-08T09:09:16Z",
+      "side": 1,
+      "message": "suggest memcpy(dst_ptr + n, out, r * BPP);",
+      "range": {
+        "startLine": 493,
+        "startChar": 55,
+        "endLine": 493,
+        "endChar": 75
+      },
+      "revId": "b25958de2c59e87e539e24ed3681ec749a98f154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
