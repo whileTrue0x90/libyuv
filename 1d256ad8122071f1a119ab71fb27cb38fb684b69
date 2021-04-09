@@ -56,6 +56,30 @@
       },
       "revId": "1d256ad8122071f1a119ab71fb27cb38fb684b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ecde385_30e4c40c",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4400,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-09T19:05:20Z",
+      "side": 1,
+      "message": "voila!  You found the bug.  Thanks!",
+      "parentUuid": "574e76f0_58049e3e",
+      "range": {
+        "startLine": 4400,
+        "startChar": 26,
+        "endLine": 4400,
+        "endChar": 27
+      },
+      "revId": "1d256ad8122071f1a119ab71fb27cb38fb684b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
