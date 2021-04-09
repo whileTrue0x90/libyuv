@@ -16,6 +16,40 @@
       "message": "Unittest passed on my side.",
       "revId": "569e4e1ba58815aece65aa6f23460a419bd4ffdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd5549e6_f2334085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-09T20:47:31Z",
+      "side": 1,
+      "message": "This looks awesome overall!  Thanks!\nWill is support the unclamped coefficients in row_common so limited range issue can be resolved for ARM at least?\nSee row_common.cc:\n// U and V contributions to R,G,B.\n#if LIBYUV_UNLIMITED_DATA\n#define UB 129 /* round(2.018 * 64) */\n#else\n#define UB 128 /* max(128, round(2.018 * 64)) */\n#endif\n\nIf you have time, consider doing a 10 bit conversion.  I010ToAR64?\nThe unittests likely need updates.  The NEON should exactly match the C, and if necessary make the C mimic the Neon when run on ARM, but ideally make NEON and AVX2 match.\n\nPerformance is critical on this function.  It looks like an improvement, but will need to benchmark.\n\nMight be good to have comments about register usage",
+      "revId": "569e4e1ba58815aece65aa6f23460a419bd4ffdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c4c223_d3925a6c",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-09T20:47:31Z",
+      "side": 1,
+      "message": "NV12 is the most important to be efficient.  It would be good, perhaps a future change, so have the layout be similar to P416.  UVUVUVUV using zip to replicate 8 bits to 16 bits but no TBL instruction.",
+      "revId": "569e4e1ba58815aece65aa6f23460a419bd4ffdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
