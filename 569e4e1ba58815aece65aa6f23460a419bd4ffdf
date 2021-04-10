@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fe8ec8b8_2eaf84ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-10T08:47:47Z",
+      "side": 1,
+      "message": "The updated version now supports unclamped coefficients, but both the values in YuvConstants and the code need some changes.\nAdd -DLIBYUV_UNLIMITED_DATA definition during compilation will enable it.\n\nI\u0027m going to add 10 and 12 bit conversion later in another CL. Probably two, one for ARM row functions for 10/12 bit YUV -\u003e 8/10 bit RGB, another for both ARM and Intel for 10/12 bit YUV -\u003e 16 bit RGB.\n\nNEON, AVX2 and C now all matches with each other. (if LIBYUV_UNLIMITED_DATA enabled, NEON and C match)\n\nAdded comments for registers used to store input and output. Macro YUVTORGB_REGS listed all registers used.",
+      "parentUuid": "fd5549e6_f2334085",
+      "revId": "569e4e1ba58815aece65aa6f23460a419bd4ffdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "69c4c223_d3925a6c",
         "filename": "source/row_neon64.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2021-04-09T20:47:31Z",
       "side": 1,
       "message": "NV12 is the most important to be efficient.  It would be good, perhaps a future change, so have the layout be similar to P416.  UVUVUVUV using zip to replicate 8 bits to 16 bits but no TBL instruction.",
+      "revId": "569e4e1ba58815aece65aa6f23460a419bd4ffdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a4c7802_a9b4195b",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-10T08:47:47Z",
+      "side": 1,
+      "message": "Theoretically TBL will be slower, but on my device performance is identical (tested by simply replace TBL with ZIP and ignore result correctness), probably because of pipelining.",
+      "parentUuid": "69c4c223_d3925a6c",
       "revId": "569e4e1ba58815aece65aa6f23460a419bd4ffdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
