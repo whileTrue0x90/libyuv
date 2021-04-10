@@ -498,7 +498,11 @@ TEST_F(LibYUVColorTest, TestYUV) {
   YUVToRGB(240, 0, 0, &r1, &g1, &b1);
   EXPECT_EQ(57, r1);
   EXPECT_EQ(255, g1);
+#ifdef LIBYUV_UNLIMITED_DATA
+  EXPECT_EQ(3, b1);
+#else
   EXPECT_EQ(5, b1);
+#endif
 
   for (int i = 0; i < 256; ++i) {
     YUVToRGBReference(i, 128, 128, &r0, &g0, &b0);
