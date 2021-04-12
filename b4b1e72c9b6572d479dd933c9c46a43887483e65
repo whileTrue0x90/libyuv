@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2c7ecb9_34dd6003",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-12T23:49:13Z",
+      "side": 1,
+      "message": "Main differences are in load macros. armv8 can do it with one ZIP1 or TBL, but armv7 needs 2 or 3 (VMOVL+VSLI or VMOV+VZIP for ZIP1, VMOVL+VSLI+VSRI for TBL). Other instrcutions should perfectly match between the two.",
+      "parentUuid": "bfcbe7ed_7ff1590d",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1645366_3925a4b8",
@@ -52,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f84a5c1_15bb878e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-12T23:49:13Z",
+      "side": 1,
+      "message": "Done\nSometimes without the semicolon clang-format will do something weird and lwft some mess, so I didn\u0027t do that. It seems ok here.",
+      "parentUuid": "a1645366_3925a4b8",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6247b3f1_5b1e2368",
@@ -65,6 +101,24 @@
       "writtenOn": "2021-04-12T21:15:45Z",
       "side": 1,
       "message": "Previously, we only allow the B channel error to be 15 or 18 in two cases. Now we will allow the B channel error to be 18 in all cases. Is this intended?",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9469054c_48dd26cc",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-12T23:49:13Z",
+      "side": 1,
+      "message": "Eventually we will switch to unlimited data and ERROR_B will be 1 everywhere, so I\u0027m changing the unit test to fit unlimited data code more. If this is too early I\u0027ll revert these changes.",
+      "parentUuid": "6247b3f1_5b1e2368",
       "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
