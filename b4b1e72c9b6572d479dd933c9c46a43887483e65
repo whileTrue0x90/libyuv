@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfcbe7ed_7ff1590d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-12T18:16:18Z",
+      "side": 1,
+      "message": "slight loss of performance on some armv7 functions?  In general they should be the same, except the 32 bit versions dont have prefetch.",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
