@@ -33,6 +33,40 @@
       "message": "tested performance on several ARM cpus:\n\nWas\na53.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (2327 ms)\na55.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (3364 ms)\na72.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1774 ms)\na73.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1678 ms)\na75.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1395 ms)\na76.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1420 ms)\na77.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1099 ms)\nkryo.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1392 ms)\nm1.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1693 ms)\nm3.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1306 ms)\n\nNow\na53.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1804 ms)\na55.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (2446 ms)\na72.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1289 ms)\na73.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1250 ms)\na75.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1007 ms)\na76.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1026 ms)\na77.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (905 ms)\nkryo.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1212 ms)\nm1.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1303 ms)\nm3.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1287 ms)\n\n",
       "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1645366_3925a4b8",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-04-12T21:15:45Z",
+      "side": 1,
+      "message": "Nit/optional: We can define the LOAD_YUV_CONSTANTS macro so that it must be followed by a semicolon, which looks like a normal statement. I leave this decision to you.",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6247b3f1_5b1e2368",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-04-12T21:15:45Z",
+      "side": 1,
+      "message": "Previously, we only allow the B channel error to be 15 or 18 in two cases. Now we will allow the B channel error to be 18 in all cases. Is this intended?",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
