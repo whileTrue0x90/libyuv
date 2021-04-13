@@ -16,6 +16,57 @@
       "message": "Use UMLAL to calc UV contribution to G. All functions are at least not slower:\n\nARMv7:\n[       OK ] LibYUVConvertTest.I420ToARGB_Opt (957 ms)\n[       OK ] LibYUVConvertTest.I422ToARGB_Opt (931 ms)\n[       OK ] LibYUVConvertTest.I444ToARGB_Opt (779 ms)\n[       OK ] LibYUVConvertTest.I420AlphaToARGB_Opt (997 ms)\n[       OK ] LibYUVConvertTest.I422AlphaToARGB_Opt (969 ms)\n[       OK ] LibYUVConvertTest.I444AlphaToARGB_Opt (786 ms)\n[       OK ] LibYUVConvertTest.NV12ToARGB_Opt (815 ms)\n[       OK ] LibYUVConvertTest.NV21ToARGB_Opt (828 ms)\n[       OK ] LibYUVConvertTest.I400ToARGB_Opt (752 ms)\n[       OK ] LibYUVConvertTest.UYVYToARGB_Opt (865 ms)\n[       OK ] LibYUVConvertTest.YUY2ToARGB_Opt (847 ms)\n\nARMv8:\n[       OK ] LibYUVConvertTest.I420ToARGB_Opt (783 ms)\n[       OK ] LibYUVConvertTest.I422ToARGB_Opt (778 ms)\n[       OK ] LibYUVConvertTest.I444ToARGB_Opt (736 ms)\n[       OK ] LibYUVConvertTest.I420AlphaToARGB_Opt (787 ms)\n[       OK ] LibYUVConvertTest.I422AlphaToARGB_Opt (787 ms)\n[       OK ] LibYUVConvertTest.I444AlphaToARGB_Opt (754 ms)\n[       OK ] LibYUVConvertTest.NV12ToARGB_Opt (679 ms)\n[       OK ] LibYUVConvertTest.NV21ToARGB_Opt (679 ms)\n[       OK ] LibYUVConvertTest.I400ToARGB_Opt (714 ms)\n[       OK ] LibYUVConvertTest.UYVYToARGB_Opt (801 ms)\n[       OK ] LibYUVConvertTest.YUY2ToARGB_Opt (738 ms)\n\nUsing UMLAL on UV contribution to R/B is slower, due to additional data dependency.",
       "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17ff594f_67148dc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-13T19:16:16Z",
+      "side": 1,
+      "message": "Your Neon is getting very good!  Tested on Cortex A53, which is the little core on many CPUs and one of the most sensitive to performance:\n\nWas:\nI420ToARGB_Opt (2321 ms)\nI422ToARGB_Opt (2372 ms)\nI444ToARGB_Opt (2707 ms)\nI420AlphaToARGB_Opt (2556 ms)\nI422AlphaToARGB_Opt (2598 ms)\nI444AlphaToARGB_Opt (2961 ms)\nNV12ToARGB_Opt (2463 ms)\nNV21ToARGB_Opt (2459 ms)\nI400ToARGB_Opt (2177 ms)\nUYVYToARGB_Opt (2417 ms)\nYUY2ToARGB_Opt (2414 ms)\n\nNow:\nI420ToARGB_Opt (1779 ms)\nI422ToARGB_Opt (1883 ms)\nI444ToARGB_Opt (2030 ms)\nI420AlphaToARGB_Opt (2025 ms)\nI422AlphaToARGB_Opt (2111 ms)\nI444AlphaToARGB_Opt (2279 ms)\nNV12ToARGB_Opt (1705 ms)\nNV21ToARGB_Opt (1713 ms)\nI400ToARGB_Opt (1589 ms)\nUYVYToARGB_Opt (1818 ms)\nYUY2ToARGB_Opt (1816 ms)\n\n32 bit Now\nI420ToARGB_Opt (2087 ms)\nI422ToARGB_Opt (2291 ms)\nI444ToARGB_Opt (2681 ms)\nI420AlphaToARGB_Opt (2766 ms)\nI422AlphaToARGB_Opt (2897 ms)\nI444AlphaToARGB_Opt (3463 ms)\nNV12ToARGB_Opt (1967 ms)\nNV21ToARGB_Opt (1973 ms)\nI400ToARGB_Opt (1721 ms)\nUYVYToARGB_Opt (2039 ms)\nYUY2ToARGB_Opt (2069 ms)\n\n3 things to consider (for future)\n-instead of full vectors for constants, a single vector could be used for all multiply constants, using \u0027elements\u0027 to select which constant.\n-mla also has mls variant that does subtract.  unfortunately both arm and intel only do 3 parameters, so the destination is the accumulator and requires a mov to initialize it, so likely not a win here.\n-udot instruction multiplies 4 bytes (e.g. ayuv) by 4 values (coefficients) and adds them together to make a uint32_t.  It produces 4 uint32_t at a time.  Its ideal for argb to yuv, but unclear it can be used on yuv to rgb, due to differing signs on r,b and g.\n\nIn the future, constants structure should be used for RGB to YUV as well.",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4736dd41_73eac783",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-13T19:16:16Z",
+      "side": 1,
+      "message": "does this clamp hot colors correctly?\nthe old code treated these as s16 so if the limited range values were out of range, the underflow is considered a negative that will be clamped to 0.",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0bd4ce8_8d26e26b",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-13T19:16:16Z",
+      "side": 1,
+      "message": "is this right?  I was expecting unlimited data to do sub on green and add on r and b?",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
