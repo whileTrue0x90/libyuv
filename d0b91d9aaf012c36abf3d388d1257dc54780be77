@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ad5f5b7_55840e2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-13T16:25:03Z",
+      "side": 1,
+      "message": "Use UMLAL to calc UV contribution to G. All functions are at least not slower:\n\nARMv7:\n[       OK ] LibYUVConvertTest.I420ToARGB_Opt (957 ms)\n[       OK ] LibYUVConvertTest.I422ToARGB_Opt (931 ms)\n[       OK ] LibYUVConvertTest.I444ToARGB_Opt (779 ms)\n[       OK ] LibYUVConvertTest.I420AlphaToARGB_Opt (997 ms)\n[       OK ] LibYUVConvertTest.I422AlphaToARGB_Opt (969 ms)\n[       OK ] LibYUVConvertTest.I444AlphaToARGB_Opt (786 ms)\n[       OK ] LibYUVConvertTest.NV12ToARGB_Opt (815 ms)\n[       OK ] LibYUVConvertTest.NV21ToARGB_Opt (828 ms)\n[       OK ] LibYUVConvertTest.I400ToARGB_Opt (752 ms)\n[       OK ] LibYUVConvertTest.UYVYToARGB_Opt (865 ms)\n[       OK ] LibYUVConvertTest.YUY2ToARGB_Opt (847 ms)\n\nARMv8:\n[       OK ] LibYUVConvertTest.I420ToARGB_Opt (783 ms)\n[       OK ] LibYUVConvertTest.I422ToARGB_Opt (778 ms)\n[       OK ] LibYUVConvertTest.I444ToARGB_Opt (736 ms)\n[       OK ] LibYUVConvertTest.I420AlphaToARGB_Opt (787 ms)\n[       OK ] LibYUVConvertTest.I422AlphaToARGB_Opt (787 ms)\n[       OK ] LibYUVConvertTest.I444AlphaToARGB_Opt (754 ms)\n[       OK ] LibYUVConvertTest.NV12ToARGB_Opt (679 ms)\n[       OK ] LibYUVConvertTest.NV21ToARGB_Opt (679 ms)\n[       OK ] LibYUVConvertTest.I400ToARGB_Opt (714 ms)\n[       OK ] LibYUVConvertTest.UYVYToARGB_Opt (801 ms)\n[       OK ] LibYUVConvertTest.YUY2ToARGB_Opt (738 ms)\n\nUsing UMLAL on UV contribution to R/B is slower, due to additional data dependency.",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
