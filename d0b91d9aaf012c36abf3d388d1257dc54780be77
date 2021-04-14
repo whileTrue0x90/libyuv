@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "973e901b_14e8332f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-14T01:32:28Z",
+      "side": 1,
+      "message": "UMLAL/UMULL by element only supports U16 or U32, and want the element in low register (d0-d7 on armv7, v0-v15 on armv8).\n\nMLA and MLS do not saturate. This is the bigger problem.",
+      "parentUuid": "17ff594f_67148dc3",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4736dd41_73eac783",
         "filename": "source/row_neon.cc",
         "patchSetId": 8
@@ -48,6 +66,24 @@
       "writtenOn": "2021-04-13T19:16:16Z",
       "side": 1,
       "message": "does this clamp hot colors correctly?\nthe old code treated these as s16 so if the limited range values were out of range, the underflow is considered a negative that will be clamped to 0.",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba56fa43_80c67b6f",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-14T01:32:28Z",
+      "side": 1,
+      "message": "In my analysis, for any reasonable colorspace it can\u0027t overflow. (By saying reasonable I mean red primary actually looks reddish and so on.)\n\nIf you want, I can post my analysis here or put in the code somewhere.",
+      "parentUuid": "4736dd41_73eac783",
       "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2021-04-13T19:16:16Z",
       "side": 1,
       "message": "is this right?  I was expecting unlimited data to do sub on green and add on r and b?",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df067d85_b4850dfa",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-14T01:32:28Z",
+      "side": 1,
+      "message": "First we add UV contribution to R and B, but add Bias to G. Then we sub Bias from R and B, sub UV contribution from G. In reasonable colorspace the first add won\u0027t overflow u16. Only the following sub needs saturating.",
+      "parentUuid": "c0bd4ce8_8d26e26b",
       "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
