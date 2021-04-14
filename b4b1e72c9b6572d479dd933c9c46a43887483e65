@@ -121,6 +121,24 @@
       "parentUuid": "6247b3f1_5b1e2368",
       "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6e7480_60e1c691",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-14T18:48:34Z",
+      "side": 1,
+      "message": "Ack.  Makes sense to me.\nI expect a phased rollout where\n1. now it is available via flag but only works for ARM.\n2. remove old code but allow for clamp coefficients by default so results dont change.\n3. enable by default.  Can provide old YuvConstants as additional colorspaces if anyone needs them.\nThis is the single most used function in libyuv, so the change will affect many projects and unittests will require updates.",
+      "parentUuid": "9469054c_48dd26cc",
+      "revId": "b4b1e72c9b6572d479dd933c9c46a43887483e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

@@ -72,6 +72,41 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "182a7340_ce1eb2b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-14T18:48:34Z",
+      "side": 1,
+      "message": "This analysis would be good to document.  Its a bit long for a comment (usually in row_common.cc), so adding it to one of the documents might be good?\nFor now I\u0027ll add it to the issue tracker 862\nhttps://bugs.chromium.org/p/libyuv/issues/detail?id\u003d862",
+      "parentUuid": "c53ff9f9_d2cf7902",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cea4882_cb15cfaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-14T18:48:34Z",
+      "side": 1,
+      "message": "Tested the basic I420ToARGB on a variety of CPUs\nWas\na53.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (2333 ms)\na55.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (3368 ms)\na72.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1772 ms)\na73.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1673 ms)\na75.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1387 ms)\na76.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1445 ms)\na77.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1098 ms)\nkryo.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1384 ms)\nm1.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1698 ms)\nm3.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1316 ms)\n\nNow\na53.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1818 ms)\na55.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (2447 ms)\na72.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1172 ms)\na73.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1207 ms)\na75.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (900 ms)\na76.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1011 ms)\na77.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (882 ms)\nkryo.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1219 ms)\nm1.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1285 ms)\nm3.txt:[       OK ] LibYUVConvertTest.I420ToARGB_Opt (1213 ms)\n",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4736dd41_73eac783",
         "filename": "source/row_neon.cc",
         "patchSetId": 8
@@ -136,6 +171,24 @@
       "side": 1,
       "message": "First we add UV contribution to R and B, but add Bias to G. Then we sub Bias from R and B, sub UV contribution from G. In reasonable colorspace the first add won\u0027t overflow u16. Only the following sub needs saturating.",
       "parentUuid": "c0bd4ce8_8d26e26b",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cb54544_eff5ad8d",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-14T18:48:34Z",
+      "side": 1,
+      "message": "With unsigned coefficients of the \u0027unlimited data\u0027, in the case of \u0027full range\u0027 colorspace, we have the ability to use 1.7 and 1.15 fixed point, representing 0 to 1.999, but with 1 additional bit of accuracy.\nIt would push the values closer to overflow.\nThe main code change to enable this is the final shift needs to be in the YuvConstants structure.\nIt doesnt need to be done, but this is a possible future quality improvement and it would be good if the math can allow for 1.15 without overflows",
+      "parentUuid": "df067d85_b4850dfa",
       "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
