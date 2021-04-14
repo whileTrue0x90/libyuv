@@ -55,6 +55,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c53ff9f9_d2cf7902",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-14T03:42:53Z",
+      "side": 1,
+      "message": "Analysis\n\nThis is the C code we are going to optimize:\n\n    y1 \u003d (uint32_t)(y * 0x0101 * yg) \u003e\u003e 16;\n    b \u003d (int)(y1 + (u * ub) + bb);\n    g \u003d (int)(y1 + (u * ug + v * vg) + bg);\n    r \u003d (int)(y1 + (v * vr) + br);\n\nTo use unsigned arithmetic, we need to first figure out sign and range for each term.\n\n- Range of yg and y1:\nyg is always 16320 for full range YUV. For limited range YUV, it\u0027s round(A * 64 * 256 * 256 / 257), where A is the scale from limited range to full range. A depends on input bit depth, for N bit input, A \u003d ((1 \u003c\u003c N) - 1) / (219 \u003c\u003c (N - 8)). So the value varies between 19003 (N \u003d 8, A \u003d 255/219) and 19078 (N -\u003e inf, A \u003d 256/219). \ny is always positive and maximum is 255, so 0 \u003c\u003d y1 \u003c\u003d 19077 ((255 * 0x101 * 19078) \u003e\u003e 16). It\u0027s safe to store it in U16.\n\n- Range of ub, vr, u * ub and v * vr:\nub is u\u0027s contribution to b. u \u003d (b - y) / (2 * (1 - kb)), so ub is bigger when b contributes less to y. The extreme case is XYZ colorspace, where b doesn\u0027t contribute to y at all. In this case, with limited range, ubf \u003d ((1 \u003c\u003c N) - 1) / (112 \u003c\u003c (N - 8)) and ub \u003d round(ubf * 64), so ub \u003c\u003d 146. The same applies to vr.\nu is always positive and maximum is 255, so 0 \u003c\u003d u * ub \u003c\u003d 37230. The same applies to v * vr. It\u0027s safe to store it in U16.\n\n- Range of ug, vg, u * ug + v * vg:\nug and vg are u and v\u0027s contribution to g. These are usually small, and even smaller for wider gamut. For a reasonable colorspace Green contributes most in y. The extreme case is kr \u003d kb \u003d 1/3, with limited range, ugf \u003d 2 * (kb - 1) * kb / (1 - kb - kr) * ((1 \u003c\u003c N) - 1) / (112 \u003c\u003c (N - 8)) and ug \u003d round(ugf * 64), so ug \u003e\u003d -98. The same applies to vg.\nu and v are always positive and maximum is 255, so -49980 \u003c\u003d u * ug + v * vg \u003c\u003d 0. It\u0027s safe to store its negative in U16.\n\n- Range of bb, bg and br:\nBias consists of 3 parts: \n 1. u and v are stored as actual value + 128, so ub * 128 and alike should be subtracted.\n 2. In limited range y are stored with bias A * 64 * -16.\n 3. Rounding bias, which is always 32.\n\nWe know ub \u003c\u003d 146, so ub * 128 \u003c\u003d 18688. The same applies to vr * 128.\nWe know -1197 \u003c\u003d A * 64 * -16 \u003c\u003d -1192.\nbb \u003d -(ub * 128) + (A * 64 * -16) + 32 so bb \u003e\u003d -19853. bb \u003c 0 unless full range and ub \u003d 0, which is likely not the case. It\u0027s safe to store its negative in U16. The same applies to br.\n\nWe know ug \u003e\u003d -98, so -25088 \u003c\u003d ug * 128 + vg * 128 \u003c 0. bg \u003d -(ug * 128 + vg * 128) + (A * 64 * -16) + 32, so -1165 \u003c\u003d bg \u003c\u003d 23923. For all current colorspace bg \u003e 0 (it\u0027s true as long as ug + vg \u003e 9, which is likely the case). It\u0027s safe to store it in U16.\n\n\nFrom the analysis above, for this term table:\n        Y     UV                B\n    R   y1    u * ub            bb\n    G   y1    u * ug + v * vg   bg\n    B   y1    v * vr            br\n\nSign of each term are shown as below:\n        Y   UV   B\n    R   +   +    -\n    G   +   -   +/-\n    B   +   +    -\n\nFor R and B, Y part and UV part are both positive, and their sum is in range 0 \u003c\u003d sum \u003c\u003d 56307, so unsigned add is safe. B part is negative, a saturating sub is needed.\n\nFor G, Y part is positive, assuming B part is positive, their sum is in range 0 \u003c\u003d sum \u003c\u003d 44165, so unsigned add is safe. UV part is negative, a saturating sub is needed.",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4736dd41_73eac783",
         "filename": "source/row_neon.cc",
         "patchSetId": 8
