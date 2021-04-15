@@ -191,6 +191,24 @@
       "parentUuid": "df067d85_b4850dfa",
       "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6169139f_aacedd6c",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-15T02:32:53Z",
+      "side": 1,
+      "message": "1.7 and 1.15 fix point is doable for full range colorspace, but that need another code path, using some signed intermediates and instructions.\n\nIt might be worth considering using different code paths for different  YuvConstants. I have an attempt to support unlimited data on Intel but has 5%-10% performance overhead. It would be good to give better performance / precision on possible YuvConstants.",
+      "parentUuid": "7cb54544_eff5ad8d",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
