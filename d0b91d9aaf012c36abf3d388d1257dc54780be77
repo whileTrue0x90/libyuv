@@ -226,6 +226,24 @@
       "parentUuid": "7cb54544_eff5ad8d",
       "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e608e6d6_bf1d3df0",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-15T19:12:54Z",
+      "side": 1,
+      "message": "This CL, for ARM, addresses the 2 largest quality issues on ARM.  The I444 subsampling, for I444.  No impact on I420 but a huge improvement on I444, which I expect is used a bit more today than in the past.\nAs codecs improve, we rely less on resolution and subsampling and let the codec do it.\n\nThe 2.6 is a bit of an issue, depending on the colorspace.  In practice its not too bad for full range, but some of the limited range coefficients had more rounding error.\nI experimented on Intel with a shift vs multiply for the final / 64.  Shift is faster.  But if a multiply is used, then fixed point does not need to be used... each channel can have normalized coefficients to maximize accuracy within the final 16 bit values.  e.g.  instead of /64 or /128, it could be /100 providing a bit more accuracy than /64 and still enough range for limited range coefficients.\nif float or fp16 become important, a float YUV to RGB could be done with a convert to fp16.  But it would hurt performance if conversion to/from int were used.\n\nThe original way this yuv to rgb was written was 3 tables of contributions from each yuv component, to rgb.  roughly\nrgb +\u003d yrgb[y]\nrgb +\u003d urgb[u]\nrgb +\u003d vrgb[v]\nrgb \u003e\u003e\u003d 6\nIt had 2 drawbacks:\n1 table cache misses\n2 its not simd.  it produces 1 pixel at a time.\nbut simd can do table look ups today with a vtbl / vpshufb.  Just not quite big enough.  arm can do a 64 byte table.  intel can do 128 byte.\n\nThe 8 bit math on chroma is probably the next biggest issue on 10 bit.  The chroma bits are simply reduced to 8 bit.\nFull 16 bit multiplies will be needed, similar to the Y channel.\nThere will need to be READ macros that convert 10 bit to 16 bit instead of down to 8 bit.",
+      "parentUuid": "6169139f_aacedd6c",
+      "revId": "d0b91d9aaf012c36abf3d388d1257dc54780be77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
