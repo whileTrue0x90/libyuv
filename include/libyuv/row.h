@@ -769,6 +769,10 @@ struct YuvConstants {
   int16_t kUVBiasR[16];
   int16_t kYToRgb[16];
   int16_t kYBiasToRgb[16];
+#if defined(LIBYUV_UNLIMITED_DATA)
+  uint8_t kUMaskB[32];
+  uint8_t kVMaskR[32];
+#endif
 };
 
 // Offsets into YuvConstants structure
@@ -780,6 +784,8 @@ struct YuvConstants {
 #define KUVBIASR 160
 #define KYTORGB 192
 #define KYBIASTORGB 224
+#define KUMASKB 256
+#define KVMASKR 288
 
 #endif
 
