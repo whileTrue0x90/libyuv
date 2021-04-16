@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea0a58d7_052f4ef6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T21:59:39Z",
+      "side": 1,
+      "message": "Its unfortunate that full range colorspaces don\u0027t benefit from the quality improvement, but take a performance hit.\nThe way I intended to implement this would have been\nUV is in excess 128 notation.  Sub 128 so its back to signed.  Then pmaddubsw with signed UV and unsigned coefficients.\nShould be 1 extra sub, shortly after loading the UV.\nYour code added 2 AND instructions?\n\nIn the future, on full range, where your current code has no quality improvement, and is slower, however, the quality could be improved by using 1.7 fixed point coefficients.\nSo I\u0027m still in favor of using unsigned coefficients.",
+      "revId": "54fe566c46802d7765a95f17857b3b04287d3d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
