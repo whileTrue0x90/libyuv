@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04708f97_0778df3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T20:17:27Z",
+      "side": 1,
+      "message": "In future it would be great to have NV12ToRGB24 and RAW use a direct row function that can write 24 bit RGB.  We are very low on free registers, but it likely requires shufflers.",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459dff1b_7262d737",
@@ -48,6 +65,29 @@
       "writtenOn": "2021-04-16T20:11:59Z",
       "side": 1,
       "message": "Not ideal to have these, but your code looks reasonable.\nCan this be reduced to 16 bytes each.  Use vbroadcastf128 in avx2 to replicate it.",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6930d7cc_239e7cfc",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2171,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T20:17:27Z",
+      "side": 1,
+      "message": "not important, but instead of alpha variants of all planar formats, consider READALPHA macros",
+      "range": {
+        "startLine": 2171,
+        "startChar": 19,
+        "endLine": 2171,
+        "endChar": 66
+      },
       "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
