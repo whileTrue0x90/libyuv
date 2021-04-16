@@ -16,6 +16,23 @@
       "message": "This is my attempt to make unlimited data work on Intel.\n\nPMADDUBSW interprets UB as s8, so for value \u003e 127, it\u0027s interpreted as value - 256. To fix this problem we can add 256 * UB back to get the correct result.\n\nThis CL implements this idea. Additional 5 instructions (1 shift, 2 and, 2 add) and 2 constants are required.\n\nSome problems:\nPerformance is 5% - 10% slower.\nAll registers are now used. Register arrangement need change to fit in, so almost all code is changed. Many data dependency due to no enough registers. Supporting AR4H need 3 registers (1 for unpack, 1 for clamp max, 1 for multiply), so this can be a bigger problem later.",
       "revId": "cc7995b2bcff72c01de165e2aa34611a2d3d6f1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e715d42_944b2d64",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2324,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T19:55:38Z",
+      "side": 1,
+      "message": "add a blank row",
+      "revId": "cc7995b2bcff72c01de165e2aa34611a2d3d6f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
