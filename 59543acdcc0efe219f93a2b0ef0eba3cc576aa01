@@ -18,6 +18,40 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff7a14a0_a05152cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T20:11:59Z",
+      "side": 1,
+      "message": "Looks great overall!  Thanks!\nWe can likely land this as is, since it is behind a flag.\n\nwindows and mips dont have this unlimited data feature.  A quick work around is to disable the assembly for those.  On windows with clangcl, the 64 bit uses row_gcc.cc so it works.  But 32 bit uses row_win.cc, and actual visual c uses row_win.cc for 64 bit using the intrinsics version.\nWe can disable SIMD for windows and mips for now in row.h and they will benefit from the new quality, but will be slow until optimized.\n\nThe next step is to enable the new code for unlimited, but still use the old clamped coefficients for comparability.  I had meant to have LIBYUV_UNLIMITED_CODE as a macro for the code, and it would work with either the old data or the new LIBYUV_UNLIMITED_DATA.\nWe can remove all the old code at that point.\n",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "459dff1b_7262d737",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T20:11:59Z",
+      "side": 1,
+      "message": "Not ideal to have these, but your code looks reasonable.\nCan this be reduced to 16 bytes each.  Use vbroadcastf128 in avx2 to replicate it.",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ea1da21_6b7f0c65",
