@@ -69,6 +69,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2bb02a7_7a471419",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T20:33:44Z",
+      "side": 1,
+      "message": "Performance is slightly slower than old code, likely due to masking.\nWas \nNV12ToARGB_Opt (248 ms)\nNow\nNV12ToARGB_Opt (265 ms)\n\nThis is expected and acceptable in my opinion, for the improved accuracy on blue channel.\nPerformance improved on ARM, so there may be a way to optimize the AVX further?\n\n\n",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459dff1b_7262d737",
