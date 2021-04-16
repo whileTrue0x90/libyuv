@@ -86,6 +86,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b0d8be_ff74f928",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-16T20:38:47Z",
+      "side": 1,
+      "message": "Color test looks good, but green channel has the most error on bt.2020?\n[ RUN      ] LibYUVColorTest.TestFullYUV\nhist\t      -1\t       0\t       1\nred\t  568320\t15632384\t  576512\ngreen\t  212963\t16350646\t  213607\nblue\t  444672\t15875840\t  456704\n[       OK ] LibYUVColorTest.TestFullYUV (601 ms)\n[ RUN      ] LibYUVColorTest.TestFullYUVJ\nhist\t      -1\t       0\t       1\nred\t 1329408\t14306304\t 1141504\ngreen\t 1991639\t12981998\t 1803579\nblue\t 1413120\t14024704\t 1339392\n[       OK ] LibYUVColorTest.TestFullYUVJ (557 ms)\n[ RUN      ] LibYUVColorTest.TestFullYUVH\nhist\t      -1\t       0\t       1\nred\t  876032\t15063552\t  837632\ngreen\t 2542624\t11665266\t 2569326\nblue\t  455424\t15859200\t  462592\n[       OK ] LibYUVColorTest.TestFullYUVH (557 ms)\n[ RUN      ] LibYUVColorTest.TestFullYUVF\nhist\t      -1\t       0\t       1\nred\t  903168\t15049472\t  824576\ngreen\t  407119\t16186415\t  183682\nblue\t  729600\t15387392\t  660224\n[       OK ] LibYUVColorTest.TestFullYUVF (529 ms)\n[ RUN      ] LibYUVColorTest.TestFullYUVU\nhist\t      -1\t       0\t       1\nred\t 1575936\t13507584\t 1693696\ngreen\t 2278894\t12168729\t 2329593\nblue\t  168448\t16390912\t  217856\n[       OK ] LibYUVColorTest.TestFullYUVU (555 ms)\n[ RUN      ] LibYUVColorTest.TestFullYUVV\nhist\t      -2\t      -1\t       0\t       1\t       2\nred\t       0\t 1627136\t13670144\t 1479936\t       0\ngreen\t  319285\t 3456836\t 9243059\t 3440771\t  317265\nblue\t       0\t 1561088\t14202112\t 1014016\t       0\n[       OK ] LibYUVColorTest.TestFullYUVV (527 ms)\n",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459dff1b_7262d737",
