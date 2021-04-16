@@ -1427,6 +1427,30 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
   {{UB, VR, UG, VG, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},     \
    {YG, BB, BG, BR, YB, 0, 0, 0}}
 #else
+#ifdef LIBYUV_UNLIMITED_DATA
+#define UVMASK(C) ((C) > 127 ? 0xff : 0)
+
+#define YUBCONSTANTSBODY(YG, YB, UB, UG, VG, VR, BB, BG, BR)         \
+  {{UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0,          \
+    UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0, UB, 0},         \
+   {UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG,  \
+    UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG, UG, VG}, \
+   {0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR,          \
+    0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR, 0, VR},         \
+   {BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB, BB}, \
+   {BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG, BG}, \
+   {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR}, \
+   {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG}, \
+   {YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB}, \
+   {0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB),      \
+    0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB),      \
+    0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB),      \
+    0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB), 0, UVMASK(UB)},     \
+   {0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR),      \
+    0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR),      \
+    0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR),      \
+    0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR), 0, UVMASK(VR)}}
+#else
 #define YUBCONSTANTSBODY(YG, YB, UB, UG, VG, VR, BB, BG, BR)         \
   {{-UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0,  \
     -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0, -UB, 0}, \
@@ -1439,6 +1463,7 @@ void J400ToARGBRow_C(const uint8_t* src_y, uint8_t* dst_argb, int width) {
    {BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR, BR}, \
    {YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG, YG}, \
    {YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB, YB}}
+#endif
 #endif
 
 // clang-format on
@@ -1653,6 +1678,17 @@ MAKEYUVCONSTANTS(V2020, YG, YB, UB, UG, VG, VR, BB, BG, BR)
   int br = yuvconstants->kRGBCoeffBias[3]
 #endif
 #else
+#ifdef LIBYUV_UNLIMITED_DATA
+#define LOAD_YUV_CONSTANTS             \
+  int ub = -yuvconstants->kUVToB[0];   \
+  int ug = yuvconstants->kUVToG[0];    \
+  int vg = yuvconstants->kUVToG[1];    \
+  int vr = -yuvconstants->kUVToR[1];   \
+  int bb = -yuvconstants->kUVBiasB[0]; \
+  int bg = yuvconstants->kUVBiasG[0];  \
+  int br = -yuvconstants->kUVBiasR[0]; \
+  int yg = yuvconstants->kYToRgb[0];
+#else
 #define LOAD_YUV_CONSTANTS            \
   int ub = yuvconstants->kUVToB[0];   \
   int ug = yuvconstants->kUVToG[0];   \
@@ -1662,6 +1698,7 @@ MAKEYUVCONSTANTS(V2020, YG, YB, UB, UG, VG, VR, BB, BG, BR)
   int bg = yuvconstants->kUVBiasG[0]; \
   int br = yuvconstants->kUVBiasR[0]; \
   int yg = yuvconstants->kYToRgb[0]
+#endif
 #endif
 
 // C reference code that mimics the YUV assembly.
