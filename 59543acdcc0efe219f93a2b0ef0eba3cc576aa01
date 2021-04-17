@@ -120,6 +120,42 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caa8e979_6f08b1ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-17T02:04:37Z",
+      "side": 1,
+      "message": "UG\u003d11 is rounded from 0.164553 * 64 \u003d 10.531392\nVG\u003d37 is rounded from 0.571353 * 64 \u003d 36.566592\n\nNote that they are both near *.5, so error accumulates and makes the result error high.\n\nBT.709 full range is the opposite:\nUG\u003d12 is rounded from 0.18732 * 64 \u003d 11.98848\nVG\u003d30 is rounded from 0.46812 * 64 \u003d 29.95968\n\nThey are both near .0, so as you can see, the error on green is quite low on BT.709.",
+      "parentUuid": "08b0d8be_ff74f928",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4253b3_ba0536b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-17T02:04:37Z",
+      "side": 1,
+      "message": "Actually this is mostly the code that\u0027s already here. I have to change the arrangement of some registers, so there\u0027s some small changes here and there.\n\nConsidering that we plan to replace old code with new, I didn\u0027t scatter ifdefs everywhere but duplicated all affected code and wrapped it in one ifdef. It\u0027ll be easier when we remove the old code later.",
+      "parentUuid": "d93fb9f4_ee824ea3",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459dff1b_7262d737",
@@ -133,6 +169,24 @@
       "writtenOn": "2021-04-16T20:11:59Z",
       "side": 1,
       "message": "Not ideal to have these, but your code looks reasonable.\nCan this be reduced to 16 bytes each.  Use vbroadcastf128 in avx2 to replicate it.",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5daf88d_40fffba9",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-17T02:04:37Z",
+      "side": 1,
+      "message": "If we do this we can\u0027t do vpand directly with 256(%[yuvconstants]).",
+      "parentUuid": "459dff1b_7262d737",
       "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -212,6 +266,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3cfe31e_33ced74b",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-17T02:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ea1da21_6b7f0c65",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b90173d1_d1e9c9af",
@@ -225,6 +297,24 @@
       "writtenOn": "2021-04-16T20:40:37Z",
       "side": 1,
       "message": "Nit: Delete this blank line? There are many other occurrences in this file.",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e8bfc9c_f72a0d4f",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2751,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-17T02:04:37Z",
+      "side": 1,
+      "message": "Done\nIt was used to stop clang-format from messing the assembly up, but now it seems do nothing.",
+      "parentUuid": "b90173d1_d1e9c9af",
       "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
