@@ -156,6 +156,42 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f0281c0_4264e4f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-17T03:00:28Z",
+      "side": 1,
+      "message": "ah those 0.5 values would really benefit from 1.7\nAnother option is an ordered dither, which is almost free for SIMD.\nbt.709 full range is good... I hope more teams will use it.",
+      "parentUuid": "caa8e979_6f08b1ec",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "628aa6f6_7cb5c198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-17T03:00:28Z",
+      "side": 1,
+      "message": "The amount of hand tuned code is a technical debt.  The macros help hide some of the complexity.\nOn Intel its handy that 32 and 64 bit can share a lot of code, and 64 bit probably could run the 32 bit code, but its a performance win to load the constants into registers and this is the single most important set of functions in libyuv.  Cameras and codecs produce YUV.  GPUs and Machine Learning tend to want RGB.\nTo reduce the amount of code, I\u0027ll suggest removing the legacy code, but maintain the old YuvConstants a bit longer.",
+      "parentUuid": "ce4253b3_ba0536b0",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459dff1b_7262d737",
@@ -187,6 +223,24 @@
       "side": 1,
       "message": "If we do this we can\u0027t do vpand directly with 256(%[yuvconstants]).",
       "parentUuid": "459dff1b_7262d737",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a03e55_e6bc7d41",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-17T03:00:28Z",
+      "side": 1,
+      "message": "Correct.  For 64 bit we load the constants once, so its just a bit smaller/faster.\nFor 32 bit SSE we can still use the constants from memory\nFor 32 bit AVX we would load the constants with vbroadcastf128",
+      "parentUuid": "a5daf88d_40fffba9",
       "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },

@@ -34,6 +34,24 @@
       "parentUuid": "ea0a58d7_052f4ef6",
       "revId": "54fe566c46802d7765a95f17857b3b04287d3d5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02b43159_0fa58182",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-17T03:00:28Z",
+      "side": 1,
+      "message": "I\u0027m okay with checking this in and trying sub 128 as an iteration.  If you want to do that, add a TODO to investigate sub 128.\nThis code will need a revisit to improve 10/12 bit HDR, 1.7 fixed point.\n\nRe 2 versions\nI prefer keep 1 code path if possible... its already a lot of code, and there is still a need for more code to handle new formats, chroma upsampling, new cpus.  Wheres the AVX512? :-)\nThis new technique of unsigned coefficients has imposed a new limitation on what the matrix is, so if other color spaces are needed, such as identity matrix, YCoCg, we may need another code path for generic 3x4 matrix.",
+      "parentUuid": "305c1bb4_41df1756",
+      "revId": "54fe566c46802d7765a95f17857b3b04287d3d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
