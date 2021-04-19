@@ -192,6 +192,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e76930c5_086db666",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-19T10:07:57Z",
+      "side": 1,
+      "message": "I removed old code now.",
+      "parentUuid": "628aa6f6_7cb5c198",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459dff1b_7262d737",
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "Correct.  For 64 bit we load the constants once, so its just a bit smaller/faster.\nFor 32 bit SSE we can still use the constants from memory\nFor 32 bit AVX we would load the constants with vbroadcastf128",
       "parentUuid": "a5daf88d_40fffba9",
+      "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a184055_8403c286",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-19T10:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9a03e55_e6bc7d41",
       "revId": "59543acdcc0efe219f93a2b0ef0eba3cc576aa01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
