@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6a3ac957_445717d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-19T17:34:22Z",
+      "side": 1,
+      "message": "If you upload a new version, could you bump the version\n\nIts likely this change affects Windows and Mips and will need a solution.  Perhaps disable SIMD if unlimited data is enabled for those platforms.\n",
+      "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8a30a0ff_f66559f9",
         "filename": "source/row_gcc.cc",
         "patchSetId": 5
