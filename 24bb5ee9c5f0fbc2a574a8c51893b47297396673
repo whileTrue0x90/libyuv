@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "412696de_4bd7ae2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-19T17:29:02Z",
+      "side": 1,
+      "message": "Much cleaner.  LGTM\nI asked some questions but its good to go.  Will run some tests.",
+      "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a30a0ff_f66559f9",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2322,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-19T17:29:02Z",
+      "side": 1,
+      "message": "nit could use broadcast.\nnote that 2 additional registers makes it hard to implement complex formats like RGB24 output that need additional shufflers.  The sub 128 approach should reduce this to a single constant and it could be generated.",
+      "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99d215bc_d5ed41cb",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-19T17:29:02Z",
+      "side": 1,
+      "message": "in future this could go into yuvconstants to allow 1.7 bit",
+      "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "176b4c9f_9b9e8c49",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2371,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-19T17:29:02Z",
+      "side": 1,
+      "message": "mjpeg uses full range bt.601 which didnt change with unlimited data?\nis there a math difference?",
+      "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

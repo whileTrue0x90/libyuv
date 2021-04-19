@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55af138f_713d8ecc",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2406,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-19T17:29:02Z",
+      "side": 0,
+      "message": "Good catch.",
+      "range": {
+        "startLine": 2406,
+        "startChar": 27,
+        "endLine": 2406,
+        "endChar": 63
+      },
+      "revId": "590c17ce40638362fa141bb34ce9da490b546853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
