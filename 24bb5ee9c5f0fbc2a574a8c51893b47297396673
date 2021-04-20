@@ -101,6 +101,24 @@
       "message": "mjpeg uses full range bt.601 which didnt change with unlimited data?\nis there a math difference?",
       "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87b11fbf_3c6b94c6",
+        "filename": "unit_test/convert_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2371,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-20T00:14:19Z",
+      "side": 1,
+      "message": "It\u0027s using limited range bt.601 actually: https://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/master/source/convert_jpeg.cc#477",
+      "parentUuid": "176b4c9f_9b9e8c49",
+      "revId": "24bb5ee9c5f0fbc2a574a8c51893b47297396673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
