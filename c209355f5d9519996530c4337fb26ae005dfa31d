@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d718982b_7614dfbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-20T04:26:48Z",
+      "side": 1,
+      "message": "Port new unlimited code to windows.\nTo support unsigned coefficients, actual data stored in YuvConstants has to be changed, so old code won\u0027t work even if we keep using clamped coefficients.\nI don\u0027t have MIPS CPU to test on, so I simply disabled related functions, to at least make sure result is correct.\n\nWe may also notify the author of MIPS code, but I\u0027m not sure who is taking care of it. By the way it seems MMI/MSA don\u0027t have the magic pmaddubsw equivalent, so I recommend porting from NEON instead.",
+      "revId": "c209355f5d9519996530c4337fb26ae005dfa31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
