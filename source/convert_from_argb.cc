@@ -1055,6 +1055,14 @@ int ARGBToYUY2(const uint8_t* src_argb,
     }
   }
 #endif
+#if defined(HAS_I422TOYUY2ROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    I422ToYUY2Row = I422ToYUY2Row_Any_LASX;
+    if (IS_ALIGNED(width, 32)) {
+      I422ToYUY2Row = I422ToYUY2Row_LASX;
+    }
+  }
+#endif
 
   {
     // Allocate a rows of yuv.
@@ -1217,6 +1225,14 @@ int ARGBToUYVY(const uint8_t* src_argb,
     I422ToUYVYRow = I422ToUYVYRow_Any_MSA;
     if (IS_ALIGNED(width, 32)) {
       I422ToUYVYRow = I422ToUYVYRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_I422TOUYVYROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    I422ToUYVYRow = I422ToUYVYRow_Any_LASX;
+    if (IS_ALIGNED(width, 32)) {
+      I422ToUYVYRow = I422ToUYVYRow_LASX;
     }
   }
 #endif

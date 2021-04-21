@@ -199,6 +199,125 @@ extern "C" {
     pdst_argb += 64;                                         \
   }
 
+void MirrorRow_LASX(const uint8_t* src, uint8_t* dst, int width) {
+  int x;
+  int len = width >> 6;
+  __m256i src0, src1;
+  __m256i shuffler = {0x08090A0B0C0D0E0F, 0x0001020304050607,
+                      0x08090A0B0C0D0E0F, 0x0001020304050607};
+  src += width - 64;
+  for (x = 0; x < len; x++) {
+      DUP2_ARG2(__lasx_xvld, src, 0, src, 32, src0, src1);
+      DUP2_ARG3(__lasx_xvshuf_b, src0, src0, shuffler,
+                src1, src1, shuffler, src0, src1);
+      src0 = __lasx_xvpermi_q(src0, src0, 0x01);
+      src1 = __lasx_xvpermi_q(src1, src1, 0x01);
+      __lasx_xvst(src1, dst, 0);
+      __lasx_xvst(src0, dst, 32);
+      dst += 64;
+      src -= 64;
+  }
+}
+
+void MirrorUVRow_LASX(const uint8_t* src_uv, uint8_t* dst_uv, int width) {
+  int x;
+  int len = width >> 4;
+  __m256i src, dst;
+  __m256i shuffler = {0x0004000500060007, 0x0000000100020003,
+                      0x0004000500060007, 0x0000000100020003};
+
+  src_uv += (width - 16) << 1;
+  for (x = 0; x < len; x++) {
+      src = __lasx_xvld(src_uv, 0);
+      dst = __lasx_xvshuf_h(shuffler, src, src);
+      dst = __lasx_xvpermi_q(dst, dst, 0x01);
+      __lasx_xvst(dst, dst_uv, 0);
+      src_uv -= 32;
+      dst_uv += 32;
+  }
+}
+
+void ARGBMirrorRow_LASX(const uint8_t* src, uint8_t* dst, int width) {
+  int x;
+  int len = width >> 4;
+  __m256i src0, src1;
+  __m256i dst0, dst1;
+  __m256i shuffler = {0x0B0A09080F0E0D0C, 0x0302010007060504,
+                      0x0B0A09080F0E0D0C, 0x0302010007060504};
+  src += (width << 2) - 64;
+  for (x = 0; x < len; x++) {
+      DUP2_ARG2(__lasx_xvld, src, 0, src, 32, src0, src1);
+      DUP2_ARG3(__lasx_xvshuf_b, src0, src0, shuffler,
+                src1, src1, shuffler, src0, src1);
+      dst1 = __lasx_xvpermi_q(src0, src0, 0x01);
+      dst0 = __lasx_xvpermi_q(src1, src1, 0x01);
+      __lasx_xvst(dst0, dst, 0);
+      __lasx_xvst(dst1, dst, 32);
+      dst += 64;
+      src -= 64;
+  }
+}
+
+void I422ToYUY2Row_LASX(const uint8_t* src_y,
+                        const uint8_t* src_u,
+                        const uint8_t* src_v,
+                        uint8_t* dst_yuy2,
+                        int width) {
+  int x;
+  int len = width >> 5;
+  __m256i src_u0, src_v0, src_y0, vec_uv0;
+  __m256i vec_yuy2_0, vec_yuy2_1;
+  __m256i dst_yuy2_0, dst_yuy2_1;
+
+  for (x = 0; x < len; x++) {
+      DUP2_ARG2(__lasx_xvld, src_u, 0, src_v, 0, src_u0, src_v0);
+      src_y0 = __lasx_xvld(src_y, 0);
+      src_u0 = __lasx_xvpermi_d(src_u0, 0xD8);
+      src_v0 = __lasx_xvpermi_d(src_v0, 0xD8);
+      vec_uv0 = __lasx_xvilvl_b(src_v0, src_u0);
+      vec_yuy2_0 = __lasx_xvilvl_b(vec_uv0, src_y0);
+      vec_yuy2_1 = __lasx_xvilvh_b(vec_uv0, src_y0);
+      dst_yuy2_0 = __lasx_xvpermi_q(vec_yuy2_1, vec_yuy2_0, 0x20);
+      dst_yuy2_1 = __lasx_xvpermi_q(vec_yuy2_1, vec_yuy2_0, 0x31);
+      __lasx_xvst(dst_yuy2_0, dst_yuy2, 0);
+      __lasx_xvst(dst_yuy2_1, dst_yuy2, 32);
+      src_u += 16;
+      src_v += 16;
+      src_y += 32;
+      dst_yuy2 += 64;
+  }
+}
+
+void I422ToUYVYRow_LASX(const uint8_t* src_y,
+                        const uint8_t* src_u,
+                        const uint8_t* src_v,
+                        uint8_t* dst_uyvy,
+                        int width) {
+  int x;
+  int len = width >> 5;
+  __m256i src_u0, src_v0, src_y0, vec_uv0;
+  __m256i vec_uyvy0, vec_uyvy1;
+  __m256i dst_uyvy0, dst_uyvy1;
+
+  for (x = 0; x < len; x++) {
+      DUP2_ARG2(__lasx_xvld, src_u, 0, src_v, 0, src_u0, src_v0);
+      src_y0 = __lasx_xvld(src_y, 0);
+      src_u0 = __lasx_xvpermi_d(src_u0, 0xD8);
+      src_v0 = __lasx_xvpermi_d(src_v0, 0xD8);
+      vec_uv0 = __lasx_xvilvl_b(src_v0, src_u0);
+      vec_uyvy0 = __lasx_xvilvl_b(src_y0, vec_uv0);
+      vec_uyvy1 = __lasx_xvilvh_b(src_y0, vec_uv0);
+      dst_uyvy0 = __lasx_xvpermi_q(vec_uyvy1, vec_uyvy0, 0x20);
+      dst_uyvy1 = __lasx_xvpermi_q(vec_uyvy1, vec_uyvy0, 0x31);
+      __lasx_xvst(dst_uyvy0, dst_uyvy, 0);
+      __lasx_xvst(dst_uyvy1, dst_uyvy, 32);
+      src_u += 16;
+      src_v += 16;
+      src_y += 32
+      dst_uyvy +=64;
+  }
+}
+
 void I422ToARGBRow_LASX(const uint8_t* src_y,
                         const uint8_t* src_u,
                         const uint8_t* src_v,
@@ -294,6 +413,97 @@ void I422AlphaToARGBRow_LASX(const uint8_t* src_y,
     READYUV422(src_y, src_u, src_v, y, uv);
     YUVTORGB(y, uv, vec_ubvr, vec_ugvg, vec_yg, vec_yb, b, g, r);
     STOREARGB(a, r, g, b, dst_argb);
+  }
+}
+
+void I422ToRGB24Row_LASX(const uint8_t* src_y,
+                         const uint8_t* src_u,
+                         const uint8_t* src_v,
+                         uint8_t* dst_argb,
+                         const struct YuvConstants* yuvconstants,
+                         int32_t width) {
+  int x;
+  int len = width >> 5;
+  __m256i vec_yb, vec_yg;
+  __m256i vec_ubvr, vec_ugvg;
+  __m256i const_0x80 = __lasx_xvldi(0x80);
+  __m256i shuffler0 = {0x0504120302100100, 0x0A18090816070614,
+                       0x0504120302100100, 0x0A18090816070614};
+  __m256i shuffler1 = {0x1E0F0E1C0D0C1A0B, 0x1E0F0E1C0D0C1A0B,
+                       0x1E0F0E1C0D0C1A0B, 0x1E0F0E1C0D0C1A0B};
+
+  YUVTORGB_SETUP(yuvconstants, vec_ubvr, vec_ugvg, vec_yg, vec_yb);
+
+  for (x = 0; x < len; x++) {
+    __m256i y, uv_l, uv_h, b_l, b_h, g_l, g_h, r_l, r_h;
+    __m256i temp0, temp1, temp2, temp3;
+
+    READYUV422_16(src_y, src_u, src_v, y, uv_l, uv_h);
+    YUVTORGB_16(y, uv_l, uv_h, vec_ubvr, vec_ugvg, vec_yg,
+                vec_yb, b_l, b_h, g_l, g_h, r_l, r_h);
+    temp0 = __lasx_xvpackev_b(g_l, b_l);
+    temp1 = __lasx_xvpackev_b(g_h, b_h);
+    DUP4_ARG3(__lasx_xvshuf_b, r_l, temp0, shuffler1, r_h, temp1, shuffler1,
+              r_l, temp0, shuffler0, r_h, temp1, shuffler0, temp2, temp3, temp0, temp1);
+
+    b_l = __lasx_xvilvl_d(temp1, temp2);
+    b_h = __lasx_xvilvh_d(temp3, temp1);
+    temp1 = __lasx_xvpermi_q(b_l, temp0, 0x20);
+    temp2 = __lasx_xvpermi_q(temp0, b_h, 0x30);
+    temp3 = __lasx_xvpermi_q(b_h, b_l, 0x31);
+    __lasx_xvst(temp1, dst_argb, 0);
+    __lasx_xvst(temp2, dst_argb, 32);
+    __lasx_xvst(temp3, dst_argb, 64);
+    dst_argb += 96;
+    src_y += 32;
+    src_u += 16;
+    src_v += 16;
+  }
+}
+
+void I422ToRGB565Row_LASX(const uint8_t* src_y,
+                          const uint8_t* src_u,
+                          const uint8_t* src_v,
+                          uint8_t* dst_rgb565,
+                          const struct YuvConstants* yuvconstants,
+                          int width) {
+  int x;
+  int len = width >> 5;
+  __m256i vec_yb, vec_yg;
+  __m256i vec_ubvr, vec_ugvg;
+  __m256i const_0x80 = __lasx_xvldi(0x80);
+
+  YUVTORGB_SETUP(yuvconstants, vec_ubvr, vec_ugvg, vec_yg, vec_yb);
+
+  for (x = 0; x < len; x++) {
+    __m256i y, uv_l, uv_h, b_l, b_h, g_l, g_h, r_l, r_h;
+    __m256i dst_l, dst_h;
+
+    READYUV422_16(src_y, src_u, src_v, y, uv_l, uv_h);
+    YUVTORGB_16(y, uv_l, uv_h, vec_ubvr, vec_ugvg, vec_yg,
+                vec_yb, b_l, b_h, g_l, g_h, r_l, r_h);
+    b_l   = __lasx_xvsrli_h(b_l, 3);
+    b_h   = __lasx_xvsrli_h(b_h, 3);
+    g_l   = __lasx_xvsrli_h(g_l, 2);
+    g_h   = __lasx_xvsrli_h(g_h, 2);
+    r_l   = __lasx_xvsrli_h(r_l, 3);
+    r_h   = __lasx_xvsrli_h(r_h, 3);
+    r_l   = __lasx_xvslli_h(r_l, 11);
+    r_h   = __lasx_xvslli_h(r_h, 11);
+    g_l   = __lasx_xvslli_h(g_l, 5);
+    g_h   = __lasx_xvslli_h(g_h, 5);
+    r_l   = __lasx_xvor_v(r_l, g_l);
+    r_l   = __lasx_xvor_v(r_l, b_l);
+    r_h   = __lasx_xvor_v(r_h, g_h);
+    r_h   = __lasx_xvor_v(r_h, b_h);
+    dst_l = __lasx_xvpermi_q(r_h, r_l, 0x20);
+    dst_h = __lasx_xvpermi_q(r_h, r_l, 0x31);
+    __lasx_xvst(dst_l, dst_rgb565, 0);
+    __lasx_xvst(dst_h, dst_rgb565, 32);
+    dst_rgb565 += 64;
+    src_y += 32;
+    src_u += 16;
+    src_v += 16;
   }
 }
 
