@@ -16,6 +16,40 @@
       "message": "Port new unlimited code to windows.\nTo support unsigned coefficients, actual data stored in YuvConstants has to be changed, so old code won\u0027t work even if we keep using clamped coefficients.\nI don\u0027t have MIPS CPU to test on, so I simply disabled related functions, to at least make sure result is correct.\n\nWe may also notify the author of MIPS code, but I\u0027m not sure who is taking care of it. By the way it seems MMI/MSA don\u0027t have the magic pmaddubsw equivalent, so I recommend porting from NEON instead.",
       "revId": "c209355f5d9519996530c4337fb26ae005dfa31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea7996b2_44cd26d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-21T22:09:16Z",
+      "side": 1,
+      "message": "Looks good, thanks!\n\nI changed row.h to disable assembly so we\u0027ll need to undo that, to merge/test this.\nOn linux wine runs the x86 64 bit code ok, but I\u0027m not able to test 32 bit windows, beyond the build.  The bots have some testing.\nIn theory it can be built/tested with clangcl on any platform?\n\nAssuming your code passes test, we\u0027ll keep actual Visual C alive a bit longer, but I\u0027d like to go ahead with clangcl for windows using row_gcc.cc for win32.  It already is used for win64.\nI have a CL coming soon to switch.\n",
+      "revId": "c209355f5d9519996530c4337fb26ae005dfa31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e4041eb_685d9c84",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-21T22:09:16Z",
+      "side": 1,
+      "message": "should the structure be defined with 2 fields?",
+      "revId": "c209355f5d9519996530c4337fb26ae005dfa31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
