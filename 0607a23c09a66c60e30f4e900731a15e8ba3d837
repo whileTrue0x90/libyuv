@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "584b99ac_a0c4b1ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-21T22:49:31Z",
+      "side": 1,
+      "message": "Even when row_win.cc works, it will be overall faster to use row_gcc.cc when running clangcl.",
+      "revId": "0607a23c09a66c60e30f4e900731a15e8ba3d837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
