@@ -247,10 +247,10 @@ extern "C" {
 #endif
 #endif
 
-// The following are available for AVX2 Visual C and clangcl 32 bit:
+// The following are available for AVX2 Visual C 32 bit:
 // TODO(fbarchard): Port to gcc.
 #if !defined(LIBYUV_DISABLE_X86) && defined(_M_IX86) && defined(_MSC_VER) && \
-    (defined(VISUALC_HAS_AVX2) || defined(CLANG_HAS_AVX2))
+    !defined(__clang__) && defined(VISUALC_HAS_AVX2)
 #define HAS_ARGB1555TOARGBROW_AVX2
 #define HAS_ARGB4444TOARGBROW_AVX2
 #define HAS_ARGBTOARGB1555ROW_AVX2
@@ -272,7 +272,7 @@ extern "C" {
 // The following are available for gcc/clang x86 platforms:
 // TODO(fbarchard): Port to Visual C
 #if !defined(LIBYUV_DISABLE_X86) && \
-    (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
+    (defined(__x86_64__) || defined(__i386__))
 #define HAS_ABGRTOAR30ROW_SSSE3
 #define HAS_ARGBTOAR30ROW_SSSE3
 #define HAS_ARGBTOAR64ROW_SSSE3
@@ -319,7 +319,7 @@ extern "C" {
 // The following are available for AVX2 gcc/clang x86 platforms:
 // TODO(fbarchard): Port to Visual C
 #if !defined(LIBYUV_DISABLE_X86) &&                                       \
-    (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER))) && \
+    (defined(__x86_64__) || defined(__i386__)) && \
     (defined(CLANG_HAS_AVX2) || defined(GCC_HAS_AVX2))
 #define HAS_ABGRTOAR30ROW_AVX2
 #define HAS_ABGRTOUVROW_AVX2
@@ -379,7 +379,7 @@ extern "C" {
 // TODO(fbarchard): Port to GCC and Visual C
 // TODO(fbarchard): re-enable HAS_ARGBTORGB24ROW_AVX512VBMI. Issue libyuv:789
 #if !defined(LIBYUV_DISABLE_X86) &&                                       \
-    (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER))) && \
+    (defined(__x86_64__) || defined(__i386__)) && \
     (defined(CLANG_HAS_AVX512))
 #define HAS_ARGBTORGB24ROW_AVX512VBMI
 #endif

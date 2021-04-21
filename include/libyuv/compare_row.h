@@ -64,13 +64,13 @@ extern "C" {
 
 // The following are available for GCC and clangcl 64 bit:
 #if !defined(LIBYUV_DISABLE_X86) && \
-    (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
+    (defined(__x86_64__) || defined(__i386__))
 #define HAS_HAMMINGDISTANCE_SSSE3
 #endif
 
 // The following are available for GCC and clangcl 64 bit:
 #if !defined(LIBYUV_DISABLE_X86) && defined(CLANG_HAS_AVX2) && \
-    (defined(__x86_64__) || (defined(__i386__) && !defined(_MSC_VER)))
+    (defined(__x86_64__) || defined(__i386__))
 #define HAS_HAMMINGDISTANCE_AVX2
 #endif
 
