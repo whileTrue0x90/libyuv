@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44ea3ef1_f129e7d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-21T19:56:39Z",
+      "side": 1,
+      "message": "This disables all assembly for win32, for both Visual C and clangcl.\nThat allows the build to pass again.\n\nThere is a followup CL to switch clangcl to use row_gcc.cc source, that would get win32 for clangcl running efficiently again.\nBut Visual C win32 would still be disabled.\nwin64 is unaffected\nx86 for linux, android, chromeos are unaffected.\n",
+      "revId": "23cc6bd1482b9a72456eb9c1d32883336e73737f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
