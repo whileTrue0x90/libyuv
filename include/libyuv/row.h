@@ -730,25 +730,18 @@ struct YuvConstants {
   uint8_t kUVToB[32];
   uint8_t kUVToG[32];
   uint8_t kUVToR[32];
-  int16_t kUVBiasB[16];
-  int16_t kUVBiasG[16];
-  int16_t kUVBiasR[16];
+  uint8_t kUVBias[32];
   int16_t kYToRgb[16];
   int16_t kYBiasToRgb[16];
-  uint8_t kUVMaskBR[32];
 };
 
 // Offsets into YuvConstants structure
 #define KUVTOB 0
 #define KUVTOG 32
 #define KUVTOR 64
-#define KUVBIASB 96
-#define KUVBIASG 128
-#define KUVBIASR 160
-#define KYTORGB 192
-#define KYBIASTORGB 224
-#define KUMASKB 256
-#define KVMASKR 272
+#define KUVBIAS 96
+#define KYTORGB 128
+#define KYBIASTORGB 160
 
 #endif
 
