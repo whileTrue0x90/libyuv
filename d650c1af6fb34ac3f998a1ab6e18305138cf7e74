@@ -16,6 +16,189 @@
       "message": "This CL switch to unsigned coefficient and signed UV value for VPMADDUBSW. Code is now much cleaner and performance is roughly the same as the version before unlimited data change.\n\nNew code can do 1.7 for full range colorspace by changing YuvConstants value and shift amount.\n\nBT.2020 Full range performance if using 1.7 coefficient:\nhist\t      -1\t       0\t       1\nred\t  572160\t15673856\t  531200\ngreen\t  507469\t15824492\t  445255\nblue\t  278016\t16255488\t  243712\n\nNew code also reduces register usage. ymm14 and ymm15 are now free. Due to producing signed result, ymm6 and ymm7 are used for min/max.",
       "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58bff78e_61aafe52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "vpmaddubsw is quirky with its sign/unsigned but super fast.  Unfortunately we should really re-implement 16 bit YUV to RGB using VPMULHUW for chroma to improve quality.  But not just yet.  Maybe start with a histogram to evaluate how much error 10 and 12 bit have compared to doubles.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "239cc42a_00b4f6a0",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "note: the next thing we may want in this structure is the shift value (6) so 1.7 fixed point can be used.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7fa090f_f60a24e9",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "better but we dont use \u0027camel\u0027 case.  Functions should be mixed case. ClampMax()",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1efd984_299f513e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "Have you thought about the ARM code?  The extra sub on UV is an overhead, but does it allow bias adds to be removed?",
+      "range": {
+        "startLine": 1452,
+        "startChar": 0,
+        "endLine": 1452,
+        "endChar": 55
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae578de7_b8f356c0",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "A more descriptive comment please.  Something about Intel version uses signed math so bias is not needed.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41d4afa7_05549aec",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1647,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "Note this else will be used on all cpus except ARM.  Is that your intent?\nI test with an emulator, PPC which is big endian and not ARM or Intel.  mips has SIMD and I think followed ARM in general.  I did run PPC recently and all tests passed.\nWhich ever it is, be consistent.  row.h defining structures, and row_common.cc implementing YUV to RGB in C.  Oh also Web Assembly uses this C code.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1ac57e9_fc397c28",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "0 for min comment should be on previous line",
+      "range": {
+        "startLine": 2584,
+        "startChar": 58,
+        "endLine": 2584,
+        "endChar": 59
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "915355a9_962afeec",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3371,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "sub would be the same performance but more reflective of what you\u0027re really doing here.\nuv -\u003d 128\nBut otherwise wow... this is really tight code!  Nice.",
+      "range": {
+        "startLine": 3371,
+        "startChar": 0,
+        "endLine": 3371,
+        "endChar": 71
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3fddca9_920bf599",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3437,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 1,
+      "message": "its a shame to see these come back, taking away some of the win and a register.",
+      "range": {
+        "startLine": 3437,
+        "startChar": 30,
+        "endLine": 3437,
+        "endChar": 34
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

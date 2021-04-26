@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "548d534e_d458a688",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-26T19:48:09Z",
+      "side": 0,
+      "message": "nice win.  note the bias included 0.5 for rounding... i think you got that",
+      "revId": "5e05f26a2bcacc5d34ee5786e25efee2493003cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
