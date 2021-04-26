@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65a7839e_abb59f47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-26T13:21:26Z",
+      "side": 1,
+      "message": "This CL switch to unsigned coefficient and signed UV value for VPMADDUBSW. Code is now much cleaner and performance is roughly the same as the version before unlimited data change.\n\nNew code can do 1.7 for full range colorspace by changing YuvConstants value and shift amount.\n\nBT.2020 Full range performance if using 1.7 coefficient:\nhist\t      -1\t       0\t       1\nred\t  572160\t15673856\t  531200\ngreen\t  507469\t15824492\t  445255\nblue\t  278016\t16255488\t  243712\n\nNew code also reduces register usage. ymm14 and ymm15 are now free. Due to producing signed result, ymm6 and ymm7 are used for min/max.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
