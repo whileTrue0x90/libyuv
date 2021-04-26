@@ -54,6 +54,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "aa06f884_09455f38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-04-26T22:44:58Z",
+      "side": 1,
+      "message": "I am not qualified to review the correctness of the CL, so I just skimmed through the code. I suggest two small comment fixes.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "239cc42a_00b4f6a0",
         "filename": "include/libyuv/row.h",
         "patchSetId": 2
@@ -128,6 +145,29 @@
       "writtenOn": "2021-04-26T19:48:09Z",
       "side": 1,
       "message": "A more descriptive comment please.  Something about Intel version uses signed math so bias is not needed.",
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e15477eb_ce3c311e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-04-26T22:44:58Z",
+      "side": 1,
+      "message": "Nit: add \"about\" after \"care\".",
+      "range": {
+        "startLine": 1458,
+        "startChar": 12,
+        "endLine": 1458,
+        "endChar": 22
+      },
       "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -213,6 +253,29 @@
         "startChar": 30,
         "endLine": 3437,
         "endChar": 34
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e204e6d_87dd64a9",
+        "filename": "source/row_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-04-26T22:44:58Z",
+      "side": 1,
+      "message": "Nit: minus \u003d\u003e subtract",
+      "range": {
+        "startLine": 314,
+        "startChar": 15,
+        "endLine": 314,
+        "endChar": 20
       },
       "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
