@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d151c96c_d01987d1",
+        "filename": "project.config",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1303432
+      },
+      "writtenOn": "2021-04-27T16:56:39Z",
+      "side": 1,
+      "message": "Your change looks good, but we likely want to get rid of this push permission as well. With mandatory code review almost no one should need push to refs/heads/*",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "4380c6f6af2a6c5cdcd3bfb8834d5f8b80592ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
