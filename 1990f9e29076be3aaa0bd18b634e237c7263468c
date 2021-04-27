@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70541c4f_c0aaebfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2021-04-27T10:20:31Z",
+      "side": 1,
+      "message": "I forgot updating the constant offset in 32 bit code. Test failure should now be solved. ",
+      "revId": "1990f9e29076be3aaa0bd18b634e237c7263468c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
