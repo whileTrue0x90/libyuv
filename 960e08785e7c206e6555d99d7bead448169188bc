@@ -16,6 +16,24 @@
       "message": "I sadly can\u0027t cc anyone from WebRTC on this CL 😞",
       "revId": "960e08785e7c206e6555d99d7bead448169188bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f399cd53_eabbd999",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1114919
+      },
+      "writtenOn": "2021-04-27T18:33:52Z",
+      "side": 1,
+      "message": "sent WebRTC mbonadei@ a screenshot and he LGTMed it 😄",
+      "parentUuid": "9ceb3b8d_fae38cab",
+      "revId": "960e08785e7c206e6555d99d7bead448169188bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
