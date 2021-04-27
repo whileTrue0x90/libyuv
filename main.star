@@ -156,11 +156,6 @@ luci.cq_group(
 
 luci.bucket(
     name = "ci",
-    acls = [
-        acl.entry(acl.BUILDBUCKET_TRIGGERER, users = [
-            "luci-scheduler@appspot.gserviceaccount.com",
-        ]),
-    ],
 )
 luci.bucket(
     name = "try",
@@ -173,11 +168,6 @@ luci.bucket(
 )
 luci.bucket(
     name = "cron",
-    acls = [
-        acl.entry(acl.BUILDBUCKET_TRIGGERER, users = [
-            "luci-scheduler@appspot.gserviceaccount.com",
-        ]),
-    ],
 )
 
 def get_os_dimensions(os):
