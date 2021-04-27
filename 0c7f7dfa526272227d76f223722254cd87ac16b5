@@ -16,6 +16,24 @@
       "message": "Is this the same as https://chromium-review.googlesource.com/c/libyuv/libyuv/+/2854456?",
       "revId": "0c7f7dfa526272227d76f223722254cd87ac16b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "691429b5_adff438e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1114919
+      },
+      "writtenOn": "2021-04-27T17:35:56Z",
+      "side": 1,
+      "message": "yeah. sorry. Abandoned the other one.",
+      "parentUuid": "ef3e3d4e_b6678c00",
+      "revId": "0c7f7dfa526272227d76f223722254cd87ac16b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
