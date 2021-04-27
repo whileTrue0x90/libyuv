@@ -3,7 +3,7 @@
 
 """LUCI project configuration for libyuv CQ and CI."""
 
-lucicfg.check_version("1.15.0")
+lucicfg.check_version("1.23.0")
 
 LIBYUV_GIT = "https://chromium.googlesource.com/libyuv/libyuv"
 LIBYUV_GERRIT = "https://chromium-review.googlesource.com/libyuv/libyuv"
@@ -19,6 +19,9 @@ GOMA_BACKEND_RBE_ATS_PROD = {
     "enable_ats": True,
 }
 
+# Enable LUCI Realms support.
+lucicfg.enable_experiment("crbug.com/1085650")
+
 lucicfg.config(
     lint_checks = ["default"],
     config_dir = ".",
@@ -29,6 +32,7 @@ lucicfg.config(
         "luci-milo.cfg",
         "luci-scheduler.cfg",
         "project.cfg",
+        "realms.cfg",
     ],
 )
 
