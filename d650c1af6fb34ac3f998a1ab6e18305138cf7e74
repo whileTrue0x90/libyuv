@@ -438,6 +438,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fae4980_b60be0fe",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3437,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-27T17:51:45Z",
+      "side": 1,
+      "message": "Note: Another important format for machine learning is RGB24.  We will want a STORERGB24 macro.  easy on ARM - st3.  hard to do on Intel... needs at least 1 shuffler to pack ARGB down to RGB.  palignr could be used to combine registers.",
+      "parentUuid": "ca4a68c9_2998673f",
+      "range": {
+        "startLine": 3437,
+        "startChar": 30,
+        "endLine": 3437,
+        "endChar": 34
+      },
+      "revId": "d650c1af6fb34ac3f998a1ab6e18305138cf7e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e204e6d_87dd64a9",
