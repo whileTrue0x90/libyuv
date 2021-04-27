@@ -21,6 +21,8 @@ GOMA_BACKEND_RBE_ATS_PROD = {
 
 # Enable LUCI Realms support.
 lucicfg.enable_experiment("crbug.com/1085650")
+# Launch 20% of builds in "realms-aware mode", crbug.com/1203285.
+luci.builder.defaults.experiments.set({"luci.use_realms": 20})
 
 lucicfg.config(
     lint_checks = ["default"],
