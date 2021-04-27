@@ -16,6 +16,29 @@
       "message": "I\u0027m not see code changes?  change in repo from master to main?",
       "revId": "bc7954ae4e8c8fc880fb380c1bf7ac5fa26bcbf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c03c38b_e7322623",
+        "filename": "unit_test/unit_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-27T19:30:05Z",
+      "side": 1,
+      "message": "Sounds right.\nWIN32 is defined by the SDK or the build environment, so it does not use the implementation reserved namespace\n_WIN32 is defined by the compiler so it uses the underscore to place it in the implementation-reserved namespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "bc7954ae4e8c8fc880fb380c1bf7ac5fa26bcbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
