@@ -34,6 +34,24 @@
       "parentUuid": "9ceb3b8d_fae38cab",
       "revId": "960e08785e7c206e6555d99d7bead448169188bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48dc67cc_c38999e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1303432
+      },
+      "writtenOn": "2021-04-27T18:35:06Z",
+      "side": 1,
+      "message": "That is an awkward side effect of needing to lock down refs/meta/config more because of banned words. I\u0027m hopeful we can improve this in the not too distant future as we make the whole thing better.",
+      "parentUuid": "9ceb3b8d_fae38cab",
+      "revId": "960e08785e7c206e6555d99d7bead448169188bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
