@@ -16,6 +16,23 @@
       "message": "This just shows which macros are defined, to help us diagnose when bots fail.\n\nThe list of macros was somewhat mechanically generated\nI grepped for all #if statements, reduced it to just the macros, sorted, made a unique list, then generated the code.  Tweeks for build errors.  Could almost be done with a script.\nMight want to expand it to all macros used in the source as well, which wouldnt complicate it.\n",
       "revId": "efaf1d3bec8b819fd8fcd49f350575bf3b6c3c9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c0e5f91_4f91099d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-28T23:03:46Z",
+      "side": 1,
+      "message": "[ RUN      ] LibYUVBaseTest.TestCompilerMacros\n__ATOMIC_RELAXED 0\n__cplusplus 201402\n__clang_major__ 12\n__clang_minor__ 0\n__GNUC__ 4\n__GNUC_MINOR__ 2\n__x86_64__ 1\n__clang__ 1\n__llvm__ 1\n__pic__ 2\nINT_TYPES_DEFINED\n__has_feature\n[       OK ] LibYUVBaseTest.TestCompilerMacros (0 ms)\n",
+      "revId": "efaf1d3bec8b819fd8fcd49f350575bf3b6c3c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
