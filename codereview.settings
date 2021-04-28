@@ -2,5 +2,4 @@
 CODE_REVIEW_SERVER: codereview.chromium.org
 GERRIT_HOST: True
 PROJECT: libyuv
-TRY_ON_UPLOAD: False
 VIEW_VC: https://chromium.googlesource.com/libyuv/libyuv/+/
