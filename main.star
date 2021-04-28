@@ -131,7 +131,7 @@ luci.cq_group(
     watch = [
         cq.refset(
             repo = LIBYUV_GERRIT,
-            refs = ["refs/heads/master"],
+            refs = ["refs/heads/main", "refs/heads/master"],
         ),
     ],
     acls = [
