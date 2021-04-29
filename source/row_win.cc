@@ -74,21 +74,21 @@ extern "C" {
   a_buf += 8;
 
 // Convert 8 pixels: 8 UV and 8 Y.
-#define YUVTORGB(yuvconstants)                                            \
-  xmm3 = _mm_sub_epi8(xmm3, _mm_set1_epi8(0x80));                         \
-  xmm4 = _mm_mulhi_epu16(xmm4, *(__m128i*)yuvconstants->kYToRgb);         \
-  xmm4 = _mm_add_epi16(xmm4, *(__m128i*)yuvconstants->kYBiasToRgb);       \
-  xmm0 = _mm_maddubs_epi16(*(__m128i*)yuvconstants->kUVToB, xmm3);        \
-  xmm1 = _mm_maddubs_epi16(*(__m128i*)yuvconstants->kUVToG, xmm3);        \
-  xmm2 = _mm_maddubs_epi16(*(__m128i*)yuvconstants->kUVToR, xmm3);        \
-  xmm0 = _mm_adds_epi16(xmm4, xmm0);                                      \
-  xmm1 = _mm_subs_epi16(xmm4, xmm1);                                      \
-  xmm2 = _mm_adds_epi16(xmm4, xmm2);                                      \
-  xmm0 = _mm_srai_epi16(xmm0, 6);                                         \
-  xmm1 = _mm_srai_epi16(xmm1, 6);                                         \
-  xmm2 = _mm_srai_epi16(xmm2, 6);                                         \
-  xmm0 = _mm_packus_epi16(xmm0, xmm0);                                    \
-  xmm1 = _mm_packus_epi16(xmm1, xmm1);                                    \
+#define YUVTORGB(yuvconstants)                                      \
+  xmm3 = _mm_sub_epi8(xmm3, _mm_set1_epi8(0x80));                   \
+  xmm4 = _mm_mulhi_epu16(xmm4, *(__m128i*)yuvconstants->kYToRgb);   \
+  xmm4 = _mm_add_epi16(xmm4, *(__m128i*)yuvconstants->kYBiasToRgb); \
+  xmm0 = _mm_maddubs_epi16(*(__m128i*)yuvconstants->kUVToB, xmm3);  \
+  xmm1 = _mm_maddubs_epi16(*(__m128i*)yuvconstants->kUVToG, xmm3);  \
+  xmm2 = _mm_maddubs_epi16(*(__m128i*)yuvconstants->kUVToR, xmm3);  \
+  xmm0 = _mm_adds_epi16(xmm4, xmm0);                                \
+  xmm1 = _mm_subs_epi16(xmm4, xmm1);                                \
+  xmm2 = _mm_adds_epi16(xmm4, xmm2);                                \
+  xmm0 = _mm_srai_epi16(xmm0, 6);                                   \
+  xmm1 = _mm_srai_epi16(xmm1, 6);                                   \
+  xmm2 = _mm_srai_epi16(xmm2, 6);                                   \
+  xmm0 = _mm_packus_epi16(xmm0, xmm0);                              \
+  xmm1 = _mm_packus_epi16(xmm1, xmm1);                              \
   xmm2 = _mm_packus_epi16(xmm2, xmm2);
 
 // Store 8 ARGB values.
@@ -2106,8 +2106,7 @@ __declspec(naked) void RGBAToUVRow_SSSE3(const uint8_t* src_argb,
     __asm vpsraw     ymm2, ymm2, 6                                             \
     __asm vpackuswb  ymm0, ymm0, ymm0                                          \
     __asm vpackuswb  ymm1, ymm1, ymm1                                          \
-    __asm vpackuswb  ymm2, ymm2, ymm2                                          \
-  }
+    __asm vpackuswb  ymm2, ymm2, ymm2}
 
 // Store 16 ARGB values.
 #define STOREARGB_AVX2 \
@@ -2585,7 +2584,7 @@ __declspec(naked) void I422ToRGBARow_AVX2(
     __asm psraw      xmm2, 6                                                   \
     __asm packuswb   xmm0, xmm0 /* B */                                        \
     __asm packuswb   xmm1, xmm1 /* G */                                        \
-    __asm packuswb   xmm2, xmm2 /* R */                                        \
+    __asm packuswb   xmm2, xmm2 /* R */             \
   }
 
 // Store 8 ARGB values.
