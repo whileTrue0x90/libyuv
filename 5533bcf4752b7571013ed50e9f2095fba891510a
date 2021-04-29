@@ -33,6 +33,24 @@
       "message": "I see a lot of stuff in the diff, I think most of them should not be checked in.",
       "revId": "5533bcf4752b7571013ed50e9f2095fba891510a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8c77d8d_952bb7c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-29T22:11:30Z",
+      "side": 1,
+      "message": "Removed the junk.  These are files output by the makefile linux.mk so they should be added to the exclude list I guess.  I\u0027ve manually removed them.\nclang-format is applied, changing a number of files.",
+      "parentUuid": "e4cc10bb_0aefe6d0",
+      "revId": "5533bcf4752b7571013ed50e9f2095fba891510a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
