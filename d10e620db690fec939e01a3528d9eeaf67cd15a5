@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e280cbad_362e12c2",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-04-29T06:28:15Z",
+      "side": 1,
+      "message": "This test doesn\u0027t assert anything, is it only a way to print a recap of the system the binary is targeting?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "d10e620db690fec939e01a3528d9eeaf67cd15a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
