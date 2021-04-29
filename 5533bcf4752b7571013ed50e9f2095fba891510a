@@ -16,6 +16,23 @@
       "message": "android 64 bit results:\n[ RUN      ] LibYUVBaseTest.TestCpuHas\nCpu Flags 7\nHas ARM 2\nHas NEON 4\nHas X86 0\nHas SSE2 0\nHas SSSE3 0\nHas SSE41 0\nHas SSE42 0\nHas AVX 0\nHas AVX2 0\nHas ERMS 0\nHas FMA3 0\nHas F16C 0\nHas GFNI 0\nHas AVX512BW 0\nHas AVX512VL 0\nHas AVX512VBMI 0\nHas AVX512VBMI2 0\nHas AVX512VBITALG 0\nHas AVX512VPOPCNTDQ 0\n[       OK ] LibYUVBaseTest.TestCpuHas (0 ms)\n[ RUN      ] LibYUVBaseTest.TestCompilerMacros\n__ATOMIC_RELAXED 0\n__cplusplus 201402\n__clang_major__ 12\n__clang_minor__ 0\n__GNUC__ 4\n__GNUC_MINOR__ 2\n__aarch64__ 1\n__clang__ 1\n__llvm__ 1\n__pic__ 2\nINT_TYPES_DEFINED\n__has_feature\n[       OK ] LibYUVBaseTest.TestCompilerMacros (0 ms)\n",
       "revId": "5533bcf4752b7571013ed50e9f2095fba891510a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4cc10bb_0aefe6d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-04-29T17:25:49Z",
+      "side": 1,
+      "message": "I see a lot of stuff in the diff, I think most of them should not be checked in.",
+      "revId": "5533bcf4752b7571013ed50e9f2095fba891510a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
