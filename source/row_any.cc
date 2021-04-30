@@ -153,7 +153,6 @@ ANY41CT(I210AlphaToARGBRow_Any_SSSE3,
         4,
         7)
 #endif
-
 #ifdef HAS_I210ALPHATOARGBROW_AVX2
 ANY41CT(I210AlphaToARGBRow_Any_AVX2,
         I210AlphaToARGBRow_AVX2,
@@ -164,7 +163,16 @@ ANY41CT(I210AlphaToARGBRow_Any_AVX2,
         4,
         15)
 #endif
-
+#ifdef HAS_I210ALPHATOARGBROW_NEON
+ANY41CT(I210AlphaToARGBRow_Any_NEON,
+        I210AlphaToARGBRow_NEON,
+        1,
+        0,
+        uint16_t,
+        2,
+        4,
+        7)
+#endif
 #ifdef HAS_I410ALPHATOARGBROW_SSSE3
 ANY41CT(I410AlphaToARGBRow_Any_SSSE3,
         I410AlphaToARGBRow_SSSE3,
@@ -175,7 +183,6 @@ ANY41CT(I410AlphaToARGBRow_Any_SSSE3,
         4,
         7)
 #endif
-
 #ifdef HAS_I410ALPHATOARGBROW_AVX2
 ANY41CT(I410AlphaToARGBRow_Any_AVX2,
         I410AlphaToARGBRow_AVX2,
@@ -186,7 +193,76 @@ ANY41CT(I410AlphaToARGBRow_Any_AVX2,
         4,
         15)
 #endif
-
+#ifdef HAS_I410ALPHATOARGBROW_NEON
+ANY41CT(I410AlphaToARGBRow_Any_NEON,
+        I410AlphaToARGBRow_NEON,
+        0,
+        0,
+        uint16_t,
+        2,
+        4,
+        7)
+#endif
+#ifdef HAS_I212ALPHATOARGBROW_SSSE3
+ANY41CT(I212AlphaToARGBRow_Any_SSSE3,
+        I212AlphaToARGBRow_SSSE3,
+        1,
+        0,
+        uint16_t,
+        2,
+        4,
+        7)
+#endif
+#ifdef HAS_I212ALPHATOARGBROW_AVX2
+ANY41CT(I212AlphaToARGBRow_Any_AVX2,
+        I212AlphaToARGBRow_AVX2,
+        1,
+        0,
+        uint16_t,
+        2,
+        4,
+        15)
+#endif
+#ifdef HAS_I212ALPHATOARGBROW_NEON
+ANY41CT(I212AlphaToARGBRow_Any_NEON,
+        I212AlphaToARGBRow_NEON,
+        1,
+        0,
+        uint16_t,
+        2,
+        4,
+        7)
+#endif
+#ifdef HAS_I412ALPHATOARGBROW_SSSE3
+ANY41CT(I412AlphaToARGBRow_Any_SSSE3,
+        I412AlphaToARGBRow_SSSE3,
+        0,
+        0,
+        uint16_t,
+        2,
+        4,
+        7)
+#endif
+#ifdef HAS_I412ALPHATOARGBROW_AVX2
+ANY41CT(I412AlphaToARGBRow_Any_AVX2,
+        I412AlphaToARGBRow_AVX2,
+        0,
+        0,
+        uint16_t,
+        2,
+        4,
+        15)
+#endif
+#ifdef HAS_I412ALPHATOARGBROW_NEON
+ANY41CT(I412AlphaToARGBRow_Any_NEON,
+        I412AlphaToARGBRow_NEON,
+        0,
+        0,
+        uint16_t,
+        2,
+        4,
+        7)
+#endif
 #undef ANY41CT
 
 // Any 4 planes to 1 plane with parameter
@@ -365,6 +441,9 @@ ANY31C(I422ToAR30Row_Any_SSSE3, I422ToAR30Row_SSSE3, 1, 0, 4, 7)
 #ifdef HAS_I422TOAR30ROW_AVX2
 ANY31C(I422ToAR30Row_Any_AVX2, I422ToAR30Row_AVX2, 1, 0, 4, 15)
 #endif
+#ifdef HAS_I422TOAR30ROW_NEON
+ANY31C(I422ToAR30Row_Any_NEON, I422ToAR30Row_NEON, 1, 0, 4, 7)
+#endif
 #ifdef HAS_I444TOARGBROW_SSSE3
 ANY31C(I444ToARGBRow_Any_SSSE3, I444ToARGBRow_SSSE3, 0, 0, 4, 7)
 #endif
@@ -451,6 +530,12 @@ ANY31CT(I210ToARGBRow_Any_AVX2, I210ToARGBRow_AVX2, 1, 0, uint16_t, 2, 4, 15)
 #ifdef HAS_I210TOAR30ROW_AVX2
 ANY31CT(I210ToAR30Row_Any_AVX2, I210ToAR30Row_AVX2, 1, 0, uint16_t, 2, 4, 15)
 #endif
+#ifdef HAS_I210TOAR30ROW_NEON
+ANY31CT(I210ToAR30Row_Any_NEON, I210ToAR30Row_NEON, 1, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I210TOARGBROW_NEON
+ANY31CT(I210ToARGBRow_Any_NEON, I210ToARGBRow_NEON, 1, 0, uint16_t, 2, 4, 7)
+#endif
 #ifdef HAS_I410TOAR30ROW_SSSE3
 ANY31CT(I410ToAR30Row_Any_SSSE3, I410ToAR30Row_SSSE3, 0, 0, uint16_t, 2, 4, 7)
 #endif
@@ -462,6 +547,12 @@ ANY31CT(I410ToARGBRow_Any_AVX2, I410ToARGBRow_AVX2, 0, 0, uint16_t, 2, 4, 15)
 #endif
 #ifdef HAS_I410TOAR30ROW_AVX2
 ANY31CT(I410ToAR30Row_Any_AVX2, I410ToAR30Row_AVX2, 0, 0, uint16_t, 2, 4, 15)
+#endif
+#ifdef HAS_I410TOAR30ROW_NEON
+ANY31CT(I410ToAR30Row_Any_NEON, I410ToAR30Row_NEON, 0, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I410TOARGBROW_NEON
+ANY31CT(I410ToARGBRow_Any_NEON, I410ToARGBRow_NEON, 0, 0, uint16_t, 2, 4, 7)
 #endif
 #ifdef HAS_I210TOARGBROW_MMI
 ANY31CT(I210ToARGBRow_Any_MMI, I210ToARGBRow_MMI, 1, 0, uint16_t, 2, 4, 7)
@@ -477,6 +568,30 @@ ANY31CT(I212ToARGBRow_Any_AVX2, I212ToARGBRow_AVX2, 1, 0, uint16_t, 2, 4, 15)
 #endif
 #ifdef HAS_I212TOAR30ROW_AVX2
 ANY31CT(I212ToAR30Row_Any_AVX2, I212ToAR30Row_AVX2, 1, 0, uint16_t, 2, 4, 15)
+#endif
+#ifdef HAS_I212TOAR30ROW_NEON
+ANY31CT(I212ToAR30Row_Any_NEON, I212ToAR30Row_NEON, 1, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I212TOARGBROW_NEON
+ANY31CT(I212ToARGBRow_Any_NEON, I212ToARGBRow_NEON, 1, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I412TOAR30ROW_SSSE3
+ANY31CT(I412ToAR30Row_Any_SSSE3, I412ToAR30Row_SSSE3, 0, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I412TOARGBROW_SSSE3
+ANY31CT(I412ToARGBRow_Any_SSSE3, I412ToARGBRow_SSSE3, 0, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I412TOARGBROW_AVX2
+ANY31CT(I412ToARGBRow_Any_AVX2, I412ToARGBRow_AVX2, 0, 0, uint16_t, 2, 4, 15)
+#endif
+#ifdef HAS_I412TOAR30ROW_AVX2
+ANY31CT(I412ToAR30Row_Any_AVX2, I412ToAR30Row_AVX2, 0, 0, uint16_t, 2, 4, 15)
+#endif
+#ifdef HAS_I412TOAR30ROW_NEON
+ANY31CT(I412ToAR30Row_Any_NEON, I412ToAR30Row_NEON, 0, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_I412TOARGBROW_NEON
+ANY31CT(I412ToARGBRow_Any_NEON, I412ToARGBRow_NEON, 0, 0, uint16_t, 2, 4, 7)
 #endif
 #undef ANY31CT
 
@@ -787,6 +902,12 @@ ANY21CT(P210ToARGBRow_Any_AVX2, P210ToARGBRow_AVX2, 1, 0, uint16_t, 2, 4, 15)
 #endif
 #ifdef HAS_P210TOAR30ROW_AVX2
 ANY21CT(P210ToAR30Row_Any_AVX2, P210ToAR30Row_AVX2, 1, 0, uint16_t, 2, 4, 15)
+#endif
+#ifdef HAS_P210TOAR30ROW_NEON
+ANY21CT(P210ToAR30Row_Any_NEON, P210ToAR30Row_NEON, 1, 0, uint16_t, 2, 4, 7)
+#endif
+#ifdef HAS_P210TOARGBROW_NEON
+ANY21CT(P210ToARGBRow_Any_NEON, P210ToARGBRow_NEON, 1, 0, uint16_t, 2, 4, 7)
 #endif
 #ifdef HAS_P410TOAR30ROW_SSSE3
 ANY21CT(P410ToAR30Row_Any_SSSE3, P410ToAR30Row_SSSE3, 0, 0, uint16_t, 2, 4, 7)

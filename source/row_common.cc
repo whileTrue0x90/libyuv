@@ -1983,6 +1983,72 @@ void I212ToARGBRow_C(const uint16_t* src_y,
   }
 }
 
+void I412ToARGBRow_C(const uint16_t* src_y,
+                     const uint16_t* src_u,
+                     const uint16_t* src_v,
+                     uint8_t* rgb_buf,
+                     const struct YuvConstants* yuvconstants,
+                     int width) {
+  int x;
+  for (x = 0; x < width; ++x) {
+    YuvPixel12(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
+               rgb_buf + 2, yuvconstants);
+    rgb_buf[3] = 255;
+    src_y += 1;
+    src_u += 1;
+    src_v += 1;
+    rgb_buf += 4;  // Advance 1 pixels.
+  }
+}
+
+void I212AlphaToARGBRow_C(const uint16_t* src_y,
+                          const uint16_t* src_u,
+                          const uint16_t* src_v,
+                          const uint16_t* src_a,
+                          uint8_t* rgb_buf,
+                          const struct YuvConstants* yuvconstants,
+                          int width) {
+  int x;
+  for (x = 0; x < width - 1; x += 2) {
+    YuvPixel12(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
+               rgb_buf + 2, yuvconstants);
+    rgb_buf[3] = clamp255(src_a[0] >> 4);
+    YuvPixel12(src_y[1], src_u[0], src_v[0], rgb_buf + 4, rgb_buf + 5,
+               rgb_buf + 6, yuvconstants);
+    rgb_buf[7] = clamp255(src_a[1] >> 4);
+    src_y += 2;
+    src_u += 1;
+    src_v += 1;
+    src_a += 2;
+    rgb_buf += 8;  // Advance 2 pixels.
+  }
+  if (width & 1) {
+    YuvPixel12(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
+               rgb_buf + 2, yuvconstants);
+    rgb_buf[3] = clamp255(src_a[0] >> 4);
+  }
+}
+
+void I412AlphaToARGBRow_C(const uint16_t* src_y,
+                          const uint16_t* src_u,
+                          const uint16_t* src_v,
+                          const uint16_t* src_a,
+                          uint8_t* rgb_buf,
+                          const struct YuvConstants* yuvconstants,
+                          int width) {
+  int x;
+  for (x = 0; x < width; ++x) {
+    YuvPixel12(src_y[0], src_u[0], src_v[0], rgb_buf + 0, rgb_buf + 1,
+               rgb_buf + 2, yuvconstants);
+    rgb_buf[3] = clamp255(src_a[0] >> 4);
+    src_y += 1;
+    src_u += 1;
+    src_v += 1;
+    src_a += 1;
+    rgb_buf += 4;  // Advance 1 pixels.
+  }
+}
+
 static void StoreAR30(uint8_t* rgb_buf, int b, int g, int r) {
   uint32_t ar30;
   b = b >> 4;  // convert 8 bit 10.6 to 10 bit.
@@ -2061,6 +2127,26 @@ void I410ToAR30Row_C(const uint16_t* src_y,
   int r;
   for (x = 0; x < width; ++x) {
     YuvPixel10_16(src_y[0], src_u[0], src_v[0], &b, &g, &r, yuvconstants);
+    StoreAR30(rgb_buf, b, g, r);
+    src_y += 1;
+    src_u += 1;
+    src_v += 1;
+    rgb_buf += 4;  // Advance 1 pixel.
+  }
+}
+
+void I412ToAR30Row_C(const uint16_t* src_y,
+                     const uint16_t* src_u,
+                     const uint16_t* src_v,
+                     uint8_t* rgb_buf,
+                     const struct YuvConstants* yuvconstants,
+                     int width) {
+  int x;
+  int b;
+  int g;
+  int r;
+  for (x = 0; x < width; ++x) {
+    YuvPixel12_16(src_y[0], src_u[0], src_v[0], &b, &g, &r, yuvconstants);
     StoreAR30(rgb_buf, b, g, r);
     src_y += 1;
     src_u += 1;

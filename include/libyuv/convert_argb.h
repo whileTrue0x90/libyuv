@@ -66,6 +66,18 @@ LIBYUV_API extern const struct YuvConstants kYvuV2020Constants;  // BT.2020 full
   I210ToAR30Matrix(a, b, e, f, c, d, g, h, i##VU, j, k)
 #define I410ToAB30Matrix(a, b, c, d, e, f, g, h, i, j, k) \
   I410ToAR30Matrix(a, b, e, f, c, d, g, h, i##VU, j, k)
+#define I012ToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k) \
+  I012ToARGBMatrix(a, b, e, f, c, d, g, h, i##VU, j, k)
+#define I212ToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k) \
+  I212ToARGBMatrix(a, b, e, f, c, d, g, h, i##VU, j, k)
+#define I412ToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k) \
+  I412ToARGBMatrix(a, b, e, f, c, d, g, h, i##VU, j, k)
+#define I012ToAB30Matrix(a, b, c, d, e, f, g, h, i, j, k) \
+  I012ToAR30Matrix(a, b, e, f, c, d, g, h, i##VU, j, k)
+#define I212ToAB30Matrix(a, b, c, d, e, f, g, h, i, j, k) \
+  I212ToAR30Matrix(a, b, e, f, c, d, g, h, i##VU, j, k)
+#define I412ToAB30Matrix(a, b, c, d, e, f, g, h, i, j, k) \
+  I412ToAR30Matrix(a, b, e, f, c, d, g, h, i##VU, j, k)
 #define I420AlphaToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n) \
   I420AlphaToARGBMatrix(a, b, e, f, c, d, g, h, i, j, k##VU, l, m, n)
 #define I422AlphaToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n) \
@@ -78,6 +90,12 @@ LIBYUV_API extern const struct YuvConstants kYvuV2020Constants;  // BT.2020 full
   I210AlphaToARGBMatrix(a, b, e, f, c, d, g, h, i, j, k##VU, l, m, n)
 #define I410AlphaToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n) \
   I410AlphaToARGBMatrix(a, b, e, f, c, d, g, h, i, j, k##VU, l, m, n)
+#define I012AlphaToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n) \
+  I012AlphaToARGBMatrix(a, b, e, f, c, d, g, h, i, j, k##VU, l, m, n)
+#define I212AlphaToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n) \
+  I212AlphaToARGBMatrix(a, b, e, f, c, d, g, h, i, j, k##VU, l, m, n)
+#define I412AlphaToABGRMatrix(a, b, c, d, e, f, g, h, i, j, k, l, m, n) \
+  I412AlphaToARGBMatrix(a, b, e, f, c, d, g, h, i, j, k##VU, l, m, n)
 
 // Alias.
 #define ARGBToARGB ARGBCopy
@@ -1550,7 +1568,7 @@ int I010ToARGBMatrix(const uint16_t* src_y,
                      int width,
                      int height);
 
-// multiply 12 bit yuv into high bits to allow any number of bits.
+// Convert 12 bit YUV to AR30 with matrix.
 LIBYUV_API
 int I012ToAR30Matrix(const uint16_t* src_y,
                      int src_stride_y,
@@ -1567,6 +1585,62 @@ int I012ToAR30Matrix(const uint16_t* src_y,
 // Convert 12 bit YUV to ARGB with matrix.
 LIBYUV_API
 int I012ToARGBMatrix(const uint16_t* src_y,
+                     int src_stride_y,
+                     const uint16_t* src_u,
+                     int src_stride_u,
+                     const uint16_t* src_v,
+                     int src_stride_v,
+                     uint8_t* dst_argb,
+                     int dst_stride_argb,
+                     const struct YuvConstants* yuvconstants,
+                     int width,
+                     int height);
+
+// Convert 12 bit YUV to AR30 with matrix.
+LIBYUV_API
+int I212ToAR30Matrix(const uint16_t* src_y,
+                     int src_stride_y,
+                     const uint16_t* src_u,
+                     int src_stride_u,
+                     const uint16_t* src_v,
+                     int src_stride_v,
+                     uint8_t* dst_ar30,
+                     int dst_stride_ar30,
+                     const struct YuvConstants* yuvconstants,
+                     int width,
+                     int height);
+
+// Convert 12 bit YUV to ARGB with matrix.
+LIBYUV_API
+int I212ToARGBMatrix(const uint16_t* src_y,
+                     int src_stride_y,
+                     const uint16_t* src_u,
+                     int src_stride_u,
+                     const uint16_t* src_v,
+                     int src_stride_v,
+                     uint8_t* dst_argb,
+                     int dst_stride_argb,
+                     const struct YuvConstants* yuvconstants,
+                     int width,
+                     int height);
+
+// Convert 12 bit YUV to AR30 with matrix.
+LIBYUV_API
+int I412ToAR30Matrix(const uint16_t* src_y,
+                     int src_stride_y,
+                     const uint16_t* src_u,
+                     int src_stride_u,
+                     const uint16_t* src_v,
+                     int src_stride_v,
+                     uint8_t* dst_ar30,
+                     int dst_stride_ar30,
+                     const struct YuvConstants* yuvconstants,
+                     int width,
+                     int height);
+
+// Convert 12 bit YUV to ARGB with matrix.
+LIBYUV_API
+int I412ToARGBMatrix(const uint16_t* src_y,
                      int src_stride_y,
                      const uint16_t* src_u,
                      int src_stride_u,
@@ -1761,6 +1835,57 @@ int I210AlphaToARGBMatrix(const uint16_t* src_y,
 // Convert I410 with Alpha to preattenuated ARGB with matrix.
 LIBYUV_API
 int I410AlphaToARGBMatrix(const uint16_t* src_y,
+                          int src_stride_y,
+                          const uint16_t* src_u,
+                          int src_stride_u,
+                          const uint16_t* src_v,
+                          int src_stride_v,
+                          const uint16_t* src_a,
+                          int src_stride_a,
+                          uint8_t* dst_argb,
+                          int dst_stride_argb,
+                          const struct YuvConstants* yuvconstants,
+                          int width,
+                          int height,
+                          int attenuate);
+
+// Convert I010 with Alpha to preattenuated ARGB with matrix.
+LIBYUV_API
+int I012AlphaToARGBMatrix(const uint16_t* src_y,
+                          int src_stride_y,
+                          const uint16_t* src_u,
+                          int src_stride_u,
+                          const uint16_t* src_v,
+                          int src_stride_v,
+                          const uint16_t* src_a,
+                          int src_stride_a,
+                          uint8_t* dst_argb,
+                          int dst_stride_argb,
+                          const struct YuvConstants* yuvconstants,
+                          int width,
+                          int height,
+                          int attenuate);
+
+// Convert I210 with Alpha to preattenuated ARGB with matrix.
+LIBYUV_API
+int I212AlphaToARGBMatrix(const uint16_t* src_y,
+                          int src_stride_y,
+                          const uint16_t* src_u,
+                          int src_stride_u,
+                          const uint16_t* src_v,
+                          int src_stride_v,
+                          const uint16_t* src_a,
+                          int src_stride_a,
+                          uint8_t* dst_argb,
+                          int dst_stride_argb,
+                          const struct YuvConstants* yuvconstants,
+                          int width,
+                          int height,
+                          int attenuate);
+
+// Convert I410 with Alpha to preattenuated ARGB with matrix.
+LIBYUV_API
+int I412AlphaToARGBMatrix(const uint16_t* src_y,
                           int src_stride_y,
                           const uint16_t* src_u,
                           int src_stride_u,
