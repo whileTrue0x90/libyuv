@@ -41,6 +41,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d02cd42_c16776a4",
+        "filename": "source/row_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-04-30T16:52:41Z",
+      "side": 1,
+      "message": "clang-format doesnt work on these but ive done it manually",
+      "parentUuid": "b19827cb_bec23f4f",
+      "range": {
+        "startLine": 2113,
+        "startChar": 0,
+        "endLine": 2119,
+        "endChar": 70
+      },
+      "revId": "cdccf812a9344e41634548a7c29c75f4bb8ed338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1b855e5_12f17cb4",
