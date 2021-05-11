@@ -1728,6 +1728,16 @@ int YUY2ToI422(const uint8_t* src_yuy2,
     }
   }
 #endif
+#if defined(HAS_YUY2TOYROW_LASX) && defined(HAS_YUY2TOUV422ROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    YUY2ToYRow = YUY2ToYRow_Any_LASX;
+    YUY2ToUV422Row = YUY2ToUV422Row_Any_LASX;
+    if (IS_ALIGNED(width, 32)) {
+      YUY2ToYRow = YUY2ToYRow_LASX;
+      YUY2ToUV422Row = YUY2ToUV422Row_LASX;
+    }
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     YUY2ToUV422Row(src_yuy2, dst_u, dst_v, width);
@@ -1821,6 +1831,16 @@ int UYVYToI422(const uint8_t* src_uyvy,
     if (IS_ALIGNED(width, 32)) {
       UYVYToYRow = UYVYToYRow_MSA;
       UYVYToUV422Row = UYVYToUV422Row_MSA;
+    }
+  }
+#endif
+#if defined(HAS_UYVYTOYROW_LASX) && defined(HAS_UYVYTOUV422ROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    UYVYToYRow = UYVYToYRow_Any_LASX;
+    UYVYToUV422Row = UYVYToUV422Row_Any_LASX;
+    if (IS_ALIGNED(width, 32)) {
+      UYVYToYRow = UYVYToYRow_LASX;
+      UYVYToUV422Row = UYVYToUV422Row_LASX;
     }
   }
 #endif
@@ -2626,6 +2646,14 @@ int ARGBMultiply(const uint8_t* src_argb0,
     }
   }
 #endif
+#if defined(HAS_ARGBMULTIPLYROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    ARGBMultiplyRow = ARGBMultiplyRow_Any_LASX;
+    if (IS_ALIGNED(width, 8)) {
+      ARGBMultiplyRow = ARGBMultiplyRow_LASX;
+    }
+  }
+#endif
 
   // Multiply plane
   for (y = 0; y < height; ++y) {
@@ -2711,6 +2739,14 @@ int ARGBAdd(const uint8_t* src_argb0,
     }
   }
 #endif
+#if defined(HAS_ARGBADDROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    ARGBAddRow = ARGBAddRow_Any_LASX;
+    if (IS_ALIGNED(width, 8)) {
+      ARGBAddRow = ARGBAddRow_LASX;
+    }
+  }
+#endif
 
   // Add plane
   for (y = 0; y < height; ++y) {
@@ -2788,6 +2824,14 @@ int ARGBSubtract(const uint8_t* src_argb0,
     ARGBSubtractRow = ARGBSubtractRow_Any_MSA;
     if (IS_ALIGNED(width, 8)) {
       ARGBSubtractRow = ARGBSubtractRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_ARGBSUBTRACTROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    ARGBSubtractRow = ARGBSubtractRow_Any_LASX;
+    if (IS_ALIGNED(width, 8)) {
+      ARGBSubtractRow = ARGBSubtractRow_LASX;
     }
   }
 #endif
@@ -3094,6 +3138,14 @@ int ARGBAttenuate(const uint8_t* src_argb,
     ARGBAttenuateRow = ARGBAttenuateRow_Any_MSA;
     if (IS_ALIGNED(width, 8)) {
       ARGBAttenuateRow = ARGBAttenuateRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_ARGBATTENUATEROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    ARGBAttenuateRow = ARGBAttenuateRow_Any_LASX;
+    if (IS_ALIGNED(width, 16)) {
+      ARGBAttenuateRow = ARGBAttenuateRow_LASX;
     }
   }
 #endif
@@ -3937,6 +3989,14 @@ int ARGBShuffle(const uint8_t* src_bgra,
     ARGBShuffleRow = ARGBShuffleRow_Any_MSA;
     if (IS_ALIGNED(width, 8)) {
       ARGBShuffleRow = ARGBShuffleRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_ARGBSHUFFLEROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX)) {
+    ARGBShuffleRow = ARGBShuffleRow_Any_LASX;
+    if (IS_ALIGNED(width, 16)) {
+      ARGBShuffleRow = ARGBShuffleRow_LASX;
     }
   }
 #endif
