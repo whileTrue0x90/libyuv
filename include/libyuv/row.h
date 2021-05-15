@@ -711,6 +711,9 @@ extern "C" {
 #define HAS_ARGBATTENUATEROW_LASX
 #define HAS_ARGBTORGB565DITHERROW_LASX
 #define HAS_ARGBSHUFFLEROW_LASX
+#define HAS_ARGBSHADEROW_LASX
+#define HAS_ARGBGRAYROW_LASX
+#define HAS_ARGBSEPIAROW_LASX
 #endif
 
 #if defined(_MSC_VER) && !defined(__CLR_VER) && !defined(__clang__)
@@ -4973,12 +4976,14 @@ void ARGBGrayRow_SSSE3(const uint8_t* src_argb, uint8_t* dst_argb, int width);
 void ARGBGrayRow_NEON(const uint8_t* src_argb, uint8_t* dst_argb, int width);
 void ARGBGrayRow_MSA(const uint8_t* src_argb, uint8_t* dst_argb, int width);
 void ARGBGrayRow_MMI(const uint8_t* src_argb, uint8_t* dst_argb, int width);
+void ARGBGrayRow_LASX(const uint8_t* src_argb, uint8_t* dst_argb, int width);
 
 void ARGBSepiaRow_C(uint8_t* dst_argb, int width);
 void ARGBSepiaRow_SSSE3(uint8_t* dst_argb, int width);
 void ARGBSepiaRow_NEON(uint8_t* dst_argb, int width);
 void ARGBSepiaRow_MSA(uint8_t* dst_argb, int width);
 void ARGBSepiaRow_MMI(uint8_t* dst_argb, int width);
+void ARGBSepiaRow_LASX(uint8_t* dst_argb, int width);
 
 void ARGBColorMatrixRow_C(const uint8_t* src_argb,
                           uint8_t* dst_argb,
@@ -5056,6 +5061,10 @@ void ARGBShadeRow_MMI(const uint8_t* src_argb,
                       uint8_t* dst_argb,
                       int width,
                       uint32_t value);
+void ARGBShadeRow_LASX(const uint8_t* src_argb,
+                       uint8_t* dst_argb,
+                       int width,
+                       uint32_t value);
 
 // Used for blur.
 void CumulativeSumToAverageRow_SSE2(const int32_t* topleft,
