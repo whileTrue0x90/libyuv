@@ -3254,6 +3254,11 @@ int ARGBGrayTo(const uint8_t* src_argb,
     ARGBGrayRow = ARGBGrayRow_MSA;
   }
 #endif
+#if defined(HAS_ARGBGRAYROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX) && IS_ALIGNED(width, 16)) {
+    ARGBGrayRow = ARGBGrayRow_LASX;
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     ARGBGrayRow(src_argb, dst_argb, width);
@@ -3304,6 +3309,11 @@ int ARGBGray(uint8_t* dst_argb,
     ARGBGrayRow = ARGBGrayRow_MSA;
   }
 #endif
+#if defined(HAS_ARGBGRAYROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX) && IS_ALIGNED(width, 16)) {
+    ARGBGrayRow = ARGBGrayRow_LASX;
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     ARGBGrayRow(dst, dst, width);
@@ -3350,6 +3360,11 @@ int ARGBSepia(uint8_t* dst_argb,
 #if defined(HAS_ARGBSEPIAROW_MSA)
   if (TestCpuFlag(kCpuHasMSA) && IS_ALIGNED(width, 8)) {
     ARGBSepiaRow = ARGBSepiaRow_MSA;
+  }
+#endif
+#if defined(HAS_ARGBSEPIAROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX) && IS_ALIGNED(width, 16)) {
+    ARGBSepiaRow = ARGBSepiaRow_LASX;
   }
 #endif
 
@@ -3780,6 +3795,11 @@ int ARGBShade(const uint8_t* src_argb,
 #if defined(HAS_ARGBSHADEROW_MSA)
   if (TestCpuFlag(kCpuHasMSA) && IS_ALIGNED(width, 4)) {
     ARGBShadeRow = ARGBShadeRow_MSA;
+  }
+#endif
+#if defined(HAS_ARGBSHADEROW_LASX)
+  if (TestCpuFlag(kCpuHasLASX) && IS_ALIGNED(width, 8)) {
+    ARGBShadeRow = ARGBShadeRow_LASX;
   }
 #endif
 

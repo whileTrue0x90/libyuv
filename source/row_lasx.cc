@@ -1246,6 +1246,99 @@ void ARGBShuffleRow_LASX(const uint8_t* src_argb,
   }
 }
 
+void ARGBShadeRow_LASX(const uint8_t* src_argb,
+                       uint8_t* dst_argb,
+                       int width,
+                       uint32_t value) {
+  int x;
+  int len = width >> 3;
+  __m256i src0, dst0, tmp0, tmp1;
+  __m256i vec_value = __lasx_xvreplgr2vr_w(value);
+
+  vec_value = __lasx_xvilvl_b(vec_value, vec_value);
+  for (x = 0; x < len; x++) {
+    src0 = __lasx_xvld(src_argb, 0);
+    tmp0 = __lasx_xvilvl_b(src0, src0);
+    tmp1 = __lasx_xvilvh_b(src0, src0);
+    tmp0 = __lasx_xvmuh_hu(tmp0, vec_value);
+    tmp1 = __lasx_xvmuh_hu(tmp1, vec_value);
+    dst0 = __lasx_xvpickod_b(tmp1, tmp0);
+    __lasx_xvst(dst0, dst_argb, 0);
+    src_argb += 32;
+    dst_argb += 32;
+  }
+}
+
+void ARGBGrayRow_LASX(const uint8_t* src_argb, uint8_t* dst_argb, int width) {
+  int x;
+  int len = width >> 4;
+  __m256i src0, src1, tmp0, tmp1;
+  __m256i reg0, reg1, reg2, dst0, dst1;
+  __m256i const_128 = __lasx_xvldi(0x480);
+  __m256i const_150 = __lasx_xvldi(0x96);
+  __m256i const_br  = {0x4D1D4D1D4D1D4D1D, 0x4D1D4D1D4D1D4D1D,
+                       0x4D1D4D1D4D1D4D1D, 0x4D1D4D1D4D1D4D1D};
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lasx_xvld, src_argb, 0, src_argb, 32, src0, src1);
+    tmp0 = __lasx_xvpickev_b(src1, src0);
+    tmp1 = __lasx_xvpickod_b(src1, src0);
+    reg0 = __lasx_xvdp2_h_bu(tmp0, const_br);
+    reg1 = __lasx_xvmaddwev_h_bu(const_128, tmp1, const_150);
+    reg2 = __lasx_xvadd_h(reg0, reg1);
+    tmp0 = __lasx_xvpackod_b(reg2, reg2);
+    tmp1 = __lasx_xvpackod_b(tmp1, reg2);
+    dst0 = __lasx_xvilvl_h(tmp1, tmp0);
+    dst1 = __lasx_xvilvh_h(tmp1, tmp0);
+    __lasx_xvst(dst0, dst_argb, 0);
+    __lasx_xvst(dst1, dst_argb, 32);
+    src_argb += 64;
+    dst_argb += 64;
+  }
+}
+
+void ARGBSepiaRow_LASX(uint8_t* dst_argb, int width) {
+  int x;
+  int len = width >> 4;
+  __m256i src0, src1, tmp0, tmp1;
+  __m256i reg0, reg1, spb, spg, spr;
+  __m256i dst0, dst1;
+  __m256i spb_g  = __lasx_xvldi(68);
+  __m256i spg_g  = __lasx_xvldi(88);
+  __m256i spr_g  = __lasx_xvldi(98);
+  __m256i spb_br = {0x2311231123112311, 0x2311231123112311,
+                    0x2311231123112311, 0x2311231123112311};
+  __m256i spg_br = {0x2D162D162D162D16, 0x2D162D162D162D16,
+                    0x2D162D162D162D16, 0x2D162D162D162D16};
+  __m256i spr_br = {0x3218321832183218, 0x3218321832183218,
+                    0x3218321832183218, 0x3218321832183218};
+  __m256i shuff  = {0x1706150413021100, 0x1F0E1D0C1B0A1908,
+                    0x1706150413021100, 0x1F0E1D0C1B0A1908};
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lasx_xvld, dst_argb, 0, dst_argb, 32, src0, src1);
+    tmp0 = __lasx_xvpickev_b(src1, src0);
+    tmp1 = __lasx_xvpickod_b(src1, src0);
+    DUP2_ARG2(__lasx_xvdp2_h_bu, tmp0, spb_br, tmp0, spg_br, spb, spg);
+    spr = __lasx_xvdp2_h_bu(tmp0, spr_br);
+    spb  = __lasx_xvmaddwev_h_bu(spb, tmp1, spb_g);
+    spg  = __lasx_xvmaddwev_h_bu(spg, tmp1, spg_g);
+    spr  = __lasx_xvmaddwev_h_bu(spr, tmp1, spr_g);
+    spb  = __lasx_xvsrli_h(spb, 7);
+    spg  = __lasx_xvsrli_h(spg, 7);
+    spr  = __lasx_xvsrli_h(spr, 7);
+    spg  = __lasx_xvsat_hu(spg, 7);
+    spr  = __lasx_xvsat_hu(spr, 7);
+    reg0 = __lasx_xvpackev_b(spg, spb);
+    reg1 = __lasx_xvshuf_b(tmp1, spr, shuff);
+    dst0 = __lasx_xvilvl_h(reg1, reg0);
+    dst1 = __lasx_xvilvh_h(reg1, reg0);
+    __lasx_xvst(dst0, dst_argb, 0);
+    __lasx_xvst(dst1, dst_argb, 32);
+    dst_argb += 64;
+  }
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
