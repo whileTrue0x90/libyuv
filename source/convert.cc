@@ -2650,7 +2650,7 @@ int ARGB1555ToI420(const uint8_t* src_argb1555,
                    int height) {
   int y;
 #if (defined(HAS_ARGB1555TOYROW_NEON) || defined(HAS_ARGB1555TOYROW_MSA) || \
-     defined(HAS_ARGB1555TOYROW_MMI))
+     defined(HAS_ARGB1555TOYROW_MMI) || defined(HAS_ARGB1555TOYROW_LSX))
   void (*ARGB1555ToUVRow)(const uint8_t* src_argb1555, int src_stride_argb1555,
                           uint8_t* dst_u, uint8_t* dst_v, int width) =
       ARGB1555ToUVRow_C;
@@ -2712,6 +2712,15 @@ int ARGB1555ToI420(const uint8_t* src_argb1555,
     }
   }
 #endif
+#elif (defined(HAS_ARGB1555TOYROW_LSX) && defined(HAS_ARGB1555TOUVROW_LSX))
+  if (TestCpuFlag(kCpuHasLSX)) {
+    ARGB1555ToUVRow = ARGB1555ToUVRow_Any_LSX;
+    ARGB1555ToYRow = ARGB1555ToYRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      ARGB1555ToYRow = ARGB1555ToYRow_LSX;
+      ARGB1555ToUVRow = ARGB1555ToUVRow_LSX;
+    }
+  }
 // Other platforms do intermediate conversion from ARGB1555 to ARGB.
 #else
 #if defined(HAS_ARGB1555TOARGBROW_SSE2)
@@ -2765,7 +2774,7 @@ int ARGB1555ToI420(const uint8_t* src_argb1555,
 #endif
   {
 #if !(defined(HAS_ARGB1555TOYROW_NEON) || defined(HAS_ARGB1555TOYROW_MSA) || \
-      defined(HAS_ARGB1555TOYROW_MMI))
+      defined(HAS_ARGB1555TOYROW_MMI) || defined(HAS_ARGB1555TOYROW_LSX))
     // Allocate 2 rows of ARGB.
     const int kRowSize = (width * 4 + 31) & ~31;
     align_buffer_64(row, kRowSize * 2);
@@ -2773,7 +2782,7 @@ int ARGB1555ToI420(const uint8_t* src_argb1555,
 
     for (y = 0; y < height - 1; y += 2) {
 #if (defined(HAS_ARGB1555TOYROW_NEON) || defined(HAS_ARGB1555TOYROW_MSA) || \
-     defined(HAS_ARGB1555TOYROW_MMI))
+     defined(HAS_ARGB1555TOYROW_MMI) || defined(HAS_ARGB1555TOYROW_LSX))
       ARGB1555ToUVRow(src_argb1555, src_stride_argb1555, dst_u, dst_v, width);
       ARGB1555ToYRow(src_argb1555, dst_y, width);
       ARGB1555ToYRow(src_argb1555 + src_stride_argb1555, dst_y + dst_stride_y,
@@ -2793,7 +2802,7 @@ int ARGB1555ToI420(const uint8_t* src_argb1555,
     }
     if (height & 1) {
 #if (defined(HAS_ARGB1555TOYROW_NEON) || defined(HAS_ARGB1555TOYROW_MSA) || \
-     defined(HAS_ARGB1555TOYROW_MMI))
+     defined(HAS_ARGB1555TOYROW_MMI) || defined(HAS_ARGB1555TOYROW_LSX))
       ARGB1555ToUVRow(src_argb1555, 0, dst_u, dst_v, width);
       ARGB1555ToYRow(src_argb1555, dst_y, width);
 #else
@@ -2803,7 +2812,7 @@ int ARGB1555ToI420(const uint8_t* src_argb1555,
 #endif
     }
 #if !(defined(HAS_ARGB1555TOYROW_NEON) || defined(HAS_ARGB1555TOYROW_MSA) || \
-      defined(HAS_ARGB1555TOYROW_MMI))
+      defined(HAS_ARGB1555TOYROW_MMI) || defined(HAS_ARGB1555TOYROW_LSX))
     free_aligned_buffer_64(row);
 #endif
   }
@@ -2895,6 +2904,14 @@ int ARGB4444ToI420(const uint8_t* src_argb4444,
     ARGB4444ToARGBRow = ARGB4444ToARGBRow_Any_MSA;
     if (IS_ALIGNED(width, 16)) {
       ARGB4444ToARGBRow = ARGB4444ToARGBRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_ARGB4444TOARGBROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    ARGB4444ToARGBRow = ARGB4444ToARGBRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      ARGB4444ToARGBRow = ARGB4444ToARGBRow_LSX;
     }
   }
 #endif
