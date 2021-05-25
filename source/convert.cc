@@ -1793,7 +1793,7 @@ int RGBAToI420(const uint8_t* src_rgba,
 
 // Enabled if 1 pass is available
 #if (defined(HAS_RGB24TOYROW_NEON) || defined(HAS_RGB24TOYROW_MSA) || \
-     defined(HAS_RGB24TOYROW_MMI))
+     defined(HAS_RGB24TOYROW_MMI) || defined(HAS_RGB24TOYROW_LSX))
 #define HAS_RGB24TOYROW
 #endif
 
@@ -1869,6 +1869,16 @@ int RGB24ToI420(const uint8_t* src_rgb24,
     if (IS_ALIGNED(width, 16)) {
       RGB24ToYRow = RGB24ToYRow_MSA;
       RGB24ToUVRow = RGB24ToUVRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_RGB24TOYROW_LSX) && defined(HAS_RGB24TOUVROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    RGB24ToUVRow = RGB24ToUVRow_Any_LSX;
+    RGB24ToYRow = RGB24ToYRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      RGB24ToYRow = RGB24ToYRow_LSX;
+      RGB24ToUVRow = RGB24ToUVRow_LSX;
     }
   }
 #endif
@@ -2131,7 +2141,7 @@ int RGB24ToJ420(const uint8_t* src_rgb24,
 
 // Enabled if 1 pass is available
 #if (defined(HAS_RAWTOYROW_NEON) || defined(HAS_RAWTOYROW_MSA) || \
-     defined(HAS_RAWTOYROW_MMI))
+     defined(HAS_RAWTOYROW_MMI) || defined(HAS_RAWTOYROW_LSX))
 #define HAS_RAWTOYROW
 #endif
 
@@ -2206,6 +2216,16 @@ int RAWToI420(const uint8_t* src_raw,
     if (IS_ALIGNED(width, 16)) {
       RAWToYRow = RAWToYRow_MSA;
       RAWToUVRow = RAWToUVRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_RAWTOYROW_LSX) && defined(HAS_RAWTOUVROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    RAWToUVRow = RAWToUVRow_Any_LSX;
+    RAWToYRow = RAWToYRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      RAWToYRow = RAWToYRow_LSX;
+      RAWToUVRow = RAWToUVRow_LSX;
     }
   }
 #endif
@@ -2480,7 +2500,7 @@ int RGB565ToI420(const uint8_t* src_rgb565,
                  int height) {
   int y;
 #if (defined(HAS_RGB565TOYROW_NEON) || defined(HAS_RGB565TOYROW_MSA) || \
-     defined(HAS_RGB565TOYROW_MMI))
+     defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_LSX))
   void (*RGB565ToUVRow)(const uint8_t* src_rgb565, int src_stride_rgb565,
                         uint8_t* dst_u, uint8_t* dst_v, int width) =
       RGB565ToUVRow_C;
@@ -2518,7 +2538,8 @@ int RGB565ToI420(const uint8_t* src_rgb565,
     }
   }
 // MMI and MSA version does direct RGB565 to YUV.
-#elif (defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_MSA))
+#elif (defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_MSA)  \
+       || defined(HAS_RGB565TOYROW_LSX))
 #if defined(HAS_RGB565TOYROW_MMI) && defined(HAS_RGB565TOUVROW_MMI)
   if (TestCpuFlag(kCpuHasMMI)) {
     RGB565ToUVRow = RGB565ToUVRow_Any_MMI;
@@ -2538,6 +2559,16 @@ int RGB565ToI420(const uint8_t* src_rgb565,
     if (IS_ALIGNED(width, 16)) {
       RGB565ToYRow = RGB565ToYRow_MSA;
       RGB565ToUVRow = RGB565ToUVRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_RGB565TOYROW_LSX) && defined(HAS_RGB565TOUVROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    RGB565ToUVRow = RGB565ToUVRow_Any_LSX;
+    RGB565ToYRow = RGB565ToYRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      RGB565ToYRow = RGB565ToYRow_LSX;
+      RGB565ToUVRow = RGB565ToUVRow_LSX;
     }
   }
 #endif
@@ -2594,14 +2625,14 @@ int RGB565ToI420(const uint8_t* src_rgb565,
 #endif
   {
 #if !(defined(HAS_RGB565TOYROW_NEON) || defined(HAS_RGB565TOYROW_MSA) || \
-      defined(HAS_RGB565TOYROW_MMI))
+      defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_LSX))
     // Allocate 2 rows of ARGB.
     const int kRowSize = (width * 4 + 31) & ~31;
     align_buffer_64(row, kRowSize * 2);
 #endif
     for (y = 0; y < height - 1; y += 2) {
 #if (defined(HAS_RGB565TOYROW_NEON) || defined(HAS_RGB565TOYROW_MSA) || \
-     defined(HAS_RGB565TOYROW_MMI))
+     defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_LSX))
       RGB565ToUVRow(src_rgb565, src_stride_rgb565, dst_u, dst_v, width);
       RGB565ToYRow(src_rgb565, dst_y, width);
       RGB565ToYRow(src_rgb565 + src_stride_rgb565, dst_y + dst_stride_y, width);
@@ -2619,7 +2650,7 @@ int RGB565ToI420(const uint8_t* src_rgb565,
     }
     if (height & 1) {
 #if (defined(HAS_RGB565TOYROW_NEON) || defined(HAS_RGB565TOYROW_MSA) || \
-     defined(HAS_RGB565TOYROW_MMI))
+     defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_LSX))
       RGB565ToUVRow(src_rgb565, 0, dst_u, dst_v, width);
       RGB565ToYRow(src_rgb565, dst_y, width);
 #else
@@ -2629,7 +2660,7 @@ int RGB565ToI420(const uint8_t* src_rgb565,
 #endif
     }
 #if !(defined(HAS_RGB565TOYROW_NEON) || defined(HAS_RGB565TOYROW_MSA) || \
-      defined(HAS_RGB565TOYROW_MMI))
+      defined(HAS_RGB565TOYROW_MMI) || defined(HAS_RGB565TOYROW_LSX))
     free_aligned_buffer_64(row);
 #endif
   }
