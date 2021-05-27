@@ -691,6 +691,9 @@ extern "C" {
 #define HAS_RGB24TOUVROW_LSX
 #define HAS_RAWTOYROW_LSX
 #define HAS_RAWTOUVROW_LSX
+#define HAS_NV12TOARGBROW_LSX
+#define HAS_NV12TORGB565ROW_LSX
+#define HAS_NV21TOARGBROW_LSX
 #endif
 
 #if !defined(LIBYUV_DISABLE_LASX) && defined(__loongarch_asx)
@@ -1107,6 +1110,22 @@ void YUY2ToARGBRow_MSA(const uint8_t* src_yuy2,
                        const struct YuvConstants* yuvconstants,
                        int width);
 void UYVYToARGBRow_MSA(const uint8_t* src_uyvy,
+                       uint8_t* dst_argb,
+                       const struct YuvConstants* yuvconstants,
+                       int width);
+
+void NV12ToARGBRow_LSX(const uint8_t* src_y,
+                       const uint8_t* src_uv,
+                       uint8_t* dst_argb,
+                       const struct YuvConstants* yuvconstants,
+                       int width);
+void NV12ToRGB565Row_LSX(const uint8_t* src_y,
+                         const uint8_t* src_uv,
+                         uint8_t* dst_rgb565,
+                         const struct YuvConstants* yuvconstants,
+                         int width);
+void NV21ToARGBRow_LSX(const uint8_t* src_y,
+                       const uint8_t* src_vu,
                        uint8_t* dst_argb,
                        const struct YuvConstants* yuvconstants,
                        int width);
@@ -4563,6 +4582,22 @@ void YUY2ToARGBRow_Any_MSA(const uint8_t* src_ptr,
                            const struct YuvConstants* yuvconstants,
                            int width);
 void UYVYToARGBRow_Any_MSA(const uint8_t* src_ptr,
+                           uint8_t* dst_ptr,
+                           const struct YuvConstants* yuvconstants,
+                           int width);
+
+void NV12ToARGBRow_Any_LSX(const uint8_t* y_buf,
+                           const uint8_t* uv_buf,
+                           uint8_t* dst_ptr,
+                           const struct YuvConstants* yuvconstants,
+                           int width);
+void NV12ToRGB565Row_Any_LSX(const uint8_t* y_buf,
+                             const uint8_t* uv_buf,
+                             uint8_t* dst_ptr,
+                             const struct YuvConstants* yuvconstants,
+                             int width);
+void NV21ToARGBRow_Any_LSX(const uint8_t* y_buf,
+                           const uint8_t* uv_buf,
                            uint8_t* dst_ptr,
                            const struct YuvConstants* yuvconstants,
                            int width);

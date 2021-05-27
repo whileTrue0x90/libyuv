@@ -22,6 +22,75 @@ namespace libyuv {
 extern "C" {
 #endif
 
+// Fill YUV -> RGB conversion constants into vectors
+#define YUVTORGB_SETUP(yuvconst, vr, ub, vg, ug, yg, yb)            \
+  {                                                                 \
+    ub = __lsx_vreplgr2vr_h(yuvconst->kUVToB[0]);                   \
+    vr = __lsx_vreplgr2vr_h(yuvconst->kUVToR[1]);                   \
+    ug = __lsx_vreplgr2vr_h(yuvconst->kUVToG[0]);                   \
+    vg = __lsx_vreplgr2vr_h(yuvconst->kUVToG[1]);                   \
+    yg = __lsx_vreplgr2vr_h(yuvconst->kYToRgb[0]);                  \
+    yb = __lsx_vreplgr2vr_w(yuvconst->kYBiasToRgb[0]);              \
+  }
+
+// Convert 8 pixels of YUV420 to RGB.
+#define YUVTORGB(in_y, in_vu, vrub, vgug,                           \
+                 yg, yb, out_b, out_g, out_r)                       \
+  {                                                                 \
+    __m128i y_ev, y_od, u_l, v_l;                                   \
+    __m128i tmp0, tmp1, tmp2, tmp3;                                 \
+                                                                    \
+    tmp0  = __lsx_vilvl_b(in_y, in_y);                              \
+    y_ev  = __lsx_vmulwev_w_hu_h(tmp0, yg);                         \
+    y_od  = __lsx_vmulwod_w_hu_h(tmp0, yg);                         \
+    y_ev  = __lsx_vsrai_w(y_ev, 16);                                \
+    y_od  = __lsx_vsrai_w(y_od, 16);                                \
+    y_ev  = __lsx_vadd_w(y_ev, yb);                                 \
+    y_od  = __lsx_vadd_w(y_od, yb);                                 \
+    in_vu = __lsx_vilvl_b(zero, in_vu);                             \
+    in_vu = __lsx_vsub_h(in_vu, const_80);                          \
+    u_l   = __lsx_vmulwev_w_h(in_vu, vrub);                         \
+    v_l   = __lsx_vmulwod_w_h(in_vu, vrub);                         \
+    tmp0  = __lsx_vadd_w(y_ev, u_l);                                \
+    tmp1  = __lsx_vadd_w(y_od, u_l);                                \
+    tmp2  = __lsx_vadd_w(y_ev, v_l);                                \
+    tmp3  = __lsx_vadd_w(y_od, v_l);                                \
+    tmp0  = __lsx_vsrai_w(tmp0, 6);                                 \
+    tmp1  = __lsx_vsrai_w(tmp1, 6);                                 \
+    tmp2  = __lsx_vsrai_w(tmp2, 6);                                 \
+    tmp3  = __lsx_vsrai_w(tmp3, 6);                                 \
+    tmp0  = __lsx_vclip255_w(tmp0);                                 \
+    tmp1  = __lsx_vclip255_w(tmp1);                                 \
+    tmp2  = __lsx_vclip255_w(tmp2);                                 \
+    tmp3  = __lsx_vclip255_w(tmp3);                                 \
+    out_b = __lsx_vpackev_h(tmp1, tmp0);                            \
+    out_r = __lsx_vpackev_h(tmp3, tmp2);                            \
+    tmp0  = __lsx_vdp2_w_h(in_vu, vgug);                            \
+    tmp1  = __lsx_vsub_w(y_ev, tmp0);                               \
+    tmp2  = __lsx_vsub_w(y_od, tmp0);                               \
+    tmp1  = __lsx_vsrai_w(tmp1, 6);                                 \
+    tmp2  = __lsx_vsrai_w(tmp2, 6);                                 \
+    tmp1  = __lsx_vclip255_w(tmp1);                                 \
+    tmp2  = __lsx_vclip255_w(tmp2);                                 \
+    out_g = __lsx_vpackev_h(tmp2, tmp1);                            \
+  }
+
+// Pack and Store 8 ARGB values.
+#define STOREARGB(in_a, in_r, in_g, in_b, pdst_argb)         \
+  {                                                          \
+    __m128i temp0, temp1;                                    \
+    __m128i dst0, dst1;                                      \
+                                                             \
+    temp0 = __lsx_vpackev_b(in_g, in_b);                     \
+    temp1 = __lsx_vpackev_b(in_a, in_r);                     \
+    dst0  = __lsx_vilvl_h(temp1, temp0);                     \
+    dst1  = __lsx_vilvh_h(temp1, temp0);                     \
+    __lsx_vst(dst0, pdst_argb, 0);                           \
+    __lsx_vst(dst1, pdst_argb, 16);                          \
+    pdst_argb += 32;                                         \
+  }
+
+
 void ARGB4444ToARGBRow_LSX(const uint8_t* src_argb4444,
                            uint8_t* dst_argb,
                            int width) {
@@ -651,6 +720,103 @@ void RAWToUVRow_LSX(const uint8_t* src_raw,
     dst_v += 8;
     src_raw += 48;
     next_raw += 48;
+  }
+}
+
+void NV12ToARGBRow_LSX(const uint8_t* src_y,
+                       const uint8_t* src_uv,
+                       uint8_t* dst_argb,
+                       const struct YuvConstants* yuvconstants,
+                       int width) {
+  int x;
+  int len = width >> 3;
+  __m128i vec_y, vec_vu;
+  __m128i vec_vr, vec_ub, vec_vg, vec_ug, vec_yg, vec_yb;
+  __m128i vec_vrub, vec_vgug;
+  __m128i out_b, out_g, out_r;
+  __m128i const_80 = __lsx_vldi(0x480);
+  __m128i alpha = __lsx_vldi(0xFF);
+  __m128i zero  = __lsx_vldi(0);
+
+  YUVTORGB_SETUP(yuvconstants, vec_vr, vec_ub, vec_vg, vec_ug, vec_yg, vec_yb);
+  vec_vrub = __lsx_vilvl_h(vec_vr, vec_ub);
+  vec_vgug = __lsx_vilvl_h(vec_vg, vec_ug);
+
+  for (x = 0; x < len; x++) {
+    vec_y  = __lsx_vld(src_y, 0);
+    vec_vu = __lsx_vld(src_uv, 0);
+    YUVTORGB(vec_y, vec_vu, vec_vrub, vec_vgug, vec_yg, vec_yb,
+             out_b, out_g, out_r);
+    STOREARGB(alpha, out_r, out_g, out_b, dst_argb);
+    src_y  += 8;
+    src_uv += 8;
+  }
+}
+
+void NV12ToRGB565Row_LSX(const uint8_t* src_y,
+                         const uint8_t* src_uv,
+                         uint8_t* dst_rgb565,
+                         const struct YuvConstants* yuvconstants,
+                         int width) {
+  int x;
+  int len = width >> 3;
+  __m128i vec_y, vec_vu;
+  __m128i vec_vr, vec_ub, vec_vg, vec_ug, vec_yg, vec_yb;
+  __m128i vec_vrub, vec_vgug;
+  __m128i out_b, out_g, out_r;
+  __m128i const_80 = __lsx_vldi(0x480);
+  __m128i zero  = __lsx_vldi(0);
+
+  YUVTORGB_SETUP(yuvconstants, vec_vr, vec_ub, vec_vg, vec_ug, vec_yg, vec_yb);
+  vec_vrub = __lsx_vilvl_h(vec_vr, vec_ub);
+  vec_vgug = __lsx_vilvl_h(vec_vg, vec_ug);
+
+  for (x = 0; x < len; x++) {
+    vec_y  = __lsx_vld(src_y, 0);
+    vec_vu = __lsx_vld(src_uv, 0);
+    YUVTORGB(vec_y, vec_vu, vec_vrub, vec_vgug, vec_yg, vec_yb,
+             out_b, out_g, out_r);
+    out_b = __lsx_vsrli_h(out_b, 3);
+    out_g = __lsx_vsrli_h(out_g, 2);
+    out_r = __lsx_vsrli_h(out_r, 3);
+    out_g = __lsx_vslli_h(out_g, 5);
+    out_r = __lsx_vslli_h(out_r, 11);
+    out_r = __lsx_vor_v(out_r, out_g);
+    out_r = __lsx_vor_v(out_r, out_b);
+    __lsx_vst(out_r, dst_rgb565, 0);
+    src_y  += 8;
+    src_uv += 8;
+    dst_rgb565 += 16;
+  }
+}
+
+void NV21ToARGBRow_LSX(const uint8_t* src_y,
+                       const uint8_t* src_vu,
+                       uint8_t* dst_argb,
+                       const struct YuvConstants* yuvconstants,
+                       int width) {
+  int x;
+  int len = width >> 3;
+  __m128i vec_y, vec_uv;
+  __m128i vec_vr, vec_ub, vec_vg, vec_ug, vec_yg, vec_yb;
+  __m128i vec_ubvr, vec_ugvg;
+  __m128i out_b, out_g, out_r;
+  __m128i const_80 = __lsx_vldi(0x480);
+  __m128i alpha = __lsx_vldi(0xFF);
+  __m128i zero  = __lsx_vldi(0);
+
+  YUVTORGB_SETUP(yuvconstants, vec_vr, vec_ub, vec_vg, vec_ug, vec_yg, vec_yb);
+  vec_ubvr = __lsx_vilvl_h(vec_ub, vec_vr);
+  vec_ugvg = __lsx_vilvl_h(vec_ug, vec_vg);
+
+  for (x = 0; x < len; x++) {
+    vec_y  = __lsx_vld(src_y, 0);
+    vec_uv = __lsx_vld(src_vu, 0);
+    YUVTORGB(vec_y, vec_uv, vec_ubvr, vec_ugvg, vec_yg, vec_yb,
+             out_r, out_g, out_b);
+    STOREARGB(alpha, out_r, out_g, out_b, dst_argb);
+    src_y  += 8;
+    src_vu += 8;
   }
 }
 
