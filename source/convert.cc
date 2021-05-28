@@ -1562,6 +1562,16 @@ int BGRAToI420(const uint8_t* src_bgra,
     }
   }
 #endif
+#if defined(HAS_BGRATOYROW_LSX) && defined(HAS_BGRATOUVROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    BGRAToYRow = BGRAToYRow_Any_LSX;
+    BGRAToUVRow = BGRAToUVRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      BGRAToYRow = BGRAToYRow_LSX;
+      BGRAToUVRow = BGRAToUVRow_LSX;
+    }
+  }
+#endif
 
   for (y = 0; y < height - 1; y += 2) {
     BGRAToUVRow(src_bgra, src_stride_bgra, dst_u, dst_v, width);

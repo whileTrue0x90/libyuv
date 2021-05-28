@@ -671,6 +671,9 @@ ANY21(SobelRow_Any_MSA, SobelRow_MSA, 0, 1, 1, 4, 15)
 #ifdef HAS_SOBELROW_MMI
 ANY21(SobelRow_Any_MMI, SobelRow_MMI, 0, 1, 1, 4, 7)
 #endif
+#ifdef HAS_SOBELROW_LSX
+ANY21(SobelRow_Any_LSX, SobelRow_LSX, 0, 1, 1, 4, 15)
+#endif
 #ifdef HAS_SOBELTOPLANEROW_SSE2
 ANY21(SobelToPlaneRow_Any_SSE2, SobelToPlaneRow_SSE2, 0, 1, 1, 1, 15)
 #endif
@@ -683,6 +686,9 @@ ANY21(SobelToPlaneRow_Any_MSA, SobelToPlaneRow_MSA, 0, 1, 1, 1, 31)
 #ifdef HAS_SOBELTOPLANEROW_MMI
 ANY21(SobelToPlaneRow_Any_MMI, SobelToPlaneRow_MMI, 0, 1, 1, 1, 7)
 #endif
+#ifdef HAS_SOBELTOPLANEROW_LSX
+ANY21(SobelToPlaneRow_Any_LSX, SobelToPlaneRow_LSX, 0, 1, 1, 1, 31)
+#endif
 #ifdef HAS_SOBELXYROW_SSE2
 ANY21(SobelXYRow_Any_SSE2, SobelXYRow_SSE2, 0, 1, 1, 4, 15)
 #endif
@@ -694,6 +700,9 @@ ANY21(SobelXYRow_Any_MSA, SobelXYRow_MSA, 0, 1, 1, 4, 15)
 #endif
 #ifdef HAS_SOBELXYROW_MMI
 ANY21(SobelXYRow_Any_MMI, SobelXYRow_MMI, 0, 1, 1, 4, 7)
+#endif
+#ifdef HAS_SOBELXYROW_LSX
+ANY21(SobelXYRow_Any_LSX, SobelXYRow_LSX, 0, 1, 1, 4, 15)
 #endif
 #undef ANY21
 
@@ -1054,6 +1063,9 @@ ANY11(ARGBToYJRow_Any_MSA, ARGBToYJRow_MSA, 0, 4, 1, 15)
 #ifdef HAS_ARGBTOYJROW_MMI
 ANY11(ARGBToYJRow_Any_MMI, ARGBToYJRow_MMI, 0, 4, 1, 7)
 #endif
+#ifdef HAS_ARGBTOYJROW_LSX
+ANY11(ARGBToYJRow_Any_LSX, ARGBToYJRow_LSX, 0, 4, 1, 15)
+#endif
 #ifdef HAS_BGRATOYROW_NEON
 ANY11(BGRAToYRow_Any_NEON, BGRAToYRow_NEON, 0, 4, 1, 7)
 #endif
@@ -1062,6 +1074,9 @@ ANY11(BGRAToYRow_Any_MSA, BGRAToYRow_MSA, 0, 4, 1, 15)
 #endif
 #ifdef HAS_BGRATOYROW_MMI
 ANY11(BGRAToYRow_Any_MMI, BGRAToYRow_MMI, 0, 4, 1, 7)
+#endif
+#ifdef HAS_BGRATOYROW_LSX
+ANY11(BGRAToYRow_Any_LSX, BGRAToYRow_LSX, 0, 4, 1, 15)
 #endif
 #ifdef HAS_ABGRTOYROW_NEON
 ANY11(ABGRToYRow_Any_NEON, ABGRToYRow_NEON, 0, 4, 1, 7)
@@ -2064,6 +2079,9 @@ ANY12S(BGRAToUVRow_Any_NEON, BGRAToUVRow_NEON, 0, 4, 15)
 #endif
 #ifdef HAS_BGRATOUVROW_MSA
 ANY12S(BGRAToUVRow_Any_MSA, BGRAToUVRow_MSA, 0, 4, 15)
+#endif
+#ifdef HAS_BGRATOUVROW_LSX
+ANY12S(BGRAToUVRow_Any_LSX, BGRAToUVRow_LSX, 0, 4, 15)
 #endif
 #ifdef HAS_BGRATOUVROW_MMI
 ANY12S(BGRAToUVRow_Any_MMI, BGRAToUVRow_MMI, 0, 4, 15)
