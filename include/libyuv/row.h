@@ -694,6 +694,12 @@ extern "C" {
 #define HAS_NV12TOARGBROW_LSX
 #define HAS_NV12TORGB565ROW_LSX
 #define HAS_NV21TOARGBROW_LSX
+#define HAS_SOBELROW_LSX
+#define HAS_SOBELTOPLANEROW_LSX
+#define HAS_SOBELXYROW_LSX
+#define HAS_ARGBTOYJROW_LSX
+#define HAS_BGRATOYROW_LSX
+#define HAS_BGRATOUVROW_LSX
 #endif
 
 #if !defined(LIBYUV_DISABLE_LASX) && defined(__loongarch_asx)
@@ -1158,6 +1164,7 @@ void ARGBToYJRow_MSA(const uint8_t* src_argb0, uint8_t* dst_y, int width);
 void ARGBToYRow_MMI(const uint8_t* src_argb0, uint8_t* dst_y, int width);
 void ARGBToYJRow_MMI(const uint8_t* src_argb0, uint8_t* dst_y, int width);
 void ARGBToYRow_LASX(const uint8_t* src_argb0, uint8_t* dst_y, int width);
+void ARGBToYJRow_LSX(const uint8_t* src_argb0, uint8_t* dst_y, int width);
 void ARGBToUV444Row_NEON(const uint8_t* src_argb,
                          uint8_t* dst_u,
                          uint8_t* dst_v,
@@ -1294,6 +1301,11 @@ void ARGBToUVJRow_MMI(const uint8_t* src_rgb,
                       uint8_t* dst_u,
                       uint8_t* dst_v,
                       int width);
+void BGRAToUVRow_LSX(const uint8_t* src_bgra,
+                     int src_stride_bgra,
+                     uint8_t* dst_u,
+                     uint8_t* dst_v,
+                     int width);
 void ARGB1555ToUVRow_LSX(const uint8_t* src_argb1555,
                          int src_stride_argb1555,
                          uint8_t* dst_u,
@@ -1384,6 +1396,7 @@ void RGB565ToYRow_MMI(const uint8_t* src_rgb565, uint8_t* dst_y, int width);
 void ARGB1555ToYRow_MMI(const uint8_t* src_argb1555, uint8_t* dst_y, int width);
 void ARGB4444ToYRow_MMI(const uint8_t* src_argb4444, uint8_t* dst_y, int width);
 
+void BGRAToYRow_LSX(const uint8_t* src_bgra, uint8_t* dst_y, int width);
 void ARGB1555ToYRow_LSX(const uint8_t* src_argb1555, uint8_t* dst_y, int width);
 void RGB565ToYRow_LSX(const uint8_t* src_rgb565, uint8_t* dst_y, int width);
 void RGB24ToYRow_LSX(const uint8_t* src_rgb24, uint8_t* dst_y, int width);
@@ -1459,6 +1472,8 @@ void ARGB4444ToYRow_Any_MMI(const uint8_t* src_ptr,
                             uint8_t* dst_ptr,
                             int width);
 
+void BGRAToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
+void ARGBToYJRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void RGB24ToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void RGB565ToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void ARGB1555ToYRow_Any_LSX(const uint8_t* src_ptr,
@@ -1683,6 +1698,11 @@ void ARGBToUVJRow_Any_MMI(const uint8_t* src_ptr,
                           uint8_t* dst_u,
                           uint8_t* dst_v,
                           int width);
+void BGRAToUVRow_Any_LSX(const uint8_t* src_ptr,
+                         int src_stride_ptr,
+                         uint8_t* dst_u,
+                         uint8_t* dst_v,
+                         int width);
 void ARGB1555ToUVRow_Any_LSX(const uint8_t* src_ptr,
                              int src_stride_ptr,
                              uint8_t* dst_u,
@@ -5361,6 +5381,10 @@ void SobelRow_MMI(const uint8_t* src_sobelx,
                   const uint8_t* src_sobely,
                   uint8_t* dst_argb,
                   int width);
+void SobelRow_LSX(const uint8_t* src_sobelx,
+                  const uint8_t* src_sobely,
+                  uint8_t* dst_argb,
+                  int width);
 void SobelToPlaneRow_C(const uint8_t* src_sobelx,
                        const uint8_t* src_sobely,
                        uint8_t* dst_y,
@@ -5378,6 +5402,10 @@ void SobelToPlaneRow_MSA(const uint8_t* src_sobelx,
                          uint8_t* dst_y,
                          int width);
 void SobelToPlaneRow_MMI(const uint8_t* src_sobelx,
+                         const uint8_t* src_sobely,
+                         uint8_t* dst_y,
+                         int width);
+void SobelToPlaneRow_LSX(const uint8_t* src_sobelx,
                          const uint8_t* src_sobely,
                          uint8_t* dst_y,
                          int width);
@@ -5401,6 +5429,10 @@ void SobelXYRow_MMI(const uint8_t* src_sobelx,
                     const uint8_t* src_sobely,
                     uint8_t* dst_argb,
                     int width);
+void SobelXYRow_LSX(const uint8_t* src_sobelx,
+                    const uint8_t* src_sobely,
+                    uint8_t* dst_argb,
+                    int width);
 void SobelRow_Any_SSE2(const uint8_t* y_buf,
                        const uint8_t* uv_buf,
                        uint8_t* dst_ptr,
@@ -5414,6 +5446,10 @@ void SobelRow_Any_MSA(const uint8_t* y_buf,
                       uint8_t* dst_ptr,
                       int width);
 void SobelRow_Any_MMI(const uint8_t* y_buf,
+                      const uint8_t* uv_buf,
+                      uint8_t* dst_ptr,
+                      int width);
+void SobelRow_Any_LSX(const uint8_t* y_buf,
                       const uint8_t* uv_buf,
                       uint8_t* dst_ptr,
                       int width);
@@ -5433,6 +5469,10 @@ void SobelToPlaneRow_Any_MMI(const uint8_t* y_buf,
                              const uint8_t* uv_buf,
                              uint8_t* dst_ptr,
                              int width);
+void SobelToPlaneRow_Any_LSX(const uint8_t* y_buf,
+                             const uint8_t* uv_buf,
+                             uint8_t* dst_ptr,
+                             int width);
 void SobelXYRow_Any_SSE2(const uint8_t* y_buf,
                          const uint8_t* uv_buf,
                          uint8_t* dst_ptr,
@@ -5446,6 +5486,10 @@ void SobelXYRow_Any_MSA(const uint8_t* y_buf,
                         uint8_t* dst_ptr,
                         int width);
 void SobelXYRow_Any_MMI(const uint8_t* y_buf,
+                        const uint8_t* uv_buf,
+                        uint8_t* dst_ptr,
+                        int width);
+void SobelXYRow_Any_LSX(const uint8_t* y_buf,
                         const uint8_t* uv_buf,
                         uint8_t* dst_ptr,
                         int width);
