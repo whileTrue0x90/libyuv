@@ -2117,6 +2117,16 @@ int ARGBToJ420(const uint8_t* src_argb,
     }
   }
 #endif
+#if defined(HAS_ARGBTOYJROW_LSX) && defined(HAS_ARGBTOUVJROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    ARGBToYJRow = ARGBToYJRow_Any_LSX;
+    ARGBToUVJRow = ARGBToUVJRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      ARGBToYJRow = ARGBToYJRow_LSX;
+      ARGBToUVJRow = ARGBToUVJRow_LSX;
+    }
+  }
+#endif
 
   for (y = 0; y < height - 1; y += 2) {
     ARGBToUVJRow(src_argb, src_stride_argb, dst_u, dst_v, width);
@@ -2229,6 +2239,16 @@ int ARGBToJ422(const uint8_t* src_argb,
     }
     if (IS_ALIGNED(width, 32)) {
       ARGBToUVJRow = ARGBToUVJRow_MSA;
+    }
+  }
+#endif
+#if defined(HAS_ARGBTOYJROW_LSX) && defined(HAS_ARGBTOUVJROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    ARGBToYJRow = ARGBToYJRow_Any_LSX;
+    ARGBToUVJRow = ARGBToUVJRow_Any_LSX;
+    if (IS_ALIGNED(width, 16)) {
+      ARGBToYJRow = ARGBToYJRow_LSX;
+      ARGBToUVJRow = ARGBToUVJRow_LSX;
     }
   }
 #endif

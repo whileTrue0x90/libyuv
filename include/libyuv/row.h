@@ -700,6 +700,11 @@ extern "C" {
 #define HAS_ARGBTOYJROW_LSX
 #define HAS_BGRATOYROW_LSX
 #define HAS_BGRATOUVROW_LSX
+#define HAS_ABGRTOYROW_LSX
+#define HAS_ABGRTOUVROW_LSX
+#define HAS_RGBATOYROW_LSX
+#define HAS_RGBATOUVROW_LSX
+#define HAS_ARGBTOUVJROW_LSX
 #endif
 
 #if !defined(LIBYUV_DISABLE_LASX) && defined(__loongarch_asx)
@@ -1306,6 +1311,21 @@ void BGRAToUVRow_LSX(const uint8_t* src_bgra,
                      uint8_t* dst_u,
                      uint8_t* dst_v,
                      int width);
+void ABGRToUVRow_LSX(const uint8_t* src_abgr,
+                     int src_stride_abgr,
+                     uint8_t* dst_u,
+                     uint8_t* dst_v,
+                     int width);
+void RGBAToUVRow_LSX(const uint8_t* src_rgba,
+                     int src_stride_rgba,
+                     uint8_t* dst_u,
+                     uint8_t* dst_v,
+                     int width);
+void ARGBToUVJRow_LSX(const uint8_t* src_argb,
+                      int src_stride_argb,
+                      uint8_t* dst_u,
+                      uint8_t* dst_v,
+                      int width);
 void ARGB1555ToUVRow_LSX(const uint8_t* src_argb1555,
                          int src_stride_argb1555,
                          uint8_t* dst_u,
@@ -1397,6 +1417,8 @@ void ARGB1555ToYRow_MMI(const uint8_t* src_argb1555, uint8_t* dst_y, int width);
 void ARGB4444ToYRow_MMI(const uint8_t* src_argb4444, uint8_t* dst_y, int width);
 
 void BGRAToYRow_LSX(const uint8_t* src_bgra, uint8_t* dst_y, int width);
+void ABGRToYRow_LSX(const uint8_t* src_abgr, uint8_t* dst_y, int width);
+void RGBAToYRow_LSX(const uint8_t* src_rgba, uint8_t* dst_y, int width);
 void ARGB1555ToYRow_LSX(const uint8_t* src_argb1555, uint8_t* dst_y, int width);
 void RGB565ToYRow_LSX(const uint8_t* src_rgb565, uint8_t* dst_y, int width);
 void RGB24ToYRow_LSX(const uint8_t* src_rgb24, uint8_t* dst_y, int width);
@@ -1473,6 +1495,8 @@ void ARGB4444ToYRow_Any_MMI(const uint8_t* src_ptr,
                             int width);
 
 void BGRAToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
+void ABGRToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
+void RGBAToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void ARGBToYJRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void RGB24ToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void RGB565ToYRow_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
@@ -1698,11 +1722,26 @@ void ARGBToUVJRow_Any_MMI(const uint8_t* src_ptr,
                           uint8_t* dst_u,
                           uint8_t* dst_v,
                           int width);
+void ABGRToUVRow_Any_LSX(const uint8_t* src_ptr,
+                         int src_stride_ptr,
+                         uint8_t* dst_u,
+                         uint8_t* dst_v,
+                         int width);
 void BGRAToUVRow_Any_LSX(const uint8_t* src_ptr,
                          int src_stride_ptr,
                          uint8_t* dst_u,
                          uint8_t* dst_v,
                          int width);
+void RGBAToUVRow_Any_LSX(const uint8_t* src_ptr,
+                         int src_stride_ptr,
+                         uint8_t* dst_u,
+                         uint8_t* dst_v,
+                         int width);
+void ARGBToUVJRow_Any_LSX(const uint8_t* src_ptr,
+                          int src_stride_ptr,
+                          uint8_t* dst_u,
+                          uint8_t* dst_v,
+                          int width);
 void ARGB1555ToUVRow_Any_LSX(const uint8_t* src_ptr,
                              int src_stride_ptr,
                              uint8_t* dst_u,
