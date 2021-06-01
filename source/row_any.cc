@@ -598,6 +598,9 @@ ANY21(MergeUVRow_Any_MSA, MergeUVRow_MSA, 0, 1, 1, 2, 15)
 #ifdef HAS_MERGEUVROW_MMI
 ANY21(MergeUVRow_Any_MMI, MergeUVRow_MMI, 0, 1, 1, 2, 7)
 #endif
+#ifdef HAS_MERGEUVROW_LSX
+ANY21(MergeUVRow_Any_LSX, MergeUVRow_LSX, 0, 1, 1, 2, 15)
+#endif
 #ifdef HAS_NV21TOYUV24ROW_NEON
 ANY21(NV21ToYUV24Row_Any_NEON, NV21ToYUV24Row_NEON, 1, 1, 2, 3, 15)
 #endif
@@ -1005,6 +1008,9 @@ ANY11(RAWToRGB24Row_Any_MSA, RAWToRGB24Row_MSA, 0, 3, 3, 15)
 #endif
 #if defined(HAS_RAWTORGB24ROW_MMI)
 ANY11(RAWToRGB24Row_Any_MMI, RAWToRGB24Row_MMI, 0, 3, 3, 3)
+#endif
+#if defined(HAS_RAWTORGB24ROW_LSX)
+ANY11(RAWToRGB24Row_Any_LSX, RAWToRGB24Row_LSX, 0, 3, 3, 15)
 #endif
 #ifdef HAS_ARGBTOYROW_AVX2
 ANY11(ARGBToYRow_Any_AVX2, ARGBToYRow_AVX2, 0, 4, 1, 31)
@@ -1753,6 +1759,9 @@ ANY11I(InterpolateRow_Any_MSA, InterpolateRow_MSA, 1, 1, 31)
 #ifdef HAS_INTERPOLATEROW_MMI
 ANY11I(InterpolateRow_Any_MMI, InterpolateRow_MMI, 1, 1, 7)
 #endif
+#ifdef HAS_INTERPOLATEROW_LSX
+ANY11I(InterpolateRow_Any_LSX, InterpolateRow_LSX, 1, 1, 31)
+#endif
 #undef ANY11I
 
 // Any 1 to 1 mirror.
@@ -1857,6 +1866,9 @@ ANY1(ARGBSetRow_Any_MSA, ARGBSetRow_MSA, uint32_t, 4, 3)
 #endif
 #ifdef HAS_ARGBSETROW_MMI
 ANY1(ARGBSetRow_Any_MMI, ARGBSetRow_MMI, uint32_t, 4, 3)
+#endif
+#ifdef HAS_ARGBSETROW_LSX
+ANY1(ARGBSetRow_Any_LSX, ARGBSetRow_LSX, uint32_t, 4, 3)
 #endif
 #undef ANY1
 

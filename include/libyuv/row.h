@@ -710,6 +710,10 @@ extern "C" {
 #define HAS_J400TOARGBROW_LSX
 #define HAS_YUY2TOARGBROW_LSX
 #define HAS_UYVYTOARGBROW_LSX
+#define HAS_INTERPOLATEROW_LSX
+#define HAS_ARGBSETROW_LSX
+#define HAS_RAWTORGB24ROW_LSX
+#define HAS_MERGEUVROW_LSX
 #endif
 
 #if !defined(LIBYUV_DISABLE_LASX) && defined(__loongarch_asx)
@@ -2056,6 +2060,10 @@ void MergeUVRow_MMI(const uint8_t* src_u,
                     const uint8_t* src_v,
                     uint8_t* dst_uv,
                     int width);
+void MergeUVRow_LSX(const uint8_t* src_u,
+                    const uint8_t* src_v,
+                    uint8_t* dst_uv,
+                    int width);
 void MergeUVRow_Any_SSE2(const uint8_t* y_buf,
                          const uint8_t* uv_buf,
                          uint8_t* dst_ptr,
@@ -2073,6 +2081,10 @@ void MergeUVRow_Any_MSA(const uint8_t* y_buf,
                         uint8_t* dst_ptr,
                         int width);
 void MergeUVRow_Any_MMI(const uint8_t* y_buf,
+                        const uint8_t* uv_buf,
+                        uint8_t* dst_ptr,
+                        int width);
+void MergeUVRow_Any_LSX(const uint8_t* y_buf,
                         const uint8_t* uv_buf,
                         uint8_t* dst_ptr,
                         int width);
@@ -2750,6 +2762,8 @@ void ARGBSetRow_MSA(uint8_t* dst_argb, uint32_t v32, int width);
 void ARGBSetRow_Any_MSA(uint8_t* dst_ptr, uint32_t v32, int width);
 void ARGBSetRow_MMI(uint8_t* dst_argb, uint32_t v32, int width);
 void ARGBSetRow_Any_MMI(uint8_t* dst_ptr, uint32_t v32, int width);
+void ARGBSetRow_LSX(uint8_t* dst_argb, uint32_t v32, int width);
+void ARGBSetRow_Any_LSX(uint8_t* dst_ptr, uint32_t v32, int width);
 
 // ARGBShufflers for BGRAToARGB etc.
 void ARGBShuffleRow_C(const uint8_t* src_argb,
@@ -2838,6 +2852,7 @@ void RAWToARGBRow_LSX(const uint8_t* src_raw, uint8_t* dst_argb, int width);
 void RAWToRGB24Row_NEON(const uint8_t* src_raw, uint8_t* dst_rgb24, int width);
 void RAWToRGB24Row_MSA(const uint8_t* src_raw, uint8_t* dst_rgb24, int width);
 void RAWToRGB24Row_MMI(const uint8_t* src_raw, uint8_t* dst_rgb24, int width);
+void RAWToRGB24Row_LSX(const uint8_t* src_raw, uint8_t* dst_rgb24, int width);
 void RGB565ToARGBRow_NEON(const uint8_t* src_rgb565,
                           uint8_t* dst_argb,
                           int width);
@@ -2944,6 +2959,7 @@ void RAWToRGB24Row_Any_NEON(const uint8_t* src_ptr,
                             int width);
 void RAWToRGB24Row_Any_MSA(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void RAWToRGB24Row_Any_MMI(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
+void RAWToRGB24Row_Any_LSX(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void RGB565ToARGBRow_Any_NEON(const uint8_t* src_ptr,
                               uint8_t* dst_ptr,
                               int width);
@@ -5365,6 +5381,11 @@ void InterpolateRow_MMI(uint8_t* dst_ptr,
                         ptrdiff_t src_stride,
                         int width,
                         int source_y_fraction);
+void InterpolateRow_LSX(uint8_t* dst_ptr,
+                        const uint8_t* src_ptr,
+                        ptrdiff_t src_stride,
+                        int width,
+                        int source_y_fraction);
 void InterpolateRow_Any_NEON(uint8_t* dst_ptr,
                              const uint8_t* src_ptr,
                              ptrdiff_t src_stride_ptr,
@@ -5386,6 +5407,11 @@ void InterpolateRow_Any_MSA(uint8_t* dst_ptr,
                             int width,
                             int source_y_fraction);
 void InterpolateRow_Any_MMI(uint8_t* dst_ptr,
+                            const uint8_t* src_ptr,
+                            ptrdiff_t src_stride_ptr,
+                            int width,
+                            int source_y_fraction);
+void InterpolateRow_Any_LSX(uint8_t* dst_ptr,
                             const uint8_t* src_ptr,
                             ptrdiff_t src_stride_ptr,
                             int width,
