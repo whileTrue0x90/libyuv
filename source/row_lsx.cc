@@ -1409,6 +1409,126 @@ void UYVYToARGBRow_LSX(const uint8_t* src_uyvy,
   }
 }
 
+void InterpolateRow_LSX(uint8_t* dst_ptr,
+                        const uint8_t* src_ptr,
+                        ptrdiff_t src_stride,
+                        int width,
+                        int32_t source_y_fraction) {
+  int x;
+  int y1_fraction = source_y_fraction;
+  int y0_fraction = 256 - y1_fraction;
+  const uint8_t* nex_ptr = src_ptr + src_stride;
+  uint16_t y_fractions;
+  int len = width >> 5;
+  __m128i src0, src1, nex0, nex1;
+  __m128i dst0, dst1, y_frac;
+  __m128i tmp0, tmp1, tmp2, tmp3;
+  __m128i const_128 = __lsx_vldi(0x480);
+
+  if (y1_fraction == 0) {
+    for (x = 0; x < len; x++) {
+      DUP2_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src0, src1);
+      __lsx_vst(src0, dst_ptr, 0);
+      __lsx_vst(src1, dst_ptr, 16);
+      src_ptr += 32;
+      dst_ptr += 32;
+    }
+    return;
+  }
+
+  if (y1_fraction == 128) {
+    for (x = 0; x < len; x++) {
+      DUP2_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src0, src1);
+      DUP2_ARG2(__lsx_vld, nex_ptr, 0, nex_ptr, 16, nex0, nex1);
+      dst0 = __lsx_vavgr_bu(src0, nex0);
+      dst1 = __lsx_vavgr_bu(src1, nex1);
+      __lsx_vst(dst0, dst_ptr, 0);
+      __lsx_vst(dst1, dst_ptr, 16);
+      src_ptr += 32;
+      nex_ptr += 32;
+      dst_ptr += 32;
+    }
+    return;
+  }
+
+  y_fractions = (uint16_t)(y0_fraction + (y1_fraction << 8));
+  y_frac = __lsx_vreplgr2vr_h(y_fractions);
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src0, src1);
+    DUP2_ARG2(__lsx_vld, nex_ptr, 0, nex_ptr, 16, nex0, nex1);
+    tmp0 = __lsx_vilvl_b(nex0, src0);
+    tmp1 = __lsx_vilvh_b(nex0, src0);
+    tmp2 = __lsx_vilvl_b(nex1, src1);
+    tmp3 = __lsx_vilvh_b(nex1, src1);
+    tmp0 = __lsx_vdp2add_h_bu(const_128, tmp0, y_frac);
+    tmp1 = __lsx_vdp2add_h_bu(const_128, tmp1, y_frac);
+    tmp2 = __lsx_vdp2add_h_bu(const_128, tmp2, y_frac);
+    tmp3 = __lsx_vdp2add_h_bu(const_128, tmp3, y_frac);
+    dst0 = __lsx_vsrlni_b_h(tmp1, tmp0, 8);
+    dst1 = __lsx_vsrlni_b_h(tmp3, tmp2, 8);
+    __lsx_vst(dst0, dst_ptr, 0);
+    __lsx_vst(dst1, dst_ptr, 16);
+    src_ptr += 32;
+    nex_ptr += 32;
+    dst_ptr += 32;
+  }
+}
+
+void ARGBSetRow_LSX(uint8_t* dst_argb, uint32_t v32, int width) {
+  int x;
+  int len = width >> 2;
+  __m128i dst0 = __lsx_vreplgr2vr_w(v32);
+
+  for (x = 0; x < len; x++) {
+    __lsx_vst(dst0, dst_argb, 0);
+    dst_argb += 16;
+  }
+}
+
+void RAWToRGB24Row_LSX(const uint8_t* src_raw, uint8_t* dst_rgb24, int width) {
+  int x;
+  int len = width >> 4;
+  __m128i src0, src1, src2;
+  __m128i dst0, dst1, dst2;
+  __m128i shuf0 = {0x0708030405000102, 0x110C0D0E090A0B06};
+  __m128i shuf1 = {0x1516171213140F10, 0x1F1E1B1C1D18191A};
+  __m128i shuf2 = {0x090405060102031E, 0x0D0E0F0A0B0C0708};
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lsx_vld, src_raw, 0, src_raw, 16, src0, src1);
+    src2 = __lsx_vld(src_raw, 32);
+    DUP2_ARG3(__lsx_vshuf_b, src1, src0, shuf0, src1, src0, shuf1, dst0, dst1);
+    dst2 = __lsx_vshuf_b(src1, src2, shuf2);
+    dst1 = __lsx_vinsgr2vr_b(dst1, src_raw[32], 0x0E);
+    __lsx_vst(dst0, dst_rgb24, 0);
+    __lsx_vst(dst1, dst_rgb24, 16);
+    __lsx_vst(dst2, dst_rgb24, 32);
+    dst_rgb24 += 48;
+    src_raw += 48;
+  }
+}
+
+void MergeUVRow_LSX(const uint8_t* src_u,
+                    const uint8_t* src_v,
+                    uint8_t* dst_uv,
+                    int width) {
+  int x;
+  int len = width >> 4;
+  __m128i src0, src1, dst0, dst1;
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lsx_vld, src_u, 0, src_v, 0, src0, src1);
+    dst0 = __lsx_vilvl_b(src1, src0);
+    dst1 = __lsx_vilvh_b(src1, src0);
+    __lsx_vst(dst0, dst_uv, 0);
+    __lsx_vst(dst1, dst_uv, 16);
+    src_u += 16;
+    src_v += 16;
+    dst_uv += 32;
+  }
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
