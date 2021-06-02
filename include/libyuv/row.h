@@ -714,6 +714,10 @@ extern "C" {
 #define HAS_ARGBSETROW_LSX
 #define HAS_RAWTORGB24ROW_LSX
 #define HAS_MERGEUVROW_LSX
+#define HAS_ARGBEXTRACTALPHAROW_LSX
+#define HAS_ARGBBLENDROW_LSX
+#define HAS_ARGBQUANTIZEROW_LSX
+#define HAS_ARGBCOLORMATRIXROW_LSX
 #endif
 
 #if !defined(LIBYUV_DISABLE_LASX) && defined(__loongarch_asx)
@@ -2716,6 +2720,9 @@ void ARGBExtractAlphaRow_MSA(const uint8_t* src_argb,
 void ARGBExtractAlphaRow_MMI(const uint8_t* src_argb,
                              uint8_t* dst_a,
                              int width);
+void ARGBExtractAlphaRow_LSX(const uint8_t* src_argb,
+                             uint8_t* dst_a,
+                             int width);
 void ARGBExtractAlphaRow_Any_SSE2(const uint8_t* src_ptr,
                                   uint8_t* dst_ptr,
                                   int width);
@@ -2729,6 +2736,9 @@ void ARGBExtractAlphaRow_Any_MSA(const uint8_t* src_ptr,
                                  uint8_t* dst_ptr,
                                  int width);
 void ARGBExtractAlphaRow_Any_MMI(const uint8_t* src_ptr,
+                                 uint8_t* dst_ptr,
+                                 int width);
+void ARGBExtractAlphaRow_Any_LSX(const uint8_t* src_ptr,
                                  uint8_t* dst_ptr,
                                  int width);
 
@@ -4107,6 +4117,10 @@ void ARGBBlendRow_MMI(const uint8_t* src_argb0,
                       const uint8_t* src_argb1,
                       uint8_t* dst_argb,
                       int width);
+void ARGBBlendRow_LSX(const uint8_t* src_argb0,
+                      const uint8_t* src_argb1,
+                      uint8_t* dst_argb,
+                      int width);
 void ARGBBlendRow_C(const uint8_t* src_argb,
                     const uint8_t* src_argb1,
                     uint8_t* dst_argb,
@@ -5256,6 +5270,10 @@ void ARGBColorMatrixRow_MMI(const uint8_t* src_argb,
                             uint8_t* dst_argb,
                             const int8_t* matrix_argb,
                             int width);
+void ARGBColorMatrixRow_LSX(const uint8_t* src_argb,
+                            uint8_t* dst_argb,
+                            const int8_t* matrix_argb,
+                            int width);
 
 void ARGBColorTableRow_C(uint8_t* dst_argb,
                          const uint8_t* table_argb,
@@ -5291,6 +5309,12 @@ void ARGBQuantizeRow_MSA(uint8_t* dst_argb,
                          int interval_size,
                          int interval_offset,
                          int width);
+void ARGBQuantizeRow_LSX(uint8_t* dst_argb,
+                         int scale,
+                         int interval_size,
+                         int interval_offset,
+                         int width);
+
 
 void ARGBShadeRow_C(const uint8_t* src_argb,
                     uint8_t* dst_argb,
