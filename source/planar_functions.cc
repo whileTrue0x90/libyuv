@@ -2330,6 +2330,11 @@ ARGBBlendRow GetARGBBlend() {
     ARGBBlendRow = ARGBBlendRow_MSA;
   }
 #endif
+#if defined(HAS_ARGBBLENDROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    ARGBBlendRow = ARGBBlendRow_LSX;
+  }
+#endif
   return ARGBBlendRow;
 }
 
@@ -3447,6 +3452,11 @@ int ARGBColorMatrix(const uint8_t* src_argb,
     ARGBColorMatrixRow = ARGBColorMatrixRow_MSA;
   }
 #endif
+#if defined(HAS_ARGBCOLORMATRIXROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX) && IS_ALIGNED(width, 8)) {
+    ARGBColorMatrixRow = ARGBColorMatrixRow_LSX;
+  }
+#endif
   for (y = 0; y < height; ++y) {
     ARGBColorMatrixRow(src_argb, dst_argb, matrix_argb, width);
     src_argb += src_stride_argb;
@@ -3610,6 +3620,11 @@ int ARGBQuantize(uint8_t* dst_argb,
 #if defined(HAS_ARGBQUANTIZEROW_MSA)
   if (TestCpuFlag(kCpuHasMSA) && IS_ALIGNED(width, 8)) {
     ARGBQuantizeRow = ARGBQuantizeRow_MSA;
+  }
+#endif
+#if defined(HAS_ARGBQUANTIZEROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX) && IS_ALIGNED(width, 8)) {
+    ARGBQuantizeRow = ARGBQuantizeRow_LSX;
   }
 #endif
   for (y = 0; y < height; ++y) {
@@ -4838,6 +4853,12 @@ int ARGBExtractAlpha(const uint8_t* src_argb,
   if (TestCpuFlag(kCpuHasMSA)) {
     ARGBExtractAlphaRow = IS_ALIGNED(width, 16) ? ARGBExtractAlphaRow_MSA
                                                 : ARGBExtractAlphaRow_Any_MSA;
+  }
+#endif
+#if defined(HAS_ARGBEXTRACTALPHAROW_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    ARGBExtractAlphaRow = IS_ALIGNED(width, 16) ? ARGBExtractAlphaRow_LSX
+                                                : ARGBExtractAlphaRow_Any_LSX;
   }
 #endif
 

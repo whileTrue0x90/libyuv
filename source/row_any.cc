@@ -1321,6 +1321,9 @@ ANY11(ARGBExtractAlphaRow_Any_MSA, ARGBExtractAlphaRow_MSA, 0, 4, 1, 15)
 #ifdef HAS_ARGBEXTRACTALPHAROW_MMI
 ANY11(ARGBExtractAlphaRow_Any_MMI, ARGBExtractAlphaRow_MMI, 0, 4, 1, 7)
 #endif
+#ifdef HAS_ARGBEXTRACTALPHAROW_LSX
+ANY11(ARGBExtractAlphaRow_Any_LSX, ARGBExtractAlphaRow_LSX, 0, 4, 1, 15)
+#endif
 #undef ANY11
 
 // Any 1 to 1 blended.  Destination is read, modify, write.
