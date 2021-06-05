@@ -1709,6 +1709,221 @@ void ARGBColorMatrixRow_LSX(const uint8_t* src_argb,
   }
 }
 
+void SplitUVRow_LSX(const uint8_t* src_uv,
+                    uint8_t* dst_u,
+                    uint8_t* dst_v,
+                    int width) {
+  int x;
+  int len = width >> 5;
+  __m128i src0, src1, src2, src3;
+  __m128i dst0, dst1, dst2, dst3;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_uv, 0, src_uv, 16, src_uv, 32,
+              src_uv, 48, src0, src1, src2, src3);
+    DUP2_ARG2(__lsx_vpickev_b, src1, src0, src3, src2, dst0, dst1);
+    DUP2_ARG2(__lsx_vpickod_b, src1, src0, src3, src2, dst2, dst3);
+    __lsx_vst(dst0, dst_u, 0);
+    __lsx_vst(dst1, dst_u, 16);
+    __lsx_vst(dst2, dst_v, 0);
+    __lsx_vst(dst3, dst_v, 16);
+    src_uv += 64;
+    dst_u += 32;
+    dst_v += 32;
+  }
+}
+
+void SetRow_LSX(uint8_t* dst, uint8_t v8, int width) {
+  int x;
+  int len = width >> 4;
+  __m128i dst0 = __lsx_vreplgr2vr_b(v8);
+
+  for (x = 0; x < len; x++) {
+    __lsx_vst(dst0, dst, 0);
+    dst += 16;
+  }
+}
+
+void MirrorSplitUVRow_LSX(const uint8_t* src_uv,
+                          uint8_t* dst_u,
+                          uint8_t* dst_v,
+                          int width) {
+  int x;
+  int len = width >> 5;
+  __m128i src0, src1, src2, src3;
+  __m128i dst0, dst1, dst2, dst3;
+  __m128i shuff0 = {0x10121416181A1C1E, 0x00020406080A0C0E};
+  __m128i shuff1 = {0x11131517191B1D1F, 0x01030507090B0D0F};
+
+  src_uv += (width << 1);
+  for (x = 0; x < len; x++) {
+    src_uv -= 64;
+    DUP4_ARG2(__lsx_vld, src_uv, 0, src_uv, 16, src_uv, 32,
+              src_uv, 48, src2, src3, src0, src1);
+    DUP4_ARG3(__lsx_vshuf_b, src1, src0, shuff1, src3, src2, shuff1,
+              src1, src0, shuff0, src3, src2, shuff0, dst0, dst1, dst2, dst3);
+    __lsx_vst(dst0, dst_v, 0);
+    __lsx_vst(dst1, dst_v, 16);
+    __lsx_vst(dst2, dst_u, 0);
+    __lsx_vst(dst3, dst_u, 16);
+    dst_u += 32;
+    dst_v += 32;
+  }
+}
+
+static __inline uint32_t Abs(int32_t v) {
+  int m = -(v < 0);
+  return (v + m) ^ m;
+}
+
+static __inline int32_t clamp255(int32_t v) {
+  return (v > 255) ? 255 : v;
+}
+
+void SobelXRow_LSX(const uint8_t* src_y0,
+                   const uint8_t* src_y1,
+                   const uint8_t* src_y2,
+                   uint8_t* dst_sobelx,
+                   int width) {
+  int x;
+  int len = width >> 4;
+  int res = width & 15;
+  __m128i src0, src1, src2, src3, src4, src5;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, dst0;
+  __m128i shuff0 = {0x0305020401030002, 0x0709060805070406};
+  __m128i shuff1 = __lsx_vaddi_bu(shuff0, 8);
+  __m128i shuff2 = {0x0503040203010200, 0x0907080607050604};
+  __m128i shuff3 = __lsx_vaddi_bu(shuff2, 8);
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lsx_vld, src_y0, 0, src_y1, 0, src0, src2);
+    DUP2_ARG2(__lsx_vldrepl_h, src_y0, 16, src_y1, 16, src1, src3);
+    src4 = __lsx_vld(src_y2, 0);
+    src5 = __lsx_vldrepl_h(src_y2, 16);
+    DUP4_ARG3(__lsx_vshuf_b, src1, src0, shuff0, src1, src0, shuff1,
+              src3, src2, shuff0, src3, src2, shuff1, tmp0, tmp1, tmp2, tmp3);
+    DUP2_ARG3(__lsx_vshuf_b, src5, src4, shuff2,
+              src5, src4, shuff3, tmp4, tmp5);
+    DUP4_ARG2(__lsx_vhsubw_hu_bu, tmp0, tmp0, tmp1, tmp1, tmp2, tmp2,
+              tmp3, tmp3, tmp0, tmp1, tmp2, tmp3);
+    DUP2_ARG2(__lsx_vhsubw_hu_bu, tmp4, tmp4, tmp5, tmp5, tmp4, tmp5);
+    DUP2_ARG2(__lsx_vslli_h, tmp2, 1, tmp3, 1, tmp2, tmp3);
+    DUP2_ARG2(__lsx_vadd_h, tmp0, tmp2, tmp1, tmp3, tmp0, tmp1);
+    DUP2_ARG2(__lsx_vabsd_h, tmp0, tmp4, tmp1, tmp5, tmp0, tmp1);
+    DUP2_ARG1(__lsx_vclip255_h, tmp0, tmp1, tmp0, tmp1);
+    dst0 = __lsx_vpickev_b(tmp1, tmp0);
+    __lsx_vst(dst0, dst_sobelx, 0);
+    src_y0 += 16;
+    src_y1 += 16;
+    src_y2 += 16;
+    dst_sobelx += 16;
+  }
+  for (x = 0; x < res; ++x) {
+    int a = src_y0[x];
+    int b = src_y1[x];
+    int c = src_y2[x];
+    int a_sub = src_y0[x + 2];
+    int b_sub = src_y1[x + 2];
+    int c_sub = src_y2[x + 2];
+    int a_diff = a - a_sub;
+    int b_diff = b - b_sub;
+    int c_diff = c - c_sub;
+    int sobel = Abs(a_diff + b_diff * 2 + c_diff);
+    dst_sobelx[x] = (uint8_t)(clamp255(sobel));
+  }
+}
+
+void SobelYRow_LSX(const uint8_t* src_y0,
+                   const uint8_t* src_y1,
+                   uint8_t* dst_sobely,
+                   int32_t width) {
+  int x;
+  int len = width >> 4;
+  int res = width & 15;
+  __m128i src0, src1, src2, src3, dst0;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4;
+  __m128i reg0, reg1, reg2, reg3;
+  __m128i shuff0 = {0x0908070605040302, 0x11100F0E0D0C0B0A};
+  __m128i shuff1 = {0x0908070605040302, 0x13120F0E0D0C0B0A};
+  __m128i zero = __lsx_vldi(0);
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lsx_vld, src_y0, 0, src_y1, 0, src0, src1);
+    DUP2_ARG2(__lsx_vldrepl_h, src_y0, 16, src_y1, 16, src2, src3);
+    tmp0 = __lsx_vsubwev_h_bu(src0, src1);
+    tmp1 = __lsx_vsubwod_h_bu(src0, src1);
+    src2 = __lsx_vilvl_b(zero, src2);
+    src3 = __lsx_vilvl_b(zero, src3);
+    tmp2 = __lsx_vsub_h(src2, src3);
+    DUP2_ARG3(__lsx_vshuf_b, tmp2, tmp0, shuff0, tmp2, tmp1, shuff1, tmp3, tmp4);
+    DUP4_ARG2(__lsx_vhaddw_w_h, tmp0, tmp0, tmp1, tmp1,
+              tmp3, tmp3, tmp4, tmp4, reg0, reg1, reg2, reg3);
+    DUP2_ARG2(__lsx_vslli_h, tmp1, 1, tmp3, 1, tmp0, tmp1);
+    DUP2_ARG2(__lsx_vpackev_h, reg2, reg0, reg3, reg1, reg0, reg1);
+    DUP2_ARG2(__lsx_vadd_h, tmp0, reg0, tmp1, reg1, tmp0, tmp1);
+    DUP2_ARG2(__lsx_vadda_h, zero, tmp0, zero, tmp1, tmp0, tmp1);
+    DUP2_ARG1(__lsx_vclip255_h, tmp0, tmp1, tmp0, tmp1);
+    dst0 = __lsx_vpackev_b(tmp1, tmp0);
+    __lsx_vst(dst0, dst_sobely, 0);
+    src_y0 += 16;
+    src_y1 += 16;
+    dst_sobely += 16;
+  }
+  for (x = 0; x < res; x++) {
+    int a = src_y0[x + 0];
+    int b = src_y0[x + 1];
+    int c = src_y0[x + 2];
+    int a_sub = src_y1[x + 0];
+    int b_sub = src_y1[x + 1];
+    int c_sub = src_y1[x + 2];
+    int a_diff = a - a_sub;
+    int b_diff = b - b_sub;
+    int c_diff = c - c_sub;
+    int sobel = Abs(a_diff + b_diff * 2 + c_diff);
+    dst_sobely[x] = (uint8_t)(clamp255(sobel));
+  }
+}
+
+void HalfFloatRow_LSX(const uint16_t* src,
+                      uint16_t* dst,
+                      float scale,
+                      int width) {
+  int x;
+  int len = width >> 5;
+  float mult = 1.9259299444e-34f * scale;
+  __m128i src0, src1, src2, src3, dst0, dst1, dst2, dst3;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128  reg0, reg1, reg2, reg3, reg4, reg5, reg6, reg7;
+  __m128 vec_mult = (__m128)__lsx_vldrepl_w(&mult, 0);
+  __m128i zero = __lsx_vldi(0);
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src, 0, src, 16, src, 32, src, 48, src0, src1, src2, src3);
+    DUP4_ARG2(__lsx_vilvl_h, zero, src0, zero, src1, zero, src2,
+              zero, src3, tmp0, tmp2, tmp4, tmp6);
+    DUP4_ARG2(__lsx_vilvh_h, zero, src0, zero, src1, zero, src2,
+              zero, src3, tmp1, tmp3, tmp5, tmp7);
+    DUP4_ARG1(__lsx_vffint_s_wu, tmp0, tmp2, tmp4, tmp6, reg0, reg2, reg4, reg6);
+    DUP4_ARG1(__lsx_vffint_s_wu, tmp1, tmp3, tmp5, tmp7, reg1, reg3, reg5, reg7);
+    DUP4_ARG2(__lsx_vfmul_s, reg0, vec_mult, reg1, vec_mult, reg2, vec_mult,
+              reg3, vec_mult, reg0, reg1, reg2, reg3);
+    DUP4_ARG2(__lsx_vfmul_s, reg4, vec_mult, reg5, vec_mult, reg6, vec_mult,
+              reg7, vec_mult, reg4, reg5, reg6, reg7);
+    DUP4_ARG2(__lsx_vsrli_w, (v4u32)reg0, 13, (v4u32)reg1, 13, (v4u32)reg2, 13,
+              (v4u32)reg3, 13, tmp0, tmp1, tmp2, tmp3);
+    DUP4_ARG2(__lsx_vsrli_w, (v4u32)reg4, 13, (v4u32)reg5, 13, (v4u32)reg6, 13,
+              (v4u32)reg7, 13, tmp4, tmp5, tmp6, tmp7);
+    DUP4_ARG2(__lsx_vpickev_h, tmp1, tmp0, tmp3, tmp2, tmp5, tmp4,
+              tmp7, tmp6, dst0, dst1, dst2, dst3);
+    __lsx_vst(dst0, dst, 0);
+    __lsx_vst(dst1, dst, 16);
+    __lsx_vst(dst2, dst, 32);
+    __lsx_vst(dst3, dst, 48);
+    src += 32;
+    dst += 32;
+  }
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
