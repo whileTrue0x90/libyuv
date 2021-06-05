@@ -718,6 +718,12 @@ extern "C" {
 #define HAS_ARGBBLENDROW_LSX
 #define HAS_ARGBQUANTIZEROW_LSX
 #define HAS_ARGBCOLORMATRIXROW_LSX
+#define HAS_SPLITUVROW_LSX
+#define HAS_SETROW_LSX
+#define HAS_MIRRORSPLITUVROW_LSX
+#define HAS_SOBELXROW_LSX
+#define HAS_SOBELYROW_LSX
+#define HAS_HALFFLOATROW_LSX
 #endif
 
 #if !defined(LIBYUV_DISABLE_LASX) && defined(__loongarch_asx)
@@ -1956,6 +1962,10 @@ void MirrorSplitUVRow_MMI(const uint8_t* src_uv,
                           uint8_t* dst_u,
                           uint8_t* dst_v,
                           int width);
+void MirrorSplitUVRow_LSX(const uint8_t* src_uv,
+                          uint8_t* dst_u,
+                          uint8_t* dst_v,
+                          int width);
 void MirrorSplitUVRow_C(const uint8_t* src_uv,
                         uint8_t* dst_u,
                         uint8_t* dst_v,
@@ -2019,6 +2029,10 @@ void SplitUVRow_MMI(const uint8_t* src_uv,
                     uint8_t* dst_u,
                     uint8_t* dst_v,
                     int width);
+void SplitUVRow_LSX(const uint8_t* src_uv,
+                    uint8_t* dst_u,
+                    uint8_t* dst_v,
+                    int width);
 void SplitUVRow_Any_SSE2(const uint8_t* src_ptr,
                          uint8_t* dst_u,
                          uint8_t* dst_v,
@@ -2036,6 +2050,10 @@ void SplitUVRow_Any_MSA(const uint8_t* src_ptr,
                         uint8_t* dst_v,
                         int width);
 void SplitUVRow_Any_MMI(const uint8_t* src_ptr,
+                        uint8_t* dst_u,
+                        uint8_t* dst_v,
+                        int width);
+void SplitUVRow_Any_LSX(const uint8_t* src_ptr,
                         uint8_t* dst_u,
                         uint8_t* dst_v,
                         int width);
@@ -2761,8 +2779,10 @@ void SetRow_MSA(uint8_t* dst, uint8_t v8, int width);
 void SetRow_X86(uint8_t* dst, uint8_t v8, int width);
 void SetRow_ERMS(uint8_t* dst, uint8_t v8, int width);
 void SetRow_NEON(uint8_t* dst, uint8_t v8, int width);
+void SetRow_LSX(uint8_t* dst, uint8_t v8, int width);
 void SetRow_Any_X86(uint8_t* dst_ptr, uint8_t v32, int width);
 void SetRow_Any_NEON(uint8_t* dst_ptr, uint8_t v32, int width);
+void SetRow_Any_LSX(uint8_t* dst_ptr, uint8_t v32, int width);
 
 void ARGBSetRow_C(uint8_t* dst_argb, uint32_t v32, int width);
 void ARGBSetRow_X86(uint8_t* dst_argb, uint32_t v32, int width);
@@ -5481,6 +5501,11 @@ void SobelXRow_MMI(const uint8_t* src_y0,
                    const uint8_t* src_y2,
                    uint8_t* dst_sobelx,
                    int width);
+void SobelXRow_LSX(const uint8_t* src_y0,
+                   const uint8_t* src_y1,
+                   const uint8_t* src_y2,
+                   uint8_t* dst_sobelx,
+                   int width);
 void SobelYRow_C(const uint8_t* src_y0,
                  const uint8_t* src_y1,
                  uint8_t* dst_sobely,
@@ -5498,6 +5523,10 @@ void SobelYRow_MSA(const uint8_t* src_y0,
                    uint8_t* dst_sobely,
                    int width);
 void SobelYRow_MMI(const uint8_t* src_y0,
+                   const uint8_t* src_y1,
+                   uint8_t* dst_sobely,
+                   int width);
+void SobelYRow_LSX(const uint8_t* src_y0,
                    const uint8_t* src_y1,
                    uint8_t* dst_sobely,
                    int width);
@@ -5702,6 +5731,14 @@ void HalfFloatRow_MSA(const uint16_t* src,
                       float scale,
                       int width);
 void HalfFloatRow_Any_MSA(const uint16_t* src_ptr,
+                          uint16_t* dst_ptr,
+                          float param,
+                          int width);
+void HalfFloatRow_LSX(const uint16_t* src,
+                      uint16_t* dst,
+                      float scale,
+                      int width);
+void HalfFloatRow_Any_LSX(const uint16_t* src_ptr,
                           uint16_t* dst_ptr,
                           float param,
                           int width);

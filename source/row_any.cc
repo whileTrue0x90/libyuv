@@ -1690,6 +1690,9 @@ ANY11P16(HalfFloatRow_Any_MSA, HalfFloatRow_MSA, uint16_t, uint16_t, 2, 2, 31)
 #ifdef HAS_BYTETOFLOATROW_NEON
 ANY11P16(ByteToFloatRow_Any_NEON, ByteToFloatRow_NEON, uint8_t, float, 1, 3, 7)
 #endif
+#ifdef HAS_HALFFLOATROW_LSX
+ANY11P16(HalfFloatRow_Any_LSX, HalfFloatRow_LSX, uint16_t, uint16_t, 2, 2, 31)
+#endif
 #undef ANY11P16
 
 // Any 1 to 1 with yuvconstants
@@ -1864,6 +1867,9 @@ ANY1(SetRow_Any_X86, SetRow_X86, uint8_t, 1, 3)
 #ifdef HAS_SETROW_NEON
 ANY1(SetRow_Any_NEON, SetRow_NEON, uint8_t, 1, 15)
 #endif
+#ifdef HAS_SETROW_LSX
+ANY1(SetRow_Any_LSX, SetRow_LSX, uint8_t, 1, 15)
+#endif
 #ifdef HAS_ARGBSETROW_NEON
 ANY1(ARGBSetRow_Any_NEON, ARGBSetRow_NEON, uint32_t, 4, 3)
 #endif
@@ -1909,6 +1915,9 @@ ANY12(SplitUVRow_Any_MSA, SplitUVRow_MSA, 0, 2, 0, 31)
 #endif
 #ifdef HAS_SPLITUVROW_MMI
 ANY12(SplitUVRow_Any_MMI, SplitUVRow_MMI, 0, 2, 0, 7)
+#endif
+#ifdef HAS_SPLITUVROW_LSX
+ANY12(SplitUVRow_Any_LSX, SplitUVRow_LSX, 0, 2, 0, 31)
 #endif
 #ifdef HAS_ARGBTOUV444ROW_SSSE3
 ANY12(ARGBToUV444Row_Any_SSSE3, ARGBToUV444Row_SSSE3, 0, 4, 0, 15)
