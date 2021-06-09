@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c19bfa6_0c1c1e0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-06-09T23:16:42Z",
+      "side": 1,
+      "message": "Would you like to mention the changes to Android.bp?",
+      "revId": "7009a1d0b8b51573e581b2cd05d98bb642a3dc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09a27c38_f0d53af0",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2021-06-09T23:16:42Z",
+      "side": 1,
+      "message": "This change seems incorrect. Why do we print this warning message without inspecting the \"/proc/cpuinfo\" file?",
+      "revId": "7009a1d0b8b51573e581b2cd05d98bb642a3dc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
