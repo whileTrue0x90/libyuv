@@ -31,7 +31,7 @@ namespace libyuv {
 #endif
 #define ERROR_R 1
 #define ERROR_G 1
-#ifdef LIBYUV_UNLIMITED_DATA
+#ifndef LIBYUV_LIMITED_DATA
 #define ERROR_B 1
 #else
 #define ERROR_B 18
@@ -501,7 +501,7 @@ TEST_F(LibYUVColorTest, TestYUV) {
   YUVToRGB(240, 0, 0, &r1, &g1, &b1);
   EXPECT_EQ(57, r1);
   EXPECT_EQ(255, g1);
-#ifdef LIBYUV_UNLIMITED_DATA
+#ifndef LIBYUV_LIMITED_DATA
   EXPECT_EQ(3, b1);
 #else
   EXPECT_EQ(5, b1);
