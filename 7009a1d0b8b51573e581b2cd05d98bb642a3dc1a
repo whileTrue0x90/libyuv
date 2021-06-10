@@ -51,6 +51,24 @@
       "message": "This change seems incorrect. Why do we print this warning message without inspecting the \"/proc/cpuinfo\" file?",
       "revId": "7009a1d0b8b51573e581b2cd05d98bb642a3dc1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76f85172_fd441a34",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-06-10T19:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a27c38_f0d53af0",
+      "revId": "7009a1d0b8b51573e581b2cd05d98bb642a3dc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
