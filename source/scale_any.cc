@@ -427,6 +427,26 @@ SDANY(ScaleARGBRowDown2Box_Any_MMI,
       4,
       1)
 #endif
+#ifdef HAS_SCALEARGBROWDOWN2_LSX
+SDANY(ScaleARGBRowDown2_Any_LSX,
+      ScaleARGBRowDown2_LSX,
+      ScaleARGBRowDown2_C,
+      2,
+      4,
+      3)
+SDANY(ScaleARGBRowDown2Linear_Any_LSX,
+      ScaleARGBRowDown2Linear_LSX,
+      ScaleARGBRowDown2Linear_C,
+      2,
+      4,
+      3)
+SDANY(ScaleARGBRowDown2Box_Any_LSX,
+      ScaleARGBRowDown2Box_LSX,
+      ScaleARGBRowDown2Box_C,
+      2,
+      4,
+      3)
+#endif
 #undef SDANY
 
 // Scale down by even scale factor.
@@ -489,6 +509,18 @@ SDAANY(ScaleARGBRowDownEvenBox_Any_MMI,
        ScaleARGBRowDownEvenBox_C,
        4,
        1)
+#endif
+#ifdef HAS_SCALEARGBROWDOWNEVEN_LSX
+SDAANY(ScaleARGBRowDownEven_Any_LSX,
+       ScaleARGBRowDownEven_LSX,
+       ScaleARGBRowDownEven_C,
+       4,
+       3)
+SDAANY(ScaleARGBRowDownEvenBox_Any_LSX,
+       ScaleARGBRowDownEvenBox_LSX,
+       ScaleARGBRowDownEvenBox_C,
+       4,
+       3)
 #endif
 #ifdef HAS_SCALEUVROWDOWNEVEN_NEON
 SDAANY(ScaleUVRowDownEven_Any_NEON,

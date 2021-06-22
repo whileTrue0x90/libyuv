@@ -178,6 +178,11 @@ extern "C" {
 #define HAS_SCALEROWDOWN34_MMI
 #endif
 
+#if !defined(LIBYUV_DISABLE_LSX) && defined(__loongarch_sx)
+#define HAS_SCALEARGBROWDOWN2_LSX
+#define HAS_SCALEARGBROWDOWNEVEN_LSX
+#endif
+
 // Scale ARGB vertically with bilinear interpolation.
 void ScalePlaneVertical(int src_height,
                         int dst_width,
@@ -931,6 +936,18 @@ void ScaleARGBRowDown2Box_MMI(const uint8_t* src_argb,
                               ptrdiff_t src_stride,
                               uint8_t* dst_argb,
                               int dst_width);
+void ScaleARGBRowDown2_LSX(const uint8_t* src_argb,
+                           ptrdiff_t src_stride,
+                           uint8_t* dst_argb,
+                           int dst_width);
+void ScaleARGBRowDown2Linear_LSX(const uint8_t* src_argb,
+                                 ptrdiff_t src_stride,
+                                 uint8_t* dst_argb,
+                                 int dst_width);
+void ScaleARGBRowDown2Box_LSX(const uint8_t* src_argb,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_argb,
+                              int dst_width);
 void ScaleARGBRowDown2_Any_SSE2(const uint8_t* src_ptr,
                                 ptrdiff_t src_stride,
                                 uint8_t* dst_ptr,
@@ -979,6 +996,18 @@ void ScaleARGBRowDown2Box_Any_MMI(const uint8_t* src_ptr,
                                   ptrdiff_t src_stride,
                                   uint8_t* dst_ptr,
                                   int dst_width);
+void ScaleARGBRowDown2_Any_LSX(const uint8_t* src_ptr,
+                               ptrdiff_t src_stride,
+                               uint8_t* dst_ptr,
+                               int dst_width);
+void ScaleARGBRowDown2Linear_Any_LSX(const uint8_t* src_ptr,
+                                     ptrdiff_t src_stride,
+                                     uint8_t* dst_ptr,
+                                     int dst_width);
+void ScaleARGBRowDown2Box_Any_LSX(const uint8_t* src_ptr,
+                                  ptrdiff_t src_stride,
+                                  uint8_t* dst_ptr,
+                                  int dst_width);
 void ScaleARGBRowDownEven_SSE2(const uint8_t* src_argb,
                                ptrdiff_t src_stride,
                                int src_stepx,
@@ -1019,6 +1048,16 @@ void ScaleARGBRowDownEvenBox_MMI(const uint8_t* src_argb,
                                  int src_stepx,
                                  uint8_t* dst_argb,
                                  int dst_width);
+void ScaleARGBRowDownEven_LSX(const uint8_t* src_argb,
+                              ptrdiff_t src_stride,
+                              int32_t src_stepx,
+                              uint8_t* dst_argb,
+                              int dst_width);
+void ScaleARGBRowDownEvenBox_LSX(const uint8_t* src_argb,
+                                 ptrdiff_t src_stride,
+                                 int src_stepx,
+                                 uint8_t* dst_argb,
+                                 int dst_width);
 void ScaleARGBRowDownEven_Any_SSE2(const uint8_t* src_ptr,
                                    ptrdiff_t src_stride,
                                    int src_stepx,
@@ -1055,6 +1094,16 @@ void ScaleARGBRowDownEven_Any_MMI(const uint8_t* src_ptr,
                                   uint8_t* dst_ptr,
                                   int dst_width);
 void ScaleARGBRowDownEvenBox_Any_MMI(const uint8_t* src_ptr,
+                                     ptrdiff_t src_stride,
+                                     int src_stepx,
+                                     uint8_t* dst_ptr,
+                                     int dst_width);
+void ScaleARGBRowDownEven_Any_LSX(const uint8_t* src_ptr,
+                                  ptrdiff_t src_stride,
+                                  int32_t src_stepx,
+                                  uint8_t* dst_ptr,
+                                  int dst_width);
+void ScaleARGBRowDownEvenBox_Any_LSX(const uint8_t* src_ptr,
                                      ptrdiff_t src_stride,
                                      int src_stepx,
                                      uint8_t* dst_ptr,
