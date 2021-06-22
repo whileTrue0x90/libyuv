@@ -160,6 +160,149 @@ void ScaleARGBRowDownEvenBox_LSX(const uint8_t* src_argb,
   }
 }
 
+void ScaleRowDown2_LSX(const uint8_t* src_ptr,
+                       ptrdiff_t src_stride,
+                       uint8_t* dst,
+                       int dst_width) {
+  int x;
+  int len = dst_width >> 5;
+  __m128i src0, src1, src2, src3, dst0, dst1;
+  (void)src_stride;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src_ptr, 32, src_ptr,
+              48, src0, src1, src2, src3);
+    DUP2_ARG2(__lsx_vpickod_b, src1, src0, src3, src2, dst0, dst1);
+    __lsx_vst(dst0, dst, 0);
+    __lsx_vst(dst1, dst, 16);
+    src_ptr += 64;
+    dst += 32;
+  }
+}
+
+void ScaleRowDown2Linear_LSX(const uint8_t* src_ptr,
+                             ptrdiff_t src_stride,
+                             uint8_t* dst,
+                             int dst_width) {
+  int x;
+  int len = dst_width >> 5;
+  __m128i src0, src1, src2, src3;
+  __m128i tmp0, tmp1, tmp2, tmp3, dst0, dst1;
+  (void)src_stride;
+
+  for(x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src_ptr, 32, src_ptr,
+              48, src0, src1, src2, src3);
+    DUP2_ARG2(__lsx_vpickev_b, src1, src0, src3, src2, tmp0, tmp2);
+    DUP2_ARG2(__lsx_vpickod_b, src1, src0, src3, src2, tmp1, tmp3);
+    DUP2_ARG2(__lsx_vavgr_bu, tmp0, tmp1, tmp2, tmp3, dst0, dst1);
+    __lsx_vst(dst0, dst, 0);
+    __lsx_vst(dst1, dst, 16);
+    src_ptr += 64;
+    dst += 32;
+  }
+}
+
+void ScaleRowDown2Box_LSX(const uint8_t* src_ptr,
+                          ptrdiff_t src_stride,
+                          uint8_t* dst,
+                          int dst_width) {
+  int x;
+  int len = dst_width >> 5;
+  const uint8_t *src_nex = src_ptr + src_stride;
+  __m128i src0, src1, src2, src3, src4, src5, src6, src7;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128i dst0, dst1;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src_ptr, 32, src_ptr,
+              48, src0, src1, src2, src3);
+    DUP4_ARG2(__lsx_vld, src_nex, 0, src_nex, 16, src_nex, 32, src_nex,
+              48, src4, src5, src6, src7);
+    DUP4_ARG2(__lsx_vaddwev_h_bu, src0, src4, src1, src5, src2, src6, src3, src7,
+              tmp0, tmp2, tmp4, tmp6);
+    DUP4_ARG2(__lsx_vaddwod_h_bu, src0, src4, src1, src5, src2, src6, src3, src7,
+              tmp1, tmp3, tmp5, tmp7);
+    DUP4_ARG2(__lsx_vadd_h, tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7,
+              tmp0, tmp1, tmp2, tmp3);
+    DUP2_ARG3(__lsx_vsrarni_b_h, tmp1, tmp0, 2, tmp3, tmp2, 2, dst0, dst1);
+    __lsx_vst(dst0, dst, 0);
+    __lsx_vst(dst1, dst, 16);
+    src_ptr += 64;
+    src_nex += 64;
+    dst += 32;
+  }
+}
+
+void ScaleRowDown4_LSX(const uint8_t* src_ptr,
+                       ptrdiff_t src_stride,
+                       uint8_t* dst,
+                       int dst_width) {
+  int x;
+  int len = dst_width >> 4;
+  __m128i src0, src1, src2, src3, tmp0, tmp1, dst0;
+  (void)src_stride;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src_ptr, 32, src_ptr,
+              48, src0, src1, src2, src3);
+    DUP2_ARG2(__lsx_vpickev_b, src1, src0, src3, src2, tmp0, tmp1);
+    dst0 = __lsx_vpickod_b(tmp1, tmp0);
+    __lsx_vst(dst0, dst, 0);
+    src_ptr += 64;
+    dst += 16;
+  }
+}
+
+void ScaleRowDown4Box_LSX(const uint8_t* src_ptr,
+                          ptrdiff_t src_stride,
+                          uint8_t* dst,
+                          int dst_width) {
+  int x;
+  int len = dst_width >> 4;
+  const uint8_t* ptr1 = src_ptr + src_stride;
+  const uint8_t* ptr2 = ptr1 + src_stride;
+  const uint8_t* ptr3 = ptr2 + src_stride;
+  __m128i src0, src1, src2, src3, src4, src5, src6, src7;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128i reg0, reg1, reg2, reg3, reg4, reg5, reg6, reg7, dst0;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src_ptr, 32, src_ptr,
+              48, src0, src1, src2, src3);
+    DUP4_ARG2(__lsx_vld, ptr1, 0, ptr1, 16, ptr1, 32, ptr1, 48,
+              src4, src5, src6, src7);
+    DUP4_ARG2(__lsx_vaddwev_h_bu, src0, src4, src1, src5, src2, src6, src3, src7,
+              tmp0, tmp2, tmp4, tmp6);
+    DUP4_ARG2(__lsx_vaddwod_h_bu, src0, src4, src1, src5, src2, src6, src3, src7,
+              tmp1, tmp3, tmp5, tmp7);
+    DUP4_ARG2(__lsx_vadd_h, tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7,
+              reg0, reg1, reg2, reg3);
+    DUP4_ARG2(__lsx_vld, ptr2, 0, ptr2, 16, ptr2, 32, ptr2, 48,
+              src0, src1, src2, src3);
+    DUP4_ARG2(__lsx_vld, ptr3, 0, ptr3, 16, ptr3, 32, ptr3, 48,
+              src4, src5, src6, src7);
+    DUP4_ARG2(__lsx_vaddwev_h_bu, src0, src4, src1, src5, src2, src6, src3, src7,
+              tmp0, tmp2, tmp4, tmp6);
+    DUP4_ARG2(__lsx_vaddwod_h_bu, src0, src4, src1, src5, src2, src6, src3, src7,
+              tmp1, tmp3, tmp5, tmp7);
+    DUP4_ARG2(__lsx_vadd_h, tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7,
+              reg4, reg5, reg6, reg7);
+    DUP4_ARG2(__lsx_vadd_h, reg0, reg4, reg1, reg5, reg2, reg6, reg3, reg7,
+              reg0, reg1, reg2, reg3);
+    DUP4_ARG2(__lsx_vhaddw_wu_hu, reg0, reg0, reg1, reg1, reg2, reg2, reg3, reg3,
+              reg0, reg1, reg2, reg3);
+    DUP2_ARG3(__lsx_vsrarni_h_w, reg1, reg0, 4, reg3, reg2, 4, tmp0, tmp1);
+    dst0 = __lsx_vpickev_b(tmp1, tmp0);
+    __lsx_vst(dst0, dst, 0);
+    src_ptr += 64;
+    ptr1 += 64;
+    ptr2 += 64;
+    ptr3 += 64;
+    dst += 16;
+  }
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv

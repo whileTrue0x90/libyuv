@@ -181,6 +181,8 @@ extern "C" {
 #if !defined(LIBYUV_DISABLE_LSX) && defined(__loongarch_sx)
 #define HAS_SCALEARGBROWDOWN2_LSX
 #define HAS_SCALEARGBROWDOWNEVEN_LSX
+#define HAS_SCALEROWDOWN2_LSX
+#define HAS_SCALEROWDOWN4_LSX
 #endif
 
 // Scale ARGB vertically with bilinear interpolation.
@@ -1767,6 +1769,46 @@ void ScaleRowDown4Box_Any_MMI(const uint8_t* src_ptr,
 void ScaleAddRow_Any_MMI(const uint8_t* src_ptr,
                          uint16_t* dst_ptr,
                          int src_width);
+void ScaleRowDown2_LSX(const uint8_t* src_ptr,
+                       ptrdiff_t src_stride,
+                       uint8_t* dst,
+                       int dst_width);
+void ScaleRowDown2Linear_LSX(const uint8_t* src_ptr,
+                             ptrdiff_t src_stride,
+                             uint8_t* dst,
+                             int dst_width);
+void ScaleRowDown2Box_LSX(const uint8_t* src_ptr,
+                          ptrdiff_t src_stride,
+                          uint8_t* dst,
+                          int dst_width);
+void ScaleRowDown4_LSX(const uint8_t* src_ptr,
+                       ptrdiff_t src_stride,
+                       uint8_t* dst,
+                       int dst_width);
+void ScaleRowDown4Box_LSX(const uint8_t* src_ptr,
+                          ptrdiff_t src_stride,
+                          uint8_t* dst,
+                          int dst_width);
+void ScaleRowDown2_Any_LSX(const uint8_t* src_ptr,
+                           ptrdiff_t src_stride,
+                           uint8_t* dst_ptr,
+                           int dst_width);
+void ScaleRowDown2Linear_Any_LSX(const uint8_t* src_ptr,
+                                 ptrdiff_t src_stride,
+                                 uint8_t* dst_ptr,
+                                 int dst_width);
+void ScaleRowDown2Box_Any_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_ptr,
+                              int dst_width);
+void ScaleRowDown4_Any_LSX(const uint8_t* src_ptr,
+                           ptrdiff_t src_stride,
+                           uint8_t* dst_ptr,
+                           int dst_width);
+void ScaleRowDown4Box_Any_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_ptr,
+                              int dst_width);
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
