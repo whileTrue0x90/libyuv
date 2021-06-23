@@ -650,6 +650,26 @@ static void ScalePlaneDown38(int src_width,
     }
   }
 #endif
+#if defined(HAS_SCALEROWDOWN38_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    if (!filtering) {
+      ScaleRowDown38_3 = ScaleRowDown38_Any_LSX;
+      ScaleRowDown38_2 = ScaleRowDown38_Any_LSX;
+    } else {
+      ScaleRowDown38_3 = ScaleRowDown38_3_Box_Any_LSX;
+      ScaleRowDown38_2 = ScaleRowDown38_2_Box_Any_LSX;
+    }
+    if (dst_width % 12 == 0) {
+      if (!filtering) {
+        ScaleRowDown38_3 = ScaleRowDown38_LSX;
+        ScaleRowDown38_2 = ScaleRowDown38_LSX;
+      } else {
+        ScaleRowDown38_3 = ScaleRowDown38_3_Box_LSX;
+        ScaleRowDown38_2 = ScaleRowDown38_2_Box_LSX;
+      }
+    }
+  }
+#endif
 
   for (y = 0; y < dst_height - 2; y += 3) {
     ScaleRowDown38_3(src_ptr, filter_stride, dst_ptr, dst_width);

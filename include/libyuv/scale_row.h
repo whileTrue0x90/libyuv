@@ -183,6 +183,7 @@ extern "C" {
 #define HAS_SCALEARGBROWDOWNEVEN_LSX
 #define HAS_SCALEROWDOWN2_LSX
 #define HAS_SCALEROWDOWN4_LSX
+#define HAS_SCALEROWDOWN38_LSX
 #endif
 
 // Scale ARGB vertically with bilinear interpolation.
@@ -1789,6 +1790,18 @@ void ScaleRowDown4Box_LSX(const uint8_t* src_ptr,
                           ptrdiff_t src_stride,
                           uint8_t* dst,
                           int dst_width);
+void ScaleRowDown38_LSX(const uint8_t* src_ptr,
+                        ptrdiff_t src_stride,
+                        uint8_t* dst,
+                        int dst_width);
+void ScaleRowDown38_2_Box_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_ptr,
+                              int dst_width);
+void ScaleRowDown38_3_Box_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_ptr,
+                              int dst_width);
 void ScaleRowDown2_Any_LSX(const uint8_t* src_ptr,
                            ptrdiff_t src_stride,
                            uint8_t* dst_ptr,
@@ -1809,6 +1822,18 @@ void ScaleRowDown4Box_Any_LSX(const uint8_t* src_ptr,
                               ptrdiff_t src_stride,
                               uint8_t* dst_ptr,
                               int dst_width);
+void ScaleRowDown38_Any_LSX(const uint8_t* src_ptr,
+                            ptrdiff_t src_stride,
+                            uint8_t* dst_ptr,
+                            int dst_width);
+void ScaleRowDown38_2_Box_Any_LSX(const uint8_t* src_ptr,
+                                  ptrdiff_t src_stride,
+                                  uint8_t* dst_ptr,
+                                  int dst_width);
+void ScaleRowDown38_3_Box_Any_LSX(const uint8_t* src_ptr,
+                                  ptrdiff_t src_stride,
+                                  uint8_t* dst_ptr,
+                                  int dst_width);
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv

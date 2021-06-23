@@ -303,6 +303,114 @@ void ScaleRowDown4Box_LSX(const uint8_t* src_ptr,
   }
 }
 
+void ScaleRowDown38_LSX(const uint8_t* src_ptr,
+                        ptrdiff_t src_stride,
+                        uint8_t* dst,
+                        int dst_width) {
+  int x, len;
+  __m128i src0, src1, tmp0;
+  __m128i shuff = {0x13100E0B08060300, 0x000000001E1B1816};
+
+  assert(dst_width % 3 == 0);
+  len = dst_width / 12;
+  (void)src_stride;
+
+  for (x = 0; x < len; x++) {
+    DUP2_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src0, src1);
+    tmp0 = __lsx_vshuf_b(src1, src0, shuff);
+    __lsx_vstelm_d(tmp0, dst, 0, 0);
+    __lsx_vstelm_w(tmp0, dst, 8, 2);
+    src_ptr += 32;
+    dst += 12;
+  }
+}
+
+void ScaleRowDown38_2_Box_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_ptr,
+                              int dst_width) {
+  int x, len;
+  const uint8_t* src_nex = src_ptr + src_stride;
+  __m128i src0, src1, src2, src3, dst0;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128i reg0, reg1, reg2, reg3;
+  __m128i shuff = {0x0A08160604120200, 0x000000001E0E0C1A};
+  __m128i const_0x2AAA = __lsx_vreplgr2vr_h(0x2AAA);
+  __m128i const_0x4000 = __lsx_vreplgr2vr_w(0x4000);
+
+  assert((dst_width % 3 == 0) && (dst_width > 0));
+  len = dst_width / 12;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, src_nex, 0, src_nex,
+              16, src0, src1, src2, src3);
+    DUP2_ARG2(__lsx_vaddwev_h_bu, src0, src2, src1, src3, tmp0, tmp2);
+    DUP2_ARG2(__lsx_vaddwod_h_bu, src0, src2, src1, src3, tmp1, tmp3);
+    DUP2_ARG2(__lsx_vpickev_h, tmp2, tmp0, tmp3, tmp1, reg0, reg1);
+    DUP2_ARG2(__lsx_vpackod_h, tmp1, tmp0, tmp3, tmp2, reg2, reg3);
+    tmp4 = __lsx_vpickev_w(reg3, reg2);
+    tmp5 = __lsx_vadd_h(reg0, reg1);
+    tmp6 = __lsx_vadd_h(tmp5, tmp4);
+    tmp7 = __lsx_vmuh_h(tmp6, const_0x2AAA);
+    tmp0 = __lsx_vpickod_w(reg3, reg2);
+    tmp1 = __lsx_vhaddw_wu_hu(tmp0, tmp0);
+    tmp2 = __lsx_vmul_w(tmp1, const_0x4000);
+    dst0 = __lsx_vshuf_b(tmp2, tmp7, shuff);
+    __lsx_vstelm_d(dst0, dst_ptr, 0, 0);
+    __lsx_vstelm_w(dst0, dst_ptr, 8, 2);
+    src_ptr += 32;
+    src_nex += 32;
+    dst_ptr += 12;
+  }
+}
+
+void ScaleRowDown38_3_Box_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* dst_ptr,
+                              int dst_width) {
+  int x, len;
+  const uint8_t* ptr1 = src_ptr + src_stride;
+  const uint8_t* ptr2 = ptr1 + src_stride;
+  __m128i src0, src1, src2, src3, src4, src5;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128i reg0, reg1, reg2, reg3, dst0;
+  __m128i zero = __lsx_vldi(0);
+  __m128i shuff = {0x0A08160604120200, 0x000000001E0E0C1A};
+  __m128i const_0x1C71 = __lsx_vreplgr2vr_h(0x1C71);
+  __m128i const_0x2AAA = __lsx_vreplgr2vr_w(0x2AAA);
+
+  assert((dst_width % 3 == 0) && (dst_width > 0));
+  len = dst_width / 12;
+
+  for (x = 0; x < len; x++) {
+    DUP4_ARG2(__lsx_vld, src_ptr, 0, src_ptr, 16, ptr1, 0, ptr1, 16,
+              src0, src1, src2, src3);
+    DUP2_ARG2(__lsx_vld, ptr2, 0, ptr2, 16, src4, src5);
+    DUP2_ARG2(__lsx_vaddwev_h_bu, src0, src2, src1, src3, tmp0, tmp2);
+    DUP2_ARG2(__lsx_vaddwod_h_bu, src0, src2, src1, src3, tmp1, tmp3);
+    DUP2_ARG2(__lsx_vpackev_b, zero, src4, zero, src5, tmp4, tmp6);
+    DUP2_ARG2(__lsx_vpackod_b, zero, src4, zero, src5, tmp5, tmp7);
+    DUP4_ARG2(__lsx_vadd_h, tmp0, tmp4, tmp1, tmp5, tmp2, tmp6, tmp3,
+              tmp7, tmp0, tmp1, tmp2, tmp3);
+    DUP2_ARG2(__lsx_vpickev_h, tmp2, tmp0, tmp3, tmp1, reg0, reg1);
+    DUP2_ARG2(__lsx_vpackod_h, tmp1, tmp0, tmp3, tmp2, reg2, reg3);
+    tmp4 = __lsx_vpickev_w(reg3, reg2);
+    tmp5 = __lsx_vadd_h(reg0, reg1);
+    tmp6 = __lsx_vadd_h(tmp5, tmp4);
+    tmp7 = __lsx_vmuh_h(tmp6, const_0x1C71);
+    tmp0 = __lsx_vpickod_w(reg3, reg2);
+    tmp1 = __lsx_vhaddw_wu_hu(tmp0, tmp0);
+    tmp2 = __lsx_vmul_w(tmp1, const_0x2AAA);
+    dst0 = __lsx_vshuf_b(tmp2, tmp7, shuff);
+    __lsx_vstelm_d(dst0, dst_ptr, 0, 0);
+    __lsx_vstelm_w(dst0, dst_ptr, 8, 2);
+    src_ptr += 32;
+    ptr1 += 32;
+    ptr2 += 32;
+    dst_ptr += 12;
+  }
+}
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
