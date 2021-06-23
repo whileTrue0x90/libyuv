@@ -370,6 +370,26 @@ SDANY(ScaleRowDown38_2_Box_Any_MSA,
       1,
       11)
 #endif
+#ifdef HAS_SCALEROWDOWN38_LSX
+SDANY(ScaleRowDown38_Any_LSX,
+      ScaleRowDown38_LSX,
+      ScaleRowDown38_C,
+      8 / 3,
+      1,
+      11)
+SDANY(ScaleRowDown38_3_Box_Any_LSX,
+      ScaleRowDown38_3_Box_LSX,
+      ScaleRowDown38_3_Box_C,
+      8 / 3,
+      1,
+      11)
+SDANY(ScaleRowDown38_2_Box_Any_LSX,
+      ScaleRowDown38_2_Box_LSX,
+      ScaleRowDown38_2_Box_C,
+      8 / 3,
+      1,
+      11)
+#endif
 
 #ifdef HAS_SCALEARGBROWDOWN2_SSE2
 SDANY(ScaleARGBRowDown2_Any_SSE2,
