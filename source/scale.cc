@@ -951,6 +951,14 @@ static void ScalePlaneBox(int src_width,
       }
     }
 #endif
+#if defined(HAS_SCALEADDROW_LSX)
+    if (TestCpuFlag(kCpuHasLSX)) {
+      ScaleAddRow = ScaleAddRow_Any_LSX;
+      if (IS_ALIGNED(src_width, 16)) {
+        ScaleAddRow = ScaleAddRow_LSX;
+      }
+    }
+#endif
 
     for (j = 0; j < dst_height; ++j) {
       int boxheight;
@@ -1130,6 +1138,14 @@ void ScalePlaneBilinearDown(int src_width,
     ScaleFilterCols = ScaleFilterCols_Any_MSA;
     if (IS_ALIGNED(dst_width, 16)) {
       ScaleFilterCols = ScaleFilterCols_MSA;
+    }
+  }
+#endif
+#if defined(HAS_SCALEFILTERCOLS_LSX)
+  if (TestCpuFlag(kCpuHasLSX) && src_width < 32768) {
+    ScaleFilterCols = ScaleFilterCols_Any_LSX;
+    if (IS_ALIGNED(dst_width, 16)) {
+      ScaleFilterCols = ScaleFilterCols_LSX;
     }
   }
 #endif
@@ -1320,6 +1336,14 @@ void ScalePlaneBilinearUp(int src_width,
     ScaleFilterCols = ScaleFilterCols_Any_MSA;
     if (IS_ALIGNED(dst_width, 16)) {
       ScaleFilterCols = ScaleFilterCols_MSA;
+    }
+  }
+#endif
+#if defined(HAS_SCALEFILTERCOLS_LSX)
+  if (filtering && TestCpuFlag(kCpuHasLSX) && src_width < 32768) {
+    ScaleFilterCols = ScaleFilterCols_Any_LSX;
+    if (IS_ALIGNED(dst_width, 16)) {
+      ScaleFilterCols = ScaleFilterCols_LSX;
     }
   }
 #endif

@@ -606,6 +606,9 @@ SAROW(ScaleAddRow_Any_NEON, ScaleAddRow_NEON, 1, 2, 15)
 #ifdef HAS_SCALEADDROW_MSA
 SAROW(ScaleAddRow_Any_MSA, ScaleAddRow_MSA, 1, 2, 15)
 #endif
+#ifdef HAS_SCALEADDROW_LSX
+SAROW(ScaleAddRow_Any_LSX, ScaleAddRow_LSX, 1, 2, 15)
+#endif
 #ifdef HAS_SCALEADDROW_MMI
 SAROW(ScaleAddRow_Any_MMI, ScaleAddRow_MMI, 1, 2, 7)
 #endif
@@ -638,6 +641,9 @@ SAANY(ScaleAddRow_Any_MSA, ScaleAddRow_MSA, ScaleAddRow_C, 15)
 #ifdef HAS_SCALEADDROW_MMI
 SAANY(ScaleAddRow_Any_MMI, ScaleAddRow_MMI, ScaleAddRow_C, 7)
 #endif
+#ifdef HAS_SCALEADDROW_LSX
+SAANY(ScaleAddRow_Any_LSX, ScaleAddRow_LSX, ScaleAddRow_C, 15)
+#endif
 #undef SAANY
 
 #endif  // SASIMDONLY
@@ -660,11 +666,17 @@ CANY(ScaleFilterCols_Any_NEON, ScaleFilterCols_NEON, ScaleFilterCols_C, 1, 7)
 #ifdef HAS_SCALEFILTERCOLS_MSA
 CANY(ScaleFilterCols_Any_MSA, ScaleFilterCols_MSA, ScaleFilterCols_C, 1, 15)
 #endif
+#ifdef HAS_SCALEFILTERCOLS_LSX
+CANY(ScaleFilterCols_Any_LSX, ScaleFilterCols_LSX, ScaleFilterCols_C, 1, 15)
+#endif
 #ifdef HAS_SCALEARGBCOLS_NEON
 CANY(ScaleARGBCols_Any_NEON, ScaleARGBCols_NEON, ScaleARGBCols_C, 4, 7)
 #endif
 #ifdef HAS_SCALEARGBCOLS_MSA
 CANY(ScaleARGBCols_Any_MSA, ScaleARGBCols_MSA, ScaleARGBCols_C, 4, 3)
+#endif
+#ifdef HAS_SCALEARGBCOLS_LSX
+CANY(ScaleARGBCols_Any_LSX, ScaleARGBCols_LSX, ScaleARGBCols_C, 4, 3)
 #endif
 #ifdef HAS_SCALEARGBCOLS_MMI
 CANY(ScaleARGBCols_Any_MMI, ScaleARGBCols_MMI, ScaleARGBCols_C, 4, 0)
@@ -679,6 +691,13 @@ CANY(ScaleARGBFilterCols_Any_NEON,
 #ifdef HAS_SCALEARGBFILTERCOLS_MSA
 CANY(ScaleARGBFilterCols_Any_MSA,
      ScaleARGBFilterCols_MSA,
+     ScaleARGBFilterCols_C,
+     4,
+     7)
+#endif
+#ifdef HAS_SCALEARGBFILTERCOLS_LSX
+CANY(ScaleARGBFilterCols_Any_LSX,
+     ScaleARGBFilterCols_LSX,
      ScaleARGBFilterCols_C,
      4,
      7)
