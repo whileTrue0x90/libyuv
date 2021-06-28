@@ -22,6 +22,17 @@ namespace libyuv {
 extern "C" {
 #endif
 
+#define LOAD_DATA(_src, _in, _out)                                 \
+  {                                                                \
+    int _tmp1, _tmp2, _tmp3, _tmp4;                                \
+    DUP4_ARG2(__lsx_vpickve2gr_w, _in, 0, _in, 1, _in, 2,      \
+              _in, 3, _tmp1, _tmp2, _tmp3, _tmp4);             \
+    _out = __lsx_vinsgr2vr_w(_out, _src[_tmp1], 0);                \
+    _out = __lsx_vinsgr2vr_w(_out, _src[_tmp2], 1);                \
+    _out = __lsx_vinsgr2vr_w(_out, _src[_tmp3], 2);                \
+    _out = __lsx_vinsgr2vr_w(_out, _src[_tmp4], 3);                \
+  }
+
 void ScaleARGBRowDown2_LSX(const uint8_t* src_argb,
                            ptrdiff_t src_stride,
                            uint8_t* dst_argb,
@@ -408,6 +419,165 @@ void ScaleRowDown38_3_Box_LSX(const uint8_t* src_ptr,
     ptr1 += 32;
     ptr2 += 32;
     dst_ptr += 12;
+  }
+}
+
+void ScaleAddRow_LSX(const uint8_t* src_ptr, uint16_t* dst_ptr, int src_width) {
+  int x;
+  int len = src_width >> 4;
+  __m128i src0, tmp0, tmp1, dst0, dst1;
+  __m128i zero = __lsx_vldi(0);
+
+  assert(src_width > 0);
+
+  for (x = 0; x < len; x++) {
+    src0 = __lsx_vld(src_ptr, 0);
+    DUP2_ARG2(__lsx_vld, dst_ptr, 0, dst_ptr, 16, dst0, dst1);
+    tmp0 = __lsx_vilvl_b(zero, src0);
+    tmp1 = __lsx_vilvh_b(zero, src0);
+    DUP2_ARG2(__lsx_vadd_h, dst0, tmp0, dst1, tmp1, dst0, dst1);
+    __lsx_vst(dst0, dst_ptr, 0);
+    __lsx_vst(dst1, dst_ptr, 16);
+    src_ptr += 16;
+    dst_ptr += 16;
+  }
+}
+
+void ScaleFilterCols_LSX(uint8_t* dst_ptr,
+                         const uint8_t* src_ptr,
+                         int dst_width,
+                         int x,
+                         int dx) {
+  int j;
+  int len = dst_width >> 4;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128i reg0, reg1, reg2, reg3, reg4, reg5, reg6, reg7;
+  __m128i vec0, vec1, dst0;
+  __m128i vec_x = __lsx_vreplgr2vr_w(x);
+  __m128i vec_dx = __lsx_vreplgr2vr_w(dx);
+  __m128i const1 = __lsx_vreplgr2vr_w(0xFFFF);
+  __m128i const2 = __lsx_vreplgr2vr_w(0x40);
+  __m128i const_tmp = {0x0000000100000000, 0x0000000300000002};
+
+  vec0 = __lsx_vmul_w(vec_dx, const_tmp);
+  vec1 = __lsx_vslli_w(vec_dx, 2);
+  vec_x = __lsx_vadd_w(vec_x, vec0);
+
+  for (j = 0; j < len; j++) {
+    tmp0 = __lsx_vsrai_w(vec_x, 16);
+    tmp4 = __lsx_vand_v(vec_x, const1);
+    vec_x = __lsx_vadd_w(vec_x, vec1);
+    tmp1 = __lsx_vsrai_w(vec_x, 16);
+    tmp5 = __lsx_vand_v(vec_x, const1);
+    vec_x = __lsx_vadd_w(vec_x, vec1);
+    tmp2 = __lsx_vsrai_w(vec_x, 16);
+    tmp6 = __lsx_vand_v(vec_x, const1);
+    vec_x = __lsx_vadd_w(vec_x, vec1);
+    tmp3 = __lsx_vsrai_w(vec_x, 16);
+    tmp7 = __lsx_vand_v(vec_x, const1);
+    vec_x = __lsx_vadd_w(vec_x, vec1);
+    DUP4_ARG2(__lsx_vsrai_w, tmp4, 9, tmp5, 9, tmp6, 9, tmp7, 9,
+              tmp4, tmp5, tmp6, tmp7);
+    LOAD_DATA(src_ptr, tmp0, reg0);
+    LOAD_DATA(src_ptr, tmp1, reg1);
+    LOAD_DATA(src_ptr, tmp2, reg2);
+    LOAD_DATA(src_ptr, tmp3, reg3);
+    DUP4_ARG2(__lsx_vaddi_wu, tmp0, 1, tmp1, 1, tmp2, 1, tmp3, 1,
+              tmp0, tmp1, tmp2, tmp3);
+    LOAD_DATA(src_ptr, tmp0, reg4);
+    LOAD_DATA(src_ptr, tmp1, reg5);
+    LOAD_DATA(src_ptr, tmp2, reg6);
+    LOAD_DATA(src_ptr, tmp3, reg7);
+    DUP4_ARG2(__lsx_vsub_w, reg4, reg0, reg5, reg1, reg6, reg2, reg7,
+              reg3, reg4, reg5, reg6, reg7);
+    DUP4_ARG2(__lsx_vmul_w, reg4, tmp4, reg5, tmp5, reg6, tmp6, reg7,
+              tmp7, reg4, reg5, reg6, reg7);
+    DUP4_ARG2(__lsx_vadd_w, reg4, const2, reg5, const2, reg6, const2,
+              reg7, const2, reg4, reg5, reg6, reg7);
+    DUP4_ARG2(__lsx_vsrai_w, reg4, 7, reg5, 7, reg6, 7, reg7, 7,
+              reg4, reg5, reg6, reg7);
+    DUP4_ARG2(__lsx_vadd_w, reg0, reg4, reg1, reg5, reg2, reg6, reg3,
+              reg7, reg0, reg1, reg2, reg3);
+    DUP2_ARG2(__lsx_vpickev_h, reg1, reg0, reg3, reg2, tmp0, tmp1);
+    dst0 = __lsx_vpickev_b(tmp1, tmp0);
+    __lsx_vst(dst0, dst_ptr, 0);
+    dst_ptr += 16;
+  }
+}
+
+void ScaleARGBCols_LSX(uint8_t* dst_argb,
+                       const uint8_t* src_argb,
+                       int dst_width,
+                       int x,
+                       int dx) {
+  const uint32_t* src = (const uint32_t*)src_argb;
+  uint32_t* dst = (uint32_t*)dst_argb;
+  int j;
+  int len = dst_width >> 2;
+  __m128i tmp0, tmp1, tmp2, dst0;
+  __m128i vec_x = __lsx_vreplgr2vr_w(x);
+  __m128i vec_dx = __lsx_vreplgr2vr_w(dx);
+  __m128i const_tmp = {0x0000000100000000, 0x0000000300000002};
+
+  tmp0 = __lsx_vmul_w(vec_dx, const_tmp);
+  tmp1 = __lsx_vslli_w(vec_dx, 2);
+  vec_x = __lsx_vadd_w(vec_x, tmp0);
+
+  for (j = 0; j < len; j++) {
+    tmp2 = __lsx_vsrai_w(vec_x, 16);
+    vec_x = __lsx_vadd_w(vec_x, tmp1);
+    LOAD_DATA(src, tmp2, dst0);
+    __lsx_vst(dst0, dst, 0);
+    dst += 4;
+  }
+}
+
+void ScaleARGBFilterCols_LSX(uint8_t* dst_argb,
+                             const uint8_t* src_argb,
+                             int dst_width,
+                             int x,
+                             int dx) {
+  const uint32_t* src = (const uint32_t*)src_argb;
+  int j;
+  int len = dst_width >> 3;
+  __m128i src0, src1, src2, src3;
+  __m128i tmp0, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7;
+  __m128i reg0, reg1, reg2, reg3, reg4, reg5, reg6, reg7;
+  __m128i vec0, vec1, dst0, dst1;
+  __m128i vec_x = __lsx_vreplgr2vr_w(x);
+  __m128i vec_dx = __lsx_vreplgr2vr_w(dx);
+  __m128i const_tmp = {0x0000000100000000, 0x0000000300000002};
+  __m128i const_7f = __lsx_vldi(0x7F);
+
+  vec0 = __lsx_vmul_w(vec_dx, const_tmp);
+  vec1 = __lsx_vslli_w(vec_dx, 2);
+  vec_x = __lsx_vadd_w(vec_x, vec0);
+
+  for (j = 0; j < len; j++) {
+    tmp0 = __lsx_vsrai_w(vec_x, 16);
+    reg0 = __lsx_vsrai_w(vec_x, 9);
+    vec_x = __lsx_vadd_w(vec_x, vec1);
+    tmp1 = __lsx_vsrai_w(vec_x, 16);
+    reg1 = __lsx_vsrai_w(vec_x, 9);
+    vec_x = __lsx_vadd_w(vec_x, vec1);
+    DUP2_ARG2(__lsx_vand_v, reg0, const_7f, reg1, const_7f, reg0, reg1);
+    DUP2_ARG2(__lsx_vshuf4i_b, reg0, 0, reg1, 0, reg0, reg1);
+    DUP2_ARG2(__lsx_vxor_v, reg0, const_7f, reg1, const_7f, reg2, reg3);
+    DUP2_ARG2(__lsx_vilvl_b, reg0, reg2, reg1, reg3, reg4, reg6);
+    DUP2_ARG2(__lsx_vilvh_b, reg0, reg2, reg1, reg3, reg5, reg7);
+    LOAD_DATA(src, tmp0, src0);
+    LOAD_DATA(src, tmp1, src1);
+    DUP2_ARG2(__lsx_vaddi_wu, tmp0, 1, tmp1, 1, tmp0, tmp1);
+    LOAD_DATA(src, tmp0, src2);
+    LOAD_DATA(src, tmp1, src3);
+    DUP2_ARG2(__lsx_vilvl_b, src2, src0, src3, src1, tmp4, tmp6);
+    DUP2_ARG2(__lsx_vilvh_b, src2, src0, src3, src1, tmp5, tmp7);
+    DUP4_ARG2(__lsx_vdp2_h_bu, tmp4, reg4, tmp5, reg5, tmp6, reg6, tmp7, reg7,
+              tmp0, tmp1, tmp2, tmp3);
+    DUP2_ARG3(__lsx_vsrani_b_h, tmp1, tmp0, 7, tmp3, tmp2, 7, dst0, dst1);
+    __lsx_vst(dst0, dst_argb, 0);
+    __lsx_vst(dst1, dst_argb, 16);
+    dst_argb += 32;
   }
 }
 
