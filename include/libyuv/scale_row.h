@@ -188,6 +188,7 @@ extern "C" {
 #define HAS_SCALEADDROW_LSX
 #define HAS_SCALEARGBCOLS_LSX
 #define HAS_SCALEARGBFILTERCOLS_LSX
+#define HAS_SCALEROWDOWN34_LSX
 #endif
 
 // Scale ARGB vertically with bilinear interpolation.
@@ -1822,6 +1823,18 @@ void ScaleARGBCols_LSX(uint8_t* dst_argb,
                        int dst_width,
                        int x,
                        int dx);
+void ScaleRowDown34_LSX(const uint8_t* src_ptr,
+                        ptrdiff_t src_stride,
+                        uint8_t* dst,
+                        int dst_width);
+void ScaleRowDown34_0_Box_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* d,
+                              int dst_width);
+void ScaleRowDown34_1_Box_LSX(const uint8_t* src_ptr,
+                              ptrdiff_t src_stride,
+                              uint8_t* d,
+                              int dst_width);
 void ScaleRowDown2_Any_LSX(const uint8_t* src_ptr,
                            ptrdiff_t src_stride,
                            uint8_t* dst_ptr,
@@ -1872,6 +1885,19 @@ void ScaleARGBFilterCols_Any_LSX(uint8_t* dst_ptr,
                                  int dst_width,
                                  int x,
                                  int dx);
+void ScaleRowDown34_Any_LSX(const uint8_t* src_ptr,
+                            ptrdiff_t src_stride,
+                            uint8_t* dst_ptr,
+                            int dst_width);
+void ScaleRowDown34_0_Box_Any_LSX(const uint8_t* src_ptr,
+                                  ptrdiff_t src_stride,
+                                  uint8_t* dst_ptr,
+                                  int dst_width);
+void ScaleRowDown34_1_Box_Any_LSX(const uint8_t* src_ptr,
+                                  ptrdiff_t src_stride,
+                                  uint8_t* dst_ptr,
+                                  int dst_width);
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv

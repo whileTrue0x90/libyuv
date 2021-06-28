@@ -435,6 +435,26 @@ static void ScalePlaneDown34(int src_width,
     }
   }
 #endif
+#if defined(HAS_SCALEROWDOWN34_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    if (!filtering) {
+      ScaleRowDown34_0 = ScaleRowDown34_Any_LSX;
+      ScaleRowDown34_1 = ScaleRowDown34_Any_LSX;
+    } else {
+      ScaleRowDown34_0 = ScaleRowDown34_0_Box_Any_LSX;
+      ScaleRowDown34_1 = ScaleRowDown34_1_Box_Any_LSX;
+    }
+    if (dst_width % 48 == 0) {
+      if (!filtering) {
+        ScaleRowDown34_0 = ScaleRowDown34_LSX;
+        ScaleRowDown34_1 = ScaleRowDown34_LSX;
+      } else {
+        ScaleRowDown34_0 = ScaleRowDown34_0_Box_LSX;
+        ScaleRowDown34_1 = ScaleRowDown34_1_Box_LSX;
+      }
+    }
+  }
+#endif
 #if defined(HAS_SCALEROWDOWN34_SSSE3)
   if (TestCpuFlag(kCpuHasSSSE3)) {
     if (!filtering) {
