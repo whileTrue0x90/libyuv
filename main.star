@@ -184,7 +184,7 @@ def get_os_dimensions(os):
     elif os == "win":
         return {"os": "Windows-10", "cores": "8", "cpu": "x86-64"}
     elif os == "linux":
-        return {"os": "Ubuntu-16.04", "cores": "8", "cpu": "x86-64"}
+        return {"os": "Ubuntu-18.04", "cores": "8", "cpu": "x86-64"}
     return {}
 
 def get_os_properties(os):
