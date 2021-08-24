@@ -16,6 +16,24 @@
       "message": "mbonadei@, could you merge this if this looks OK?",
       "revId": "799d50a9fc7aedbc779954def2f38412806dc263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e333c3ee_d450ce61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2021-08-24T08:28:25Z",
+      "side": 1,
+      "message": "mbonadei@, I don\u0027t have permission to submit this. Could you submit?",
+      "parentUuid": "2d48adc3_143310aa",
+      "revId": "799d50a9fc7aedbc779954def2f38412806dc263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
