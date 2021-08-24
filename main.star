@@ -19,6 +19,13 @@ GOMA_BACKEND_RBE_ATS_PROD = {
     "enable_ats": True,
 }
 
+# Disable ATS on Windows CQ/try.
+GOMA_BACKEND_RBE_NO_ATS_PROD = {
+    "server_host": "goma.chromium.org",
+    "use_luci_auth": True,
+    "enable_ats": False,
+}
+
 # Enable LUCI Realms support.
 lucicfg.enable_experiment("crbug.com/1085650")
 # Launch all builds in "realms-aware mode", crbug.com/1203285.
@@ -187,11 +194,13 @@ def get_os_dimensions(os):
         return {"os": "Ubuntu-18.04", "cores": "8", "cpu": "x86-64"}
     return {}
 
-def get_os_properties(os):
+def get_os_properties(os, try_builder=False):
     if os == "android":
         return {"$build/goma": GOMA_BACKEND_RBE_PROD}
     elif os in ("ios", "mac"):
         return {"$build/goma": GOMA_BACKEND_RBE_PROD}
+    elif os == "win" and try_builder:
+        return {"$build/goma": GOMA_BACKEND_RBE_NO_ATS_PROD}
     elif os == "win":
         return {"$build/goma": GOMA_BACKEND_RBE_ATS_PROD}
     elif os == "linux":
@@ -244,7 +253,7 @@ def ci_builder(name, os, category, short_name = None):
 
 def try_builder(name, os, experiment_percentage = None):
     dimensions = get_os_dimensions(os)
-    properties = get_os_properties(os)
+    properties = get_os_properties(os, try_builder=True)
 
     dimensions["pool"] = "luci.flex.try"
     properties["builder_group"] = "tryserver.libyuv"
