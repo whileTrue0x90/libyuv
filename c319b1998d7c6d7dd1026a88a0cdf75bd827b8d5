@@ -16,6 +16,24 @@
       "message": "mbonadei, could you be an owner for infra/config branch?",
       "revId": "c319b1998d7c6d7dd1026a88a0cdf75bd827b8d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1f5c981_84eb6a72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-09-06T12:29:17Z",
+      "side": 1,
+      "message": "Yes, SGTM.",
+      "parentUuid": "ff6db63b_98061e3e",
+      "revId": "c319b1998d7c6d7dd1026a88a0cdf75bd827b8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
