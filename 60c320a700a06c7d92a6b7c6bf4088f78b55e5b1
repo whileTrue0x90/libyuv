@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13f4ae90_2d23c43d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-09-09T23:28:14Z",
+      "side": 1,
+      "message": "Stephan, can you test this version when you have a chance?\nI\u0027ve removed the \"Q\", allowing GCC to use any valid memory address.\nMost code in row_neon64.cc uses \"r\"(\u0026memory) to force the address to be put into a register.  Which works but is not ideal, if the compiler is able to use a register/offset, saving an instruction.",
+      "revId": "60c320a700a06c7d92a6b7c6bf4088f78b55e5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
