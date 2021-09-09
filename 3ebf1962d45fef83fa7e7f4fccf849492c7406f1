@@ -101,6 +101,24 @@
       "message": "Mirko, note failing bots.  This change is for GCC benefit.  We dont have a test for that?",
       "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45340e0a_f97093fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-09-09T06:58:32Z",
+      "side": 1,
+      "message": "Yes, we don\u0027t have a GCC bot anymore (following Chromium on this).\n\nYes, I see there is some activity on the Android ones, I need to find time and take a closer look.",
+      "parentUuid": "dded3175_9606f961",
+      "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
