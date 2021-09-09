@@ -155,6 +155,59 @@
       "parentUuid": "3b03c734_02ee1709",
       "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70f1fd71_3896a59d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-09-09T22:15:39Z",
+      "side": 1,
+      "message": "ok I understand now.  Here is some doc on constraints\nhttps://gcc.gnu.org/onlinedocs/gcc/Machine-Constraints.html\n\nYour solution is ok, but I should really use LDR which should simplify it.  Lets go ahead with your \"Q\" modifier and I\u0027ll follow up with LDR.  Would be great if you can test it once fixed.",
+      "parentUuid": "695320c5_c33240d4",
+      "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09b43cfd_8ca0a72d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-09-09T22:15:39Z",
+      "side": 1,
+      "message": "ok thanks, thats a bit complicated.  On linux intel, I\u0027ve used the linux.mk with CC/CXX flags to test gcc, but I havent got an ARM solution.  @Mirko its on my platform wish list.",
+      "parentUuid": "07749634_c8051c7c",
+      "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c9b73c0_9b409b80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-09-09T22:15:39Z",
+      "side": 1,
+      "message": "Have you had a chance to try 32 bit ARM to see if the same issue exists there?",
+      "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
