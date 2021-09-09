@@ -119,6 +119,42 @@
       "parentUuid": "dded3175_9606f961",
       "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07749634_c8051c7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1361388
+      },
+      "writtenOn": "2021-09-09T20:13:42Z",
+      "side": 1,
+      "message": "I\u0027m building in context of Chromium with custom_toolchain\u003d\"//build/toolchain/linux/unbundle:default\" and host_toolchain\u003d\"//build/toolchain/linux/unbundle:default\". With these gn flags I can set CC/CXX env variables to GCC.",
+      "parentUuid": "a9289510_500ea48f",
+      "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "695320c5_c33240d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1361388
+      },
+      "writtenOn": "2021-09-09T20:13:42Z",
+      "side": 1,
+      "message": "GCC doesn\u0027t modify asm() blocks. As described in the commit message, \u0027m\u0027 can generate with offset, but ld1 doesn\u0027t alllow offset. as of binutils fails with:\nError: invalid addressing mode at operand 2 -- `ld1 {v4.16b},[x3,#:lo12:.LANCHOR0]\u0027\n\nThat\u0027s why I modified the memory constraint to \u0027Q\u0027 to force an address without offset. CLANG on the other hand, analyzes asm() statements and silently generates an address without offset. In the end, with \u0027Q\u0027 constraint both generate the same code.",
+      "parentUuid": "3b03c734_02ee1709",
+      "revId": "3ebf1962d45fef83fa7e7f4fccf849492c7406f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
