@@ -321,9 +321,11 @@ ci_builder("iOS ARM64 Release", "ios", "iOS|ARM64", "rel")
 ci_builder("iOS Debug", "ios", "iOS", "dbg")
 ci_builder("iOS Release", "ios", "iOS", "rel")
 
-try_builder("android", "android")
-try_builder("android_arm64", "android")
-try_builder("android_rel", "android")
+# TODO(crbug.com/1242847): make this not experimental.
+try_builder("android", "android", experiment_percentage=100)
+try_builder("android_arm64", "android", experiment_percentage=100)
+try_builder("android_rel", "android", experiment_percentage=100)
+
 try_builder("android_x64", "linux")
 try_builder("android_x86", "linux")
 try_builder("ios", "ios")
