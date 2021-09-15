@@ -3,6 +3,7 @@ gclient_gn_args = [
   'generate_location_tags',
 ]
 
+
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
   'chromium_revision': 'eaac4f14d951eb92181830ed7c346d3ad3ebe7a5',
