@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d8f8b24_4b0b4433",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-09-22T18:20:41Z",
+      "side": 1,
+      "message": "Fix a stride issue for NV12 allowing a conversion from I420 into a portion of an NV12, including when the NV12 has been padded for alignment reasons",
+      "revId": "8885d65182dc9b84bc03db9633433a4cb92639c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
