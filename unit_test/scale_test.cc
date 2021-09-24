@@ -882,7 +882,7 @@ static int NV12TestFilter(int src_width,
 
 // Test a scale factor with all 4 filters.  Expect unfiltered to be exact, but
 // filtering is different fixed point implementations for SSSE3, Neon and C.
-#ifdef ENABLE_SLOW_TESTS
+#ifndef DISABLE_SLOW_TESTS
 #define TEST_FACTOR(name, nom, denom, boxdiff)  \
   TEST_FACTOR1(, name, None, nom, denom, 0)     \
   TEST_FACTOR1(, name, Linear, nom, denom, 3)   \
@@ -1008,7 +1008,7 @@ TEST_FACTOR(3, 1, 3, 0)
     EXPECT_LE(diff, max_diff);                                                \
   }
 
-#ifdef ENABLE_SLOW_TESTS
+#ifndef DISABLE_SLOW_TESTS
 // Test scale to a specified size with all 4 filters.
 #define TEST_SCALETO(name, width, height)           \
   TEST_SCALETO1(, name, width, height, None, 0)     \
@@ -1030,9 +1030,10 @@ TEST_SCALETO(Scale, 320, 240)
 TEST_SCALETO(Scale, 569, 480)
 TEST_SCALETO(Scale, 640, 360)
 TEST_SCALETO(Scale, 1280, 720)
-#ifdef ENABLE_SLOW_TESTS
+#ifndef DISABLE_SLOW_TESTS
 TEST_SCALETO(Scale, 1920, 1080)
-#endif  // ENABLE_SLOW_TESTS
+#endif  // DISABLE_SLOW_TESTS
+
 #undef TEST_SCALETO1
 #undef TEST_SCALETO
 
@@ -1088,7 +1089,7 @@ TEST_SCALETO(Scale, 1920, 1080)
   }
 
 // Test scale to a specified size with all 4 filters.
-#ifdef ENABLE_SLOW_TESTS
+#ifndef DISABLE_SLOW_TESTS
 TEST_SCALESWAPXY1(, Scale, None, 0)
 TEST_SCALESWAPXY1(, Scale, Linear, 3)
 TEST_SCALESWAPXY1(, Scale, Bilinear, 3)
