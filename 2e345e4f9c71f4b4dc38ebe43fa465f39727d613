@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "213ffc4b_1a0a36ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-10-11T18:49:01Z",
+      "side": 1,
+      "message": "GCC build fix and improve ARGBToRGB24 performance using 16 byte vectors instead of 8",
+      "revId": "2e345e4f9c71f4b4dc38ebe43fa465f39727d613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
