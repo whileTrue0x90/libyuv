@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb720db5_d2224851",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-10-19T06:09:43Z",
+      "side": 1,
+      "message": "This makes RGB to Y use SIMD for exact, while allowing UV to use C for exact, or SIMD for regular build",
+      "revId": "6819352b0d4dd660ebaa76db8dd96b4f731f23b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
