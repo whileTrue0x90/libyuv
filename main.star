@@ -64,6 +64,12 @@ luci.project(
         acl.entry(acl.BUILDBUCKET_READER, groups = ["all"]),
         acl.entry(acl.BUILDBUCKET_OWNER, groups = ["project-libyuv-admins"]),
     ],
+    bindings = [
+        luci.binding(
+            roles = "role/configs.validator",
+            users = "libyuv-try-builder@chops-service-accounts.iam.gserviceaccount.com",
+        ),
+    ],
 )
 
 # Generates luci-logdog.cfg
