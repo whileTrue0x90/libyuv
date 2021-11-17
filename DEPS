@@ -4,6 +4,11 @@ gclient_gn_args = [
 ]
 
 vars = {
+  # By default, we should check out everything needed to run on the main
+  # chromium waterfalls. More info at: crbug.com/570091.
+  'checkout_configuration': 'default',
+  'checkout_instrumented_libraries': 'checkout_linux and checkout_configuration == "default"',
+
   'chromium_git': 'https://chromium.googlesource.com',
   'chromium_revision': 'eaac4f14d951eb92181830ed7c346d3ad3ebe7a5',
   'gn_version': 'git_revision:6f13aaac55a977e1948910942675c69f2b4f7a94',
@@ -2359,25 +2364,25 @@ hooks = [
   {
     'name': 'msan_chained_origins',
     'pattern': '.',
-    'condition': 'checkout_linux',
+    'condition': 'checkout_instrumented_libraries',
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--no_auth',
-                '--bucket', 'chromium-instrumented-libraries',
-                '-s', 'src/third_party/instrumented_libraries/binaries/msan-chained-origins-trusty.tgz.sha1',
+                "--no_resume",
+                "--no_auth",
+                "--bucket", "chromium-instrumented-libraries",
+                "-s", "src/third_party/instrumented_libraries/binaries/msan-chained-origins.tgz.sha1",
               ],
   },
   {
     'name': 'msan_no_origins',
     'pattern': '.',
-    'condition': 'checkout_linux',
+    'condition': 'checkout_instrumented_libraries',
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
-                '--no_resume',
-                '--no_auth',
-                '--bucket', 'chromium-instrumented-libraries',
-                '-s', 'src/third_party/instrumented_libraries/binaries/msan-no-origins-trusty.tgz.sha1',
+                "--no_resume",
+                "--no_auth",
+                "--bucket", "chromium-instrumented-libraries",
+                "-s", "src/third_party/instrumented_libraries/binaries/msan-no-origins.tgz.sha1",
               ],
   },
   {
