@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8338dda_2002fad6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002781
+      },
+      "writtenOn": "2021-11-22T08:20:29Z",
+      "side": 1,
+      "message": "LGTM, make sure you also enable bbagent (setting) in the luci.recipe call. Like I did in https://webrtc-review.googlesource.com/c/src/+/238383.\n\nhttps://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/infra/config/main.star#227\n\nhttps://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/infra/config/main.star#243\n\nhttps://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/infra/config/main.star#291\n\nNote I cannot grant +1 in this repo.",
+      "revId": "6b886ef2e54bf973183de195eac880dcad0b80d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
