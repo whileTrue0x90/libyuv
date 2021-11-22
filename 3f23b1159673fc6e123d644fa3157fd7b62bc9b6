@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73ac498d_98635d76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-11-22T22:14:00Z",
+      "side": 1,
+      "message": "vpshufb can only shuffle within the 16 bytes of the upper or lower lane.  The index is 0 to 15, not 0 to 31.  Its the equivalent to 2 pshufb.\nIf we put 8 Y and 8 UV into a register,  3 pshufb can produce 8 YUV24.\nI guess it works out, if the upper 8 Y and upper 8 UV, then 3 vpshufb produce 8 more YUV24 in the upper lanes, but its not arranged the way you want them.  3 lower parts for the first 8, and 3 upper parts for the next 8.",
+      "revId": "3f23b1159673fc6e123d644fa3157fd7b62bc9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
