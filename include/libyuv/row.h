@@ -303,6 +303,7 @@ extern "C" {
 #define HAS_MERGEXRGBROW_SSE2
 #define HAS_MERGERGBROW_SSSE3
 #define HAS_MIRRORUVROW_SSSE3
+#define HAS_NV21TOYUV24ROW_SSSE3
 #define HAS_P210TOAR30ROW_SSSE3
 #define HAS_P210TOARGBROW_SSSE3
 #define HAS_P410TOAR30ROW_SSSE3
@@ -318,6 +319,7 @@ extern "C" {
 #define HAS_SPLITXRGBROW_SSSE3
 #define HAS_SPLITRGBROW_SSSE3
 #define HAS_SWAPUVROW_SSSE3
+
 
 #if defined(__x86_64__) || !defined(__pic__)
 // TODO(fbarchard): fix build error on android_full_debug=1
@@ -379,8 +381,6 @@ extern "C" {
 #define HAS_SPLITXRGBROW_AVX2
 #define HAS_SPLITUVROW_16_AVX2
 #define HAS_SWAPUVROW_AVX2
-// TODO(fbarchard): Fix AVX2 version of YUV24
-// #define HAS_NV21TOYUV24ROW_AVX2
 
 #if defined(__x86_64__) || !defined(__pic__)
 // TODO(fbarchard): fix build error on android_full_debug=1
@@ -3227,10 +3227,10 @@ void NV21ToRGB24Row_AVX2(const uint8_t* src_y,
                          uint8_t* dst_rgb24,
                          const struct YuvConstants* yuvconstants,
                          int width);
-void NV21ToYUV24Row_AVX2(const uint8_t* src_y,
-                         const uint8_t* src_vu,
-                         uint8_t* dst_yuv24,
-                         int width);
+void NV21ToYUV24Row_SSSE3(const uint8_t* src_y,
+                          const uint8_t* src_vu,
+                          uint8_t* dst_yuv24,
+                          int width);
 void NV12ToRGB565Row_AVX2(const uint8_t* src_y,
                           const uint8_t* src_uv,
                           uint8_t* dst_rgb565,
@@ -3568,10 +3568,10 @@ void NV21ToRGB24Row_Any_AVX2(const uint8_t* y_buf,
                              uint8_t* dst_ptr,
                              const struct YuvConstants* yuvconstants,
                              int width);
-void NV21ToYUV24Row_Any_AVX2(const uint8_t* src_y,
-                             const uint8_t* src_vu,
-                             uint8_t* dst_yuv24,
-                             int width);
+void NV21ToYUV24Row_Any_SSSE3(const uint8_t* src_y,
+                              const uint8_t* src_vu,
+                              uint8_t* dst_yuv24,
+                              int width);
 void NV12ToRGB565Row_Any_SSSE3(const uint8_t* y_buf,
                                const uint8_t* uv_buf,
                                uint8_t* dst_ptr,

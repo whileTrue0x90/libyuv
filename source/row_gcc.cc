@@ -8894,6 +8894,46 @@ void ARGBLumaColorTableRow_SSSE3(const uint8_t* src_argb,
 }
 #endif  // HAS_ARGBLUMACOLORTABLEROW_SSSE3
 
+static const uvec8 kYUV24Shuffle[3] =
+  {{ 8, 9, 0, 8, 9, 1, 10, 11,    128, 128, 128, 128, 128, 128, 128, 128 },
+   { 2, 10, 11, 3, 12, 13, 4, 12, 128, 128, 128, 128, 128, 128, 128, 128 },
+   { 13, 5, 14, 16, 6, 14, 15, 7, 128, 128, 128, 128, 128, 128, 128, 128 }};
+
+// Convert biplanar NV21 to packed YUV24
+// NV21 has VU in memory for chroma.
+// YUV24 is VUY in memory
+void NV21ToYUV24Row_SSSE3(const uint8_t* src_y,
+                          const uint8_t* src_vu,
+                          uint8_t* dst_yuv24,
+                          int width) {
+  asm volatile(
+      "movdqa      (%4),%%xmm3                   \n"  // 3 shuffler constants
+      "movdqa      16(%4),%%xmm4                 \n"
+      "movdqa      32(%4),%%xmm5                 \n"
+      "1:                                        \n"
+      "movlps      (%0),%%xmm0                   \n"
+      "lea         8(%0),%0                      \n"
+      "movhps      (%1),%%xmm0                   \n"
+      "lea         8(%1),%1                      \n"
+      "movdqa      %%xmm0, %%xmm1                \n"
+      "movdqa      %%xmm0, %%xmm2                \n"
+      "pshufb      %%xmm3, %%xmm0                \n"  // weave into YUV24
+      "pshufb      %%xmm4, %%xmm1                \n"
+      "pshufb      %%xmm5, %%xmm2                \n"
+      "movlps      %%xmm0,(%2)                   \n"
+      "movlps      %%xmm1,8(%2)                  \n"
+      "movlps      %%xmm2,16(%2)                 \n"
+      "lea         24(%2),%2                     \n"
+      "sub         $8,%3                         \n"  // 8 pixels per loop
+      "jg          1b                            \n"
+      : "+r"(src_y),      // %0
+        "+r"(src_vu),     // %1
+        "+r"(dst_yuv24),  // %2
+        "+r"(width)       // %3
+      : "r"(&kYUV24Shuffle[0])  // %4
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5");
+}
+
 #ifdef HAS_NV21TOYUV24ROW_AVX2
 
 // begin NV21ToYUV24Row_C avx2 constants
