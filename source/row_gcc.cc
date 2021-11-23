@@ -8894,7 +8894,127 @@ void ARGBLumaColorTableRow_SSSE3(const uint8_t* src_argb,
 }
 #endif  // HAS_ARGBLUMACOLORTABLEROW_SSSE3
 
-#ifdef HAS_NV21TOYUV24ROW_AVX2
+static const uvec8 kYUV24Shuffle[3] =
+  {{ 8, 9, 0, 8, 9, 1, 10, 11, 2, 10, 11, 3, 12, 13, 4, 12 },
+   { 9, 1, 10, 11, 2, 10, 11, 3, 12, 13, 4, 12, 13, 5, 14, 15 },
+   { 2, 10, 11, 3, 12, 13, 4, 12, 13, 5, 14, 15, 6, 14, 15, 7 }};
+
+// Convert biplanar NV21 to packed YUV24
+// NV21 has VU in memory for chroma.
+// YUV24 is VUY in memory
+void NV21ToYUV24Row_SSSE3(const uint8_t* src_y,
+                          const uint8_t* src_vu,
+                          uint8_t* dst_yuv24,
+                          int width) {
+  asm volatile(
+      "movdqa      (%4),%%xmm4                   \n"  // 3 shuffler constants
+      "movdqa      16(%4),%%xmm5                 \n"
+      "movdqa      32(%4),%%xmm6                 \n"
+      "1:                                        \n"
+      "movdqu      (%0),%%xmm2                   \n"  // load 16 Y values
+      "movdqu      (%1),%%xmm3                   \n"  // load 8 VU values
+      "lea         16(%0),%0                     \n"
+      "lea         16(%1),%1                     \n"
+      "movdqa      %%xmm2,%%xmm0                 \n"
+      "movdqa      %%xmm2,%%xmm1                 \n"
+      "shufps      $0x44,%%xmm3,%%xmm0           \n"  // Y 0..7,  UV 0..3
+      "shufps      $0x99,%%xmm3,%%xmm1           \n"  // Y 4..11, UV 2..5
+      "shufps      $0xee,%%xmm3,%%xmm2           \n"  // Y 8..15, UV 4..7
+      "pshufb      %%xmm4, %%xmm0                \n"  // weave into YUV24
+      "pshufb      %%xmm5, %%xmm1                \n"
+      "pshufb      %%xmm6, %%xmm2                \n"
+      "movdqu      %%xmm0,(%2)                   \n"
+      "movdqu      %%xmm1,16(%2)                 \n"
+      "movdqu      %%xmm2,32(%2)                 \n"
+      "lea         48(%2),%2                     \n"
+      "sub         $16,%3                        \n"  // 16 pixels per loop
+      "jg          1b                            \n"
+      : "+r"(src_y),      // %0
+        "+r"(src_vu),     // %1
+        "+r"(dst_yuv24),  // %2
+        "+r"(width)       // %3
+      : "r"(&kYUV24Shuffle[0])  // %4
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
+}
+
+// Convert biplanar NV21 to packed YUV24
+// NV21 has VU in memory for chroma.
+// YUV24 is VUY in memory
+void NV21ToYUV24Row_AVX2(const uint8_t* src_y,
+                         const uint8_t* src_vu,
+                         uint8_t* dst_yuv24,
+                         int width) {
+  asm volatile(
+      "vmovdqa      (%4),%%xmm4                   \n"  // 3 shuffler constants
+      "vmovdqa      16(%4),%%xmm5                 \n"
+      "vmovdqa      32(%4),%%xmm6                 \n"
+      "1:                                         \n"
+      "vmovdqu      (%0),%%xmm2                   \n"  // load 16 Y values
+      "vmovdqu      (%1),%%xmm3                   \n"  // load 8 VU values
+      "lea          16(%0),%0                     \n"
+      "lea          16(%1),%1                     \n"
+      "vshufps      $0x44,%%xmm3,%%xmm2,%%xmm0    \n"  // Y 0..7,  UV 0..3
+      "vshufps      $0x99,%%xmm3,%%xmm2,%%xmm1    \n"  // Y 4..11, UV 2..5
+      "vshufps      $0xee,%%xmm3,%%xmm2,%%xmm2    \n"  // Y 8..15, UV 4..7
+      "vpshufb      %%xmm4,%%xmm0,%%xmm0          \n"  // weave into YUV24
+      "vpshufb      %%xmm5,%%xmm1,%%xmm1          \n"
+      "vpshufb      %%xmm6,%%xmm2,%%xmm2          \n"
+      "vmovdqu      %%xmm0,(%2)                   \n"
+      "vmovdqu      %%xmm1,16(%2)                 \n"
+      "vmovdqu      %%xmm2,32(%2)                 \n"
+      "lea          48(%2),%2                     \n"
+      "sub          $16,%3                        \n"  // 16 pixels per loop
+      "jg           1b                            \n"
+      "vzeroupper                                \n"
+      : "+r"(src_y),      // %0
+        "+r"(src_vu),     // %1
+        "+r"(dst_yuv24),  // %2
+        "+r"(width)       // %3
+      : "r"(&kYUV24Shuffle[0])  // %4
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6");
+}
+
+// Convert biplanar NV21 to packed YUV24
+// NV21 has VU in memory for chroma.
+// YUV24 is VUY in memory
+void NV21ToYUV24Row_AVX2_32(const uint8_t* src_y,
+                         const uint8_t* src_vu,
+                         uint8_t* dst_yuv24,
+                         int width) {
+  asm volatile(
+      "vbroadcastf128 (%4),%%ymm5                 \n"  // 3 shuffler constants
+      "vbroadcastf128 16(%4),%%ymm6               \n"
+      "vbroadcastf128 32(%4),%%ymm7               \n"
+      "1:                                         \n"
+      "vmovdqu      (%0),%%ymm3                   \n"  // load 32 Y values
+      "vmovdqu      (%1),%%ymm4                   \n"  // load 16 VU values
+      "lea          32(%0),%0                     \n"
+      "lea          32(%1),%1                     \n"
+      "vshufps      $0x44,%%ymm4,%%ymm3,%%ymm0    \n"  // Y 0..7,  UV 0..3
+      "vshufps      $0x99,%%ymm4,%%ymm3,%%ymm1    \n"  // Y 4..11, UV 2..5
+      "vshufps      $0xee,%%ymm4,%%ymm3,%%ymm2    \n"  // Y 8..15, UV 4..7
+      "vpshufb      %%ymm5,%%ymm0,%%ymm0          \n"  // weave into YUV24
+      "vpshufb      %%ymm6,%%ymm1,%%ymm1          \n"
+      "vpshufb      %%ymm7,%%ymm2,%%ymm2          \n"
+      "vperm2i128   $0x44,%%ymm0,%%ymm1,%%ymm3    \n"
+      "vperm2i128   $0xe4,%%ymm2,%%ymm0,%%ymm4    \n"
+      "vperm2i128   $0xee,%%ymm1,%%ymm2,%%ymm5    \n"
+      "vmovdqu      %%ymm3,(%2)                   \n"
+      "vmovdqu      %%ymm4,32(%2)                 \n"
+      "vmovdqu      %%ymm5,64(%2)                 \n"
+      "lea          96(%2),%2                     \n"
+      "sub          $32,%3                        \n"  // 32 pixels per loop
+      "jg           1b                            \n"
+      "vzeroupper                                 \n"
+      : "+r"(src_y),      // %0
+        "+r"(src_vu),     // %1
+        "+r"(dst_yuv24),  // %2
+        "+r"(width)       // %3
+      : "r"(&kYUV24Shuffle[0])  // %4
+      : "memory", "cc", "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7");
+}
+
+#ifdef HAS_NV21TOYUV24ROW_AVX2_OLD
 
 // begin NV21ToYUV24Row_C avx2 constants
 static const ulvec8 kBLEND0 = {0x80, 0x00, 0x80, 0x80, 0x00, 0x80, 0x80, 0x00,
