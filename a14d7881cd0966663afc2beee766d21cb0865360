@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01af5490_796366bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2021-11-26T12:26:41Z",
+      "side": 1,
+      "message": "\u003e Patch Set 2: Code-Review+1\n\u003e \n\u003e By voting Code-Review+1 the following files are now code-owner approved by \u003cGERRIT_ACCOUNT_1178490\u003e:\n\u003e * DEPS\n\u003e \n\nCould you do CQ+2 too?",
+      "revId": "a14d7881cd0966663afc2beee766d21cb0865360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
