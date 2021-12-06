@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e1ce8a1_e248cb09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2021-12-06T07:48:01Z",
+      "side": 1,
+      "message": "Because there is a -Wshadow diagnostic triggering in this files (there is a global variable with the same name).",
+      "parentUuid": "a2a4a5af_2d2632a0",
+      "revId": "9963862b60d30a72d070ea4a8c3049efce7b9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "965dc0f6_79bb4eb9",
