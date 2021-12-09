@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9d6f00c_721812c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-09T21:45:49Z",
+      "side": 1,
+      "message": "sending this to you as I tried unsuccessfully to optimize this for x86 the same way",
+      "revId": "e9519512e1a4a342cc58f2a8a4bd61c68ab0cead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
