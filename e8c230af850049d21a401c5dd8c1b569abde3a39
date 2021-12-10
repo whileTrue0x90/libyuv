@@ -68,6 +68,23 @@
       "parentUuid": "ee29a3c7_6e0e6ece",
       "revId": "e8c230af850049d21a401c5dd8c1b569abde3a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46c0fab1_e8468829",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-10T05:22:55Z",
+      "side": 1,
+      "message": "To benchmark at 4k resolution..\ngn gen out/Release --args\u003dis_debug\u003dfalse\nninja -v -C out/Release\nout/Release/libyuv_unittest \u0027--gtest_filter\u003d*Interpolate*Opt\u0027 --libyuv_width\u003d3840 --libyuv_height\u003d2160 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n\nFor Skylake Xeon:\n[ RUN      ] LibYUVPlanarTest.ARGBInterpolate0_Opt\n[       OK ] LibYUVPlanarTest.ARGBInterpolate0_Opt (5155 ms)\n[ RUN      ] LibYUVPlanarTest.ARGBInterpolate64_Opt\n[       OK ] LibYUVPlanarTest.ARGBInterpolate64_Opt (7905 ms)\n[ RUN      ] LibYUVPlanarTest.ARGBInterpolate128_Opt\n[       OK ] LibYUVPlanarTest.ARGBInterpolate128_Opt (7484 ms)\n[ RUN      ] LibYUVPlanarTest.ARGBInterpolate192_Opt\n[       OK ] LibYUVPlanarTest.ARGBInterpolate192_Opt (7784 ms)\n[ RUN      ] LibYUVPlanarTest.ARGBInterpolate255_Opt\n[       OK ] LibYUVPlanarTest.ARGBInterpolate255_Opt (7835 ms)\n[----------] 5 tests from LibYUVPlanarTest (36166 ms total)\n",
+      "revId": "e8c230af850049d21a401c5dd8c1b569abde3a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
