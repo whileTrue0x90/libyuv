@@ -50,6 +50,24 @@
       "message": "at 4k the specialized interpolation for 0 and 128 are faster than the general case, which uses vpmaddubsw\n\nARGBInterpolate0_Opt (5290 ms)\nARGBInterpolate64_Opt (7362 ms)\nARGBInterpolate128_Opt (7153 ms)\nARGBInterpolate192_Opt (7340 ms)\nARGBInterpolate255_Opt (7380 ms)\n",
       "revId": "e8c230af850049d21a401c5dd8c1b569abde3a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7f2c4a8_07ce5e29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-10T05:10:46Z",
+      "side": 1,
+      "message": "Pixel 6, for fun\nARGBInterpolate0_Opt (2567 ms)\nARGBInterpolate64_Opt (3727 ms)\nARGBInterpolate128_Opt (3755 ms)\nARGBInterpolate192_Opt (3784 ms)\nARGBInterpolate255_Opt (3788 ms)",
+      "parentUuid": "ee29a3c7_6e0e6ece",
+      "revId": "e8c230af850049d21a401c5dd8c1b569abde3a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
