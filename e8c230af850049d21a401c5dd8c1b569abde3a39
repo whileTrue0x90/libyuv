@@ -16,6 +16,23 @@
       "message": "this version of InterpolateRow_AVX2 replaces the rep movsb with AVX2 mov instructions.",
       "revId": "e8c230af850049d21a401c5dd8c1b569abde3a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17f47f25_5791b9f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-10T04:58:47Z",
+      "side": 1,
+      "message": "For 4k images\nlibyuv_test \u0027--gunit_filter\u003d*Interpolate*\u0027 --libyuv_width\u003d3840 --libyuv_height\u003d2160 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n\nWas ERMS\nTestARGBInterpolate (541 ms)\nTestInterpolatePlane (391 ms)\nARGBInterpolate0_Any (6690 ms)\nARGBInterpolate0_Unaligned (6637 ms)\nARGBInterpolate0_Invert (6302 ms)\nARGBInterpolate0_Opt (6632 ms)\nARGBInterpolate64_Any (8200 ms)\nARGBInterpolate64_Unaligned (8483 ms)\nARGBInterpolate64_Invert (7855 ms)\nARGBInterpolate64_Opt (7949 ms)\nARGBInterpolate128_Any (7422 ms)\nARGBInterpolate128_Unaligned (7402 ms)\nARGBInterpolate128_Invert (7561 ms)\nARGBInterpolate128_Opt (7462 ms)\nARGBInterpolate192_Any (7971 ms)\nARGBInterpolate192_Unaligned (8235 ms)\nARGBInterpolate192_Invert (7789 ms)\nARGBInterpolate192_Opt (7838 ms)\nARGBInterpolate255_Any (7875 ms)\nARGBInterpolate255_Unaligned (8190 ms)\nARGBInterpolate255_Invert (7841 ms)\nARGBInterpolate255_Opt (7877 ms)\nYUVPlanarTest (153153 ms total)\n\nNow AVX2\nTestARGBInterpolate (534 ms)\nTestInterpolatePlane (395 ms)\nARGBInterpolate0_Any (5268 ms)\nARGBInterpolate0_Unaligned (5231 ms)\nARGBInterpolate0_Invert (5420 ms)\nARGBInterpolate0_Opt (5229 ms)\nARGBInterpolate64_Any (8256 ms)\nARGBInterpolate64_Unaligned (7885 ms)\nARGBInterpolate64_Invert (7459 ms)\nARGBInterpolate64_Opt (7570 ms)\nARGBInterpolate128_Any (7311 ms)\nARGBInterpolate128_Unaligned (7341 ms)\nARGBInterpolate128_Invert (7422 ms)\nARGBInterpolate128_Opt (8448 ms)\nARGBInterpolate192_Any (7748 ms)\nARGBInterpolate192_Unaligned (8129 ms)\nARGBInterpolate192_Invert (7608 ms)\nARGBInterpolate192_Opt (7898 ms)\nARGBInterpolate255_Any (7795 ms)\nARGBInterpolate255_Unaligned (8152 ms)\nARGBInterpolate255_Invert (7665 ms)\nARGBInterpolate255_Opt (7782 ms)\nYUVPlanarTest (146558 ms total)\n",
+      "revId": "e8c230af850049d21a401c5dd8c1b569abde3a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
