@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e8cc2e2_6b71a5b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-10T01:45:19Z",
+      "side": 1,
+      "message": "for both arm and intel, a shuffle table approach also works.  but on ssse3 this code is a little slower\n// J400 to ARGB shuffle table\nstatic const vec8 kShuffleJ400[2] \u003d {\n    {0, 0, 0, 8, 1, 1, 1, 8, 2, 2, 2, 8, 3, 3, 3, 8},\n    {4, 4, 4, 8, 5, 5, 5, 8, 6, 6, 6, 8, 7, 7, 7, 8}};\n\nvoid J400ToARGBRow_SSE2(const uint8_t* src_y, uint8_t* dst_argb, int width) {\n  asm volatile(\n      \"pcmpeqb     %%xmm3,%%xmm3                 \\n\"\n      \"psllq       $32,%%xmm3                    \\n\"\n      \"punpcklbw   %%xmm3,%%xmm3                 \\n\"\n      \"movdqa      (%3),%%xmm4                   \\n\"\n      \"movdqa      16(%3),%%xmm5                 \\n\"\n\n      LABELALIGN\n      \"1:                                        \\n\"\n      \"movq        (%0),%%xmm0                   \\n\"\n      \"lea         0x8(%0),%0                    \\n\"\n      \"por         %%xmm3, %%xmm0                \\n\"\n      \"movdqa      %%xmm0, %%xmm1                \\n\"\n      \"movdqa      %%xmm0, %%xmm2                \\n\"\n      \"pshufb      %%xmm4,%%xmm1                 \\n\"\n      \"pshufb      %%xmm5,%%xmm2                 \\n\"\n      \"movdqu      %%xmm1,(%1)                   \\n\"\n      \"movdqu      %%xmm2,0x10(%1)               \\n\"\n      \"lea         0x20(%1),%1                   \\n\"\n      \"sub         $0x8,%2                       \\n\"\n      \"jg          1b                            \\n\"\n      : \"+r\"(src_y),           // %0\n        \"+r\"(dst_argb),        // %1\n        \"+r\"(width)            // %2\n      : \"r\"(\u0026kShuffleJ400[0])  // %3\n      : \"memory\", \"cc\", \"xmm0\", \"xmm1\", \"xmm2\", \"xmm3\", \"xmm4\", \"xmm5\");\n}",
+      "revId": "d7a2d5da87ebdb4e606858dfdb94141bd5aae8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
