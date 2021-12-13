@@ -26,8 +26,6 @@ GOMA_BACKEND_RBE_NO_ATS_PROD = {
     "enable_ats": False,
 }
 
-# Enable LUCI Realms support.
-lucicfg.enable_experiment("crbug.com/1085650")
 # Launch all builds in "realms-aware mode", crbug.com/1203285.
 luci.builder.defaults.experiments.set(
     {
@@ -205,7 +203,7 @@ def get_os_dimensions(os):
         return {"os": "Ubuntu-18.04", "cores": "8", "cpu": "x86-64"}
     return {}
 
-def get_os_properties(os, try_builder=False):
+def get_os_properties(os, try_builder = False):
     if os == "android":
         return {"$build/goma": GOMA_BACKEND_RBE_PROD}
     elif os in ("ios", "mac"):
@@ -232,6 +230,7 @@ def libyuv_ci_builder(name, dimensions, properties, triggered_by):
         executable = luci.recipe(
             name = "libyuv/libyuv",
             cipd_package = "infra/recipe_bundles/chromium.googlesource.com/chromium/tools/build",
+            use_python3 = True,
         ),
     )
 
@@ -248,6 +247,7 @@ def libyuv_try_builder(name, dimensions, properties, recipe_name = "libyuv/libyu
         executable = luci.recipe(
             name = recipe_name,
             cipd_package = "infra/recipe_bundles/chromium.googlesource.com/chromium/tools/build",
+            use_python3 = True,
         ),
     )
 
@@ -264,7 +264,7 @@ def ci_builder(name, os, category, short_name = None):
 
 def try_builder(name, os, experiment_percentage = None):
     dimensions = get_os_dimensions(os)
-    properties = get_os_properties(os, try_builder=True)
+    properties = get_os_properties(os, try_builder = True)
 
     dimensions["pool"] = "luci.flex.try"
     properties["builder_group"] = "tryserver.libyuv"
@@ -296,6 +296,7 @@ luci.builder(
     executable = luci.recipe(
         name = "libyuv/roll_deps",
         cipd_package = "infra/recipe_bundles/chromium.googlesource.com/chromium/tools/build",
+        use_python3 = True,
     ),
 )
 
@@ -333,9 +334,9 @@ ci_builder("iOS Debug", "ios", "iOS", "dbg")
 ci_builder("iOS Release", "ios", "iOS", "rel")
 
 # TODO(crbug.com/1242847): make this not experimental.
-try_builder("android", "android", experiment_percentage=100)
-try_builder("android_arm64", "android", experiment_percentage=100)
-try_builder("android_rel", "android", experiment_percentage=100)
+try_builder("android", "android", experiment_percentage = 100)
+try_builder("android_arm64", "android", experiment_percentage = 100)
+try_builder("android_rel", "android", experiment_percentage = 100)
 
 try_builder("android_x64", "linux")
 try_builder("android_x86", "linux")
