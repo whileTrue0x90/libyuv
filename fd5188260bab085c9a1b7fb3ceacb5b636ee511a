@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0aa6e69_2e52764a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-14T07:46:20Z",
+      "side": 1,
+      "message": "Hello Frank, could you please help to review our patches uploaded by Hao Chen recently.\nThese patchs is optimizations for loongarch. Do we need to provide any test environment, and what kind of environment is needed. \nThank you very much.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
