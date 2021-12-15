@@ -33,6 +33,199 @@
       "message": "Hello Frank, could you please help to review our patches uploaded by Hao Chen recently.\nThese patchs is optimizations for loongarch. Do we need to provide any test environment, and what kind of environment is needed. \nThank you very much.",
       "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cafb6344_45ec6aba",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "put lasx together with lsx. they are all loongarch SIMD.\nmmi and msa belongs to old loongson SIMD which is MIPS architecture.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6cc99bb_0bc648b0",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd94a633_11e18b97",
+        "filename": "docs/environment_variables.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "put LASX after LSX.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aa442ad_f0d71eaa",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "put LSX before LASX.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09671e4_99f3d536",
+        "filename": "include/libyuv/loongson_intrinsics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "updated to latest version 1.0.3",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23a6b488_7809fcd7",
+        "filename": "libyuv.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "put lsx before lasx",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af31aad9_b7155392",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "Let\u0027s use \u0027cpucfg\u0027 to read feature flags.\nPlease refer to ffmpeg.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7e79b5d_b440bd4f",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "The order.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa3f8fa8_c01c9d85",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "use \u0027__loongarch__\u0027 or \u0027__loongarch64\u0027 or \u0027__loongarch32\u0027\nthere are no \u0027__loongarch\u0027 anymore。",
+      "range": {
+        "startLine": 161,
+        "startChar": 7,
+        "endLine": 161,
+        "endChar": 18
+      },
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc470a3e_78bbcbb9",
+        "filename": "unit_test/unit_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "the order.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f5a25a3_d69f0bca",
+        "filename": "util/cpuid.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-15T08:24:02Z",
+      "side": 1,
+      "message": "the order.",
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
