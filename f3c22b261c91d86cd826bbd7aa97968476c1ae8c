@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "885b01ec_b14206e0",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-20T06:38:04Z",
+      "side": 1,
+      "message": "This should be LSX.",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 12
+      },
+      "revId": "f3c22b261c91d86cd826bbd7aa97968476c1ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
