@@ -258,6 +258,7 @@ if (libyuv_use_lsx) {
   static_library("libyuv_lsx") {
     sources = [
       # LSX Source Files
+      "source/row_lsx.cc"
     ]
 
     deps = [ ":libyuv_internal" ]
