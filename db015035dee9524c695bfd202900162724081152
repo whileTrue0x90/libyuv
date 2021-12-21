@@ -16,6 +16,40 @@
       "message": "LGTM.",
       "revId": "db015035dee9524c695bfd202900162724081152",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9fbc402_830d668d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-21T04:41:31Z",
+      "side": 1,
+      "message": "consider updating scale_argb.cc, which also refers to the conversion:\nscale_argb.cc:      I422ToARGBRow \u003d I422ToARGBRow_MSA;\n",
+      "revId": "db015035dee9524c695bfd202900162724081152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d93c06e7_fe058b9e",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-21T04:41:31Z",
+      "side": 1,
+      "message": "Naming note.  This is probably my fault, but in most libyuv functions the _16 will denote 16 bit per channel formats.  But in YUV to RGB I think this means the macro expects 16 bit per channels in the registers, but will store ARGB 8 bit per channel.\nIt was added to enable AB10 and AR64 formats that output more then 8 bits per channel.",
+      "revId": "db015035dee9524c695bfd202900162724081152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
