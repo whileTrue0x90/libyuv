@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79cf0713_3188aa1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:42:05Z",
+      "side": 1,
+      "message": "note that i\u0027ll want to call clang-format on everything and if it makes a mess, disable it around some code",
+      "revId": "35b0749da90ffe481071c6a26f5a0a07030c4424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
