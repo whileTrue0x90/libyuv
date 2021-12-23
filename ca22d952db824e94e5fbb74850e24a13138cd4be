@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da82c122_ff26a0fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:36:15Z",
+      "side": 1,
+      "message": "note that scale_uv is not fully optimized for arm and intel and not at all for msa and mmi.\nthe code is based on argb and conceptually is a 2 channel version, while argb is 4 channels, but otherwise very similar.  so all functions that are in argb should eventually be in uv.\nscale_uv is for nv12 / nv21.  I would only bother optimizing if this format is used on lsx machines.\n\nrotate_argb is not efficient.  it will be refactored to be like planar rotation using 8x8 transpose, and then do a rotate_uv the same way.  work in progress.",
+      "revId": "ca22d952db824e94e5fbb74850e24a13138cd4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
