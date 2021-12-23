@@ -35,6 +35,42 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4784a164_5298edcc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-23T09:09:43Z",
+      "side": 1,
+      "message": "Hi Frank, I am HaoChen‘s colleague.\nMMI and MSA belongs to MIPS arch which is used for LoongSon 3A1000~3A4000. MMI is 64-bit SIMD which is supported by 3A1000~3A3000, MSA is first supported on 3A4000. I agree with  your opinion to remove MMI as it\u0027s really difficult to maintain so many kind of SIMD. We will rise a thread to do this work.\nLSX and LASX belongs to LoongSon\u0027s new architecture \u0027loongarch\u0027. We can donate HW or online host for building and testing if it\u0027s needed, also, we will continue to make sure each patch uploaded has passed the test.",
+      "parentUuid": "42f2442d_143bad74",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea83deb8_3ace1429",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2021-12-23T09:09:43Z",
+      "side": 1,
+      "message": "How about remove \u0027import(\"//build/config/loongarch.gni\")\u0027 temporarily.\nTo support building with ninja in the next step.",
+      "parentUuid": "2fd6542d_a1f54b76",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fe10890_838f7ea9",
