@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f2442d_143bad74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:21:03Z",
+      "side": 1,
+      "message": "consider trimming the intrinsics header down to whats needed.\n\nthe mmi and msa are likely falling into disrepair.  If mmi is not needed, i\u0027d suggest removing it, as msa is far cleaner.  i\u0027m not able to build/test mips and la and leave it to you to contribute the code.  thanks!",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fe10890_838f7ea9",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:21:03Z",
+      "side": 1,
+      "message": "no mla instruction on lasx?",
+      "range": {
+        "startLine": 90,
+        "startChar": 46,
+        "endLine": 90,
+        "endChar": 79
+      },
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6275fe5c_e78a44d7",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:21:03Z",
+      "side": 1,
+      "message": "avoid macros if possible.  its hard to tell what this DUP4 does.  it uses INS() but I dont see a definition of that.  From the 6 parameter I\u0027m guess this does a shift by 6.",
+      "range": {
+        "startLine": 99,
+        "startChar": 42,
+        "endLine": 99,
+        "endChar": 79
+      },
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da47b50c_272f4cc5",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:21:03Z",
+      "side": 1,
+      "message": "for a function function, consider doing ARGBToYJ which is for RGB to YUV, and popular for both graphics and machine learning.  It tends to optimize very nicely.",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
