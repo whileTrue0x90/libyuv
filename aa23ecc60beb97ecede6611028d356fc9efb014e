@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fd6542d_a1f54b76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-23T01:30:22Z",
+      "side": 1,
+      "message": "ERROR at //libyuv.gni:12:1: Can\u0027t load input file.\nimport(\"//build/config/loongarch.gni\")\n",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fe10890_838f7ea9",
