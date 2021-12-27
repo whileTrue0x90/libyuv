@@ -16,6 +16,40 @@
       "message": "could you file a bug https://monorail-prod.appspot.com/p/libyuv/issues/list\n\nsome of these functions, such as sobel, might not be used?  I\u0027d suggest just optimizing functions that you know products are using.\n",
       "revId": "d7a7ea34e5492a63cf2aa96e99203fca3c7b10cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dfdc3d7_64f8f1f6",
+        "filename": "source/row_lsx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-27T23:59:12Z",
+      "side": 1,
+      "message": "is string needed?  if not, remove",
+      "revId": "d7a7ea34e5492a63cf2aa96e99203fca3c7b10cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3ab7d07_15c606a0",
+        "filename": "source/row_lsx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2021-12-27T23:59:12Z",
+      "side": 1,
+      "message": "note in future all constants will come from a structure like yuv matrix functions have.\nI\u0027ll switch the arm and intel code, but mmi, msa, lsx and lasx will need an update.",
+      "revId": "d7a7ea34e5492a63cf2aa96e99203fca3c7b10cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
