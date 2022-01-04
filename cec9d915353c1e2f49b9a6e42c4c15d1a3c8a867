@@ -33,6 +33,23 @@
       "message": "Hello, Frank, Do you have time to review my patches?",
       "revId": "cec9d915353c1e2f49b9a6e42c4c15d1a3c8a867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d21f018b_3173248d",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-04T20:26:34Z",
+      "side": 1,
+      "message": "ubsan will likely complain that shift behavior is undefined for signed int.  If the compiler is smart enough to do a shift, replace these with width / 16.",
+      "revId": "cec9d915353c1e2f49b9a6e42c4c15d1a3c8a867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
