@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e550a73d_ffbecb43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-04T06:14:42Z",
+      "side": 1,
+      "message": "Hello, Frank, Do you have time to review my patches?",
+      "revId": "cec9d915353c1e2f49b9a6e42c4c15d1a3c8a867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
