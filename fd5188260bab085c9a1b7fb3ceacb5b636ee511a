@@ -232,6 +232,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6980ade1_c74e2b5d",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-09T22:27:40Z",
+      "side": 1,
+      "message": "is there a macro that covers all forms of loongson, similar to __mips?\nThese are just printf\u0027s to help you confirm your build flags are correct, so do as many/few as useful.",
+      "parentUuid": "fa3f8fa8_c01c9d85",
+      "range": {
+        "startLine": 161,
+        "startChar": 7,
+        "endLine": 161,
+        "endChar": 18
+      },
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc470a3e_78bbcbb9",
         "filename": "unit_test/unit_test.cc",
         "patchSetId": 1
