@@ -256,6 +256,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "590daf92_99ff12e6",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2022-01-10T02:41:58Z",
+      "side": 1,
+      "message": "loongson is company\u0027s name, which used to use mips architecture.\nNow loongson use his own architecture \u0027loongarch\u0027 for his new series of CPU.\nUse \u0027__loongarch__\u0027 can covers all \u0027loongarch\u0027 CPU.",
+      "parentUuid": "6980ade1_c74e2b5d",
+      "range": {
+        "startLine": 161,
+        "startChar": 7,
+        "endLine": 161,
+        "endChar": 18
+      },
+      "revId": "fd5188260bab085c9a1b7fb3ceacb5b636ee511a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc470a3e_78bbcbb9",
         "filename": "unit_test/unit_test.cc",
         "patchSetId": 1

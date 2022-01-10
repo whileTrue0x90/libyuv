@@ -89,6 +89,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f7dcd34_55b80d46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2022-01-10T02:41:58Z",
+      "side": 1,
+      "message": "loongson is a company which used to use \u0027mips\u0027 architecture for his CPU, mmi is an extention for mips authored by loongson. Now loongson use his own architecture \u0027loongarch\u0027 for his new series of CPU.\n\n           64     128     256+\nX86      : mmx    sse*    avx*\narm      :        neon\nmips     : mmi    msa\nloongarch:        lsx     lasx",
+      "parentUuid": "4293b3a8_e81e6d25",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d76f301b_1a1b47d0",
