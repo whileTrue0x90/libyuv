@@ -84,6 +84,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6d2d6edb_cb3cb40e",
+        "filename": "include/libyuv/loongson_intrinsics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-10T03:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feba2039_3ca581b0",
+      "range": {
+        "startLine": 2,
+        "startChar": 14,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "db015035dee9524c695bfd202900162724081152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d93c06e7_fe058b9e",
         "filename": "source/row_lasx.cc",
         "patchSetId": 3

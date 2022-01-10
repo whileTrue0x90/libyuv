@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e5904e_3158836f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-10T03:56:47Z",
+      "side": 1,
+      "message": "Can\u0027t submit the other CLs until this one is checked in.\nI\u0027m planning some AVX512 cpuid and function changes, so would be good to get this in before those, to avoid merge issues",
+      "revId": "3898add272882c1f0d3c00fb83200a7a9d7b9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
