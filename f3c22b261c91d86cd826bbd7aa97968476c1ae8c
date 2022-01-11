@@ -22,6 +22,30 @@
       },
       "revId": "f3c22b261c91d86cd826bbd7aa97968476c1ae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25c546e0_93fcbf58",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thx, It\u0027s done.",
+      "parentUuid": "885b01ec_b14206e0",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 12
+      },
+      "revId": "f3c22b261c91d86cd826bbd7aa97968476c1ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

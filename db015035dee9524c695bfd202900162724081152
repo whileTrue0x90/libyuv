@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1478d80b_676d757f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thank you very much for your reminder. I422ToARGBRow_LASX has been added in scale_argb.cc on patch set 5.",
+      "parentUuid": "c9fbc402_830d668d",
+      "revId": "db015035dee9524c695bfd202900162724081152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6680463e_b408ae24",
@@ -108,6 +126,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a4353812_cdba6705",
+        "filename": "include/libyuv/loongson_intrinsics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "OK, it\u0027s done.",
+      "parentUuid": "feba2039_3ca581b0",
+      "range": {
+        "startLine": 2,
+        "startChar": 14,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "db015035dee9524c695bfd202900162724081152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d93c06e7_fe058b9e",
         "filename": "source/row_lasx.cc",
         "patchSetId": 3
@@ -119,6 +161,24 @@
       "writtenOn": "2021-12-21T04:41:31Z",
       "side": 1,
       "message": "Naming note.  This is probably my fault, but in most libyuv functions the _16 will denote 16 bit per channel formats.  But in YUV to RGB I think this means the macro expects 16 bit per channels in the registers, but will store ARGB 8 bit per channel.\nIt was added to enable AB10 and AR64 formats that output more then 8 bits per channel.",
+      "revId": "db015035dee9524c695bfd202900162724081152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ba3192d_c189e75b",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thank you very much for your advice. Original macro naming _16 indicates that this macro processes 16 ARGB format pixels which are 8 bit per channels. To avoid ambiguity, _16 is changed to _D to indicate that this marco can handle double pixels compared with macros without _D.",
+      "parentUuid": "d93c06e7_fe058b9e",
       "revId": "db015035dee9524c695bfd202900162724081152",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }

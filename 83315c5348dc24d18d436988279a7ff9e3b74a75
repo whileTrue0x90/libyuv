@@ -16,6 +16,24 @@
       "message": "if it helps, split the CL into a couple smaller ones.",
       "revId": "83315c5348dc24d18d436988279a7ff9e3b74a75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4474d96_82f20572",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thanks for your advice. We oiginally submitted 19 patches. Considering that submitting so many patches at one time is a burden for your review, we merged them into five patches. if allowed, I don\u0027t want to split them agian.",
+      "parentUuid": "bc5a731a_9cf75d7d",
+      "revId": "83315c5348dc24d18d436988279a7ff9e3b74a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

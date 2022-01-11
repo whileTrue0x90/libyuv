@@ -107,6 +107,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21fb8bf4_e52883f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Yes，you are right.",
+      "parentUuid": "4293b3a8_e81e6d25",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d76f301b_1a1b47d0",
@@ -124,6 +142,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19168093_08cf50a2",
+        "filename": "libyuv.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thanks very much for your questions. We added loongarch support for the build projects when compiling with ninja locally. Since it has not been submitted to the corresponding community, we intend to delete these contents here for the time being.",
+      "parentUuid": "d76f301b_1a1b47d0",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fe10890_838f7ea9",
@@ -137,6 +173,30 @@
       "writtenOn": "2021-12-23T01:21:03Z",
       "side": 1,
       "message": "no mla instruction on lasx?",
+      "range": {
+        "startLine": 90,
+        "startChar": 46,
+        "endLine": 90,
+        "endChar": 79
+      },
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e07c2167_23e92196",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thanks for your advice. There is a \"madd\" instruction on lasx. Because u_l and v_l variables are added with different variables many times later, multiple multiplication operations can be avoided by using mul instructions here.",
+      "parentUuid": "6fe10890_838f7ea9",
       "range": {
         "startLine": 90,
         "startChar": 46,
@@ -170,6 +230,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "605cfb7b_8725c9df",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thansk for your questions. DUP4 macro is defined in include/libyuv/loongson_intrinsics.h file. This macro is mainly designed to avoid writing the same instruction name many times.",
+      "parentUuid": "6275fe5c_e78a44d7",
+      "range": {
+        "startLine": 99,
+        "startChar": 42,
+        "endLine": 99,
+        "endChar": 79
+      },
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da47b50c_272f4cc5",
@@ -183,6 +267,24 @@
       "writtenOn": "2021-12-23T01:21:03Z",
       "side": 1,
       "message": "for a function function, consider doing ARGBToYJ which is for RGB to YUV, and popular for both graphics and machine learning.  It tends to optimize very nicely.",
+      "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bb6af6b_a89c20d4",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thanks very much for your advice. ARGBToYJ is optimized in the subsequent patch called \"Add optimization functions in row_lsx.cc file\". We submitted 5 patches and optimized 103 common functions.",
+      "parentUuid": "da47b50c_272f4cc5",
       "revId": "aa23ecc60beb97ecede6611028d356fc9efb014e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }

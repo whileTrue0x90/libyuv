@@ -16,6 +16,41 @@
       "message": "Can\u0027t submit the other CLs until this one is checked in.\nI\u0027m planning some AVX512 cpuid and function changes, so would be good to get this in before those, to avoid merge issues",
       "revId": "3898add272882c1f0d3c00fb83200a7a9d7b9fb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16b3a4a4_06be8bfa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Hey，frank，please trigger CQ again. I think it should be OK this time.",
+      "revId": "3898add272882c1f0d3c00fb83200a7a9d7b9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b48938c_4bd76cf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-11T03:39:56Z",
+      "side": 1,
+      "message": "Thanks for your reminder. I have resubmitted and deleted the contentes of lsx and lasx in build.gn file. Building with gn on other platforms will be successful.",
+      "parentUuid": "a8e5904e_3158836f",
+      "revId": "3898add272882c1f0d3c00fb83200a7a9d7b9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
