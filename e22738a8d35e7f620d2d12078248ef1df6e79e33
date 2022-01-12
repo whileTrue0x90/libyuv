@@ -16,6 +16,24 @@
       "message": "I think this needs to be protected with the VL flag as well when I look at this code for the vpbroadcastq used?",
       "revId": "e22738a8d35e7f620d2d12078248ef1df6e79e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "920b1db1_2d87e714",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-12T23:01:56Z",
+      "side": 1,
+      "message": "The original patch had bad cpu detect.  It checked if the CPU had BW or VL.  I caught it when testing by using the environment variable to disable BW \n\nLIBYUV_DISABLE_AVX512BW\u003d1 runyuv3100 I420ToARGB_Opt\n\nand more exactly, I profiled it to verify the code path\n\nLIBYUV_DISABLE_AVX512BW\u003d1 perfyuv3 I420ToARGB_Opt | cpumap\n    88.36%  libyuv_test  liblibyuv_impl.so       [.] I422ToARGBRow_AVX2\n     3.74%  libyuv_test  liblibyuv_test.so       [.] libyuv::LibYUVConvertTest_I420ToARGB_Opt_Test::TestBody\n     2.76%  libyuv_test  liblibyuv_test.so       [.] testing::internal::EqHelper::Compare\u003c\u003e\n\n\nLIBYUV_DISABLE_AVX512BW\u003d0 perfyuv3 I420ToARGB_Opt | cpumap\n    84.77%  libyuv_test  liblibyuv_impl.so       [.] I422ToARGBRow_AVX512F_BW_VL\n     4.19%  libyuv_test  liblibyuv_test.so       [.] testing::internal::EqHelper::Compare\u003c\u003e\n     3.84%  libyuv_test  liblibyuv_test.so       [.] libyuv::LibYUVConvertTest_I420ToARGB_Opt_Test::TestBody\n\nI can quickly reintroduce the VL check, but the original AVX2 code, as well as this, uses broadcast in a nonsense way.  It generates an SSE xmm register with a constant of 0xff80 and then broadcasts the XMM to YMM or ZMM.  It should generate the ZMM constant directly and remove the broadcast, making it BW but no VL.\n\nVL is interesting in the future.  An AVX2 function can use VNNI with vex256 to enhance performance without any drawback that AVX512 has for thermal curve or double pumping.",
+      "parentUuid": "1ccc5d00_c71801e5",
+      "revId": "e22738a8d35e7f620d2d12078248ef1df6e79e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
