@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3925ea9_c23a0555",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221903
+      },
+      "writtenOn": "2022-01-18T06:22:27Z",
+      "side": 1,
+      "message": "Hi Frank, do you have any other suggestions for this patchset?\nHope it can be merged to avoid rebase too many times.",
+      "revId": "74c5104c869676896c19d9b1c21634d07aa8c110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
