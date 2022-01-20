@@ -39,6 +39,30 @@
       },
       "revId": "74c5104c869676896c19d9b1c21634d07aa8c110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c09d05bd_99e6e168",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-20T05:54:02Z",
+      "side": 1,
+      "message": "Thank you very much for pointing out my mistake. I only focused on the testing of loongarch platform. I have fixed this bug on patch set 17 and successfully compiled it on X86 platform.",
+      "parentUuid": "208fa225_e0b66bb9",
+      "range": {
+        "startLine": 205,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 43
+      },
+      "revId": "74c5104c869676896c19d9b1c21634d07aa8c110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
