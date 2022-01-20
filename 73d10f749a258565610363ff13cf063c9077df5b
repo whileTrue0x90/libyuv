@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b735a16_8f19624f",
+        "filename": "include/libyuv/cpu_id.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-20T19:01:04Z",
+      "side": 1,
+      "message": "This likely doesnt need to be here.  It allows the /proc/cpuinfo parsing for ARM/Mips to be unittested with text files",
+      "revId": "73d10f749a258565610363ff13cf063c9077df5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35aeed16_1611468e",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-20T19:01:04Z",
+      "side": 1,
+      "message": "#if defined(__loongarch__)\n\nThis function isn\u0027t linux specific.  For ARM/Mips, the OS matters because /proc/cpuinfo is a linux convention, and ARM/Mips can run on other OS such as Windows.",
+      "revId": "73d10f749a258565610363ff13cf063c9077df5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
