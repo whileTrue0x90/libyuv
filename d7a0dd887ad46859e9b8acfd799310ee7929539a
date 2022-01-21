@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8908f0bd_d8199aa7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-21T00:26:17Z",
+      "side": 1,
+      "message": "Note that I would like to simplify the rotate row functions so they dont need to do remainder, and use an \u0027any\u0027 approach for the high level.  And then do 16 and 32 bit per channel versions using the same technique of transpose.",
+      "revId": "d7a0dd887ad46859e9b8acfd799310ee7929539a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
