@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d25c4750_79d0aef9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-01-21T01:24:14Z",
+      "side": 1,
+      "message": "\u003e Patch Set 9: Code-Review+1 Commit-Queue+2\n\u003e \n\u003e The vote Code-Review+1 is ignored as code-owner approval since the label doesn\u0027t allow self approval of the patch set uploader.\n\u003e I think this problem may be caused by you rebasing the patch. Do you need me to rebase it?\n\n",
+      "revId": "72edd1dfc8c533376a8ccbaf6af4c277a1dbabbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
