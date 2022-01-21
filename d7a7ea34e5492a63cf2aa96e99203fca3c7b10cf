@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c41b186e_a559773d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-21T00:21:13Z",
+      "side": 1,
+      "message": "matissa?  FYI  sobel is basically a 5 tap filter, much like gauss, but with different coefficients and offsets which sharpen edges.\nHistorically it was used in Google Hangouts video chat in a low bandwidth mode that reduced the video to just outlines.  It isnt used for that now and is likely not important, but sobel is a useful building block for filters, and the libyuv implementation is very fast, processing 16 bytes at a time using unaligned loads, compared to most implementations that do 8 byte aligned loads, processing half as much per iteration.",
+      "parentUuid": "66c19415_94cfd06c",
+      "revId": "d7a7ea34e5492a63cf2aa96e99203fca3c7b10cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3dfdc3d7_64f8f1f6",
         "filename": "source/row_lsx.cc",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "OK. I mainly maintain lasx and lsx code under loogarch architecture. Of course, I can update the msa code if necessary. Since there are few scenarios where mmi code is used, it is recommended to cancel maintenance and consider deleting it.",
       "parentUuid": "f3ab7d07_15c606a0",
+      "revId": "d7a7ea34e5492a63cf2aa96e99203fca3c7b10cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "573e29f1_fe506255",
+        "filename": "source/row_lsx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-21T00:21:13Z",
+      "side": 1,
+      "message": "I can do the removal, but I dont have mips builds, so if you could test it once checked in, to make sure MSA builds are still good, that would be great.",
+      "parentUuid": "7b0bf0aa_db54ded9",
       "revId": "d7a7ea34e5492a63cf2aa96e99203fca3c7b10cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
