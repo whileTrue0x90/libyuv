@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83c9a9ee_3d7e2c31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-01-26T02:50:02Z",
+      "side": 1,
+      "message": "Remove MMI. MMI is 8 byte SIMD, similar to MMX on Intel.\nMips still has MSA, which is 16 byte SIMD similar to SSE on Intel\nLoongArch has LSX and LASX which are similar to SSE and AVX.",
+      "revId": "f6fb43f608b540c7f13c849885e2f920475bccd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
