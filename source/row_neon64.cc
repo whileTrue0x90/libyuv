@@ -608,9 +608,7 @@ void SplitUVRow_NEON(const uint8_t* src_uv,
 // MM21 Y tiles are 16x32 so src_tile_stride = 512 bytes
 // MM21 UV tiles are 8x16 so src_tile_stride = 256 bytes
 // width measured in bytes so 8 UV = 16.
-void DetileRow_NEON(const uint8_t* src,
-                    ptrdiff_t src_tile_stride,
-                    uint8_t* dst,
+void DetileRow_NEON(const uint8_t* src, ptrdiff_t src_tile_stride, uint8_t* dst,
                     int width) {
   asm volatile(
       "1:                                        \n"
@@ -624,6 +622,26 @@ void DetileRow_NEON(const uint8_t* src,
         "+r"(width)           // %2
       : "r"(src_tile_stride)  // %3
       : "cc", "memory", "v0"  // Clobber List
+  );
+}
+
+// Read 16 bytes of UV, detile, and write 8 bytes of U and 8 bytes of V.
+void DetileSplitUVRow_NEON(const uint8_t* src_uv, ptrdiff_t src_tile_stride,
+                           uint8_t* dst_u, uint8_t* dst_v, int width) {
+  asm volatile(
+      "1:                                        \n"
+      "ld2         {v0.8b,v1.8b}, [%0], %4       \n"
+      "subs        %w3, %w3, #16                 \n"
+      "prfm        pldl1keep, [%0, 1792]          \n"
+      "st1         {v0.8b}, [%1], #8             \n"
+      "st1         {v1.8b}, [%2], #8             \n"
+      "b.gt        1b                            \n"
+      : "+r"(src_uv),               // %0
+        "+r"(dst_u),                // %1
+        "+r"(dst_v),                // %2
+        "+r"(width)                 // %3
+      : "r"(src_tile_stride)        // %4
+      : "cc", "memory", "v0", "v1"  // Clobber List
   );
 }
 
