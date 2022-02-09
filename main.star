@@ -3,7 +3,7 @@
 
 """LUCI project configuration for libyuv CQ and CI."""
 
-lucicfg.check_version("1.23.0")
+lucicfg.check_version("1.30.9")
 
 LIBYUV_GIT = "https://chromium.googlesource.com/libyuv/libyuv"
 LIBYUV_GERRIT = "https://chromium-review.googlesource.com/libyuv/libyuv"
@@ -26,10 +26,11 @@ GOMA_BACKEND_RBE_NO_ATS_PROD = {
     "enable_ats": False,
 }
 
-# Launch all builds in "realms-aware mode", crbug.com/1203285.
+# Use LUCI Scheduler BBv2 names and add Scheduler realms configs.
+lucicfg.enable_experiment("crbug.com/1182002")
+
 luci.builder.defaults.experiments.set(
     {
-        "luci.use_realms": 100,
         "luci.recipes.use_python3": 100,
     },
 )
