@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb8a83e_5a77ec85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003293
+      },
+      "writtenOn": "2022-02-09T22:12:50Z",
+      "side": 1,
+      "message": "PTAL and land",
+      "revId": "4a0d0a5d0b64203c3630efb16c108455d701c1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
