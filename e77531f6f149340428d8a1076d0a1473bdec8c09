@@ -142,6 +142,30 @@
       },
       "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "094c1cee_a217baef",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002781
+      },
+      "writtenOn": "2022-02-24T13:10:50Z",
+      "side": 0,
+      "message": "Hmm wait a second, I had semi-colon after the solutions \u003d []; list (it\u0027s there default). Is this like SQL where it ends the command? :) Now it works when I removed that",
+      "parentUuid": "501bd208_af9930e4",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 59
+      },
+      "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
