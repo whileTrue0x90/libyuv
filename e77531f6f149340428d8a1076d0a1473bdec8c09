@@ -166,6 +166,30 @@
       },
       "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0b0cb68_8896bc64",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-02-24T13:14:56Z",
+      "side": 0,
+      "message": "Thanks for digging into this!\n\nCan you upload the patch set with this added back?",
+      "parentUuid": "094c1cee_a217baef",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 59
+      },
+      "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
