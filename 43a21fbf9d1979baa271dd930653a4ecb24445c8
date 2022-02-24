@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e68764b_5c2c36bb",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-02-24T15:01:30Z",
+      "side": 0,
+      "message": "Ouch! :)",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 6
+      },
+      "revId": "43a21fbf9d1979baa271dd930653a4ecb24445c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
