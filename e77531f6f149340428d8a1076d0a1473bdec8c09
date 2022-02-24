@@ -46,6 +46,30 @@
       },
       "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc51c3a9_e314b8c9",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-02-24T12:41:37Z",
+      "side": 0,
+      "message": "I am not 100% I understand the code (together with https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/tools_webrtc/autoroller/roll_deps.py;l\u003d280;drc\u003d36cf4787d064635578cde107c9b993379b17fec6).\n\nFor now (and the py3 migration) I would keep this and eventually try to remove later. WDYT?",
+      "parentUuid": "4a0e03fc_811f5325",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 59
+      },
+      "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
