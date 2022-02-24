@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ce81a99_226f88e5",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-02-24T12:27:15Z",
+      "side": 0,
+      "message": "Do you confirm this is not needed?\n\nLike we have it here (thanks for spotting that) https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/tools_webrtc/autoroller/roll_deps.py;l\u003d554;drc\u003d36cf4787d064635578cde107c9b993379b17fec6, I think we should keep it for libyuv as well?",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 59
+      },
+      "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
