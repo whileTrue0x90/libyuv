@@ -22,6 +22,30 @@
       },
       "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0e03fc_811f5325",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002781
+      },
+      "writtenOn": "2022-02-24T12:29:56Z",
+      "side": 0,
+      "message": "Well to me it seems like this expects there to be a checkout for each OS but there is no use of this directory anywhere? Is it a check for an old mechanism no longer present? I tried to through git history but cannot find anything about this.\n\nWhat would it actually use in all OS specific checkouts?",
+      "parentUuid": "1ce81a99_226f88e5",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 59
+      },
+      "revId": "e77531f6f149340428d8a1076d0a1473bdec8c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
