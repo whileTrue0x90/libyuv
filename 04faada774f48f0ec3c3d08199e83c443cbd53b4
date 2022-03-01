@@ -46,6 +46,30 @@
       },
       "revId": "04faada774f48f0ec3c3d08199e83c443cbd53b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb7df57a_96cb9939",
+        "filename": "include/libyuv/macros_msa.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-03-01T13:14:00Z",
+      "side": 1,
+      "message": "Yes, when the libyuv_unittest is build with version 8.0 of the clang compiler, using the ULW instruction will cause bus errors in some cases.",
+      "parentUuid": "93edc343_24d07fc4",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 50
+      },
+      "revId": "04faada774f48f0ec3c3d08199e83c443cbd53b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
