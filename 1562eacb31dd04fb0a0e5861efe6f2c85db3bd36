@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93373d68_40c05a12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-01T12:48:26Z",
+      "side": 1,
+      "message": "RAWToJNV21 is similar to RAWToJ420 but uses MergeUV to convert the J420 to NV21.\n\n3 passes are done per row: RAWToARGB, ARGBToJ420, MergeUV",
+      "revId": "1562eacb31dd04fb0a0e5861efe6f2c85db3bd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
