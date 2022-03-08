@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef827b24_f4d227d1",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-08T22:54:57Z",
+      "side": 1,
+      "message": "remove stdio if it was just for printf debugging",
+      "revId": "d876f3f07b3c80e48a7a66864f366e58764a5246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
