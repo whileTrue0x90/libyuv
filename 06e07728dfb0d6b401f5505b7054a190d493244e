@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c805da3e_912d648a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-09T00:42:53Z",
+      "side": 1,
+      "message": "Hao Chen can you approve my edit which removes stdio.h?",
+      "revId": "06e07728dfb0d6b401f5505b7054a190d493244e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
