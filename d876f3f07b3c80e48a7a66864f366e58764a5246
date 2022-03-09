@@ -34,6 +34,24 @@
       "parentUuid": "ef827b24_f4d227d1",
       "revId": "d876f3f07b3c80e48a7a66864f366e58764a5246",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a73757_bb109cd2",
+        "filename": "source/row_lasx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-03-09T01:06:06Z",
+      "side": 1,
+      "message": "Thanks for your kind assistance.",
+      "parentUuid": "83243537_f9ff0d15",
+      "revId": "d876f3f07b3c80e48a7a66864f366e58764a5246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
