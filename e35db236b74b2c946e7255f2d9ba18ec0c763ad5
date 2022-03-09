@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66654be8_6b79e931",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-03-09T14:20:12Z",
+      "side": 1,
+      "message": "libyuv itself is compiled as C++ so this issue didn\u0027t pop up. Reported by offek3@gmail.com .",
+      "revId": "e35db236b74b2c946e7255f2d9ba18ec0c763ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
