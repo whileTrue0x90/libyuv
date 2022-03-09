@@ -16,6 +16,23 @@
       "message": "libyuv itself is compiled as C++ so this issue didn\u0027t pop up. Reported by offek3@gmail.com .",
       "revId": "e35db236b74b2c946e7255f2d9ba18ec0c763ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3183afb2_08640a33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-09T21:06:16Z",
+      "side": 1,
+      "message": "Thanks for the fix!  How did you reproduce this issue?",
+      "revId": "e35db236b74b2c946e7255f2d9ba18ec0c763ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
