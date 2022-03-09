@@ -18,6 +18,40 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57aef563_9a322154",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-09T06:39:06Z",
+      "side": 1,
+      "message": "try bot has build error.  please fix",
+      "revId": "6855c34c06fb56f92bb3802c1428e5f5a0bdb796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c726eca_c5a72e5c",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6634,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-09T06:39:06Z",
+      "side": 1,
+      "message": "needs a return or a default: to fix the try bot build error.\nOr use an\n if (filter \u003d\u003d kFilterNone) return I210ToAR30Matrix(...\n return I210ToAR30MatrixLinear(...",
+      "revId": "6855c34c06fb56f92bb3802c1428e5f5a0bdb796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "812d71fa_3ca224e3",
