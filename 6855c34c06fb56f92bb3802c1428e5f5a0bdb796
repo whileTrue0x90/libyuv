@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c265092_50b0fea6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-09T05:00:47Z",
+      "side": 1,
+      "message": "Thanks for the CL!  Looks good overall.\nI\u0027d prefer less scaling references - ideally conversion would be independent of scaling code and vice versa.  But its not worth duplicating the code/headers.\n\u0027Linear\u0027 support is not important, but for I422 and I210 it makes sense.\n\nI\u0027ve had a request for more complete P010 support, so if you have a chance, include P010 with filtering",
+      "revId": "6855c34c06fb56f92bb3802c1428e5f5a0bdb796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "812d71fa_3ca224e3",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6660,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-09T05:00:47Z",
+      "side": 1,
+      "message": "Linear is not really important, but it can be implemented using Bilinear, pointing the 2 rows to the same source.  So you could do this by passing a stride or the filter to Bilinear.\nBut also Linear is not used by anyone that I know, so it could be removed or left as an error.",
+      "revId": "6855c34c06fb56f92bb3802c1428e5f5a0bdb796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
