@@ -74,6 +74,30 @@
       },
       "revId": "06e07728dfb0d6b401f5505b7054a190d493244e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac49848_7b371970",
+        "filename": "include/libyuv/loongson_intrinsics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-03-09T08:12:02Z",
+      "side": 1,
+      "message": "Thanks for your reminding, it has been revised back to 2022.",
+      "parentUuid": "08c5baa8_41b2555b",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "06e07728dfb0d6b401f5505b7054a190d493244e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
