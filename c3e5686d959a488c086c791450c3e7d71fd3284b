@@ -16,6 +16,23 @@
       "message": "Add back the newline. Also increase the version number. I forgot that in the chroma upsampling filter change.",
       "revId": "c3e5686d959a488c086c791450c3e7d71fd3284b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "280071ed_d1c4c489",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-16T06:20:31Z",
+      "side": 1,
+      "message": "please update the version in README.chromium any time you bump the version",
+      "revId": "c3e5686d959a488c086c791450c3e7d71fd3284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
