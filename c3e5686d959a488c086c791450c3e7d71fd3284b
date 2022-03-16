@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09f5b919_7a4722b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-03-16T03:57:08Z",
+      "side": 1,
+      "message": "Add back the newline. Also increase the version number. I forgot that in the chroma upsampling filter change.",
+      "revId": "c3e5686d959a488c086c791450c3e7d71fd3284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
