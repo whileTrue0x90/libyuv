@@ -16,6 +16,24 @@
       "message": "The newline at end of file was removed.",
       "revId": "b63a4cfe30dff702de623da3a8a964ce740d12d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c50ddba_e51d403f",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-17T22:47:36Z",
+      "side": 1,
+      "message": "Done.  For some reason code reviews consider the file 1 line less than text editors.\nSo now version.h is 18 lines:\nline 16 is the #endif and comment and ends with \\n\nLine 17 is blank and ends with \\n\nLine 18 is blank and is not terminated.",
+      "parentUuid": "592c4ce5_6faed647",
+      "revId": "b63a4cfe30dff702de623da3a8a964ce740d12d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
