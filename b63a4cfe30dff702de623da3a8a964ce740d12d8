@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "592c4ce5_6faed647",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-03-17T22:29:16Z",
+      "side": 1,
+      "message": "The newline at end of file was removed.",
+      "revId": "b63a4cfe30dff702de623da3a8a964ce740d12d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
