@@ -2472,22 +2472,6 @@ int RAWToJNV21(const uint8_t* src_raw,
     }
   }
 #endif
-#if defined(HAS_MERGEUVROW_MSA)
-  if (TestCpuFlag(kCpuHasMSA)) {
-    MergeUVRow_ = MergeUVRow_Any_MSA;
-    if (IS_ALIGNED(halfwidth, 16)) {
-      MergeUVRow_ = MergeUVRow_MSA;
-    }
-  }
-#endif
-#if defined(HAS_MERGEUVROW_LSX)
-  if (TestCpuFlag(kCpuHasLSX)) {
-    MergeUVRow_ = MergeUVRow_Any_LSX;
-    if (IS_ALIGNED(halfwidth, 16)) {
-      MergeUVRow_ = MergeUVRow_LSX;
-    }
-  }
-#endif
   {
     // Allocate a row of uv.
     align_buffer_64(row_u, ((halfwidth + 31) & ~31) * 2);
