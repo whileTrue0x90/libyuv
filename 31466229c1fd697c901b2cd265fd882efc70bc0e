@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "391e366c_b6161ae9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-21T18:14:08Z",
+      "side": 1,
+      "message": "The changes for linux.mk and BUILD.gn make sense, since they are the list of source files, and should include all source needed.  I usually update all build files when something new is added, such as the recent scale_rgb.cc but the cpu specific files are conditionally built for NEON, since they require different flags, and I assume LSX and LASX are like that as well?\n",
+      "revId": "31466229c1fd697c901b2cd265fd882efc70bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18114e62_4e764912",
