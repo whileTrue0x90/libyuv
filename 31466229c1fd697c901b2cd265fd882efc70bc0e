@@ -35,6 +35,42 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c88aed5_0421c3a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-03-22T01:36:55Z",
+      "side": 1,
+      "message": "Thanks for your warning. This is my spelling mistake. It has been corrected.",
+      "parentUuid": "877e74a9_faa7db16",
+      "revId": "31466229c1fd697c901b2cd265fd882efc70bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3463469e_d7a4f1ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2022-03-22T01:36:55Z",
+      "side": 1,
+      "message": "Yes,build files should be update when new files is added. Because of the lack of support in the build, if I updated the build files, the CV would be failed like now. In addition, since loongson only has one machine named 3A5000 available right now, which supports both LASX and LSX, there is no need to make a special distinction.",
+      "parentUuid": "391e366c_b6161ae9",
+      "revId": "31466229c1fd697c901b2cd265fd882efc70bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18114e62_4e764912",
