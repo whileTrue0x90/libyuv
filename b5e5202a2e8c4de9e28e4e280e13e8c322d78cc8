@@ -51,6 +51,41 @@
       "parentUuid": "8fb10ffc_ec888c35",
       "revId": "b5e5202a2e8c4de9e28e4e280e13e8c322d78cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58f3d03e_4d3d9898",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-03-24T17:45:46Z",
+      "side": 1,
+      "message": "Yuan: If you want to keep this CL, I will close my CLs. Please add one more fix to this CL (see my other comment).",
+      "parentUuid": "6b7d55be_81918675",
+      "revId": "b5e5202a2e8c4de9e28e4e280e13e8c322d78cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0836d467_a25e1a1f",
+        "filename": "source/convert_argb.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6475,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-03-24T17:45:46Z",
+      "side": 1,
+      "message": "Yuan: We need to add a call to ARGBAttenuateRow() here:\n\n    if (attenuate) {\n      ARGBAttenuateRow(dst_argb, dst_argb, width);\n    }\n\nNote: I checked this file exhaustively and found no other missing src_a increment or ARGBAttenuateRow() call.",
+      "revId": "b5e5202a2e8c4de9e28e4e280e13e8c322d78cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
