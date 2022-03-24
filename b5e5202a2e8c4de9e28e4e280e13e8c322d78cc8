@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fb62dd6_9c10fac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-03-24T16:20:12Z",
+      "side": 1,
+      "message": "Maybe there should be some unit-test for I420AlphaToARGB versus I420ToARGB+ARGBCopyYToAlpha(+ARGBAttenuate) (and alike pairs). But we don\u0027t have 16 to 8 equivalent to ARGBCopyYToAlpha. Maybe add another Convert16To8Plane, but that\u0027s a lot of steps. \n\nAlso I have no idea about the name of test macro or test case, if we\u0027re going to add such test.",
+      "revId": "b5e5202a2e8c4de9e28e4e280e13e8c322d78cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
