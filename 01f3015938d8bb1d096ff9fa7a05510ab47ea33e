@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "439aed12_9051ea37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-03-24T16:22:42Z",
+      "side": 1,
+      "message": "Should I bump the version number so that people can detect this bug fix at compile time?",
+      "revId": "01f3015938d8bb1d096ff9fa7a05510ab47ea33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "49728615_f3a892aa",
