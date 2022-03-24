@@ -33,6 +33,24 @@
       "message": "I apparently messed up this CL. I will recreate it after my meeting (in two hours).",
       "revId": "b5e5202a2e8c4de9e28e4e280e13e8c322d78cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b7d55be_81918675",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-03-24T17:28:14Z",
+      "side": 1,
+      "message": "Yuan: Ah, I was confused. I didn\u0027t realize this is your CL. I created my own CLs at the same time:\n\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/3549976\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/3550016\n\nPlease close this CL. Sorry about the poor coordination. And thank you very much for your help.",
+      "parentUuid": "8fb10ffc_ec888c35",
+      "revId": "b5e5202a2e8c4de9e28e4e280e13e8c322d78cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
