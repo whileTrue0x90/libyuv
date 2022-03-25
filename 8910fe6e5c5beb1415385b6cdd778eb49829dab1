@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73525b2d_d1907e26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-03-25T18:07:23Z",
+      "side": 1,
+      "message": "See the following for more info on Mutable Constants:\nhttps://chromium.googlesource.com/chromium/src/+/main/docs/speed/binary_size/android_binary_size_trybot.md#Mutable-Constants",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 57
+      },
+      "revId": "8910fe6e5c5beb1415385b6cdd778eb49829dab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
