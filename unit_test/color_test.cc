@@ -410,6 +410,11 @@ static int RoundToByte(float f) {
   int i = ROUND(f);
   return (i < 0) ? 0 : ((i > 255) ? 255 : i);
 }
+
+static int RoundToShort10b(float f) {
+  int i = ROUND(f);
+  return (i < 0) ? 0 : ((i > 1023) ? 1023 : i);
+}
 #elif defined(CLAMPMETHOD_MASK)
 static int RoundToByte(float f) {
   int i = ROUND(f);
@@ -419,6 +424,7 @@ static int RoundToByte(float f) {
 #endif
 
 #define RANDOM256(s) ((s & 1) ? ((s >> 1) ^ 0xb8) : (s >> 1))
+#define RANDOM1024(s) ((s & 1) ? ((s >> 1) ^ 0x2b8) : (s >> 1))
 
 TEST_F(LibYUVColorTest, TestRoundToByte) {
   int allb = 0;
@@ -434,6 +440,8 @@ TEST_F(LibYUVColorTest, TestRoundToByte) {
   EXPECT_GE(allb, 0);
   EXPECT_LE(allb, 255);
 }
+
+// 8bit YUV to 8bit RGB
 
 // BT.601 limited range YUV to RGB reference
 static void YUVToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
@@ -477,6 +485,158 @@ static void YUVVToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
   *r = RoundToByte(y + (v - 128) * 1.474600);
   *g = RoundToByte(y - (u - 128) * 0.164553 - (v - 128) * 0.571353);
   *b = RoundToByte(y + (u - 128) * 1.881400);
+}
+
+// 10bit YUV to 8bit RGB
+
+// BT.601 10bit limited range YUV to RGB reference
+static void YUV10ToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (v - 512) * -0.39900669642857142857);
+  *g = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (u - 512) * 0.09794057252372840107 -
+                   (v - 512) * 0.20324191180944268679);
+  *b = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (u - 512) * -0.50430803571428571429);
+}
+
+// BT.601 10bit full range YUV to RGB reference
+static void YUVJ10ToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToByte(y * 0.24926686217008797654 -
+                   (v - 512) * -0.34947214076246334311);
+  *g = RoundToByte(y * 0.24926686217008797654 -
+                   (u - 512) * 0.08578177222019613623 -
+                   (v - 512) * 0.17801051122312868755);
+  *b = RoundToByte(y * 0.24926686217008797654 -
+                   (u - 512) * -0.44170087976539589443);
+}
+
+// BT.709 10bit limited range YUV to RGB reference
+static void YUVH10ToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (v - 512) * -0.41966852678571428571);
+  *g = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (u - 512) * 0.046831526054835651075 -
+                   (v - 512) * 0.16260607962626422250);
+  *b = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (u - 512) * -0.53544308035714285714);
+}
+
+// BT.709 10bit full range YUV to RGB reference
+static void YUVF10ToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToByte(y * 0.24926686217008797654 -
+                   (v - 512) * -0.39254545454545454545);
+  *g = RoundToByte(y * 0.24926686217008797654 -
+                   (u - 512) * 0.046693733721715968956 -
+                   (v - 512) * 0.11668786861907667277);
+  *b = RoundToByte(y * 0.24926686217008797654 -
+                   (u - 512) * -0.46253958944281524927);
+}
+
+// BT.2020 10bit limited range YUV to RGB reference
+static void YUVU10ToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (v - 512) * -0.44818526785714285714);
+  *g = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (u - 512) * 0.053312153568432406520 -
+                   (v - 512) * 0.13322733213986097795);
+  *b = RoundToByte((y - 64) * 0.29109589041095890411 -
+                   (u - 512) * -0.52810044642857142857);
+}
+
+// BT.2020 10bit full range YUV to RGB reference
+static void YUVV10ToRGBReference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToByte(y * 0.24926686217008797654 +
+                   (v - 512) * 0.36756891495601173021);
+  *g = RoundToByte(y * 0.24926686217008797654 -
+                   (u - 512) * 0.041017641588595057051 -
+                   (v - 512) * 0.14241940111938684591);
+  *b = RoundToByte(y * 0.24926686217008797654 +
+                   (u - 512) * 0.46897067448680351906);
+}
+
+// 10bit YUV to 10bit RGB
+
+// BT.601 10bit limited range YUV to RGB reference
+static void YUV10ToRGB10Reference(int y, int u, int v, int* r, int* g, int* b) {
+  *r = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (v - 512) * -1.6007209821428571429);
+  *g = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (u - 512) * 0.39291453212460452665 -
+                       (v - 512) * 0.8153587285531759552);
+  *b = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (u - 512) * -2.0231651785714285714);
+}
+
+// BT.601 10bit full range YUV to RGB reference
+static void YUVJ10ToRGB10Reference(int y,
+                                   int u,
+                                   int v,
+                                   int* r,
+                                   int* g,
+                                   int* b) {
+  *r = RoundToShort10b(y - (v - 512) * -1.402);
+  *g = RoundToShort10b(y - (u - 512) * 0.34413628620102214651 -
+                       (v - 512) * 0.7141362862010221465);
+  *b = RoundToShort10b(y - (u - 512) * -1.772);
+}
+
+// BT.709 10bit limited range YUV to RGB reference
+static void YUVH10ToRGB10Reference(int y,
+                                   int u,
+                                   int v,
+                                   int* r,
+                                   int* g,
+                                   int* b) {
+  *r = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (v - 512) * -1.7980138392857142857);
+  *g = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (u - 512) * 0.21387581608041706616 -
+                       (v - 512) * 0.53447670893755992330);
+  *b = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (u - 512) * -2.1186147321428571429);
+}
+
+// BT.709 10bit full range YUV to RGB reference
+static void YUVF10ToRGB10Reference(int y,
+                                   int u,
+                                   int v,
+                                   int* r,
+                                   int* g,
+                                   int* b) {
+  *r = RoundToShort10b(y - (v - 512) * -1.5748);
+  *g = RoundToShort10b(y - (u - 512) * 0.18732427293064876957 -
+                       (v - 512) * 0.46812427293064876957);
+  *b = RoundToShort10b(y - (u - 512) * -1.8556);
+}
+
+// BT.2020 10bit limited range YUV to RGB reference
+static void YUVU10ToRGB10Reference(int y,
+                                   int u,
+                                   int v,
+                                   int* r,
+                                   int* g,
+                                   int* b) {
+  *r = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (v - 512) * -1.6836113839285714286);
+  *g = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (u - 512) * 0.18787706334939949431 -
+                       (v - 512) * 0.6523373312065423515);
+  *b = RoundToShort10b((y - 64) * 1.1678082191780821918 -
+                       (u - 512) * -2.1480716517857142857);
+}
+
+// BT.2020 10bit full range YUV to RGB reference
+static void YUVV10ToRGB10Reference(int y,
+                                   int u,
+                                   int v,
+                                   int* r,
+                                   int* g,
+                                   int* b) {
+  *r = RoundToShort10b(y + (v - 512) * 1.4746);
+  *g = RoundToShort10b(y - (u - 512) * 0.16455312684365781711 -
+                       (v - 512) * 0.5713531268436578171);
+  *b = RoundToShort10b(y + (u - 512) * 1.8814);
 }
 
 TEST_F(LibYUVColorTest, TestYUV) {
@@ -578,30 +738,31 @@ TEST_F(LibYUVColorTest, TestGreyYUV) {
   }
 }
 
-static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
+template <size_t N = 256>
+static void PrintHistogram(int rh[N], int gh[N], int bh[N]) {
   int i;
   printf("hist");
-  for (i = 0; i < 256; ++i) {
+  for (i = 0; i < N; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", i - 128);
+      printf("\t%10d", i - N / 2);
     }
   }
-  printf("\nred");
-  for (i = 0; i < 256; ++i) {
+  printf("\nred ");
+  for (i = 0; i < N; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", rh[i]);
+      printf("\t%10zu", rh[i]);
     }
   }
   printf("\ngreen");
-  for (i = 0; i < 256; ++i) {
+  for (i = 0; i < N; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", gh[i]);
+      printf("\t%10zu", gh[i]);
     }
   }
   printf("\nblue");
-  for (i = 0; i < 256; ++i) {
+  for (i = 0; i < N; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", bh[i]);
+      printf("\t%10zu", bh[i]);
     }
   }
   printf("\n");
@@ -794,6 +955,182 @@ TEST_F(LibYUVColorTest, TestFullYUVV) {
   }
   PrintHistogram(rh, gh, bh);
 }
+
+#ifdef ENABLE_FULL_TESTS
+auto MakeYUV10To8TestFunction(const struct YuvConstants* constants) {
+  return [constants](int y, int u, int v, int* r, int* g, int* b) {
+    const int kWidth = 16;
+    const int kHeight = 1;
+    const int kPixels = kWidth * kHeight;
+    const int kHalfPixels = ((kWidth + 1) / 2) * ((kHeight + 1) / 2);
+
+    SIMD_ALIGNED(uint8_t orig_y_m[32]);
+    SIMD_ALIGNED(uint8_t orig_u_m[16]);
+    SIMD_ALIGNED(uint8_t orig_v_m[16]);
+    SIMD_ALIGNED(uint8_t orig_pixels[16 * 4]);
+    auto* orig_y = (uint16_t*)(orig_y_m);
+    auto* orig_u = (uint16_t*)(orig_u_m);
+    auto* orig_v = (uint16_t*)(orig_v_m);
+    for (int i = 0; i < kPixels; ++i) {
+      orig_y[i] = y;
+    }
+
+    for (int i = 0; i < kHalfPixels; ++i) {
+      orig_u[i] = u;
+      orig_v[i] = v;
+    }
+
+    /* YUV converted to ARGB. */
+    I210ToARGBMatrix(orig_y, kWidth, orig_u, (kWidth + 1) / 2, orig_v,
+                     (kWidth + 1) / 2, orig_pixels, kWidth * 4, constants,
+                     kWidth, kHeight);
+
+    *b = orig_pixels[0];
+    *g = orig_pixels[1];
+    *r = orig_pixels[2];
+  };
+}
+
+TEST_F(LibYUVColorTest, TestFullYUV10To8) {
+  const struct {
+    const struct YuvConstants* constants;
+    void (*reference)(int y, int u, int v, int* r, int* g, int* b);
+    const char* name;
+  } cases[] = {
+      {&kYuvI601Constants, YUV10ToRGBReference, "I601"},
+      {&kYuvJPEGConstants, YUVJ10ToRGBReference, "JPEG"},
+      {&kYuvH709Constants, YUVH10ToRGBReference, "H709"},
+      {&kYuvF709Constants, YUVF10ToRGBReference, "F709"},
+      {&kYuv2020Constants, YUVU10ToRGBReference, "U2020"},
+      {&kYuvV2020Constants, YUVV10ToRGBReference, "V2020"},
+  };
+
+  for (const auto& c : cases) {
+    int rh[256] = {
+        0,
+    };
+    int gh[256] = {
+        0,
+    };
+    int bh[256] = {
+        0,
+    };
+
+    for (int u = 0; u < 1024; ++u) {
+      for (int v = 0; v < 1024; ++v) {
+        for (int y2 = 0; y2 < 1024; y2 += FASTSTEP) {
+          int r0, g0, b0, r1, g1, b1;
+          int y = RANDOM256(y2);
+          c.reference(y, u, v, &r0, &g0, &b0);
+          MakeYUV10To8TestFunction(c.constants)(y, u, v, &r1, &g1, &b1);
+#ifdef LIBYUV_UNLIMITED_DATA
+          EXPECT_NEAR(r0, r1, 17);
+          EXPECT_NEAR(g0, g1, 20);
+          EXPECT_NEAR(b0, b1, 6);
+#else
+          EXPECT_NEAR(r0, r1, 17);
+          EXPECT_NEAR(g0, g1, 20);
+          EXPECT_NEAR(b0, b1, 20);
+#endif
+          ++rh[r1 - r0 + 128];
+          ++gh[g1 - g0 + 128];
+          ++bh[b1 - b0 + 128];
+        }
+      }
+    }
+    printf("Test result for colorspace %s:\n", c.name);
+    PrintHistogram(rh, gh, bh);
+  }
+}
+
+auto MakeYUV10To10TestFunction(const struct YuvConstants* constants) {
+  return [constants](int y, int u, int v, int* r, int* g, int* b) {
+    const int kWidth = 16;
+    const int kHeight = 1;
+    const int kPixels = kWidth * kHeight;
+    const int kHalfPixels = ((kWidth + 1) / 2) * ((kHeight + 1) / 2);
+
+    SIMD_ALIGNED(uint8_t orig_y_m[32]);
+    SIMD_ALIGNED(uint8_t orig_u_m[16]);
+    SIMD_ALIGNED(uint8_t orig_v_m[16]);
+    SIMD_ALIGNED(uint8_t orig_pixels[16 * 4]);
+    auto* orig_y = (uint16_t*)(orig_y_m);
+    auto* orig_u = (uint16_t*)(orig_u_m);
+    auto* orig_v = (uint16_t*)(orig_v_m);
+    auto* orig_ar30 = (uint32_t*)(orig_pixels);
+    for (int i = 0; i < kPixels; ++i) {
+      orig_y[i] = y;
+    }
+
+    for (int i = 0; i < kHalfPixels; ++i) {
+      orig_u[i] = u;
+      orig_v[i] = v;
+    }
+
+    /* YUV converted to ARGB. */
+    I210ToAR30Matrix(orig_y, kWidth, orig_u, (kWidth + 1) / 2, orig_v,
+                     (kWidth + 1) / 2, orig_pixels, kWidth * 4, constants,
+                     kWidth, kHeight);
+
+    auto ar30_pixel = orig_ar30[0];
+    *b = (ar30_pixel >> 0) & 0x3ff;
+    *g = (ar30_pixel >> 10) & 0x3ff;
+    *r = (ar30_pixel >> 20) & 0x3ff;
+  };
+}
+
+TEST_F(LibYUVColorTest, TestFullYUV10To10) {
+  const struct {
+    const struct YuvConstants* constants;
+    void (*reference)(int y, int u, int v, int* r, int* g, int* b);
+    const char* name;
+  } cases[] = {
+      {&kYuvI601Constants, YUV10ToRGB10Reference, "I601"},
+      {&kYuvJPEGConstants, YUVJ10ToRGB10Reference, "JPEG"},
+      {&kYuvH709Constants, YUVH10ToRGB10Reference, "H709"},
+      {&kYuvF709Constants, YUVF10ToRGB10Reference, "F709"},
+      {&kYuv2020Constants, YUVU10ToRGB10Reference, "U2020"},
+      {&kYuvV2020Constants, YUVV10ToRGB10Reference, "V2020"},
+  };
+
+  for (const auto& c : cases) {
+    int rh[1024] = {
+        0,
+    };
+    int gh[1024] = {
+        0,
+    };
+    int bh[1024] = {
+        0,
+    };
+
+    for (int u = 0; u < 1024; ++u) {
+      for (int v = 0; v < 1024; ++v) {
+        for (int y2 = 0; y2 < 1024; y2 += FASTSTEP) {
+          int r0, g0, b0, r1, g1, b1;
+          int y = RANDOM1024(y2);
+          c.reference(y, u, v, &r0, &g0, &b0);
+          MakeYUV10To10TestFunction(c.constants)(y, u, v, &r1, &g1, &b1);
+#ifdef LIBYUV_UNLIMITED_DATA
+          EXPECT_NEAR(r0, r1, 13);
+          EXPECT_NEAR(g0, g1, 11);
+          EXPECT_NEAR(b0, b1, 13);
+#else
+          EXPECT_NEAR(r0, r1, 13);
+          EXPECT_NEAR(g0, g1, 11);
+          EXPECT_NEAR(b0, b1, 80);
+#endif
+          ++rh[r1 - r0 + 512];
+          ++gh[g1 - g0 + 512];
+          ++bh[b1 - b0 + 512];
+        }
+      }
+    }
+    printf("Test result for colorspace %s:\n", c.name);
+    PrintHistogram<1024>(rh, gh, bh);
+  }
+}
+#endif
 #undef FASTSTEP
 
 TEST_F(LibYUVColorTest, TestGreyYUVJ) {
