@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ddafcad_5904ab6c",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-03-25T15:52:52Z",
+      "side": 1,
+      "message": "The two tests are really slow (even with FASTSTEP\u003d5), so we would probably disable them by default. Is this the correct macro for this kind of test?",
+      "revId": "ba3e98ce51f543f61aa34ce48831a5e7533ade77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
