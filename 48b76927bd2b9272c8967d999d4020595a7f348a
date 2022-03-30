@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6debf30_187922be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-03-30T09:43:06Z",
+      "side": 1,
+      "message": "Hi, I have been implementing H264 422 (8 and 10 bits) decoding in libwebrtc and I found that some conversion/scaling functions were missing in libyuv but could be easily implemented on top of already existing functions:\n\nhttps://webrtc-review.googlesource.com/c/src/+/255380\nhttps://webrtc-review.googlesource.com/c/src/+/256964\n\nThis CL adds them so we don\u0027t have to include them in the libwebrtc code. ",
+      "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
