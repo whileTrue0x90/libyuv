@@ -34,6 +34,23 @@
       "parentUuid": "d6debf30_187922be",
       "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bb8b357_2792a353",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1234969
+      },
+      "writtenOn": "2022-03-30T13:26:00Z",
+      "side": 1,
+      "message": "A webrtc now also needs I210toI420, but this will be a tricky one, since there\u0027s not only a downscaling in UV planes, but also downsamping of bit depth. IIUC, no such conversion is currently done in libyuv.\n\nSeems like some kind of new ScalePlane function is needed, which would combine functionality of ScalePlane and Planar16bitTo8bit, so that it can all be done in one pass without first converting to I010 or I422 as a temporarily buffer. ",
+      "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
