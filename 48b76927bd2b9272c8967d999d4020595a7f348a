@@ -68,6 +68,24 @@
       "message": "Looks good!  Thanks for the CL.",
       "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4458917a_4ebb58cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-03-31T18:31:30Z",
+      "side": 1,
+      "message": "Best to open a specific libyuv issue for new I210ToI420 since it will require AVX/Neon to be fully efficient.\n\nBut the code will be simple enough.  Something like this:\n\n// Convert a row of 4:2:2 10 bit to a row of 4:2:0 8 bit\n// average 2 rows of 10 bit and output a row of 8 bit.\nvoid UV16To8Row_NEON(const uint16_t* src_u,\n                     int stride_u,\n                     uint8_t* dst_u,\n                     int depth,\n                     int width) {\n  const int shift \u003d 7 - depth;\n  const uint8_t* src_u2 \u003d src_u + stride_u;\n  asm volatile(\n      \"dup         v5.8h, %w5                    \\n\"\n      \"1:                                        \\n\"\n      \"ld1         {v0.8h,v1.8h}, [%0], #32      \\n\"  // load 16 pixels of 10b\n      \"subs        %w3, %w3, #16                 \\n\"\n      \"ld1         {v2.8h,v3.8h}, [%1], #32      \\n\"  // load next row\n      \"add         v0.8h, v0.8h, v2.8h           \\n\"  // add 2 rows\n      \"add         v1.8h, v1.8h, v3.8h           \\n\"\n      \"prfm        pldl1keep, [%0, 448]          \\n\"\n      \"ushl        v0.8h, v0.8h, v31.8h          \\n\"\n      \"ushl        v1.8h, v1.8h, v31.8h          \\n\"\n      \"prfm        pldl1keep, [%1, 448]          \\n\"\n      \"uqxtn       v0.8b, v0.8h                  \\n\"\n      \"uqxtn       v1.8b, v1.8h                  \\n\"\n      \"st1         {v0.8b,v1.8b}, [%2], #16      \\n\"  // store 16 pixels of 8b\n      \"b.gt        1b                            \\n\"\n      : \"+r\"(src_u),   // %0\n        \"+r\"(src_u2),  // %1\n        \"+r\"(dst_u),   // %2\n        \"+r\"(width)    // %3\n      : \"r\"(shift)     // %4\n      : \"cc\", \"memory\", \"v0\", \"v1\", \"v2\", \"v3\", \"v5\"  // Clobber List\n  );\n}",
+      "parentUuid": "0bb8b357_2792a353",
+      "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
