@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08d134cd_f3f08db8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-01T14:14:04Z",
+      "side": 1,
+      "message": "I suggest breaking this CL into 2:  One change for BUILD.gn and linux.mk.  Which is good to go.\nAnd one change for libyuv.gni, which blocked by the chrome BUILD\n\nNote that I\u0027ve reintroduced gyp support for mozilla. I dont have a way to test it, but the list of source files will be maintained.",
+      "revId": "72cc1f42dacb749221eb129c8ed673ec3dc242eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
