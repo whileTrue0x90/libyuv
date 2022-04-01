@@ -86,6 +86,24 @@
       "parentUuid": "0bb8b357_2792a353",
       "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "596c0f75_04930952",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-01T01:41:50Z",
+      "side": 1,
+      "message": "Re 255380 is mainly I422Rotate and Scale.  Its not very compelling to have 422, 420, 444 entry points, when ScalePlane and RotatePlane are the core functions that need to be efficient.  I can\u0027t really add any performance.  There are other subsamplings even more rare, like 411 that I used to support, but removed.\n\nRe 256964 this is maining I210 support.  10 bit (and 9, 12 and 16 bit) is more interesting.  For anything that would benefit from a bit of avx/neon, please file a bug/request and/or CL.",
+      "parentUuid": "e655c99d_6173bb6b",
+      "revId": "48b76927bd2b9272c8967d999d4020595a7f348a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
