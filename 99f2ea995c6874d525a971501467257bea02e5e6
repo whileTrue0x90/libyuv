@@ -16,6 +16,137 @@
       "message": "Frank: Please review. Thanks!",
       "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "731fdb12_fd5887a2",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "Do you have a link to the table of xor values for this random generator?",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 63
+      },
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7de726f_fe794639",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "These constants dont match the precision of the 8 bit references.  Seems like 8 bit and 10 bit should produce identical results if you took the 10 bit, shifted it down by 2 and used the 8 bit?\n\nThe ones in the 8 bit float code use the same precision as row_common and can reasonably be expected to be \u0027exact\u0027 with float math, assuming the coefficients have been normalized to add up to 1.0\n\nAnother way to get values would be find an accepted implementation, such as a codec, and use the same reference values / precision they used",
+      "range": {
+        "startLine": 494,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 54
+      },
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29cbafdf_d951cdd6",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "is there any value to 10 bit yuv to 8 bit rgb reference functions?  can\u0027t 10 bit to 10 bit test be used?\n\nall these constants and code are hard to maintain.  They are similar to the standard 8 bit coefficients, but divided by 4 to convert 10 bit to 8 bit, but extra precision has been added, which is likely not going to affect the 8 bit output.\nIf you still want all these perhaps base them on the 8 bit code using the same constants but with / 4.0.\n\nThe 10 to 10 bit can use the same coefficients, so its just these 10 to 8 conversions that have different values.",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a8378ce_90c6b298",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "should use the same constants as 8 to 8?",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e54cb8fc_8f62f433",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "keep %8d for 8 bit if you can.  Its already quite wide.",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf826d9_231b4c94",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "prefer C++ be kept minimal so this can be compiled with C89 if needed.",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e522014d_4c9caa44",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-03T18:59:36Z",
+      "side": 1,
+      "message": "consider using OMP to make this faster using multicore",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
