@@ -34,6 +34,41 @@
       "parentUuid": "448aba1a_3bdc59a3",
       "revId": "7264469537052943df3b7e4205f9721e31f30271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91fc454a_5303602b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-04T21:18:45Z",
+      "side": 1,
+      "message": "ah, thats cool... then I definitely want this function in libyuv.  It would be good to add a comment at the top of the function saying exactly that.\n\nIdeally Scale will do the perfect thing with a specialized scaler.  Half width and double height.  Hmm.  That upsample vertically is hard.  If you use \u0027linear\u0027 if would scale to have width and use nearest neighbor vertically and would be fast, but duplicate values.  Which would look different... its hard to say if blurry chroma is a good or bad thing.\nYou could also scale first.  So take 422 and scale to half height and double width.\nPerformance of scaling varies alot... I would just try both ways and see which is faster.\nAnd running perf on it, to make sure it is using SIMD, not C code.",
+      "parentUuid": "86a01df1_3be5c602",
+      "revId": "7264469537052943df3b7e4205f9721e31f30271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12379a1d_1d92b94f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-04T21:18:45Z",
+      "side": 1,
+      "message": "Could you add a test before we submit this?",
+      "revId": "7264469537052943df3b7e4205f9721e31f30271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
