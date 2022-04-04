@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3095246_316f0d31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "I will update the code later.",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "731fdb12_fd5887a2",
@@ -31,6 +48,30 @@
       "writtenOn": "2022-04-03T18:59:36Z",
       "side": 1,
       "message": "Do you have a link to the table of xor values for this random generator?",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 63
+      },
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df60ba19_c2448cce",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "I extend the RANDOM256 macro. I made discrete plots of generated values at https://bugs.chromium.org/p/libyuv/issues/detail?id\u003d923#c7.",
+      "parentUuid": "731fdb12_fd5887a2",
       "range": {
         "startLine": 427,
         "startChar": 0,
@@ -66,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4bbd5309_f7cd0ec4",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "There are small differences. 8bit values have range 0-255, and 10bit values have range 0-1023. So to convert from 10bit to 8bit, you should multiply 255/1023 (0.24926686217008798), but not shift down by 2 (multiply by 0.25 equivalently).\n\nThese values are derived from values and formulas from \"H.273 : Coding-independent code points for video signal type identification\" (https://www.itu.int/rec/T-REC-H.273-202107-I/en).\nNamely, formulas used are 23-25, 29-31, 38-40, and values used are Kr and Kb from Table 4.\n\nIs listing Kr and Kb and computing these coefficients from them acceptable?",
+      "parentUuid": "b7de726f_fe794639",
+      "range": {
+        "startLine": 494,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 54
+      },
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29cbafdf_d951cdd6",
         "filename": "unit_test/color_test.cc",
         "patchSetId": 4
@@ -77,6 +142,24 @@
       "writtenOn": "2022-04-03T18:59:36Z",
       "side": 1,
       "message": "is there any value to 10 bit yuv to 8 bit rgb reference functions?  can\u0027t 10 bit to 10 bit test be used?\n\nall these constants and code are hard to maintain.  They are similar to the standard 8 bit coefficients, but divided by 4 to convert 10 bit to 8 bit, but extra precision has been added, which is likely not going to affect the 8 bit output.\nIf you still want all these perhaps base them on the 8 bit code using the same constants but with / 4.0.\n\nThe 10 to 10 bit can use the same coefficients, so its just these 10 to 8 conversions that have different values.",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c2ba45_940d0b6d",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "As explained, it\u0027s not simply / 4.0 so we can\u0027t share them this way.",
+      "parentUuid": "29cbafdf_d951cdd6",
       "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -100,6 +183,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca2a69a3_f3663d43",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "1.164 and 1.164384 are actually both rounded values of 255/219 (1.1643835616438356), which scale limited range to full range.\n\nFor 10bit, this value should be 1023/876 (1.167808219178082) hence the value here.",
+      "parentUuid": "9a8378ce_90c6b298",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e54cb8fc_8f62f433",
         "filename": "unit_test/color_test.cc",
         "patchSetId": 4
@@ -111,6 +212,24 @@
       "writtenOn": "2022-04-03T18:59:36Z",
       "side": 1,
       "message": "keep %8d for 8 bit if you can.  Its already quite wide.",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80d55dac_b5b8e76e",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "For 10bit test we have 2^30 \u003d 1073741824 values, so it may need 10 digits. Or we can compute needed width from the values.",
+      "parentUuid": "e54cb8fc_8f62f433",
       "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -134,6 +253,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7c390e3_1f806fcd",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "Unittests already use googletest which is C++, so maybe it\u0027s fine?",
+      "parentUuid": "cbf826d9_231b4c94",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e522014d_4c9caa44",
         "filename": "unit_test/color_test.cc",
         "patchSetId": 4
@@ -145,6 +282,24 @@
       "writtenOn": "2022-04-03T18:59:36Z",
       "side": 1,
       "message": "consider using OMP to make this faster using multicore",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fa267c3_d61b840c",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-04T07:28:17Z",
+      "side": 1,
+      "message": "I can try it, but I\u0027m not capable of dealing with all these building tools.",
+      "parentUuid": "e522014d_4c9caa44",
       "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
