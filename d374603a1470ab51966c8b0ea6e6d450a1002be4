@@ -22,6 +22,30 @@
       },
       "revId": "d374603a1470ab51966c8b0ea6e6d450a1002be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3aa8e86_7b1a7f63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-04-04T11:31:48Z",
+      "side": 1,
+      "message": "Probably not best term. My point is that while this methods works, it is not as efficient as it could be (due to the use of two different steps and temporary memory), so not sure if it is good enough to be considered to be merged in libyuv or if we should aim for the efficient one instead (hence the term \"temptative\").",
+      "parentUuid": "ab02386a_c0812768",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "d374603a1470ab51966c8b0ea6e6d450a1002be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
