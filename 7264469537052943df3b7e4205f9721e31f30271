@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "448aba1a_3bdc59a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-04T19:54:12Z",
+      "side": 1,
+      "message": "in your description you say UV planes... do you mean for I420 or NV12?\nNV12Rotate is on the todo list.  The low level would be the same as what is needed for RotatePlane_16 for HDR.\nShort term I guess you need to SplitUV and rotate twice.\nOr use NV12RotateToI420 and then MergeUV.\n\nThis particular CL is I422, which is just a helper really and not all that useful.  I422 is not that common.  I\u0027ve wondered about putting some simple wrappers into the headers as inline, since they can be very simple, but this one is a little too large to be an inline functions, yet small enough I have no issue with adding it.\n\nCL and new public functions should have\n1. a version bump.  README.chromium and include/libyuv/version.h\n2. a bug to refer to... ah I see you did do one.  good on you. libyuv:926\n3. a unittest.  adapt I420Rotate unittests to also have I422Rotate.\nTypically unittests just do the operation with C vs SIMD and compare the results.  They also act as a benchmark.\nThose wont catch bugs in the high level C code, so better type of benchmark I call \u0027transitive\u0027 compares a 1 step function vs a 2 step approach.  Whatever it is you do now, vs using this function.  Or you could compare I420Rotate vs I422Rotate by creating an I422, converting to I420, rotating vs Rotating I422 and converting to I420.  Something that would produce identical results.\nOr a reversibility test could rotate cw, then ccw and compare the result. Or maybe rotate 90 twice and compare to rotate by 180.",
+      "revId": "7264469537052943df3b7e4205f9721e31f30271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
