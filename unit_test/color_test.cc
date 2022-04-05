@@ -410,6 +410,11 @@ static int RoundToByte(float f) {
   int i = ROUND(f);
   return (i < 0) ? 0 : ((i > 255) ? 255 : i);
 }
+
+static int RoundWithMax(double f, int max) {
+  int i = ROUND(f);
+  return (i < 0) ? 0 : ((i > max) ? max : i);
+}
 #elif defined(CLAMPMETHOD_MASK)
 static int RoundToByte(float f) {
   int i = ROUND(f);
@@ -419,6 +424,7 @@ static int RoundToByte(float f) {
 #endif
 
 #define RANDOM256(s) ((s & 1) ? ((s >> 1) ^ 0xb8) : (s >> 1))
+#define RANDOM1024(s) ((s & 1) ? ((s >> 1) ^ 0x2b8) : (s >> 1))
 
 TEST_F(LibYUVColorTest, TestRoundToByte) {
   int allb = 0;
@@ -578,33 +584,61 @@ TEST_F(LibYUVColorTest, TestGreyYUV) {
   }
 }
 
-static void PrintHistogram(int rh[256], int gh[256], int bh[256]) {
-  int i;
-  printf("hist");
-  for (i = 0; i < 256; ++i) {
-    if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", i - 128);
+static void PrintHistogram(int* rh, int* gh, int* bh, int count) {
+  int m[] = {10000, 100000, 1000000, 10000000, 100000000, 1000000000};
+  char format[] = "\t%10d";  // should not go bigger than %10d
+  int width;
+  if (count >= 20000) {
+    width = 6;
+  } else if (count >= 2000) {
+    width = 5;
+  } else {
+    width = 4;
+  }
+
+  int i, j;
+  for (i = 0; i < count; ++i) {
+    for (j = 0; j < 6; ++j) {
+      if (rh[i] < m[j] && gh[i] < m[j] && bh[i] < m[j]) {
+        width = (j + 4) > width ? (j + 4) : width;
+        break;
+      }
+    }
+
+    if (j == 6) {  // reached max possible
+      width = 10;
+      break;
     }
   }
-  printf("\nred");
-  for (i = 0; i < 256; ++i) {
+
+  sprintf(format, "\t%%%dd", width);
+
+  printf("hist");
+  for (i = 0; i < count; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", rh[i]);
+      printf(format, i - count / 2);
+    }
+  }
+  printf("\nred ");
+  for (i = 0; i < count; ++i) {
+    if (rh[i] || gh[i] || bh[i]) {
+      printf(format, rh[i]);
     }
   }
   printf("\ngreen");
-  for (i = 0; i < 256; ++i) {
+  for (i = 0; i < count; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", gh[i]);
+      printf(format, gh[i]);
     }
   }
   printf("\nblue");
-  for (i = 0; i < 256; ++i) {
+  for (i = 0; i < count; ++i) {
     if (rh[i] || gh[i] || bh[i]) {
-      printf("\t%8d", bh[i]);
+      printf(format, bh[i]);
     }
   }
   printf("\n");
+  fflush(stdout);
 }
 
 // Step by 5 on inner loop goes from 0 to 255 inclusive.
@@ -642,7 +676,7 @@ TEST_F(LibYUVColorTest, TestFullYUV) {
       }
     }
   }
-  PrintHistogram(rh, gh, bh);
+  PrintHistogram(rh, gh, bh, 256);
 }
 
 // BT.601 full range.
@@ -672,7 +706,7 @@ TEST_F(LibYUVColorTest, TestFullYUVJ) {
       }
     }
   }
-  PrintHistogram(rh, gh, bh);
+  PrintHistogram(rh, gh, bh, 256);
 }
 
 // BT.709 limited range.
@@ -702,7 +736,7 @@ TEST_F(LibYUVColorTest, TestFullYUVH) {
       }
     }
   }
-  PrintHistogram(rh, gh, bh);
+  PrintHistogram(rh, gh, bh, 256);
 }
 
 // BT.709 full range.
@@ -732,7 +766,7 @@ TEST_F(LibYUVColorTest, TestFullYUVF) {
       }
     }
   }
-  PrintHistogram(rh, gh, bh);
+  PrintHistogram(rh, gh, bh, 256);
 }
 
 // BT.2020 limited range.
@@ -762,7 +796,7 @@ TEST_F(LibYUVColorTest, TestFullYUVU) {
       }
     }
   }
-  PrintHistogram(rh, gh, bh);
+  PrintHistogram(rh, gh, bh, 256);
 }
 
 // BT.2020 full range.
@@ -792,7 +826,248 @@ TEST_F(LibYUVColorTest, TestFullYUVV) {
       }
     }
   }
-  PrintHistogram(rh, gh, bh);
+  PrintHistogram(rh, gh, bh, 256);
+}
+
+// Values and Equations from https://www.itu.int/rec/T-REC-H.273/en
+typedef struct YUVToRGBReferenceParameter {
+  double ub, ug, vg, vr;
+  double y_range, uv_range, y_bias, uv_bias;
+  int rgb_range;
+} YUVToRGBReferenceParameter;
+
+const static struct YUVToRGBTestCase {
+  const struct YuvConstants* constants;
+  double kr, kb;
+  bool full;
+  const char* name;
+} YUVToRGBTestCases[] = {
+    {&kYuvI601Constants, 0.299, 0.114, false, "I601"},
+    {&kYuvJPEGConstants, 0.299, 0.114, true, "JPEG"},
+    {&kYuvH709Constants, 0.2126, 0.0722, false, "H709"},
+    {&kYuvF709Constants, 0.2126, 0.0722, true, "F709"},
+    {&kYuv2020Constants, 0.2627, 0.0593, false, "U2020"},
+    {&kYuvV2020Constants, 0.2627, 0.0593, true, "V2020"},
+};
+
+const static int YUVToRGBTestCaseCount =
+    sizeof(YUVToRGBTestCases) / sizeof(struct YUVToRGBTestCase);
+
+YUVToRGBReferenceParameter CalcYUVToRGBReferenceParameter(double kr,
+                                                          double kb,
+                                                          int yuv_depth,
+                                                          int rgb_depth,
+                                                          bool yuv_full) {
+  YUVToRGBReferenceParameter p;
+
+  // ITU-T Rec. H.273 Equation 38-40
+  double kg = 1 - kr - kb;
+  p.ub = 2 - 2 * kb;
+  p.vr = 2 - 2 * kr;
+  p.ug = -2 * (1 - kb) * kb / kg;
+  p.vg = -2 * (1 - kr) * kr / kg;
+
+  if (yuv_full) {
+    // ITU-T Rec. H.273 Equation 29-31
+    p.y_range = p.uv_range = (1 << yuv_depth) - 1;
+    p.y_bias = 0;
+  } else {
+    // ITU-T Rec. H.273 Equation 23-25
+    p.y_range = 219 << (yuv_depth - 8);
+    p.uv_range = 224 << (yuv_depth - 8);
+    p.y_bias = 16 << (yuv_depth - 8);
+  }
+
+  // ITU-T Rec. H.273 Equation 23-25, 29-31
+  p.uv_bias = 1 << (yuv_depth - 1);
+
+  // ITU-T Rec. H.273 Equation 26-28
+  p.rgb_range = (1 << rgb_depth) - 1;
+  return p;
+}
+
+void YUVToRGBReferenceParametric(int iy,
+                                 int iu,
+                                 int iv,
+                                 int* r,
+                                 int* g,
+                                 int* b,
+                                 YUVToRGBReferenceParameter* p) {
+  double y = (iy - p->y_bias) / p->y_range;
+  double u = (iu - p->uv_bias) / p->uv_range;
+  double v = (iv - p->uv_bias) / p->uv_range;
+
+  double fr = y + p->vr * v;
+  double fg = y + p->ug * u + p->vg * v;
+  double fb = y + p->ub * u;
+
+  *r = RoundWithMax(fr * p->rgb_range, p->rgb_range);
+  *g = RoundWithMax(fg * p->rgb_range, p->rgb_range);
+  *b = RoundWithMax(fb * p->rgb_range, p->rgb_range);
+}
+
+void YUV10ToRGB8TestFunction(int y,
+                             int u,
+                             int v,
+                             int* r,
+                             int* g,
+                             int* b,
+                             const struct YuvConstants* constants) {
+  const int kWidth = 16;
+  const int kHeight = 1;
+  const int kPixels = kWidth * kHeight;
+  const int kHalfPixels = ((kWidth + 1) / 2) * ((kHeight + 1) / 2);
+
+  SIMD_ALIGNED(uint8_t orig_y_m[32]);
+  SIMD_ALIGNED(uint8_t orig_u_m[16]);
+  SIMD_ALIGNED(uint8_t orig_v_m[16]);
+  SIMD_ALIGNED(uint8_t orig_pixels[16 * 4]);
+  auto* orig_y = (uint16_t*)(orig_y_m);
+  auto* orig_u = (uint16_t*)(orig_u_m);
+  auto* orig_v = (uint16_t*)(orig_v_m);
+  for (int i = 0; i < kPixels; ++i) {
+    orig_y[i] = y;
+  }
+
+  for (int i = 0; i < kHalfPixels; ++i) {
+    orig_u[i] = u;
+    orig_v[i] = v;
+  }
+
+  /* YUV converted to ARGB. */
+  I210ToARGBMatrix(orig_y, kWidth, orig_u, (kWidth + 1) / 2, orig_v,
+                   (kWidth + 1) / 2, orig_pixels, kWidth * 4, constants, kWidth,
+                   kHeight);
+
+  *b = orig_pixels[0];
+  *g = orig_pixels[1];
+  *r = orig_pixels[2];
+}
+
+TEST_F(LibYUVColorTest, TestFullYUV10To8) {
+  for (int idx = 0; idx < YUVToRGBTestCaseCount; ++idx) {
+    const struct YUVToRGBTestCase* c = &YUVToRGBTestCases[idx];
+    int rh[256] = {
+        0,
+    };
+    int gh[256] = {
+        0,
+    };
+    int bh[256] = {
+        0,
+    };
+
+    YUVToRGBReferenceParameter p =
+        CalcYUVToRGBReferenceParameter(c->kr, c->kb, 10, 8, c->full);
+
+    for (int u2 = 0; u2 < 1024; u2 += FASTSTEP) {
+      for (int v2 = 0; v2 < 1024; v2 += FASTSTEP) {
+        for (int y2 = 0; y2 < 1024; y2 += FASTSTEP) {
+          int r0, g0, b0, r1, g1, b1;
+          int y = RANDOM1024(y2);
+          int u = RANDOM1024(u2);
+          int v = RANDOM1024(v2);
+          YUVToRGBReferenceParametric(y, u, v, &r0, &g0, &b0, &p);
+          YUV10ToRGB8TestFunction(y, u, v, &r1, &g1, &b1, c->constants);
+          EXPECT_NEAR(r0, r1, 4);
+          EXPECT_NEAR(g0, g1, 3);
+#ifdef LIBYUV_UNLIMITED_DATA
+          EXPECT_NEAR(b0, b1, 3);
+#else
+          EXPECT_NEAR(b0, b1, 20);
+#endif
+          ++rh[r1 - r0 + 128];
+          ++gh[g1 - g0 + 128];
+          ++bh[b1 - b0 + 128];
+        }
+      }
+    }
+    printf("Test result for colorspace %s:\n", c->name);
+    PrintHistogram(rh, gh, bh, 256);
+  }
+}
+
+void YUV10ToRGB10TestFunction(int y,
+                              int u,
+                              int v,
+                              int* r,
+                              int* g,
+                              int* b,
+                              const struct YuvConstants* constants) {
+  const int kWidth = 16;
+  const int kHeight = 1;
+  const int kPixels = kWidth * kHeight;
+  const int kHalfPixels = ((kWidth + 1) / 2) * ((kHeight + 1) / 2);
+
+  SIMD_ALIGNED(uint8_t orig_y_m[32]);
+  SIMD_ALIGNED(uint8_t orig_u_m[16]);
+  SIMD_ALIGNED(uint8_t orig_v_m[16]);
+  SIMD_ALIGNED(uint8_t orig_pixels[16 * 4]);
+  auto* orig_y = (uint16_t*)(orig_y_m);
+  auto* orig_u = (uint16_t*)(orig_u_m);
+  auto* orig_v = (uint16_t*)(orig_v_m);
+  auto* orig_ar30 = (uint32_t*)(orig_pixels);
+  for (int i = 0; i < kPixels; ++i) {
+    orig_y[i] = y;
+  }
+
+  for (int i = 0; i < kHalfPixels; ++i) {
+    orig_u[i] = u;
+    orig_v[i] = v;
+  }
+
+  /* YUV converted to AR30. */
+  I210ToAR30Matrix(orig_y, kWidth, orig_u, (kWidth + 1) / 2, orig_v,
+                   (kWidth + 1) / 2, orig_pixels, kWidth * 4, constants, kWidth,
+                   kHeight);
+
+  auto ar30_pixel = orig_ar30[0];
+  *b = (ar30_pixel >> 0) & 0x3ff;
+  *g = (ar30_pixel >> 10) & 0x3ff;
+  *r = (ar30_pixel >> 20) & 0x3ff;
+}
+
+TEST_F(LibYUVColorTest, TestFullYUV10To10) {
+  for (int idx = 0; idx < YUVToRGBTestCaseCount; ++idx) {
+    const struct YUVToRGBTestCase* c = &YUVToRGBTestCases[idx];
+    int rh[1024] = {
+        0,
+    };
+    int gh[1024] = {
+        0,
+    };
+    int bh[1024] = {
+        0,
+    };
+
+    YUVToRGBReferenceParameter p =
+        CalcYUVToRGBReferenceParameter(c->kr, c->kb, 10, 10, c->full);
+
+    for (int u2 = 0; u2 < 1024; u2 += FASTSTEP) {
+      for (int v2 = 0; v2 < 1024; v2 += FASTSTEP) {
+        for (int y2 = 0; y2 < 1024; y2 += FASTSTEP) {
+          int r0, g0, b0, r1, g1, b1;
+          int y = RANDOM1024(y2);
+          int u = RANDOM1024(u2);
+          int v = RANDOM1024(v2);
+          YUVToRGBReferenceParametric(y, u, v, &r0, &g0, &b0, &p);
+          YUV10ToRGB10TestFunction(y, u, v, &r1, &g1, &b1, c->constants);
+          EXPECT_NEAR(r0, r1, 13);
+          EXPECT_NEAR(g0, g1, 11);
+#ifdef LIBYUV_UNLIMITED_DATA
+          EXPECT_NEAR(b0, b1, 13);
+#else
+          EXPECT_NEAR(b0, b1, 80);
+#endif
+          ++rh[r1 - r0 + 512];
+          ++gh[g1 - g0 + 512];
+          ++bh[b1 - b0 + 512];
+        }
+      }
+    }
+    printf("Test result for colorspace %s:\n", c->name);
+    PrintHistogram(rh, gh, bh, 1024);
+  }
 }
 #undef FASTSTEP
 
