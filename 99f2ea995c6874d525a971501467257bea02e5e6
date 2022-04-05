@@ -131,6 +131,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9030842c_970b0038",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-05T15:06:55Z",
+      "side": 1,
+      "message": "Updated to calculate these coefficients from kr, kb, and bit depth.\nH.273 is used by multiple codecs such as H.264, H.265 and AV1, and also in Chrome: https://source.chromium.org/chromium/chromium/src/+/main:ui/gfx/color_space.cc;l\u003d1101",
+      "parentUuid": "4bbd5309_f7cd0ec4",
+      "range": {
+        "startLine": 494,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 54
+      },
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29cbafdf_d951cdd6",
         "filename": "unit_test/color_test.cc",
         "patchSetId": 4
@@ -234,6 +258,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "928987e2_cb6be27a",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-05T15:06:55Z",
+      "side": 1,
+      "message": "Updated to calculate a suitable width based on input range.",
+      "parentUuid": "80d55dac_b5b8e76e",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbf826d9_231b4c94",
@@ -265,6 +307,24 @@
       "side": 1,
       "message": "Unittests already use googletest which is C++, so maybe it\u0027s fine?",
       "parentUuid": "cbf826d9_231b4c94",
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a12b842_716b6298",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-05T15:06:55Z",
+      "side": 1,
+      "message": "I removed most C++ usage I spotted.",
+      "parentUuid": "a7c390e3_1f806fcd",
       "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
