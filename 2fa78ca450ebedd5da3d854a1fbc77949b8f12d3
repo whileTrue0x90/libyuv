@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79a0ec2f_46069f34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-06T23:37:56Z",
+      "side": 1,
+      "message": "looks good now.  In the bug I thought of another way to implement it\nhttps://bugs.chromium.org/p/libyuv/issues/detail?id\u003d926\nits 3 steps, but each step is simplier\n1. scale the original to half height.  there are specialized functions for this\n2. rotate.  this will be half the size, so 2x faster.\n3. scale up the vertical to full height.  this also goes thru a vertical only upsampler that is very fast\n\nIf this were a 4k buffer, 3 passes might be cache unfriendly.  So if it can be done on rows or tiles that fit cache, it would start to approach full efficiency.",
+      "revId": "2fa78ca450ebedd5da3d854a1fbc77949b8f12d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
