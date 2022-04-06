@@ -86,6 +86,42 @@
       "message": "got a test?  If you have a unittest on your side we could use that to at least ensure this really works",
       "revId": "7264469537052943df3b7e4205f9721e31f30271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a248000b_b77a115f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-04-06T18:44:17Z",
+      "side": 1,
+      "message": "I cloned the tests already present for rotation from 420 and 444, but I have nor found any relevant test I could use a reference for adding functional tests.\n\nThe rotation function is fully tested in webrtc unit tests:\n\nhttps://webrtc.googlesource.com/src/+/refs/changes/64/256964/4/common_video/video_frame_unittest.cc",
+      "parentUuid": "b10319f4_4ee80a20",
+      "revId": "7264469537052943df3b7e4205f9721e31f30271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "becc7c57_aa4123bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-04-06T18:44:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91fc454a_5303602b",
+      "revId": "7264469537052943df3b7e4205f9721e31f30271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
