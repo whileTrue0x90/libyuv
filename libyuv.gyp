@@ -94,7 +94,7 @@
         }],
         ['OS != "ios" and libyuv_disable_jpeg != 1', {
           'defines': [
-            'HAVE_JPEG'
+            'HAVE_JPEG',
           ],
           'conditions': [
             # Caveat system jpeg support may not support motion jpeg
@@ -118,6 +118,7 @@
         }],
       ], #conditions
       'defines': [
+        'LIBYUV_UNLIMITED_BT709',
         # Enable the following 3 macros to turn off assembly for specified CPU.
         # 'LIBYUV_DISABLE_X86',
         # 'LIBYUV_DISABLE_NEON',

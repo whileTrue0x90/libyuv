@@ -56,7 +56,7 @@ LOCAL_SRC_FILES += \
     source/convert_jpeg.cc      \
     source/mjpeg_decoder.cc     \
     source/mjpeg_validate.cc
-common_CFLAGS += -DHAVE_JPEG
+common_CFLAGS += -DHAVE_JPEG -DLIBYUV_UNLIMITED_BT709
 LOCAL_SHARED_LIBRARIES := libjpeg
 endif
 
