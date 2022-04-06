@@ -33,6 +33,24 @@
       "message": "This change has 2 issues\n1. breaks webrtc build.  There is already an I422Scale in webrtc\n2. adds public functions but does not have tests\nThe webrtc version is in webrtc:: name space, so as a work around, either check libyuv version, or add webrtc:: namespace to clarify which version.\n\nThe libyuv version can\u0027t be checked into all repos until the build error in webrtc is fixed",
       "revId": "4589081cea3dc5364dc433f9a20e67706fd3e29c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf3faabb_6e7cb4dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-04-06T18:55:14Z",
+      "side": 1,
+      "message": "I detected it last week and submited this CL which should fix it, but has not yet been merged\n\nhttps://webrtc-review.googlesource.com/c/src/+/257441",
+      "parentUuid": "f846e56b_bfb6b826",
+      "revId": "4589081cea3dc5364dc433f9a20e67706fd3e29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
