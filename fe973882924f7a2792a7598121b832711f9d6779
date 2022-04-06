@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2404f329_f5ed6d76",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-04-06T17:18:46Z",
+      "side": 1,
+      "message": "This block is related to JPEG. We should append -DLIBYUV_UNLIMITED_BT709 to -DLIBYUV_UNLIMITED_BT709 outside this block.",
+      "revId": "fe973882924f7a2792a7598121b832711f9d6779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
