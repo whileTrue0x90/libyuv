@@ -16,6 +16,23 @@
       "message": "looks good now.  In the bug I thought of another way to implement it\nhttps://bugs.chromium.org/p/libyuv/issues/detail?id\u003d926\nits 3 steps, but each step is simplier\n1. scale the original to half height.  there are specialized functions for this\n2. rotate.  this will be half the size, so 2x faster.\n3. scale up the vertical to full height.  this also goes thru a vertical only upsampler that is very fast\n\nIf this were a 4k buffer, 3 passes might be cache unfriendly.  So if it can be done on rows or tiles that fit cache, it would start to approach full efficiency.",
       "revId": "2fa78ca450ebedd5da3d854a1fbc77949b8f12d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36eb29d5_a7aab49a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-06T23:41:05Z",
+      "side": 1,
+      "message": "I have a CL that will conflict with this, so one of us needs to merge.\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/3572779\n\nI just added a parameter check to the Y channel in rotate.cc\n  if ((!src_y \u0026\u0026 dst_y) || !src_u || !src_v || !dst_u || !dst_v || width \u003c\u003d 0 || height \u003d\u003d 0) {\n    return -1;\n  }\n\nYour CL is smaller, so its probably easiest to land your change first.\n",
+      "revId": "2fa78ca450ebedd5da3d854a1fbc77949b8f12d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
