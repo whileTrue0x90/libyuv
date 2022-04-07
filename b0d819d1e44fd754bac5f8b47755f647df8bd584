@@ -34,6 +34,24 @@
       "parentUuid": "f395f9f5_96ad974b",
       "revId": "b0d819d1e44fd754bac5f8b47755f647df8bd584",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a73120bc_54be97b2",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1482051
+      },
+      "writtenOn": "2022-04-07T16:37:15Z",
+      "side": 1,
+      "message": "For now we can defer commiting this CL: This CL only means to spot issue, so as long as we agree there are accuracy issues in HBD functions, it\u0027s fine.\n\n\u003e 1. slow.\nMaybe add a default step scaler that enable by default. Also as I said we don\u0027t need to merge this now.\n\n\u003e 2. Would be good to use a single refernce function and pass some parameters\nYes I\u0027m doing this way. Now there\u0027s a single `YUVToRGBReferenceParametric` to handle all new cases. For existing reference functions, I\u0027m keeping those untouched, as calculated coefficients are a bit different than those hard-coded values.\n\n\u003e 3. the coefficients dont match row_common\nAs I said at beginning this CL is to spot issue, and this is the issue: Conversion of different bit depth has different coefficients, but we are always using coefficients meant for 8 to 8 conversion.\n\nA solution would be using different coefficients for each input-output depth pairs. It will bloat binary size but as least code is reused.\n\nAs for standard reference implementations, I don\u0027t think there\u0027s a dominant one. If we select current chrome implementation as reference (as we are clearly intended to replace it), I believe it\u0027s strictly following H.273 and uses single precision float.\n\n\u003e a subsampling issue\nIt was resolved in 590c17c.",
+      "parentUuid": "85050801_c4c81a5e",
+      "revId": "b0d819d1e44fd754bac5f8b47755f647df8bd584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
