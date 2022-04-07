@@ -16,6 +16,24 @@
       "message": "I noticed some difference on G between float and double. H.273 does not require specific computation precision, so I chosed higher precision as reference.",
       "revId": "b0d819d1e44fd754bac5f8b47755f647df8bd584",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85050801_c4c81a5e",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-07T11:04:58Z",
+      "side": 1,
+      "message": "sorry I havent had time for a good review of this.  There are 3 general concerns\n1. slow.  libyuv benchmarks are already getting too slow again... I\u0027ve had new code for RGB 24 bit, I210/I22 rotate and scale, and on my testing side I test on more cpus.. some are very slow.\nSo I need to mark some of these and slow and skip them or have a fast option.  OpenMP or step.  Or optimize the histogram\n2. code size / bloat - this adds many variations of the same thing - color space and depth of source and destination.  If we go down this route it will get harder to maintain.  Would be good to use a single refernce function and pass some parameters.\n3. the coefficients dont match row_common.  The idea was to check the best possible reference implementation of the color spaces in libyuv row_common.cc.  If these version, and/or 10 bit, use different coefficints, even the perfect double implementation in row_common wont match, nor 10 bit wont exactly match 8 bit.  For example if 8 bit were convert to rgb, and 8 bit were convert to 10 bit yuv and then converted to rgb, you should expect the results to be exact.\nAnd as much as possible the results should exactly match standard reference implementations.  libjpeg etc codecs, OSs, gpus...if a color space or format has an implementation, libyuv should try to exactly match it, but faster, and this color test should verify how close the optimized version is to the best possible implementation of that reference.\n\nIf I recall there is also a subsampling issue?  Does I444 downsample to I422?",
+      "parentUuid": "f395f9f5_96ad974b",
+      "revId": "b0d819d1e44fd754bac5f8b47755f647df8bd584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
