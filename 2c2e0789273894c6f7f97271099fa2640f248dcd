@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da3409a1_9456e47b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-07T20:04:16Z",
+      "side": 1,
+      "message": "Intel Xeon is pretty good compared to ARM.\nOn Pixel 4 (Cortex A76), it is much slower than comparable formats.\nARGBRotate90_Opt (4208 ms)\nI420Rotate90_Opt (273 ms)\nI422Rotate90_Opt (1207 ms)\nI444Rotate90_Opt (718 ms)\nNV12Rotate90_Opt (282 ms)\nOn a low end A53 with slow MMU Mediatek P35\nARGBRotate90_Opt (105786 ms)\nI420Rotate90_Opt (3687 ms)\nI422Rotate90_Opt (7573 ms)\nI444Rotate90_Opt (7104 ms)\nNV12Rotate90_Opt (4882 ms)\nThis CPU has substantially slower memory than others, so I422 is very slow, but not that much worse than I444.\n\nARGBRotate uses a different approach, which clearly isnt working well.\nIt \u0027scales\u0027 a column of pixels to a row of destination.  For a 1280x720 image, it would scale a column down by a scale factor of 1280, stepping thru the pixels with nearest neighbor.\nThe scalar is efficient NEON/SSE but the memory access pattern is poor images larger than the cache.\n\nYUV rotations are done with an 8x8 block transpose.  It reads the block into registers, transposes and writes back.  It writes a row of blocks and reads a column of blocks.",
+      "revId": "2c2e0789273894c6f7f97271099fa2640f248dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
