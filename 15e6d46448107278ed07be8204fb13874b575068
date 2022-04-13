@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46a9280c_ec5174b1",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-04-13T21:00:32Z",
+      "side": 0,
+      "message": "This code was originally added in https://chromium-review.googlesource.com/c/libyuv/libyuv/+/2658097.",
+      "revId": "15e6d46448107278ed07be8204fb13874b575068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
