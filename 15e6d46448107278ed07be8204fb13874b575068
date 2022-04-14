@@ -16,6 +16,24 @@
       "message": "This code was originally added in https://chromium-review.googlesource.com/c/libyuv/libyuv/+/2658097.",
       "revId": "15e6d46448107278ed07be8204fb13874b575068",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5024765_8f30b148",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-14T21:10:56Z",
+      "side": 0,
+      "message": "Thanks.. I was wanting to check that, because I dont recall making this particular bug before.  But I missed it in the review.\nTo check for other issues, intelsde or intel xed -isa-set\nWith pack, this one is okay, but packusdw is sse4.1 while packssdw is sse2, so gotta watch out for that too.",
+      "parentUuid": "46a9280c_ec5174b1",
+      "revId": "15e6d46448107278ed07be8204fb13874b575068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
