@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e16fef67_9da394a6",
+        "filename": "unit_test/color_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-15T19:56:25Z",
+      "side": 1,
+      "message": "Found a reference.  Its called LFSR\nhttps://en.wikipedia.org/wiki/Linear-feedback_shift_register\n\nIt may not been needed to randomize the values, if we exhaustive step thru all values, or set a larger step value that tests the full range, but skips some.",
+      "parentUuid": "df60ba19_c2448cce",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 427,
+        "endChar": 63
+      },
+      "revId": "99f2ea995c6874d525a971501467257bea02e5e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b7de726f_fe794639",
         "filename": "unit_test/color_test.cc",
         "patchSetId": 4
