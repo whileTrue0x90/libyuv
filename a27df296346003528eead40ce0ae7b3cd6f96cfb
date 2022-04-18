@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87630d1d_83eeece9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-04-18T23:27:47Z",
+      "side": 1,
+      "message": "On MediaTek P35 (Cortex A53)\n\nlibyuv_test \u0027--gunit_filter\u003d*Detile*\u0027 --gunit_also_run_disabled_tests --libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d-1 --libyuv_cpu_info\u003d-1\n\nAArch64\n[       OK ] LibYUVPlanarTest.TestDetilePlane (1312 ms)\n[       OK ] LibYUVPlanarTest.TestDetileSplitUVPlane_Benchmark (3563 ms)\n[       OK ] LibYUVPlanarTest.DISABLED_TestDetileSplitUVPlane_Correctness (1760 ms)\nAArch32\n[       OK ] LibYUVPlanarTest.TestDetilePlane (1387 ms)\n[       OK ] LibYUVPlanarTest.TestDetileSplitUVPlane_Benchmark (3548 ms)\n[       OK ] LibYUVPlanarTest.DISABLED_TestDetileSplitUVPlane_Correctness (1831 ms)\n\nAArch32 Was\n[       OK ] LibYUVPlanarTest.TestDetilePlane (2427 ms)\n[       OK ] LibYUVPlanarTest.TestDetileSplitUVPlane_Benchmark (3459 ms)\n[       OK ] LibYUVPlanarTest.TestDetileSplitUVPlane_Correctness (1796 ms)\n\n",
+      "revId": "a27df296346003528eead40ce0ae7b3cd6f96cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
