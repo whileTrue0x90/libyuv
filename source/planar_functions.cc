@@ -240,8 +240,7 @@ int I422Copy(const uint8_t* src_y,
              int height) {
   int halfwidth = (width + 1) >> 1;
 
-  if ((!src_y && dst_y) || !src_u || !src_v || !dst_u || !dst_v || width <= 0 ||
-      height == 0) {
+  if ((!src_y && dst_y) || !src_u || !src_v || !dst_u || !dst_v || width <= 0 || height == 0) {
     return -1;
   }
 
@@ -280,8 +279,7 @@ int I444Copy(const uint8_t* src_y,
              int dst_stride_v,
              int width,
              int height) {
-  if ((!src_y && dst_y) || !src_u || !src_v || !dst_u || !dst_v || width <= 0 ||
-      height == 0) {
+  if ((!src_y && dst_y) || !src_u || !src_v || !dst_u || !dst_v || width <= 0 || height == 0) {
     return -1;
   }
   // Negative height means invert the image.
@@ -321,8 +319,7 @@ int I210Copy(const uint16_t* src_y,
              int height) {
   int halfwidth = (width + 1) >> 1;
 
-  if ((!src_y && dst_y) || !src_u || !src_v || !dst_u || !dst_v || width <= 0 ||
-      height == 0) {
+  if ((!src_y && dst_y) || !src_u || !src_v || !dst_u || !dst_v || width <= 0 || height == 0) {
     return -1;
   }
 
