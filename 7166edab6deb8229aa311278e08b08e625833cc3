@@ -94,6 +94,30 @@
       },
       "revId": "7166edab6deb8229aa311278e08b08e625833cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7362ae80_461c1be6",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-05-05T08:23:00Z",
+      "side": 1,
+      "message": "Ah, I was looking for public_configs but I see how this works now. It is the \"all_dependent_configs\" at line 54.",
+      "parentUuid": "9760f257_efcc5122",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 3
+      },
+      "revId": "7166edab6deb8229aa311278e08b08e625833cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
