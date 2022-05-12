@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a83ee770_1b7ea9cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1543242
+      },
+      "writtenOn": "2022-05-12T15:32:53Z",
+      "side": 1,
+      "message": "The currently provided change is incorrect because the \"defines\" variable is not defined in the libyuv_config scope.",
+      "revId": "d14d81fa966ad9b408be4bfa3fdd07e52b8fdb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f600a19b_06d60f3e",
         "filename": "BUILD.gn",
         "patchSetId": 2
