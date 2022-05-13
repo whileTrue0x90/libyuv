@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0426bfa5_78c23208",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1543242
+      },
+      "writtenOn": "2022-05-13T09:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83ee770_1b7ea9cb",
+      "revId": "d14d81fa966ad9b408be4bfa3fdd07e52b8fdb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f600a19b_06d60f3e",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-05-05T09:51:02Z",
       "side": 1,
       "message": "May be move it to the libyuv group?\n\ngroup(\"libyuv\") {\n  all_dependent_configs \u003d [ \":libyuv_config\" ]\n  deps \u003d []\n  defines \u003d []\n\n  if (is_win \u0026\u0026 target_cpu \u003d\u003d \"x64\") {\n    # Compile with clang in order to get inline assembly\n    public_deps \u003d [ \":libyuv_internal(//build/toolchain/win:win_clang_x64)\" ]\n  } else {\n    public_deps \u003d [ \":libyuv_internal\" ]\n  }\n\n  if (libyuv_use_neon) {\n    deps +\u003d [ \":libyuv_neon\" ]\n  } else {\n    defines +\u003d [ \"LIBYUV_DISABLE_NEON\" ]\n  }\n\n  if (libyuv_use_msa) {\n    deps +\u003d [ \":libyuv_msa\" ]\n  }\n\n  if (!is_ios \u0026\u0026 !libyuv_disable_jpeg) {\n    # Make sure that clients of libyuv link with libjpeg. This can\u0027t go in\n    # libyuv_internal because in Windows x64 builds that will generate a clang\n    # build of libjpeg, and we don\u0027t want two copies.\n    deps +\u003d [ \"//third_party:jpeg\" ]\n  }\n}",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 3
+      },
+      "revId": "d14d81fa966ad9b408be4bfa3fdd07e52b8fdb78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a032d523_15dd771f",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1543242
+      },
+      "writtenOn": "2022-05-13T09:18:26Z",
+      "side": 1,
+      "message": "I\u0027ve checked the solution you suggested and it didn\u0027t work - for unknown to me reason it looks like the line\n\n  defines +\u003d [ \"LIBYUV_DISABLE_NEON\" ]\n  \nis ignored, the build failed with compile errors mentioned in libyuv:929.",
+      "parentUuid": "f600a19b_06d60f3e",
       "range": {
         "startLine": 31,
         "startChar": 0,
