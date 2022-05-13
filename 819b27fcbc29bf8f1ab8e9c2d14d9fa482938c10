@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60d37a4f_650370e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1543242
+      },
+      "writtenOn": "2022-05-13T09:27:09Z",
+      "side": 1,
+      "message": "Please take a look at the new patchset. If it is OK, please, submit the change for integration, because I have no permissions for it.",
+      "revId": "819b27fcbc29bf8f1ab8e9c2d14d9fa482938c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
