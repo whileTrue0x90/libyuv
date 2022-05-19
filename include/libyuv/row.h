@@ -5195,6 +5195,13 @@ void InterpolateRow_16_C(uint16_t* dst_ptr,
                          int width,
                          int source_y_fraction);
 
+void InterpolateRow_16to8_C(uint8_t* dst_ptr,
+                            const uint16_t* src_ptr,
+                            ptrdiff_t src_stride,
+                            int scale,
+                            int width,
+                            int source_y_fraction);
+
 // Sobel images.
 void SobelXRow_C(const uint8_t* src_y0,
                  const uint8_t* src_y1,

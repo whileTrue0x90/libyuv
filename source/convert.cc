@@ -16,6 +16,7 @@
 #include "libyuv/rotate.h"
 #include "libyuv/row.h"
 #include "libyuv/scale.h"     // For ScalePlane()
+#include "libyuv/scale_row.h"  // For FixedDiv
 #include "libyuv/scale_uv.h"  // For UVScale()
 
 #ifdef __cplusplus
@@ -218,6 +219,48 @@ int I010ToI420(const uint16_t* src_y,
                            src_stride_v, dst_y, dst_stride_y, dst_u,
                            dst_stride_u, dst_v, dst_stride_v, width, height, 1,
                            1, 10);
+}
+
+LIBYUV_API
+int I210ToI420(const uint16_t* src_y,
+               int src_stride_y,
+               const uint16_t* src_u,
+               int src_stride_u,
+               const uint16_t* src_v,
+               int src_stride_v,
+               uint8_t* dst_y,
+               int dst_stride_y,
+               uint8_t* dst_u,
+               int dst_stride_u,
+               uint8_t* dst_v,
+               int dst_stride_v,
+               int width,
+               int height) {
+  const int depth = 10;
+  const int scale = 1 << (24 - depth);
+
+  const int src_y_width = width;
+  const int src_y_height = height;
+  const int src_uv_width = SUBSAMPLE(width, 1, 1);
+  const int src_uv_height = height;
+  const int dst_y_width = Abs(src_y_width);
+  const int dst_y_height = Abs(src_y_height);
+  const int dst_uv_width = SUBSAMPLE(dst_y_width, 1, 1);
+  const int dst_uv_height = SUBSAMPLE(dst_y_height, 1, 1);
+  const int dy = FixedDiv(src_uv_height, dst_uv_height);
+
+  if (src_uv_width <= 0 || src_uv_height == 0) {
+    return -1;
+  }
+  Convert16To8Plane(src_y, src_stride_y, dst_y, dst_stride_y, scale, width,
+                    height);
+  ScalePlaneVertical_16to8(src_uv_height, dst_uv_width, dst_uv_height,
+                           src_stride_u, dst_stride_u, src_u, dst_u, 0, 0, dy,
+                           /*bpp=*/1, scale, kFilterBilinear);
+  ScalePlaneVertical_16to8(src_uv_height, dst_uv_width, dst_uv_height,
+                           src_stride_v, dst_stride_v, src_v, dst_v, 0, 0, dy,
+                           /*bpp=*/1, scale, kFilterBilinear);
+  return 0;
 }
 
 LIBYUV_API
