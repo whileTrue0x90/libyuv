@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e47424e_56d170cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "thanks for the CL!  Overall looks good.  Names should be mixed case.\nIts good to bump the version when there is a new API.\nComments are good to understand \u0027scale\u0027 and \u0027wpp\u0027 parameters\u0027\nNeeds NEON/AVX2 to be efficient.",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "859834a8_0c6dcdd0",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5198,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "Should be mixed case so: InterpolateRow_16To8_C",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0b9a8eb_c4c681cc",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "ScalePlaneVertical_16To8",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f32c2fe_bd211858",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "wpp?  I havent seen this term before?  rename or add a comment about what it is",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a7f8a2b_06f65475",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "clamping should not be necessary if user passes value images and scale parameter.",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ca6a58d_2789bd6f",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3455,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "scale deserves a comment.\nits really a way to represent bits per channel, but I was thinking people may find other scale factors useful.",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c67e9a23_36c77f53",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "clamp should not be necessary when interpolating.",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d671efc_4164fc4e",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "ScalePlaneVertical_16To8",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6fdcbd4_6f1e350e",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:34:42Z",
+      "side": 1,
+      "message": "Add a TODO to add NEON and AVX2 versions.",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 79
+      },
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
