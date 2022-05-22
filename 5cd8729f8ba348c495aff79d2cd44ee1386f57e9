@@ -16,6 +16,23 @@
       "message": "This support UYVYToY which is a camera format in itself, but also the same operation as needed for P010ToNV12.  This can be called on the Y plane and then the UV plane.\n",
       "revId": "5cd8729f8ba348c495aff79d2cd44ee1386f57e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "475f2821_84ff3998",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-22T23:58:18Z",
+      "side": 1,
+      "message": "For converting 16 bit to 8 bit, there are 2 ways now\nConvert16To8() which does a multiply, allowing any number of bits to convert down to 8 bits.\nUYVYToY which only takes the upper 8 bits, which works on P010 style formats.\n",
+      "revId": "5cd8729f8ba348c495aff79d2cd44ee1386f57e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
