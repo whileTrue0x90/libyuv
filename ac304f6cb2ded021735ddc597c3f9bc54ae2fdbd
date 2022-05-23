@@ -350,6 +350,30 @@
       },
       "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1176aef_b25ecbb9",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T10:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26026a34_785733ad",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 79
+      },
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
