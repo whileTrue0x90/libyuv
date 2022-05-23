@@ -33,6 +33,23 @@
       "message": "For converting 16 bit to 8 bit, there are 2 ways now\nConvert16To8() which does a multiply, allowing any number of bits to convert down to 8 bits.\nUYVYToY which only takes the upper 8 bits, which works on P010 style formats.\n",
       "revId": "5cd8729f8ba348c495aff79d2cd44ee1386f57e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13f6701_d4aef7a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-23T00:10:52Z",
+      "side": 1,
+      "message": "On Skylake Xeon for 720p 1000 images\nAVX2 UYVYToY (116 ms)\nSSE2 UYVYToY (126 ms)\nC    UYVYToY (262 ms)\n\nAVX2 Convert16To8Plane (140 ms)\nSSE2 Convert16To8Plane (126 ms)\nC    Convert16To8Plane (196 ms)\n\nPixel 4\nNEON UYVYToY (133 ms)\nC    UYVYToY (495 ms)\n",
+      "revId": "5cd8729f8ba348c495aff79d2cd44ee1386f57e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
