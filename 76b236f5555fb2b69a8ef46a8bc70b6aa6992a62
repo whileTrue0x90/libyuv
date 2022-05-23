@@ -16,6 +16,23 @@
       "message": "LG.  Note that I\u0027ve done Convert16To8 for NEON and it would likely be better if bits per channel were passed instead of scale.  Its doing a mul and shift:\nvld1.16     {q0}, [%0]! \nvld1.16     {q1}, [%0]! \nvqdmulh.s16 q0, q0, q2  \nvqdmulh.s16 q1, q1, q2  \nvqshrn.u16  d0, q0, #1  \nvqshrn.u16  d1, q1, #1  \nvst1.16     {q0}, [%1]! \nsubs        %3, %3, #16 \nbgt         1b          ",
       "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4750de9_35eedf31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-23T22:20:09Z",
+      "side": 1,
+      "message": "Needs review by Sergio for changing Bug # to 931",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
