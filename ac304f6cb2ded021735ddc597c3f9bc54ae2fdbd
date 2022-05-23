@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e6e73fb_11687d1e",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5198,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "859834a8_0c6dcdd0",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0b9a8eb_c4c681cc",
@@ -48,6 +66,24 @@
       "writtenOn": "2022-05-22T23:34:42Z",
       "side": 1,
       "message": "ScalePlaneVertical_16To8",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfeb3b30_090ea7d1",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0b9a8eb_c4c681cc",
       "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "802b4ac0_ede0efa0",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "The definition is exactly the same one as ScalePlaneVertical_16 but taking a uint8_t as output instead of uint16_t, wpp is in there\n\nhttps://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/main/include/libyuv/scale_row.h#190",
+      "parentUuid": "4f32c2fe_bd211858",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6a7f8a2b_06f65475",
         "filename": "source/row_common.cc",
         "patchSetId": 1
@@ -88,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fdc3dd94_d273f3b7",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "I have just applied the same 16 to 8 conversion as done in\n\nhttps://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/main/source/row_common.cc#2989\n\nIs clamp also not necessary there either?",
+      "parentUuid": "6a7f8a2b_06f65475",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6ca6a58d_2789bd6f",
         "filename": "source/row_common.cc",
         "patchSetId": 1
@@ -99,6 +171,24 @@
       "writtenOn": "2022-05-22T23:34:42Z",
       "side": 1,
       "message": "scale deserves a comment.\nits really a way to represent bits per channel, but I was thinking people may find other scale factors useful.",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d812264_8c36b545",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3455,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ca6a58d_2789bd6f",
       "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -137,6 +227,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad15471b_e3b177cd",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d671efc_4164fc4e",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6fdcbd4_6f1e350e",
@@ -150,6 +258,30 @@
       "writtenOn": "2022-05-22T23:34:42Z",
       "side": 1,
       "message": "Add a TODO to add NEON and AVX2 versions.",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 79
+      },
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec37a36_fa603a19",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-23T08:30:27Z",
+      "side": 1,
+      "message": "Ack.\n\nShould I open a new bug and reference it on the todo instead of myself? Like\n\n// TODO(crbug.com/12345): Add a TODO to add NEON and AVX2 versions.",
+      "parentUuid": "d6fdcbd4_6f1e350e",
       "range": {
         "startLine": 1624,
         "startChar": 0,
