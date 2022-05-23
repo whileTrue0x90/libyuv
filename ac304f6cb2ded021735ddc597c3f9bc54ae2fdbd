@@ -123,6 +123,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83fee5f6_8468e123",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-23T09:04:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "802b4ac0_ede0efa0",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a7f8a2b_06f65475",
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "I have just applied the same 16 to 8 conversion as done in\n\nhttps://chromium.googlesource.com/libyuv/libyuv/+/refs/heads/main/source/row_common.cc#2989\n\nIs clamp also not necessary there either?",
       "parentUuid": "6a7f8a2b_06f65475",
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bceec688_e1196781",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-23T09:04:53Z",
+      "side": 1,
+      "message": "Ack.  Ok leave it in.  It should never happen with the proper scale value and data.\nPerhaps it is because the unittest produced garbage and expected clamping.\nThe assembly versions do clamping for free and its nice to have, but in C version it is very slow.",
+      "parentUuid": "fdc3dd94_d273f3b7",
       "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -282,6 +318,30 @@
       "side": 1,
       "message": "Ack.\n\nShould I open a new bug and reference it on the todo instead of myself? Like\n\n// TODO(crbug.com/12345): Add a TODO to add NEON and AVX2 versions.",
       "parentUuid": "d6fdcbd4_6f1e350e",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1624,
+        "endChar": 79
+      },
+      "revId": "ac304f6cb2ded021735ddc597c3f9bc54ae2fdbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26026a34_785733ad",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1624,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-23T09:04:53Z",
+      "side": 1,
+      "message": "There should be a single issue for I210ToI420 which stays open until the NEON and AVX2 versions are done.",
+      "parentUuid": "8ec37a36_fa603a19",
       "range": {
         "startLine": 1624,
         "startChar": 0,
