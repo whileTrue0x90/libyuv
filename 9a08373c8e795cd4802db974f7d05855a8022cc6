@@ -52,6 +52,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "548b532f_6e26a371",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-24T22:14:25Z",
+      "side": 1,
+      "message": "mirko\u0027s LGTM will allow me to submit, but there are bugs, mainly with clamp255 usage.\n\nA thought on simple optimization.  HalfRow_NEON would allow the C code a way call a specialized version for 50/50.  And there is already a 100% version that can be used.  Would want HalfRow_NEON HalfRow_16_NEON and HalfRow_16To8_NEON for completeness.",
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b64dee9_c0fe5a8f",
