@@ -16,6 +16,23 @@
       "message": "is there anything i need to do to fix the LUCI CQ error?",
       "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3dbadb5_a12f7622",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-24T18:21:26Z",
+      "side": 1,
+      "message": "A profile on Pixel 4\n64.76%,  InterpolateRow_16To8_C\n25.52%,  Convert16To8Row_NEON\n\nshows the C code is a bottleneck.\nCompared to other conversions it is in the middle\nI210ToI410_Opt (590 ms)\nI210ToI010_Opt (272 ms)\nI210ToI420_Opt (365 ms)  \u003c-- new function\nI210ToI422_Opt (227 ms)\n\nBut it should be faster than I210ToI422.\nIf assembly is not written, it would be better to refactor the function to use I210ToI422 internally to convert a row at a time to a temporary buffer (using NEON) and then merge 2 rows of I422 to make I420, also with NEON/AVX.\n\nIf NEON is written but not AVX2, the code can also do both - have a 1 step conversion for NEON and 2 step for AVX2.  Typically 2 steps works better for Intel than ARM.\n\nWe can still go ahead with this CL as is, establishing the API and aim to improve performance in a follow up\n",
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
