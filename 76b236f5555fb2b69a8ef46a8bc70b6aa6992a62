@@ -50,6 +50,57 @@
       "message": "pbos should be removed from review... they are no longer supporting libyuv.\n",
       "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f7f7fe_0d177a0e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-24T18:45:35Z",
+      "side": 1,
+      "message": "clamp255 needs to be done after shifting the value down by 16\n        \nclamp255((((src_uv[x] + src_uv[src_uv_stride + x] + 1) \u003e\u003e 1) * scale) \u003e\u003e 16);",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dabb905_853e4cbc",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3477,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-24T18:45:35Z",
+      "side": 1,
+      "message": "clamp255 needs to be done after shifting the value down by 16",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01edeb2e_f9459bc3",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3477,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-24T18:45:35Z",
+      "side": 1,
+      "message": "clamp255 needs to be done after shifting the value down by 16",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
