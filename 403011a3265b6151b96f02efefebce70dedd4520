@@ -16,6 +16,23 @@
       "message": "pbos asked to be removed from OWNERS\nperhaps you would like to be added?\n",
       "revId": "403011a3265b6151b96f02efefebce70dedd4520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e87b96b_c9b18113",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-05-24T00:16:54Z",
+      "side": 1,
+      "message": "LGTM.",
+      "revId": "403011a3265b6151b96f02efefebce70dedd4520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
