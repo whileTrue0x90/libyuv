@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "468a19df_c12f5ae6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-24T18:15:59Z",
+      "side": 1,
+      "message": "is there anything i need to do to fix the LUCI CQ error?",
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
