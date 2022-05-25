@@ -69,6 +69,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8e1190a_63faf377",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3413,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-25T08:52:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81f7f7fe_0d177a0e",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dabb905_853e4cbc",
@@ -116,6 +134,60 @@
       "writtenOn": "2022-05-24T18:48:48Z",
       "side": 1,
       "message": "This line should be like the ones in the loop.  scale, shift and clamp.",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40ab0730_3d8f6f9e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3477,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-25T08:52:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01edeb2e_f9459bc3",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b72734f_2db2d0b1",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3477,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-25T08:52:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dabb905_853e4cbc",
+      "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc341894_3f2578fa",
+        "filename": "source/row_common.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3477,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-25T08:52:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0648f2de_6135c133",
       "revId": "76b236f5555fb2b69a8ef46a8bc70b6aa6992a62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }

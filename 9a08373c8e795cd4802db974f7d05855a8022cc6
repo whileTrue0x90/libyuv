@@ -84,6 +84,24 @@
       "message": "this should be removed... flipping is for public functions, not internal.\n\nit should not use int64 if possible, for efficiency on aarch32/x86 builds.\n\nvariables also need to be declared first for C89 compatability.\n\nBut just remove the inverting from here.  I210ToI420 function can do it.",
       "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a61edcb_6fc801c7",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-25T08:52:20Z",
+      "side": 1,
+      "message": "The issue is that there is not public planar function, so if done in the I210toI420 method, it will require to do it per plane, which is kind of awfull.\n\nI have added ScalePlane_16To8 to wrap the call to this, but it requires some other functions which I am not sure how likely are going to be accepted.",
+      "parentUuid": "6b64dee9_c0fe5a8f",
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
