@@ -71,6 +71,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1398f611_736f378b",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-25T12:30:54Z",
+      "side": 1,
+      "message": "note that if we keep 16To8 functions\n1. scale can be done more efficiently on NEON by taking bits (10) and doing a shift.\n2. 16 bit functions require 32 bit math, but if you know the values are in the lsb, the math can be 16 bit, so doing a \u002712\u0027 bit version will be nearly 2x faster.\nBut it increases the number of functions.  It may be better to focus on the conversion itself - I210ToI420, implementing the necessary row function in NEON/AVX2/C\n\nAll functions should be implemented in AVX2/NEON.  If this can\u0027t be optimized, an alternative should be found.  It appears feasible, but opens a can of worms.\nI410ToI420 would want general purpose scaling with 10 to 8.\nP010 will want conversion and scaling, which is a 2 channel UV with 16 bits but in the msb.  The \u0027scale\u0027 parameter may not work",
+      "range": {
+        "startLine": 1618,
+        "startChar": 0,
+        "endLine": 1618,
+        "endChar": 40
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b64dee9_c0fe5a8f",
         "filename": "source/scale_common.cc",
         "patchSetId": 6
@@ -100,6 +123,24 @@
       "side": 1,
       "message": "The issue is that there is not public planar function, so if done in the I210toI420 method, it will require to do it per plane, which is kind of awfull.\n\nI have added ScalePlane_16To8 to wrap the call to this, but it requires some other functions which I am not sure how likely are going to be accepted.",
       "parentUuid": "6b64dee9_c0fe5a8f",
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "555009ad_e459fb09",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-25T12:30:54Z",
+      "side": 1,
+      "message": "Ack.  But the other ScalePlaneVertical functions dont do it, and its not efficient doing int64_t math on 32 bit cpus.  A different type should be added.  All functions that do stride * height should have their math checked.\nOnly public functions support the negative height.  The ScalePlane functions.\nIts not important to the functionality of ScalePlaneVertical at the moment, and for I210ToI420, we likely want to bypass scale functions and directly blend 2 rows in a row function.",
+      "parentUuid": "1a61edcb_6fc801c7",
       "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
