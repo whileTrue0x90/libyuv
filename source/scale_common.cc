@@ -1533,6 +1533,7 @@ void ScalePlaneVertical(int src_height,
     y += dy;
   }
 }
+
 void ScalePlaneVertical_16(int src_height,
                            int dst_width,
                            int dst_height,
@@ -1543,7 +1544,7 @@ void ScalePlaneVertical_16(int src_height,
                            int x,
                            int y,
                            int dy,
-                           int wpp,
+                           int wpp, /* words per pixel. normally 1 */
                            enum FilterMode filtering) {
   // TODO(fbarchard): Allow higher wpp.
   int dst_width_words = dst_width * wpp;
@@ -1559,32 +1560,32 @@ void ScalePlaneVertical_16(int src_height,
   src_argb += (x >> 16) * wpp;
 #if defined(HAS_INTERPOLATEROW_16_SSE2)
   if (TestCpuFlag(kCpuHasSSE2)) {
-    InterpolateRow = InterpolateRow_Any_16_SSE2;
-    if (IS_ALIGNED(dst_width_bytes, 16)) {
+    InterpolateRow = InterpolateRow_16_Any_SSE2;
+    if (IS_ALIGNED(dst_width_words, 16)) {
       InterpolateRow = InterpolateRow_16_SSE2;
     }
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_16_SSSE3)
   if (TestCpuFlag(kCpuHasSSSE3)) {
-    InterpolateRow = InterpolateRow_Any_16_SSSE3;
-    if (IS_ALIGNED(dst_width_bytes, 16)) {
+    InterpolateRow = InterpolateRow_16_Any_SSSE3;
+    if (IS_ALIGNED(dst_width_words, 16)) {
       InterpolateRow = InterpolateRow_16_SSSE3;
     }
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_16_AVX2)
   if (TestCpuFlag(kCpuHasAVX2)) {
-    InterpolateRow = InterpolateRow_Any_16_AVX2;
-    if (IS_ALIGNED(dst_width_bytes, 32)) {
+    InterpolateRow = InterpolateRow_16_Any_AVX2;
+    if (IS_ALIGNED(dst_width_words, 32)) {
       InterpolateRow = InterpolateRow_16_AVX2;
     }
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_16_NEON)
   if (TestCpuFlag(kCpuHasNEON)) {
-    InterpolateRow = InterpolateRow_Any_16_NEON;
-    if (IS_ALIGNED(dst_width_bytes, 16)) {
+    InterpolateRow = InterpolateRow_16_Any_NEON;
+    if (IS_ALIGNED(dst_width_words, 8)) {
       InterpolateRow = InterpolateRow_16_NEON;
     }
   }
@@ -1599,6 +1600,48 @@ void ScalePlaneVertical_16(int src_height,
     yf = filtering ? ((y >> 8) & 255) : 0;
     InterpolateRow(dst_argb, src_argb + yi * src_stride, src_stride,
                    dst_width_words, yf);
+    dst_argb += dst_stride;
+    y += dy;
+  }
+}
+
+void ScalePlaneVertical_16To8(int src_height,
+                              int dst_width,
+                              int dst_height,
+                              int src_stride,
+                              int dst_stride,
+                              const uint16_t* src_argb,
+                              uint8_t* dst_argb,
+                              int x,
+                              int y,
+                              int dy,
+                              int wpp, /* words per pixel. normally 1 */
+                              int scale,
+                              enum FilterMode filtering) {
+  // TODO(fbarchard): Allow higher wpp.
+  int dst_width_words = dst_width * wpp;
+  // TODO(https://crbug.com/libyuv/931): Add NEON and AVX2 versions.
+  void (*InterpolateRow_16To8)(uint8_t * dst_argb, const uint16_t* src_argb,
+                               ptrdiff_t src_stride, int scale, int dst_width,
+                               int source_y_fraction) = InterpolateRow_16To8_C;
+  const int max_y = (src_height > 1) ? ((src_height - 1) << 16) - 1 : 0;
+  int j;
+  assert(wpp >= 1 && wpp <= 2);
+  assert(src_height != 0);
+  assert(dst_width > 0);
+  assert(dst_height > 0);
+  src_argb += (x >> 16) * wpp;
+
+  for (j = 0; j < dst_height; ++j) {
+    int yi;
+    int yf;
+    if (y > max_y) {
+      y = max_y;
+    }
+    yi = y >> 16;
+    yf = filtering ? ((y >> 8) & 255) : 0;
+    InterpolateRow_16To8(dst_argb, src_argb + yi * src_stride, src_stride,
+                         scale, dst_width_words, yf);
     dst_argb += dst_stride;
     y += dy;
   }
