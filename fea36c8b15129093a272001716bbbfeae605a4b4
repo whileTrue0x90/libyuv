@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "461b8962_204bec84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-25T17:57:35Z",
+      "side": 1,
+      "message": "This CL includes your I210ToI420, but yours can still be reviewed and checked in first",
+      "parentUuid": "a9b8be5b_97ad9773",
+      "revId": "fea36c8b15129093a272001716bbbfeae605a4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c54fba93_377eda18",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-05-25T12:58:12Z",
       "side": 1,
       "message": "Missing negative height handling, I proposed a way to move it outside ScalePlaneVertical_16To8 in here:\n\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/3655455/6..7",
+      "revId": "fea36c8b15129093a272001716bbbfeae605a4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea69985a_2418fdf9",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-25T17:57:35Z",
+      "side": 1,
+      "message": "fully implementing scaling with 16 to 8, is about 10 assembly functions per CPU... a substantial effort.  That would also lead to a set of functions for 2 channel UV and 4 channel ARGB (AR64).\n\nBackground\nThe reason for negative height handling is Windows 24 bit RGB will often capture as MJPEG and converts to BMP in GDI, inverting the image, and returning the height as negative.  In theory it can happen on other formats, but thats the only one case in practice.  Its normally easy to support, but the user can also achieve it by adjusting the pointer and negating stride.",
+      "parentUuid": "c54fba93_377eda18",
       "revId": "fea36c8b15129093a272001716bbbfeae605a4b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
