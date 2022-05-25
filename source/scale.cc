@@ -1884,6 +1884,35 @@ static void ScalePlaneSimple_16(int src_width,
   }
 }
 
+static void ScalePlaneSimple_16To8(int src_width,
+                                   int src_height,
+                                   int dst_width,
+                                   int dst_height,
+                                   int src_stride,
+                                   int dst_stride,
+                                   const uint16_t* src_ptr,
+                                   uint8_t* dst_ptr,
+                                   int scale) {
+  int i;
+  void (*ScaleCols)(uint8_t * dst_ptr, const uint16_t* src_ptr, int dst_width,
+                    int x, int dx, int scale) = ScaleCols_16To8_C;
+  // Initial source x/y coordinate and step values as 16.16 fixed point.
+  int x = 0;
+  int y = 0;
+  int dx = 0;
+  int dy = 0;
+  ScaleSlope(src_width, src_height, dst_width, dst_height, kFilterNone, &x, &y,
+             &dx, &dy);
+  src_width = Abs(src_width);
+
+  for (i = 0; i < dst_height; ++i) {
+    ScaleCols(dst_ptr, src_ptr + (y >> 16) * (int64_t)src_stride, dst_width, x,
+              dx, scale);
+    dst_ptr += dst_stride;
+    y += dy;
+  }
+}
+
 // Scale a plane.
 // This function dispatches to a specialized scaler based on scale factor.
 
@@ -2073,6 +2102,48 @@ void ScalePlane_16(const uint16_t* src,
   }
   ScalePlaneSimple_16(src_width, src_height, dst_width, dst_height, src_stride,
                       dst_stride, src, dst);
+}
+
+LIBYUV_API
+void ScalePlane_16To8(const uint16_t* src,
+                      int src_stride,
+                      int src_width,
+                      int src_height,
+                      uint8_t* dst,
+                      int dst_stride,
+                      int dst_width,
+                      int dst_height,
+                      int scale,
+                      enum FilterMode filtering) {
+  // Simplify filtering when possible.
+  filtering = ScaleFilterReduce(src_width, src_height, dst_width, dst_height,
+                                filtering);
+
+  // Negative height means invert the image.
+  if (src_height < 0) {
+    src_height = -src_height;
+    src = src + (src_height - 1) * (int64_t)src_stride;
+    src_stride = -src_stride;
+  }
+
+  // Use specialized scales to improve performance for common resolutions.
+  // For example, all the 1/2 scalings will use ScalePlaneDown2()
+  if (dst_width == src_width && dst_height == src_height) {
+    // Straight conversion.
+    Convert16To8Plane(src, src_stride, dst, dst_stride, dst_width, scale,
+                      dst_height);
+    return;
+  }
+  if (dst_width == src_width && filtering != kFilterBox) {
+    int dy = FixedDiv(src_height, dst_height);
+    // Arbitrary scale vertically, but unscaled horizontally.
+    ScalePlaneVertical_16To8(src_height, dst_width, dst_height, src_stride,
+                             dst_stride, src, dst, 0, 0, dy, /*bpp=*/1, scale,
+                             filtering);
+    return;
+  }
+  ScalePlaneSimple_16To8(src_width, src_height, dst_width, dst_height,
+                         src_stride, dst_stride, src, dst, scale);
 }
 
 LIBYUV_API
