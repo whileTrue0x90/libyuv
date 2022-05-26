@@ -71,6 +71,98 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5477e8d_22c6145c",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3414,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-26T07:04:04Z",
+      "side": 1,
+      "message": "clamp the final result after the shift is done.",
+      "range": {
+        "startLine": 3414,
+        "startChar": 0,
+        "endLine": 3414,
+        "endChar": 11
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d875ce5_d86145ef",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3478,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-26T07:04:04Z",
+      "side": 1,
+      "message": "clamp the final result after the shift is done.",
+      "range": {
+        "startLine": 3478,
+        "startChar": 0,
+        "endLine": 3478,
+        "endChar": 26
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a44d38ce_4c1d95ef",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3482,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-26T07:04:04Z",
+      "side": 1,
+      "message": "clamp the final result after the shift is done.",
+      "range": {
+        "startLine": 3482,
+        "startChar": 0,
+        "endLine": 3482,
+        "endChar": 26
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58e3b94c_f5b32210",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3489,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-26T07:04:04Z",
+      "side": 1,
+      "message": "add scale and clamp, same as main loop",
+      "range": {
+        "startLine": 3489,
+        "startChar": 0,
+        "endLine": 3489,
+        "endChar": 77
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1398f611_736f378b",
         "filename": "source/scale_common.cc",
         "patchSetId": 6
