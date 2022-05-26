@@ -4002,6 +4002,86 @@ int InterpolatePlane(const uint8_t* src0,
   return 0;
 }
 
+// Interpolate 2 planes by specified amount (0 to 255).
+LIBYUV_API
+int InterpolatePlane_16(const uint16_t* src0,
+                        int src_stride0,
+                        const uint16_t* src1,
+                        int src_stride1,
+                        uint16_t* dst,
+                        int dst_stride,
+                        int width,
+                        int height,
+                        int interpolation) {
+  int y;
+  void (*InterpolateRow_16)(uint16_t * dst_ptr, const uint16_t* src_ptr,
+                            ptrdiff_t src_stride, int dst_width,
+                            int source_y_fraction) = InterpolateRow_16_C;
+  if (!src0 || !src1 || !dst || width <= 0 || height == 0) {
+    return -1;
+  }
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    dst = dst + (height - 1) * dst_stride;
+    dst_stride = -dst_stride;
+  }
+  // Coalesce rows.
+  if (src_stride0 == width && src_stride1 == width && dst_stride == width) {
+    width *= height;
+    height = 1;
+    src_stride0 = src_stride1 = dst_stride = 0;
+  }
+#if defined(HAS_INTERPOLATEROW_16_SSSE3)
+  if (TestCpuFlag(kCpuHasSSSE3)) {
+    InterpolateRow_16 = InterpolateRow_16_Any_SSSE3;
+    if (IS_ALIGNED(width, 16)) {
+      InterpolateRow_16 = InterpolateRow_16_SSSE3;
+    }
+  }
+#endif
+#if defined(HAS_INTERPOLATEROW_16_AVX2)
+  if (TestCpuFlag(kCpuHasAVX2)) {
+    InterpolateRow_16 = InterpolateRow_16_Any_AVX2;
+    if (IS_ALIGNED(width, 32)) {
+      InterpolateRow_16 = InterpolateRow_16_AVX2;
+    }
+  }
+#endif
+#if defined(HAS_INTERPOLATEROW_16_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+    InterpolateRow_16 = InterpolateRow_16_Any_NEON;
+    if (IS_ALIGNED(width, 8)) {
+      InterpolateRow_16 = InterpolateRow_16_NEON;
+    }
+  }
+#endif
+#if defined(HAS_INTERPOLATEROW_16_MSA)
+  if (TestCpuFlag(kCpuHasMSA)) {
+    InterpolateRow_16 = InterpolateRow_16_Any_MSA;
+    if (IS_ALIGNED(width, 32)) {
+      InterpolateRow_16 = InterpolateRow_16_MSA;
+    }
+  }
+#endif
+#if defined(HAS_INTERPOLATEROW_16_LSX)
+  if (TestCpuFlag(kCpuHasLSX)) {
+    InterpolateRow_16 = InterpolateRow_16_Any_LSX;
+    if (IS_ALIGNED(width, 32)) {
+      InterpolateRow_16 = InterpolateRow_16_LSX;
+    }
+  }
+#endif
+
+  for (y = 0; y < height; ++y) {
+    InterpolateRow_16(dst, src0, src1 - src0, width, interpolation);
+    src0 += src_stride0;
+    src1 += src_stride1;
+    dst += dst_stride;
+  }
+  return 0;
+}
+
 // Interpolate 2 ARGB images by specified amount (0 to 255).
 LIBYUV_API
 int ARGBInterpolate(const uint8_t* src_argb0,
