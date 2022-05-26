@@ -200,6 +200,20 @@ void ScalePlaneVertical_16(int src_height,
                            int wpp,
                            enum FilterMode filtering);
 
+void ScalePlaneVertical_16To8(int src_height,
+                              int dst_width,
+                              int dst_height,
+                              int src_stride,
+                              int dst_stride,
+                              const uint16_t* src_argb,
+                              uint8_t* dst_argb,
+                              int x,
+                              int y,
+                              int dy,
+                              int wpp,
+                              int scale,
+                              enum FilterMode filtering);
+
 // Simplify the filtering based on scale factors.
 enum FilterMode ScaleFilterReduce(int src_width,
                                   int src_height,
@@ -349,6 +363,12 @@ void ScaleCols_16_C(uint16_t* dst_ptr,
                     int dst_width,
                     int x,
                     int dx);
+void ScaleCols_16To8_C(uint8_t* dst_ptr,
+                       const uint16_t* src_ptr,
+                       int dst_width,
+                       int x,
+                       int dx,
+                       int scale);
 void ScaleColsUp2_C(uint8_t* dst_ptr,
                     const uint8_t* src_ptr,
                     int dst_width,
