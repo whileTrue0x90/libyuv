@@ -92,6 +92,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "180b0018_4d599564",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3414,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-26T07:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5477e8d_22c6145c",
+      "range": {
+        "startLine": 3414,
+        "startChar": 0,
+        "endLine": 3414,
+        "endChar": 11
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d875ce5_d86145ef",
@@ -105,6 +129,30 @@
       "writtenOn": "2022-05-26T07:04:04Z",
       "side": 1,
       "message": "clamp the final result after the shift is done.",
+      "range": {
+        "startLine": 3478,
+        "startChar": 0,
+        "endLine": 3478,
+        "endChar": 26
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5088d429_09faf368",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3478,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-26T07:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d875ce5_d86145ef",
       "range": {
         "startLine": 3478,
         "startChar": 0,
@@ -138,6 +186,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b395f12_9b7542e3",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3482,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-26T07:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a44d38ce_4c1d95ef",
+      "range": {
+        "startLine": 3482,
+        "startChar": 0,
+        "endLine": 3482,
+        "endChar": 26
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58e3b94c_f5b32210",
@@ -151,6 +223,30 @@
       "writtenOn": "2022-05-26T07:04:04Z",
       "side": 1,
       "message": "add scale and clamp, same as main loop",
+      "range": {
+        "startLine": 3489,
+        "startChar": 0,
+        "endLine": 3489,
+        "endChar": 77
+      },
+      "revId": "9a08373c8e795cd4802db974f7d05855a8022cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7720743_bf222e36",
+        "filename": "source/row_common.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3489,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-05-26T07:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e3b94c_f5b32210",
       "range": {
         "startLine": 3489,
         "startChar": 0,
