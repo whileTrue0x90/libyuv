@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a14b1ef8_ce17f4d4",
+        "filename": "source/convert.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-05-26T08:25:08Z",
+      "side": 1,
+      "message": "fails asan.  I suggest handle inverted height here\n\nLIBYUV_API\nint I210ToI420(const uint16_t* src_y,\n               int src_stride_y,\n               const uint16_t* src_u,\n               int src_stride_u,\n               const uint16_t* src_v,\n               int src_stride_v,\n               uint8_t* dst_y,\n               int dst_stride_y,\n               uint8_t* dst_u,\n               int dst_stride_u,\n               uint8_t* dst_v,\n               int dst_stride_v,\n               int width,\n               int height) {\n  const int depth \u003d 10;\n  const int scale \u003d 1 \u003c\u003c (24 - depth);\n\n  if (width \u003c\u003d 0 || height \u003d\u003d 0) {\n    return -1;\n  }\n  // Negative height means invert the image.\n  if (height \u003c 0) {\n    height \u003d -height;\n    src_y \u003d src_y + (height - 1) * src_stride_y;\n    src_u \u003d src_u + (height - 1) * src_stride_u;\n    src_v \u003d src_v + (height - 1) * src_stride_v;\n    src_stride_y \u003d -src_stride_y;\n    src_stride_u \u003d -src_stride_u;\n    src_stride_v \u003d -src_stride_v;\n  }\n\n  {\n    const int uv_width \u003d SUBSAMPLE(width, 1, 1);\n    const int uv_height \u003d SUBSAMPLE(height, 1, 1);\n    const int dy \u003d FixedDiv(height, uv_height);\n\n    Convert16To8Plane(src_y, src_stride_y, dst_y, dst_stride_y, scale, width,\n                      height);\n    ScalePlaneVertical_16To8(height, uv_width, uv_height,\n                             src_stride_u, dst_stride_u, src_u, dst_u, 0, 32768, dy,\n                             /*bpp\u003d*/1, scale, kFilterBilinear);\n    ScalePlaneVertical_16To8(height, uv_width, uv_height,\n                             src_stride_v, dst_stride_v, src_v, dst_v, 0, 32768, dy,\n                             /*bpp\u003d*/1, scale, kFilterBilinear);\n  }\n  return 0;\n}",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 10
+      },
+      "revId": "dd1f814b0081f7bc450d88a93839a178ebd5657c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
