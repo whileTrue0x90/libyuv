@@ -46,6 +46,29 @@
       },
       "revId": "dd1f814b0081f7bc450d88a93839a178ebd5657c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f8c48e3_5670dea3",
+        "filename": "source/scale.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-01T11:00:23Z",
+      "side": 1,
+      "message": "Adding this public API creates a technical debt.  requires filtering, scaling up and down, and assembly for avx and neon.\n\nFor high quality and performance scaling, its a better investment to start with fully optimized 16 bit channels.  Scaling with conversion will open a can of worms with permutations of source and destination types.\n\nMost scale functions internally use a buffer\nConversions like I210ToI420 should really have their own row function (avx2/neon)",
+      "range": {
+        "startLine": 2108,
+        "startChar": 0,
+        "endLine": 2108,
+        "endChar": 42
+      },
+      "revId": "dd1f814b0081f7bc450d88a93839a178ebd5657c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
