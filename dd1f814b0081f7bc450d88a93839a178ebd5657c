@@ -69,6 +69,29 @@
       },
       "revId": "dd1f814b0081f7bc450d88a93839a178ebd5657c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc08658a_1a2beb4c",
+        "filename": "source/scale.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-01T11:04:19Z",
+      "side": 1,
+      "message": "This line passes 0 for initial y which will effectively turn off bilinear filtering.\nIt should be:\n\n    int dy \u003d 0;\n    int y \u003d 0;\n    // When scaling down, use the center 2 rows to filter.\n    if (dst_height \u003c\u003d src_height) {\n      dy \u003d FixedDiv(src_height, dst_height);\n      y \u003d CENTERSTART(dy, -32768);  // Subtract 0.5 (32768) to center filter.\n      // When scaling up, ensure the last row of destination uses the last\n      // source. Avoid divide by zero for dst_height but will do no scaling\n      // later.\n    } else if (src_height \u003e 1 \u0026\u0026 dst_height \u003e 1) {\n      dy \u003d FixedDiv1(src_height, dst_height);\n    }\n    ScalePlaneVertical_16To8(src_height, dst_width, dst_height, src_stride,\n                             dst_stride, src, dst, 0, y, dy, /*bpp\u003d*/1, scale,",
+      "range": {
+        "startLine": 2141,
+        "startChar": 0,
+        "endLine": 2141,
+        "endChar": 78
+      },
+      "revId": "dd1f814b0081f7bc450d88a93839a178ebd5657c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
