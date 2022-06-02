@@ -1604,6 +1604,47 @@ void ScalePlaneVertical_16(int src_height,
   }
 }
 
+void ScalePlaneVertical_16To8(int src_height,
+                              int dst_width,
+                              int dst_height,
+                              int src_stride,
+                              int dst_stride,
+                              const uint16_t* src_argb,
+                              uint8_t* dst_argb,
+                              int x,
+                              int y,
+                              int dy,
+                              int wpp,
+                              int scale,
+                              enum FilterMode filtering) {
+  // TODO(fbarchard): Allow higher wpp.
+  int dst_width_words = dst_width * wpp;
+  void (*InterpolateRow_16To8)(uint8_t * dst_argb, const uint16_t* src_argb,
+                               ptrdiff_t src_stride, int scale, int dst_width,
+                               int source_y_fraction) = InterpolateRow_16To8_C;
+  const int max_y = (src_height > 1) ? ((src_height - 1) << 16) - 1 : 0;
+  int j;
+  assert(wpp >= 1 && wpp <= 2);
+  assert(src_height != 0);
+  assert(dst_width > 0);
+  assert(dst_height > 0);
+  src_argb += (x >> 16) * wpp;
+
+  for (j = 0; j < dst_height; ++j) {
+    int yi;
+    int yf;
+    if (y > max_y) {
+      y = max_y;
+    }
+    yi = y >> 16;
+    yf = filtering ? ((y >> 8) & 255) : 0;
+    InterpolateRow_16To8(dst_argb, src_argb + yi * src_stride, src_stride,
+                         scale, dst_width_words, yf);
+    dst_argb += dst_stride;
+    y += dy;
+  }
+}
+
 // Simplify the filtering based on scale factors.
 enum FilterMode ScaleFilterReduce(int src_width,
                                   int src_height,
