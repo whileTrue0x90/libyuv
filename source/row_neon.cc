@@ -10,8 +10,6 @@
 
 #include "libyuv/row.h"
 
-#include <stdio.h>
-
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
@@ -2703,6 +2701,65 @@ void InterpolateRow_NEON(uint8_t* dst_ptr,
       "vld1.8      {q0}, [%1]!                   \n"
       "subs        %3, %3, #16                   \n"
       "vst1.8      {q0}, [%0]!                   \n"
+      "bgt         100b                          \n"
+
+      "99:                                       \n"
+      : "+r"(dst_ptr),     // %0
+        "+r"(src_ptr),     // %1
+        "+r"(src_stride),  // %2
+        "+r"(dst_width),   // %3
+        "+r"(y1_fraction)  // %4
+      :
+      : "cc", "memory", "q0", "q1", "d4", "d5", "q13", "q14");
+}
+
+// Bilinear filter 8x2 -> 8x1
+void InterpolateRow_16_NEON(uint16_t* dst_ptr,
+                            const uint16_t* src_ptr,
+                            ptrdiff_t src_stride,
+                            int dst_width,
+                            int source_y_fraction) {
+  int y1_fraction = source_y_fraction;
+  asm volatile(
+      "cmp         %4, #0                        \n"
+      "beq         100f                          \n"
+      "add         %2, %1                        \n"
+      "cmp         %4, #128                      \n"
+      "beq         50f                           \n"
+
+      "vdup.16     d5, %4                        \n"
+      "rsb         %4, #256                      \n"
+      "vdup.16     d4, %4                        \n"
+      // General purpose row blend.
+      "1:                                        \n"
+      "vld1.16     {q0}, [%1]!                   \n"
+      "vld1.16     {q1}, [%2]!                   \n"
+      "subs        %3, %3, #8                    \n"
+      "vmull.u16   q13, d0, d4                   \n"
+      "vmull.u16   q14, d1, d4                   \n"
+      "vmlal.u16   q13, d2, d5                   \n"
+      "vmlal.u16   q14, d3, d5                   \n"
+      "vrshrn.u32  d0, q13, #8                   \n"
+      "vrshrn.u32  d1, q14, #8                   \n"
+      "vst1.16     {q0}, [%0]!                   \n"
+      "bgt         1b                            \n"
+      "b           99f                           \n"
+
+      // Blend 50 / 50.
+      "50:                                       \n"
+      "vld1.16     {q0}, [%1]!                   \n"
+      "vld1.16     {q1}, [%2]!                   \n"
+      "subs        %3, %3, #8                    \n"
+      "vrhadd.u16  q0, q1                        \n"
+      "vst1.16     {q0}, [%0]!                   \n"
+      "bgt         50b                           \n"
+      "b           99f                           \n"
+
+      // Blend 100 / 0 - Copy row unchanged.
+      "100:                                      \n"
+      "vld1.16     {q0}, [%1]!                   \n"
+      "subs        %3, %3, #8                    \n"
+      "vst1.16     {q0}, [%0]!                   \n"
       "bgt         100b                          \n"
 
       "99:                                       \n"
