@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a70f43c5_9d52532e",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3008,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-03T17:54:06Z",
+      "side": 1,
+      "message": "this loop doing 16 pixels is problematic - the high levels expect 8.",
+      "range": {
+        "startLine": 3008,
+        "startChar": 32,
+        "endLine": 3008,
+        "endChar": 49
+      },
+      "revId": "d1bcb89407fc294832f856f93b99fe52e4e71a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
