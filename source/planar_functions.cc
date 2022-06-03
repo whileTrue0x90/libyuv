@@ -40,6 +40,8 @@ void CopyPlane(const uint8_t* src_y,
     height = -height;
     dst_y = dst_y + (height - 1) * dst_stride_y;
     dst_stride_y = -dst_stride_y;
+  } else if (height == 0) {
+    return;
   }
   // Coalesce rows.
   if (src_stride_y == width && dst_stride_y == width) {
