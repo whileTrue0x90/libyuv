@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "37f70b10899697b1aab8ff90805f47d6e2d31f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8658099_4e728379",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2022-06-03T19:55:06Z",
+      "side": 1,
+      "message": "Is there still an issue if width \u003d\u003d 0 and height \u003e 0 ?\n\nIn that case, CopyRow() would get called in a loop (because height \u003e 0), but would still be passed a zero number of bytes to copy, which is what triggered the bug (if I\u0027m not mistaken)?",
+      "revId": "37f70b10899697b1aab8ff90805f47d6e2d31f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
