@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aa5c1fb_cf4d2d0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-06T19:10:37Z",
+      "side": 1,
+      "message": "Wow.. good catch.  There are several unexpected things going on here.  0x0 not being one of them... I meant to support that by successfully doing nothing.\n\nCopyPlane used to be just internal, hence the void return value, so it didnt do parameter sanity checks like most functions.  Looking at a typical function, I tend to check for 0\n  if (!src_uv || !dst_u || !dst_v || width \u003c\u003d 0 || height \u003d\u003d 0) {\n    return -1;\n  }\n\nNearly all functions do row coalesce and it had not occurred to me that it would increase height to 1.  This will cause the Y loop to iterate once with width \u003d 0.  Which would be harmless except..\n\n  if (TestCpuFlag(kCpuHasAVX)) {\n    CopyRow \u003d IS_ALIGNED(width, 64) ? CopyRow_AVX : CopyRow_Any_AVX;\n  }\n  if (TestCpuFlag(kCpuHasERMS)) {\n    CopyRow \u003d CopyRow_ERMS;\n  }\nIS_ALIGNED will thing 0 is aligned, and ERMS doesnt even check.  The C version would have harmlessly done a loop of 0, but the assembly does not check and will loop at least once\n\nNormally I use signed loop counters in assembly...\nsub         $0x20,%2  \njg          1b        \nWhich would limit the overwrite to 1 loop - 32 bytes.  But ERMS is a rep movsb which I guess treated the count of 0 as a large value?\n\nYour change looks like the right thing to do.  I\u0027ll just need to check that the same issue doesnt come up in other functions.",
+      "revId": "256fe0f0efc9fdcfb14455f062fce6887f6d4233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
