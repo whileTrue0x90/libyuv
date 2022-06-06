@@ -16,6 +16,24 @@
       "message": "Please update CL description, as you\u0027re checking both width and height?",
       "revId": "58673800348200602d4c1458a1a54187bbdaa02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2267ca1e_54b85dd1",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2022-06-06T17:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b919778_0d316eba",
+      "revId": "58673800348200602d4c1458a1a54187bbdaa02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
