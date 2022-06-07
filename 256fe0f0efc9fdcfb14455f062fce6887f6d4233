@@ -16,6 +16,23 @@
       "message": "Wow.. good catch.  There are several unexpected things going on here.  0x0 not being one of them... I meant to support that by successfully doing nothing.\n\nCopyPlane used to be just internal, hence the void return value, so it didnt do parameter sanity checks like most functions.  Looking at a typical function, I tend to check for 0\n  if (!src_uv || !dst_u || !dst_v || width \u003c\u003d 0 || height \u003d\u003d 0) {\n    return -1;\n  }\n\nNearly all functions do row coalesce and it had not occurred to me that it would increase height to 1.  This will cause the Y loop to iterate once with width \u003d 0.  Which would be harmless except..\n\n  if (TestCpuFlag(kCpuHasAVX)) {\n    CopyRow \u003d IS_ALIGNED(width, 64) ? CopyRow_AVX : CopyRow_Any_AVX;\n  }\n  if (TestCpuFlag(kCpuHasERMS)) {\n    CopyRow \u003d CopyRow_ERMS;\n  }\nIS_ALIGNED will thing 0 is aligned, and ERMS doesnt even check.  The C version would have harmlessly done a loop of 0, but the assembly does not check and will loop at least once\n\nNormally I use signed loop counters in assembly...\nsub         $0x20,%2  \njg          1b        \nWhich would limit the overwrite to 1 loop - 32 bytes.  But ERMS is a rep movsb which I guess treated the count of 0 as a large value?\n\nYour change looks like the right thing to do.  I\u0027ll just need to check that the same issue doesnt come up in other functions.",
       "revId": "256fe0f0efc9fdcfb14455f062fce6887f6d4233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ebf9204_073eb714",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-07T00:36:26Z",
+      "side": 1,
+      "message": "Is there a bug #?\nNote you can test sizes with the existing unittests, if there is one, with command line parameters or environment variables.\nLIBYUV_WIDTH\u003d0 LIBYUV_HEIGHT\u003d1  libyuv_test --gunit_also_run_disabled_tests \u0027--gunit_filter\u003d*CopyPlane*\u0027\nBut the test passes because it introduced a stride\n\nSo I wrote a new test, which should pass the values of 0 along, including stride\nTEST_F(LibYUVPlanarTest, CopyPlane_Opt) {\n  int i;\n  int y_plane_size \u003d benchmark_width_ * benchmark_height_;\n  align_buffer_page_end(orig_y, y_plane_size);\n  align_buffer_page_end(dst_c, y_plane_size);\n  align_buffer_page_end(dst_opt, y_plane_size);\n\n  MemRandomize(orig_y, y_plane_size);\n  memset(dst_c, 1, y_plane_size);\n  memset(dst_opt, 2, y_plane_size);\n\n  // Disable all optimizations.\n  MaskCpuFlags(disable_cpu_flags_);\n  for (i \u003d 0; i \u003c benchmark_iterations_; i++) {\n    CopyPlane(orig_y, benchmark_width_, dst_c, benchmark_width_, benchmark_width_, benchmark_height_);\n  }\n\n  // Enable optimizations.\n  MaskCpuFlags(benchmark_cpu_info_);\n  for (i \u003d 0; i \u003c benchmark_iterations_; i++) {\n    CopyPlane(orig_y, benchmark_width_, dst_opt, benchmark_width_, benchmark_width_, benchmark_height_);\n  }\n\n  for (i \u003d 0; i \u003c y_plane_size; ++i) {\n    EXPECT_EQ(dst_c[i], dst_opt[i]);\n  }\n\n  free_aligned_buffer_page_end(orig_y);\n  free_aligned_buffer_page_end(dst_c);\n  free_aligned_buffer_page_end(dst_opt);\n}\n\nbut it still passes, even under asan.\n\n",
+      "revId": "256fe0f0efc9fdcfb14455f062fce6887f6d4233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
