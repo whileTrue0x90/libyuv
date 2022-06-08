@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ed2239_eef8a2bb",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4194,
+      "author": {
+        "id": 1526622
+      },
+      "writtenOn": "2022-06-08T15:04:56Z",
+      "side": 1,
+      "message": "Does this assume 32 bit ints? If so, should we explicitly cast to int32_t to ensure portability?",
+      "range": {
+        "startLine": 4194,
+        "startChar": 19,
+        "endLine": 4194,
+        "endChar": 40
+      },
+      "revId": "3809e9d2f6344de01affbcd92fdbabcd621ef3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
