@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f301983_559e9af3",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-06-21T20:17:57Z",
+      "side": 0,
+      "message": "Nit: The examples in the Style Guide have this blank line to separate the system headers from other headers. Should we add it back?",
+      "revId": "e906ba9fe9df1cdc32307dbb1dcb1223d41bfd56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
