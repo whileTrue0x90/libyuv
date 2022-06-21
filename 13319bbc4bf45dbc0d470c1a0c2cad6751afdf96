@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7290b7db_7808af7f",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-06-21T23:00:18Z",
+      "side": 1,
+      "message": "Please update this to the latest fix, `65536u / 9u`.",
+      "revId": "13319bbc4bf45dbc0d470c1a0c2cad6751afdf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

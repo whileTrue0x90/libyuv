@@ -34,6 +34,24 @@
       "parentUuid": "38fc3709_107519a7",
       "revId": "fd8e3e9c01c851619816a2a3428872134fc1f847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c3f50b_ef3a4ce1",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-06-21T23:00:18Z",
+      "side": 1,
+      "message": "Thank you for the explanation.",
+      "parentUuid": "6b5940e8_43e6182d",
+      "revId": "fd8e3e9c01c851619816a2a3428872134fc1f847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
