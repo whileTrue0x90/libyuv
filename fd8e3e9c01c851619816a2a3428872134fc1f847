@@ -16,6 +16,24 @@
       "message": "Should we merge version 1830 to this repository first?",
       "revId": "fd8e3e9c01c851619816a2a3428872134fc1f847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b5940e8_43e6182d",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-21T22:55:06Z",
+      "side": 1,
+      "message": "I often do several unrelated changes in google3 and upstream only when its important or requested for chromium.\nThese are important to upstream, but I think its fine to combine them at the upstreaming.  If one of them breaks, I would rollback the individual change in google3 and re-upstream.\nThe version doesnt need to roll each time.  Its more important when there is a public interface change.  But its good to do it for each CL in the master copy, which is google3.",
+      "parentUuid": "38fc3709_107519a7",
+      "revId": "fd8e3e9c01c851619816a2a3428872134fc1f847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
