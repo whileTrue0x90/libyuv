@@ -1699,9 +1699,9 @@ void ScalePlaneBilinearUp_16(int src_width,
   int dx = 0;
   int dy = 0;
   const int max_y = (src_height - 1) << 16;
-  void (*InterpolateRow)(uint16_t * dst_ptr, const uint16_t* src_ptr,
-                         ptrdiff_t src_stride, int dst_width,
-                         int source_y_fraction) = InterpolateRow_16_C;
+  void (*InterpolateRow_16)(uint16_t * dst_ptr, const uint16_t* src_ptr,
+                            ptrdiff_t src_stride, int dst_width,
+                            int source_y_fraction) = InterpolateRow_16_C;
   void (*ScaleFilterCols)(uint16_t * dst_ptr, const uint16_t* src_ptr,
                           int dst_width, int x, int dx) =
       filtering ? ScaleFilterCols_16_C : ScaleCols_16_C;
@@ -1711,33 +1711,33 @@ void ScalePlaneBilinearUp_16(int src_width,
 
 #if defined(HAS_INTERPOLATEROW_16_SSE2)
   if (TestCpuFlag(kCpuHasSSE2)) {
-    InterpolateRow = InterpolateRow_16_Any_SSE2;
+    InterpolateRow_16 = InterpolateRow_16_Any_SSE2;
     if (IS_ALIGNED(dst_width, 16)) {
-      InterpolateRow = InterpolateRow_16_SSE2;
+      InterpolateRow_16 = InterpolateRow_16_SSE2;
     }
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_16_SSSE3)
   if (TestCpuFlag(kCpuHasSSSE3)) {
-    InterpolateRow = InterpolateRow_16_Any_SSSE3;
+    InterpolateRow_16 = InterpolateRow_16_Any_SSSE3;
     if (IS_ALIGNED(dst_width, 16)) {
-      InterpolateRow = InterpolateRow_16_SSSE3;
+      InterpolateRow_16 = InterpolateRow_16_SSSE3;
     }
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_16_AVX2)
   if (TestCpuFlag(kCpuHasAVX2)) {
-    InterpolateRow = InterpolateRow_16_Any_AVX2;
+    InterpolateRow_16 = InterpolateRow_16_Any_AVX2;
     if (IS_ALIGNED(dst_width, 32)) {
-      InterpolateRow = InterpolateRow_16_AVX2;
+      InterpolateRow_16 = InterpolateRow_16_AVX2;
     }
   }
 #endif
 #if defined(HAS_INTERPOLATEROW_16_NEON)
   if (TestCpuFlag(kCpuHasNEON)) {
-    InterpolateRow = InterpolateRow_16_Any_NEON;
+    InterpolateRow_16 = InterpolateRow_16_Any_NEON;
     if (IS_ALIGNED(dst_width, 16)) {
-      InterpolateRow = InterpolateRow_16_NEON;
+      InterpolateRow_16 = InterpolateRow_16_NEON;
     }
   }
 #endif
@@ -1802,10 +1802,10 @@ void ScalePlaneBilinearUp_16(int src_width,
         }
       }
       if (filtering == kFilterLinear) {
-        InterpolateRow(dst_ptr, rowptr, 0, dst_width, 0);
+        InterpolateRow_16(dst_ptr, rowptr, 0, dst_width, 0);
       } else {
         int yf = (y >> 8) & 255;
-        InterpolateRow(dst_ptr, rowptr, rowstride, dst_width, yf);
+        InterpolateRow_16(dst_ptr, rowptr, rowstride, dst_width, yf);
       }
       dst_ptr += dst_stride;
       y += dy;
