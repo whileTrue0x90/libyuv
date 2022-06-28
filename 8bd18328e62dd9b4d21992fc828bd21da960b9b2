@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a62f3d8_b789d202",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-28T23:39:04Z",
+      "side": 1,
+      "message": "overall performance is nearly 2x, and UV only accounts for 1/4 of the pixels.\nNEON I210ToI420_Opt (306 ms)\nC    I210ToI420_Opt (2715 ms)\n\nIf I remove the special 50/50 blend and use the general purpose blend it is still fast\nNeon I210ToI420_Opt (395 ms)\nC    I210ToI420_Opt (3347 ms)\n",
+      "revId": "8bd18328e62dd9b4d21992fc828bd21da960b9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f392ba06_e652d568",
@@ -14,6 +31,30 @@
       "writtenOn": "2022-06-28T20:21:40Z",
       "side": 1,
       "message": "Would it be worth looking into combining these to reduce pressure on the port with the barrel shifter?",
+      "range": {
+        "startLine": 3071,
+        "startChar": 0,
+        "endLine": 3073,
+        "endChar": 52
+      },
+      "revId": "8bd18328e62dd9b4d21992fc828bd21da960b9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "803057e4_6424bad9",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-06-28T23:39:04Z",
+      "side": 1,
+      "message": "Any idea how?   Its done as 2 shifts because\n1. it needs to be narrowed from 32 bit to 8 bit.  The first shift is reducing it to 16 bit with rounding.\n2. the next step is the 10 bits needs to be reduced to 8 bits, with a shift and then a uqxtn to narrow.  If it were known to be 10 bit, it could be done with shrn.\n\nThe first rshrn has rounding because it is taking an weighted average of 2 values.\nThis maintains exact results compared to InterpolateRow_16_NEON followed by Convert16To8_NEON.\nThe fractions are 8 bit and the samples are typically 10 bit, so the umull produces 18 bit values.  In the C version, that is done with\nsrc_ptr[0] * y0_fraction + src_ptr1[0] * y1_fraction + 128) \u003e\u003e 8\n\nThe 2nd shift + uqxtn converts 10 bit to 8 bit without rounding.  In C\n\n// 16384 \u003d 10 bits\n#define C16TO8(v, scale) clamp255(((v) * (scale)) \u003e\u003e 16)\n\n dst_ptr[0] \u003d C16TO8(\n        (src_ptr[0] * y0_fraction + src_ptr1[0] * y1_fraction + 128) \u003e\u003e 8,\n        scale);\n\ninstructions\nFor the first part, instead of mul+mla, there is a rounding half add (average)\nThere is also an addhn that adds 32 bit values and returns the upper half with narrowing and optional rounding.  To use it would probably require a shift first, to make the 16 bit values use the msb.\nThere is a multiply that returns the upper 16 bit, but it doubles and rounds.  I used that for awhile, but it doesnt match the C code.\nFor the final shift and narrow, the variable shift doesnt narrow, but the immediate version does, so a different function could be done to specialize each number of bits.  There are only 4 common bit depths\n// 32768 \u003d 9 bits\n// 16384 \u003d 10 bits\n// 4096 \u003d 12 bits\n// 256 \u003d 16 bits\nInstead of 2 narrowing instructions, a vtbl could be used to pack 32 bit values to 8 bit.\n\nThe focus so far is specialized performance for 50/50 blend, as this is only used for converting I210ToI420 where the 10 bit UV needs to be reduced from 4:2:2 full height, to 4:2:0 half height, and packed to 8 bits.\nIt takes 3 instructions\n      urhadd      v0.8h, v0.8h, v1.8h           // average\n      ushl        v0.8h, v0.8h, v6.8h           // 10 bits to 8 bits\n      uqxtn       v0.8b, v0.8h                  // pack to bytes\nIf it were known to be an msb format, rhaddn could add, narrow and round in 1 instruction.\nIf it were known to be 10 bit it could use urhadd + ushrn #2 to shift, and narrow\nThere are a very limited number of \u0027narrowing\u0027 instructions.",
+      "parentUuid": "f392ba06_e652d568",
       "range": {
         "startLine": 3071,
         "startChar": 0,
