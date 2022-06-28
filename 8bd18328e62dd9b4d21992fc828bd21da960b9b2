@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f392ba06_e652d568",
+        "filename": "source/row_neon64.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3073,
+      "author": {
+        "id": 1526622
+      },
+      "writtenOn": "2022-06-28T20:21:40Z",
+      "side": 1,
+      "message": "Would it be worth looking into combining these to reduce pressure on the port with the barrel shifter?",
+      "range": {
+        "startLine": 3071,
+        "startChar": 0,
+        "endLine": 3073,
+        "endChar": 52
+      },
+      "revId": "8bd18328e62dd9b4d21992fc828bd21da960b9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
