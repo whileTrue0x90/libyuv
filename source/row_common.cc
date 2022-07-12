@@ -2998,6 +2998,7 @@ void Convert16To8Row_C(const uint16_t* src_y,
 
   for (x = 0; x < width; ++x) {
     dst_y[x] = C16TO8(src_y[x], scale);
+    ;
   }
 }
 
