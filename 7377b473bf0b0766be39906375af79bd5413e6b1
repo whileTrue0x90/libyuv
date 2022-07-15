@@ -16,6 +16,24 @@
       "message": "I think this has too many things and we can get away with something similar to WebRTC but let\u0027s do that later.",
       "revId": "7377b473bf0b0766be39906375af79bd5413e6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72c914a3_57445d30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-07-15T18:43:20Z",
+      "side": 1,
+      "message": "no doubt.  Its a pretty big file.  I\u0027d prefer use DEPS to pull in a copy so it stays up to date.\nBut as is, it will need periodic updates from chrome or webrtc when python updates / breaks.",
+      "parentUuid": "4a58860e_6e19e676",
+      "revId": "7377b473bf0b0766be39906375af79bd5413e6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
