@@ -53,6 +53,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd3fcaef_6c7ff8ff",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-08-01T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c285e90c_0340bee2",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c7d4cab_e1d5fd5b",
@@ -88,6 +106,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9c0ca43_43372622",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-08-01T19:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7d4cab_e1d5fd5b",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad971a95_7ccb9e58",
@@ -101,6 +137,24 @@
       "writtenOn": "2022-08-01T18:24:48Z",
       "side": 1,
       "message": "Why did the code work without this change before? Is it because we never define HAS_SCALEUVROWDOWN2BOX_AVX2 without also defining HAS_SCALEUVROWDOWN2BOX_SSSE3?",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95f19bf8_5752a221",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-08-01T19:45:25Z",
+      "side": 1,
+      "message": "correct.  Now the AVX2 is enabled but the SSSE3 is not, but we still need these shufflers.",
+      "parentUuid": "ad971a95_7ccb9e58",
       "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
