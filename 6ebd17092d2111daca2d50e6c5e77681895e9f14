@@ -124,6 +124,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdd24b14_6a235c4d",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-08-01T19:52:16Z",
+      "side": 1,
+      "message": "The unittest is a little odd that it compares 8 to 16 bit scaling and expects the exact same specializations.  So I confirmed the code path taken is the same.\nMay want a more conventional test of C vs SIMD, but 16 bit scaling is mostly C at this point.",
+      "parentUuid": "e9c0ca43_43372622",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad971a95_7ccb9e58",
