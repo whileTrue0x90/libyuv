@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8134e0f4_b2b00e77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-01T18:24:48Z",
+      "side": 1,
+      "message": "This is a huge CL but most of the changes are simple renaming. It would be good to summarize the changes in this CL.\n\nI see three changes.\n\n1. Rename HAS_SCALEROWUP2LINEAR_xxx to HAS_SCALEROWUP2_LINEAR_xxx\n\n2. Undefine HAS_SCALEROWUP2_BILINEAR_16_SSE2\n\n3. Bump version (can omit this if version bumping is expected in this kind of CL).\n\n4. DetileSplitUVRow_C() is implemented using SplitUVRow_C().\n\n5. Some changes to ScaleRowUp2_Bilinear_16_SSE2(). Did you intend to check in these changes?\n\n(I asked because ScaleRowUp2_Bilinear_16_SSE2() is disabled.)\n\n6. Changes to unit_test/planar_test.cc.",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c285e90c_0340bee2",
+        "filename": "include/libyuv/scale_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-01T18:24:48Z",
+      "side": 1,
+      "message": "Nit: Add the bug number to the TODO comnent, for example,\n\n```\n// TODO(libyuv:882): Fix SSE2 version of BILINEAR\n```",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c7d4cab_e1d5fd5b",
+        "filename": "source/scale.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-01T18:24:48Z",
+      "side": 1,
+      "message": "Nit: Just wondering if this change is needed.",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad971a95_7ccb9e58",
+        "filename": "source/scale_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-01T18:24:48Z",
+      "side": 1,
+      "message": "Why did the code work without this change before? Is it because we never define HAS_SCALEUVROWDOWN2BOX_AVX2 without also defining HAS_SCALEUVROWDOWN2BOX_SSSE3?",
+      "revId": "6ebd17092d2111daca2d50e6c5e77681895e9f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
