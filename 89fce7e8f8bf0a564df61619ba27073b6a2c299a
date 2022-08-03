@@ -84,6 +84,23 @@
       "message": "Note the clamping.",
       "revId": "89fce7e8f8bf0a564df61619ba27073b6a2c299a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "409d1f17_a6c19f2e",
+        "filename": "source/row_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-03T17:13:47Z",
+      "side": 1,
+      "message": "The `char` type of the input to `_mm_set1_epi8()` can be seen in the following webpages:\n\nhttps://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text\u003d_mm_set1_epi8\u0026ig_expand\u003d6185\n\nhttps://docs.microsoft.com/en-us/cpp/intrinsics/x64-amd64-intrinsics-list?view\u003dmsvc-170",
+      "revId": "89fce7e8f8bf0a564df61619ba27073b6a2c299a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
