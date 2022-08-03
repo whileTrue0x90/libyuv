@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "bf1ad71f_63d55cf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-08-03T21:24:09Z",
+      "side": 1,
+      "message": "I will need to test with ubsan, but looks fine.",
+      "revId": "89fce7e8f8bf0a564df61619ba27073b6a2c299a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "03997872_7cb3a7fa",
         "filename": "source/row_common.cc",
         "patchSetId": 1
@@ -14,6 +31,24 @@
       "writtenOn": "2022-08-03T17:09:13Z",
       "side": 1,
       "message": "When `u` and `v` are `uint16_t` or `int16_t`, their values have been clamped with `clamp255()`. I annotated the four such `CALC_RGB16` calls below.",
+      "revId": "89fce7e8f8bf0a564df61619ba27073b6a2c299a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcbb2ce6_b7e9a8ac",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-08-03T21:24:09Z",
+      "side": 1,
+      "message": "ok.  This should be revisited at some point.  It is supposed to be 10 bit in and 16 bit out.  The math below it will underflow the int8 and then uses 32 bit int expressions.",
+      "parentUuid": "03997872_7cb3a7fa",
       "revId": "89fce7e8f8bf0a564df61619ba27073b6a2c299a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
