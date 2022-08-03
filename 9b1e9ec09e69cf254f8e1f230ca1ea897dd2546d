@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c680acd_1c1c5d92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-03T23:36:47Z",
+      "side": 1,
+      "message": "I am surprised that there is a compiler warning for missing field initializers, because { 0 } is commonly used to initialize a struct to all zeros.\n\nIs -Wmissing-field-initializers a Clang warning that\u0027s only enabled by -Weverything?",
+      "revId": "9b1e9ec09e69cf254f8e1f230ca1ea897dd2546d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
