@@ -52,6 +52,24 @@
       "parentUuid": "b8907504_bf2934b5",
       "revId": "9b1e9ec09e69cf254f8e1f230ca1ea897dd2546d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b543341_12740025",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-04T19:52:23Z",
+      "side": 1,
+      "message": "https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html also says that -Wextra (as opposed to -Wall) enables -Wmissing-field-initializers.",
+      "parentUuid": "d990f779_952e97f1",
+      "revId": "9b1e9ec09e69cf254f8e1f230ca1ea897dd2546d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
