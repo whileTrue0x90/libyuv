@@ -34,6 +34,24 @@
       "parentUuid": "8c680acd_1c1c5d92",
       "revId": "9b1e9ec09e69cf254f8e1f230ca1ea897dd2546d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d990f779_952e97f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002174
+      },
+      "writtenOn": "2022-08-04T18:29:22Z",
+      "side": 1,
+      "message": "It seems like {0} in C and {} in C++ are treated as special cases and does not trigger this warning.\n\n(Thanks Wan-Teh for figuring this out and letting me know)\n\nhttps://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html",
+      "parentUuid": "b8907504_bf2934b5",
+      "revId": "9b1e9ec09e69cf254f8e1f230ca1ea897dd2546d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
