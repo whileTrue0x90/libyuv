@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57c9b3c9_cc3efcf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002174
+      },
+      "writtenOn": "2022-08-04T18:21:04Z",
+      "side": 1,
+      "message": "Thanks for submitting the change Wan-Teh. It seems like the win-clang_rel trybot has been broken for sometime now.",
+      "revId": "394436b289b07bffae8e4d94f4020f4f3dfc1b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
