@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1df99499_0cbc5c14",
+        "filename": "source/convert.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3205,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-04T22:06:12Z",
+      "side": 1,
+      "message": "Nit: Did you mean to add these two blank lines?",
+      "revId": "0583ac5879d36756fb981161847d96fccc326c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
