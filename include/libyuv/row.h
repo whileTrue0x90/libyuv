@@ -446,6 +446,7 @@ extern "C" {
 #define HAS_COPYROW_NEON
 #define HAS_DETILEROW_NEON
 #define HAS_DETILESPLITUVROW_NEON
+#define HAS_DETILEMERGEROW_NEON
 #define HAS_DIVIDEROW_16_NEON
 #define HAS_HALFFLOATROW_NEON
 #define HAS_HALFMERGEUVROW_NEON
@@ -1991,6 +1992,24 @@ void DetileSplitUVRow_Any_NEON(const uint8_t* src_uv,
                                uint8_t* dst_u,
                                uint8_t* dst_v,
                                int width);
+void DetileMergeRow_C(const uint8_t* src_y,
+                      ptrdiff_t src_y_tile_stride,
+                      const uint8_t* src_uv,
+                      ptrdiff_t src_uv_tile_stride,
+                      uint8_t* dst_yuyv,
+                      int width);
+void DetileMergeRow_NEON(const uint8_t* src_y,
+                         ptrdiff_t src_y_tile_stride,
+                         const uint8_t* src_uv,
+                         ptrdiff_t src_uv_tile_stride,
+                         uint8_t* dst_yuyv,
+                         int width);
+void DetileMergeRow_Any_NEON(const uint8_t* src_y,
+                             ptrdiff_t src_y_tile_stride,
+                             const uint8_t* src_uv,
+                             ptrdiff_t src_uv_tile_stride,
+                             uint8_t* dst_yuyv,
+                             int width);
 void MergeUVRow_C(const uint8_t* src_u,
                   const uint8_t* src_v,
                   uint8_t* dst_uv,

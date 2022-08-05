@@ -622,6 +622,30 @@ void DetileSplitUVRow_NEON(const uint8_t* src_uv,
   );
 }
 
+// Read 16 Y, 8 UV, and write 8 YUYV.
+void DetileMergeRow_NEON(const uint8_t* src_y,
+                         ptrdiff_t src_y_tile_stride,
+                         const uint8_t* src_uv,
+                         ptrdiff_t src_uv_tile_stride,
+                         uint8_t* dst_yuy2,
+                         int width) {
+  asm volatile(
+      "1:                                       \n"
+      "vld1.8     q0, [%0], %4                  \n"
+      "vld1.8     q1, [%1], %5                  \n"
+      "subs       %3, %3, #16                   \n"
+      "vst2.8     {q0, q1}, [%2]!               \n"
+      "bgt        1b                            \n"
+      : "+r"(src_y),                            // %0
+        "+r"(src_uv),                           // %1
+        "+r"(dst_yuy2),                         // %2
+        "+r"(width)                             // %3
+      : "r"(src_y_tile_stride),                 // %4
+        "r"(src_uv_tile_stride)                 // %5
+      : "cc", "memory", "d0", "d1", "d2", "d3"  // Clobber list
+  );
+}
+
 // Reads 16 U's and V's and writes out 16 pairs of UV.
 void MergeUVRow_NEON(const uint8_t* src_u,
                      const uint8_t* src_v,

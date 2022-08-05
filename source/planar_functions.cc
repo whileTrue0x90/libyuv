@@ -1033,6 +1033,65 @@ void DetileSplitUVPlane(const uint8_t* src_uv,
   }
 }
 
+LIBYUV_API
+void DetileMergePlane(const uint8_t* src_y,
+                      int src_stride_y,
+                      const uint8_t* src_uv,
+                      int src_stride_uv,
+                      uint8_t* dst_yuy2,
+                      int dst_stride_yuy2,
+                      int width,
+                      int height,
+                      int tile_height) {
+  const ptrdiff_t src_y_tile_stride = 16 * tile_height;
+  const ptrdiff_t src_uv_tile_stride = src_y_tile_stride / 2;
+  int y;
+  void (*DetileMergeRow)(const uint8_t* src_y, ptrdiff_t src_y_tile_stride,
+                         const uint8_t* src_uv, ptrdiff_t src_uv_tile_stride,
+                         uint8_t* dst_yuy2, int width) = DetileMergeRow_C;
+  assert(src_stride_y >= 0);
+  assert(src_stride_y > 0);
+  assert(src_stride_uv >= 0);
+  assert(src_stride_uv > 0);
+  assert(tile_height > 0);
+
+  if (width <= 0 || height == 0) {
+    return;
+  }
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    dst_yuy2 = dst_yuy2 + (height - 1) * dst_stride_yuy2;
+    dst_stride_yuy2 = -dst_stride_yuy2;
+  }
+
+#if defined(HAS_DETILEMERGEROW_NEON)
+  if (TestCpuFlag(kCpuHasNEON)) {
+    DetileMergeRow = DetileMergeRow_Any_NEON;
+    if (IS_ALIGNED(width, 16)) {
+      DetileMergeRow = DetileMergeRow_NEON;
+    }
+  }
+#endif
+
+  // Detile plane
+  for (y = 0; y < height; ++y) {
+    DetileMergeRow(src_y, src_y_tile_stride, src_uv, src_uv_tile_stride,
+                   dst_yuy2, width);
+    dst_yuy2 += dst_stride_yuy2;
+    src_y += 16;
+
+    if (y & 0x1)
+      src_uv += 16;
+
+    // Advance to next row of tiles.
+    if ((y & (tile_height - 1)) == (tile_height - 1)) {
+      src_y = src_y - src_y_tile_stride + src_stride_y * tile_height;
+      src_uv = src_uv - src_uv_tile_stride + src_stride_uv * (tile_height / 2);
+    }
+  }
+}
+
 // Support function for NV12 etc RGB channels.
 // Width and height are plane sizes (typically half pixel width).
 LIBYUV_API

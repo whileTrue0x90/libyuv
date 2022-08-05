@@ -2731,6 +2731,24 @@ void DetileSplitUVRow_C(const uint8_t* src_uv,
   }
 }
 
+void DetileMergeRow_C(const uint8_t* src_y,
+                      ptrdiff_t src_y_tile_stride,
+                      const uint8_t* src_uv,
+                      ptrdiff_t src_uv_tile_stride,
+                      uint8_t* dst_yuy2,
+                      int width) {
+  for (int x = 0; x < width - 15; x += 16) {
+    for (int i = 0; i < 8; i++) {
+      *(dst_yuy2++) = *(src_y++);
+      *(dst_yuy2++) = *(src_uv++);
+      *(dst_yuy2++) = *(src_y++);
+      *(dst_yuy2++) = *(src_uv++);
+    }
+    src_y += src_y_tile_stride - 16;
+    src_uv += src_uv_tile_stride - 16;
+  }
+}
+
 void SplitRGBRow_C(const uint8_t* src_rgb,
                    uint8_t* dst_r,
                    uint8_t* dst_g,
