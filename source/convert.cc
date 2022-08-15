@@ -713,6 +713,25 @@ int MM21ToI420(const uint8_t* src_y,
   return 0;
 }
 
+LIBYUV_API
+int MM21ToYUY2(const uint8_t* src_y,
+               int src_stride_y,
+               const uint8_t* src_uv,
+               int src_stride_uv,
+               uint8_t* dst_yuy2,
+               int dst_stride_yuy2,
+               int width,
+               int height) {
+  if (!src_y || !src_uv || !dst_yuy2 || width <= 0) {
+    return -1;
+  }
+
+  DetileToYUY2(src_y, src_stride_y, src_uv, src_stride_uv, dst_yuy2,
+                   dst_stride_yuy2, width, height, 32);
+
+  return 0;
+}
+
 #ifdef I422TONV21_ROW_VERSION
 // Unittest fails for this version.
 // 422 chroma is 1/2 width, 1x height
