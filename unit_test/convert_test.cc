@@ -3042,6 +3042,51 @@ TESTPLANARTOBD(I420, 2, 2, RGB565, 2, 2, 1, ARGB, 4)
 TESTPTOB(TestYUY2ToNV12, YUY2ToI420, YUY2ToNV12)
 TESTPTOB(TestUYVYToNV12, UYVYToI420, UYVYToNV12)
 
+TEST_F(LibYUVConvertTest, MM21ToYUY2) {
+  const int kWidth = (benchmark_width_ + 15) & (~15);
+  const int kHeight = (benchmark_height_ + 31) & (~31);
+
+  align_buffer_page_end(orig_y, kWidth * kHeight);
+  align_buffer_page_end(orig_uv,
+                        2 * SUBSAMPLE(kWidth, 2) * SUBSAMPLE(kHeight, 2));
+
+  align_buffer_page_end(tmp_y, kWidth * kHeight);
+  align_buffer_page_end(tmp_u, SUBSAMPLE(kWidth, 2) * SUBSAMPLE(kHeight, 2));
+  align_buffer_page_end(tmp_v, SUBSAMPLE(kWidth, 2) * SUBSAMPLE(kHeight, 2));
+
+  align_buffer_page_end(dst_yuyv, 4 * SUBSAMPLE(kWidth, 2) * kHeight);
+  align_buffer_page_end(golden_yuyv, 4 * SUBSAMPLE(kWidth, 2) * kHeight);
+
+  MemRandomize(orig_y, kWidth * kHeight);
+  MemRandomize(orig_uv, 2 * SUBSAMPLE(kWidth, 2) * SUBSAMPLE(kHeight, 2));
+
+  /* Convert MM21 to YUY2 in 2 steps for reference */
+  libyuv::MM21ToI420(orig_y, kWidth, orig_uv, 2 * SUBSAMPLE(kWidth, 2), tmp_y,
+                     kWidth, tmp_u, SUBSAMPLE(kWidth, 2), tmp_v,
+                     SUBSAMPLE(kWidth, 2), kWidth, kHeight);
+  libyuv::I420ToYUY2(tmp_y, kWidth, tmp_u, SUBSAMPLE(kWidth, 2), tmp_v,
+                     SUBSAMPLE(kWidth, 2), golden_yuyv,
+                     4 * SUBSAMPLE(kWidth, 2), kWidth, kHeight);
+
+  /* Convert to NV12 */
+  for (int i = 0; i < benchmark_iterations_; ++i) {
+    libyuv::MM21ToYUY2(orig_y, kWidth, orig_uv, 2 * SUBSAMPLE(kWidth, 2),
+                       dst_yuyv, 4 * SUBSAMPLE(kWidth, 2), kWidth, kHeight);
+  }
+
+  for (int i = 0; i < 4 * SUBSAMPLE(kWidth, 2) * kHeight; ++i) {
+    EXPECT_EQ(dst_yuyv[i], golden_yuyv[i]);
+  }
+
+  free_aligned_buffer_page_end(orig_y);
+  free_aligned_buffer_page_end(orig_uv);
+  free_aligned_buffer_page_end(tmp_y);
+  free_aligned_buffer_page_end(tmp_u);
+  free_aligned_buffer_page_end(tmp_v);
+  free_aligned_buffer_page_end(dst_yuyv);
+  free_aligned_buffer_page_end(golden_yuyv);
+}
+
 // Transitive test.  A to B to C is same as A to C.
 // Benchmarks A To B to C for comparison to 1 step, benchmarked elsewhere.
 #define TESTPLANARTOEI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, SUB_B, BPP_B, \

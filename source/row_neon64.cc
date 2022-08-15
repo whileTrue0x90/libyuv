@@ -651,6 +651,62 @@ void DetileSplitUVRow_NEON(const uint8_t* src_uv,
 }
 
 #if LIBYUV_USE_ST2
+// Read 16 Y, 8 UV, and write 8 YUY2
+void DetileToYUY2_NEON(const uint8_t* src_y,
+                         ptrdiff_t src_y_tile_stride,
+                         const uint8_t* src_uv,
+                         ptrdiff_t src_uv_tile_stride,
+                         uint8_t* dst_yuy2,
+                         int width) {
+  asm volatile(
+      "1:                                        \n"
+      "ld1         {v0.16b}, [%0], %4            \n"  // load 16 Ys
+      "prfm        pldl1keep, [%0, 1792]         \n"
+      "ld1         {v1.16b}, [%1], %5            \n"  // load 8 UVs
+      "prfm        pldl1keep, [%1, 1792]         \n"
+      "subs        %w3, %w3, #16                 \n"  // store 8 YUY2
+      "st2         {v0.16b,v1.16b}, [%2], #32    \n"
+      "b.gt        1b                            \n"
+      : "+r"(src_y),            // %0
+        "+r"(src_uv),           // %1
+        "+r"(dst_yuy2),         // %2
+        "+r"(width)             // %3
+      : "r"(src_y_tile_stride), // %4
+        "r"(src_uv_tile_stride) // %5
+      : "cc", "memory", "v0", "v1"  // Clobber list
+  );
+}
+#else
+// Read 16 Y, 8 UV, and write 8 YUY2
+void DetileToYUY2_NEON(const uint8_t* src_y,
+                         ptrdiff_t src_y_tile_stride,
+                         const uint8_t* src_uv,
+                         ptrdiff_t src_uv_tile_stride,
+                         uint8_t* dst_yuy2,
+                         int width) {
+  asm volatile(
+      "1:                                        \n"
+      "ld1         {v0.16b}, [%0], %4            \n"  // load 16 Ys
+      "ld1         {v1.16b}, [%1], %5            \n"  // load 8 UVs
+      "subs        %w3, %w3, #16                 \n"
+      "prfm        pldl1keep, [%0, 1792]         \n"
+      "zip1        v2.16b, v0.16b, v1.16b        \n"
+      "prfm        pldl1keep, [%1, 1792]         \n"
+      "zip2        v3.16b, v0.16b, v1.16b        \n"
+      "st1         {v2.16b,v3.16b}, [%2], #32    \n"  // store 8 YUY2
+      "b.gt     1b                               \n"
+      : "+r"(src_y),             // %0
+        "+r"(src_uv),            // %1
+        "+r"(dst_yuy2),          // %2
+        "+r"(width)              // %3
+      : "r"(src_y_tile_stride),  // %4
+        "r"(src_uv_tile_stride)  // %5
+      : "cc", "memory", "v0", "v1", "v2", "v3"  // Clobber list
+  );
+}
+#endif
+
+#if LIBYUV_USE_ST2
 // Reads 16 U's and V's and writes out 16 pairs of UV.
 void MergeUVRow_NEON(const uint8_t* src_u,
                      const uint8_t* src_v,

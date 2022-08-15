@@ -2229,6 +2229,29 @@ ANYDETILESPLITUV(DetileSplitUVRow_Any_NEON, DetileSplitUVRow_NEON, 15)
 ANYDETILESPLITUV(DetileSplitUVRow_Any_SSSE3, DetileSplitUVRow_SSSE3, 15)
 #endif
 
+#define ANYDETILEMERGE(NAMEANY, ANY_SIMD, MASK)                                \
+  void NAMEANY(const uint8_t* src_y, ptrdiff_t src_y_tile_stride,              \
+               const uint8_t* src_uv, ptrdiff_t src_uv_tile_stride,            \
+               uint8_t* dst_yuy2, int width) {                                 \
+    SIMD_ALIGNED(uint8_t temp[16 * 4]);                                        \
+    memset(temp, 0, 16 * 4); /* for msan */                                    \
+    int r = width & MASK;                                                      \
+    int n = width & ~MASK;                                                     \
+    if (n > 0) {                                                               \
+      ANY_SIMD(src_y, src_y_tile_stride, src_uv, src_uv_tile_stride, dst_yuy2, \
+               n);                                                             \
+    }                                                                          \
+    memcpy(temp, src_y + (n / 16) * src_y_tile_stride, r);                     \
+    memcpy(temp + 16, src_uv + (n / 16) * src_uv_tile_stride, r);              \
+    ANY_SIMD(temp, src_y_tile_stride, temp + 16, src_uv_tile_stride,           \
+             temp + 32, r);                                                    \
+    memcpy(dst_yuy2 + 2 * n, temp + 32, 2 * r);                                \
+  }
+
+#ifdef HAS_DETILETOYUY2_NEON
+ANYDETILEMERGE(DetileToYUY2_Any_NEON, DetileToYUY2_NEON, 15)
+#endif
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
