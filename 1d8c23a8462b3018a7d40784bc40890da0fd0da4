@@ -16,6 +16,46 @@
       "message": "Could use an SSE version\nMM21ToYUY2 (618 ms)\nMM21ToI420_Opt (139 ms)\nMM21ToNV12_Opt (133 ms)\n\n",
       "revId": "1d8c23a8462b3018a7d40784bc40890da0fd0da4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "555bfc29_18d3c998",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-15T20:55:18Z",
+      "side": 1,
+      "message": "Frank: I will wait until the internal cl/467692970 is done to review this CL.",
+      "revId": "1d8c23a8462b3018a7d40784bc40890da0fd0da4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2285606_80cceb91",
+        "filename": "include/libyuv/convert_from_argb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-15T20:55:18Z",
+      "side": 1,
+      "message": "Do not add these lines. These are the same as the existing lines 206-230.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "1d8c23a8462b3018a7d40784bc40890da0fd0da4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
