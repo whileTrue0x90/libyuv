@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb02850a_7918747b",
+        "filename": "include/libyuv/convert_from_argb.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-08-15T23:18:57Z",
+      "side": 1,
+      "message": "Lines 232-256 are still added errnoeously. (They are the same as lines 206-230.)\n\nAlso, the parameters dst_u, dst_stride_u, etc. do not have the \"j\" suffix. This shows patchset 3 is not the same as the latest version of the internal cl/467692970.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "bbb13edbcc49bfc49db0ef1fbc45688e409c456b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
