@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "669fa121_a2682a46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-09-17T09:53:37Z",
+      "side": 1,
+      "message": "Skipping CQ (all is green) until we fix the win asan bot.",
+      "revId": "e67f605c88be93beb59153f3ef81c8ddc799de8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
