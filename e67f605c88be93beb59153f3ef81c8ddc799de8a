@@ -33,6 +33,24 @@
       "message": "It seems the owners plugin is not working properly on this repository. Gerrit clearly lists you as owner (as is indicated in the OWNERS file) but it doesn\u0027t seem to actually take effect.",
       "revId": "e67f605c88be93beb59153f3ef81c8ddc799de8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2888cb1_4aac0d56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-09-20T07:02:19Z",
+      "side": 1,
+      "message": "I think the problem is that I changed the CL desc and I become the \"Uploader\" and Gerrit doesn\u0027t grant the review vote.\n\nAdding Frank.",
+      "parentUuid": "91396a56_d5e1ad5c",
+      "revId": "e67f605c88be93beb59153f3ef81c8ddc799de8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
