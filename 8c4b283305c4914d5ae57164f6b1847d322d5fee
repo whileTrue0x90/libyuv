@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "265eaef4_c5932aa3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-09-20T20:49:40Z",
+      "side": 1,
+      "message": "The commit message should also mention the I422ToRGB24Row_SSSE3() and I444ToRGB24Row_SSSE3() implementations for Visual C++. They seem unrelated to the change described here.",
+      "revId": "8c4b283305c4914d5ae57164f6b1847d322d5fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa7adb6f_2ccd3077",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-09-20T20:49:40Z",
+      "side": 1,
+      "message": "LGTM.",
+      "revId": "8c4b283305c4914d5ae57164f6b1847d322d5fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
