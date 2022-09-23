@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae0a707f_c9056f4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-09-23T00:47:57Z",
+      "side": 1,
+      "message": "LGTM. The comment about the `LIBYUV_LIMITED_DATA` macro needs editing.",
+      "revId": "777ba72ac1da48596fa83b9a899c2ad2b15c83d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84b32c9f_2f6b8d48",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-09-23T00:47:57Z",
+      "side": 1,
+      "message": "Nit: The first sentence should also be updated because it was written for the old macro `LIBYUV_UNLIMITED_DATA`, which had the opposite meaning. For example, it says \"to extend the range ... to 0 to 4\".",
+      "revId": "777ba72ac1da48596fa83b9a899c2ad2b15c83d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
