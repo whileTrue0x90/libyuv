@@ -5,7 +5,7 @@ gclient_gn_args = [
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '7d683aeda8370dcb79ec040f9473639b02fa232c',
+  'chromium_revision': 'ecfb7ecaf9b69992fce670357751c314a681f4d9',
   'gn_version': 'git_revision:6f13aaac55a977e1948910942675c69f2b4f7a94',
 
   # Keep the Chromium default of generating location tags.
@@ -14,13 +14,13 @@ vars = {
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '806b01ed9612a1a18f4cbd46ce8f0439eab82715',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '5e34adc9bc53c9e85a8384b73146a7b8fe65f0bc',
   'src/buildtools':
     Var('chromium_git') + '/chromium/src/buildtools' + '@' + 'b79692f320d80b158ce069f166f32861c36c6074',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '154d994bafa189d4b1ac7ee527bd857831ab5011',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '54d247830a845960d3849b2ac52c323a71d25ec7',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'ea1616408d0198742c47b323271bb00d69d2a73e',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'cd4eb28112b8db15f35dd39f0218fa9fbf14b7a2',
 
   'src/buildtools/linux64': {
     'packages': [
@@ -63,13 +63,13 @@ deps = {
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + '7ff728a9779cdc8e0639c032dc45cc20f7b4af21',
 
   'src/third_party/catapult':
-    Var('chromium_git') + '/catapult.git' + '@' + '5b90d5e7568beef38c375ca5787802ee37fc50c9',
+    Var('chromium_git') + '/catapult.git' + '@' + '5eb0675d9cbb3946b32d1b4f2d5a1721ec682eab',
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
   'src/third_party/depot_tools':
     Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '08bb5c487f80147a236360ea50f4544890530779',
   'src/third_party/freetype/src':
-    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + '33ceac2afc3608be2d12b3dece071a91e34c3062',
+    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + 'c9c326312f1156bc5865d076620fa13953d24a8c',
   'src/third_party/googletest/src':
     Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + 'af29db7ec28d6df1c7f0f745186884091e602e07',
   'src/third_party/harfbuzz-ng/src':
@@ -79,7 +79,7 @@ deps = {
   'src/third_party/nasm':
     Var('chromium_git') + '/chromium/deps/nasm.git' + '@' + '9215e8e1d0fe474ffd3e16c1a07a0f97089e6224',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + 'f85dc28ce50390de8fa5e34f5b008c5562b98028',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '781e32f6419c9ebc0c94eb7d1ab7b3fdbc823f1f',
 
   # libyuv-only dependencies (not present in Chromium).
   'src/third_party/gtest-parallel':
@@ -108,7 +108,7 @@ deps = {
   'src/third_party/boringssl/src':
     'https://boringssl.googlesource.com/boringssl.git' + '@' + '04989786e9ab16cef5261bbd05a2b1a8cb312dbf',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '417936cae4abfa6f3710d6eff69a99d05575df22',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '99b6b891fd96de11366cfee314fd223d7c3554f0',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -419,7 +419,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '625640808ca8f3db8740e920d8a347333edf0c2d',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '55b979b5bb6acd98c20e3ef8055c59c6e7eb36aa',
     'condition': 'checkout_ios'
   },
 
