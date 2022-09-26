@@ -51,6 +51,23 @@
       "parentUuid": "91396a56_d5e1ad5c",
       "revId": "e67f605c88be93beb59153f3ef81c8ddc799de8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "038f4a34_aa42f91b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116524
+      },
+      "writtenOn": "2022-09-26T18:42:46Z",
+      "side": 1,
+      "message": "Frank, friendly ping",
+      "revId": "e67f605c88be93beb59153f3ef81c8ddc799de8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
