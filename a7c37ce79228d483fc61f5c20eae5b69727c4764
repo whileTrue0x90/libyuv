@@ -16,6 +16,24 @@
       "message": "I noticed two issues. Not sure if these are intended.\n\n1. The version number is not changed.\n\n2. The unrelated LIBYUV_LIMITED_DATA change is reverted.",
       "revId": "a7c37ce79228d483fc61f5c20eae5b69727c4764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de33324b_87eb735d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-09-30T19:43:29Z",
+      "side": 1,
+      "message": "the version # is because it was rolled with LIBYUV_LIMITED_DATA.  Which I\u0027m rolling back.\nIt needs to be rolled back because it fails chromium try bots, preventing a roll into chromium.  The google3 version has 53 remaining issues before unlimited data can be landed, so I\u0027ll revisit that in the future.",
+      "parentUuid": "2a131abb_e4e13d09",
+      "revId": "a7c37ce79228d483fc61f5c20eae5b69727c4764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
