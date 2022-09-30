@@ -145,6 +145,7 @@ extern "C" {
 #define HAS_YUY2TOARGBROW_SSSE3
 #define HAS_YUY2TOUV422ROW_SSE2
 #define HAS_YUY2TOUVROW_SSE2
+#define HAS_YUY2TONVUVROW_SSE2
 #define HAS_YUY2TOYROW_SSE2
 
 // Effects:
@@ -236,8 +237,9 @@ extern "C" {
 #define HAS_UYVYTOUVROW_AVX2
 #define HAS_UYVYTOYROW_AVX2
 #define HAS_YUY2TOARGBROW_AVX2
-#define HAS_YUY2TOUV422ROW_AVX2
 #define HAS_YUY2TOUVROW_AVX2
+#define HAS_YUY2TONVUVROW_AVX2
+#define HAS_YUY2TOUV422ROW_AVX2
 #define HAS_YUY2TOYROW_AVX2
 
 // Effects:
@@ -524,8 +526,9 @@ extern "C" {
 #define HAS_UYVYTOUVROW_NEON
 #define HAS_UYVYTOYROW_NEON
 #define HAS_YUY2TOARGBROW_NEON
-#define HAS_YUY2TOUV422ROW_NEON
 #define HAS_YUY2TOUVROW_NEON
+#define HAS_YUY2TONVUVROW_NEON
+#define HAS_YUY2TOUV422ROW_NEON
 #define HAS_YUY2TOYROW_NEON
 
 // Effects:
@@ -4724,6 +4727,10 @@ void YUY2ToUVRow_AVX2(const uint8_t* src_yuy2,
                       uint8_t* dst_u,
                       uint8_t* dst_v,
                       int width);
+void YUY2ToNVUVRow_AVX2(const uint8_t* src_yuy2,
+                        int stride_yuy2,
+                        uint8_t* dst_uv,
+                        int width);
 void YUY2ToUV422Row_AVX2(const uint8_t* src_yuy2,
                          uint8_t* dst_u,
                          uint8_t* dst_v,
@@ -4734,6 +4741,10 @@ void YUY2ToUVRow_SSE2(const uint8_t* src_yuy2,
                       uint8_t* dst_u,
                       uint8_t* dst_v,
                       int width);
+void YUY2ToNVUVRow_SSE2(const uint8_t* src_yuy2,
+                        int stride_yuy2,
+                        uint8_t* dst_uv,
+                        int width);
 void YUY2ToUV422Row_SSE2(const uint8_t* src_yuy2,
                          uint8_t* dst_u,
                          uint8_t* dst_v,
@@ -4744,6 +4755,10 @@ void YUY2ToUVRow_NEON(const uint8_t* src_yuy2,
                       uint8_t* dst_u,
                       uint8_t* dst_v,
                       int width);
+void YUY2ToNVUVRow_NEON(const uint8_t* src_yuy2,
+                        int stride_yuy2,
+                        uint8_t* dst_uv,
+                        int width);
 void YUY2ToUV422Row_NEON(const uint8_t* src_yuy2,
                          uint8_t* dst_u,
                          uint8_t* dst_v,
@@ -4774,6 +4789,10 @@ void YUY2ToUVRow_C(const uint8_t* src_yuy2,
                    uint8_t* dst_u,
                    uint8_t* dst_v,
                    int width);
+void YUY2ToNVUVRow_C(const uint8_t* src_yuy2,
+                     int src_stride_yuy2,
+                     uint8_t* dst_uv,
+                     int width);
 void YUY2ToUV422Row_C(const uint8_t* src_yuy2,
                       uint8_t* dst_u,
                       uint8_t* dst_v,
@@ -4784,6 +4803,10 @@ void YUY2ToUVRow_Any_AVX2(const uint8_t* src_ptr,
                           uint8_t* dst_u,
                           uint8_t* dst_v,
                           int width);
+void YUY2ToNVUVRow_Any_AVX2(const uint8_t* src_yuy2,
+                            int stride_yuy2,
+                            uint8_t* dst_uv,
+                            int width);
 void YUY2ToUV422Row_Any_AVX2(const uint8_t* src_ptr,
                              uint8_t* dst_u,
                              uint8_t* dst_v,
@@ -4794,6 +4817,10 @@ void YUY2ToUVRow_Any_SSE2(const uint8_t* src_ptr,
                           uint8_t* dst_u,
                           uint8_t* dst_v,
                           int width);
+void YUY2ToNVUVRow_Any_SSE2(const uint8_t* src_yuy2,
+                            int stride_yuy2,
+                            uint8_t* dst_uv,
+                            int width);
 void YUY2ToUV422Row_Any_SSE2(const uint8_t* src_ptr,
                              uint8_t* dst_u,
                              uint8_t* dst_v,
@@ -4804,6 +4831,10 @@ void YUY2ToUVRow_Any_NEON(const uint8_t* src_ptr,
                           uint8_t* dst_u,
                           uint8_t* dst_v,
                           int width);
+void YUY2ToNVUVRow_Any_NEON(const uint8_t* src_yuy2,
+                            int stride_yuy2,
+                            uint8_t* dst_uv,
+                            int width);
 void YUY2ToUV422Row_Any_NEON(const uint8_t* src_ptr,
                              uint8_t* dst_u,
                              uint8_t* dst_v,
