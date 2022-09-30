@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a131abb_e4e13d09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-09-30T18:54:16Z",
+      "side": 1,
+      "message": "I noticed two issues. Not sure if these are intended.\n\n1. The version number is not changed.\n\n2. The unrelated LIBYUV_LIMITED_DATA change is reverted.",
+      "revId": "a7c37ce79228d483fc61f5c20eae5b69727c4764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
