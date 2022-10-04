@@ -6939,6 +6939,37 @@ void UYVYToUV422Row_SSE2(const uint8_t* src_uyvy,
 }
 #endif  // HAS_YUY2TOYROW_SSE2
 
+#ifdef HAS_YUY2TOYROW_AVX512VBMI
+static const llvec8 kShuffleYUY2ToY = {
+    0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
+    32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62,
+    64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94,
+    96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126,
+};
+
+void YUY2ToYRow_AVX512VBMI(const uint8_t* src_yuy2, uint8_t* dst_y, int width) {
+  asm volatile(
+      "vmovdqu8    %3,%%zmm2                     \n"
+      LABELALIGN
+      "1:                                        \n"
+      "vmovdqu8    (%0),%%zmm0                   \n"
+      "vmovdqu8    0x40(%0),%%zmm1               \n"
+      "lea         0x80(%0),%0                   \n"
+      "vpermt2b    %%zmm1,%%zmm2,%%zmm0          \n"
+      "vmovdqu8    %%zmm0,(%1)                   \n"
+      "lea         0x40(%1),%1                   \n"
+      "sub         $0x40,%2                      \n"
+      "jg          1b                            \n"
+
+      "vzeroupper                                \n"
+      : "+r"(src_yuy2),  // %0
+        "+r"(dst_y),     // %1
+        "+r"(width)      // %2
+      : "m"(kShuffleYUY2ToY)  // %3
+      : "memory", "cc", "xmm0", "xmm1", "xmm2");
+}
+#endif  // HAS_YUY2TOYROW_AVX512VBMI
+
 #ifdef HAS_YUY2TOYROW_AVX2
 void YUY2ToYRow_AVX2(const uint8_t* src_yuy2, uint8_t* dst_y, int width) {
   asm volatile(

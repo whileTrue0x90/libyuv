@@ -1230,6 +1230,14 @@ int YUY2ToI420(const uint8_t* src_yuy2,
     }
   }
 #endif
+#if defined(HAS_YUY2TOYROW_AVX512VBMI)
+  if (TestCpuFlag(kCpuHasAVX512VBMI)) {
+    YUY2ToYRow = YUY2ToYRow_Any_AVX512VBMI;
+    if (IS_ALIGNED(width, 64)) {
+      YUY2ToYRow = YUY2ToYRow_AVX512VBMI;
+    }
+  }
+#endif
 #if defined(HAS_YUY2TOYROW_NEON)
   if (TestCpuFlag(kCpuHasNEON)) {
     YUY2ToYRow = YUY2ToYRow_Any_NEON;

@@ -408,6 +408,7 @@ extern "C" {
 #if !defined(LIBYUV_DISABLE_X86) && \
     (defined(__x86_64__) || defined(__i386__)) && (defined(CLANG_HAS_AVX512))
 #define HAS_ARGBTORGB24ROW_AVX512VBMI
+#define HAS_YUY2TOYROW_AVX512VBMI
 #endif
 
 // The following are available for AVX512 clang x64 platforms:
@@ -765,6 +766,7 @@ typedef __declspec(align(32)) int8_t lvec8[32];
 typedef __declspec(align(32)) uint16_t ulvec16[16];
 typedef __declspec(align(32)) uint32_t ulvec32[8];
 typedef __declspec(align(32)) uint8_t ulvec8[32];
+typedef __declspec(align(32)) int8_t llvec8[64];
 #elif !defined(__pnacl__) && (defined(__GNUC__) || defined(__clang__))
 // Caveat GCC 4.2 to 4.7 have a known issue using vectors with const.
 #if defined(CLANG_HAS_AVX2) || defined(GCC_HAS_AVX2)
@@ -786,6 +788,7 @@ typedef int8_t __attribute__((vector_size(32))) lvec8;
 typedef uint16_t __attribute__((vector_size(32))) ulvec16;
 typedef uint32_t __attribute__((vector_size(32))) ulvec32;
 typedef uint8_t __attribute__((vector_size(32))) ulvec8;
+typedef int8_t __attribute__((vector_size(64))) llvec8;
 #else
 #define SIMD_ALIGNED(var) var
 #define LIBYUV_NOINLINE
@@ -802,6 +805,7 @@ typedef int8_t lvec8[32];
 typedef uint16_t ulvec16[16];
 typedef uint32_t ulvec32[8];
 typedef uint8_t ulvec8[32];
+typedef int8_t llvec8[64];
 #endif
 
 #if defined(__aarch64__) || defined(__arm__)
@@ -4721,6 +4725,7 @@ void UYVYToARGBRow_Any_LSX(const uint8_t* src_ptr,
                            const struct YuvConstants* yuvconstants,
                            int width);
 
+void YUY2ToYRow_AVX512VBMI(const uint8_t* src_yuy2, uint8_t* dst_y, int width);
 void YUY2ToYRow_AVX2(const uint8_t* src_yuy2, uint8_t* dst_y, int width);
 void YUY2ToUVRow_AVX2(const uint8_t* src_yuy2,
                       int stride_yuy2,
@@ -4797,6 +4802,7 @@ void YUY2ToUV422Row_C(const uint8_t* src_yuy2,
                       uint8_t* dst_u,
                       uint8_t* dst_v,
                       int width);
+void YUY2ToYRow_Any_AVX512VBMI(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void YUY2ToYRow_Any_AVX2(const uint8_t* src_ptr, uint8_t* dst_ptr, int width);
 void YUY2ToUVRow_Any_AVX2(const uint8_t* src_ptr,
                           int src_stride,
