@@ -655,12 +655,12 @@ void DetileToYUY2_NEON(const uint8_t* src_y,
                        int width) {
   asm volatile(
       "1:                                        \n"
-      "vld1.8      q0, [%0], %4                  \n"  // Load 16 Y
+      "vld1.8      d0, [%0], %4                  \n"  // Load 16 Y
       "pld         [%0, #1792]                   \n"
-      "vld1.8      q1, [%1], %5                  \n"  // Load 8 UV
+      "vld1.8      d1, [%1], %5                  \n"  // Load 8 UV
       "pld         [%1, #1792]                   \n"
       "subs        %3, %3, #16                   \n"
-      "vst2.8      {q0, q1}, [%2]!               \n"
+      "vst2.8      {d0, d1}, [%2]!               \n"
       "bgt         1b                            \n"
       : "+r"(src_y),                            // %0
         "+r"(src_uv),                           // %1
@@ -681,13 +681,13 @@ void DetileToYUY2_NEON(const uint8_t* src_y,
                        int width) {
   asm volatile(
       "1:                                        \n"
-      "vld1.8      q0, [%0], %4                  \n"  // Load 16 Y
-      "vld1.8      q1, [%1], %5                  \n"  // Load 8 UV
+      "vld1.8      d0, [%0], %4                  \n"  // Load 16 Y
+      "vld1.8      d1, [%1], %5                  \n"  // Load 8 UV
       "subs        %3, %3, #16                   \n"
       "pld         [%0, #1792]                   \n"
-      "vzip.8      q0, q1                        \n"
+      "vzip.8      d0, d1                        \n"
       "pld         [%1, #1792]                   \n"
-      "vst1.8      {q0, q1}, [%2]!               \n"
+      "vst1.8      {d0, d1}, [%2]!               \n"
       "bgt         1b                            \n"
       : "+r"(src_y),                            // %0
         "+r"(src_uv),                           // %1
@@ -695,7 +695,7 @@ void DetileToYUY2_NEON(const uint8_t* src_y,
         "+r"(width)                             // %3
       : "r"(src_y_tile_stride),                 // %4
         "r"(src_uv_tile_stride)                 // %5
-      : "cc", "memory", "q0", "q1", "q2", "q3"  // Clobber list
+      : "cc", "memory", "d0", "d1", "d2", "d3"  // Clobber list
   );
 }
 #endif
