@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "874846a5_44d2fb7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-10-14T01:43:37Z",
+      "side": 1,
+      "message": "LGTM.",
+      "revId": "6c2a39b73394813f874e308a95978af8e347974e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ae94e4d_3c72a32b",
+        "filename": "source/convert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-10-14T01:43:37Z",
+      "side": 1,
+      "message": "Optional: We can share the `TestCpuFlag(kCpuHasSSSE3)` call as follows:\n\n```\n#if defined(HAS_BGRATOYROW_SSSE3) || defined(HAS_BGRATOUVROW_SSSE3)\n  if (TestCpuFlag(kCpuHasSSSE3)) {\n#if defined(HAS_BGRATOYROW_SSSE3)\n    BGRAToYRow \u003d BGRAToYRow_Any_SSSE3;\n    if (IS_ALIGNED(width, 16)) {\n      BGRAToYRow \u003d BGRAToYRow_SSSE3;\n    }\n#endif\n#if defined(HAS_BGRATOUVROW_SSSE3)\n    BGRAToUVRow \u003d BGRAToUVRow_Any_SSSE3;\n    if (IS_ALIGNED(width, 16)) {\n      BGRAToUVRow \u003d BGRAToUVRow_SSSE3;\n    }\n#endif\n  }\n#endif\n```\n\nI am not sure if it is worth the complexity though.",
+      "revId": "6c2a39b73394813f874e308a95978af8e347974e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
