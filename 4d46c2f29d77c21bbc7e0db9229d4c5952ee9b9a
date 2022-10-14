@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ed96c48_d259474c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1558203
+      },
+      "writtenOn": "2022-10-14T08:04:42Z",
+      "side": 1,
+      "message": "If this change is ok, please run \"Dry Run\", because i haven\u0027t permission for it",
+      "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
