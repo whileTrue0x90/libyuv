@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4cd84a0_59711788",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-10-14T18:30:27Z",
+      "side": 1,
+      "message": "Thanks for the bug report and patch",
+      "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c31aa34_a04435d0",
@@ -31,6 +48,30 @@
       "writtenOn": "2022-10-14T18:00:26Z",
       "side": 1,
       "message": "d0 is not the same as q0, it\u0027s half as many bytes. q0 should be replaced by {d0, d1} and q1 should be replaced by {d2, d3}.",
+      "range": {
+        "startLine": 658,
+        "startChar": 19,
+        "endLine": 658,
+        "endChar": 21
+      },
+      "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b990a443_89aa2472",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-10-14T18:30:27Z",
+      "side": 1,
+      "message": "I\u0027d prefer use {q0} but the compiler will internally break it down into d0 and d1.\nvld1.8      {q0}, [%0], %4 \nFor example in DetileToYUY2 we load q0 and q1 and then use\nvzip.8      q0, q1 \nwhich is easier to understand if the registers have the name names/numbers/size as the vld1 that loaded them.  And the code is more similar to AArch64, which does natively support 128 bit loads.",
+      "parentUuid": "5c31aa34_a04435d0",
       "range": {
         "startLine": 658,
         "startChar": 19,
