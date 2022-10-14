@@ -16,6 +16,29 @@
       "message": "If this change is ok, please run \"Dry Run\", because i haven\u0027t permission for it",
       "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c31aa34_a04435d0",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1526622
+      },
+      "writtenOn": "2022-10-14T18:00:26Z",
+      "side": 1,
+      "message": "d0 is not the same as q0, it\u0027s half as many bytes. q0 should be replaced by {d0, d1} and q1 should be replaced by {d2, d3}.",
+      "range": {
+        "startLine": 658,
+        "startChar": 19,
+        "endLine": 658,
+        "endChar": 21
+      },
+      "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
