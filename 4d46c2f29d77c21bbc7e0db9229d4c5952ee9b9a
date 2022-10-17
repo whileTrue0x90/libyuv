@@ -80,6 +80,30 @@
       },
       "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d43ddde1_884ac730",
+        "filename": "source/row_neon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1558203
+      },
+      "writtenOn": "2022-10-17T12:48:23Z",
+      "side": 1,
+      "message": "Thank you for comment. So i\u0027ve abandoned my patch",
+      "parentUuid": "b990a443_89aa2472",
+      "range": {
+        "startLine": 658,
+        "startChar": 19,
+        "endLine": 658,
+        "endChar": 21
+      },
+      "revId": "4d46c2f29d77c21bbc7e0db9229d4c5952ee9b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
