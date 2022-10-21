@@ -16,6 +16,23 @@
       "message": "I don\u0027t have permissions to vote on this. It lgtm but you\u0027ll need a different reviewer.",
       "revId": "f8bc004648a1c356b33241074a0f03184915ad17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98f940ab_6b46dd61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2022-10-21T18:26:48Z",
+      "side": 1,
+      "message": "Consider tagging Chromium bug 1218384",
+      "revId": "f8bc004648a1c356b33241074a0f03184915ad17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
