@@ -5,7 +5,7 @@ gclient_gn_args = [
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '219d89149582d9cf450b5c4f1d636e4d291a075b',
+  'chromium_revision': '4d73be4a99ed874062c1eeaab80035f48e70e639',
   'gn_version': 'git_revision:6f13aaac55a977e1948910942675c69f2b4f7a94',
   # ninja CIPD package version.
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
@@ -17,13 +17,13 @@ vars = {
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '2cf254f018ff21ecffb42da96ea818eff3afb980',
+    Var('chromium_git') + '/chromium/src/build' + '@' + 'fad499770d99cba03b70f05eb317e98faa8510f9',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/src/buildtools' + '@' + 'ca6213a9de4f77e18219d822e1574bf40354da13',
+    Var('chromium_git') + '/chromium/src/buildtools' + '@' + '265695f359b7a180f573f5a9f36f285970658cb1',
   'src/testing':
-    Var('chromium_git') + '/chromium/src/testing' + '@' + '20937c1154d17a3fb1380901e9c25ca401061edb',
+    Var('chromium_git') + '/chromium/src/testing' + '@' + 'af0646bf83444cf6ccddc410cfbfda8cf8f56a8f',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '5d8d8067d05a5124b7af324bc260b9858b818d9e',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + 'fc71bd7562495d2378fd4935c07babe6dcdab5f8',
 
   'src/buildtools/linux64': {
     'packages': [
@@ -59,20 +59,20 @@ deps = {
   'src/buildtools/clang_format/script':
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/clang/tools/clang-format.git' + '@' + '8b525d2747f2584fc35d8c7e612e66f377858df7',
   'src/buildtools/third_party/libc++/trunk':
-    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxx.git' + '@' + 'e6caea47f873bd039e10e3e178112225a0d959fa',
+    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxx.git' + '@' + '47b31179d10646029c260702650a25d24f555acc',
   'src/buildtools/third_party/libc++abi/trunk':
-    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git' + '@' + '685c4ad257da543bdf9e3a391c28b3e4ac1f8aac',
+    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git' + '@' + '519e9ef6cc1c284bb1ee13540f123cdc4c269224',
   'src/buildtools/third_party/libunwind/trunk':
-    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + '1111799723f6a003e6f52202b9bf84387c552081',
+    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + 'aabcd8753678f1536e15eb6385a948470debdae4',
 
   'src/third_party/catapult':
-    Var('chromium_git') + '/catapult.git' + '@' + 'b049f00cff9843f42aa34303111616424071e543',
+    Var('chromium_git') + '/catapult.git' + '@' + 'd2c6581dd8049940ae8eaaa1f2d4f62db5d3fa96',
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'dbaca22bdf3925c498ff150dde847efcf2562f0a',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '6f2321d1de694d4ca56784ba8b5634f9ca74b3a6',
   'src/third_party/freetype/src':
-    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + '8493877e78596cf7fe8eb008708070e3852d104a',
+    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + 'dea2e6358b2f963008d447d27564dd79890b61f0',
   'src/third_party/googletest/src':
     Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + 'af29db7ec28d6df1c7f0f745186884091e602e07',
   'src/third_party/harfbuzz-ng/src':
@@ -80,9 +80,9 @@ deps = {
   'src/third_party/libjpeg_turbo':
     Var('chromium_git') + '/chromium/deps/libjpeg_turbo.git' + '@' + 'ed683925e4897a84b3bffc5c1414c85b97a129a3',
   'src/third_party/nasm':
-    Var('chromium_git') + '/chromium/deps/nasm.git' + '@' + '5fd9246276814b5ebb7e56b821cedeecab9b674d',
+    Var('chromium_git') + '/chromium/deps/nasm.git' + '@' + 'fc8e0bd892ae133602f5a6f7a9a6840aa1b75989',
   'src/tools':
-    Var('chromium_git') + '/chromium/src/tools' + '@' + '11bbc9af4d09c89f99256fc66f190e0db3848190',
+    Var('chromium_git') + '/chromium/src/tools' + '@' + 'd8a9c7df6aee7b5642d877243eef9b5a8bff5b90',
 
   # libyuv-only dependencies (not present in Chromium).
   'src/third_party/gtest-parallel':
@@ -105,13 +105,13 @@ deps = {
       'dep_type': 'cipd',
   },
   'src/third_party/auto/src': {
-    'url': Var('chromium_git') + '/external/github.com/google/auto.git' + '@' + 'b8f2bad3876add5fdf8b72d8aad79451e483befd',
+    'url': Var('chromium_git') + '/external/github.com/google/auto.git' + '@' + '3659a0e6436d3acfeda04e0bd1df3603f1e7ffac',
     'condition': 'checkout_android',
   },
   'src/third_party/boringssl/src':
     'https://boringssl.googlesource.com/boringssl.git' + '@' + '1ee71185a2322dc354bee5e5a0abfb1810a27dc6',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '3d848a5c516ea5af32f1ec323dd3497eb663f516',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'fd55cc3619f3bbf658ef3acd1cbbac413e526f67',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -431,7 +431,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '2c9611441854cf46f9f61a01badd3e6573e10831',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '4b293be10b33dd4102261ccbd18b0fe8c0c7eb52',
     'condition': 'checkout_ios'
   },
 
