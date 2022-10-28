@@ -128,6 +128,21 @@ luci.list_view(
     title = "libyuv Try Builders",
 )
 
+# Generates realms.cfg
+
+luci.realm(name = "@root", bindings = [
+    # Allow admins to use LED & Swarming "Debug" feature on all WebRTC bots.
+    luci.binding(
+        roles = "role/swarming.poolUser",
+        groups = "project-libyuv-admins",
+    ),
+    luci.binding(
+        roles = "role/swarming.taskTriggerer",
+        groups = "project-libyuv-admins",
+    ),
+])
+
+
 # Generates commit-queue.cfg
 
 def libyuv_try_job_verifier(name, cq_group, experiment_percentage):
