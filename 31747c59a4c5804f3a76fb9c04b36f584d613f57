@@ -16,6 +16,24 @@
       "message": "Adding Magnus for OWNER",
       "revId": "31747c59a4c5804f3a76fb9c04b36f584d613f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cce74d7_a2d8e20c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1366072
+      },
+      "writtenOn": "2022-10-31T01:09:08Z",
+      "side": 1,
+      "message": "Ping.\n\nMagnus, can you give your stamp on this CL?",
+      "parentUuid": "15af3f2f_4d731704",
+      "revId": "31747c59a4c5804f3a76fb9c04b36f584d613f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
