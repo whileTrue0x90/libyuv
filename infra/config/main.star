@@ -70,6 +70,10 @@ luci.project(
     ],
     bindings = [
         luci.binding(
+            roles = "role/swarming.taskTriggerer", # for LED tasks.
+            groups = "project-libyuv-admins",
+        ),
+        luci.binding(
             roles = "role/configs.validator",
             users = "libyuv-try-builder@chops-service-accounts.iam.gserviceaccount.com",
         ),
