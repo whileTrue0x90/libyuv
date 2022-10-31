@@ -16,6 +16,24 @@
       "message": "My CL https://chromium-review.googlesource.com/c/libyuv/libyuv/+/3990604 never landed but you need to add the same here then LGTM.",
       "revId": "1a74458226567cad5561a809fc63b3d07cdc25f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed1d25dd_534f9746",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1366072
+      },
+      "writtenOn": "2022-10-31T14:43:12Z",
+      "side": 1,
+      "message": "\u003e     luci.binding(\n        roles \u003d \"role/swarming.poolUser\",\n        groups \u003d \"project-libyuv-admins\",\n    ),\n    \nIt seems that libyuv doesn\u0027t have any dedicated pool. \nSo the `poolUser` role is probably noop (?)\n\nAdding `role/swarming.taskTriggerer` to `luci.project` seems to generate the same realms.cfg with your CL.",
+      "parentUuid": "f3b8cf61_079f605c",
+      "revId": "1a74458226567cad5561a809fc63b3d07cdc25f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
