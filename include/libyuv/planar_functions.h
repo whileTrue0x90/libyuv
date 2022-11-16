@@ -116,6 +116,14 @@ void DetileToYUY2(const uint8_t* src_y,
                   int height,
                   int tile_height);
 
+void DetilePlane_16(const uint16_t* src_y,
+                    int src_stride_y,
+                    uint16_t* dst_y,
+                    int dst_stride_y,
+                    int width,
+                    int height,
+                    int tile_height);
+
 // Split interleaved UV plane into separate U and V planes.
 LIBYUV_API
 void SplitUVPlane(const uint8_t* src_uv,
