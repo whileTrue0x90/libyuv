@@ -16,6 +16,23 @@
       "message": "profile on Skylake\nOverhead  Command      Shared Object           Symbol\n  92.48%  libyuv_test  liblibyuv_impl.so       [.] DetileRow_16_SSE2\n   1.22%  libyuv_test  liblibyuv_test.so       [.] libyuv::LibYUVPlanarTest_TestDetilePlane_16_Test::TestBody\n   1.14%  libyuv_test  liblibyuv_test.so       [.] testing::internal",
       "revId": "1f6246e93e386047e89c09aa8c0dba5f1691775c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52699771_dd237369",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-11-17T02:29:51Z",
+      "side": 1,
+      "message": "LGTM.",
+      "revId": "1f6246e93e386047e89c09aa8c0dba5f1691775c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
