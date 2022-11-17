@@ -290,6 +290,7 @@ extern "C" {
 #define HAS_CONVERT16TO8ROW_SSSE3
 #define HAS_CONVERT8TO16ROW_SSE2
 #define HAS_DETILEROW_SSE2
+#define HAS_DETILEROW_16_SSE2
 #define HAS_DETILESPLITUVROW_SSSE3
 #define HAS_DETILETOYUY2_SSE2
 #define HAS_HALFMERGEUVROW_SSSE3
@@ -449,6 +450,7 @@ extern "C" {
 #define HAS_BYTETOFLOATROW_NEON
 #define HAS_CONVERT16TO8ROW_NEON
 #define HAS_COPYROW_NEON
+#define HAS_DETILEROW_16_NEON
 #define HAS_DETILEROW_NEON
 #define HAS_DETILESPLITUVROW_NEON
 #define HAS_DETILETOYUY2_NEON
@@ -2012,7 +2014,6 @@ void DetileRow_C(const uint8_t* src,
                  ptrdiff_t src_tile_stride,
                  uint8_t* dst,
                  int width);
-
 void DetileRow_NEON(const uint8_t* src,
                     ptrdiff_t src_tile_stride,
                     uint8_t* dst,
@@ -2029,6 +2030,26 @@ void DetileRow_Any_SSE2(const uint8_t* src,
                         ptrdiff_t src_tile_stride,
                         uint8_t* dst,
                         int width);
+void DetileRow_16_C(const uint16_t* src,
+                    ptrdiff_t src_tile_stride,
+                    uint16_t* dst,
+                    int width);
+void DetileRow_16_NEON(const uint16_t* src,
+                       ptrdiff_t src_tile_stride,
+                       uint16_t* dst,
+                       int width);
+void DetileRow_16_Any_NEON(const uint16_t* src,
+                           ptrdiff_t src_tile_stride,
+                           uint16_t* dst,
+                           int width);
+void DetileRow_16_SSE2(const uint16_t* src,
+                       ptrdiff_t src_tile_stride,
+                       uint16_t* dst,
+                       int width);
+void DetileRow_16_Any_SSE2(const uint16_t* src,
+                           ptrdiff_t src_tile_stride,
+                           uint16_t* dst,
+                           int width);
 void DetileSplitUVRow_C(const uint8_t* src_uv,
                         ptrdiff_t src_tile_stride,
                         uint8_t* dst_u,
