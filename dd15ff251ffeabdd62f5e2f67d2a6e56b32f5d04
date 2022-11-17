@@ -33,6 +33,24 @@
       "message": "Nit: We can have spaces around the `-` sign.",
       "revId": "dd15ff251ffeabdd62f5e2f67d2a6e56b32f5d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c814a62_67c33e7a",
+        "filename": "source/planar_functions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-11-17T22:59:58Z",
+      "side": 1,
+      "message": "Keeping same as IS_ALIGNED for now.  Will change both at once in future.",
+      "parentUuid": "7ea90991_e680b50d",
+      "revId": "dd15ff251ffeabdd62f5e2f67d2a6e56b32f5d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
