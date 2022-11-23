@@ -596,13 +596,16 @@ TESTBPTOBP(MT2T, uint8_t, 10 / 8, 2, 2, P010, uint16_t, 2, 2, 2, 10, 16, 32)
     memset(dst_u_opt, 102, kDstHalfWidth* kDstHalfHeight* DST_BPC);            \
     memset(dst_v_opt, 103, kDstHalfWidth* kDstHalfHeight* DST_BPC);            \
     MaskCpuFlags(disable_cpu_flags_);                                          \
+    double c_time = get_time();                                                \
     SRC_FMT_PLANAR##To##FMT_PLANAR(                                            \
         src_y_p, kWidth, src_uv_p, kSrcHalfWidth * 2,                          \
         reinterpret_cast<DST_T*>(dst_y_c), kWidth,                             \
         reinterpret_cast<DST_T*>(dst_u_c), kDstHalfWidth,                      \
         reinterpret_cast<DST_T*>(dst_v_c), kDstHalfWidth, kWidth,              \
         NEG kHeight);                                                          \
+    c_time = (get_time() - c_time);                                            \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
+    double opt_time = get_time();                                              \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
       SRC_FMT_PLANAR##To##FMT_PLANAR(                                          \
           src_y_p, kWidth, src_uv_p, kSrcHalfWidth * 2,                        \
@@ -611,6 +614,9 @@ TESTBPTOBP(MT2T, uint8_t, 10 / 8, 2, 2, P010, uint16_t, 2, 2, 2, 10, 16, 32)
           reinterpret_cast<DST_T*>(dst_v_opt), kDstHalfWidth, kWidth,          \
           NEG kHeight);                                                        \
     }                                                                          \
+    opt_time = (get_time() - opt_time) / benchmark_iterations_;                \
+    printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),         \
+           static_cast<int>(opt_time * 1e6));                                  \
     for (int i = 0; i < kHeight * kWidth * DST_BPC; ++i) {                     \
       EXPECT_EQ(dst_y_c[i], dst_y_opt[i]);                                     \
     }                                                                          \
@@ -1099,14 +1105,20 @@ TESTQPLANARTOB(I422Alpha, 2, 1, ARGBFilter, 4, 4, 1)
     memset(dst_argb_c, 1, kStrideB* kHeight);                                  \
     memset(dst_argb_opt, 101, kStrideB* kHeight);                              \
     MaskCpuFlags(disable_cpu_flags_);                                          \
+    double c_time = get_time();                                                \
     FMT_PLANAR##To##FMT_B(src_y + OFF, kWidth, src_uv + OFF, kStrideUV * 2,    \
                           dst_argb_c, kWidth * BPP_B, kWidth, NEG kHeight);    \
+    c_time = (get_time() - c_time);                                            \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
+    double opt_time = get_time();                                              \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
       FMT_PLANAR##To##FMT_B(src_y + OFF, kWidth, src_uv + OFF, kStrideUV * 2,  \
                             dst_argb_opt, kWidth * BPP_B, kWidth,              \
                             NEG kHeight);                                      \
     }                                                                          \
+    opt_time = (get_time() - opt_time) / benchmark_iterations_;                \
+    printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),         \
+           static_cast<int>(opt_time * 1e6));                                  \
     /* Convert to ARGB so 565 is expanded to bytes that can be compared. */    \
     align_buffer_page_end(dst_argb32_c, kWidth * 4 * kHeight);                 \
     align_buffer_page_end(dst_argb32_opt, kWidth * 4 * kHeight);               \
@@ -1365,13 +1377,19 @@ TESTATOBP(AYUV, 1, 4, NV21, 2, 2)
     memset(dst_argb_c, 1, kStrideB* kHeightB);                                 \
     memset(dst_argb_opt, 101, kStrideB* kHeightB);                             \
     MaskCpuFlags(disable_cpu_flags_);                                          \
+    double c_time = get_time();                                                \
     FMT_A##To##FMT_B((TYPE_A*)(src_argb + OFF), kStrideA, (TYPE_B*)dst_argb_c, \
                      kStrideB, kWidth, NEG kHeight);                           \
+    c_time = (get_time() - c_time);                                            \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
+    double opt_time = get_time();                                              \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
       FMT_A##To##FMT_B((TYPE_A*)(src_argb + OFF), kStrideA,                    \
                        (TYPE_B*)dst_argb_opt, kStrideB, kWidth, NEG kHeight);  \
     }                                                                          \
+    opt_time = (get_time() - opt_time) / benchmark_iterations_;                \
+    printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),         \
+           static_cast<int>(opt_time * 1e6));                                  \
     for (int i = 0; i < kStrideB * kHeightB * (int)sizeof(TYPE_B); ++i) {      \
       EXPECT_EQ(dst_argb_c[i], dst_argb_opt[i]);                               \
     }                                                                          \
