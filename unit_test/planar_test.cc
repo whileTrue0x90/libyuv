@@ -3094,21 +3094,26 @@ TEST_F(LibYUVPlanarTest, MergeRGBPlane_Opt) {
   SplitRGBPlane(src_pixels, benchmark_width_ * 3, tmp_pixels_r,
                 benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                 benchmark_width_, benchmark_width_, benchmark_height_);
+  double c_time = get_time();
   MergeRGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                 tmp_pixels_b, benchmark_width_, dst_pixels_c,
                 benchmark_width_ * 3, benchmark_width_, benchmark_height_);
+  c_time = (get_time() - c_time);
   MaskCpuFlags(benchmark_cpu_info_);
 
   SplitRGBPlane(src_pixels, benchmark_width_ * 3, tmp_pixels_r,
                 benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                 benchmark_width_, benchmark_width_, benchmark_height_);
-
+  double opt_time = get_time();
   for (int i = 0; i < benchmark_iterations_; ++i) {
     MergeRGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g,
                   benchmark_width_, tmp_pixels_b, benchmark_width_,
                   dst_pixels_opt, benchmark_width_ * 3, benchmark_width_,
                   benchmark_height_);
   }
+  opt_time = (get_time() - opt_time) / benchmark_iterations_;
+  printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),
+         static_cast<int>(opt_time * 1e6));
 
   for (int i = 0; i < kPixels * 3; ++i) {
     EXPECT_EQ(dst_pixels_c[i], dst_pixels_opt[i]);
@@ -3140,20 +3145,25 @@ TEST_F(LibYUVPlanarTest, SplitRGBPlane_Opt) {
   MemRandomize(dst_pixels_c, kPixels * 3);
 
   MaskCpuFlags(disable_cpu_flags_);
+  double c_time = get_time();
   SplitRGBPlane(src_pixels, benchmark_width_ * 3, tmp_pixels_r,
                 benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                 benchmark_width_, benchmark_width_, benchmark_height_);
+  c_time = (get_time() - c_time);
   MergeRGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                 tmp_pixels_b, benchmark_width_, dst_pixels_c,
                 benchmark_width_ * 3, benchmark_width_, benchmark_height_);
   MaskCpuFlags(benchmark_cpu_info_);
-
+  double opt_time = get_time();
   for (int i = 0; i < benchmark_iterations_; ++i) {
     SplitRGBPlane(src_pixels, benchmark_width_ * 3, tmp_pixels_r,
                   benchmark_width_, tmp_pixels_g, benchmark_width_,
                   tmp_pixels_b, benchmark_width_, benchmark_width_,
                   benchmark_height_);
   }
+  opt_time = (get_time() - opt_time) / benchmark_iterations_;
+  printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),
+         static_cast<int>(opt_time * 1e6));
   MergeRGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                 tmp_pixels_b, benchmark_width_, dst_pixels_opt,
                 benchmark_width_ * 3, benchmark_width_, benchmark_height_);
@@ -3193,10 +3203,12 @@ TEST_F(LibYUVPlanarTest, MergeARGBPlane_Opt) {
                  benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                  benchmark_width_, tmp_pixels_a, benchmark_width_,
                  benchmark_width_, benchmark_height_);
+  double c_time = get_time();
   MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                  tmp_pixels_b, benchmark_width_, tmp_pixels_a, benchmark_width_,
                  dst_pixels_c, benchmark_width_ * 4, benchmark_width_,
                  benchmark_height_);
+  c_time = (get_time() - c_time);
 
   MaskCpuFlags(benchmark_cpu_info_);
   SplitARGBPlane(src_pixels, benchmark_width_ * 4, tmp_pixels_r,
@@ -3204,12 +3216,16 @@ TEST_F(LibYUVPlanarTest, MergeARGBPlane_Opt) {
                  benchmark_width_, tmp_pixels_a, benchmark_width_,
                  benchmark_width_, benchmark_height_);
 
+  double opt_time = get_time();
   for (int i = 0; i < benchmark_iterations_; ++i) {
     MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g,
                    benchmark_width_, tmp_pixels_b, benchmark_width_,
                    tmp_pixels_a, benchmark_width_, dst_pixels_opt,
                    benchmark_width_ * 4, benchmark_width_, benchmark_height_);
   }
+  opt_time = (get_time() - opt_time) / benchmark_iterations_;
+  printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),
+         static_cast<int>(opt_time * 1e6));
 
   for (int i = 0; i < kPixels * 4; ++i) {
     EXPECT_EQ(dst_pixels_c[i], dst_pixels_opt[i]);
@@ -3243,22 +3259,28 @@ TEST_F(LibYUVPlanarTest, SplitARGBPlane_Opt) {
   MemRandomize(dst_pixels_c, kPixels * 4);
 
   MaskCpuFlags(disable_cpu_flags_);
+  double c_time = get_time();
   SplitARGBPlane(src_pixels, benchmark_width_ * 4, tmp_pixels_r,
                  benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                  benchmark_width_, tmp_pixels_a, benchmark_width_,
                  benchmark_width_, benchmark_height_);
+  c_time = (get_time() - c_time);
   MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                  tmp_pixels_b, benchmark_width_, tmp_pixels_a, benchmark_width_,
                  dst_pixels_c, benchmark_width_ * 4, benchmark_width_,
                  benchmark_height_);
 
   MaskCpuFlags(benchmark_cpu_info_);
+  double opt_time = get_time();
   for (int i = 0; i < benchmark_iterations_; ++i) {
     SplitARGBPlane(src_pixels, benchmark_width_ * 4, tmp_pixels_r,
                    benchmark_width_, tmp_pixels_g, benchmark_width_,
                    tmp_pixels_b, benchmark_width_, tmp_pixels_a,
                    benchmark_width_, benchmark_width_, benchmark_height_);
   }
+  opt_time = (get_time() - opt_time) / benchmark_iterations_;
+  printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),
+         static_cast<int>(opt_time * 1e6));
 
   MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                  tmp_pixels_b, benchmark_width_, tmp_pixels_a, benchmark_width_,
@@ -3299,9 +3321,11 @@ TEST_F(LibYUVPlanarTest, MergeXRGBPlane_Opt) {
                  benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                  benchmark_width_, NULL, 0, benchmark_width_,
                  benchmark_height_);
+  double c_time = get_time();
   MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                  tmp_pixels_b, benchmark_width_, NULL, 0, dst_pixels_c,
                  benchmark_width_ * 4, benchmark_width_, benchmark_height_);
+  c_time = (get_time() - c_time);
 
   MaskCpuFlags(benchmark_cpu_info_);
   SplitARGBPlane(src_pixels, benchmark_width_ * 4, tmp_pixels_r,
@@ -3309,12 +3333,16 @@ TEST_F(LibYUVPlanarTest, MergeXRGBPlane_Opt) {
                  benchmark_width_, NULL, 0, benchmark_width_,
                  benchmark_height_);
 
+  double opt_time = get_time();
   for (int i = 0; i < benchmark_iterations_; ++i) {
     MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g,
                    benchmark_width_, tmp_pixels_b, benchmark_width_, NULL, 0,
                    dst_pixels_opt, benchmark_width_ * 4, benchmark_width_,
                    benchmark_height_);
   }
+  opt_time = (get_time() - opt_time) / benchmark_iterations_;
+  printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),
+         static_cast<int>(opt_time * 1e6));
 
   for (int i = 0; i < kPixels * 4; ++i) {
     EXPECT_EQ(dst_pixels_c[i], dst_pixels_opt[i]);
@@ -3345,21 +3373,27 @@ TEST_F(LibYUVPlanarTest, SplitXRGBPlane_Opt) {
   MemRandomize(dst_pixels_c, kPixels * 4);
 
   MaskCpuFlags(disable_cpu_flags_);
+  double c_time = get_time();
   SplitARGBPlane(src_pixels, benchmark_width_ * 4, tmp_pixels_r,
                  benchmark_width_, tmp_pixels_g, benchmark_width_, tmp_pixels_b,
                  benchmark_width_, NULL, 0, benchmark_width_,
                  benchmark_height_);
+  c_time = (get_time() - c_time);
   MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                  tmp_pixels_b, benchmark_width_, NULL, 0, dst_pixels_c,
                  benchmark_width_ * 4, benchmark_width_, benchmark_height_);
 
   MaskCpuFlags(benchmark_cpu_info_);
+  double opt_time = get_time();
   for (int i = 0; i < benchmark_iterations_; ++i) {
     SplitARGBPlane(src_pixels, benchmark_width_ * 4, tmp_pixels_r,
                    benchmark_width_, tmp_pixels_g, benchmark_width_,
                    tmp_pixels_b, benchmark_width_, NULL, 0, benchmark_width_,
                    benchmark_height_);
   }
+  opt_time = (get_time() - opt_time) / benchmark_iterations_;
+  printf(" %8d us C - %8d us OPT\n", static_cast<int>(c_time * 1e6),
+         static_cast<int>(opt_time * 1e6));
 
   MergeARGBPlane(tmp_pixels_r, benchmark_width_, tmp_pixels_g, benchmark_width_,
                  tmp_pixels_b, benchmark_width_, NULL, 0, dst_pixels_opt,
