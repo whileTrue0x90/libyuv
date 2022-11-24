@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1598e136_4c418107",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2022-11-24T07:35:56Z",
+      "side": 1,
+      "message": "Should we revert this one? (it is from the previous CL, or are you landing both together?)",
+      "revId": "1085cbda48ec015d9510c849d9ea6ea5721344ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
