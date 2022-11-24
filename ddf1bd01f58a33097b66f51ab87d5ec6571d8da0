@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf0562ba_450dcb49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-11-24T02:44:13Z",
+      "side": 1,
+      "message": "CMake is contributed, so I don\u0027t have a strong opinion on the change.\nWe prefer use libjpeg_turbo, but its mainly on Windows with webcams that product MJPG where we need it.\nIdeally it will work with static or dynamic libs.",
+      "revId": "ddf1bd01f58a33097b66f51ab87d5ec6571d8da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
