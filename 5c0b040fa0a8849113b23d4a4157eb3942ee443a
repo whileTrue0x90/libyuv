@@ -16,6 +16,159 @@
       "message": "Let\u0027s double check https://bugs.chromium.org/p/libyuv/issues/detail?id\u003d642 is not a problem anymore.\n\nhttps://codereview.chromium.org/2386093003 seems like it was a workaround to that (unrelated from NaCL).",
       "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ded9db5b_49e40bc2",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "It\u0027s safer to paranthesize the whole thing:\n\n```\ndefine STATIC_CAST(type, expr) ((type)(expr))\n```\n\nWe don\u0027t need to parenthesize `static_cast\u003ctype\u003e(expr)` because it is one token. (Not sure if I\u0027m using the term \"token\" correctly.)",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ac5a34e_141a1942",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "This statement needs only one cast.\n\nNOTE: There are a lot of statements like this that need only one cast. To avoid sending you too many review comments, I will just let you go through the file and find them.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af468190_5baa8097",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "Omit the parentheses in `(b)`, `(g)`, `(r)`, `(a)`.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d63fc5a_bc01e7d0",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "Omit the parantheses in `(b)`, `(g)`, `(r)`.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad338c5c_68c03189",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "Omit the parantheses in `(b0)`, `(g0)`, etc.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bdf6fe4_4f0902d5",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "Omit the parantheses in `(b0)`, `(g0)`, etc.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3555e14_2b738747",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3517,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "Undo this change. It is not necessary.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e839448_9591a464",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3530,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "These four casts to `float` should be reviewed. They do not seem correct/optimal.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b10079be_015e8729",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4544,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-07T21:08:06Z",
+      "side": 1,
+      "message": "Nit: note that there is no newline at the end of the file now.",
+      "revId": "5c0b040fa0a8849113b23d4a4157eb3942ee443a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
