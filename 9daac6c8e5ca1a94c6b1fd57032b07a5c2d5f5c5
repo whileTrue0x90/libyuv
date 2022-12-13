@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50fc53a4_d9138a6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T20:00:03Z",
+      "side": 1,
+      "message": "LGTM.\n\nI reviewed the Google-internal version of this CL. I don\u0027t know if you responded to my suggestions there, but I am repeating my suggestions below.",
+      "revId": "9daac6c8e5ca1a94c6b1fd57032b07a5c2d5f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88934970_32a1c513",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T20:00:03Z",
+      "side": 1,
+      "message": "Nit: The whole thing should be parenthesized:\n\n```\n#define STATIC_CAST(type, expr) ((type)(expr))\n```\n\nIn general it\u0027s safer to parenthesize the macro parameters, and if the macro expands to an expression, parenthesize the whole expression.\n\nWe don\u0027t need to parenthesize `static_cast\u003ctype\u003e(expr)` because it is a single item.",
+      "revId": "9daac6c8e5ca1a94c6b1fd57032b07a5c2d5f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0adbe192_4cf92976",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T20:00:03Z",
+      "side": 1,
+      "message": "This uses more casts than necessary. C automatically converts operands of smaller integer types to `int`. It\u0027s simpler to perform all the operations using `int` and just cast the final result to `uint8_t`:\n\n```\n    uint8_t g \u003d STATIC_CAST(uint8_t, (src_rgb565[0] \u003e\u003e 5) | ((src_rgb565[1] \u0026 0x07) \u003c\u003c 3));\n```\n\nThere are many other occurrences of this issue in this CL.",
+      "revId": "9daac6c8e5ca1a94c6b1fd57032b07a5c2d5f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
