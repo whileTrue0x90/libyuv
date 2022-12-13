@@ -71,6 +71,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c9f165d_0b104335",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:15:36Z",
+      "side": 1,
+      "message": "Array subscripting `[]` and struct member access by pointer `-\u003e` have higher precedence than the cast operator:\nhttps://en.cppreference.com/w/c/language/operator_precedence\n\nSo something like `STATIC_CAST(uint16_t *, buf)[i]` would need the parentheses around `(type)(expr)`.\n\nSince we never use the `STATIC_CAST` macro with a pointer type, the current macro definition works.",
+      "parentUuid": "811d02d6_fbefa23f",
+      "revId": "9daac6c8e5ca1a94c6b1fd57032b07a5c2d5f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0adbe192_4cf92976",
