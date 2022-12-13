@@ -16,6 +16,108 @@
       "message": "reduced redundent casts in row_common but there are still a few extra.",
       "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1d39b13_00d60a90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "Still LGTM. I suggest some changes.",
+      "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edfe4388_b8e8988b",
+        "filename": "include/libyuv/convert.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "Please describe this change in the commit message.",
+      "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81b24350_33d52287",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "Nit: revert the parentheses in `(b)`, `(g)`, `(r)`, `(a)`.",
+      "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98b68fb4_59dbfaff",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "Nit: Omit the parentheses in `(b)`, `(g)`, `(r)`.",
+      "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fa9e330_d13dff2e",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "Nit: Omit the parentheses in `(b0)`, `(g0)`, `(r0)`, etc.",
+      "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea83581b_fb8e78de",
+        "filename": "source/row_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "Nit: Omit the parentheses in `(b0)`, `(g0)`, `(r0)`, etc.",
+      "revId": "248edb5c1c38ddcb3078bedae6440b57cc2e2cc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }

@@ -107,6 +107,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1db7e200_f038ee9f",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2022-12-13T21:40:16Z",
+      "side": 1,
+      "message": "You are right. Casting to a different pointer type should use `reinterpret_cast`.",
+      "parentUuid": "aeb686ef_ea3ba5ca",
+      "revId": "9daac6c8e5ca1a94c6b1fd57032b07a5c2d5f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0adbe192_4cf92976",
