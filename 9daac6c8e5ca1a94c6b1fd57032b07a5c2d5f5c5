@@ -89,6 +89,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aeb686ef_ea3ba5ca",
+        "filename": "source/row_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-13T21:29:01Z",
+      "side": 1,
+      "message": "It would expand to (uint16_t *)(buf)[i].  okay, I guess youre right but that isn\u0027t used and would probably want to be a reinterpret_cast\nI\u0027m not sure I\u0027ll keep the static cast... a C cast is preferred.",
+      "parentUuid": "2c9f165d_0b104335",
+      "revId": "9daac6c8e5ca1a94c6b1fd57032b07a5c2d5f5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0adbe192_4cf92976",
