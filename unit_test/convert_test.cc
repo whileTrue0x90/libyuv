@@ -417,12 +417,11 @@ TESTPLANARTOBP(I210, uint16_t, 2, 2, 1, P210, uint16_t, 2, 2, 1, 10)
 TESTPLANARTOBP(I012, uint16_t, 2, 2, 2, P012, uint16_t, 2, 2, 2, 12)
 TESTPLANARTOBP(I212, uint16_t, 2, 2, 1, P212, uint16_t, 2, 2, 1, 12)
 
-#define TESTBIPLANARTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,       \
-                          SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC,           \
-                          DST_SUBSAMP_X, DST_SUBSAMP_Y, W1280, N, NEG, OFF,    \
-                          DOY, SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)             \
+#define TESTBPTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,             \
+                    SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,  \
+                    DST_SUBSAMP_Y, W1280, N, NEG, OFF, DOY, SRC_DEPTH,         \
+                    TILE_WIDTH, TILE_HEIGHT)                                   \
   TEST_F(LibYUVConvertTest, SRC_FMT_PLANAR##To##FMT_PLANAR##N) {               \
-    static_assert(SRC_BPC == 1 || SRC_BPC == 2, "SRC BPC unsupported");        \
     static_assert(DST_BPC == 1 || DST_BPC == 2, "DST BPC unsupported");        \
     static_assert(SRC_SUBSAMP_X == 1 || SRC_SUBSAMP_X == 2,                    \
                   "SRC_SUBSAMP_X unsupported");                                \
@@ -468,14 +467,16 @@ TESTPLANARTOBP(I212, uint16_t, 2, 2, 1, P212, uint16_t, 2, 2, 1, 12)
     memset(dst_uv_opt, 102, 2 * kDstHalfWidth * kDstHalfHeight * DST_BPC);     \
     MaskCpuFlags(disable_cpu_flags_);                                          \
     SRC_FMT_PLANAR##To##FMT_PLANAR(                                            \
-        src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                          \
+        src_y_p, kWidth* SRC_BPC / sizeof(SRC_T), src_uv_p,                    \
+        2 * kSrcHalfWidth * SRC_BPC / sizeof(SRC_T),                           \
         DOY ? reinterpret_cast<DST_T*>(dst_y_c) : NULL, kWidth,                \
         reinterpret_cast<DST_T*>(dst_uv_c), 2 * kDstHalfWidth, kWidth,         \
         NEG kHeight);                                                          \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
       SRC_FMT_PLANAR##To##FMT_PLANAR(                                          \
-          src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                        \
+          src_y_p, kWidth* SRC_BPC / sizeof(SRC_T), src_uv_p,                  \
+          2 * kSrcHalfWidth * SRC_BPC / sizeof(SRC_T),                         \
           DOY ? reinterpret_cast<DST_T*>(dst_y_opt) : NULL, kWidth,            \
           reinterpret_cast<DST_T*>(dst_uv_opt), 2 * kDstHalfWidth, kWidth,     \
           NEG kHeight);                                                        \
@@ -501,67 +502,51 @@ TESTPLANARTOBP(I212, uint16_t, 2, 2, 1, P212, uint16_t, 2, 2, 1, 12)
     free_aligned_buffer_page_end(src_uv);                                      \
   }
 
-#define TESTBIPLANARTOBP(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,        \
-                         SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC,            \
-                         DST_SUBSAMP_X, DST_SUBSAMP_Y, SRC_DEPTH, TILE_WIDTH,  \
-                         TILE_HEIGHT)                                          \
-  TESTBIPLANARTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,             \
-                    SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,  \
-                    DST_SUBSAMP_Y, benchmark_width_ + 1, _Any, +, 0, 1,        \
-                    SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)                        \
-  TESTBIPLANARTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,             \
-                    SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,  \
-                    DST_SUBSAMP_Y, benchmark_width_, _Unaligned, +, 2, 1,      \
-                    SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)                        \
-  TESTBIPLANARTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,             \
-                    SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,  \
-                    DST_SUBSAMP_Y, benchmark_width_, _Invert, -, 0, 1,         \
-                    SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)                        \
-  TESTBIPLANARTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,             \
-                    SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,  \
-                    DST_SUBSAMP_Y, benchmark_width_, _Opt, +, 0, 1, SRC_DEPTH, \
-                    TILE_WIDTH, TILE_HEIGHT)                                   \
-  TESTBIPLANARTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,             \
-                    SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,  \
-                    DST_SUBSAMP_Y, benchmark_width_, _NullY, +, 0, 0,          \
-                    SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)
+#define TESTBPTOBP(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,            \
+                   SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, \
+                   DST_SUBSAMP_Y, SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)        \
+  TESTBPTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+              FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+              benchmark_width_ + 1, _Any, +, 0, 1, SRC_DEPTH, TILE_WIDTH,    \
+              TILE_HEIGHT)                                                   \
+  TESTBPTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+              FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+              benchmark_width_, _Unaligned, +, 2, 1, SRC_DEPTH, TILE_WIDTH,  \
+              TILE_HEIGHT)                                                   \
+  TESTBPTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+              FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+              benchmark_width_, _Invert, -, 0, 1, SRC_DEPTH, TILE_WIDTH,     \
+              TILE_HEIGHT)                                                   \
+  TESTBPTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+              FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+              benchmark_width_, _Opt, +, 0, 1, SRC_DEPTH, TILE_WIDTH,        \
+              TILE_HEIGHT)                                                   \
+  TESTBPTOBPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+              FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+              benchmark_width_, _NullY, +, 0, 0, SRC_DEPTH, TILE_WIDTH,      \
+              TILE_HEIGHT)
 
-TESTBIPLANARTOBP(NV21, uint8_t, 1, 2, 2, NV12, uint8_t, 1, 2, 2, 8, 1, 1)
-TESTBIPLANARTOBP(NV12, uint8_t, 1, 2, 2, NV12Mirror, uint8_t, 1, 2, 2, 8, 1, 1)
-TESTBIPLANARTOBP(NV12, uint8_t, 1, 2, 2, NV24, uint8_t, 1, 1, 1, 8, 1, 1)
-TESTBIPLANARTOBP(NV16, uint8_t, 1, 2, 1, NV24, uint8_t, 1, 1, 1, 8, 1, 1)
-TESTBIPLANARTOBP(P010, uint16_t, 2, 2, 2, P410, uint16_t, 2, 1, 1, 10, 1, 1)
-TESTBIPLANARTOBP(P210, uint16_t, 2, 2, 1, P410, uint16_t, 2, 1, 1, 10, 1, 1)
-TESTBIPLANARTOBP(P012, uint16_t, 2, 2, 2, P412, uint16_t, 2, 1, 1, 10, 1, 1)
-TESTBIPLANARTOBP(P212, uint16_t, 2, 2, 1, P412, uint16_t, 2, 1, 1, 12, 1, 1)
-TESTBIPLANARTOBP(P016, uint16_t, 2, 2, 2, P416, uint16_t, 2, 1, 1, 12, 1, 1)
-TESTBIPLANARTOBP(P216, uint16_t, 2, 2, 1, P416, uint16_t, 2, 1, 1, 12, 1, 1)
-TESTBIPLANARTOBP(MM21, uint8_t, 1, 2, 2, NV12, uint8_t, 1, 2, 2, 8, 16, 32)
+TESTBPTOBP(NV21, uint8_t, 1, 2, 2, NV12, uint8_t, 1, 2, 2, 8, 1, 1)
+TESTBPTOBP(NV12, uint8_t, 1, 2, 2, NV12Mirror, uint8_t, 1, 2, 2, 8, 1, 1)
+TESTBPTOBP(NV12, uint8_t, 1, 2, 2, NV24, uint8_t, 1, 1, 1, 8, 1, 1)
+TESTBPTOBP(NV16, uint8_t, 1, 2, 1, NV24, uint8_t, 1, 1, 1, 8, 1, 1)
+TESTBPTOBP(P010, uint16_t, 2, 2, 2, P410, uint16_t, 2, 1, 1, 10, 1, 1)
+TESTBPTOBP(P210, uint16_t, 2, 2, 1, P410, uint16_t, 2, 1, 1, 10, 1, 1)
+TESTBPTOBP(P012, uint16_t, 2, 2, 2, P412, uint16_t, 2, 1, 1, 10, 1, 1)
+TESTBPTOBP(P212, uint16_t, 2, 2, 1, P412, uint16_t, 2, 1, 1, 12, 1, 1)
+TESTBPTOBP(P016, uint16_t, 2, 2, 2, P416, uint16_t, 2, 1, 1, 12, 1, 1)
+TESTBPTOBP(P216, uint16_t, 2, 2, 1, P416, uint16_t, 2, 1, 1, 12, 1, 1)
+TESTBPTOBP(MM21, uint8_t, 1, 2, 2, NV12, uint8_t, 1, 2, 2, 8, 16, 32)
 
-// TODO (greenjustin): Test all variants.
-TESTBIPLANARTOBPI(MT2T,
-                  uint16_t,
-                  2,
-                  2,
-                  2,
-                  P010,
-                  uint16_t,
-                  2,
-                  2,
-                  2,
-                  benchmark_width_,
-                  _Opt,
-                  +,
-                  0,
-                  1,
-                  10,
-                  16,
-                  32)
+// TODO(b/262468594): Fix msan and port to x86
+#if !defined(DISABLE_SLOW_TESTS)
+TESTBPTOBP(MT2T, uint8_t, 10 / 8, 2, 2, P010, uint16_t, 2, 2, 2, 10, 16, 32)
+#endif
 
-#define TESTBIPLANARTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,        \
-                         SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC,            \
-                         DST_SUBSAMP_X, DST_SUBSAMP_Y, W1280, N, NEG, OFF,     \
-                         SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)                   \
+#define TESTBPTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,              \
+                   SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,   \
+                   DST_SUBSAMP_Y, W1280, N, NEG, OFF, SRC_DEPTH, TILE_WIDTH,   \
+                   TILE_HEIGHT)                                                \
   TEST_F(LibYUVConvertTest, SRC_FMT_PLANAR##To##FMT_PLANAR##N) {               \
     static_assert(SRC_BPC == 1 || SRC_BPC == 2, "SRC BPC unsupported");        \
     static_assert(DST_BPC == 1 || DST_BPC == 2, "DST BPC unsupported");        \
@@ -641,30 +626,28 @@ TESTBIPLANARTOBPI(MT2T,
     free_aligned_buffer_page_end(src_uv);                                      \
   }
 
-#define TESTBIPLANARTOP(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,         \
-                        SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC,             \
-                        DST_SUBSAMP_X, DST_SUBSAMP_Y, SRC_DEPTH, TILE_WIDTH,   \
-                        TILE_HEIGHT)                                           \
-  TESTBIPLANARTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,              \
-                   SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,   \
-                   DST_SUBSAMP_Y, benchmark_width_ + 1, _Any, +, 0, SRC_DEPTH, \
-                   TILE_WIDTH, TILE_HEIGHT)                                    \
-  TESTBIPLANARTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,              \
-                   SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,   \
-                   DST_SUBSAMP_Y, benchmark_width_, _Unaligned, +, 2,          \
-                   SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)                         \
-  TESTBIPLANARTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,              \
-                   SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,   \
-                   DST_SUBSAMP_Y, benchmark_width_, _Invert, -, 0, SRC_DEPTH,  \
-                   TILE_WIDTH, TILE_HEIGHT)                                    \
-  TESTBIPLANARTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,              \
-                   SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X,   \
-                   DST_SUBSAMP_Y, benchmark_width_, _Opt, +, 0, SRC_DEPTH,     \
-                   TILE_WIDTH, TILE_HEIGHT)
+#define TESTBPTOP(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,            \
+                  SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, \
+                  DST_SUBSAMP_Y, SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)        \
+  TESTBPTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+             FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+             benchmark_width_ + 1, _Any, +, 0, SRC_DEPTH, TILE_WIDTH,       \
+             TILE_HEIGHT)                                                   \
+  TESTBPTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+             FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+             benchmark_width_, _Unaligned, +, 2, SRC_DEPTH, TILE_WIDTH,     \
+             TILE_HEIGHT)                                                   \
+  TESTBPTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+             FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+             benchmark_width_, _Invert, -, 0, SRC_DEPTH, TILE_WIDTH,        \
+             TILE_HEIGHT)                                                   \
+  TESTBPTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X, SRC_SUBSAMP_Y,  \
+             FMT_PLANAR, DST_T, DST_BPC, DST_SUBSAMP_X, DST_SUBSAMP_Y,      \
+             benchmark_width_, _Opt, +, 0, SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)
 
-TESTBIPLANARTOP(NV12, uint8_t, 1, 2, 2, I420, uint8_t, 1, 2, 2, 8, 1, 1)
-TESTBIPLANARTOP(NV21, uint8_t, 1, 2, 2, I420, uint8_t, 1, 2, 2, 8, 1, 1)
-TESTBIPLANARTOP(MM21, uint8_t, 1, 2, 2, I420, uint8_t, 1, 2, 2, 8, 16, 32)
+TESTBPTOP(NV12, uint8_t, 1, 2, 2, I420, uint8_t, 1, 2, 2, 8, 1, 1)
+TESTBPTOP(NV21, uint8_t, 1, 2, 2, I420, uint8_t, 1, 2, 2, 8, 1, 1)
+TESTBPTOP(MM21, uint8_t, 1, 2, 2, I420, uint8_t, 1, 2, 2, 8, 16, 32)
 
 // Provide matrix wrappers for full range bt.709
 #define F420ToABGR(a, b, c, d, e, f, g, h, i, j) \
@@ -1089,8 +1072,8 @@ TESTQPLANARTOB(I420Alpha, 2, 2, ARGBFilter, 4, 4, 1)
 TESTQPLANARTOB(I422Alpha, 2, 1, ARGBFilter, 4, 4, 1)
 #endif
 
-#define TESTBIPLANARTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C,       \
-                         BPP_B, W1280, N, NEG, OFF)                            \
+#define TESTBPTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
+                   W1280, N, NEG, OFF)                                         \
   TEST_F(LibYUVConvertTest, FMT_PLANAR##To##FMT_B##N) {                        \
     const int kWidth = W1280;                                                  \
     const int kHeight = benchmark_height_;                                     \
@@ -1143,15 +1126,15 @@ TESTQPLANARTOB(I422Alpha, 2, 1, ARGBFilter, 4, 4, 1)
     free_aligned_buffer_page_end(dst_argb32_opt);                              \
   }
 
-#define TESTBIPLANARTOB(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B) \
-  TESTBIPLANARTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
-                   benchmark_width_ + 1, _Any, +, 0)                           \
-  TESTBIPLANARTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
-                   benchmark_width_, _Unaligned, +, 2)                         \
-  TESTBIPLANARTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
-                   benchmark_width_, _Invert, -, 0)                            \
-  TESTBIPLANARTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
-                   benchmark_width_, _Opt, +, 0)
+#define TESTBPTOB(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B) \
+  TESTBPTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
+             benchmark_width_ + 1, _Any, +, 0)                           \
+  TESTBPTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
+             benchmark_width_, _Unaligned, +, 2)                         \
+  TESTBPTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
+             benchmark_width_, _Invert, -, 0)                            \
+  TESTBPTOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, FMT_C, BPP_B,      \
+             benchmark_width_, _Opt, +, 0)
 
 #define JNV12ToARGB(a, b, c, d, e, f, g, h) \
   NV12ToARGBMatrix(a, b, c, d, e, f, &kYuvJPEGConstants, g, h)
@@ -1172,29 +1155,29 @@ TESTQPLANARTOB(I422Alpha, 2, 1, ARGBFilter, 4, 4, 1)
 #define JNV12ToRGB565(a, b, c, d, e, f, g, h) \
   NV12ToRGB565Matrix(a, b, c, d, e, f, &kYuvJPEGConstants, g, h)
 
-TESTBIPLANARTOB(JNV12, 2, 2, ARGB, ARGB, 4)
-TESTBIPLANARTOB(JNV21, 2, 2, ARGB, ARGB, 4)
-TESTBIPLANARTOB(JNV12, 2, 2, ABGR, ABGR, 4)
-TESTBIPLANARTOB(JNV21, 2, 2, ABGR, ABGR, 4)
-TESTBIPLANARTOB(JNV12, 2, 2, RGB24, RGB24, 3)
-TESTBIPLANARTOB(JNV21, 2, 2, RGB24, RGB24, 3)
-TESTBIPLANARTOB(JNV12, 2, 2, RAW, RAW, 3)
-TESTBIPLANARTOB(JNV21, 2, 2, RAW, RAW, 3)
+TESTBPTOB(JNV12, 2, 2, ARGB, ARGB, 4)
+TESTBPTOB(JNV21, 2, 2, ARGB, ARGB, 4)
+TESTBPTOB(JNV12, 2, 2, ABGR, ABGR, 4)
+TESTBPTOB(JNV21, 2, 2, ABGR, ABGR, 4)
+TESTBPTOB(JNV12, 2, 2, RGB24, RGB24, 3)
+TESTBPTOB(JNV21, 2, 2, RGB24, RGB24, 3)
+TESTBPTOB(JNV12, 2, 2, RAW, RAW, 3)
+TESTBPTOB(JNV21, 2, 2, RAW, RAW, 3)
 #ifdef LITTLE_ENDIAN_ONLY_TEST
-TESTBIPLANARTOB(JNV12, 2, 2, RGB565, RGB565, 2)
+TESTBPTOB(JNV12, 2, 2, RGB565, RGB565, 2)
 #endif
 
-TESTBIPLANARTOB(NV12, 2, 2, ARGB, ARGB, 4)
-TESTBIPLANARTOB(NV21, 2, 2, ARGB, ARGB, 4)
-TESTBIPLANARTOB(NV12, 2, 2, ABGR, ABGR, 4)
-TESTBIPLANARTOB(NV21, 2, 2, ABGR, ABGR, 4)
-TESTBIPLANARTOB(NV12, 2, 2, RGB24, RGB24, 3)
-TESTBIPLANARTOB(NV21, 2, 2, RGB24, RGB24, 3)
-TESTBIPLANARTOB(NV12, 2, 2, RAW, RAW, 3)
-TESTBIPLANARTOB(NV21, 2, 2, RAW, RAW, 3)
-TESTBIPLANARTOB(NV21, 2, 2, YUV24, RAW, 3)
+TESTBPTOB(NV12, 2, 2, ARGB, ARGB, 4)
+TESTBPTOB(NV21, 2, 2, ARGB, ARGB, 4)
+TESTBPTOB(NV12, 2, 2, ABGR, ABGR, 4)
+TESTBPTOB(NV21, 2, 2, ABGR, ABGR, 4)
+TESTBPTOB(NV12, 2, 2, RGB24, RGB24, 3)
+TESTBPTOB(NV21, 2, 2, RGB24, RGB24, 3)
+TESTBPTOB(NV12, 2, 2, RAW, RAW, 3)
+TESTBPTOB(NV21, 2, 2, RAW, RAW, 3)
+TESTBPTOB(NV21, 2, 2, YUV24, RAW, 3)
 #ifdef LITTLE_ENDIAN_ONLY_TEST
-TESTBIPLANARTOB(NV12, 2, 2, RGB565, RGB565, 2)
+TESTBPTOB(NV12, 2, 2, RGB565, RGB565, 2)
 #endif
 
 #define TESTATOPLANARI(FMT_A, BPP_A, YALIGN, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, \
@@ -1289,8 +1272,8 @@ TESTATOPLANAR(UYVY, 2, 1, I422, 2, 1)
 TESTATOPLANAR(YUY2, 2, 1, I420, 2, 2)
 TESTATOPLANAR(YUY2, 2, 1, I422, 2, 1)
 
-#define TESTATOBIPLANARI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X,          \
-                         SUBSAMP_Y, W1280, N, NEG, OFF)                       \
+#define TESTATOBPI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,     \
+                   W1280, N, NEG, OFF)                                        \
   TEST_F(LibYUVConvertTest, FMT_A##To##FMT_PLANAR##N) {                       \
     const int kWidth = W1280;                                                 \
     const int kHeight = benchmark_height_;                                    \
@@ -1336,25 +1319,25 @@ TESTATOPLANAR(YUY2, 2, 1, I422, 2, 1)
     free_aligned_buffer_page_end(src_argb);                                   \
   }
 
-#define TESTATOBIPLANAR(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y) \
-  TESTATOBIPLANARI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
-                   benchmark_width_ + 1, _Any, +, 0)                           \
-  TESTATOBIPLANARI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
-                   benchmark_width_, _Unaligned, +, 2)                         \
-  TESTATOBIPLANARI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
-                   benchmark_width_, _Invert, -, 0)                            \
-  TESTATOBIPLANARI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
-                   benchmark_width_, _Opt, +, 0)
+#define TESTATOBP(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y) \
+  TESTATOBPI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
+             benchmark_width_ + 1, _Any, +, 0)                           \
+  TESTATOBPI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
+             benchmark_width_, _Unaligned, +, 2)                         \
+  TESTATOBPI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
+             benchmark_width_, _Invert, -, 0)                            \
+  TESTATOBPI(FMT_A, SUB_A, BPP_A, FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y,      \
+             benchmark_width_, _Opt, +, 0)
 
-TESTATOBIPLANAR(ARGB, 1, 4, NV12, 2, 2)
-TESTATOBIPLANAR(ARGB, 1, 4, NV21, 2, 2)
-TESTATOBIPLANAR(ABGR, 1, 4, NV12, 2, 2)
-TESTATOBIPLANAR(ABGR, 1, 4, NV21, 2, 2)
-TESTATOBIPLANAR(RAW, 1, 3, JNV21, 2, 2)
-TESTATOBIPLANAR(YUY2, 2, 4, NV12, 2, 2)
-TESTATOBIPLANAR(UYVY, 2, 4, NV12, 2, 2)
-TESTATOBIPLANAR(AYUV, 1, 4, NV12, 2, 2)
-TESTATOBIPLANAR(AYUV, 1, 4, NV21, 2, 2)
+TESTATOBP(ARGB, 1, 4, NV12, 2, 2)
+TESTATOBP(ARGB, 1, 4, NV21, 2, 2)
+TESTATOBP(ABGR, 1, 4, NV12, 2, 2)
+TESTATOBP(ABGR, 1, 4, NV21, 2, 2)
+TESTATOBP(RAW, 1, 3, JNV21, 2, 2)
+TESTATOBP(YUY2, 2, 4, NV12, 2, 2)
+TESTATOBP(UYVY, 2, 4, NV12, 2, 2)
+TESTATOBP(AYUV, 1, 4, NV12, 2, 2)
+TESTATOBP(AYUV, 1, 4, NV21, 2, 2)
 
 #define TESTATOBI(FMT_A, TYPE_A, EPP_A, STRIDE_A, HEIGHT_A, FMT_B, TYPE_B,     \
                   EPP_B, STRIDE_B, HEIGHT_B, W1280, N, NEG, OFF)               \
@@ -3935,8 +3918,8 @@ TESTQPLANAR16TOB(I010Alpha, 2, 2, ARGBFilter, 4, 4, 1, 10)
 TESTQPLANAR16TOB(I210Alpha, 2, 1, ARGBFilter, 4, 4, 1, 10)
 #endif  // DISABLE_SLOW_TESTS
 
-#define TESTBIPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B,     \
-                           ALIGN, YALIGN, W1280, N, NEG, SOFF, DOFF, S_DEPTH)  \
+#define TESTBP16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,    \
+                     YALIGN, W1280, N, NEG, SOFF, DOFF, S_DEPTH)               \
   TEST_F(LibYUVConvertTest, FMT_PLANAR##To##FMT_B##N) {                        \
     const int kWidth = W1280;                                                  \
     const int kHeight = ALIGNINT(benchmark_height_, YALIGN);                   \
@@ -3979,16 +3962,16 @@ TESTQPLANAR16TOB(I210Alpha, 2, 1, ARGBFilter, 4, 4, 1, 10)
     free_aligned_buffer_page_end(dst_argb_opt);                                \
   }
 
-#define TESTBIPLANAR16TOB(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B,    \
-                          ALIGN, YALIGN, S_DEPTH)                            \
-  TESTBIPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,  \
-                     YALIGN, benchmark_width_ + 1, _Any, +, 0, 0, S_DEPTH)   \
-  TESTBIPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,  \
-                     YALIGN, benchmark_width_, _Unaligned, +, 4, 4, S_DEPTH) \
-  TESTBIPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,  \
-                     YALIGN, benchmark_width_, _Invert, -, 0, 0, S_DEPTH)    \
-  TESTBIPLANAR16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,  \
-                     YALIGN, benchmark_width_, _Opt, +, 0, 0, S_DEPTH)
+#define TESTBP16TOB(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN,    \
+                    YALIGN, S_DEPTH)                                          \
+  TESTBP16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN, YALIGN, \
+               benchmark_width_ + 1, _Any, +, 0, 0, S_DEPTH)                  \
+  TESTBP16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN, YALIGN, \
+               benchmark_width_, _Unaligned, +, 4, 4, S_DEPTH)                \
+  TESTBP16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN, YALIGN, \
+               benchmark_width_, _Invert, -, 0, 0, S_DEPTH)                   \
+  TESTBP16TOBI(FMT_PLANAR, SUBSAMP_X, SUBSAMP_Y, FMT_B, BPP_B, ALIGN, YALIGN, \
+               benchmark_width_, _Opt, +, 0, 0, S_DEPTH)
 
 #define P010ToARGB(a, b, c, d, e, f, g, h) \
   P010ToARGBMatrix(a, b, c, d, e, f, &kYuvH709Constants, g, h)
@@ -4031,23 +4014,23 @@ TESTQPLANAR16TOB(I210Alpha, 2, 1, ARGBFilter, 4, 4, 1, 10)
                          kFilterBilinear)
 
 #if !defined(DISABLE_SLOW_TESTS) || defined(__x86_64__) || defined(__i386__)
-TESTBIPLANAR16TOB(P010, 2, 2, ARGB, 4, 4, 1, 10)
-TESTBIPLANAR16TOB(P210, 2, 1, ARGB, 4, 4, 1, 10)
-TESTBIPLANAR16TOB(P012, 2, 2, ARGB, 4, 4, 1, 12)
-TESTBIPLANAR16TOB(P212, 2, 1, ARGB, 4, 4, 1, 12)
-TESTBIPLANAR16TOB(P016, 2, 2, ARGB, 4, 4, 1, 16)
-TESTBIPLANAR16TOB(P216, 2, 1, ARGB, 4, 4, 1, 16)
-TESTBIPLANAR16TOB(P010, 2, 2, ARGBFilter, 4, 4, 1, 10)
-TESTBIPLANAR16TOB(P210, 2, 1, ARGBFilter, 4, 4, 1, 10)
+TESTBP16TOB(P010, 2, 2, ARGB, 4, 4, 1, 10)
+TESTBP16TOB(P210, 2, 1, ARGB, 4, 4, 1, 10)
+TESTBP16TOB(P012, 2, 2, ARGB, 4, 4, 1, 12)
+TESTBP16TOB(P212, 2, 1, ARGB, 4, 4, 1, 12)
+TESTBP16TOB(P016, 2, 2, ARGB, 4, 4, 1, 16)
+TESTBP16TOB(P216, 2, 1, ARGB, 4, 4, 1, 16)
+TESTBP16TOB(P010, 2, 2, ARGBFilter, 4, 4, 1, 10)
+TESTBP16TOB(P210, 2, 1, ARGBFilter, 4, 4, 1, 10)
 #ifdef LITTLE_ENDIAN_ONLY_TEST
-TESTBIPLANAR16TOB(P010, 2, 2, AR30, 4, 4, 1, 10)
-TESTBIPLANAR16TOB(P210, 2, 1, AR30, 4, 4, 1, 10)
-TESTBIPLANAR16TOB(P012, 2, 2, AR30, 4, 4, 1, 12)
-TESTBIPLANAR16TOB(P212, 2, 1, AR30, 4, 4, 1, 12)
-TESTBIPLANAR16TOB(P016, 2, 2, AR30, 4, 4, 1, 16)
-TESTBIPLANAR16TOB(P216, 2, 1, AR30, 4, 4, 1, 16)
-TESTBIPLANAR16TOB(P010, 2, 2, AR30Filter, 4, 4, 1, 10)
-TESTBIPLANAR16TOB(P210, 2, 1, AR30Filter, 4, 4, 1, 10)
+TESTBP16TOB(P010, 2, 2, AR30, 4, 4, 1, 10)
+TESTBP16TOB(P210, 2, 1, AR30, 4, 4, 1, 10)
+TESTBP16TOB(P012, 2, 2, AR30, 4, 4, 1, 12)
+TESTBP16TOB(P212, 2, 1, AR30, 4, 4, 1, 12)
+TESTBP16TOB(P016, 2, 2, AR30, 4, 4, 1, 16)
+TESTBP16TOB(P216, 2, 1, AR30, 4, 4, 1, 16)
+TESTBP16TOB(P010, 2, 2, AR30Filter, 4, 4, 1, 10)
+TESTBP16TOB(P210, 2, 1, AR30Filter, 4, 4, 1, 10)
 #endif  // LITTLE_ENDIAN_ONLY_TEST
 #endif  // DISABLE_SLOW_TESTS
 
