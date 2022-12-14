@@ -990,6 +990,7 @@ int DetilePlane_16(const uint16_t* src_y,
   int y;
   void (*DetileRow_16)(const uint16_t* src, ptrdiff_t src_tile_stride,
                        uint16_t* dst, int width) = DetileRow_16_C;
+
   if (!src_y || !dst_y || width <= 0 || height == 0 ||
       !IS_POWEROFTWO(tile_height)) {
     return -1;
