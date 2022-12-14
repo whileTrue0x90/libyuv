@@ -422,7 +422,6 @@ TESTPLANARTOBP(I212, uint16_t, 2, 2, 1, P212, uint16_t, 2, 2, 1, 12)
                           DST_SUBSAMP_X, DST_SUBSAMP_Y, W1280, N, NEG, OFF,    \
                           DOY, SRC_DEPTH, TILE_WIDTH, TILE_HEIGHT)             \
   TEST_F(LibYUVConvertTest, SRC_FMT_PLANAR##To##FMT_PLANAR##N) {               \
-    static_assert(SRC_BPC == 1 || SRC_BPC == 2, "SRC BPC unsupported");        \
     static_assert(DST_BPC == 1 || DST_BPC == 2, "DST BPC unsupported");        \
     static_assert(SRC_SUBSAMP_X == 1 || SRC_SUBSAMP_X == 2,                    \
                   "SRC_SUBSAMP_X unsupported");                                \
@@ -468,14 +467,16 @@ TESTPLANARTOBP(I212, uint16_t, 2, 2, 1, P212, uint16_t, 2, 2, 1, 12)
     memset(dst_uv_opt, 102, 2 * kDstHalfWidth * kDstHalfHeight * DST_BPC);     \
     MaskCpuFlags(disable_cpu_flags_);                                          \
     SRC_FMT_PLANAR##To##FMT_PLANAR(                                            \
-        src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                          \
+        src_y_p, kWidth* SRC_BPC / sizeof(SRC_T), src_uv_p,                    \
+        2 * kSrcHalfWidth * SRC_BPC / sizeof(SRC_T),                           \
         DOY ? reinterpret_cast<DST_T*>(dst_y_c) : NULL, kWidth,                \
         reinterpret_cast<DST_T*>(dst_uv_c), 2 * kDstHalfWidth, kWidth,         \
         NEG kHeight);                                                          \
     MaskCpuFlags(benchmark_cpu_info_);                                         \
     for (int i = 0; i < benchmark_iterations_; ++i) {                          \
       SRC_FMT_PLANAR##To##FMT_PLANAR(                                          \
-          src_y_p, kWidth, src_uv_p, 2 * kSrcHalfWidth,                        \
+          src_y_p, kWidth* SRC_BPC / sizeof(SRC_T), src_uv_p,                  \
+          2 * kSrcHalfWidth * SRC_BPC / sizeof(SRC_T),                         \
           DOY ? reinterpret_cast<DST_T*>(dst_y_opt) : NULL, kWidth,            \
           reinterpret_cast<DST_T*>(dst_uv_opt), 2 * kDstHalfWidth, kWidth,     \
           NEG kHeight);                                                        \
@@ -537,26 +538,19 @@ TESTBIPLANARTOBP(P212, uint16_t, 2, 2, 1, P412, uint16_t, 2, 1, 1, 12, 1, 1)
 TESTBIPLANARTOBP(P016, uint16_t, 2, 2, 2, P416, uint16_t, 2, 1, 1, 12, 1, 1)
 TESTBIPLANARTOBP(P216, uint16_t, 2, 2, 1, P416, uint16_t, 2, 1, 1, 12, 1, 1)
 TESTBIPLANARTOBP(MM21, uint8_t, 1, 2, 2, NV12, uint8_t, 1, 2, 2, 8, 16, 32)
-
-// TODO (greenjustin): Test all variants.
-TESTBIPLANARTOBPI(MT2T,
-                  uint16_t,
-                  2,
-                  2,
-                  2,
-                  P010,
-                  uint16_t,
-                  2,
-                  2,
-                  2,
-                  benchmark_width_,
-                  _Opt,
-                  +,
-                  0,
-                  1,
-                  10,
-                  16,
-                  32)
+TESTBIPLANARTOBP(MT2T,
+                 uint8_t,
+                 10 / 8,
+                 2,
+                 2,
+                 P010,
+                 uint16_t,
+                 2,
+                 2,
+                 2,
+                 10,
+                 16,
+                 32)
 
 #define TESTBIPLANARTOPI(SRC_FMT_PLANAR, SRC_T, SRC_BPC, SRC_SUBSAMP_X,        \
                          SRC_SUBSAMP_Y, FMT_PLANAR, DST_T, DST_BPC,            \
