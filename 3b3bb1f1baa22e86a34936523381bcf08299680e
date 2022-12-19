@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13cf4bbd_eb8b76c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-12-19T15:13:44Z",
+      "side": 1,
+      "message": "The I410To420 implementation does a two step approach for scaling down and 10-to-8 bit conversion using the Y plane as temporal storage.",
+      "revId": "3b3bb1f1baa22e86a34936523381bcf08299680e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
