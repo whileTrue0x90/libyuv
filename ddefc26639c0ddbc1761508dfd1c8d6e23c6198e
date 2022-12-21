@@ -33,6 +33,40 @@
       "message": "This initial implementation is based on what is currently being used inside webrtc",
       "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faa232b4_a765e558",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T02:06:43Z",
+      "side": 1,
+      "message": "Consider TransposePlane_16() based on TransposePlane() API.  It can be used for Rotate by 90 and 270.",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c67c0b93_1bf889fb",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T02:06:43Z",
+      "side": 1,
+      "message": "When you bump the version here, which is good when there is a new API, also bump the version in the README.chromium in the root.",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
