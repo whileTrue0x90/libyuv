@@ -477,6 +477,93 @@ int RotatePlane(const uint8_t* src,
 }
 
 LIBYUV_API
+void RotatePlane90_16(const uint16_t* src,
+                      int src_stride,
+                      uint16_t* dst,
+                      int dst_stride,
+                      int width,
+                      int height) {
+  for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+      int dest_x = height - y - 1;
+      int dest_y = x;
+      dst[dest_x + dst_stride * dest_y] = src[x + src_stride * y];
+    }
+  }
+}
+
+LIBYUV_API
+void RotatePlane180_16(const uint16_t* src,
+                       int src_stride,
+                       uint16_t* dst,
+                       int dst_stride,
+                       int width,
+                       int height) {
+  for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+      int dest_x = width - x - 1;
+      int dest_y = height - y - 1;
+      dst[dest_x + dst_stride * dest_y] = src[x + src_stride * y];
+    }
+  }
+}
+
+LIBYUV_API
+void RotatePlane270_16(const uint16_t* src,
+                       int src_stride,
+                       uint16_t* dst,
+                       int dst_stride,
+                       int width,
+                       int height) {
+  for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+      int dest_x = y;
+      int dest_y = width - x - 1;
+      dst[dest_x + dst_stride * dest_y] = src[x + src_stride * y];
+    }
+  }
+}
+
+LIBYUV_API
+int RotatePlane_16(const uint16_t* src,
+                   int src_stride,
+                   uint16_t* dst,
+                   int dst_stride,
+                   int width,
+                   int height,
+                   enum RotationMode mode) {
+  if (!src || width <= 0 || height == 0 || !dst) {
+    return -1;
+  }
+
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src = src + (height - 1) * src_stride;
+    src_stride = -src_stride;
+  }
+
+  switch (mode) {
+    case kRotate0:
+      // copy frame
+      CopyPlane_16(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    case kRotate90:
+      RotatePlane90_16(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    case kRotate270:
+      RotatePlane270_16(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    case kRotate180:
+      RotatePlane180_16(src, src_stride, dst, dst_stride, width, height);
+      return 0;
+    default:
+      break;
+  }
+  return -1;
+}
+
+LIBYUV_API
 int I420Rotate(const uint8_t* src_y,
                int src_stride_y,
                const uint8_t* src_u,
@@ -826,6 +913,214 @@ int Android420ToI420Rotate(const uint8_t* src_y,
   }
   // unsupported type and/or rotation.
   return -1;
+}
+
+LIBYUV_API
+int I010Rotate(const uint16_t* src_y,
+               int src_stride_y,
+               const uint16_t* src_u,
+               int src_stride_u,
+               const uint16_t* src_v,
+               int src_stride_v,
+               uint16_t* dst_y,
+               int dst_stride_y,
+               uint16_t* dst_u,
+               int dst_stride_u,
+               uint16_t* dst_v,
+               int dst_stride_v,
+               int width,
+               int height,
+               enum RotationMode mode) {
+  int halfwidth = (width + 1) >> 1;
+  int halfheight = (height + 1) >> 1;
+  if (!src_y || !src_u || !src_v || width <= 0 || height == 0 || !dst_y ||
+      !dst_u || !dst_v || dst_stride_y < 0) {
+    return -1;
+  }
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src_y = src_y + (height - 1) * src_stride_y;
+    src_u = src_u + (height - 1) * src_stride_u;
+    src_v = src_v + (height - 1) * src_stride_v;
+    src_stride_y = -src_stride_y;
+    src_stride_u = -src_stride_u;
+    src_stride_v = -src_stride_v;
+  }
+
+  switch (mode) {
+    case kRotate0:
+      // copy frame
+      return I010Copy(src_y, src_stride_y, src_u, src_stride_u, src_v,
+                      src_stride_v, dst_y, dst_stride_y, dst_u, dst_stride_u,
+                      dst_v, dst_stride_v, width, height);
+    case kRotate90:
+      RotatePlane90_16(src_y, src_stride_y, dst_y, dst_stride_y, width, height);
+      RotatePlane90_16(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth,
+                       halfheight);
+      RotatePlane90_16(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth,
+                       halfheight);
+      return 0;
+    case kRotate270:
+      RotatePlane270_16(src_y, src_stride_y, dst_y, dst_stride_y, width,
+                        height);
+      RotatePlane270_16(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth,
+                        halfheight);
+      RotatePlane270_16(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth,
+                        halfheight);
+      return 0;
+    case kRotate180:
+      RotatePlane180_16(src_y, src_stride_y, dst_y, dst_stride_y, width,
+                        height);
+      RotatePlane180_16(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth,
+                        halfheight);
+      RotatePlane180_16(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth,
+                        halfheight);
+      return 0;
+    default:
+      break;
+  }
+  return -1;
+}
+
+LIBYUV_API
+int I210Rotate(const uint16_t* src_y,
+               int src_stride_y,
+               const uint16_t* src_u,
+               int src_stride_u,
+               const uint16_t* src_v,
+               int src_stride_v,
+               uint16_t* dst_y,
+               int dst_stride_y,
+               uint16_t* dst_u,
+               int dst_stride_u,
+               uint16_t* dst_v,
+               int dst_stride_v,
+               int width,
+               int height,
+               enum RotationMode mode) {
+  int halfwidth = (width + 1) >> 1;
+  int halfheight = (height + 1) >> 1;
+  if (!src_y || !src_u || !src_v || width <= 0 || height == 0 || !dst_y ||
+      !dst_u || !dst_v || dst_stride_y < 0) {
+    return -1;
+  }
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src_y = src_y + (height - 1) * src_stride_y;
+    src_u = src_u + (height - 1) * src_stride_u;
+    src_v = src_v + (height - 1) * src_stride_v;
+    src_stride_y = -src_stride_y;
+    src_stride_u = -src_stride_u;
+    src_stride_v = -src_stride_v;
+  }
+
+  switch (mode) {
+    case kRotate0:
+      // copy frame
+      CopyPlane_16(src_y, src_stride_y, dst_y, dst_stride_y, width, height);
+      CopyPlane_16(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth, height);
+      CopyPlane_16(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth, height);
+      return 0;
+    case kRotate90:
+      // We need to rotate and rescale, we use plane Y as temporal storage.
+      RotatePlane90_16(src_u, src_stride_u, dst_y, height, halfwidth, height);
+      ScalePlane_16(dst_y, height, height, halfwidth, dst_u, halfheight,
+                    halfheight, width, kFilterBilinear);
+      RotatePlane90_16(src_v, src_stride_v, dst_y, height, halfwidth, height);
+      ScalePlane_16(dst_y, height, height, halfwidth, dst_v, halfheight,
+                    halfheight, width, kFilterLinear);
+      RotatePlane90_16(src_y, src_stride_y, dst_y, dst_stride_y, width, height);
+      return 0;
+    case kRotate270:
+      // We need to rotate and rescale, we use plane Y as temporal storage.
+      RotatePlane270_16(src_u, src_stride_u, dst_y, height, halfwidth, height);
+      ScalePlane_16(dst_y, height, height, halfwidth, dst_u, halfheight,
+                    halfheight, width, kFilterBilinear);
+      RotatePlane270_16(src_v, src_stride_v, dst_y, height, halfwidth, height);
+      ScalePlane_16(dst_y, height, height, halfwidth, dst_v, halfheight,
+                    halfheight, width, kFilterLinear);
+      RotatePlane270_16(src_y, src_stride_y, dst_y, dst_stride_y, width,
+                        height);
+
+      return 0;
+    case kRotate180:
+      RotatePlane180_16(src_y, src_stride_y, dst_y, dst_stride_y, width,
+                        height);
+      RotatePlane180_16(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth,
+                        height);
+      RotatePlane180_16(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth,
+                        height);
+      return 0;
+    default:
+      break;
+  }
+  return -1;
+}
+
+LIBYUV_API
+int I410Rotate(const uint16_t* src_y,
+               int src_stride_y,
+               const uint16_t* src_u,
+               int src_stride_u,
+               const uint16_t* src_v,
+               int src_stride_v,
+               uint16_t* dst_y,
+               int dst_stride_y,
+               uint16_t* dst_u,
+               int dst_stride_u,
+               uint16_t* dst_v,
+               int dst_stride_v,
+               int width,
+               int height,
+               enum RotationMode mode) {
+  if (!src_y || !src_u || !src_v || width <= 0 || height == 0 || !dst_y ||
+      !dst_u || !dst_v || dst_stride_y < 0) {
+    return -1;
+  }
+  // Negative height means invert the image.
+  if (height < 0) {
+    height = -height;
+    src_y = src_y + (height - 1) * src_stride_y;
+    src_u = src_u + (height - 1) * src_stride_u;
+    src_v = src_v + (height - 1) * src_stride_v;
+    src_stride_y = -src_stride_y;
+    src_stride_u = -src_stride_u;
+    src_stride_v = -src_stride_v;
+  }
+
+  switch (mode) {
+    case kRotate0:
+      // copy frame
+      CopyPlane_16(src_y, src_stride_y, dst_y, dst_stride_y, width, height);
+      CopyPlane_16(src_u, src_stride_u, dst_u, dst_stride_u, width, height);
+      CopyPlane_16(src_v, src_stride_v, dst_v, dst_stride_v, width, height);
+      return 0;
+    case kRotate90:
+      RotatePlane90_16(src_y, src_stride_y, dst_y, dst_stride_y, width, height);
+      RotatePlane90_16(src_u, src_stride_u, dst_u, dst_stride_u, width, height);
+      RotatePlane90_16(src_v, src_stride_v, dst_v, dst_stride_v, width, height);
+      return 0;
+    case kRotate270:
+      RotatePlane270_16(src_y, src_stride_y, dst_y, dst_stride_y, width,
+                        height);
+      RotatePlane270_16(src_u, src_stride_u, dst_u, dst_stride_u, width,
+                        height);
+      RotatePlane270_16(src_v, src_stride_v, dst_v, dst_stride_v, width,
+                        height);
+      return 0;
+    case kRotate180:
+      RotatePlane180_16(src_y, src_stride_y, dst_y, dst_stride_y, width,
+                        height);
+      RotatePlane180_16(src_u, src_stride_u, dst_u, dst_stride_u, width,
+                        height);
+      RotatePlane180_16(src_v, src_stride_v, dst_v, dst_stride_v, width,
+                        height);
+      return 0;
+    default:
+      break;
+  }
 }
 
 #ifdef __cplusplus
