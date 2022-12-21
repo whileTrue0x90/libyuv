@@ -52,6 +52,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbbd73d6_edc7d3bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T02:11:01Z",
+      "side": 1,
+      "message": "I think we could simplify this by having a RotatePlane_16 that can be called from I010/I410 etc rotate functions.",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c67c0b93_1bf889fb",
@@ -65,6 +82,23 @@
       "writtenOn": "2022-12-21T02:06:43Z",
       "side": 1,
       "message": "When you bump the version here, which is good when there is a new API, also bump the version in the README.chromium in the root.",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "642ff947_18cdabc0",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T02:11:01Z",
+      "side": 1,
+      "message": "This implements reading a row horizontally, and writing a column.\nIt is more efficient, memory/cache wise, to read a column (bottom to top), and write a row, left to right.\n1. the writes will write combine\n2. the reads will hopefully be cached, so when you read the next column you get some cache hits.",
       "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
