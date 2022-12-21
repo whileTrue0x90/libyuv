@@ -106,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3c0f6402_d21e2e60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T19:02:35Z",
+      "side": 1,
+      "message": "No I meant you can implement a Transpose and then use it for rotation of 90 and 270 by inverting (stride) the source or destination.",
+      "parentUuid": "10bc16fc_b3a93dcc",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c67c0b93_1bf889fb",
         "filename": "include/libyuv/version.h",
         "patchSetId": 1
@@ -170,6 +188,24 @@
       "side": 1,
       "message": "would it be enough to change the order of the for loops?",
       "parentUuid": "642ff947_18cdabc0",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57573170_403aff79",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T19:02:35Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "9400912f_9d985cdd",
       "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
