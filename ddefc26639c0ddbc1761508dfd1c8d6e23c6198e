@@ -122,6 +122,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c522642d_e9541b24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-12-21T19:55:15Z",
+      "side": 1,
+      "message": "Now I got it!\n\nI have implemented the Transpose_16 from the 8 bits C version and modify the rotate methods to use them.",
+      "parentUuid": "3c0f6402_d21e2e60",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c67c0b93_1bf889fb",
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "yes",
       "parentUuid": "9400912f_9d985cdd",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7e93e02_fda17201",
+        "filename": "source/rotate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-12-21T19:55:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57573170_403aff79",
       "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
