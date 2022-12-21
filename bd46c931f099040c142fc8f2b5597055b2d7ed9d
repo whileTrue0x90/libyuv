@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab01c2e_79ca0e27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T23:37:56Z",
+      "side": 1,
+      "message": "Performance on Skylake Xeon\nI210Rotate90_Opt (1429 ms)\nI410Rotate90_Opt (1232 ms)\nI422Rotate90_Opt (878 ms)\nARGBRotate90_Opt (794 ms)\nI010Rotate90_Opt (625 ms)\nI444Rotate90_Opt (597 ms)\nNV12Rotate90_Opt (304 ms)\nI420Rotate90_Opt (295 ms)\nRotatePlane90_Opt (195 ms)\n\nPerformance on Pixel 4 (Cortex A76)\nARGBRotate90_Opt (2559 ms)\nI410Rotate90_Opt (2348 ms)\nI210Rotate90_Opt (2193 ms)\nI422Rotate90_Opt (1209 ms)\nI010Rotate90_Opt (843 ms)\nI444Rotate90_Opt (706 ms)\nNV12Rotate90_Opt (285 ms)\nI420Rotate90_Opt (274 ms)\nRotatePlane90_Opt (177 ms)\n\nCould you add RotatePlane16_90_Opt benchmark?\nFor large images (this is 1280x720) performance should be 2x slower than 8 bit.  Same number of instructions, but 2x larger data.\nI420 is 274 ms, so I010 should be 274 * 2 \u003d 548 ms.\nCurrently it is 843 ms, so 65% efficient.\n\nProfiling Rotate 180 on Pixel 4\n65.22%,  MirrorRow_16_C\n22.48%,  __memcpy\n\nYou could use the existing MirrorUVRow_NEON\nwhich is used for NV12 UV and does 2 bytes at a time.  But probably a new function should be made, or at least a macro, and use uint16_t for the pointer.",
+      "revId": "bd46c931f099040c142fc8f2b5597055b2d7ed9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48e0c283_7cb9d349",
