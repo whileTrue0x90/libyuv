@@ -87,6 +87,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a453703_4eb86c48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2022-12-21T19:00:44Z",
+      "side": 1,
+      "message": "Your API etc look good, but this implementation can\u0027t be kept for production.  There are 2 ways to implement this\n1. a row of output can be generated from a column of source using scaling functions.  See ARGBRotate.  Note that UVScale can copy 16 bit values as is.\n2. implement a transpose function.  The transpose implements effeciently on blocks (e.g. 8x8) that can be read, transposed, written.  I\u0027m okay with submitting it if we followup with optimizing it.  See how 8 bit is implemented.",
+      "revId": "ddefc26639c0ddbc1761508dfd1c8d6e23c6198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c67c0b93_1bf889fb",
