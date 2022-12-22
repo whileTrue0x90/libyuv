@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a078b6d2_ffc42081",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-12-22T08:01:30Z",
+      "side": 1,
+      "message": "Solve the compilation issue about the missing return",
+      "revId": "bd46c931f099040c142fc8f2b5597055b2d7ed9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48e0c283_7cb9d349",
@@ -52,6 +69,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66e8ab1a_1bb8445e",
+        "filename": "include/libyuv/rotate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-12-22T08:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48e0c283_7cb9d349",
+      "revId": "bd46c931f099040c142fc8f2b5597055b2d7ed9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b7c689a_b86895ed",
@@ -65,6 +100,24 @@
       "writtenOn": "2022-12-21T21:52:54Z",
       "side": 1,
       "message": "optional.  this was for NV12 to I420 with rotation.\nIf we do the exquivalent, it would be P016 To I016.  I say 16 because P010 uses msb but I010 uses lsb and needs a shift.\n\nBut for NV12 I would like to move away from this split function and have an NV12Rotate that rotates the UV using RotatePlane_16()",
+      "revId": "bd46c931f099040c142fc8f2b5597055b2d7ed9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "936674f3_a6baff4f",
+        "filename": "source/rotate_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2022-12-22T08:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7c689a_b86895ed",
       "revId": "bd46c931f099040c142fc8f2b5597055b2d7ed9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
