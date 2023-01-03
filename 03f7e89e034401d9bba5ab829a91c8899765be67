@@ -16,6 +16,40 @@
       "message": "functions that only have C implementations are not acceptable long term.  Add a todo and/or bug to implement ARM and Intel versions of this.\n\nI regret the  \u0027scale\u0027 parameter implementation and naming.  Its confusing and not necessarily a performance advantage.  I tried a CL to change scale to bits, but it broke APIs, so we are stuck with it.  But in the future the parameter should be renamed and maybe an enum to make it more readable.",
       "revId": "03f7e89e034401d9bba5ab829a91c8899765be67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a19a12e_f7c9cecd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-03T21:32:45Z",
+      "side": 1,
+      "message": "This is good supporting scale so it can handle 12 bit as well, thanks",
+      "revId": "03f7e89e034401d9bba5ab829a91c8899765be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dffc652_0ddf2095",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-03T21:32:45Z",
+      "side": 1,
+      "message": "This is okay for now, but we may need to rethink the 2 steps that round.  First there is the rounding shift by 2 to take the average.  And then the scaling to convert to 8 bit.  Once assembly is written it should be apparent which is better.  As is you have 2 rounding losses, which hurts quality, but is consistent with a 2 step conversion of I410ToI010 and then I010ToI420.\nIn SIMD the averaging step may want to add the 4 values as 16 bits, and will work on up to 14 bits, but not 15 or 16 bits per channel.",
+      "revId": "03f7e89e034401d9bba5ab829a91c8899765be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
