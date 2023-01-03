@@ -51,6 +51,23 @@
       "parentUuid": "d90f3900_7f2efbc2",
       "revId": "77beb6ff8a083f6b78cd512017a6a73cc4d35f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e0491c1_c0d73345",
+        "filename": "source/convert.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-01-03T21:20:42Z",
+      "side": 1,
+      "message": "Sergio: If `width` is odd, `height \u003d\u003d 1`, and `dst_stride_y \u003d\u003d width`, I believe this `ScalePlane_12` call will overflow the `dst_y` buffer (by one byte).\n\nYou can try the simple case of `width\u003d1`, `height\u003d1`, and `dst_stride_y\u003d1`.",
+      "revId": "77beb6ff8a083f6b78cd512017a6a73cc4d35f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
