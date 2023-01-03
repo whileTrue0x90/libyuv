@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d306eb0c_8ffc3483",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-03T21:21:19Z",
+      "side": 1,
+      "message": "functions that only have C implementations are not acceptable long term.  Add a todo and/or bug to implement ARM and Intel versions of this.\n\nI regret the  \u0027scale\u0027 parameter implementation and naming.  Its confusing and not necessarily a performance advantage.  I tried a CL to change scale to bits, but it broke APIs, so we are stuck with it.  But in the future the parameter should be renamed and maybe an enum to make it more readable.",
+      "revId": "03f7e89e034401d9bba5ab829a91c8899765be67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
