@@ -11,6 +11,10 @@
 #ifndef INCLUDE_LIBYUV_VERSION_H_
 #define INCLUDE_LIBYUV_VERSION_H_
 
+<<<<<<< PATCH SET (1b5bff Add 10 bit rotate methods.)
+#define LIBYUV_VERSION 1856
+=======
 #define LIBYUV_VERSION 1855
+>>>>>>> BASE      (22a579 Use ScalePlaneDown2_16To8 for avoiding the 2 step process)
 
 #endif  // INCLUDE_LIBYUV_VERSION_H_
