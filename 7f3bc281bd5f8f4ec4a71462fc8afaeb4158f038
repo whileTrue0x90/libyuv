@@ -16,6 +16,29 @@
       "message": "Rebased due to main version change",
       "revId": "7f3bc281bd5f8f4ec4a71462fc8afaeb4158f038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63aa9106_269ed01f",
+        "filename": "source/rotate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-03T23:46:54Z",
+      "side": 1,
+      "message": "use stride value for 2nd argument. Here is an I422 version that has the fix\n\n\n// I422 has half width x full height UV planes, so rotate by 90 and 270\n// require scaling to maintain 422 subsampling.\nLIBYUV_API\nint I422Rotate(const uint8_t* src_y,\n               int src_stride_y,\n               const uint8_t* src_u,\n               int src_stride_u,\n               const uint8_t* src_v,\n               int src_stride_v,\n               uint8_t* dst_y,\n               int dst_stride_y,\n               uint8_t* dst_u,\n               int dst_stride_u,\n               uint8_t* dst_v,\n               int dst_stride_v,\n               int width,\n               int height,\n               enum RotationMode mode) {\n  int halfwidth \u003d (width + 1) \u003e\u003e 1;\n  int halfheight \u003d (height + 1) \u003e\u003e 1;\n  if (!src_y || !src_u || !src_v || width \u003c\u003d 0 || height \u003d\u003d 0 || !dst_y ||\n      !dst_u || !dst_v) {\n    return -1;\n  }\n  // Negative height means invert the image.\n  if (height \u003c 0) {\n    height \u003d -height;\n    src_y \u003d src_y + (height - 1) * src_stride_y;\n    src_u \u003d src_u + (height - 1) * src_stride_u;\n    src_v \u003d src_v + (height - 1) * src_stride_v;\n    src_stride_y \u003d -src_stride_y;\n    src_stride_u \u003d -src_stride_u;\n    src_stride_v \u003d -src_stride_v;\n  }\n\n  switch (mode) {\n    case kRotate0:\n      // Copy frame\n      CopyPlane(src_y, src_stride_y, dst_y, dst_stride_y, width, height);\n      CopyPlane(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth, height);\n      CopyPlane(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth, height);\n      return 0;\n\n      // Note on temporary Y plane for UV.\n      // Rotation of UV first fits within the Y destination plane rows.\n      // Y plane is width x height\n      // Y plane rotated is height x width\n      // UV plane is (width / 2) x height\n      // UV plane rotated is height x (width / 2)\n      // UV plane rotated+scaled is (height / 2) x width.\n      // UV plane rotated is a temporary that fits within the Y plane rotated.\n\n    case kRotate90:\n      RotatePlane90(src_u, src_stride_u, dst_y, dst_stride_y, halfwidth,\n                    height);\n      ScalePlane(dst_y, dst_stride_y, height, halfwidth, dst_u, dst_stride_u,\n                 halfheight, width, kFilterBilinear);\n      RotatePlane90(src_v, src_stride_v, dst_y, dst_stride_y, halfwidth,\n                    height);\n      ScalePlane(dst_y, dst_stride_y, height, halfwidth, dst_v, dst_stride_v,\n                 halfheight, width, kFilterLinear);\n      RotatePlane90(src_y, src_stride_y, dst_y, dst_stride_y, width, height);\n      return 0;\n    case kRotate270:\n      RotatePlane270(src_u, src_stride_u, dst_y, dst_stride_y, halfwidth,\n                     height);\n      ScalePlane(dst_y, dst_stride_y, height, halfwidth, dst_u, dst_stride_u,\n                 halfheight, width, kFilterBilinear);\n      RotatePlane270(src_v, src_stride_v, dst_y, dst_stride_y, halfwidth,\n                     height);\n      ScalePlane(dst_y, dst_stride_y, height, halfwidth, dst_v, dst_stride_v,\n                 halfheight, width, kFilterLinear);\n      RotatePlane270(src_y, src_stride_y, dst_y, dst_stride_y, width, height);\n      return 0;\n    case kRotate180:\n      RotatePlane180(src_y, src_stride_y, dst_y, dst_stride_y, width, height);\n      RotatePlane180(src_u, src_stride_u, dst_u, dst_stride_u, halfwidth,\n                     height);\n      RotatePlane180(src_v, src_stride_v, dst_v, dst_stride_v, halfwidth,\n                     height);\n      return 0;\n    default:\n      break;\n  }\n  return -1;\n}",
+      "range": {
+        "startLine": 1056,
+        "startChar": 27,
+        "endLine": 1056,
+        "endChar": 33
+      },
+      "revId": "7f3bc281bd5f8f4ec4a71462fc8afaeb4158f038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
