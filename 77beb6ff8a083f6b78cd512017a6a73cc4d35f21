@@ -86,6 +86,24 @@
       "parentUuid": "7e0491c1_c0d73345",
       "revId": "77beb6ff8a083f6b78cd512017a6a73cc4d35f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4158e019_eff67dad",
+        "filename": "source/convert.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-01-04T20:47:30Z",
+      "side": 1,
+      "message": "No, the issue is not present in the new code, because the new code doesn\u0027t borrow the dst_y buffer as a temporary buffer.",
+      "parentUuid": "a969ba21_e6192fbd",
+      "revId": "77beb6ff8a083f6b78cd512017a6a73cc4d35f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
