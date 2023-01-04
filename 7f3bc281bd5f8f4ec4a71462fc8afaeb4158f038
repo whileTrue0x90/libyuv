@@ -63,6 +63,30 @@
       },
       "revId": "7f3bc281bd5f8f4ec4a71462fc8afaeb4158f038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0608c91c_4e042f6e",
+        "filename": "source/rotate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-04T20:52:25Z",
+      "side": 1,
+      "message": "Thats okay... I\u0027ll send a CL",
+      "parentUuid": "e85dad44_cef1ef77",
+      "range": {
+        "startLine": 1056,
+        "startChar": 27,
+        "endLine": 1056,
+        "endChar": 33
+      },
+      "revId": "7f3bc281bd5f8f4ec4a71462fc8afaeb4158f038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
