@@ -39,6 +39,30 @@
       },
       "revId": "7f3bc281bd5f8f4ec4a71462fc8afaeb4158f038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e85dad44_cef1ef77",
+        "filename": "source/rotate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-04T20:46:07Z",
+      "side": 1,
+      "message": "Should I apply the fix for the I422Rotate? it also seems to be affected by it in main.",
+      "parentUuid": "63aa9106_269ed01f",
+      "range": {
+        "startLine": 1056,
+        "startChar": 27,
+        "endLine": 1056,
+        "endChar": 33
+      },
+      "revId": "7f3bc281bd5f8f4ec4a71462fc8afaeb4158f038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
