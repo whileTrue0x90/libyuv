@@ -210,27 +210,34 @@ void ScalePlaneDown2_16To8(int src_width,
                            enum FilterMode filtering) {
   int y;
   void (*ScaleRowDown2)(const uint16_t* src_ptr, ptrdiff_t src_stride,
-                        uint8_t* dst_ptr, int dst_width, int scale) =
+                        int src_width, uint8_t* dst_ptr, int dst_width,
+                        int scale) =
       filtering == kFilterNone
           ? ScaleRowDown2_16To8_C
           : (filtering == kFilterLinear ? ScaleRowDown2Linear_16To8_C
                                         : ScaleRowDown2Box_16To8_C);
+  void (*ScaleRowDown2_1)(const uint16_t* src_ptr, ptrdiff_t src_stride,
+                          int src_width, uint8_t* dst_ptr, int dst_width,
+                          int scale) = filtering == kFilterNone
+                                           ? ScaleRowDown2_16To8_C
+                                           : ScaleRowDown2Linear_16To8_C;
   int row_stride = src_stride * 2;
-  (void)src_width;
-  (void)src_height;
+  (void)dst_height;
   if (!filtering) {
     src_ptr += src_stride;  // Point to odd rows.
     src_stride = 0;
   }
 
-  if (filtering == kFilterLinear) {
+  if (filtering == kFilterLinear && (src_height & 1) == 0) {
     src_stride = 0;
   }
-  // TODO(fbarchard): Loop through source height to allow odd height.
-  for (y = 0; y < dst_height; ++y) {
-    ScaleRowDown2(src_ptr, src_stride, dst_ptr, dst_width, scale);
+  for (y = 0; y < src_height / 2; ++y) {
+    ScaleRowDown2(src_ptr, src_stride, src_width, dst_ptr, dst_width, scale);
     src_ptr += row_stride;
     dst_ptr += dst_stride;
+  }
+  if (src_height & 1) {
+    ScaleRowDown2_1(src_ptr, src_stride, src_width, dst_ptr, dst_width, scale);
   }
 }
 
