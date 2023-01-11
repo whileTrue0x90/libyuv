@@ -272,6 +272,7 @@ void ScaleRowDown2_16_C(const uint16_t* src_ptr,
                         int dst_width);
 void ScaleRowDown2_16To8_C(const uint16_t* src_ptr,
                            ptrdiff_t src_stride,
+                           int src_width,
                            uint8_t* dst,
                            int dst_width,
                            int scale);
@@ -285,6 +286,7 @@ void ScaleRowDown2Linear_16_C(const uint16_t* src_ptr,
                               int dst_width);
 void ScaleRowDown2Linear_16To8_C(const uint16_t* src_ptr,
                                  ptrdiff_t src_stride,
+                                 int src_width,
                                  uint8_t* dst,
                                  int dst_width,
                                  int scale);
@@ -302,6 +304,7 @@ void ScaleRowDown2Box_16_C(const uint16_t* src_ptr,
                            int dst_width);
 void ScaleRowDown2Box_16To8_C(const uint16_t* src_ptr,
                               ptrdiff_t src_stride,
+                              int src_width,
                               uint8_t* dst,
                               int dst_width,
                               int scale);
