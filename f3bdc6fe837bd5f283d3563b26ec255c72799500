@@ -33,6 +33,24 @@
       "message": "Create new row functions similar to ScaleRowDown2Box_Odd_C",
       "revId": "f3bdc6fe837bd5f283d3563b26ec255c72799500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d064d69e_2ffd1f7a",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-18T17:01:26Z",
+      "side": 1,
+      "message": "I have added the Odd functions as requested.",
+      "parentUuid": "4fa067ce_be83c8f5",
+      "revId": "f3bdc6fe837bd5f283d3563b26ec255c72799500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
