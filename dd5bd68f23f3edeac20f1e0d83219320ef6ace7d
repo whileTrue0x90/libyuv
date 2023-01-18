@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "877384c1_1ed100c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-18T22:54:32Z",
+      "side": 1,
+      "message": "overall looks correct but there are 2 bugs.",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "073286c9_ba7ee819",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-18T22:54:32Z",
+      "side": 1,
+      "message": "this may be problematic.  really linear should use odd rows too.\n\nimage the case of 4 source rows.  rows 0, 1, 2, 3.  we advance to row 1 and will use row 1 and row 3.\n\nif that is reduced to 3 source rows, we still produce 2 output rows.  but we can\u0027t use rows 1 and 3.  row 3 does not exist.  Its probably necessary to duplicate this logic and back up by 1 row before doing the final (src_height \u0026 1) last row.\nThis bug likely exists in the other scale down by 2 functions, including UV and ARGB functions... maybe file a bug or todo to investigate other occurances.",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbfcbf20_d65d6668",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-18T22:54:32Z",
+      "side": 1,
+      "message": "pass 0 for src_stride.  Although src_stride is set to 0, which also cripples box to behave like linear, its best not to allow src+stride to have the potential to step off the end of the image.",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9034c77e_38073183",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-18T22:54:32Z",
+      "side": 1,
+      "message": "src_ptr[1]",
+      "range": {
+        "startLine": 121,
+        "startChar": 41,
+        "endLine": 121,
+        "endChar": 51
+      },
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
