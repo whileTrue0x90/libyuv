@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b96c62f_2c2e6e3d",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-19T10:09:51Z",
+      "side": 1,
+      "message": "Note that I am iterating by src_height/2 and not by dst_height, so in case there are only 3 input rows, the loop will only only use the first 2 ones and the (src_height \u0026 1) will do the last row.\n\nThe other functions do not support odd heights (you have it as a TODO).\n\nAm I missing anything?",
+      "parentUuid": "073286c9_ba7ee819",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bbfcbf20_d65d6668",
         "filename": "source/scale.cc",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2023-01-18T22:54:32Z",
       "side": 1,
       "message": "pass 0 for src_stride.  Although src_stride is set to 0, which also cripples box to behave like linear, its best not to allow src+stride to have the potential to step off the end of the image.",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2e9626b_5a0b11ca",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-19T10:09:51Z",
+      "side": 1,
+      "message": "I am using a different function for the last row (ScaleRowDown2 vs ScaleRowDown2_1), and using Box instead of Linear for it.\n\nI didn\u0027t realize I could use Box with stride \u003d 0 instead, changing it.",
+      "parentUuid": "bbfcbf20_d65d6668",
       "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -65,6 +101,30 @@
       "writtenOn": "2023-01-18T22:54:32Z",
       "side": 1,
       "message": "src_ptr[1]",
+      "range": {
+        "startLine": 121,
+        "startChar": 41,
+        "endLine": 121,
+        "endChar": 51
+      },
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d142a02_cfff7bd4",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-19T10:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9034c77e_38073183",
       "range": {
         "startLine": 121,
         "startChar": 41,
