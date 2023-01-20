@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18f38065_f0e256e7",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-20T20:41:50Z",
+      "side": 1,
+      "message": "what you\u0027re missing is the line 233 that moved the source ptr to odd rows.\nin the case of 3 source rows, you\u0027ll be reading row 1 and 3, not 0 and 2.  row 3 does not exist (0,1,2,3).",
+      "parentUuid": "7b96c62f_2c2e6e3d",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bbfcbf20_d65d6668",
         "filename": "source/scale.cc",
         "patchSetId": 4
