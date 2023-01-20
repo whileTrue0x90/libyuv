@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c0d1dd_874a53ed",
+        "filename": "source/scale.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-20T20:58:51Z",
+      "side": 1,
+      "message": "This is correct, and likely needs to be done in the original ScalePlaneDown2?\nBut also I\u0027m thinking linear filtering should also use odd rows.\nlinear is bilinear-like on the horizontal, and point sampling-like on the vertical.\n\nWhereas bilinear and box also filter vertically.\nKeep it as is and add a todo to consider fixing linear/unfiltered for other functions.  I think as is, there is a crash/segfault as it reads off the source on odd height.  But it may also not come up in practice because it wouldnt normally use scaledown by 2 if the scale factor isnt exactly 2... for scaling.\n\nlinear was intended to be a faster-than bilinear and at the time I tested both vertical and horizontal and doing filtering horizontally, although more difficult math wise, is faster due to memory access... 1 source row instead of 2.\nand it implemented easily by setting source stride to 0 and using bilinear code\nAs far as I know, noone uses linear for its\u0027 intended purpose, but it likely does get used now for subsampling - e.g. convert 444 to 422 is linear - half width, full height.\n422 is not common.. its more common in packed variations like YUY2.  But it increased a bit as jpeg started doing different subsampling based on compression ratio.  And 420 is falling out of favor for its brutal quality, so 444 has increased popularity.  To a large degree advanced compression can effectively subsample by quantizing chroma more than luma and doing different block sizes.  So 420 and 422 are less necessary and 444 becomes more practical.\nSo 422 still needs support, but performance is less important, and the bilinear trick will achieve the same quality.\n(a+b+a+b+2)/4 is equivalent to (a+b+1)/2\n\nAlso point sampling is very rarely used.",
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dacc699d_be304b03",
+        "filename": "source/scale.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-20T20:58:51Z",
+      "side": 1,
+      "message": "although src_stride is forced to 0, I would still feel safer if you pass 0, to be explicit and defensive, that only 1 row of source is used.",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 66
+      },
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

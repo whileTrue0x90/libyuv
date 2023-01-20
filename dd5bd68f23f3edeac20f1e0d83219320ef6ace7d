@@ -71,6 +71,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcee9d0f_3a3d44f7",
+        "filename": "source/scale.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-20T20:58:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f38065_f0e256e7",
+      "revId": "dd5bd68f23f3edeac20f1e0d83219320ef6ace7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbfcbf20_d65d6668",
