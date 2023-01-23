@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4845892d_eaaa9a94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-23T18:46:36Z",
+      "side": 1,
+      "message": "It is important to bump when there is a new public api.  This fixes an existing one, so it is optional, but still nice to have the bump, so the version can be mentioned as having the fix.",
+      "parentUuid": "e3df5ceb_381b6c3b",
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51c0d1dd_874a53ed",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "The original ScalePlaneDown2  and ScalePlaneDown2_16 don\u0027t support odd rows (you have it in a todo), but I think this approach would work also for it. Do you want me to submit a patch for it afterwards?\n\nRegarding the linear filter using the odd rows instead, I don\u0027t have enough knowledge to give any feedback on that. But if this is going to be changed, it is probably worth changing the behavior of the other ScalePlaneDown methods too.",
       "parentUuid": "51c0d1dd_874a53ed",
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3610d09_0f1f45ff",
+        "filename": "source/scale.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-01-23T18:46:36Z",
+      "side": 1,
+      "message": "Re ScalePlaneDown2 and ScalePlaneDown2_16  yes a fix for those would be great.\n\nRe linear odd rows.. lets leave it for now",
+      "parentUuid": "4817decc_f7ede694",
       "revId": "f3f75b65164ff6519a90d0355de409b239031302",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
