@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3df5ceb_381b6c3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-23T10:12:53Z",
+      "side": 1,
+      "message": "One further question, should we increase the library version also?",
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51c0d1dd_874a53ed",
@@ -20,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4817decc_f7ede694",
+        "filename": "source/scale.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-23T10:12:53Z",
+      "side": 1,
+      "message": "The original ScalePlaneDown2  and ScalePlaneDown2_16 don\u0027t support odd rows (you have it in a todo), but I think this approach would work also for it. Do you want me to submit a patch for it afterwards?\n\nRegarding the linear filter using the odd rows instead, I don\u0027t have enough knowledge to give any feedback on that. But if this is going to be changed, it is probably worth changing the behavior of the other ScalePlaneDown methods too.",
+      "parentUuid": "51c0d1dd_874a53ed",
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dacc699d_be304b03",
         "filename": "source/scale.cc",
         "patchSetId": 5
@@ -31,6 +66,30 @@
       "writtenOn": "2023-01-20T20:58:51Z",
       "side": 1,
       "message": "although src_stride is forced to 0, I would still feel safer if you pass 0, to be explicit and defensive, that only 1 row of source is used.",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 66
+      },
+      "revId": "f3f75b65164ff6519a90d0355de409b239031302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "652ded12_5a56683e",
+        "filename": "source/scale.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1208520
+      },
+      "writtenOn": "2023-01-23T10:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dacc699d_be304b03",
       "range": {
         "startLine": 243,
         "startChar": 4,
