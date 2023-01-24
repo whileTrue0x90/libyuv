@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <iostream>
+
 #include "libyuv/video_common.h"
 
 #ifdef __cplusplus
@@ -46,6 +48,7 @@ static const struct FourCCAliasEntry kFourCCAliases[NUM_ALIASES] = {
 
 LIBYUV_API
 uint32_t CanonicalFourCC(uint32_t fourcc) {
+  std::cout << "foo" << std::endl;
   int i;
   for (i = 0; i < NUM_ALIASES; ++i) {
     if (kFourCCAliases[i].alias == fourcc) {
