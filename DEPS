@@ -5,7 +5,11 @@ gclient_gn_args = [
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+  'chromium_revision': 'c6a838a2bce41e63a15a99d9831b0eb75a4f8395',
+=======
   'chromium_revision': 'd4adab061fd2b5560dc870cf002473aa6f30635f',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'gn_version': 'git_revision:6f13aaac55a977e1948910942675c69f2b4f7a94',
   # ninja CIPD package version.
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
@@ -31,13 +35,29 @@ vars = {
 
 deps = {
   'src/build':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/src/build' + '@' + '1103ef535ca1e100db5d4e59781a4e59369a9818',
+=======
     Var('chromium_git') + '/chromium/src/build' + '@' + '60a5c0d8b7aa171bb0260d207f02fd3fbafe217e',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/buildtools':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/src/buildtools' + '@' + '2ff42d2008f09f65de12e70c6ff0ad58ddb090ad',
+=======
     Var('chromium_git') + '/chromium/src/buildtools' + '@' + 'd1127a2c8d7320af342dabf7efa069036bb426a3',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/testing':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/src/testing' + '@' + '166db27fd0d53afc0c716b1ae9c15725e380871f',
+=======
     Var('chromium_git') + '/chromium/src/testing' + '@' + 'ce7bc51b4ddd213d4e67dc412422bede5dd5ef2c',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/third_party':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '4578a3fe755e4149b12f906d88e503401105571a',
+=======
     Var('chromium_git') + '/chromium/src/third_party' + '@' + '7cfb60d8ce3f40f5cf140ca3174c307f9e00879e',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
 
   'src/buildtools/linux64': {
     'packages': [
@@ -83,20 +103,44 @@ deps = {
   'src/buildtools/clang_format/script':
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/clang/tools/clang-format.git' + '@' + 'f97059df7f8b205064625cdb5f97b56668a125ef',
   'src/buildtools/third_party/libc++/trunk':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxx.git' + '@' + '6f4617b9efc36525e030ec9855114f3c93550ec1',
+=======
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxx.git' + '@' + 'e136ec5032a5e5d97e988ce66e8c269a80ff54c4',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/buildtools/third_party/libc++abi/trunk':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git' + '@' + 'f7460fc60ab56553f0b3b0853f1ea60aa51b9478',
+=======
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git' + '@' + 'ff8e691cbc2ab7905dd6a0c218bcc401b7830e54',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/buildtools/third_party/libunwind/trunk':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + 'c4ed9cba55ce96b94a1f676890dcac8673cdedfd',
+=======
     Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + 'c5e861c7b48ee121d3719b7b5c14175c47ec5cc9',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
 
   'src/third_party/catapult':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/catapult.git' + '@' + '44b7bc5487653bc9c61958ffd58851a6c369d441',
+=======
     Var('chromium_git') + '/catapult.git' + '@' + '9c6c41afcf180e0bf068129b75da62e535f37629',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
   'src/third_party/depot_tools':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '3879bd830c6c1c8d4f3460fa93fa58e891e58263',
+=======
     Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'eee53367c1fab7b7ca150ee45aacafb4103c4ed2',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/third_party/freetype/src':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + 'bbfcd79eacb4985d4b68783565f4b494aa64516b',
+=======
     Var('chromium_git') + '/chromium/src/third_party/freetype2.git' + '@' + '3f01161ff22c84c371b6dc3b5e0351e0d6e8e771',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   'src/third_party/googletest/src':
     Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + 'af29db7ec28d6df1c7f0f745186884091e602e07',
   'src/third_party/harfbuzz-ng/src':
@@ -106,7 +150,11 @@ deps = {
   'src/third_party/nasm':
     Var('chromium_git') + '/chromium/deps/nasm.git' + '@' + '7fc833e889d1afda72c06220e5bed8fb43b2e5ce',
   'src/tools':
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    Var('chromium_git') + '/chromium/src/tools' + '@' + '04e6a398f0e9eda0297a1154edc7f50fde75bf36',
+=======
     Var('chromium_git') + '/chromium/src/tools' + '@' + 'fce3426afeb7e90790c16cb0efa4208b370fc097',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
 
   # libyuv-only dependencies (not present in Chromium).
   'src/third_party/gtest-parallel':
@@ -153,7 +201,11 @@ deps = {
   'src/third_party/boringssl/src':
     'https://boringssl.googlesource.com/boringssl.git' + '@' + 'ca1690e221677cea3fb946f324eb89d846ec53f2',
   'src/base': {
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '146f709b33b8d58af0241ab8bea83bbdaa63fd86',
+=======
     'url': Var('chromium_git') + '/chromium/src/base' + '@' + 'd0fee1a37260bd1e834cb8d80ef4aae40cbf45e7',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -320,7 +372,11 @@ deps = {
   },
 
   'src/third_party/icu': {
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + 'c6b68522318204f795a8f04caebf6c0beb679cc4',
+=======
     'url': Var('chromium_git') + '/chromium/deps/icu.git' + '@' + '1e49ac26ddc712b1ab702f69023cbc57e9ae6628',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
   },
   'src/third_party/icu4j': {
       'packages': [
@@ -475,7 +531,11 @@ deps = {
 
   # iOS deps:
   'src/ios': {
+<<<<<<< PATCH SET (c160c4 Roll chromium_revision 504c069755..c6a838a2bc (1074965:11068)
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '7f97028c5370e5df676bd53a37a1afc907136f16',
+=======
     'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '09f48d9955ae68c16e38fc92bf7a1371ae092f93',
+>>>>>>> BASE      (f9b23b Transpose 4x4 for SSE2 and AVX2)
     'condition': 'checkout_ios'
   },
 
