@@ -33,6 +33,24 @@
       "message": "There are some android deps to update manually.\n\nHow urgent is it?",
       "revId": "c160c46214256567f715a357b0e3521d9b2a3f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b57e9ca_ac37ffa7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-02-18T03:00:06Z",
+      "side": 1,
+      "message": "no rush... just a routine roll to keep in sync",
+      "parentUuid": "5ded7ab5_6494334e",
+      "revId": "c160c46214256567f715a357b0e3521d9b2a3f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
