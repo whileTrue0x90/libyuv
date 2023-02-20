@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23efbdb1_51bd0a2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-02-20T09:52:17Z",
+      "side": 1,
+      "message": "Ported avx512 from intrinsics to assembly\nApplied the same method to avx2 and mergeuv_16",
+      "revId": "7f6922277f439e79a7f28e027cc2118bf5c93d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
