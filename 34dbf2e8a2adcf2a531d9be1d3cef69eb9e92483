@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a79abfbb_2a067afc",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5157,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-02-22T20:24:57Z",
+      "side": 1,
+      "message": "Only V gets shifted, so to do that would require loading V first.  It likely wouldnt make a difference since CPUs with AVX512 are not only reordering instructions within the loop, but multiple iterations of the loop.  I tried to achieve the same goal, of reducing interlocks, but unrolling, and it was actually slower.\nI tried loading V first, then U, then shift V.  Performance did not improve on Skylake Xeon.  I would prefer keep the U load first, as it is likely first in memory.",
+      "parentUuid": "07e9d725_f14dea90",
+      "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22c1001b_652c3bff",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-02-22T16:53:27Z",
       "side": 1,
       "message": "This is unaligned, but aren\u0027t the destination buffers held to an alignment?  Is there no performance penalty for the unaligned vs aligned store?  Or is there only an unaligned store at this size?",
+      "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29debb02_95a98cf6",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5159,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-02-22T20:24:57Z",
+      "side": 1,
+      "message": "destination alignment is not guaranteed and doesnt make a difference.  Using an aligned instruction vs unaligned on aligned memory is the same speed.  Using unaligned memory is slower, but its not worth writing a different function for aligned vs unaligned.  That was Core2 time frame when movdqu was 5 cycles vs movdqa is 1 cycle.  On Westmere they fixed that to a large degree.",
+      "parentUuid": "22c1001b_652c3bff",
       "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
