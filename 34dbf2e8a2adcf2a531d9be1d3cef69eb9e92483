@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a567a876_77acccee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000886
+      },
+      "writtenOn": "2023-02-22T16:53:27Z",
+      "side": 1,
+      "message": "wow, VPMOVZXBW is a neat instruction",
+      "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07e9d725_f14dea90",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5157,
+      "author": {
+        "id": 1000886
+      },
+      "writtenOn": "2023-02-22T16:53:27Z",
+      "side": 1,
+      "message": "Would it be better to operate on `zmm0` here?  As it is loaded earlier, it would be ready earlier.  Or is the load latency so high that it doesn\u0027t matter?",
+      "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22c1001b_652c3bff",
+        "filename": "source/row_gcc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5159,
+      "author": {
+        "id": 1000886
+      },
+      "writtenOn": "2023-02-22T16:53:27Z",
+      "side": 1,
+      "message": "This is unaligned, but aren\u0027t the destination buffers held to an alignment?  Is there no performance penalty for the unaligned vs aligned store?  Or is there only an unaligned store at this size?",
+      "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
