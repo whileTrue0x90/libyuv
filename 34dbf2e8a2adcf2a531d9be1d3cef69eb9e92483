@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63ca57bb_7fcefee0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-02-22T20:28:19Z",
+      "side": 1,
+      "message": "The downside is it loads less.  If you loaded a full vector, you could unpack the low and high parts, achieving the best use of fewer loads.\nBut the upside is it expands without permuting the middle q words, so no vpermq is needed.",
+      "parentUuid": "a567a876_77acccee",
+      "revId": "34dbf2e8a2adcf2a531d9be1d3cef69eb9e92483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07e9d725_f14dea90",
