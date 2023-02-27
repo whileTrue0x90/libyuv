@@ -16,6 +16,24 @@
       "message": "The roll is almost ready to be landed.\n\nThe last problem is around a win bot using MSVC, which fails to link with lld.",
       "revId": "f6e4744f1236ad2439aaabf543719bd5594d5ddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd1f6f9c_ab3288a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-02-27T10:19:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6be26de0_b0d0cc1c",
+      "revId": "f6e4744f1236ad2439aaabf543719bd5594d5ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
