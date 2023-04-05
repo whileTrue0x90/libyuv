@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3145dc6b_ba6a2e0f",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-05T21:27:32Z",
+      "side": 1,
+      "message": "Wow... its been awhile since I looked at this code.\nSo as we step across the image with x +\u003d dx, the box size will either be rounded down or up.... e.g.  scaling down by 10.1 times, the box width is either 10 or 11.  So yes your assert looks right.\nI would put parenthesis to be clear\nassert(((boxwidth - minboxwidth) \u003d\u003d 0) || ((boxwidth - minboxwidth) \u003d\u003d 1));",
+      "revId": "5bd4cc6dfb00b7e67daf26af44ece40e25b2ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "bf647e84_6d422394",
