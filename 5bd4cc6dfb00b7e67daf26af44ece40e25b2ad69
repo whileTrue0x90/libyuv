@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cbdfb37f_3590c290",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-05T21:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3145dc6b_ba6a2e0f",
+      "revId": "5bd4cc6dfb00b7e67daf26af44ece40e25b2ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bf647e84_6d422394",
         "filename": "source/scale.cc",
         "patchSetId": 1
