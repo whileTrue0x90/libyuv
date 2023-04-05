@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "409bd011_cbd8f42c",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-05T21:13:56Z",
+      "side": 1,
+      "message": "It took me a while to prove `boxwidth - minboxwidth` is either 0 or 1, so I am not surprised that the static analyzer cannot prove it.",
+      "revId": "5bd4cc6dfb00b7e67daf26af44ece40e25b2ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf647e84_6d422394",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-05T21:13:56Z",
+      "side": 1,
+      "message": "I ran scan-build on the copy of libyuv in the libaom source tree, so the line numbers and the code are different.\n\nThe warning message is:\n\n```\naom/third_party/libyuv/source/scale.cc:763:43: warning: The right operand of \u0027*\u0027 is a garbage value due to array index out of bounds [core.UndefinedBinaryOperatorResult]\n        SumPixels(boxwidth, src_ptr + ix) * scaletbl[boxwidth - minboxwidth] \u003e\u003e\n                                          ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n```",
+      "revId": "5bd4cc6dfb00b7e67daf26af44ece40e25b2ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b54796c2_12e449ba",
+        "filename": "source/scale.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-05T21:13:56Z",
+      "side": 1,
+      "message": "I ran scan-build on the copy of libyuv in the libaom source tree, so the line numbers are different.\n\nThe warning message is:\n\n```\naom/third_party/libyuv/source/scale.cc:784:55: warning: The right operand of \u0027*\u0027 is a garbage value due to array index out of bounds [core.UndefinedBinaryOperatorResult]\n    *dst_ptr++ \u003d SumPixels_16(boxwidth, src_ptr + ix) *\n                                                      ^\n```",
+      "revId": "5bd4cc6dfb00b7e67daf26af44ece40e25b2ad69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
