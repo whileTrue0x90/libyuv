@@ -16,6 +16,23 @@
       "message": "Hello Frank\n\nSiFive is working on enabling RISC-V and upstreaming our RVV implementation in Libyuv to upstream. Please help to review it.\n\nThanks\nBruce Lai",
       "revId": "4200c1632b9f79bb4b95268093a4576df5742eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c8235ca_7c6ab967",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-06T15:46:36Z",
+      "side": 1,
+      "message": "ya thats what I\u0027ve been doing but it would sure be great if qemu could be used without hacking cpu detection.",
+      "revId": "4200c1632b9f79bb4b95268093a4576df5742eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
