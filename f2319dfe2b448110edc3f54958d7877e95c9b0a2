@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd325d25_e9152605",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-04-06T18:53:55Z",
+      "side": 1,
+      "message": "This could be `sizeof(temp) / 2` if that\u0027s enough in your experience. This could also be bounded by a `#if`:\n\n```\n#if defined(__has_feature)\n#if __has_feature(memory_sanitizer)\n...\n```",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
