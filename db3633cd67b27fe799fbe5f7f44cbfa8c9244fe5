@@ -33,6 +33,23 @@
       "message": "Hello Frank\n\nSiFive is working on enabling RISC-V and upstreaming our RVV implementation in Libyuv to upstream. Please help to review it.\n\nThanks\nBruce Lai",
       "revId": "db3633cd67b27fe799fbe5f7f44cbfa8c9244fe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc00cb61_2c10b876",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-06T15:42:27Z",
+      "side": 1,
+      "message": "Looks good but I think this will fail under qemu, as do mips and neon.",
+      "revId": "db3633cd67b27fe799fbe5f7f44cbfa8c9244fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
