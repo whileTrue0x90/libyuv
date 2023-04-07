@@ -69,6 +69,24 @@
       "parentUuid": "0642a4db_ca2ea4d5",
       "revId": "4200c1632b9f79bb4b95268093a4576df5742eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43ed7e67_88c0af84",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-07T07:15:05Z",
+      "side": 1,
+      "message": "CI?  On these code reviews we have \u0027try bots\u0027 that are backed by real machines.\nIdeally Mirko would help review build / documentation but it looks like he is out of office until Tuesday, so lets go ahead with these.\nI\u0027ll update the other build files to simply include the rvv source as it gets added.",
+      "parentUuid": "742feaed_ed277cf9",
+      "revId": "4200c1632b9f79bb4b95268093a4576df5742eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
