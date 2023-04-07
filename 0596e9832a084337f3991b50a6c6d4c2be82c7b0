@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e503185_0a1aae64",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-07T18:42:51Z",
+      "side": 1,
+      "message": "For segment load/store, the constraint would be EMUL * NFIELDS ≤ 8\n\nAs v-spec mentioned: \"This constraint makes this total no larger than 1/4 of the architectural register file.\" \nand \n\"This constraint is to help allow for forward-compatibility with a possible future longer instruction encoding that has more addressable vector registers.\"\n\nPlease refers to riscv-v-spec for more info (https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#78-vector-loadstore-segment-instructions)\n\nHence the maximum lmul here is m2.\n\nvsseg4 used 2(m2) * 4 (vr,vg,vb,va) \u003d 8 registers in total.",
+      "parentUuid": "67d5eb65_b2d0f969",
+      "revId": "0596e9832a084337f3991b50a6c6d4c2be82c7b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0161b3db_b7798325",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
