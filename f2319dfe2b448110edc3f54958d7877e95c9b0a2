@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c008142_f8b1f943",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-07T23:01:51Z",
+      "side": 1,
+      "message": "2 alternative solutions\n1. dont do memset... just disable msan.  Its a bit of a bug in msan in my opinion.  We dont use the uninitialized values.\n2. allocate the destination temporary in a different array than the source.  Then memset the full source but not the destination.",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd325d25_e9152605",
@@ -14,6 +31,24 @@
       "writtenOn": "2023-04-06T18:53:55Z",
       "side": 1,
       "message": "This could be `sizeof(temp) / 2` if that\u0027s enough in your experience. This could also be bounded by a `#if`:\n\n```\n#if defined(__has_feature)\n#if __has_feature(memory_sanitizer)\n...\n```",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c591eb21_55652613",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-07T23:01:51Z",
+      "side": 1,
+      "message": "What is the warning about?  The original code looks right.  temp contains 2 arrays... the source and destination\nThe first 16 values are the source, which we need to clear to keep msan happy.\nWe dont need to memset the destination.  sizeof(temp) is too much.\nsizeof(temp) / 2 would work in this particular case, but is not safe in general.. often we have several temporaries... e.g.  MergeUV would have 2 sources and 1 destination.  Some functions would have different element sizes for source and destination.  So I clear the specific size of the destination.\nWhich is 16 * BPP bytes.",
+      "parentUuid": "dd325d25_e9152605",
       "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
