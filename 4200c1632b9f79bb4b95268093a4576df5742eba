@@ -51,6 +51,24 @@
       "parentUuid": "5c8235ca_7c6ab967",
       "revId": "4200c1632b9f79bb4b95268093a4576df5742eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "742feaed_ed277cf9",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-07T03:20:56Z",
+      "side": 1,
+      "message": "I found that an ios-arm64 test on CI and it uses a remote client to test. Is that a real machine behind a remote client? If it is a virtual machine behind a remote client, it is also workable for risc-v.",
+      "parentUuid": "0642a4db_ca2ea4d5",
+      "revId": "4200c1632b9f79bb4b95268093a4576df5742eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
