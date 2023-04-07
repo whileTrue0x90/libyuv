@@ -55,6 +55,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67d5eb65_b2d0f969",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-07T18:00:28Z",
+      "side": 1,
+      "message": "Did you try different values for m?\nis m2 because you have 2 vector units?\nis m8 just 4x slower?\nor is vsseg4 really using 4 registers and m2 means it is using 8?",
+      "revId": "0596e9832a084337f3991b50a6c6d4c2be82c7b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0161b3db_b7798325",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
