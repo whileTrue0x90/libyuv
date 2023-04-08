@@ -105,6 +105,24 @@
       "parentUuid": "9256de70_23e30c47",
       "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02d41fd8_1aac58fb",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-04-08T02:29:19Z",
+      "side": 1,
+      "message": "`cmake .. -DCMAKE_CXX_FLAGS\u003d-Wall`\n\n\u003e 1. would 16 * sizeof(T) work?\n\u003e where T is the type we pass in\n\u003e \n\nNo.\n\n```\n\nsource/row_any.cc:2287:11: warning: ‘memset’ used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]\n 2287 |     memset(temp, 0, 16 * sizeof(T)); /* for msan */                          \\\n      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~\nsource/row_any.cc:2308:1: note: in expansion of macro ‘ANYDETILE’\n 2308 | ANYDETILE(DetileRow_16_Any_SSE2, DetileRow_16_SSE2, uint16_t, 2, 15)\n      | ^~~~~~~~~\n\n```\n\n\u003e 2. would casting the temp to (void*) work?\n\nNo.\n\n```\nsource/row_any.cc:2287:11: warning: ‘memset’ used with length equal to number of elements without multiplication by element size [-Wmemset-elt-size]\n 2287 |     memset((void*)temp, 0, 16 * BPP); /* for msan */                                \\\n      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~\nsource/row_any.cc:2308:1: note: in expansion of macro ‘ANYDETILE’\n 2308 | ANYDETILE(DetileRow_16_Any_SSE2, DetileRow_16_SSE2, uint16_t, 2, 15)\n      | ^~~~~~~~~\n```",
+      "parentUuid": "d31693ad_0e88eb70",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
