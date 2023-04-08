@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c90ba9c_0d894c85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-04-08T02:21:05Z",
+      "side": 1,
+      "message": "\u003e 2 alternative solutions\n\u003e 1. dont do memset... just disable msan.  Its a bit of a bug in msan in my opinion.  We dont use the uninitialized values.\n\nI agree with the sentiment. valgrind is better for things like this. We could just fully memset and use the `__has_feature` check I mentioned.\n\n\u003e 2. allocate the destination temporary in a different array than the source.  Then memset the full source but not the destination.",
+      "parentUuid": "3c008142_f8b1f943",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd325d25_e9152605",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "What is the warning about?  The original code looks right.  temp contains 2 arrays... the source and destination\nThe first 16 values are the source, which we need to clear to keep msan happy.\nWe dont need to memset the destination.  sizeof(temp) is too much.\nsizeof(temp) / 2 would work in this particular case, but is not safe in general.. often we have several temporaries... e.g.  MergeUV would have 2 sources and 1 destination.  Some functions would have different element sizes for source and destination.  So I clear the specific size of the destination.\nWhich is 16 * BPP bytes.",
       "parentUuid": "dd325d25_e9152605",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9256de70_23e30c47",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-04-08T02:21:05Z",
+      "side": 1,
+      "message": "\u003e What is the warning about?  The original code looks right.  temp contains 2 arrays... the source and destination\n\u003e The first 16 values are the source, which we need to clear to keep msan happy.\n\u003e We dont need to memset the destination.  sizeof(temp) is too much.\n\u003e sizeof(temp) / 2 would work in this particular case, but is not safe in general.. often we have several temporaries... e.g.  MergeUV would have 2 sources and 1 destination.  Some functions would have different element sizes for source and destination.  So I clear the specific size of the destination.\n\u003e Which is 16 * BPP bytes.\n\nThe original warning is in the commit message. It\u0027s just semantics:\n\n```\nunder gcc 12.2.0 using -Wall:\nsource/row_any.cc: In function ‘void libyuv::DetileRow_16_Any_SSE2(const\n                       uint16_t*, ptrdiff_t, uint16_t*, int)’:\nsource/row_any.cc:2287:11: warning: ‘memset’ used with length equal to\nnumber of elements without multiplication by element size\n[-Wmemset-elt-size]\n 2287 |     memset(temp, 0, 16 * BPP); /* for msan */\n      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~\nsource/row_any.cc:2308:1: note: in expansion of macro ‘ANYDETILE’\n 2308 | ANYDETILE(DetileRow_16_Any_SSE2, DetileRow_16_SSE2, uint16_t, 2, 15)\n```",
+      "parentUuid": "c591eb21_55652613",
       "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
