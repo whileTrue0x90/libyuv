@@ -16,6 +16,23 @@
       "message": "Small cl to fix typo.",
       "revId": "021fe232a6582c0243de3bbdb3da7f50227aca24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7c5b42_48dd220f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-10T16:55:24Z",
+      "side": 1,
+      "message": "Looks good but likely means those functions are untested.\nScale UV is for NV12 biplanar UV plane.  The code is based on ARGBScale which is 4 channels, and even in C it is faster than using conversion to planar and back, due mostly to scaling overhead of stepping pixels being once per plane.",
+      "revId": "021fe232a6582c0243de3bbdb3da7f50227aca24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
