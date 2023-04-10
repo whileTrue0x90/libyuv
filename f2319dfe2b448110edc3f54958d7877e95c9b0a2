@@ -158,6 +158,24 @@
       "parentUuid": "02d41fd8_1aac58fb",
       "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "498a95a0_213de01d",
+        "filename": "source/row_any.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2287,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-04-10T16:39:49Z",
+      "side": 1,
+      "message": "\u003e We dont get this on other \u0027any\u0027 functions?\n\nI only saw in this case after the uint16_t variants were added.\n\n\u003e Anyway, it would be cleaner to have 2 temp arrays... source and destination.  And fully memset the source.\n\nThat makes sense.",
+      "parentUuid": "87f63a6b_2365b25b",
+      "revId": "f2319dfe2b448110edc3f54958d7877e95c9b0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
