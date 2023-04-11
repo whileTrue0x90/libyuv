@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "893ced48_8c91aca2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-11T05:37:00Z",
+      "side": 1,
+      "message": "Hi all\nCL includes 3 RVV optimized color conversion kernels(ARGBToRAWRow_RVV, ARGBToRGB24Row_RVV, RGB24ToARGBRow_RVV).\nPlease help to review.",
+      "revId": "6581e682a14bfc5759989d363fbb3fa4dff50e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
