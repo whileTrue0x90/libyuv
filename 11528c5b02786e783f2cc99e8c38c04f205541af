@@ -3,6 +3,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8aef8567_3a70a866",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-12T22:02:27Z",
+      "side": 1,
+      "message": "Is 1866 skipped?",
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ca9b2a9_835714bc",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-12T22:02:27Z",
+      "side": 1,
+      "message": "If this change is not an accident, it should be described in the commit message.",
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28a0fa11_402f3b46",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-12T22:02:27Z",
+      "side": 1,
+      "message": "I agree the index 2 seems wrong. Should it be 1?",
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cebeb0ef_58843287",
         "filename": "source/scale_common.cc",
         "patchSetId": 2
