@@ -16,6 +16,40 @@
       "message": "The most common case specialized case of scaling is scaling to half width / half height.  libyuv implements 4 filter modes\nNone - point sampling.\nLinear - filtering 2x1 pixels on horizontal only\nBilinear - filter 2x2 pixels\nBox - average of a box.  Not implemented for UV, but for half size it is the same as bilinear.",
       "revId": "fdd9385874dd0058272492a8c9a5ca0a85ef01db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1c735ea_b908bf3a",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-12T08:29:30Z",
+      "side": 1,
+      "message": "Can we only use 1 vld2.16 to load each UV plan together?\nIf no, the comment \"// load 8 UV pixels.\" seems wrong.",
+      "revId": "fdd9385874dd0058272492a8c9a5ca0a85ef01db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fa3af36_a686bec8",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-12T08:29:30Z",
+      "side": 1,
+      "message": "Here is weird. q1 \u003d {d2, d3}.\nAssume u0,v0,u1,v1...; \nd2\u003dv0,v1...\nd3\u003dv8,v9...\nIt only stores v back to UV.",
+      "revId": "fdd9385874dd0058272492a8c9a5ca0a85ef01db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
