@@ -22,6 +22,30 @@
       },
       "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2541ff01_d6132a5a",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T21:53:33Z",
+      "side": 1,
+      "message": "odd indexed columns is the correct behavior",
+      "parentUuid": "cebeb0ef_58843287",
+      "range": {
+        "startLine": 1286,
+        "startChar": 4,
+        "endLine": 1287,
+        "endChar": 26
+      },
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
