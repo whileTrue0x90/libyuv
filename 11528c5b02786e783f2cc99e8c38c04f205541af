@@ -53,6 +53,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e436f10d_1391bc21",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T22:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca9b2a9_835714bc",
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28a0fa11_402f3b46",

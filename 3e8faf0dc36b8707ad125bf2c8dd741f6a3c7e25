@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7543d9b8_a4bc0368",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T22:16:45Z",
+      "side": 1,
+      "message": "removed unused j variable in test",
+      "revId": "3e8faf0dc36b8707ad125bf2c8dd741f6a3c7e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
