@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7d4f800_279fc60e",
+        "filename": "include/libyuv/version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T22:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aef8567_3a70a866",
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ca9b2a9_835714bc",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-04-12T22:02:27Z",
       "side": 1,
       "message": "I agree the index 2 seems wrong. Should it be 1?",
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a87d8e29_f6fe91c8",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T22:11:19Z",
+      "side": 1,
+      "message": "We are copying the 2nd UV value, which is at index 2 and 3.",
+      "parentUuid": "28a0fa11_402f3b46",
       "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
