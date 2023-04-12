@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cebeb0ef_58843287",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1526622
+      },
+      "writtenOn": "2023-04-12T21:07:25Z",
+      "side": 1,
+      "message": "This looks inconsistent with the Neon at first glance. This is sampling all of the odd indexed columns (columns 1, 3, 5, etc) while the Neon looks like it samples all of the even indexed columns (columns 0, 2, 4, etc).",
+      "range": {
+        "startLine": 1286,
+        "startChar": 4,
+        "endLine": 1287,
+        "endChar": 26
+      },
+      "revId": "11528c5b02786e783f2cc99e8c38c04f205541af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
