@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dce439c0_2481be1b",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T19:49:24Z",
+      "side": 1,
+      "message": "Fixed.   You\u0027re right, for both neon64 and neon the point sampled neon was wrong.  But the unittest didnt catching it.  Rewrote the unittest to be simplier and expect exact results.",
+      "parentUuid": "d1c735ea_b908bf3a",
+      "revId": "fdd9385874dd0058272492a8c9a5ca0a85ef01db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fa3af36_a686bec8",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-04-12T08:29:30Z",
       "side": 1,
       "message": "Here is weird. q1 \u003d {d2, d3}.\nAssume u0,v0,u1,v1...; \nd2\u003dv0,v1...\nd3\u003dv8,v9...\nIt only stores v back to UV.",
+      "revId": "fdd9385874dd0058272492a8c9a5ca0a85ef01db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bda329_05683f67",
+        "filename": "source/scale_neon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-12T19:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fa3af36_a686bec8",
       "revId": "fdd9385874dd0058272492a8c9a5ca0a85ef01db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
