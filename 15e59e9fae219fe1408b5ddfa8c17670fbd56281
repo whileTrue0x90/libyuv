@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cd5d720_378b6bc3",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-13T19:01:10Z",
+      "side": 1,
+      "message": "At some point the compiler is likely to complain that size_t has a different sign and size than int width.  But we can ignore that for now.  Have you tried compiling as RV32 - 32 bit pointers?  is size_t 32 bit in that mode?",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ac2bec5_a5997ae8",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-13T19:01:10Z",
+      "side": 1,
+      "message": "Interesting.  I was thinking the redundent vsetvl was unfortunate, and I\u0027ve wondered if it is expensive or relatively free.\nI\u0027ve seen tutorials that say the vsetvl is effectively the upper 32 bits of a 64 bit instruction and in the future there may be a 64 bit instruction encoding that includes the vsetvl in every instruction.\nIf thats the nature of the instruction, I\u0027d expect the vsetvl is very fast, and not worth avoiding.\nBut if there is a cost, theres an argument for a more classic approach of looping while the width is vlen, and then a remainder\nsomething like this:\n\n  size_t vl \u003d __riscv_vsetvl_e8m2(width);\n  vuint8m2_t v_a \u003d __riscv_vmv_v_x_u8m2(255u, vl);\n  while (width \u003e\u003d vl) {\n    vuint8m2_t v_b, v_g, v_r;\n    __riscv_vlseg3e8_v_u8m2(\u0026v_r, \u0026v_g, \u0026v_b, src_raw, vl);\n    __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);\n    width -\u003d vl;\n    src_raw +\u003d (3 * vl);\n    dst_argb +\u003d (4 * vl);\n  }\n  if (width \u003e 0)\n    vuint8m2_t v_b, v_g, v_r;\n    vl \u003d __riscv_vsetvl_e8m2(width);\n    __riscv_vlseg3e8_v_u8m2(\u0026v_r, \u0026v_g, \u0026v_b, src_raw, vl);\n    __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);\n  }\n\nBut your new code looks good.  Any cost the the __riscv_vsetvl_e8m2 is somewhat hidden by the looping branch",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
