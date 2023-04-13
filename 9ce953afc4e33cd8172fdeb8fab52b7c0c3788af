@@ -33,6 +33,24 @@
       "message": "use do/while loop.  We can guaranteed width \u003e 0.  Add assert if you\u0027re worried.\nThe NEON/AVX versions drop straight into the loop, assuming a full vector size.\nThe calling function should have checked width !\u003d 0.  e.g.\n// Convert ARGB To RAW.\nLIBYUV_API\nint ARGBToRAW(const uint8_t* src_argb,\n              int src_stride_argb,\n              uint8_t* dst_raw,\n              int dst_stride_raw,\n              int width,\n              int height) {\n  int y;\n  void (*ARGBToRAWRow)(const uint8_t* src_argb, uint8_t* dst_rgb, int width) \u003d\n      ARGBToRAWRow_C;\n  if (!src_argb || !dst_raw || width \u003c\u003d 0 || height \u003d\u003d 0) {\n    return -1;\n  }",
       "revId": "9ce953afc4e33cd8172fdeb8fab52b7c0c3788af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e6b9c48_c4e72ea7",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-13T12:13:55Z",
+      "side": 1,
+      "message": "Thank you to catch these. You are right. I solved them in Patchset 3.",
+      "parentUuid": "d62ac50b_cfcdf744",
+      "revId": "9ce953afc4e33cd8172fdeb8fab52b7c0c3788af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
