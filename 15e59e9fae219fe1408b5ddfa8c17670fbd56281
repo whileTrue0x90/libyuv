@@ -69,6 +69,24 @@
       "parentUuid": "8ac2bec5_a5997ae8",
       "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cd1a5d7_8ad0cc28",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-14T06:11:28Z",
+      "side": 1,
+      "message": "\u0027\u0027\u0027... and in the future there may be a 64 bit instruction encoding that includes the vsetvl in every instruction.\u0027\u0027\u0027\n\u003d\u003e Does this refers to \"It is anticipated that a future extended 64-bit instruction encoding would allow these fields to be specified statically in the instruction encoding.\" mentioned here https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#34-vector-type-register-vtype ?\n\nRegarding putting the vsetvl at the front or the last, I prefer to put it at the front in general. Due to the tail/mask policy of the 1st instruction inside the loop and the default (vsetvl) tail/mask policy difference. \n\nIf those are different then the compiler should add a vsetvl with proper tail/mask policy for it, then the last vsetvl will be redundant. (Though cases here should be fine.)",
+      "parentUuid": "3e0f6e4e_b1f179b5",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
