@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "aca98929_7354dade",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-14T04:00:53Z",
+      "side": 1,
+      "message": "Yes, size_t(unsigned int) is 32 bits in RV32 mode.\nI\u0027ll replace this with `size_t avl \u003d (size_t)width;` in the following CL.\nThanks!",
+      "parentUuid": "2cd5d720_378b6bc3",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8ac2bec5_a5997ae8",
         "filename": "source/row_rvv.cc",
         "patchSetId": 3
