@@ -51,6 +51,24 @@
       "message": "Interesting.  I was thinking the redundent vsetvl was unfortunate, and I\u0027ve wondered if it is expensive or relatively free.\nI\u0027ve seen tutorials that say the vsetvl is effectively the upper 32 bits of a 64 bit instruction and in the future there may be a 64 bit instruction encoding that includes the vsetvl in every instruction.\nIf thats the nature of the instruction, I\u0027d expect the vsetvl is very fast, and not worth avoiding.\nBut if there is a cost, theres an argument for a more classic approach of looping while the width is vlen, and then a remainder\nsomething like this:\n\n  size_t vl \u003d __riscv_vsetvl_e8m2(width);\n  vuint8m2_t v_a \u003d __riscv_vmv_v_x_u8m2(255u, vl);\n  while (width \u003e\u003d vl) {\n    vuint8m2_t v_b, v_g, v_r;\n    __riscv_vlseg3e8_v_u8m2(\u0026v_r, \u0026v_g, \u0026v_b, src_raw, vl);\n    __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);\n    width -\u003d vl;\n    src_raw +\u003d (3 * vl);\n    dst_argb +\u003d (4 * vl);\n  }\n  if (width \u003e 0)\n    vuint8m2_t v_b, v_g, v_r;\n    vl \u003d __riscv_vsetvl_e8m2(width);\n    __riscv_vlseg3e8_v_u8m2(\u0026v_r, \u0026v_g, \u0026v_b, src_raw, vl);\n    __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);\n  }\n\nBut your new code looks good.  Any cost the the __riscv_vsetvl_e8m2 is somewhat hidden by the looping branch",
       "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e0f6e4e_b1f179b5",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-14T05:08:43Z",
+      "side": 1,
+      "message": "\u003e Interesting.  I was thinking the redundent vsetvl was unfortunate, and I\u0027ve wondered if it is expensive or relatively free.\n\n\u003d\u003e This is relatively free. \n\n\u003e I\u0027ve seen tutorials that say the vsetvl is effectively the upper 32 bits of a 64 bit instruction and in the future there may be a 64 bit instruction encoding that includes the vsetvl in every instruction.\n\n\u003d\u003e can you share with me about this?\n\n\u003e But if there is a cost, theres an argument for a more classic approach of looping while the width is vlen, and then a remainder\n\u003e something like this:\n\u003e \n\u003e   size_t vl \u003d __riscv_vsetvl_e8m2(width);\n\u003e   vuint8m2_t v_a \u003d __riscv_vmv_v_x_u8m2(255u, vl);\n\u003e   while (width \u003e\u003d vl) {\n\u003e     vuint8m2_t v_b, v_g, v_r;\n\u003e     __riscv_vlseg3e8_v_u8m2(\u0026v_r, \u0026v_g, \u0026v_b, src_raw, vl);\n\u003e     __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);\n\u003e     width -\u003d vl;\n\u003e     src_raw +\u003d (3 * vl);\n\u003e     dst_argb +\u003d (4 * vl);\n\u003e   }\n\u003e   if (width \u003e 0)\n\u003e     vuint8m2_t v_b, v_g, v_r;\n\u003e     vl \u003d __riscv_vsetvl_e8m2(width);\n\u003e     __riscv_vlseg3e8_v_u8m2(\u0026v_r, \u0026v_g, \u0026v_b, src_raw, vl);\n\u003e     __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);\n\u003e   }\n\n\u003d\u003e I don\u0027t suggset dividing the code as above althought it can get extra benefits. Because this style seems violate the philosophy of vector. \n\n\u003e But your new code looks good.  Any cost the the __riscv_vsetvl_e8m2 is somewhat hidden by the looping branch\n\n\u003d\u003e For here, I originally just want to avoid redundant vsetvl() at first time running the loop. I didn\u0027t notice the benefit. However, I think about the pattern here again. It seems that putting vsetvl() at first or at last are the same.\nIf we put vsetvl() at fisrt of while-block{}, we\u0027ll do a redundant vsetvl(). \nIf we put vsetvl() at last of while-block{}, we\u0027ll do a useless vsetvl(0) at last time. Both of them have one redundant vsetvl()\n\nCould you provide some detail about \"somewhat hidden by the looping branch\"? Because Risc-v doesn\u0027t have delay slot, I am not sure do you mention about delay slot.",
+      "parentUuid": "8ac2bec5_a5997ae8",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
