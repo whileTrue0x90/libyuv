@@ -87,6 +87,24 @@
       "parentUuid": "3e0f6e4e_b1f179b5",
       "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe3c8012_ff052bcc",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-14T16:13:23Z",
+      "side": 1,
+      "message": "If vsetvl is slow, having it at the top of the loop, immediately followed by an rvv instruction that needs it, will delay that instruction, and can\u0027t be co-issued.\nMy understanding is x280 can execute 2 instructions per cycle, but they would need to be instructions that dont depend on each other.\nBy moving it to the bottom of the loop, the first instruction of the loop can immediately start on the first iteration.  e.g. the rgb24 starts with 3 instructions\n  size_t vl \u003d __riscv_vsetvl_e8m2(width);\n  vuint8m2_t v_a \u003d __riscv_vmv_v_x_u8m2(255u, vl);\n  do {\n    vuint8m2_t v_b, v_g, v_r;\n    __riscv_vlseg3e8_v_u8m2(\u0026v_b, \u0026v_g, \u0026v_r, src_rgb24, vl);\n\nvsetvl will issue in the first cycle\n__riscv_vmv_v_x_u8m2 has to wait for vsetvl but can issue in the 2nd cycle\n__riscv_vlseg3e8_v_u8m2 can also co-issue in the 2nd cycle\n\nIf the vsetvl were at the top of the loop, it would have delayed the load.\n\nAt the bottom of the loop vsetvl will be followed by the branch to loop.  the branch for the loop can co-issue with the vsetvl\n\nWorst case if vsetvl is very slow, the second vsetvl only impacts the next function.\n\nFor this particular function another option is move\n  vuint8m2_t v_a \u003d __riscv_vmv_v_x_u8m2(255u, vl);\ninside the loop, if that can be co-issued for free.\nThen there is only a single vsetvl at the top of the loop.\n\nHere is what the compiler generated:\n\nRGB24ToARGBRow_RVV:                 \n\tvsetvli\ta3, a2, e8, m2, ta, ma\n\tvmv.v.i\tv14, -1\n.LBB5_1:                             \n\tvlseg3e8.v\tv8, (a0)\n\tvsseg4e8.v\tv8, (a1)\n\tsubw\ta2, a2, a3\n\tslli\ta4, a3, 1\n\tadd\ta0, a0, a3\n\tadd\ta0, a0, a4\n\tslli\ta3, a3, 2\n\tadd\ta1, a1, a3\n\tvsetvli\ta3, a2, e8, m2, ta, ma\n\tbgtz\ta2, .LBB5_1\n\nthe vsetvli wont hurt performance too much where it is.  In assembly I might move it up a few lines.\noh there is a way you can remove it, but you wont like it\n\n\nRGB24ToARGBRow_RVV:                 \n\tvsetvli\ta3, a2, e8, m2, ta, ma\n\tvmv.v.i\tv14, -1\n\tslli\ta4, a3, 1   // vl * 2\n\tslli\ta5, a3, 2   // vl * 4\n\tadd\ta4, a3, a4  // vl * 3\n\n.LBB5_1:                             \n\tvlseg3e8.v\tv8, (a0)\n\tvsseg4e8.v\tv8, (a1)\n\tsubw\ta2, a2, a3\n\tadd\ta0, a0, a4\n\tbgtz\ta2, .LBB5_1\n\nYou could provide 2 functions:\nRGB24ToARGBRow_Any_RVV that has vsetvli inside the loop\nRGB24ToARGBRow_RVV that has vsetvli outside the loop\n\nBy far the most common case for libyuv is images coming from a camera with a nice sized resolution, such as 1280x720.  For simple functions like this, row coalesce will convert that into a single call with 1280*720 x 1, so 921600x1\nSo width is almost always a multiple of 64",
+      "parentUuid": "3e0f6e4e_b1f179b5",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
