@@ -196,9 +196,13 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
   int flag = 0x0;
   FILE* f = fopen(cpuinfo_name, "re");
   if (!f) {
-    // Assume nothing if /proc/cpuinfo is unavailable.
+    // Assume RVV if /proc/cpuinfo is unavailable.
     // This will occur for Chrome sandbox for Pepper or Render process.
-    return 0;
+#if defined(__riscv_vector)
+     return kCpuHasRVV;
+#else
+     return 0;
+#endif
   }
   while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
     if (memcmp(cpuinfo_line, "isa", 3) == 0) {
@@ -243,6 +247,14 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
         }
       }
     }
+#if defined(__riscv_vector) && defined(__linux__)
+    if (memcmp(cpuinfo_line, "vendor_id", 9) == 0) {
+      if (strstr(cpuinfo_line, "GenuineIntel") ||
+          strstr(cpuinfo_line, "AuthenticAMD")) {
+        flag |= kCpuHasRVV;
+      }
+    }
+#endif
   }
   fclose(f);
   return flag;
