@@ -105,6 +105,24 @@
       "parentUuid": "3e0f6e4e_b1f179b5",
       "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17e5fc49_78ae28d0",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-17T08:33:07Z",
+      "side": 1,
+      "message": "I\u0027ll investigate the suggestion of supporting both RGB24ToARGBRow_Any_RVV \u0026 RGB24ToARGBRow_RVV with some experiments.",
+      "parentUuid": "fe3c8012_ff052bcc",
+      "revId": "15e59e9fae219fe1408b5ddfa8c17670fbd56281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
