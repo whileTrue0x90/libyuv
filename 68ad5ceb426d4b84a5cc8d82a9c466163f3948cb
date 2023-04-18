@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "258055b9_c835aa36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1168145
+      },
+      "writtenOn": "2023-04-18T09:50:25Z",
+      "side": 1,
+      "message": "I don\u0027t have permission to vote, but LGTM (% couple of nits)",
+      "revId": "68ad5ceb426d4b84a5cc8d82a9c466163f3948cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4ebff3d_8b6a2de9",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1168145
+      },
+      "writtenOn": "2023-04-18T09:50:25Z",
+      "side": 1,
+      "message": "Should this comment be inside the #if?",
+      "range": {
+        "startLine": 199,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 50
+      },
+      "revId": "68ad5ceb426d4b84a5cc8d82a9c466163f3948cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4adf6f6_622a88c0",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1168145
+      },
+      "writtenOn": "2023-04-18T09:50:25Z",
+      "side": 1,
+      "message": "Maybe use this instead?\n\n    if (memcmp(cpuinfo_line, \"vendor_id\\t: GenuineIntel\", 24) ||\n        memcmp(cpuinfo_line, \"vendor_id\\t: AuthenticAMD\", 24)) {\n        \nAnd maybe also use `else if` instead of `if` here.",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 49
+      },
+      "revId": "68ad5ceb426d4b84a5cc8d82a9c466163f3948cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
