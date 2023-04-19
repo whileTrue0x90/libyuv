@@ -105,6 +105,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d18ead1_e023d7e9",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-19T10:39:28Z",
+      "side": 1,
+      "message": "My understanding is that if there are tail elements then the last two iterations will balance it. Meaning the 2nd one from the end won\u0027t be VLMAX. \n\nDue to the constraints on setting vl: \n1. vl \u003d AVL if AVL ≤ VLMAX\n2. ceil(AVL / 2) ≤ vl ≤ VLMAX if AVL \u003c (2 * VLMAX)\n3. vl \u003d VLMAX if AVL ≥ (2 * VLMAX)\n\nhttps://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#63-constraints-on-setting-vl",
+      "parentUuid": "6128d35b_8f984805",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "090d612a_17de432a",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
