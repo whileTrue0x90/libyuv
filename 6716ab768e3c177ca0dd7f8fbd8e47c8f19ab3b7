@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c158fbd7_8847279d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T08:28:06Z",
+      "side": 1,
+      "message": "Performance is faster for ARGBToAR64?  That takes 4 instructions - load, wadd, mul, store, vs the AR64ToARGB takes 3?  On ARM they are similar\nAR64ToARGB_Opt (499 ms)\nARGBToAR64_Opt (359 ms)",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090d612a_17de432a",
