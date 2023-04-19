@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bd4dbfa_d45bdac7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T09:41:21Z",
+      "side": 1,
+      "message": "AR64 / AB64 are simple but not commonly used.  So its good practice to implement them, but a more practical gpu friendly 10 bit format is AB30 which is 2:10:10:10\n\nAnother set of useful simple functions are ARGBToABGR etc.  On ARM and Intel I ended up using a common shuffle.  But if vlseg4/vsset4 is more efficient, you can do it that way.",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090d612a_17de432a",
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "1. No 1 vs 1 mapping between them. \n2. The answer is no. If widening from u8 to u16, the input vector or scalar value should be u8. Ref.:https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#1112-vector-widening-integer-multiply-instructions\n3. Based on my understanding to your question 3. \u003d\u003e not really sure misunderstanding or not. \nDo you mean __riscv_vlseg4e8_v_u8m1(b,g,r,a). and directly store with __riscv_vsseg8e8_v_u8m1(r,r,g,g,b,b,a,a)?",
       "parentUuid": "090d612a_17de432a",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7872a845_40b00aa7",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T09:41:21Z",
+      "side": 1,
+      "message": "I thought vsseg8 wouldnt exist, but sure.\nBut its probably simplier to do a simple load of 1 register and then vsseg2 with the register specified twice, to replicate it.",
+      "parentUuid": "20f0abb2_0ebea119",
       "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
