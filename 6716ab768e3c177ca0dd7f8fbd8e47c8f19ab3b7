@@ -139,6 +139,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfb9de52_9a30cdbe",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-19T11:11:28Z",
+      "side": 1,
+      "message": "Looks like my understanding was not completely correct.\n\nThere\u0027s a NOTE at the end of that section.\n`Requirement 2 also allows an implementation to set vl to VLMAX for VLMAX \u003c AVL \u003c 2*VLMAX`\n\n\nThanks to Bruce point that out.",
+      "parentUuid": "534d6da6_8161a264",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090d612a_17de432a",
