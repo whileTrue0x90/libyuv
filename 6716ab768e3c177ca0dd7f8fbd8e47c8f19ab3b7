@@ -115,6 +115,30 @@
       },
       "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ebf2cb0_ab001e32",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-19T09:41:06Z",
+      "side": 1,
+      "message": "We can also use Vector Strided Load Functions to do it.",
+      "parentUuid": "8e9e8f7d_a7e97024",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
