@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5df05bb1_74260188",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-19T10:53:19Z",
+      "side": 1,
+      "message": "This\u0027s based on the previous comment. \nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/4413083/3/source/row_rvv.cc#33\n\nDid I misunderstand the message?\n\nmay I suggest w as a name?\n\u003d\u003e Sure",
+      "parentUuid": "7a97447b_dd27c746",
+      "revId": "608bf4b5fba8a2e3bed174f0ab9f8f77cdecf4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "486b24a3_c47f89ba",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
