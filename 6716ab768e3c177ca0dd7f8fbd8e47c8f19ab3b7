@@ -52,6 +52,57 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e31decd4_fd50f74b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T09:54:26Z",
+      "side": 1,
+      "message": "The code looks ok and can always be optimized later",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddcdb19b_6b77ce56",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T09:54:26Z",
+      "side": 1,
+      "message": "style wise\nsrc_argb +\u003d vl * 4;",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6128d35b_8f984805",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T09:54:26Z",
+      "side": 1,
+      "message": "performance wise, consider, vl * 4 could be computed outside the loop\n\nset the initial size outside the loop\nsize_t vl \u003d __riscv_vsetvl_e8m1(avl);\nconst size_t src_stride \u003d vl * 4;\n\ninside the loop, but setvl to bottom of loop\nsrc_argb +\u003d src_stride;\non the last iteration the stride wrong but unused.\nBut if this isnt a win or just too ugly, disreguard.",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090d612a_17de432a",
