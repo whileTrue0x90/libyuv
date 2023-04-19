@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "20f0abb2_0ebea119",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-19T09:30:19Z",
+      "side": 1,
+      "message": "1. No 1 vs 1 mapping between them. \n2. The answer is no. If widening from u8 to u16, the input vector or scalar value should be u8. Ref.:https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#1112-vector-widening-integer-multiply-instructions\n3. Based on my understanding to your question 3. \u003d\u003e not really sure misunderstanding or not. \nDo you mean __riscv_vlseg4e8_v_u8m1(b,g,r,a). and directly store with __riscv_vsseg8e8_v_u8m1(r,r,g,g,b,b,a,a)?",
+      "parentUuid": "090d612a_17de432a",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d9feff7f_7256a719",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
@@ -65,6 +83,30 @@
       "writtenOn": "2023-04-19T08:08:59Z",
       "side": 1,
       "message": "could this be more efficient with __riscv_vlseg2e8_v_u8m2 and then __riscv_vsseg1e8_v_u8m1 or whatever a single register store is called?\n\nuse the vlseg2 with bytes to split the low and high bytes of each 16 bit value.  then store just the high 8 bits register",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e9e8f7d_a7e97024",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-19T09:30:19Z",
+      "side": 1,
+      "message": "\u003e could this be more efficient with __riscv_vlseg2e8_v_u8m2 and then __riscv_vsseg1e8_v_u8m1 or whatever a single register store is called?\n\nYou are right.  We don\u0027t need to use segment load here, we can use unit-strided load __riscv_vle16_v here.\n\n\u003e use the vlseg2 with bytes to split the low and high bytes of each 16 bit value. then store just the high 8 bits register\n\nThis is also an good idea for this kernel. I\u0027ll check which is better before providing another cl.",
+      "parentUuid": "d9feff7f_7256a719",
       "range": {
         "startLine": 80,
         "startChar": 4,
