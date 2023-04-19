@@ -33,6 +33,29 @@
       "message": "Theres probably a better way to replicate bytes?\n\n1. Is there something like arm\u0027s zip / intel unpack that weaves 2 registers together?\n\n2. Can __riscv_vwmul_vx_u16m2 that can widen the register but still multiply by 0x0101 ?\n\n3. Is there a vsseg trick like replicate the vuint8m1_t registers and treat them as vuint16m2_t for  __riscv_vsseg4e16_v_u16m2?  Thats what I did in ARM, except I just loaded a single register as normal, not vlseg.  copied it and then did vsseg2",
       "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9feff7f_7256a719",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T08:08:59Z",
+      "side": 1,
+      "message": "could this be more efficient with __riscv_vlseg2e8_v_u8m2 and then __riscv_vsseg1e8_v_u8m1 or whatever a single register store is called?\n\nuse the vlseg2 with bytes to split the low and high bytes of each 16 bit value.  then store just the high 8 bits register",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
