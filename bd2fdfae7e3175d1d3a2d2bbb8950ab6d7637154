@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dcabed6_c333aebe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-19T07:38:12Z",
+      "side": 1,
+      "message": "I remove out-of-date information on getting_started.md. Please help to review.",
+      "revId": "bd2fdfae7e3175d1d3a2d2bbb8950ab6d7637154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
