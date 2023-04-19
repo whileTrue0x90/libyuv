@@ -16,6 +16,57 @@
       "message": "Hi Frank, \nI add split/merge RGB/ARGB/XRGB rvv kernels. \nCan you help to review it?",
       "revId": "608bf4b5fba8a2e3bed174f0ab9f8f77cdecf4cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7a6d045_62d53736",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T10:02:47Z",
+      "side": 1,
+      "message": "nice speed ups",
+      "revId": "608bf4b5fba8a2e3bed174f0ab9f8f77cdecf4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a97447b_dd27c746",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T10:02:47Z",
+      "side": 1,
+      "message": "do we need a size_t version of width?  the .S files I looked at seemed to handle int ok.  libyuv prefers use signed values in general, but its okay if necessary\n\nmay I suggest w as a name?",
+      "revId": "608bf4b5fba8a2e3bed174f0ab9f8f77cdecf4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "486b24a3_c47f89ba",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T10:02:47Z",
+      "side": 1,
+      "message": "() are not needed, and these are usually expressed with constant last.\nsrc_rgb +\u003d vl * 3;",
+      "revId": "608bf4b5fba8a2e3bed174f0ab9f8f77cdecf4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
