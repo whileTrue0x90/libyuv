@@ -174,6 +174,30 @@
       },
       "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d228cbcd_f468b0f0",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T09:45:53Z",
+      "side": 1,
+      "message": "we\u0027re only discarding half the bytes, so a simplier load is probably faster?",
+      "parentUuid": "8ebf2cb0_ab001e32",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
