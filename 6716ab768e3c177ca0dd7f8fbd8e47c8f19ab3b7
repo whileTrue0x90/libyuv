@@ -16,6 +16,23 @@
       "message": "I implement AR/AB64 \u003c-\u003e ARGB conversion with RVV. Can you help to review it?",
       "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "090d612a_17de432a",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-19T07:50:23Z",
+      "side": 1,
+      "message": "Theres probably a better way to replicate bytes?\n\n1. Is there something like arm\u0027s zip / intel unpack that weaves 2 registers together?\n\n2. Can __riscv_vwmul_vx_u16m2 that can widen the register but still multiply by 0x0101 ?\n\n3. Is there a vsseg trick like replicate the vuint8m1_t registers and treat them as vuint16m2_t for  __riscv_vsseg4e16_v_u16m2?  Thats what I did in ARM, except I just loaded a single register as normal, not vlseg.  copied it and then did vsseg2",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
