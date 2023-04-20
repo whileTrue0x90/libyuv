@@ -16,6 +16,63 @@
       "message": "Hi Frank\nI rewrite ARGBToAR64Row_RVV \u0026 AR64ToARGBRow_RVV to avoid using segment load \u0026 store.",
       "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67d8da2b_00b21d08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-20T16:49:12Z",
+      "side": 1,
+      "message": "ideally these would all be 15x faster but its these are not common formats so I wouldnt worry about it.\n\nAB30 is more common and much more difficult to convert so/from: 2:10:10:10\n\nIt may help to do performance testing with 640x360 to get a better measure of instruction efficiency when L1 hits",
+      "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce5da37c_cece520c",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-20T16:49:12Z",
+      "side": 1,
+      "message": "nice... with m8 doing the shift makes more sense.\nI had been thinking __riscv_vlseg2e8_v_u8m1 which loads 2 registers and __riscv_vse8_v_u8m1 to store the 2nd register. \nsomething like this:\n__riscv_vlseg2e8_v_u8m1(\u0026v_lo, \u0026v_hi, src_ar64, vl);\n __riscv_vse8_v_u8m1(dst_argb, v_hi, vl);",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a37c7769_68f76b3c",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-20T16:49:12Z",
+      "side": 1,
+      "message": "although you implemented this consistently with other functions, I question the channel order of AB64.\nin a little endian view where left values are low bits/bytes\nAB30 is bgra\nAB30 is rgba\nwhile\nAB64 is rgba\nAR64 is bgra\nI can\u0027t find this format supported elsewhere so I\u0027ll file a bug and swap the 2 formats in the future.",
+      "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
