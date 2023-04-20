@@ -33,6 +33,24 @@
       "message": "This seems ok I think for standalone builds. //build is pulled in at https://source.chromium.org/chromium/chromium/src/+/main:third_party/libyuv/DEPS;l\u003d34 and that has the use_blink in the version it is using.",
       "revId": "96d3783bbc6af8427b31d8a98f5a608d4363deb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10ce9f79_6cc1550e",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1322187
+      },
+      "writtenOn": "2023-04-20T14:28:35Z",
+      "side": 1,
+      "message": "Yes, I have pulled the shandalone code abd tested it.",
+      "parentUuid": "73bec1ae_88828d3a",
+      "revId": "96d3783bbc6af8427b31d8a98f5a608d4363deb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
