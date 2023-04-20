@@ -86,6 +86,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b722149_1bd46506",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-20T09:35:29Z",
+      "side": 1,
+      "message": "\u003e Another set of useful simple functions are ARGBToABGR\nDarren has been implemented them in the previous. We\u0027ll make CL ASAP.",
+      "parentUuid": "6bd4dbfa_d45bdac7",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddcdb19b_6b77ce56",
@@ -263,6 +281,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53374aa3_2be37c86",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-20T09:35:29Z",
+      "side": 1,
+      "message": "If we read with a single vector here, we will get v_argb(b,g,r,a...).\nWe cannot store it with vsseg2 b/c the result will become (b,b,g,g,r,r,a,a...) for AB64, but the expected result is (r,r,g,g,b,b,a,a...).",
+      "parentUuid": "4013f380_a167dbd3",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9feff7f_7256a719",
@@ -372,6 +408,30 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "d228cbcd_f468b0f0",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "345273c0_1cda41b9",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-20T09:35:29Z",
+      "side": 1,
+      "message": "I rewrite the code with unit-stride load + shift +unit-stride store. The performance improvement is better now.",
+      "parentUuid": "e43998a0_727c7ceb",
       "range": {
         "startLine": 80,
         "startChar": 4,
