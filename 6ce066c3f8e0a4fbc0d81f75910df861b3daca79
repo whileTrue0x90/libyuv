@@ -73,6 +73,24 @@
       "message": "although you implemented this consistently with other functions, I question the channel order of AB64.\nin a little endian view where left values are low bits/bytes\nAB30 is bgra\nAB30 is rgba\nwhile\nAB64 is rgba\nAR64 is bgra\nI can\u0027t find this format supported elsewhere so I\u0027ll file a bug and swap the 2 formats in the future.",
       "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "793ec9f7_5fb5302a",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-20T19:36:52Z",
+      "side": 1,
+      "message": "Disregard... your code is right.  The code in row_common is misleading but AB64 is r,g,b,a as you have it, and that is consistent with AB30.  In the future there will be AR4H and AB4H as well, which are fp16 versions of this.  I\u0027m curious how you would implement those, so I might do the ARM version sooner than later, while you\u0027re able to provide some assistance.",
+      "parentUuid": "a37c7769_68f76b3c",
+      "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
