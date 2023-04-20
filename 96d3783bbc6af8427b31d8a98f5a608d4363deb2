@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "639b06b7_eb9739c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2023-04-20T13:59:51Z",
+      "side": 1,
+      "message": "Non-owner lgtm",
+      "revId": "96d3783bbc6af8427b31d8a98f5a608d4363deb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73bec1ae_88828d3a",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2023-04-20T13:59:51Z",
+      "side": 1,
+      "message": "This seems ok I think for standalone builds. //build is pulled in at https://source.chromium.org/chromium/chromium/src/+/main:third_party/libyuv/DEPS;l\u003d34 and that has the use_blink in the version it is using.",
+      "revId": "96d3783bbc6af8427b31d8a98f5a608d4363deb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
