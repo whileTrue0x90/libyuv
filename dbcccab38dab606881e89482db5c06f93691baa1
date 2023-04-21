@@ -16,6 +16,23 @@
       "message": "Note that maybe this can\u0027t land until https://chromium-review.googlesource.com/c/chromium/src/+/4036347 does.",
       "revId": "dbcccab38dab606881e89482db5c06f93691baa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c87d1e6_ab3bb106",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2023-04-21T03:56:04Z",
+      "side": 1,
+      "message": "PTAL, I guess the relevant Chrome bits have rolled in now?",
+      "revId": "dbcccab38dab606881e89482db5c06f93691baa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
