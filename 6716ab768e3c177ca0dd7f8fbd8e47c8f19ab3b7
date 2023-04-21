@@ -104,6 +104,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86fdb2d_d7231508",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-21T03:23:08Z",
+      "side": 1,
+      "message": "Actually, we can further optimize AB64 \u003c-\u003e ARGB functions.\nIt will need to use vrgather to swap R \u0026 B.\nWe already used vrgather on ARGB_Shuffle. I think that might have many discussion on implementation with vrgather, so I prefer to keep optimization room here. After we upstream ARGB_Shuffle and have a consensus on vrgather. We can go back to optimize AB64\u003c-\u003eARGB.",
+      "parentUuid": "e31decd4_fd50f74b",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddcdb19b_6b77ce56",

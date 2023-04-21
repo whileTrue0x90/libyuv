@@ -60,6 +60,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "72ea9e7b_7d440c3c",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-21T03:23:08Z",
+      "side": 1,
+      "message": "Both at below can implement the same function:\n1.  __riscv_vlseg2e8_v_u8m1 + __riscv_vse8_v_u8m1\n2. strided_load with only high byte + vector unit-strided store.\n\nIt depends on arch-design of segement_load \u0026 strided_load. Here, I think using simply unit-strided load is relatively general. Because unit-strided load/store are the simplest pattern in memory operations. I believe every RISC-V CPU vendor make this continuous load/store pattern as fast as possible. \nI am not really sure what\u0027s the performance for vld2 on ARM.",
+      "parentUuid": "ce5da37c_cece520c",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a37c7769_68f76b3c",
         "filename": "source/row_rvv.cc",
         "patchSetId": 2
