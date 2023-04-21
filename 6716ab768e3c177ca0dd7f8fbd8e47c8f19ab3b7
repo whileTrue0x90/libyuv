@@ -122,6 +122,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa2731bb_385d04a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-21T08:17:52Z",
+      "side": 1,
+      "message": "For those kernels needs tables like vrgather have many to discuss.\nI\u0027ll send a CL for ARGBShuffle and we can discuss it there.\nBut if you have any thoughts about this now,\nI would very much like your opinions first :)\n\nSome of the questions are:\nNot all RISCV targets have the best performance under the same LMUL. \n\u003d\u003e Should we define the code as a MACRO and the LMUL as a variable so that future targets can reuse it? It looks not pretty with the LMUL variables but I can\u0027t think of another solution.\n\nWhat VLEN range do we want to support? \n\u003d\u003e 128, 256, 512,1024, etc.\n\nShould we limit the table size?\n\u003d\u003e For large VLEN and LMUL, the size would be huge here. (e.g. VLEN\u003d1024 + m8, the table would be uint8_t[1024])\n\nThanks",
+      "parentUuid": "b86fdb2d_d7231508",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddcdb19b_6b77ce56",
