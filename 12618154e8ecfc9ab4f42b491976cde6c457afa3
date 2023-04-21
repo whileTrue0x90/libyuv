@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a99e327_6ea30a37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-04-21T01:19:36Z",
+      "side": 1,
+      "message": "Hi Frank,\nI\u0027ve modified it, please help review it. Thanks!",
+      "revId": "12618154e8ecfc9ab4f42b491976cde6c457afa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
