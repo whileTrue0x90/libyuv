@@ -20,21 +20,23 @@ namespace libyuv {
 
 TEST_F(LibYUVBaseTest, TestCpuHas) {
   int cpu_flags = TestCpuFlag(-1);
-  printf("Cpu Flags %d\n", cpu_flags);
+  printf("Cpu Flags %x\n", cpu_flags);
 #if defined(__arm__) || defined(__aarch64__)
   int has_arm = TestCpuFlag(kCpuHasARM);
-  printf("Has ARM %d\n", has_arm);
+  printf("Has ARM %x\n", has_arm);
   int has_neon = TestCpuFlag(kCpuHasNEON);
-  printf("Has NEON %d\n", has_neon);
+  printf("Has NEON %x\n", has_neon);
 #endif
 #if defined(__riscv) && defined(__linux__)
   int has_riscv = TestCpuFlag(kCpuHasRISCV);
-  printf("Has RISCV %d\n", has_riscv);
+  printf("Has RISCV %x\n", has_riscv);
   int has_rvv = TestCpuFlag(kCpuHasRVV);
-  printf("Has RVV %d\n", has_rvv);
+  printf("Has RVV %x\n", has_rvv);
   int has_rvvzvfh = TestCpuFlag(kCpuHasRVVZVFH);
-  printf("Has RVVZVFH %d\n", has_rvvzvfh);
+  printf("Has RVVZVFH %x\n", has_rvvzvfh);
 #endif
+#if defined(__i386__) || defined(__x86_64__) || defined(_M_IX86) || \
+    defined(_M_X64)
   int has_x86 = TestCpuFlag(kCpuHasX86);
   int has_sse2 = TestCpuFlag(kCpuHasSSE2);
   int has_ssse3 = TestCpuFlag(kCpuHasSSSE3);
@@ -53,39 +55,38 @@ TEST_F(LibYUVBaseTest, TestCpuHas) {
   int has_avx512vbmi2 = TestCpuFlag(kCpuHasAVX512VBMI2);
   int has_avx512vbitalg = TestCpuFlag(kCpuHasAVX512VBITALG);
   int has_avx512vpopcntdq = TestCpuFlag(kCpuHasAVX512VPOPCNTDQ);
-  printf("Has X86 %d\n", has_x86);
-  printf("Has SSE2 %d\n", has_sse2);
-  printf("Has SSSE3 %d\n", has_ssse3);
-  printf("Has SSE41 %d\n", has_sse41);
-  printf("Has SSE42 %d\n", has_sse42);
-  printf("Has AVX %d\n", has_avx);
-  printf("Has AVX2 %d\n", has_avx2);
-  printf("Has ERMS %d\n", has_erms);
-  printf("Has FMA3 %d\n", has_fma3);
-  printf("Has F16C %d\n", has_f16c);
-  printf("Has GFNI %d\n", has_gfni);
-  printf("Has AVX512BW %d\n", has_avx512bw);
-  printf("Has AVX512VL %d\n", has_avx512vl);
-  printf("Has AVX512VNNI %d\n", has_avx512vnni);
-  printf("Has AVX512VBMI %d\n", has_avx512vbmi);
-  printf("Has AVX512VBMI2 %d\n", has_avx512vbmi2);
-  printf("Has AVX512VBITALG %d\n", has_avx512vbitalg);
-  printf("Has AVX512VPOPCNTDQ %d\n", has_avx512vpopcntdq);
-
+  printf("Has X86 %x\n", has_x86);
+  printf("Has SSE2 %x\n", has_sse2);
+  printf("Has SSSE3 %x\n", has_ssse3);
+  printf("Has SSE41 %x\n", has_sse41);
+  printf("Has SSE42 %x\n", has_sse42);
+  printf("Has AVX %x\n", has_avx);
+  printf("Has AVX2 %x\n", has_avx2);
+  printf("Has ERMS %x\n", has_erms);
+  printf("Has FMA3 %x\n", has_fma3);
+  printf("Has F16C %x\n", has_f16c);
+  printf("Has GFNI %x\n", has_gfni);
+  printf("Has AVX512BW %x\n", has_avx512bw);
+  printf("Has AVX512VL %x\n", has_avx512vl);
+  printf("Has AVX512VNNI %x\n", has_avx512vnni);
+  printf("Has AVX512VBMI %x\n", has_avx512vbmi);
+  printf("Has AVX512VBMI2 %x\n", has_avx512vbmi2);
+  printf("Has AVX512VBITALG %x\n", has_avx512vbitalg);
+  printf("Has AVX512VPOPCNTDQ %x\n", has_avx512vpopcntdq);
+#endif
 #if defined(__mips__)
   int has_mips = TestCpuFlag(kCpuHasMIPS);
-  printf("Has MIPS %d\n", has_mips);
+  printf("Has MIPS %x\n", has_mips);
   int has_msa = TestCpuFlag(kCpuHasMSA);
-  printf("Has MSA %d\n", has_msa);
+  printf("Has MSA %x\n", has_msa);
 #endif
-
 #if defined(__loongarch__)
   int has_loongarch = TestCpuFlag(kCpuHasLOONGARCH);
-  printf("Has LOONGARCH %d\n", has_loongarch);
+  printf("Has LOONGARCH %x\n", has_loongarch);
   int has_lsx = TestCpuFlag(kCpuHasLSX);
-  printf("Has LSX %d\n", has_lsx);
+  printf("Has LSX %x\n", has_lsx);
   int has_lasx = TestCpuFlag(kCpuHasLASX);
-  printf("Has LASX %d\n", has_lasx);
+  printf("Has LASX %x\n", has_lasx);
 #endif
 }
 
@@ -112,14 +113,14 @@ TEST_F(LibYUVBaseTest, TestCompilerMacros) {
 #ifdef __i386__
   printf("__i386__ %d\n", __i386__);
 #endif
-#ifdef __mips
-  printf("__mips %d\n", __mips);
-#endif
-#ifdef __mips_isa_rev
-  printf("__mips_isa_rev %d\n", __mips_isa_rev);
-#endif
 #ifdef __x86_64__
   printf("__x86_64__ %d\n", __x86_64__);
+#endif
+#ifdef _M_IX86
+  printf("_M_IX86 %d\n", _M_IX86);
+#endif
+#ifdef _M_X64
+  printf("_M_X64 %d\n", _M_X64);
 #endif
 #ifdef _MSC_VER
   printf("_MSC_VER %d\n", _MSC_VER);
@@ -127,11 +128,17 @@ TEST_F(LibYUVBaseTest, TestCompilerMacros) {
 #ifdef __aarch64__
   printf("__aarch64__ %d\n", __aarch64__);
 #endif
-#ifdef __APPLE__
-  printf("__APPLE__ %d\n", __APPLE__);
-#endif
 #ifdef __arm__
   printf("__arm__ %d\n", __arm__);
+#endif
+#ifdef __riscv
+  printf("__riscv %d\n", __riscv);
+#endif
+#ifdef __riscv_vector
+  printf("__riscv_vector %d\n", __riscv_vector);
+#endif
+#ifdef __APPLE__
+  printf("__APPLE__ %d\n", __APPLE__);
 #endif
 #ifdef __clang__
   printf("__clang__ %d\n", __clang__);
@@ -148,20 +155,11 @@ TEST_F(LibYUVBaseTest, TestCompilerMacros) {
 #ifdef __mips_msa
   printf("__mips_msa %d\n", __mips_msa);
 #endif
-#ifdef __native_client__
-  printf("__native_client__ %d\n", __native_client__);
+#ifdef __mips
+  printf("__mips %d\n", __mips);
 #endif
-#ifdef __pic__
-  printf("__pic__ %d\n", __pic__);
-#endif
-#ifdef __pnacl__
-  printf("__pnacl__ %d\n", __pnacl__);
-#endif
-#ifdef _M_IX86
-  printf("_M_IX86 %d\n", _M_IX86);
-#endif
-#ifdef _M_X64
-  printf("_M_X64 %d\n", _M_X64);
+#ifdef __mips_isa_rev
+  printf("__mips_isa_rev %d\n", __mips_isa_rev);
 #endif
 #ifdef _MIPS_ARCH_LOONGSON3A
   printf("_MIPS_ARCH_LOONGSON3A %d\n", _MIPS_ARCH_LOONGSON3A);
@@ -172,8 +170,14 @@ TEST_F(LibYUVBaseTest, TestCompilerMacros) {
 #ifdef _WIN32
   printf("_WIN32 %d\n", _WIN32);
 #endif
-#ifdef __riscv
-  printf("__riscv %d\n", __riscv);
+#ifdef __native_client__
+  printf("__native_client__ %d\n", __native_client__);
+#endif
+#ifdef __pic__
+  printf("__pic__ %d\n", __pic__);
+#endif
+#ifdef __pnacl__
+  printf("__pnacl__ %d\n", __pnacl__);
 #endif
 #ifdef GG_LONGLONG
   printf("GG_LONGLONG %d\n", GG_LONGLONG);
