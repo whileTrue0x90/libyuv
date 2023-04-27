@@ -143,7 +143,8 @@ LIBYUV_API SAFEBUFFERS int ArmCpuCaps(const char* cpuinfo_name) {
     // This will occur for Chrome sandbox for Pepper or Render process.
     return kCpuHasNEON;
   }
-  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+  memset(cpuinfo_line, 0, sizeof(cpuinfo_line));
+  while (fgets(cpuinfo_line, sizeof(cpuinfo_line), f)) {
     if (memcmp(cpuinfo_line, "Features", 8) == 0) {
       char* p = strstr(cpuinfo_line, " neon");
       if (p && (p[5] == ' ' || p[5] == '\n')) {
@@ -165,14 +166,15 @@ LIBYUV_API SAFEBUFFERS int ArmCpuCaps(const char* cpuinfo_name) {
 // TODO(fbarchard): Consider read_msa_ir().
 LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name) {
   char cpuinfo_line[512];
-  int flag = 0x0;
+  int flag = 0;
   FILE* f = fopen(cpuinfo_name, "re");
   if (!f) {
     // Assume nothing if /proc/cpuinfo is unavailable.
     // This will occur for Chrome sandbox for Pepper or Render process.
     return 0;
   }
-  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+  memset(cpuinfo_line, 0, sizeof(cpuinfo_line));
+  while (fgets(cpuinfo_line, sizeof(cpuinfo_line), f)) {
     if (memcmp(cpuinfo_line, "cpu model", 9) == 0) {
       // Workaround early kernel without MSA in ASEs line.
       if (strstr(cpuinfo_line, "Loongson-2K")) {
@@ -193,7 +195,7 @@ LIBYUV_API SAFEBUFFERS int MipsCpuCaps(const char* cpuinfo_name) {
 
 LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
   char cpuinfo_line[512];
-  int flag = 0x0;
+  int flag = 0;
   FILE* f = fopen(cpuinfo_name, "re");
   if (!f) {
 #if defined(__riscv_vector)
@@ -204,7 +206,8 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
     return 0;
 #endif
   }
-  while (fgets(cpuinfo_line, sizeof(cpuinfo_line) - 1, f)) {
+  memset(cpuinfo_line, 0, sizeof(cpuinfo_line));
+  while (fgets(cpuinfo_line, sizeof(cpuinfo_line), f)) {
     if (memcmp(cpuinfo_line, "isa", 3) == 0) {
       // ISA string must begin with rv64{i,e,g} for a 64-bit processor.
       char* isa = strstr(cpuinfo_line, "rv64");
@@ -222,13 +225,13 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
         // Find the very first occurrence of 's', 'x' or 'z'.
         // To detect multi-letter standard, non-standard, and
         // supervisor-level extensions.
-        int otherExts_len = 0;
-        char* otherExts = strpbrk(isa, "zxs");
-        if (otherExts) {
-          otherExts_len = strlen(otherExts);
+        int extensions_len = 0;
+        char* extensions = strpbrk(isa, "zxs");
+        if (extensions) {
+          extensions_len = strlen(extensions);
           // Multi-letter extensions are seperated by a single underscore
           // as described in RISC-V User-Level ISA V2.2.
-          char* ext = strtok(otherExts, "_");
+          char* ext = strtok(extensions, "_");
           while (ext) {
             // Search for the ZVFH (Vector FP16) extension.
             // The ZVFH implied the (Scalar FP16)ZFH extension.
@@ -238,9 +241,9 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
             ext = strtok(NULL, "_");
           }
         }
-        const int std_isa_len = isa_len - otherExts_len - 5 - 1;
+        const int std_isa_len = isa_len - extensions_len - 5 - 1;
         // Detect the v in the standard single-letter extensions.
-        // Skip optional Zve* and Zvl* extensions detection at otherExts.
+        // Skip optional Zve* and Zvl* extensions detection at extensions.
         if (memchr(isa, 'v', std_isa_len)) {
           // The RVV implied the F extension.
           flag |= kCpuHasRVV;
@@ -248,9 +251,11 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
       }
     }
 #if defined(__riscv_vector)
+    // Assume RVV if /proc/cpuinfo is from x86 host running QEMU.
     else if ((memcmp(cpuinfo_line, "vendor_id\t: GenuineIntel", 24) == 0) ||
              (memcmp(cpuinfo_line, "vendor_id\t: AuthenticAMD", 24) == 0)) {
-      flag |= kCpuHasRVV;
+      fclose(f);
+      return kCpuHasRVV;
     }
 #endif
   }
@@ -265,7 +270,7 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
 
 #if defined(__loongarch__)
 LIBYUV_API SAFEBUFFERS int LoongarchCpuCaps(void) {
-  int flag = 0x0;
+  int flag = 0;
   uint32_t cfg2 = 0;
 
   __asm__ volatile("cpucfg %0, %1 \n\t" : "+&r"(cfg2) : "r"(LOONGARCH_CFG2));

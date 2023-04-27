@@ -21,8 +21,9 @@ using namespace libyuv;
 int main(int argc, const char* argv[]) {
   int cpu_flags = TestCpuFlag(-1);
   int has_arm = TestCpuFlag(kCpuHasARM);
-  int has_mips = TestCpuFlag(kCpuHasMIPS);
+  int has_riscv = TestCpuFlag(kCpuHasRISCV);
   int has_x86 = TestCpuFlag(kCpuHasX86);
+  int has_mips = TestCpuFlag(kCpuHasMIPS);
   int has_loongarch = TestCpuFlag(kCpuHasLOONGARCH);
   (void)argc;
   (void)argv;
@@ -63,22 +64,26 @@ int main(int argc, const char* argv[]) {
   }
 #endif
   printf("Cpu Flags %x\n", cpu_flags);
-  printf("Has ARM %x\n", has_arm);
-  printf("Has MIPS %x\n", has_mips);
-  printf("Has X86 %x\n", has_x86);
-  printf("Has LOONGARCH %x\n", has_loongarch);
   if (has_arm) {
     int has_neon = TestCpuFlag(kCpuHasNEON);
+    printf("Has ARM %x\n", has_arm);
     printf("Has NEON %x\n", has_neon);
+  }
+  if (has_riscv) {
+    int has_rvv = TestCpuFlag(kCpuHasRVV);
+    printf("Has RISCV %x\n", has_riscv);
+    printf("Has RVV %x\n", has_rvv);
   }
   if (has_mips) {
     int has_msa = TestCpuFlag(kCpuHasMSA);
+    printf("Has MIPS %x\n", has_mips);
     printf("Has MSA %x\n", has_msa);
   }
   if (has_loongarch) {
     int has_lsx  = TestCpuFlag(kCpuHasLSX);
-    printf("Has LSX %x\n", has_lsx);
     int has_lasx = TestCpuFlag(kCpuHasLASX);
+    printf("Has LOONGARCH %x\n", has_loongarch);
+    printf("Has LSX %x\n", has_lsx);
     printf("Has LASX %x\n", has_lasx);
   }
   if (has_x86) {
@@ -99,6 +104,7 @@ int main(int argc, const char* argv[]) {
     int has_avx512vbmi2 = TestCpuFlag(kCpuHasAVX512VBMI2);
     int has_avx512vbitalg = TestCpuFlag(kCpuHasAVX512VBITALG);
     int has_avx512vpopcntdq = TestCpuFlag(kCpuHasAVX512VPOPCNTDQ);
+    printf("Has X86 %x\n", has_x86);
     printf("Has SSE2 %x\n", has_sse2);
     printf("Has SSSE3 %x\n", has_ssse3);
     printf("Has SSE4.1 %x\n", has_sse41);
