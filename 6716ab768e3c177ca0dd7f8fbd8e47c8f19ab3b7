@@ -140,6 +140,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "324a2e7b_e78e44f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T18:12:26Z",
+      "side": 1,
+      "message": "I\u0027m told vrgather is slow on x280 except on small vlen, maybe avoid it for now?\nAB64 is not high priority, so I suggest move on to another set of functions and circle back if you\u0027ve learned a technique you want to apply here.",
+      "parentUuid": "fa2731bb_385d04a0",
+      "revId": "6716ab768e3c177ca0dd7f8fbd8e47c8f19ab3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddcdb19b_6b77ce56",

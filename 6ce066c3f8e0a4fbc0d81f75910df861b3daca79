@@ -84,6 +84,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e32bc7eb_3a3b96b0",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T18:12:26Z",
+      "side": 1,
+      "message": "vld2 on arm is the same as loading 2 registers, but it separates the even and odd elements for free, making the rest of a function much simplier.\nSome older cpus have a limit to the size/number of vector registers that can be updated in a cycle, which can start to impact the vld3 or vld4, but its a subtle latency in the load unit register write back, not necessarily hurting throughput.\n\ne.g. on an in-order arm cpu you can do a neon vector math instruction and co-issue a vld2 for free, which would attempt to update 3 registers - the math, and the 2 registers for the load.  some cpus can only update 2 per cycle, so the 2nd register of the load would have 1 cycle higher latency.",
+      "parentUuid": "72ea9e7b_7d440c3c",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "6ce066c3f8e0a4fbc0d81f75910df861b3daca79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a37c7769_68f76b3c",
         "filename": "source/row_rvv.cc",
         "patchSetId": 2
