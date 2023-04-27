@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d683e3e7_9ab62b9b",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T22:10:20Z",
+      "side": 1,
+      "message": "Acknowledged.  Removed.",
+      "parentUuid": "e83612d6_dead4914",
+      "revId": "807ff823f91ea4b61a151e87e3ab28f47c3ed063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "343b84c3_086b86e7",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-04-27T21:50:05Z",
       "side": 1,
       "message": "Regarding my suggestion of adding the 0x prefix to hex, what I meant is to add the 0x prefix to the %x format specifier for printf. For example, this line would become:\n\n```\n  printf(\"Cpu Flags 0x%x\\n\", cpu_flags);\n```\n\nso that its output would look like:\n\n```\nCpu Flags 0x30000001\n```\n\nWithout the 0x prefix, it\u0027s not clear whether 30000001 is decimal or hexadecimal.",
+      "revId": "807ff823f91ea4b61a151e87e3ab28f47c3ed063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "607956e4_7669997d",
+        "filename": "util/cpuid.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T22:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "343b84c3_086b86e7",
       "revId": "807ff823f91ea4b61a151e87e3ab28f47c3ed063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
