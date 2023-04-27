@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5fe6c11_70a11b6d",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-27T21:11:31Z",
+      "side": 1,
+      "message": "Nit: `isa_len`, `otherExts_len`, and `std_isa_len` should all be of the `size_t` type, because they receive the return value of `strlen`.",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87d81c55_ad493cd9",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-27T21:11:31Z",
+      "side": 1,
+      "message": "Nit: This variable should be named `other_exts_len` to follow the naming convention of the Style Guide.\n\nSimilarly, `otherExts` in the next line should be named `other_exts`.",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e619aa5_1d7316ce",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-27T21:11:31Z",
+      "side": 1,
+      "message": "I suggest adding the `0x` prefix to hex.",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e76b83b_f4edafed",
+        "filename": "util/cpuid.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-04-27T21:11:31Z",
+      "side": 1,
+      "message": "I suggest adding the 0x prefix to hex.",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
