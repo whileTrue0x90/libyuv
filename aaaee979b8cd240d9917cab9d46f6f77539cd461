@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78466ac2_0e661ade",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T21:26:32Z",
+      "side": 1,
+      "message": "Acknowledged.  libyuv has so far avoided size_t for historical reasons.  I see MT2T used it, so I\u0027ll let that slide and see if anyone complains about size_t compile errors.... if not I might adopt size_t or intptr_t for sizes that can 64 bit, such as strides.",
+      "parentUuid": "b5fe6c11_70a11b6d",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87d81c55_ad493cd9",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-04-27T21:11:31Z",
       "side": 1,
       "message": "Nit: This variable should be named `other_exts_len` to follow the naming convention of the Style Guide.\n\nSimilarly, `otherExts` in the next line should be named `other_exts`.",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11052104_5f475070",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T21:26:32Z",
+      "side": 1,
+      "message": "Done.  Note that this function is not C89 compatible, but I\u0027ll leave it for now",
+      "parentUuid": "87d81c55_ad493cd9",
       "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -52,6 +88,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bfeead0_d0c4629c",
+        "filename": "unit_test/cpu_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T21:26:32Z",
+      "side": 1,
+      "message": "0x allows you to specify the constant as hexadecimal.  It doesnt affect the type.\nIn early compilers it implied unsigned it, but in todays compilers you need to add u suffix for that.  e.g. 0x0u is unsigned int 0.  0x0 is int 0.",
+      "parentUuid": "3e619aa5_1d7316ce",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e76b83b_f4edafed",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-04-27T21:11:31Z",
       "side": 1,
       "message": "I suggest adding the 0x prefix to hex.",
+      "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cfe841c_1514bcfa",
+        "filename": "util/cpuid.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-04-27T21:26:32Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "2e76b83b_f4edafed",
       "revId": "aaaee979b8cd240d9917cab9d46f6f77539cd461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
