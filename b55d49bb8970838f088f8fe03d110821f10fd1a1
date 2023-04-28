@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eec4ed8_b564a844",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-04-28T01:08:49Z",
+      "side": 1,
+      "message": "Hi Frank\nDo you have any concern about this CL? If yes, please let us know.",
+      "revId": "b55d49bb8970838f088f8fe03d110821f10fd1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
