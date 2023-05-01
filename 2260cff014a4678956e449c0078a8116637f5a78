@@ -16,6 +16,46 @@
       "message": "Hi all,\nI\u0027ve solved the conflict.",
       "revId": "2260cff014a4678956e449c0078a8116637f5a78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3045cd9b_f0477c8c",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-01T20:20:51Z",
+      "side": 1,
+      "message": "#if !defined(LIBYUV_DISABLE_RVV) \u0026\u0026 defined(__riscv_vector)",
+      "range": {
+        "startLine": 760,
+        "startChar": 0,
+        "endLine": 760,
+        "endChar": 79
+      },
+      "revId": "2260cff014a4678956e449c0078a8116637f5a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6326f55e_b7fe4684",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-01T20:20:51Z",
+      "side": 1,
+      "message": "#if !defined(LIBYUV_DISABLE_RVV) \u0026\u0026 defined(__riscv_vector)\nOther source files only check for the vector extensions.",
+      "revId": "2260cff014a4678956e449c0078a8116637f5a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
