@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37c700b2_02c0c560",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Nit: contains \u003d\u003e be contained",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d5d426_d307b172",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Nit: fail \u003d\u003e failure",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80027ba6_ca240de7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Why does the commit message say \"avoid using strstr()\"? This CL doesn\u0027t remove the strstr() call at line 182.",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8109d01_d8fa7e17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Bruce: Thank you for the CL. I suggest a few simple changes.",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de5f2685_8830778b",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Nit: This variable doesn\u0027t need to be initialized.",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e624df6_df3de952",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Nit:\n\n1 new-line \u003d\u003e the newline\n\ncharacteron \u003d\u003e character at",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a481958e_24eea94e",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-02T23:52:12Z",
+      "side": 1,
+      "message": "Optional: It seems that instead of removing the newline character at the end of string, we can also fix the bug by replacing the `strtok(extensions, \"_\")` call with `strtok(extensions, \"_\\n\")`. Note that your current fix is fine by me. I am just trying to confirm my understanding of the bug.",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
