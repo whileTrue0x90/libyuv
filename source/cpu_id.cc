@@ -203,7 +203,7 @@ LIBYUV_API SAFEBUFFERS int RiscvCpuCaps(const char* cpuinfo_name) {
           char* ext = strtok(extensions, "_");
           while (ext) {
             // Search for the ZVFH (Vector FP16) extension.
-            if (!strcmp(ext, "zvfh")) {
+            if (!strcmp(ext, "zvfh") || !strcmp(ext, "zvfh\n")) {
               flag |= kCpuHasRVVZVFH;
             }
             ext = strtok(NULL, "_");
