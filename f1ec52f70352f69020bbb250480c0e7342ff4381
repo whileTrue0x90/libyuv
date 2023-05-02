@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2354c58c_86b740c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-02T01:58:20Z",
+      "side": 1,
+      "message": "Thanks to remind me. I\u0027ve solved both.",
+      "revId": "f1ec52f70352f69020bbb250480c0e7342ff4381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
