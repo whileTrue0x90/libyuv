@@ -128,6 +128,11 @@ int I420ToARGBMatrix(const uint8_t* src_y,
     }
   }
 #endif
+#if defined(HAS_I422TOARGBROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToARGBRow = I422ToARGBRow_RVV;
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     I422ToARGBRow(src_y, src_u, src_v, dst_argb, yuvconstants, width);
@@ -367,6 +372,11 @@ int I422ToARGBMatrix(const uint8_t* src_y,
     if (IS_ALIGNED(width, 32)) {
       I422ToARGBRow = I422ToARGBRow_LASX;
     }
+  }
+#endif
+#if defined(HAS_I422TOARGBROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToARGBRow = I422ToARGBRow_RVV;
   }
 #endif
 
@@ -4471,6 +4481,11 @@ int I422ToRGBAMatrix(const uint8_t* src_y,
     }
   }
 #endif
+#if defined(HAS_I422TORGBAROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToRGBARow = I422ToRGBARow_RVV;
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     I422ToRGBARow(src_y, src_u, src_v, dst_rgba, yuvconstants, width);
@@ -4686,6 +4701,11 @@ int I420ToRGBAMatrix(const uint8_t* src_y,
     }
   }
 #endif
+#if defined(HAS_I422TORGBAROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToRGBARow = I422ToRGBARow_RVV;
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     I422ToRGBARow(src_y, src_u, src_v, dst_rgba, yuvconstants, width);
@@ -4801,6 +4821,11 @@ int I420ToRGB24Matrix(const uint8_t* src_y,
     if (IS_ALIGNED(width, 32)) {
       I422ToRGB24Row = I422ToRGB24Row_LASX;
     }
+  }
+#endif
+#if defined(HAS_I422TORGB24ROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToRGB24Row = I422ToRGB24Row_RVV;
   }
 #endif
 
@@ -4990,6 +5015,11 @@ int I422ToRGB24Matrix(const uint8_t* src_y,
     if (IS_ALIGNED(width, 32)) {
       I422ToRGB24Row = I422ToRGB24Row_LASX;
     }
+  }
+#endif
+#if defined(HAS_I422TORGB24ROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToRGB24Row = I422ToRGB24Row_RVV;
   }
 #endif
 
@@ -5514,6 +5544,11 @@ int I420ToRGB565Dither(const uint8_t* src_y,
     if (IS_ALIGNED(width, 32)) {
       I422ToARGBRow = I422ToARGBRow_LASX;
     }
+  }
+#endif
+#if defined(HAS_I422TOARGBROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    I422ToARGBRow = I422ToARGBRow_RVV;
   }
 #endif
 #if defined(HAS_ARGBTORGB565DITHERROW_SSE2)
