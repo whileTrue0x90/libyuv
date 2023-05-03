@@ -18,6 +18,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96e03ab0_3f0e5dd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "37c700b2_02c0c560",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62d5d426_d307b172",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-05-02T23:52:12Z",
       "side": 1,
       "message": "Nit: fail \u003d\u003e failure",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ad89f09_ee7e42a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "62d5d426_d307b172",
       "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "69b01883_9c847b5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "Let me add more description to the commit message. \nI would like to describe that we can directly use strstr() to solve the problem. However, we\u0027ll face the problem when using strstr() if the future extension contains \"zvfh\".",
+      "parentUuid": "80027ba6_ca240de7",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b8109d01_d8fa7e17",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -65,6 +119,23 @@
       "writtenOn": "2023-05-02T23:52:12Z",
       "side": 1,
       "message": "Bruce: Thank you for the CL. I suggest a few simple changes.",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "350075a2_b4e9730e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "Hi Wan-Teh\nThanks to help review. Based on your suggestion, I upload the patchset 3.",
       "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -86,6 +157,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7895d3ce_83c0d81d",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "de5f2685_8830778b",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e624df6_df3de952",
@@ -103,6 +192,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "335e055e_2663f94c",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9e624df6_df3de952",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a481958e_24eea94e",
@@ -116,6 +223,24 @@
       "writtenOn": "2023-05-02T23:52:12Z",
       "side": 1,
       "message": "Optional: It seems that instead of removing the newline character at the end of string, we can also fix the bug by replacing the `strtok(extensions, \"_\")` call with `strtok(extensions, \"_\\n\")`. Note that your current fix is fine by me. I am just trying to confirm my understanding of the bug.",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc154bf8_d9a8a8c2",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-03T02:18:43Z",
+      "side": 1,
+      "message": "\u003e we can also fix the bug by replacing the `strtok(extensions, \"_\")` call with `strtok(extensions, \"_\\n\")`.\n\nI think the answer is no.\nextension string usually looks like \"zaaa_zbbb_zccc_zddd\\n\".\nIf calling with `strtok(extensions, \"_\\n\")`, the return value is always NULL.\nBTW: strtok() doesn\u0027t support searching for either \"_\" or \"\\n\" at the same time.",
+      "parentUuid": "a481958e_24eea94e",
       "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
