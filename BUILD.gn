@@ -7,6 +7,7 @@
 # be found in the AUTHORS file in the root of the source tree.
 
 import("//build/config/features.gni")
+import("//build/config/android/abi.gni")
 import("//testing/test.gni")
 import("libyuv.gni")
 
@@ -22,15 +23,19 @@ declare_args() {
 
 config("libyuv_config") {
   include_dirs = [ "include" ]
-  if (is_android && current_cpu == "arm64") {
-    ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker64" ]
+  if (is_android) {
+    if (android_64bit_target_cpu) {
+      ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker64" ]
+    } else {
+      ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker" ]
+    }
   }
-  if (is_android && current_cpu != "arm64") {
-    ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker" ]
-  }
-
+  defines = []
   if (!libyuv_use_neon) {
-    defines = [ "LIBYUV_DISABLE_NEON" ]
+    defines += [ "LIBYUV_DISABLE_NEON" ]
+  }
+  if (libyuv_disable_rvv) {
+    defines += [ "LIBYUV_DISABLE_RVV" ]
   }
 }
 
@@ -130,6 +135,7 @@ static_library("libyuv_internal") {
     "source/row_any.cc",
     "source/row_common.cc",
     "source/row_gcc.cc",
+    "source/row_rvv.cc",
     "source/row_win.cc",
     "source/scale.cc",
     "source/scale_any.cc",
