@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ed2f41_f3d93313",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-03T23:03:03Z",
+      "side": 1,
+      "message": "Note - this CL cannot land until we roll the chromium revision forward to at least https://chromium.googlesource.com/chromium/src/+/4b1c4e0f93d28787ec1d8906c1311626b249e81d .",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
