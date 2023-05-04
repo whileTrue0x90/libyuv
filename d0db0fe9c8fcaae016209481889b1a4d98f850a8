@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "41f59221_883b1065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-04T16:23:21Z",
+      "side": 1,
+      "message": "Thanks Bruce - that solution seems cleaner to deal with the lack of riscv_vector, I\u0027ll update this CL then to just focus on the Android.bp and BUILD.gn changes.",
+      "parentUuid": "cca8c370_4fb1cac4",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "01de98fb_ebdc7e71",
         "filename": "Android.bp",
         "patchSetId": 2
