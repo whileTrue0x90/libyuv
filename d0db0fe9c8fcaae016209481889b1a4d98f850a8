@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cca8c370_4fb1cac4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-04T08:40:31Z",
+      "side": 1,
+      "message": "Hi All,\nI\u0027ve provided a CL to solve the error of compiling riscv64 without RVV.\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/4486239\nIf applying my cl, we can directly build the rv64 scalar without using extra flag.",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "01de98fb_ebdc7e71",
         "filename": "Android.bp",
         "patchSetId": 2
