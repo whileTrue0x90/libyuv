@@ -16,6 +16,52 @@
       "message": "Note - this CL cannot land until we roll the chromium revision forward to at least https://chromium.googlesource.com/chromium/src/+/4b1c4e0f93d28787ec1d8906c1311626b249e81d .",
       "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01de98fb_ebdc7e71",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-04T06:51:29Z",
+      "side": 1,
+      "message": "LG since this is guarded by:\n\n```\n#if !defined(LIBYUV_DISABLE_RVV) \u0026\u0026 defined(__riscv)\n```",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6369bc45_b0d9a3f0",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-04T06:51:29Z",
+      "side": 1,
+      "message": "Add comment:\n\n```\n# Disable RVV until support is available.\n```",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
