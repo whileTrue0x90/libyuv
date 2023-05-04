@@ -108,6 +108,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "de3206b3_8ed59d4e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-04T18:12:26Z",
+      "side": 1,
+      "message": "The new NOTE in the commit message clarified this for me. Thanks.",
+      "parentUuid": "69b01883_9c847b5e",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b8109d01_d8fa7e17",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "\u003e we can also fix the bug by replacing the `strtok(extensions, \"_\")` call with `strtok(extensions, \"_\\n\")`.\n\nI think the answer is no.\nextension string usually looks like \"zaaa_zbbb_zccc_zddd\\n\".\nIf calling with `strtok(extensions, \"_\\n\")`, the return value is always NULL.\nBTW: strtok() doesn\u0027t support searching for either \"_\" or \"\\n\" at the same time.",
       "parentUuid": "a481958e_24eea94e",
+      "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1865a147_150271f3",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-04T18:12:26Z",
+      "side": 1,
+      "message": "Thanks for the reply. I believe we could also fix the test failure by passing \"_\\n\" as the second argument to **both** strtok() calls, but it is worse than your fix (removing the newline character at the end of the line) because it makes the correct format of the extension string less clear.",
+      "parentUuid": "fc154bf8_d9a8a8c2",
       "revId": "d85db43ffe7d77580e5db6229ca1ce044108816a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }

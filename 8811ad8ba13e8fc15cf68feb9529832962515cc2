@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05bcb736_92705c4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-04T18:12:26Z",
+      "side": 1,
+      "message": "Bruce: I\u0027m sorry I forgot to review the new patchset. It looks good.",
+      "revId": "8811ad8ba13e8fc15cf68feb9529832962515cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
