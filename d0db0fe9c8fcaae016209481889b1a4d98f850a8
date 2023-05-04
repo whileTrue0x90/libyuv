@@ -53,6 +53,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "584d204e_6be7ea00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-04T22:07:37Z",
+      "side": 1,
+      "message": "Actually, I realize there\u0027s a small problem here. Some of the functions used it row_rvv require Zfh and Zvfh, right? Until Android formally enables those, I think we\u0027d still need the disable flag.",
+      "parentUuid": "41f59221_883b1065",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "01de98fb_ebdc7e71",
