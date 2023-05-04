@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b6d9719_0d864134",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-04T03:11:11Z",
+      "side": 1,
+      "message": "Looks ok.  Can you confirm x280 support fp16?\nFor libyuv we currently don\u0027t require it, so this code could be simplifed.  But it will be nice to support in the future.  In XNNPack I do a lot of fp16",
+      "revId": "fabcc3dd5d811bf688007d53ccc5cf9914cb1d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
