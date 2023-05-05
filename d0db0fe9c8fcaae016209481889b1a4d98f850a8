@@ -107,6 +107,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3269047d_614d43a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-05T15:32:03Z",
+      "side": 1,
+      "message": "I\u0027m currently using the public Android RISCV virtual device target on QEMU (aosp_cf_riscv64_phone). They indeed don\u0027t support RVV yet, but I\u0027m trying to build some further things that sit on top of libyuv, hence the need to guard RVV until it\u0027s supported. My only test right now is whether it compiles or not.",
+      "parentUuid": "0b454974_5b307747",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "01de98fb_ebdc7e71",
