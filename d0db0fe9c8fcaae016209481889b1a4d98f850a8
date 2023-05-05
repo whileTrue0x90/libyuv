@@ -89,6 +89,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b454974_5b307747",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-05T05:28:29Z",
+      "side": 1,
+      "message": "Hi Prashanth\nI am curious about what is the testing platform for riscv64 target.\nWill you use real platform or qemu(user-mode or system-mode)?\nAnother is that, since open-source linux \u0026 android haven\u0027t supported RVV yet. How do you test them?",
+      "parentUuid": "db77409f_8e79dd4f",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "01de98fb_ebdc7e71",
