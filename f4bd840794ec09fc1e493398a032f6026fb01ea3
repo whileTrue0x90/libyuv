@@ -68,6 +68,24 @@
       "parentUuid": "53929341_1fdaada5",
       "revId": "f4bd840794ec09fc1e493398a032f6026fb01ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e92d974_2dfed274",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-05T02:17:19Z",
+      "side": 1,
+      "message": "Thank you for the explanation. I see my question was confusing. What I meant to ask is: should this line also contain \"CACHE STRING\" as follows?\n\n```\n      set(GTEST_SRC_DIR third_party/googletest/src/googletest CACHE STRING \"Location of gtest sources\")\n```",
+      "parentUuid": "f38c835a_93a10566",
+      "revId": "f4bd840794ec09fc1e493398a032f6026fb01ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
