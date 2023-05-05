@@ -71,6 +71,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "db77409f_8e79dd4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-05T01:51:45Z",
+      "side": 1,
+      "message": "\u003e Some of the functions used it row_rvv require Zfh and Zvfh, right?\n\nCurrently, there are no functions used either zfh or zvfh extensions.\nWhen we have functions which use zfh/zvfh, we\u0027ll use preprocessor definition to avoid compiling them. Hence, you don\u0027t need to worry about it for now.\n\nFollowing up your concern. If there is no RVV support on android, we should use flag to disable RVV.",
+      "parentUuid": "584d204e_6be7ea00",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "01de98fb_ebdc7e71",
