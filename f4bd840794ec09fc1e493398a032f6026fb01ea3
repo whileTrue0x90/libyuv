@@ -50,6 +50,24 @@
       "message": "Bruce: I don\u0027t know CMake very well. Do you know if this `set` command should also have the `CACHE STRING \"Location of gtest sources\"` part like line 58?",
       "revId": "f4bd840794ec09fc1e493398a032f6026fb01ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f38c835a_93a10566",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-05T02:00:48Z",
+      "side": 1,
+      "message": "\u003e Bruce: I don\u0027t know CMake very well. Do you know if this `set` command should also have the `CACHE STRING \"Location of gtest sources\"` part like line 58?\n\nUsing a cache string makes a user modify the variable directly when applying CMake configure. \nFor instance: We can directly set `UNIT_TEST` string by `-DUNIT_TEST\u003dON`.",
+      "parentUuid": "53929341_1fdaada5",
+      "revId": "f4bd840794ec09fc1e493398a032f6026fb01ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
