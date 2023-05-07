@@ -33,6 +33,24 @@
       "message": "@mbonadei, would you be able to push this through or re-run it? I appear to not be able to issue a change that triggers Bot-Commit\u003d+1 (I don\u0027t appear to have the permissions required to run this script E2E).",
       "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feb30bd3_dff21854",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-07T09:55:54Z",
+      "side": 1,
+      "message": "There are some issues:\n\n```\nERROR Unresolved dependencies.\n//third_party/androidx:androidx_test_runner_java__classes(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__assetres(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__assetres(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__build_config_crbug_908819(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__build_config_crbug_908819(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__dex(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__header(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__header(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__header(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__host(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__host(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__validate(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__host(//build/toolchain/android:android_clang_x64)\n//third_party/androidx:androidx_test_runner_java__classes__validate(//build/toolchain/android:android_clang_x64)\n  needs //third_party/android_deps:net_sf_kxml_kxml2_java__validate(//build/toolchain/android:android_clang_x64)\n```\n\nAre you familiar about these or do you want me to take a look?",
+      "parentUuid": "c57c198a_9cc361e4",
+      "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
