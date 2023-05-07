@@ -87,6 +87,24 @@
       "parentUuid": "47e2c510_dc24804a",
       "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6ed609e_26fe2089",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-07T14:29:55Z",
+      "side": 1,
+      "message": "Possibly because in upstream, AndroidX does not have a checked in BUILD.gn file and instead generates it live - we might need to either control the BUILD.gn generation via action or have the roller trigger the build generation.\n\nhttps://chromium.googlesource.com/chromium/src.git/+/refs/heads/main/third_party/androidx/",
+      "parentUuid": "f3c8be3e_d360f8e0",
+      "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
