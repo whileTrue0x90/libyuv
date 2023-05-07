@@ -69,6 +69,24 @@
       "parentUuid": "feb30bd3_dff21854",
       "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c8be3e_d360f8e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-07T14:25:57Z",
+      "side": 1,
+      "message": "It looks like the origin of the issue comes from this CL, which removed that dependency: https://chromium-review.googlesource.com/c/chromium/src/+/4356264.\n\nStill investigating why it was removed / what we can do about it.",
+      "parentUuid": "47e2c510_dc24804a",
+      "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
