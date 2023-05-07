@@ -51,6 +51,24 @@
       "parentUuid": "c57c198a_9cc361e4",
       "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47e2c510_dc24804a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-07T13:59:33Z",
+      "side": 1,
+      "message": "Not familiar but will take a look - it appears that this has been one of the reasons the autoroller has been failing for the last few weeks:\n\nThis failure has appeared multiple times in the last 100 CQ runs:\nhttps://ci.chromium.org/p/libyuv/builders/try/android_x64\n\nAll of those failures are auto-roller runs:\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/4475426/1",
+      "parentUuid": "feb30bd3_dff21854",
+      "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
