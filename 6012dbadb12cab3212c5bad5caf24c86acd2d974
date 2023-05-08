@@ -105,6 +105,24 @@
       "parentUuid": "f3c8be3e_d360f8e0",
       "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87b583ac_7f48f41d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-08T16:56:29Z",
+      "side": 1,
+      "message": "Resolving this one. I updated the CL with the DEPS fixes.",
+      "parentUuid": "c6ed609e_26fe2089",
+      "revId": "6012dbadb12cab3212c5bad5caf24c86acd2d974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
