@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dfd925f_9a9b4344",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-08T11:55:38Z",
+      "side": 1,
+      "message": "Hi, we prepare RVV optimized I{422,420}TO{ARGB,RGBA,RGB24} functions in this CL.\nPlease help to review.",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
