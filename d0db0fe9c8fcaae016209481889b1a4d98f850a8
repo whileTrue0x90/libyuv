@@ -127,6 +127,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7949800b_0998605b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-08T23:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3269047d_614d43a5",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "01de98fb_ebdc7e71",
         "filename": "Android.bp",
         "patchSetId": 2
@@ -165,6 +183,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd1e449f_8063786f",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-08T23:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b35432a_171d91d4",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3beae0ad_9e4469e4",
@@ -182,6 +218,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c2b910_ba97a114",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-08T23:08:00Z",
+      "side": 1,
+      "message": "Fixed to instead switch on the 64bit flag rather than individual CPUs.",
+      "parentUuid": "3beae0ad_9e4469e4",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7021317_01d360f3",
@@ -195,6 +249,24 @@
       "writtenOn": "2023-05-08T19:24:35Z",
       "side": 1,
       "message": "we\u0027ll probably need to model how vectors are enabled/disabled on the arm builds.\na gn flag can be passed to enable/disable",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f3f99f4_0cd948a7",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-08T23:08:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7021317_01d360f3",
       "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
