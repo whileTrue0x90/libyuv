@@ -150,6 +150,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b35432a_171d91d4",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T19:24:35Z",
+      "side": 1,
+      "message": "this shouldnt be necessary as the row_rvv.cc has an ifdef guard... oh wait.\nthere is a CL to add the guard but it hasnt landed.  if you can hold off, the source should have\n#if defined(__riscv_vector)\nallowing all platforms to include the source but only compiling anything if rvv is enabled",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3beae0ad_9e4469e4",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T19:24:35Z",
+      "side": 1,
+      "message": "should linker64 be the default and \u0027linker\u0027 for just aarch32 builds?",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7021317_01d360f3",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T19:24:35Z",
+      "side": 1,
+      "message": "we\u0027ll probably need to model how vectors are enabled/disabled on the arm builds.\na gn flag can be passed to enable/disable",
+      "revId": "d0db0fe9c8fcaae016209481889b1a4d98f850a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6369bc45_b0d9a3f0",
         "filename": "BUILD.gn",
         "patchSetId": 2
