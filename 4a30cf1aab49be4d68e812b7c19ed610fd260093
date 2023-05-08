@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fdac6119_c7bd852b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T18:28:57Z",
+      "side": 1,
+      "message": "I420ToARGB and NV12ToARGB use the I422ToARGBRow functions and are the single most important conversion, performance wise.\nOn Android the output will be \u0027ABGR\u0027 which is r,g,b,a in memory, but it uses the same code with a mirrored matrix.",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b0313e31_60196aef",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
