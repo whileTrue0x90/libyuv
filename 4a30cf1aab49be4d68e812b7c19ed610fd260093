@@ -37,6 +37,46 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0a80784a_0d771cd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-08T22:06:13Z",
+      "side": 1,
+      "message": "My review is just supplemental.",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5694d309_a2cdf0c7",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-08T22:06:13Z",
+      "side": 1,
+      "message": "Please update this comment, for example,\n\n```\n// This struct is for ARM and RISC-V color conversion.\n```",
+      "range": {
+        "startLine": 842,
+        "startChar": 22,
+        "endLine": 842,
+        "endChar": 25
+      },
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b0313e31_60196aef",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
@@ -65,6 +105,29 @@
       "writtenOn": "2023-05-08T18:26:53Z",
       "side": 1,
       "message": "would it help performance to put the yuv constants into GPR registers and use \u0027vx\u0027 to multiply image vectors by scalar values?",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8ba61ac_69535441",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-08T22:06:13Z",
+      "side": 1,
+      "message": "Nit: sets \u003d\u003e is set ?\n\nNote: also at line 298 and line 330.",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 19
+      },
       "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
