@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b933f890_1bdcd3a9",
+        "filename": "source/row_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-05-08T22:38:45Z",
+      "side": 1,
+      "message": "Including this for x64 builds for me, though I don\u0027t know if there are configurations it might break for.",
+      "revId": "3666222721a54fb6c1521de27c4b9ce050392f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6487207e_7d8635ac",
+        "filename": "source/row_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-05-08T22:38:45Z",
+      "side": 1,
+      "message": "`_M_X64` is defined along with `_M_ARM64EC`:\nhttps://learn.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view\u003dmsvc-170",
+      "revId": "3666222721a54fb6c1521de27c4b9ce050392f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
