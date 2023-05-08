@@ -16,6 +16,57 @@
       "message": "Hi, we prepare RVV optimized I{422,420}TO{ARGB,RGBA,RGB24} functions in this CL.\nPlease help to review.",
       "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0313e31_60196aef",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T18:26:53Z",
+      "side": 1,
+      "message": "historically 422 is the main function, but on mobile NV12 is more common so it would be good to consider READNV12 and optimize for that use case",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6075a9b_b211c673",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T18:26:53Z",
+      "side": 1,
+      "message": "would it help performance to put the yuv constants into GPR registers and use \u0027vx\u0027 to multiply image vectors by scalar values?",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12536a4b_f138c3f2",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-08T18:26:53Z",
+      "side": 1,
+      "message": "include this in the YUVTORGB_SETUP function?",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
