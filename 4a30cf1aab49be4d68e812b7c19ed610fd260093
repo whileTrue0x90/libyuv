@@ -216,6 +216,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6022c5f_dfec326d",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7548d29f_d2003cc4",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 19
+      },
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12536a4b_f138c3f2",
@@ -247,6 +271,24 @@
       "side": 1,
       "message": "ok.",
       "parentUuid": "12536a4b_f138c3f2",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd9682e_313fc32a",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9723617_7505561a",
       "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
