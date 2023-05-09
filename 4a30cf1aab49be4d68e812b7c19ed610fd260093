@@ -169,6 +169,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5436ee31_1d7060c1",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-05-09T04:51:35Z",
+      "side": 1,
+      "message": "It got the better performance to use \u0027vv\u0027 here.",
+      "parentUuid": "f6075a9b_b211c673",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8ba61ac_69535441",
