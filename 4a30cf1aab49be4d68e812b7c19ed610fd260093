@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1558cb2a_39c13a38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:51:46Z",
+      "side": 1,
+      "message": "OK, thank you to provide this information.",
+      "parentUuid": "fdac6119_c7bd852b",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5694d309_a2cdf0c7",
@@ -77,6 +95,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "75801566_2e164b50",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:51:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5694d309_a2cdf0c7",
+      "range": {
+        "startLine": 842,
+        "startChar": 22,
+        "endLine": 842,
+        "endChar": 25
+      },
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b0313e31_60196aef",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
@@ -88,6 +130,24 @@
       "writtenOn": "2023-05-08T18:26:53Z",
       "side": 1,
       "message": "historically 422 is the main function, but on mobile NV12 is more common so it would be good to consider READNV12 and optimize for that use case",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaa91787_16d505c8",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:51:46Z",
+      "side": 1,
+      "message": "\u003e historically 422 is the main function, but on mobile NV12 is more common so it would be good to consider READNV12 and optimize for that use case\n\nWe\u0027ve implemented NV{12}To{ARGB,RGB24}. After this CL merge, we\u0027ll be provided ASAP.\nBTW: Do you have any suggestions to tackle two implementations(general vs. specific)? I find that row_neon64.cc use `#if LIBYUV_USE_ST2` to achieve.",
+      "parentUuid": "b0313e31_60196aef",
       "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -134,6 +194,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7548d29f_d2003cc4",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:51:46Z",
+      "side": 1,
+      "message": "ok.",
+      "parentUuid": "f8ba61ac_69535441",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 19
+      },
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12536a4b_f138c3f2",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
@@ -145,6 +229,24 @@
       "writtenOn": "2023-05-08T18:26:53Z",
       "side": 1,
       "message": "include this in the YUVTORGB_SETUP function?",
+      "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9723617_7505561a",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-09T03:51:46Z",
+      "side": 1,
+      "message": "ok.",
+      "parentUuid": "12536a4b_f138c3f2",
       "revId": "4a30cf1aab49be4d68e812b7c19ed610fd260093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
