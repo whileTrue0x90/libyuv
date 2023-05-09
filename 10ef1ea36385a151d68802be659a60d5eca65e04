@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "435e3a1a_bee15639",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1580862
+      },
+      "writtenOn": "2023-05-09T12:00:10Z",
+      "side": 1,
+      "message": "Hello, I am the research and development of Tencent. In our project, we found that the latest version of libyuv has the problem of memory being written out of bounds. The old version of libyuv does not have this problem. This commit fixes this memory issue.\nBug Root Cause Analysis:\nThe new version upgrades MergeUVRow_AVX2 in row_gcc.c, but does not upgrade MergeUVRow_AVX2 in row_win.cc. In the row_any.cc file, the new version is defined as follows: ANY21(MergeUVRow_Any_AVX2, MergeUVRow_AVX2, 0, 1, 1, 2, 15). The old version is defined as follows: ANY21(MergeUVRow_Any_AVX2, MergeUVRow_AVX2, 0, 1, 1, 2, 31)",
+      "revId": "10ef1ea36385a151d68802be659a60d5eca65e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
