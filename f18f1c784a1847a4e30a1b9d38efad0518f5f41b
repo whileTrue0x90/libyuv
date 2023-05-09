@@ -70,6 +70,24 @@
       "parentUuid": "243b1f78_431ab5f7",
       "revId": "f18f1c784a1847a4e30a1b9d38efad0518f5f41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "209bc841_9ef0f536",
+        "filename": "source/row_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2023-05-09T20:06:59Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9b9be2b6_2eb54225",
+      "revId": "f18f1c784a1847a4e30a1b9d38efad0518f5f41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
