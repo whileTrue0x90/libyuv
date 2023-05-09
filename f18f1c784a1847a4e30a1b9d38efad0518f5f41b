@@ -16,6 +16,24 @@
       "message": "would it be better to avoid _M_ARM64EC with the guard?\n\n// This module is for Visual C 32/64 bit x86\n#if !defined(LIBYUV_DISABLE_X86) \u0026\u0026 defined(_MSC_VER) \u0026\u0026 \\\n  !defined(__clang__) \u0026\u0026 (defined(_M_IX86) || defined(_M_X64)) \u0026\u0026 \\\n  !defined(_M_ARM64EC)",
       "revId": "f18f1c784a1847a4e30a1b9d38efad0518f5f41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313082f3_548f65c4",
+        "filename": "source/row_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-09T19:56:28Z",
+      "side": 0,
+      "message": "Looks ok",
+      "parentUuid": "dd512425_1b62bc90",
+      "revId": "f18f1c784a1847a4e30a1b9d38efad0518f5f41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
