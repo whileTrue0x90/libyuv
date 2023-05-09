@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25f32252_8abfcf3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-09T20:01:10Z",
+      "side": 1,
+      "message": "Note that this row_win.cc code only applies to actual Visual Studio compiler, and that particular function is for Win32.\nBecause Visual Studio hasn\u0027t supported 64 bit inline, I moved away from this file and use row_gcc.cc with clangcl to compile inline x86 code that is compatible with Visual C.  If you can, I suggest using clangcl, for ARM as well as X86.\nBut as long as row_win keeps working reasonably well, I\u0027ll keep the support there.  Thanks for the patch!",
+      "revId": "4c209d264d5e4b297bab17f7ba0a49ecafa08b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
