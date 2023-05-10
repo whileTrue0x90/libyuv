@@ -16,6 +16,23 @@
       "message": "Hi all, \nWe upload RVV vectorized version of I444To{ARGB,RGB24} please help to review. \nThanks\nBruce",
       "revId": "2c384d634c41bdb38bbcfaf22b0a0d4d00c8dae7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ebb918d_6a70316a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-10T19:33:14Z",
+      "side": 1,
+      "message": "Looks good!  Thanks.  It should be easy to add I444AlphaToARGB if you like... it just reads the alpha, much like the Y channel.\n\nIn the future I444 will be more central to libyuv, as I420 and I422 have \u0027filtered\u0027 versions that first upsample to I444.\n\nThere is a 16 bit version of this that is also a small change\nI410 for example is 444 with 10 bit (lsb).  When it reads the I410 it converts the 10 bit to 16 bit, instead of the usual 8 bit to 16 bit.  So only the READ macro is affected.\nOutputting to ARGB can shift the results down to 8 bit as usual, and having all YUV formats able to output ARGB is a good first step, since YUV comes for HEVC etc for media and we need good coverage on that end.\nSupport for 10 bit RGB formats is harder and less useful, depending what the GPU / rendering supports.",
+      "revId": "2c384d634c41bdb38bbcfaf22b0a0d4d00c8dae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
