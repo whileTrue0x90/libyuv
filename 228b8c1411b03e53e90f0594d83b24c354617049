@@ -33,6 +33,24 @@
       "message": "this is good, but consider a dot product so you can convert all 4 channels in 1 instruction?",
       "revId": "228b8c1411b03e53e90f0594d83b24c354617049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19037b0e_4aea756e",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-11T12:21:39Z",
+      "side": 1,
+      "message": "\u003e this is good, but consider a dot product so you can convert all 4 channels in 1 instruction?\n\nThank you to recommend.\nCould you provide more info about your idea?",
+      "parentUuid": "5bc997c1_fb01c827",
+      "revId": "228b8c1411b03e53e90f0594d83b24c354617049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
