@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10032d41_17270fc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T23:39:11Z",
+      "side": 1,
+      "message": "LGTM.",
+      "revId": "1b1e467ba2c40af35eddffa94b989f58488cdddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da55e61c_21e06664",
+        "filename": "source/convert.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T23:39:11Z",
+      "side": 1,
+      "message": "Optional: Some people write this comment (for the `#else`) as `!defined(USE_EXTRACTALPHA)`.",
+      "revId": "1b1e467ba2c40af35eddffa94b989f58488cdddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
