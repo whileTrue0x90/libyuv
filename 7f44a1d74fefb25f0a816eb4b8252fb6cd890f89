@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f2f7455_1cdbc7da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T19:54:18Z",
+      "side": 1,
+      "message": "Thanks for the patch. I didn\u0027t review the test. I suggest a few simple changes.",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6baa407a_d5d86ceb",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T19:54:18Z",
+      "side": 1,
+      "message": "Nit/optional: It would be clearer to negate this to `#ifdef USE_EXTRACTALPHA` and swap the two blocks so that the shorter block goes first.",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d9944c3_cde7b0c8",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T19:54:18Z",
+      "side": 1,
+      "message": "Add \"with Alpha\"",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "251c90be_7fac1f04",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T19:54:18Z",
+      "side": 1,
+      "message": "Add `|| !dst_a`",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20f71506_fdc4c89f",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-16T19:54:18Z",
+      "side": 1,
+      "message": "Nit: Add a `// defined(USE_EXTRACTALPHA)` comment ?",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
