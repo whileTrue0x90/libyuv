@@ -16,6 +16,23 @@
       "message": "Hi all, \nI\u0027ve upload I{422,444}AlphaToARGB RVV implementations. \nPlease help to review.\nThx.",
       "revId": "579be53bf55024c494c1c5b2583dac19d019de5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c839e91_0eb3b780",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T17:37:01Z",
+      "side": 1,
+      "message": "Seems a shame not to use m2 for the vectors, but you\u0027ve used most of the registers for constants.  If these constants were in a single vector, or scalars, you could make the input/output m2.",
+      "revId": "579be53bf55024c494c1c5b2583dac19d019de5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
