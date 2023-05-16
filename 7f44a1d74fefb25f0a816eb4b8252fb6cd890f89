@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "205c7dfa_10e95c74",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T23:30:37Z",
+      "side": 1,
+      "message": "Done.  Will likely remove the wrapper once performance comparisons are done.",
+      "parentUuid": "6baa407a_d5d86ceb",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d9944c3_cde7b0c8",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-16T19:54:18Z",
       "side": 1,
       "message": "Add \"with Alpha\"",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5992b4a_5c50d3de",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T23:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d9944c3_cde7b0c8",
       "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -69,6 +105,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "639f06b5_bf65d7ab",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T23:30:37Z",
+      "side": 1,
+      "message": "Done.  I was considering making alpha optional, and then calling it from the ARGBToI420.  But for now 2 functions, alpha not optional.",
+      "parentUuid": "251c90be_7fac1f04",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "123a2270_4496cc2d",
@@ -82,6 +136,24 @@
       "writtenOn": "2023-05-16T19:58:28Z",
       "side": 1,
       "message": "I am curious why for MSA and LASX you test the Y and UV macros together but for other ISAs you test them separately.",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cce620e0_b51b9b62",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T23:30:37Z",
+      "side": 1,
+      "message": "Acknowledged.  A single test is more efficient and what we tended to do in the past.  But 2 tests is more flexible.  At times the ARGBToY has been available when the ARGBToUV was not, so moving forward, row_any and these macros will be decoupled as much as possible so individual row functions can be disabled and still get some benefit.",
+      "parentUuid": "123a2270_4496cc2d",
       "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -105,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e439a8e_c9f46422",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1941,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T23:30:37Z",
+      "side": 1,
+      "message": "It doesnt exist apparently... which is odd... ABGRToUVRow_LSX exists, but not ARGB",
+      "parentUuid": "a2fa417a_d60f9d59",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20f71506_fdc4c89f",
         "filename": "source/convert.cc",
         "patchSetId": 2
@@ -116,6 +206,24 @@
       "writtenOn": "2023-05-16T19:54:18Z",
       "side": 1,
       "message": "Nit: Add a `// defined(USE_EXTRACTALPHA)` comment ?",
+      "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac33948d_a322cae6",
+        "filename": "source/convert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-16T23:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f71506_fdc4c89f",
       "revId": "7f44a1d74fefb25f0a816eb4b8252fb6cd890f89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
