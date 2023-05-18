@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6802813a_5af7b516",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-18T23:55:03Z",
+      "side": 1,
+      "message": "Filed a bug for rounding\nhttps://bugs.chromium.org/p/libyuv/issues/detail?id\u003d961\n\nI\u0027m thinking remove the rounding in the bias (32) and apply rounding when converting the 16 bit value back to 8 bit.  Use a rounding shift.\n\nYou can implement this any time by subtracting the 32 from the bias and use a rounding shift instead.  Then the bias will always be the same sign and you can remove an if.\nThe bias represents 16 in the original I400 Y.\nY values goes from 16 to 235\nThe conversion could subtract the 16 first and then multiply.\nY - 16 gives a range of 0 to 235 - 16 \u003d 219 inclusive.\nThe scaling converts the range to 0 to 255 inclusive.\nrgb \u003d (y - 16) * 255 / (235 - 16)\nWhen done with ints we want rounding so add (235-16)/2\nrgb \u003d ((y - 16) * 255 + (235 - 16) / 2) / (235 - 16)\n\nBecause divide is slow we use fixed point.\nAnd to avoid doing 2 adds (-16 and + (235 - 16) / 2), the -16 is done after the multiply, combined with the rounding.",
+      "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
