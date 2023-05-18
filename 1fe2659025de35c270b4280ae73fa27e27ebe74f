@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71bccb77_45389c60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-18T23:03:36Z",
+      "side": 1,
+      "message": "I400 will likely need a revisit, as the rounding for 8 bit is baked into the bias and is not correct for 10 bit.  e.g. you could not adapt this to I400ToAR64",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e3f0b0f_8ec29aba",
@@ -31,6 +48,74 @@
       "writtenOn": "2023-05-18T21:03:23Z",
       "side": 1,
       "message": "This may be a merge error.\n\nThe new code doesn\u0027t call assert(), so it doesn\u0027t seem necessary to add this. Also note that \u003cassert.h\u003e is already included at line 23.",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ac3f002_c00d515d",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-18T23:03:36Z",
+      "side": 1,
+      "message": "what does rounding mode apply to?",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37f5f9ea_2747a4e1",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-18T23:03:36Z",
+      "side": 1,
+      "message": "this doesnt seem right?  arm doesnt need a branch\n\nYB \u003d yuvconstants-\u003ekRGBCoeffBias[4]\n\nFor I400\n#define YB -1160 /* 1.164 * 64 * -16 + 64 / 2 */\nFor J400\n#define YB 32    /* 64 / 2 */\n\n32 is because we do rounding before shifting right by 6.\n\nhmmm... this might even be a bug.  rounding should only apply when we take the fixed point value (10.6) and convert it down to 8 bit\nnormally we\u0027d use\nYUVTORGB\nthen\nRGBTORGB8\nBut when doing 10, 12 or 16 bit this isnt the right rounding.\n\nFor ARM it might be better to remove the 32 and using rounding shift during RGBTORGB8\nIntel version is more complicated... no rounding shift.\n\nYour code is accurate but slow and wont work for 10 bit.  Nor will ARM version.  So we\u0027ll need to rethink YUV to RGB for 10 bit.",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c1d80a2_81775f85",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-18T23:03:36Z",
+      "side": 1,
+      "message": "These 3 lines read 8 bit values and make them into 16 bit.  I see ARGBToAR64 is the same, but it isn\u0027t efficient?  And will come up again\nOn Intel replicating the values (with unpacklbw) is the fastest and most accurate way to make 16 bit values.\n\nAs we move toward 10 bit the idea is the READ will replicate the high bits.\nSee row_gcc:\n// Read 4 UV from 422 10 bit, upsample to 8 UV\n#define READYUV210                                                \\\n  \"movq       (%[u_buf]),%%xmm3                               \\n\" \\\n  \"movq       0x00(%[u_buf],%[v_buf],1),%%xmm1                \\n\" \\\n  \"lea        0x8(%[u_buf]),%[u_buf]                          \\n\" \\\n  \"punpcklwd  %%xmm1,%%xmm3                                   \\n\" \\\n  \"psraw      $2,%%xmm3                                       \\n\" \\\n  \"packuswb   %%xmm3,%%xmm3                                   \\n\" \\\n  \"punpcklwd  %%xmm3,%%xmm3                                   \\n\" \\\n  \"movdqu     (%[y_buf]),%%xmm4                               \\n\" \\\n  \"movdqa     %%xmm4,%%xmm2                                   \\n\" \\\n  \"psllw      $6,%%xmm4                                       \\n\" \\\n  \"psrlw      $4,%%xmm2                                       \\n\" \\\n  \"paddw      %%xmm2,%%xmm4                                   \\n\" \\\n  \"lea        0x10(%[y_buf]),%[y_buf]                         \\n\"\n\nxmm4 is shifted from low 10 bits to the high bits.\nxmm2 is the same 10 lsb, shifted right by 4 to get the top 6 bits into the lsb\nthen combine, so we have 10 bits followed by the upper 6 bits replicated into the bottom.\nOn ARM I would probably use sri - shift right and insert.\n\nFor 8 bit a byte based shuffle could be used.\nOn ARM the zip instruction is like Intel unpacklbw which weaves 2 registers together.  Does RVV have one of those?",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cef51893_5b22c2f7",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-18T23:03:36Z",
+      "side": 1,
+      "message": "can this be done in 16 bit?  on Intel there is pmulhuw which returns the upper 16 bits.  see the row_gcc version:\n\n#ifdef HAS_I400TOARGBROW_SSE2\nvoid I400ToARGBRow_SSE2(const uint8_t* y_buf,\n                        uint8_t* dst_argb,\n                        const struct YuvConstants* yuvconstants,\n                        int width) {\n  asm volatile(\n      \"movdqa      96(%3),%%xmm2                 \\n\"  // yg \u003d 18997 \u003d 1.164\n      \"movdqa      128(%3),%%xmm3                \\n\"  // ygb \u003d 1160 \u003d 1.164 * 16\n      \"pcmpeqb     %%xmm4,%%xmm4                 \\n\"  // 0xff000000\n      \"pslld       $0x18,%%xmm4                  \\n\"\n\n      LABELALIGN\n      \"1:                                        \\n\"\n      // Step 1: Scale Y contribution to 8 G values. G \u003d (y - 16) * 1.164\n      \"movq      (%0),%%xmm0                     \\n\"\n      \"lea       0x8(%0),%0                      \\n\"\n      \"punpcklbw %%xmm0,%%xmm0                   \\n\"\n      \"pmulhuw   %%xmm2,%%xmm0                   \\n\"\n      \"paddsw    %%xmm3,%%xmm0                   \\n\"\n      \"psraw     $6, %%xmm0                      \\n\"\n      \"packuswb  %%xmm0,%%xmm0                   \\n\"\n\n      // Step 2: Weave into ARGB\n      \"punpcklbw %%xmm0,%%xmm0                   \\n\"\n      \"movdqa    %%xmm0,%%xmm1                   \\n\"\n      \"punpcklwd %%xmm0,%%xmm0                   \\n\"\n      \"punpckhwd %%xmm1,%%xmm1                   \\n\"\n      \"por       %%xmm4,%%xmm0                   \\n\"\n      \"por       %%xmm4,%%xmm1                   \\n\"\n      \"movdqu    %%xmm0,(%1)                     \\n\"\n      \"movdqu    %%xmm1,0x10(%1)                 \\n\"\n      \"lea       0x20(%1),%1                     \\n\"\n\n      \"sub       $0x8,%2                         \\n\"\n      \"jg        1b                              \\n\"\n      : \"+r\"(y_buf),       // %0\n        \"+r\"(dst_argb),    // %1\n        \"+rm\"(width)       // %2\n      : \"r\"(yuvconstants)  // %3\n      : \"memory\", \"cc\", \"xmm0\", \"xmm1\", \"xmm2\", \"xmm3\", \"xmm4\");\n}\n#endif  // HAS_I400TOARGBROW_SSE2\nArm has a q15 multiply that is similar but it doubles and rounds.  We dont want the low 16 bits rounded. sqrdmulh",
       "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
