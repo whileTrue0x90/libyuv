@@ -33,6 +33,24 @@
       "message": "Seems a shame not to use m2 for the vectors, but you\u0027ve used most of the registers for constants.  If these constants were in a single vector, or scalars, you could make the input/output m2.",
       "revId": "579be53bf55024c494c1c5b2583dac19d019de5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b73e953_80c83d29",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-18T08:23:21Z",
+      "side": 1,
+      "message": "You are right. I am checking about this. Thank you to provide this info.",
+      "parentUuid": "2c839e91_0eb3b780",
+      "revId": "579be53bf55024c494c1c5b2583dac19d019de5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
