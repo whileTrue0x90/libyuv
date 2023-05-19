@@ -105,6 +105,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c5c296_daa30174",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-19T01:03:32Z",
+      "side": 1,
+      "message": "If we use rounding the csrwi vxrm, 2 can be removed?",
+      "parentUuid": "db84f2cb_a5ec4c54",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37f5f9ea_2747a4e1",
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "\u003e arm doesnt need a branch\n\nUsing Branch here is for protection purposes. For I400ToARGBRow_RVV,  we actually only need to use the `is_yb_positive` part of the code. \nHowever, there is a bug, if one day there is negative YB to directly pass to the code. NEON code doesn\u0027t face the problem because it uses BB/BG/BR not directly using YB.\n\n\u003e hmmm... this might even be a bug. rounding should only apply when we take the fixed point value (10.6) and convert it down to 8 bit\nnormally we\u0027d use\n\n\u003e For ARM it might be better to remove the 32 and using rounding shift during RGBTORGB8\n\nWe originally follow the const value used by ARM (+32). If you would like to modify this. I could help to modify RVV part. RISC-V has round-to-nearest-up (add +0.5 LSB) by setting vxrm\u003d0. I didn\u0027t use it here in the previous because YB has already contained 32 inside.\n\n\u003e Your code is accurate but slow and wont work for 10 bit. Nor will ARM version. So we\u0027ll need to rethink YUV to RGB for 10 bit.\n\nSince you\u0027ve mentioned 10-bit several times, I think this is important in the future. I would suggest you mention the importance of this in the mail thread or sending new mail.\n\n\u003e Your code is accurate but slow\n\nThe const variable `is_yb_positive` help clang to provide two code block. One is for `is_yb_positive\u003dtrue` another is `is_yb_positive\u003dfalse`.",
       "parentUuid": "37f5f9ea_2747a4e1",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45ad757f_71c9e697",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-19T01:03:32Z",
+      "side": 1,
+      "message": "I will follow up with ARM changes to the yuvconstants, but it will only improve the quality of 10 bit\n\nYes.  10 bit (and 12 bit) has been important for \u0027media\u0027 for several years, when using libyuv to convert to and from codecs that support 10 bit.\nThese HDR codecs have tended run on Intel based machines, but we\u0027ll start to see them on ARM and others.\n\nThen next phase is 10 bit camera formats.  Android has started supporting 10 bit cameras.  The most common format is P010 which is similar to NV12 except 16 bit channels with the 10 bits in the upper bits.\n\nSoftware codecs tend to use 3 planes, which I called I010 where it is similar to I420, but 16 bits per plane and the bits are in the 10 lsb.\n\nSome functions can get away with treating 10 and 12 bits as 16 bits.  For example Rotate.\nYou may need to look at row_gcc for examples of 10 bit support.\nAR30 is a common GPU format that is 2:10:10:10.  Good luck with that one :-)\nIt will depend on what camera, GPU and display come with RISC-V systems",
+      "parentUuid": "efd5b21f_a31c3643",
       "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
