@@ -71,6 +71,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b34f0f0_8d180aba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-19T19:13:18Z",
+      "side": 1,
+      "message": "For now lets just find a good CPU to compromise performance on, while not hurting the others.  You can choose p670... just dont hurt x280 too much.\n\nI\u0027ve been tempted to optimize for specific ARM cpus... one of the most recent CPUs has a very slow store instruction (56 cycles).  So I avoid it.  But I\u0027ve been creating 2 versions of each function and using a macro to choose.\nIf a developer wanted to, they could enable the macro to choose which cpu to optimize for.  Not a great solution, but its easy to do.\n\nThe proper solution would be similar to XNNPack where it has a complex cpu detect and functions optimized for every CPU.  On ARM there is an especially big architectural difference between big a little cores, and XNNPack enables different code for both and does runtime thread switching that detects the current core and uses the matching microkernel.  The performance difference of using the right kernel is about 30% so its a big enough improvement to warrant not just have optimized kernels, but also the overhead of switching on the fly.\n\nThe first step would be a cpu detection that can identify x280 vs p470 and p670.  Its not clear how to do that.\nThe package XNNPack uses has initial RVV detect\nhttps://github.com/pytorch/cpuinfo\nbut does not identify uarch",
+      "parentUuid": "ad630251_948563cf",
+      "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c297d79_246623eb",
