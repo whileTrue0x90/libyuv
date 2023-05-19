@@ -194,6 +194,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "522c24b0_b72213e9",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-19T08:53:56Z",
+      "side": 1,
+      "message": "Thanks to provide these info. We\u0027ll do some study about these.",
+      "parentUuid": "45ad757f_71c9e697",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c1d80a2_81775f85",
