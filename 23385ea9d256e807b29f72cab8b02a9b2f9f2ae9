@@ -33,6 +33,42 @@
       "message": "Its not clear that we have to change 8 bit Y to 16 bit before doing the multiply.  But if so it would be good to follow up with ARGBToAR64 and I400ToARGB doing it more efficiently.\nSince you benchmark shows I400 is only a little slower than J400 the performance of the multiply isnt too bad.",
       "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad630251_948563cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-19T05:33:09Z",
+      "side": 1,
+      "message": "\u003e Its not clear that we have to change 8 bit Y to 16 bit before doing the multiply.  \n\nWe use widening add and then perform 16-bit multiply. Because _vx instrcution only supports multiplty with same data_width. You can refer to https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#1110-vector-single-width-integer-multiply-instructions. \nIt says that \"The single-width multiply instructions perform a SEW-bit * SEW-bit multiply to generate a 2*SEW-bit product, then return one half of the product in the SEW-bit-wide destination.\"\n\nYou can also look-up intrinsic api\nhttps://raw.githubusercontent.com/riscv-non-isa/rvv-intrinsic-doc/master/auto-generated/intrinsic_funcs.md.\n\nThis is efficient. \n\n\u003e But if so it would be good to follow up with ARGBToAR64 and I400ToARGB doing it more efficiently.\nSince you benchmark shows I400 is only a little slower than J400 the performance of the multiply isnt too bad.\n\nSorry to make you confuesd. \nThe performance data isn\u0027t consistent between previous and now. Due to changing testing platform from x280 to P470 since this PR. The mirco-arch between x280 \u0026 p470/670 are different. Since P470/P670 is application level process and target for android, it\u0027s more suitable for us to upstream for them.\n\n\u003e Since you benchmark shows I400 is only a little slower than J400 the performance of the multiply isnt too bad. \n\n(1) We cannot directly use speedup result to point out that \"I400 is only a little slower than J400\". Two scalar implementations are different.\n(2) We previous CLs use x280\u0027s speed-up. ARGBToAR64_Opt runs well(13.7x). ARGBToAB64_Opt(5x) is relatively poor. This is because of micro-arch. We would prefer to p470/p670 favor(general) code, and We also feel free to also upload x280 optimized code. However, I need to know formal way in libyuv to provide hard-ware specific code.\n(3) We can provide new performance speedup for p470 with previous upstream kernels.",
+      "parentUuid": "afc7262a_46cbca13",
+      "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9ba5e7e_2fecc7af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-19T05:33:09Z",
+      "side": 1,
+      "message": "\u003e Filed a bug for rounding\nhttps://bugs.chromium.org/p/libyuv/issues/detail?id\u003d961\n\nI cannot access this ticket. (Permission denied.)\n\n\u003e I\u0027m thinking remove the rounding in the bias (32) and apply rounding when converting the 16 bit value back to 8 bit. Use a rounding shift.\n\nThanks for your info. I think my CL can pending until your decision.",
+      "parentUuid": "6802813a_5af7b516",
+      "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
