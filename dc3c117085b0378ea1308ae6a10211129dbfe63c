@@ -16,6 +16,23 @@
       "message": "This patch includes the implementation of the ARGBToUVRow_LSX function.",
       "revId": "dc3c117085b0378ea1308ae6a10211129dbfe63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e174fc7_428a2477",
+        "filename": "source/row_lsx.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-19T18:37:29Z",
+      "side": 1,
+      "message": "Note in the future these constants will go into an rgbconstants matrix, much like yuvconstants.\nIts also possible this function goes away in favor of using ARGBToY with different constants for U and V and then subsample and store a row at a time.",
+      "revId": "dc3c117085b0378ea1308ae6a10211129dbfe63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
