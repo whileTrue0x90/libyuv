@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67f9fc3c_2d41d1e8",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-19T00:49:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4e3f0b0f_8ec29aba",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ac3f002_c00d515d",
@@ -71,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db84f2cb_a5ec4c54",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-19T00:49:05Z",
+      "side": 1,
+      "message": "Apply \"2\" is to make sure fixed-point right shift operation(__riscv_vnsrl_wx_u16m4) to not apply rouning. Because YB has already added 32(apply round-up manually).",
+      "parentUuid": "6ac3f002_c00d515d",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37f5f9ea_2747a4e1",
         "filename": "source/row_rvv.cc",
         "patchSetId": 1
@@ -82,6 +118,24 @@
       "writtenOn": "2023-05-18T23:03:36Z",
       "side": 1,
       "message": "this doesnt seem right?  arm doesnt need a branch\n\nYB \u003d yuvconstants-\u003ekRGBCoeffBias[4]\n\nFor I400\n#define YB -1160 /* 1.164 * 64 * -16 + 64 / 2 */\nFor J400\n#define YB 32    /* 64 / 2 */\n\n32 is because we do rounding before shifting right by 6.\n\nhmmm... this might even be a bug.  rounding should only apply when we take the fixed point value (10.6) and convert it down to 8 bit\nnormally we\u0027d use\nYUVTORGB\nthen\nRGBTORGB8\nBut when doing 10, 12 or 16 bit this isnt the right rounding.\n\nFor ARM it might be better to remove the 32 and using rounding shift during RGBTORGB8\nIntel version is more complicated... no rounding shift.\n\nYour code is accurate but slow and wont work for 10 bit.  Nor will ARM version.  So we\u0027ll need to rethink YUV to RGB for 10 bit.",
+      "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efd5b21f_a31c3643",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-19T00:49:05Z",
+      "side": 1,
+      "message": "\u003e arm doesnt need a branch\n\nUsing Branch here is for protection purposes. For I400ToARGBRow_RVV,  we actually only need to use the `is_yb_positive` part of the code. \nHowever, there is a bug, if one day there is negative YB to directly pass to the code. NEON code doesn\u0027t face the problem because it uses BB/BG/BR not directly using YB.\n\n\u003e hmmm... this might even be a bug. rounding should only apply when we take the fixed point value (10.6) and convert it down to 8 bit\nnormally we\u0027d use\n\n\u003e For ARM it might be better to remove the 32 and using rounding shift during RGBTORGB8\n\nWe originally follow the const value used by ARM (+32). If you would like to modify this. I could help to modify RVV part. RISC-V has round-to-nearest-up (add +0.5 LSB) by setting vxrm\u003d0. I didn\u0027t use it here in the previous because YB has already contained 32 inside.\n\n\u003e Your code is accurate but slow and wont work for 10 bit. Nor will ARM version. So we\u0027ll need to rethink YUV to RGB for 10 bit.\n\nSince you\u0027ve mentioned 10-bit several times, I think this is important in the future. I would suggest you mention the importance of this in the mail thread or sending new mail.\n\n\u003e Your code is accurate but slow\n\nThe const variable `is_yb_positive` help clang to provide two code block. One is for `is_yb_positive\u003dtrue` another is `is_yb_positive\u003dfalse`.",
+      "parentUuid": "37f5f9ea_2747a4e1",
       "revId": "1fe2659025de35c270b4280ae73fa27e27ebe74f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
