@@ -69,6 +69,23 @@
       "parentUuid": "6802813a_5af7b516",
       "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c297d79_246623eb",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-19T16:46:45Z",
+      "side": 1,
+      "message": "This issue is still in patchset 2. We don\u0027t need both this line and line 23.",
+      "revId": "23385ea9d256e807b29f72cab8b02a9b2f9f2ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
