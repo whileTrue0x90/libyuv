@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44259853_af4b2c34",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-20T23:13:33Z",
+      "side": 1,
+      "message": "I removed this one in patchset 4. The contents of this entire file are inside the #if block that starts at line 22, so #include \u003cassert.h\u003e should reside inside that #if block, and there is one at line 23.",
+      "parentUuid": "0bfe6444_e7ff97a0",
+      "revId": "657722762726883f0198cfd01a15752e90fe44e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84b880f0_ccccff7f",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-05-20T22:58:02Z",
       "side": 1,
       "message": "Here is the second #include \u003cassert.h\u003e statement.",
+      "revId": "657722762726883f0198cfd01a15752e90fe44e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4a0d88_25b823e7",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-05-20T23:13:33Z",
+      "side": 1,
+      "message": "Fixed in patchset 4.",
+      "parentUuid": "84b880f0_ccccff7f",
       "revId": "657722762726883f0198cfd01a15752e90fe44e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
