@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26ca4b7b_ea49f992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-22T01:49:12Z",
+      "side": 1,
+      "message": "Hi all,\nI upload this CL in order to mimic behavior after libyuv:961 is completed.\nPlease help to review. When libyuv:961 is solved, we should remove 32 inside `row_rvv.cc`.",
+      "revId": "8b562b69a2fc2b372c0655d89b4eb5769f811776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
