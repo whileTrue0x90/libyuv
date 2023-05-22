@@ -16,6 +16,23 @@
       "message": "PTAL. Thanks.",
       "revId": "56b2415764f167ecf52c8487a75cbc6879fd4e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5890622c_e50b387c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-22T18:56:12Z",
+      "side": 1,
+      "message": "Note that typically the same code exists for different data types.  But Box is only for planar, not ARGB or UV scaling at the moment.",
+      "revId": "56b2415764f167ecf52c8487a75cbc6879fd4e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
