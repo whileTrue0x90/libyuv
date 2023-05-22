@@ -16,6 +16,23 @@
       "message": "Hi all,\nI upload this CL in order to mimic behavior after libyuv:961 is completed.\nPlease help to review. When libyuv:961 is solved, we should remove 32 inside `row_rvv.cc`.",
       "revId": "8b562b69a2fc2b372c0655d89b4eb5769f811776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "715cc0ca_72c7226c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-22T17:57:56Z",
+      "side": 1,
+      "message": "Cool... I was thinking of something like that for Intel, which will likely still want the bias but will need to know if the output is 8 bit or 10 bit.\nWhereas ARM can just use rounding and not need to know",
+      "revId": "8b562b69a2fc2b372c0655d89b4eb5769f811776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
