@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c31dcb4_b281fdf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-05-24T21:12:06Z",
+      "side": 1,
+      "message": "Fixed incorrect clobber lists",
+      "revId": "500d32d2c77f8843b8b82a7ff86ee5af18bccc7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
