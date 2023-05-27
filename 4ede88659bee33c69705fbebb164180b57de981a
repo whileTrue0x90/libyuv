@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c80d9d1_6c0fed9f",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-27T21:11:16Z",
+      "side": 1,
+      "message": "Do you have an example of these?\n\n(I wonder if this needs to be ported to WebRTC as well or if for some reason this is a libyuv only thing)",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 42
+      },
+      "revId": "4ede88659bee33c69705fbebb164180b57de981a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
