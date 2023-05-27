@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ecab924_a7702c29",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-27T17:34:37Z",
+      "side": 1,
+      "message": "Can we do a full roll?\n\nIf you get blockers, pass the CL to me and I will try to fix them.",
+      "revId": "fa8035e537398741fe87f02fd7565c5e4a0af71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
