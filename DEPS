@@ -153,7 +153,7 @@ deps = {
   'src/third_party/boringssl/src':
     'https://boringssl.googlesource.com/boringssl.git' + '@' + '1b724a6b8cefd6d3facf7141222bca57f9e090c7',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '9d22e0aa98630e53dffc6bf177fd70e99da979bc',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '3ea3dab22a3ce23283ad2bdbbbeae84a3a240de0',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
