@@ -16,6 +16,24 @@
       "message": "Can we do a full roll?\n\nIf you get blockers, pass the CL to me and I will try to fix them.",
       "revId": "fa8035e537398741fe87f02fd7565c5e4a0af71b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d4608aa_72d82275",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-27T17:48:59Z",
+      "side": 1,
+      "message": "Blocked - ran roll_deps with `b9a5db7e8866af7b84fcf6fedf03722d054c1e3f` as the hash, some of the deps URLs do not have a \u0027@\u0027, which causes a failure here:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/libyuv/tools_libyuv/autoroller/roll_deps.py;l\u003d221",
+      "parentUuid": "3ecab924_a7702c29",
+      "revId": "fa8035e537398741fe87f02fd7565c5e4a0af71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
