@@ -23,10 +23,11 @@ declare_args() {
 config("libyuv_config") {
   include_dirs = [ "include" ]
   if (is_android) {
-    if (target_cpu == "arm" || target_cpu == "x86" || target_cpu == "mipsel") {
-      ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker" ]
-    } else {
+    import("//build/config/android/config.gni")
+    if (android_64bit_target_cpu) {
       ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker64" ]
+    } else {
+      ldflags = [ "-Wl,--dynamic-linker,/system/bin/linker" ]
     }
   }
   defines = []
