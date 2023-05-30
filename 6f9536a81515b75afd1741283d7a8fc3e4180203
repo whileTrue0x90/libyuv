@@ -16,6 +16,24 @@
       "message": "Hi all, this CL upstream CopyRow \u0026 InterpolateRow \u0026 Merge/SplitUVRow RVV implementations. \nPlease help to review.",
       "revId": "6f9536a81515b75afd1741283d7a8fc3e4180203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51cac8a0_8646c7d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-30T08:53:19Z",
+      "side": 1,
+      "message": "Patchset 2: modify speedup result to use the same platform as https://chromium-review.googlesource.com/c/libyuv/libyuv/+/4544972.\nPatchset 3: add `Bug: libyuv:956` in the commit message.",
+      "parentUuid": "712b8d04_1e8fe3f7",
+      "revId": "6f9536a81515b75afd1741283d7a8fc3e4180203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
