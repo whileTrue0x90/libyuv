@@ -34,6 +34,24 @@
       "parentUuid": "3ecab924_a7702c29",
       "revId": "fa8035e537398741fe87f02fd7565c5e4a0af71b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32742450_15a64b42",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-30T09:06:06Z",
+      "side": 1,
+      "message": "Thanks, let\u0027s do a full roll and then land this one.",
+      "parentUuid": "7d4608aa_72d82275",
+      "revId": "fa8035e537398741fe87f02fd7565c5e4a0af71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
