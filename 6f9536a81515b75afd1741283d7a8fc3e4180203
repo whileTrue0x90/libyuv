@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "712b8d04_1e8fe3f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-30T05:29:03Z",
+      "side": 1,
+      "message": "Hi all, this CL upstream CopyRow \u0026 InterpolateRow \u0026 Merge/SplitUVRow RVV implementations. \nPlease help to review.",
+      "revId": "6f9536a81515b75afd1741283d7a8fc3e4180203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
