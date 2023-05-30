@@ -34,6 +34,24 @@
       "parentUuid": "259b36a9_71c90aef",
       "revId": "62ce5b821b3fad0f5e88910f606baee93440584c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "120994f6_f7a814b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-05-30T10:00:36Z",
+      "side": 1,
+      "message": "Note that for x280, it\u0027s faster to use previous version.\nFor upstream, I think it might be more intuitive to use _vx with m2.",
+      "parentUuid": "ae2226d9_19760d29",
+      "revId": "62ce5b821b3fad0f5e88910f606baee93440584c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
