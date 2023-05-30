@@ -94,6 +94,30 @@
       },
       "revId": "4ede88659bee33c69705fbebb164180b57de981a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aff5133_3902b7d2",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-30T17:16:41Z",
+      "side": 1,
+      "message": "Hmm, maybe we need to do the other way around.\n\nCopy this into WebRTC. :)",
+      "parentUuid": "e32a2046_f1de57ae",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 42
+      },
+      "revId": "4ede88659bee33c69705fbebb164180b57de981a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
