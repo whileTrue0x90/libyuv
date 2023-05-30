@@ -16,6 +16,24 @@
       "message": "Does the m2 improve performance?",
       "revId": "62ce5b821b3fad0f5e88910f606baee93440584c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae2226d9_19760d29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-05-30T09:44:55Z",
+      "side": 1,
+      "message": "It might improve performance(depends on u-arch design, how fast CPU handle spilling register?\n\nNOTE: When using LMUL\u003d2, the register spill cannot be avoided since vector registers are also under pressure.",
+      "parentUuid": "259b36a9_71c90aef",
+      "revId": "62ce5b821b3fad0f5e88910f606baee93440584c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
