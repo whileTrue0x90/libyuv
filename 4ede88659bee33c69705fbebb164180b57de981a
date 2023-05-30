@@ -46,6 +46,30 @@
       },
       "revId": "4ede88659bee33c69705fbebb164180b57de981a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b682dcd_069884ac",
+        "filename": "tools_libyuv/autoroller/roll_deps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-05-30T09:00:04Z",
+      "side": 1,
+      "message": "WebRTC does https://source.chromium.org/chromium/chromium/src/+/main:third_party/webrtc/tools_webrtc/autoroller/roll_deps.py;l\u003d268-280;drc\u003d4b3bb799e2e1e559ec284e5d192fd01d93691db6.\n\nCan this work here?\n\nI think yes, can you copy and try?",
+      "parentUuid": "1b67af5c_249d18ec",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 42
+      },
+      "revId": "4ede88659bee33c69705fbebb164180b57de981a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
