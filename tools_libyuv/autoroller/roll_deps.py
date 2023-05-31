@@ -265,7 +265,7 @@ def CalculateChangedDeps(libyuv_deps, new_cr_deps):
     else:
       # Use the HEAD of the deps repo.
       stdout, _ = _RunCommand(['git', 'ls-remote', libyuv_deps_entry.url,
-                               'HEAD'])
+                               'main' if 'mockito' in libyuv_deps_entry.url else 'HEAD'])
       new_rev = stdout.strip().split('\t')[0]
 
     # Check if an update is necessary.
