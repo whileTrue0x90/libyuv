@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3449642_ed79f694",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-05-31T00:41:15Z",
+      "side": 1,
+      "message": "Note - in order to do this roll, I locally made a change to the roller script to pull \u0027main\u0027 from \u0027mockito\u0027 instead of \u0027HEAD\u0027 (as the latter does not exist). This is being fixed in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d1449483.",
+      "revId": "4cc7b9b6ba80a84db7d1bb2cb052a8d53c5d51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
