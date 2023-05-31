@@ -32,13 +32,36 @@ def FindSrcDirPath():
 # Skip these dependencies (list without solution name prefix).
 DONT_AUTOROLL_THESE = [
     'src/third_party/gflags/src',
+    'src/third_party/mockito/src',
 ]
 
 # These dependencies are missing in chromium/src/DEPS, either unused or already
 # in-tree. For instance, src/base is a part of the Chromium source git repo,
 # but we pull it through a subtree mirror, so therefore it isn't listed in
 # Chromium's deps but it is in ours.
-LIBYUV_ONLY_DEPS = []
+LIBYUV_ONLY_DEPS = [
+    'src/base',
+    'src/build',
+    'src/buildtools',
+    'src/ios',
+    'src/testing',
+    'src/third_party',
+    'src/third_party/android_support_test_runner',
+    'src/third_party/bazel',
+    'src/third_party/bouncycastle',
+    'src/third_party/errorprone/lib',
+    'src/third_party/findbugs',
+    'src/third_party/gson',
+    'src/third_party/gtest-parallel',
+    'src/third_party/guava',
+    'src/third_party/intellij',
+    'src/third_party/jsr-305/src',
+    'src/third_party/ow2_asm',
+    'src/third_party/proguard',
+    'src/third_party/ub-uiautomator/lib',
+    'src/tools',
+    'src/tools/clang/dsymutil',
+]
 
 LIBYUV_URL = 'https://chromium.googlesource.com/libyuv/libyuv'
 CHROMIUM_SRC_URL = 'https://chromium.googlesource.com/chromium/src'
