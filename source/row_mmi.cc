@@ -448,7 +448,7 @@ void ARGBToRGB565Row_MMI(const uint8_t* src_argb, uint8_t* dst_rgb, int width) {
 // or the upper byte for big endian.
 void ARGBToRGB565DitherRow_MMI(const uint8_t* src_argb,
                                uint8_t* dst_rgb,
-                               const uint32_t dither4,
+                               uint32_t dither4,
                                int width) {
   uint64_t src0, src1;
   uint64_t ftmp[3];
