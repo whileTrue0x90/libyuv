@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adca939e_c4644e94",
+        "filename": "infra/config/main.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1425877
+      },
+      "writtenOn": "2023-06-01T12:04:26Z",
+      "side": 1,
+      "message": "let\u0027s also move this to \u0027walleye\u0027 (pixel 2).",
+      "range": {
+        "startLine": 212,
+        "startChar": 32,
+        "endLine": 212,
+        "endChar": 40
+      },
+      "revId": "07b0256afdce92bebd5c1f7d9fe6454e0e625cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
