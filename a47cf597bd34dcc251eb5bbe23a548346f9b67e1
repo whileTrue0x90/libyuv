@@ -16,6 +16,24 @@
       "message": "This CL also deleted four *_mmi.cc files. If that is intended, please mention the deletion in the commit message.",
       "revId": "a47cf597bd34dcc251eb5bbe23a548346f9b67e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b31f079e_d099c69f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-01T22:16:08Z",
+      "side": 1,
+      "message": "yes they are already removed from google3... removing them now from git.\nadded to description",
+      "parentUuid": "ae32c56d_5f577572",
+      "revId": "a47cf597bd34dcc251eb5bbe23a548346f9b67e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
