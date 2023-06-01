@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83cdea24_3a1f2742",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002174
+      },
+      "writtenOn": "2023-06-01T22:54:05Z",
+      "side": 1,
+      "message": "i don\u0027t have the permission to vote on code review here.\n\nlgtm though.",
+      "revId": "e560ccba45228a3adb8bb0748335806b2b311543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
