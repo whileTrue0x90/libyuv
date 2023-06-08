@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "860fb2e8_7a726ed4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-08T14:28:21Z",
+      "side": 1,
+      "message": "Hi, we upload the CL to enable several scale down kernels. Please help to review.",
+      "revId": "fd95a9e9149c9cca6c90e55de52f23de16ab71d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
