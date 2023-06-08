@@ -16,6 +16,86 @@
       "message": "Hi, we upload the CL to enable several scale down kernels. Please help to review.",
       "revId": "fd95a9e9149c9cca6c90e55de52f23de16ab71d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2f81775_4c0d5b14",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-08T22:33:22Z",
+      "side": 1,
+      "message": "would vlseg2 be more efficient?  you can eliminate the shift",
+      "revId": "fd95a9e9149c9cca6c90e55de52f23de16ab71d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01d45f75_a6289fb4",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-08T22:33:22Z",
+      "side": 1,
+      "message": "should this be?\n__riscv_vlseg2e32_v_u32m4(\u0026v_even_32, \u0026v_odd_32, src, vl);",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 62
+      },
+      "revId": "fd95a9e9149c9cca6c90e55de52f23de16ab71d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60bf4741_9a287aa6",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-08T22:33:22Z",
+      "side": 1,
+      "message": "nice.  but I think this is taking the first pixel from each pair?\nScaleARGBRowDown2_RVV takes the 2nd pixel using a shift.\nLooks like thats how NEON does it too.",
+      "revId": "fd95a9e9149c9cca6c90e55de52f23de16ab71d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6625172d_49fd229b",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-08T22:33:22Z",
+      "side": 1,
+      "message": "too many registers?  reduce to m1/m2?",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 4
+      },
+      "revId": "fd95a9e9149c9cca6c90e55de52f23de16ab71d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
