@@ -16,6 +16,24 @@
       "message": "Can https://ci.chromium.org/ui/p/libyuv/builders/try/android_x86/2903/overview be caused by this?",
       "revId": "af7f8778fb43e2cf90488552460570be7b6ce304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b0f8dcf_d81b6507",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-06-09T06:34:43Z",
+      "side": 1,
+      "message": "Actually looking into that right now, I\u0027m pretty sure it\u0027s not but can\u0027t ignore the timing. Will get back to you shortly!",
+      "parentUuid": "48c6e10f_5e0b3aec",
+      "revId": "af7f8778fb43e2cf90488552460570be7b6ce304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
