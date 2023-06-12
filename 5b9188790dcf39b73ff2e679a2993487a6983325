@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b75bc1b2_9d0a6122",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-06-12T19:28:19Z",
+      "side": 1,
+      "message": "LGTM.\n\nFrank, Mirko: FYI.",
+      "revId": "5b9188790dcf39b73ff2e679a2993487a6983325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
