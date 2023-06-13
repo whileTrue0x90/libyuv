@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e74309b_f84ed388",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-13T09:40:43Z",
+      "side": 1,
+      "message": "Hi all, we upload this CL to optimze ScaleRowDown34 with RVV.",
+      "revId": "efc6cf8331285f56562220c96cd13c85dc3bf637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
