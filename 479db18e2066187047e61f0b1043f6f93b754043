@@ -16,6 +16,23 @@
       "message": "Hi all, is there any feedback about this CL?",
       "revId": "479db18e2066187047e61f0b1043f6f93b754043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "525ad1e4_8dc287fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-13T00:23:06Z",
+      "side": 1,
+      "message": "will likely need build file changes for added scale_rvv.cc",
+      "revId": "479db18e2066187047e61f0b1043f6f93b754043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
