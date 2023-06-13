@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e0b92d0_cac8c43e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-13T06:19:43Z",
+      "side": 1,
+      "message": "Hi, this CL adds scale_rvv.cc to BUILD.gn.",
+      "revId": "b73b8f8a134b64db1f3203e13a82afac863534e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
