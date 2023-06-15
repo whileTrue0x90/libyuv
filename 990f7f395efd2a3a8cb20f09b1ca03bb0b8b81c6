@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "827065f3_6b0fd771",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1366219
+      },
+      "writtenOn": "2023-06-15T09:51:22Z",
+      "side": 1,
+      "message": "Hello, Frank, Mirko, could you please review this change? Thanks.",
+      "revId": "990f7f395efd2a3a8cb20f09b1ca03bb0b8b81c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
