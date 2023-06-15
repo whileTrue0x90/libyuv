@@ -33,6 +33,24 @@
       "message": "beat you to it :-).  but thanks.\nwe\u0027ll need a rotate_rvv.cc and compare_rvv.cc are the last 2 files",
       "revId": "b73b8f8a134b64db1f3203e13a82afac863534e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb16e85c_8d9d9bb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-15T01:32:48Z",
+      "side": 1,
+      "message": "It\u0027s fined (๑•̀ω•́)ノ\nI\u0027ll rember to add those two files when upstream implementation.",
+      "parentUuid": "100544ba_a06faa1b",
+      "revId": "b73b8f8a134b64db1f3203e13a82afac863534e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
