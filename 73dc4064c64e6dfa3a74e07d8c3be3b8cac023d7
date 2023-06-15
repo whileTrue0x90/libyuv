@@ -16,6 +16,29 @@
       "message": "Hi, I add RVV implementations for ARGBExtractAlphaRow/ARGBCopyYToAlphaRow.\nPlease help to review.",
       "revId": "73dc4064c64e6dfa3a74e07d8c3be3b8cac023d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b327d036_cbccc071",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-15T21:38:45Z",
+      "side": 1,
+      "message": "this method of c timing isnt very accurate, since we only do 1.  so what i\u0027ve been doing lately is run the benchmark but disable vectors.\nyou can disable vectors with environment variables or flags\nLIBYUV_DISABLE_ASM\u003d1 to disable all vectors\n--libyuv_width\u003d1280 --libyuv_height\u003d720 --libyuv_repeat\u003d1000 --libyuv_flags\u003d1 --libyuv_cpu_info\u003d1\n\n1 means cpu is initialized but has no vector instruction sets.\n--libyuv_flags\u003d1 affects the variable MaskCpuFlags(disable_cpu_flags_);\n--libyuv_cpu_info\u003d1 affects the variable MaskCpuFlags(benchmark_cpu_info_);\nIts fine to keep the C vs OPT code but dont expect much accuracy",
+      "range": {
+        "startLine": 2766,
+        "startChar": 0,
+        "endLine": 2766,
+        "endChar": 35
+      },
+      "revId": "73dc4064c64e6dfa3a74e07d8c3be3b8cac023d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
