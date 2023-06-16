@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27783032_a6054619",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-06-16T18:57:41Z",
+      "side": 1,
+      "message": "Add:\n\n```\n- scale_rvv fix intinsic build error\n```",
+      "revId": "fb879cc5e34d664f0d8bfd1260d46eb85fe276df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b183d079_514f6051",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-06-16T18:57:41Z",
+      "side": 1,
+      "message": "Is the \"UNATTENUATE\" part of `EXPECTED_UNATTENUATE_DIFF` a typo? This test is ARGBAttenuate_Opt, so it seems that it should use `EXPECTED_ATTENUATE_DIFF`.",
+      "revId": "fb879cc5e34d664f0d8bfd1260d46eb85fe276df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
