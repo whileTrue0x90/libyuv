@@ -50,6 +50,23 @@
       "message": "I can find build/config/loongarch64.gni in https://source.chromium.org/chromium/chromium/src/+/main:build/config/loongarch64.gni，is the build bot not gclient sync yet?",
       "revId": "990f7f395efd2a3a8cb20f09b1ca03bb0b8b81c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1c898d1_7a403d2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443440
+      },
+      "writtenOn": "2023-06-16T03:28:44Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "990f7f395efd2a3a8cb20f09b1ca03bb0b8b81c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
