@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0020c92d_c1b4c450",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-16T02:58:42Z",
+      "side": 1,
+      "message": "The variables order mismatch with naming here.",
+      "revId": "04821d1e7d60845525e8db55c7bcd41ef5be9406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

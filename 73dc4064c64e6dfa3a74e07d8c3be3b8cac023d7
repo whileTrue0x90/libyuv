@@ -39,6 +39,30 @@
       },
       "revId": "73dc4064c64e6dfa3a74e07d8c3be3b8cac023d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da45198f_785a31df",
+        "filename": "unit_test/planar_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-16T02:58:42Z",
+      "side": 1,
+      "message": "Thanks to provide information.\nHere, I add one time warmup for c code. I know it still contains large variations.\nYour method seems more reasonable. However, some of tests case doesn\u0027t contain get_time and print, so we can only get time info from google_test result log.\nIt includes setup time for testing.",
+      "parentUuid": "b327d036_cbccc071",
+      "range": {
+        "startLine": 2766,
+        "startChar": 0,
+        "endLine": 2766,
+        "endChar": 35
+      },
+      "revId": "73dc4064c64e6dfa3a74e07d8c3be3b8cac023d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
