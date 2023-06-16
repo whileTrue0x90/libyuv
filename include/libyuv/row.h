@@ -171,9 +171,7 @@ extern "C" {
 #define HAS_SOBELXROW_SSE2
 #define HAS_SOBELXYROW_SSE2
 #define HAS_SOBELYROW_SSE2
-#if !defined(LIBYUV_BIT_EXACT)
 #define HAS_ARGBATTENUATEROW_SSSE3
-#endif
 
 // The following functions fail on gcc/clang 32 bit with fpic and framepointer.
 // caveat: clangcl uses row_win.cc which works.
@@ -243,9 +241,7 @@ extern "C" {
 #define HAS_ARGBSUBTRACTROW_AVX2
 #define HAS_ARGBUNATTENUATEROW_AVX2
 #define HAS_BLENDPLANEROW_AVX2
-#if !defined(LIBYUV_BIT_EXACT)
 #define HAS_ARGBATTENUATEROW_AVX2
-#endif
 
 #if defined(__x86_64__) || !defined(__pic__) || defined(__clang__) || \
     defined(_MSC_VER)
@@ -6190,6 +6186,11 @@ void ByteToFloatRow_Any_NEON(const uint8_t* src_ptr,
 void ConvertFP16ToFP32Row_NEON(const uint16_t* src,  // fp16
                                float* dst,
                                int width);
+// Convert a column of FP16 Half Floats to a row of FP32 Floats
+void ConvertFP16ToFP32Column_NEON(const uint16_t* src,  // fp16
+                                  int src_stride,       // stride in elements
+                                  float* dst,
+                                  int width);
 // Convert FP32 Floats to FP16 Half Floats
 void ConvertFP32ToFP16Row_NEON(const float* src,
                                uint16_t* dst,  // fp16
