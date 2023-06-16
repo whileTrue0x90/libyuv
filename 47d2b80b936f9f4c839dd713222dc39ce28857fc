@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "586afd3c_ebaacf76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-16T07:29:42Z",
+      "side": 1,
+      "message": "Hi: There is no RVV segment load \u0026 store intrinsic for GCC now, compiling error will happens when compiling scale_rvv.cc/row_rvv.cc. \nThis CL temporarily workaround compiling error by only build scale_rvv.cc/row_rvv.cc with clang.",
+      "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
