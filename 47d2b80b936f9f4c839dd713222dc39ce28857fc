@@ -16,6 +16,23 @@
       "message": "Hi: There is no RVV segment load \u0026 store intrinsic for GCC now, compiling error will happens when compiling scale_rvv.cc/row_rvv.cc. \nThis CL temporarily workaround compiling error by only build scale_rvv.cc/row_rvv.cc with clang.",
       "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10b705e4_54653243",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-16T13:00:11Z",
+      "side": 1,
+      "message": "This is okay for now, but even when GCC has full support, we\u0027ll need a compiler version check.\nThe more elegant way is in row.h add a compiler version check and enable HAS_ for individual functions and do #ifdef HAS_ around the affected functions, so GCC can have other the other functions.",
+      "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
