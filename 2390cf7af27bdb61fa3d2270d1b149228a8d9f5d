@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d08932e4_8ce052d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1366219
+      },
+      "writtenOn": "2023-06-16T07:18:18Z",
+      "side": 1,
+      "message": "Hello, Mirko, https://chromium-review.googlesource.com/c/libyuv/libyuv/+/4615589 CQ failed, so we need update src/build deps. Thanks.",
+      "revId": "2390cf7af27bdb61fa3d2270d1b149228a8d9f5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
