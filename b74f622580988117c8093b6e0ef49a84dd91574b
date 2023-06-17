@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59ea744c_d8eecb35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-17T02:16:28Z",
+      "side": 1,
+      "message": "Hi, this cl update ARGBAttentuateRow_RVV to follow (f * a + 255) \u003e\u003e 8.",
+      "revId": "b74f622580988117c8093b6e0ef49a84dd91574b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
