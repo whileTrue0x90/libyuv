@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff909b90_373078df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-17T01:33:03Z",
+      "side": 1,
+      "message": "\u003e This is okay for now, but even when GCC has full support, we\u0027ll need a compiler version check.\n\u003e The more elegant way is in row.h add a compiler version check and enable HAS_ for individual functions and do #ifdef HAS_ around the affected functions, so GCC can have other the other functions.\n\nOK, we can add this when we enable GCC if needed.",
+      "parentUuid": "10b705e4_54653243",
+      "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b892ef7f_b719d7a1",
@@ -52,6 +70,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18842fc2_9ec557f8",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-17T01:33:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b892ef7f_b719d7a1",
+      "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "360dc597_16bbc77a",
@@ -65,6 +101,24 @@
       "writtenOn": "2023-06-16T14:27:26Z",
       "side": 1,
       "message": "haven\u0027t \u003d\u003e hasn\u0027t",
+      "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7d973bc_e6464008",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-17T01:33:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "360dc597_16bbc77a",
       "revId": "47d2b80b936f9f4c839dd713222dc39ce28857fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }

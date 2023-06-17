@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85211fc7_9fee3621",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-17T01:33:03Z",
+      "side": 1,
+      "message": "Hi all,\nI fixed warning in rvv files and add compile options in cmake build flow.\nPlease help to review.",
+      "revId": "1bbcba4a8d6d11af31bd4cfe01426e31b42ac487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
