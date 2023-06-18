@@ -33,6 +33,24 @@
       "message": "isnt this just for vnclipu?  you have vnsrl now.",
       "revId": "b74f622580988117c8093b6e0ef49a84dd91574b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77ed19c4_7b676fe9",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-06-18T12:15:44Z",
+      "side": 1,
+      "message": "Acknowledged\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/4624492",
+      "parentUuid": "f62de974_f95e2b1e",
+      "revId": "b74f622580988117c8093b6e0ef49a84dd91574b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
