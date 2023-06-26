@@ -16,6 +16,24 @@
       "message": "The variables order mismatch with naming here.",
       "revId": "04821d1e7d60845525e8db55c7bcd41ef5be9406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb48dd1_099681db",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-26T19:18:38Z",
+      "side": 1,
+      "message": "Sent a CL to fix to you.  Please review https://chromium-review.googlesource.com/c/libyuv/libyuv/+/4646636",
+      "parentUuid": "0020c92d_c1b4c450",
+      "revId": "04821d1e7d60845525e8db55c7bcd41ef5be9406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
