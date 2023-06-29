@@ -16,6 +16,23 @@
       "message": "LGTM. Thanks!",
       "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0406e80a_9638200c",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-29T18:10:35Z",
+      "side": 1,
+      "message": "prototype should match implementation which is in planar_functions, line 2790\nupdate that to take void",
+      "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
