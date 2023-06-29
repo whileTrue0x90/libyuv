@@ -33,6 +33,24 @@
       "message": "prototype should match implementation which is in planar_functions, line 2790\nupdate that to take void",
       "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f14bfab_7303ba21",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-29T19:21:38Z",
+      "side": 1,
+      "message": "We could also try removing the function from the public header and see if it breaks any projects.\nIt was used in a very old version of Google Hangouts Effects 10+ years ago as part of a polygon function that used row functions directly.\nIt is not adviced but you can use row functions directly if you include row.h",
+      "parentUuid": "0406e80a_9638200c",
+      "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
