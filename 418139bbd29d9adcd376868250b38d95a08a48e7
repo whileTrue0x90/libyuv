@@ -68,6 +68,24 @@
       "parentUuid": "0406e80a_9638200c",
       "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69cf7e5d_a49b4419",
+        "filename": "include/libyuv/planar_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1586692
+      },
+      "writtenOn": "2023-06-30T03:58:44Z",
+      "side": 1,
+      "message": "The new patch look great. I was not using that function but got the warning. Thanks for the quick fix!",
+      "parentUuid": "1f14bfab_7303ba21",
+      "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
