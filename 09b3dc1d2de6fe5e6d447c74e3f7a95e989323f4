@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9829321_7b9046ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-30T05:19:02Z",
+      "side": 1,
+      "message": "note adding -Wmissing-prototypes produces a number of warnings.  Most can be fixed by making internal functions static.",
+      "revId": "09b3dc1d2de6fe5e6d447c74e3f7a95e989323f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
