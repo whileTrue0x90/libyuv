@@ -22,6 +22,30 @@
       },
       "revId": "1a61f7cfc06e49ce695488838b40b114307c0bf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b1ee488_12d178e3",
+        "filename": "source/scale_common.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-30T05:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c245876_7130db88",
+      "range": {
+        "startLine": 1969,
+        "startChar": 12,
+        "endLine": 1969,
+        "endChar": 28
+      },
+      "revId": "1a61f7cfc06e49ce695488838b40b114307c0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
