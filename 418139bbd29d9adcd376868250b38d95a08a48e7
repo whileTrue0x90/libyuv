@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a1626a9_d60f35b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-06-30T02:44:34Z",
+      "side": 1,
+      "message": "Here is a CL to remove the function\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/4658956",
+      "revId": "418139bbd29d9adcd376868250b38d95a08a48e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0406e80a_9638200c",
