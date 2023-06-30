@@ -1966,10 +1966,10 @@ void ScaleSlope(int src_width,
 
 // Read 8x2 upsample with filtering and write 16x1.
 // actually reads an extra pixel, so 9x2.
-void ScaleRowUp2_16_C(const uint16_t* src_ptr,
-                      ptrdiff_t src_stride,
-                      uint16_t* dst,
-                      int dst_width) {
+static void ScaleRowUp2_16_C(const uint16_t* src_ptr,
+                             ptrdiff_t src_stride,
+                             uint16_t* dst,
+                             int dst_width) {
   const uint16_t* src2 = src_ptr + src_stride;
 
   int x;
