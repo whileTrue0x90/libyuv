@@ -16,6 +16,24 @@
       "message": "locally tested win32 builds ok",
       "revId": "1de671e7c6e15673f1d3e9ac2bd1695bb74728f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c230165_2435d5f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2023-06-30T11:34:19Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "eaed38b3_7dfea9ff",
+      "revId": "1de671e7c6e15673f1d3e9ac2bd1695bb74728f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
