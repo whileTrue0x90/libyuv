@@ -5,7 +5,7 @@ gclient_gn_args = [
 
 vars = {
   'chromium_git': 'https://chromium.googlesource.com',
-  'chromium_revision': '7287570212a11c8d03fb09a96def48680676df0b',
+  'chromium_revision': '04c0ff7ad67ef8627fa9391946b542ab66f8f927',
   'gn_version': 'git_revision:4bd1a77e67958fb7f6739bd4542641646f264e5d',
   # ninja CIPD package version.
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
@@ -37,7 +37,7 @@ deps = {
   'src/testing':
     Var('chromium_git') + '/chromium/src/testing' + '@' + 'a74fd69d4e71647c9b1896df5d309fe261d4e0ac',
   'src/third_party':
-    Var('chromium_git') + '/chromium/src/third_party' + '@' + '2aff4da2e9d724da0c73912ee6b2cef8cd5d4fc7',
+    Var('chromium_git') + '/chromium/src/third_party' + '@' + '5328b3a8ec3153dc20e64613cd3877b9682bd685',
 
   'src/buildtools/linux64': {
     'packages': [
@@ -163,7 +163,7 @@ deps = {
   'src/third_party/boringssl/src':
     'https://boringssl.googlesource.com/boringssl.git' + '@' + '824f0e9113916d0258ce515079492f43d3ed67c3',
   'src/base': {
-    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '26fca42563931bfbc4a850ecc517ae83283f3c55',
+    'url': Var('chromium_git') + '/chromium/src/base' + '@' + '054152707e189aedb3766ea5be91b38f8bb9f6fa',
     'condition': 'checkout_android',
   },
   'src/third_party/bazel': {
@@ -478,7 +478,7 @@ deps = {
       'packages': [
           {
               'package': 'chromium/third_party/turbine',
-              'version': 'G8Cku1fztaDd9to_8gk3PNWM2iRacAxD9zcUAgUPUEAC',
+              'version': '9rSngS4o9OIlNubLcU1zXF_w0dPYif6AS-_k1pPAV1kC',
           },
       ],
       'condition': 'checkout_android',
@@ -491,7 +491,7 @@ deps = {
 
   # iOS deps:
   'src/ios': {
-    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + 'b16951257bdaf7d562cc5f9581c7f0e3ea4cd92d',
+    'url': Var('chromium_git') + '/chromium/src/ios' + '@' + '8b435629ec2d8ea0b9f8be6de8d992bfcd1de28a',
     'condition': 'checkout_ios'
   },
 
