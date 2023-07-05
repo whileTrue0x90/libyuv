@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0cae999_ec998334",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-05T06:25:33Z",
+      "side": 1,
+      "message": "Hi, we upstream 4 rvv version of ScaleRowUp2.\nPlease help to review.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
