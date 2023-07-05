@@ -3,6 +3,7 @@ URL: http://code.google.com/p/libyuv/
 Version: 1874
 License: BSD
 License File: LICENSE
+Shipped: yes
 
 Description:
 libyuv is an open source project that includes YUV conversion and scaling functionality.
