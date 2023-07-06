@@ -35,6 +35,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "246c77f0_a4147d04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T19:02:19Z",
+      "side": 1,
+      "message": "Your version is okay to check in if you want to defer on optimization and/or comment changes.  I\u0027ll change the ARM version to avoid \u0027lengthen\u0027",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59a965b6_10e4b7ab",
@@ -123,6 +140,24 @@
       "writtenOn": "2023-07-06T05:08:18Z",
       "side": 1,
       "message": "the clipping aspect is not needed for functions that interpolate.  Is there a faster instruction for shift/round/pack to 8 bits?\nOn ARM the \u0027q\u0027 in a shift narrow instruction for quantize does the clipping and is mostly free, but likely on newer cpus it generates a microop and should be simplified when possible.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea4b5feb_0c89d115",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T19:02:19Z",
+      "side": 1,
+      "message": "when you vwaddu the pixels, you could add 2 instead of 0, to get rounding and then use a simple shift with narrow instead of vnclipu\n vnsrl.wi vd, vs2, uimm, vm   # vector-immediate",
+      "parentUuid": "96f532b6_e2b8c934",
       "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
