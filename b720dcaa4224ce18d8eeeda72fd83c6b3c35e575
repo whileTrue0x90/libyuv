@@ -20,6 +20,80 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "59a965b6_10e4b7ab",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T05:08:18Z",
+      "side": 1,
+      "message": "On Intel you can load bytes and extend them to 16 bits.  Does RVV have a load instruction like that?",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27b3ba3e_c8187e6f",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T05:08:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure this +1 method of getting that second set makes sense as you get wider and wider?\nAlternative 1:\nPreload the first vector, then inside the loop, read the next vector.. of which you only need 1 byte.  Then combine the 2 vectors with an offset of 1.. on Intel this is called palignr.  On ARM it is vext.  At the bottom of the loop move the second vector to the first, or unroll the loop and toggle between 2 registers.\nAlternative 2:\nRead a full vector and then process half of it, using instructions that do paired add.  Probably not fully efficient, but on RVV you\u0027d be loading m8 and processing m4.  Or maybe load m5 and process m4?\nAlternative 3:\nRead a single byte into a second vector.  Then combine with the first vector at an offset of 1.  On ARM the 2nd load would be a load lane to read 1 byte.\nYou could shift the first vector right by 1 byte and if RVV allows it, lengthen.  And then load the 1 extra byte into the last lane of the vector.",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41da3204_d6b94703",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T05:08:18Z",
+      "side": 1,
+      "message": "You\u0027ve implemented the same code as my arm, but I think my ARM code is not great.\nThe first thing I would change is make the v_3 into vuint16m8_t so you dont need to widen, and use the v_src0_u16 and v_src1_u16 that are already widened for the inputs.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96f532b6_e2b8c934",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T05:08:18Z",
+      "side": 1,
+      "message": "the clipping aspect is not needed for functions that interpolate.  Is there a faster instruction for shift/round/pack to 8 bits?\nOn ARM the \u0027q\u0027 in a shift narrow instruction for quantize does the clipping and is mostly free, but likely on newer cpus it generates a microop and should be simplified when possible.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c15c2410_63db26e7",
         "filename": "source/scale_rvv.cc",
         "patchSetId": 1
