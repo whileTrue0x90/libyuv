@@ -16,6 +16,29 @@
       "message": "Hi, we upstream 4 rvv version of ScaleRowUp2.\nPlease help to review.",
       "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c15c2410_63db26e7",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-06T04:06:22Z",
+      "side": 1,
+      "message": "OOO threw me... suggest using XXX, (Bi)linear or [FILTER]",
+      "range": {
+        "startLine": 709,
+        "startChar": 3,
+        "endLine": 709,
+        "endChar": 24
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
