@@ -18,6 +18,23 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a595ceb9_0f4fa278",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-06T12:22:36Z",
+      "side": 1,
+      "message": "Reply to comment of extending the byte using RVV. \nOther review comments leave for Darren to reply.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59a965b6_10e4b7ab",
@@ -31,6 +48,24 @@
       "writtenOn": "2023-07-06T05:08:18Z",
       "side": 1,
       "message": "On Intel you can load bytes and extend them to 16 bits.  Does RVV have a load instruction like that?",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "577dae65_4ad63fdc",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-06T12:22:36Z",
+      "side": 1,
+      "message": "Please refer to vector spec 11.2 Note: https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#112-vector-widening-integer-addsubtract\n\"An integer value can be doubled in width using the widening add instructions with a scalar operand of x0. Assembly pseudoinstructions vwcvt.x.x.v vd,vs,vm \u003d vwadd.vx vd,vs,x0,vm and vwcvtu.x.x.v vd,vs,vm \u003d vwaddu.vx vd,vs,x0,vm are provided.\"",
+      "parentUuid": "59a965b6_10e4b7ab",
       "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
