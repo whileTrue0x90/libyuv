@@ -112,6 +112,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47aba7d6_3b66d694",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-08T19:42:56Z",
+      "side": 1,
+      "message": "This pattern is bugging me ever since I see it.\nI used to apply `vslide1down` on x280 for other library functions, and the result got worse a little bit.\n\nI benchmark with this edition on p470 core here, and this time the result is very close(basically the same):\n```\nvoid ScaleRowUp2_Linear_RVV(const uint8_t* src_ptr,\n                            uint8_t* dst_ptr,\n                            int dst_width) {\n  size_t work_width \u003d ((size_t)dst_width - 1u) \u0026 ~1u;\n  size_t src_width \u003d work_width \u003e\u003e 1u;\n  const uint8_t* work_src_ptr \u003d src_ptr;\n  uint8_t* work_dst_ptr \u003d dst_ptr + 1;\n  size_t vl \u003d __riscv_vsetvl_e8m4(src_width);\n  vuint8m4_t v_3 \u003d __riscv_vmv_v_x_u8m4(3, vl);\n  dst_ptr[0] \u003d src_ptr[0];\n  while (src_width \u003e 0) {\n    vuint8m4_t v_src0, v_src1, v_dst_odd, v_dst_even;\n    vuint16m8_t v_src0_u16, v_src1_u16, v_t0_u16, v_t1_u16;\n    size_t vl \u003d __riscv_vsetvl_e8m4(src_width);\n    v_src0 \u003d __riscv_vle8_v_u8m4(work_src_ptr, vl);\n    work_src_ptr +\u003d vl;\n    v_src1 \u003d __riscv_vslide1down_vx_u8m4 (v_src0, *work_src_ptr, vl);\n\n    v_src0_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src0, 2, vl);\n    v_src1_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src1, 2, vl);\n    v_src0_u16 \u003d __riscv_vwmaccu_vv_u16m8(v_src0_u16, v_3, v_src1, vl);\n    v_src1_u16 \u003d __riscv_vwmaccu_vv_u16m8(v_src1_u16, v_3, v_src0, vl);\n\n    v_dst_odd \u003d __riscv_vnsrl_wx_u8m4(v_src0_u16, 2, vl);\n    v_dst_even \u003d __riscv_vnsrl_wx_u8m4(v_src1_u16, 2, vl);\n\n    __riscv_vsseg2e8_v_u8m4(work_dst_ptr, v_dst_even, v_dst_odd, vl);\n    src_width -\u003d vl;\n    work_dst_ptr +\u003d 2 * vl;\n  }\n  dst_ptr[dst_width - 1] \u003d src_ptr[(dst_width - 1) / 2];\n}\n```\n\n\nAlternative 1:\nI think we can\u0027t move the second vector to the first(toggle them).\nIn the second loop, the v_src0 needs loading from `work_src_ptr + vl`.\nIf we toggle it, the v_src0 would be from `work_src_ptr + 1`, right?\n\nAlternative 2:\nThis is interesting, although there\u0027s no m5 nor paired add, but maybe we can use m4 but not use all lanes by not setting vl to VLMAX?\n\nAlternative 3:\nThis is similar to approach mentioned above with `vslide1down`, \nBut I\u0027m not sure what `lengthen` means.\nDoes that means for instance: \nload 4 elements to v1 then append 1 element to make it hold 5 elements?\nEven if RISC-V can(by not setting vl to VLMAX), there\u0027s still lacks of paired-add.\nEventually we still need to split it into two registers(group) for later operations.",
+      "parentUuid": "27b3ba3e_c8187e6f",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "41da3204_d6b94703",
         "filename": "source/scale_rvv.cc",
         "patchSetId": 1
@@ -123,6 +147,24 @@
       "writtenOn": "2023-07-06T05:08:18Z",
       "side": 1,
       "message": "You\u0027ve implemented the same code as my arm, but I think my ARM code is not great.\nThe first thing I would change is make the v_3 into vuint16m8_t so you dont need to widen, and use the v_src0_u16 and v_src1_u16 that are already widened for the inputs.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53fcf256_718ba8aa",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-08T19:42:56Z",
+      "side": 1,
+      "message": "The return register of `vmacc` should be used the same as the first argument(vd).\nHence, the code should be changed to:\n```\n    v_src0_u16 \u003d __riscv_vwmaccu_vv_u16m8(v_src0_u16, v_3, v_src1, vl);\n    v_src1_u16 \u003d __riscv_vwmaccu_vv_u16m8(v_src1_u16, v_3, v_src0, vl);\n```\n\nThen if we try to avoid widening we need to make a copy for both `v_src0_u16` and `v_src1_u16` before accumulating by macc.\n\notherwise, the code below is wrong:\n```\n    v_src0_u16 \u003d __riscv_vmacc_vv_u16m8(v_src0_u16, v_3_u16, v_src1_u16, vl);\n    v_src1_u16 \u003d __riscv_vmacc_vv_u16m8(v_src1_u16, v_3_u16, v_src0_u16, vl);\n```\n\nAnd making copies for these makes no gains.",
+      "parentUuid": "41da3204_d6b94703",
       "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
@@ -162,6 +204,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a4475a7_cb87e40b",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-08T19:42:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ea4b5feb_0c89d115",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c15c2410_63db26e7",
@@ -175,6 +235,30 @@
       "writtenOn": "2023-07-06T04:06:22Z",
       "side": 1,
       "message": "OOO threw me... suggest using XXX, (Bi)linear or [FILTER]",
+      "range": {
+        "startLine": 709,
+        "startChar": 3,
+        "endLine": 709,
+        "endChar": 24
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ff5b6b_65323473",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-08T19:42:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c15c2410_63db26e7",
       "range": {
         "startLine": 709,
         "startChar": 3,
