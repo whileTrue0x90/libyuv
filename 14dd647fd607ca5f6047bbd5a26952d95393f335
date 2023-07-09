@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "969367f6_3741adf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-09T08:07:59Z",
+      "side": 1,
+      "message": "scaleup by 2 is used when converting I420 or NV12 to I444 with filtering.\nThe current code has a rounding bug that should be caught if it expects exact results to match C code.",
+      "revId": "14dd647fd607ca5f6047bbd5a26952d95393f335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1c5a51b_da9367e2",
