@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c5a51b_da9367e2",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-09T08:05:50Z",
+      "side": 1,
+      "message": "add should be 8 when the shift is 4.\n(a + b*3 + c*3 + d*9 +8)/16\nsum of the coefficients is 16 so shift by 4 which needs rounding, so add 8.",
+      "revId": "14dd647fd607ca5f6047bbd5a26952d95393f335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
