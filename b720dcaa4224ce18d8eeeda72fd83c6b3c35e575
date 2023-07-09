@@ -54,6 +54,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0419c42_0ccdefe6",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-09T08:50:46Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b01bc8f0_0b5e6f71",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-09T08:50:46Z",
+      "side": 1,
+      "message": "src_width \u003d (dst_width - 1) \u003e\u003e 1;\nThe \u0026 ~1 is not needed if you\u0027re shifting",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8d60bc8_08fd5171",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-09T08:50:46Z",
+      "side": 1,
+      "message": "long term, this approach for edges prevents it from supporting clipping.  But I dont know if we\u0027ll be able to do that elegantly.\nAn example of clipping\nInstead of upsampling an entire image, do it in tiles... e.g. break it into 64x64 pixel blocks and upsample each.  The destination is 64x64 with a stride.  The source would read outside the block by 1 pixel in each direction, so 66x66\n\nAlso note that we\u0027ve implemented 4:2:0 and 4:2:2 with center of the pixels, but mpeg allows different subsample center points.  If those are ever implemented, this function may still work but get called in a different way.",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "59a965b6_10e4b7ab",
         "filename": "source/scale_rvv.cc",
         "patchSetId": 1
@@ -208,6 +259,30 @@
       "side": 1,
       "message": "hmm... I use `vslide-1-down` here not `vslidedown`.",
       "parentUuid": "11f94e7e_5f8d177d",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a52c783e_6e69d201",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-09T08:50:46Z",
+      "side": 1,
+      "message": "Re alternative 1\nThe idea is to read full vectors source outside the loop\nThe at top of the loop read the next full set of vectors.\nThen to achieve the src+1 load effect, combine the 2 full vectors with an offset of 1 byte.  On ARM vext does this.  On Intel palignr.\n\nI do similar code to this for sobel... read a vector from a pointer and then another full vector at the same pointer + 1 and pointer - 1.  Gauss is as well.\nSo it would be good to understand the best way to handle this sort of thing.\n\nOn Intel I even go as far as re-reading the exact same pointer/vector multiple times, because the mov is fast and can run in parallel, whereas a single read and then mov has an dependency.\n\nI\u0027ve tried most of the ideas I mentioned on ARM, and the only thing that looks promising is unrolling it more, reading and writing full vectors instead of 8 bytes.\n\nslidedown is probably not super fast, but reading a very wide vector from memory has to be slower... especially if a vector is more than 1 cacheline wide.  With RVV the vector could be as little as 4 bytes, and then the multiple reads is probably fastest, but if we imagine maximum vector sizes, vector math and moves will be substantially faster than the loads and stores.\nMost libyuv functions aim to have 1 full vector store, aligned if possible, and multiple and/or unaligned reads out of order is okay.\n\nNo paired add?  hmmm.  Intel lacks a paired add but had pmaddwd or pmaddubsw which are multiple and paired add, and you can multiple by 1.  They are really dot products of 2 values.  Multiplies are fast and pipeline, so sometimes it makes sense, and I considered using multiply for this function.  Instead of\n(1 * far + 3 * near + 2) / 4\na shift by 8 can be less expensive so\n(64 * far + 192 * near + 128) / 256\nARM has addhn which is add a 16 bit value to a 16 bit value, shift right by 8 and narrow to byte.\nARM also has uzp1 which returns all the even bytes or uzp2 which returns all the odd bytes.  uzp2 takes 2 vectors and makes 1, so it can do 2x more than addhn but it doesnt do the add for rounding.\nARM has paired adds that take 2 vectors and makes 1 vector... quiet useful.\nIntel could do 64 * far + 192 * near with a vpmaddubsw but the + 128 / 256 and pack to bytes takes 3 more instructions.  I\u0027m so glad RVV is more like ARM than Intel :-)\n\nOn the ARM version of this code, its frustrating but it is already very fast, and even when I remove instructions that I suspect are slow, it stays the same speed, so if RVV is the same, I guess it is good enough, and doing the single function is a bit win.",
+      "parentUuid": "5507682d_0db75dec",
       "range": {
         "startLine": 485,
         "startChar": 0,
