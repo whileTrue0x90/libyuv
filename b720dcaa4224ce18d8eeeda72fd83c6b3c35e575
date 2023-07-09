@@ -105,6 +105,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa491f01_694777ac",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-09T04:50:39Z",
+      "side": 1,
+      "message": "Yes, there\u0027s `vzext*` but after I changed add 2 here to avoid `vnclip`, I have to keep `vwaddu`:\n```\nvuint16m8_t v_src0_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src0, 2, vl);\n```",
+      "parentUuid": "ade1f739_c7fce4c8",
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27b3ba3e_c8187e6f",
@@ -166,6 +184,30 @@
       "side": 1,
       "message": "\u003e v_src1 \u003d __riscv_vslide1down_vx_u8m4 (v_src0, *work_src_ptr, vl);\n\nThis looks wrong. It should be:\nv_src1 \u003d __riscv_vslide1down_vx_u8m4 (v_src0, 1, vl);",
       "parentUuid": "47aba7d6_3b66d694",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5507682d_0db75dec",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-09T04:50:39Z",
+      "side": 1,
+      "message": "hmm... I use `vslide-1-down` here not `vslidedown`.",
+      "parentUuid": "11f94e7e_5f8d177d",
       "range": {
         "startLine": 485,
         "startChar": 0,
