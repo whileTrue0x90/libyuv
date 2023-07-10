@@ -51,6 +51,24 @@
       "parentUuid": "e1c5a51b_da9367e2",
       "revId": "14dd647fd607ca5f6047bbd5a26952d95393f335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61b6feb0_079181a4",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-10T23:28:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "75acdb96_01172ad7",
+      "revId": "14dd647fd607ca5f6047bbd5a26952d95393f335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
