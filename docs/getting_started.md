@@ -250,6 +250,13 @@ Example:
           -DCMAKE_TOOLCHAIN_FILE="./riscv_script/riscv-clang.cmake" \
           -DRISCV_COMPILER_FLAGS="-mcpu=sifive-x280" \
           .
+#### VRGATHER Maximum Vector Length
+
+`RVV_VRGATHER_MAX_VL` indicates max vl vrgather can use. Now, it only supports 16(by default) or 32.
+
+Example:
+
+    -DRVV_VRGATHER_MAX_VL=32
 
 ### Run on QEMU
 

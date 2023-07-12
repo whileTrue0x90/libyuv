@@ -3003,6 +3003,31 @@ int J400ToARGB(const uint8_t* src_y,
   return 0;
 }
 
+#if defined(__riscv_vector) && RVV_VRGATHER_MAX_VL == 32
+// Shuffle table for converting BGRA to ARGB.
+static const ulvec8 kShuffleMaskBGRAToARGB = {
+    3u,  2u,  1u,  0u,  7u,  6u,  5u,  4u,  11u, 10u, 9u,
+    8u,  15u, 14u, 13u, 12u, 19u, 18u, 17u, 16u, 23u, 22u,
+    21u, 20u, 27u, 26u, 25u, 24u, 31u, 30u, 29u, 28u};
+
+// Shuffle table for converting ABGR to ARGB.
+static const ulvec8 kShuffleMaskABGRToARGB = {
+    2u,  1u,  0u,  3u,  6u,  5u,  4u,  7u,  10u, 9u,  8u,
+    11u, 14u, 13u, 12u, 15u, 18u, 17u, 16u, 19u, 22u, 21u,
+    20u, 23u, 26u, 25u, 24u, 27u, 30u, 29u, 28u, 31u};
+
+// Shuffle table for converting RGBA to ARGB.
+static const ulvec8 kShuffleMaskRGBAToARGB = {
+    1u,  2u,  3u,  0u,  5u,  6u,  7u,  4u,  9u,  10u, 11u,
+    8u,  13u, 14u, 15u, 12u, 17u, 18u, 19u, 16u, 21u, 22u,
+    23u, 20u, 25u, 26u, 27u, 24u, 29u, 30u, 31u, 28u};
+
+// Shuffle table for converting AR64 to AB64.
+static const ulvec8 kShuffleMaskAR64ToAB64 = {
+    4u,  5u,  2u,  3u,  0u,  1u,  6u,  7u,  12u, 13u, 10u,
+    11u, 8u,  9u,  14u, 15u, 20u, 21u, 18u, 19u, 16u, 17u,
+    22u, 23u, 28u, 29u, 26u, 27u, 24u, 25u, 30u, 31u};
+#else
 // Shuffle table for converting BGRA to ARGB.
 static const uvec8 kShuffleMaskBGRAToARGB = {
     3u, 2u, 1u, 0u, 7u, 6u, 5u, 4u, 11u, 10u, 9u, 8u, 15u, 14u, 13u, 12u};
@@ -3018,7 +3043,7 @@ static const uvec8 kShuffleMaskRGBAToARGB = {
 // Shuffle table for converting AR64 to AB64.
 static const uvec8 kShuffleMaskAR64ToAB64 = {
     4u, 5u, 2u, 3u, 0u, 1u, 6u, 7u, 12u, 13u, 10u, 11u, 8u, 9u, 14u, 15u};
-
+#endif
 // Convert BGRA to ARGB.
 LIBYUV_API
 int BGRAToARGB(const uint8_t* src_bgra,

@@ -126,6 +126,16 @@ static __inline void SetCpuFlags(int cpu_flags) {
 LIBYUV_API
 void CpuId(int info_eax, int info_ecx, int* cpu_info);
 
+#if defined(__riscv_vector)
+#if !defined(RVV_VRGATHER_MAX_VL)
+  // Set RVV_VRGATHER_MAX_VL=16 by default to match other platforms
+  #define RVV_VRGATHER_MAX_VL 16
+#elif RVV_VRGATHER_MAX_VL != 16 && RVV_VRGATHER_MAX_VL != 32
+  #error "Only support RVV_VRGATHER_MAX_VL = 16 or 32 now."
+#endif
+int GetRVVVrgatherMaxVL(void);
+#endif
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv
