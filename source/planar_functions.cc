@@ -4597,6 +4597,11 @@ int ARGBShuffle(const uint8_t* src_bgra,
     }
   }
 #endif
+#if defined(HAS_ARGBSHUFFLEROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    ARGBShuffleRow = ARGBShuffleRow_RVV;
+  }
+#endif
 
   for (y = 0; y < height; ++y) {
     ARGBShuffleRow(src_bgra, dst_argb, shuffler, width);
@@ -4656,6 +4661,11 @@ int AR64Shuffle(const uint16_t* src_ar64,
     if (IS_ALIGNED(width, 4)) {
       AR64ShuffleRow = ARGBShuffleRow_NEON;
     }
+  }
+#endif
+#if defined(HAS_ARGBSHUFFLEROW_RVV)
+  if (TestCpuFlag(kCpuHasRVV)) {
+    AR64ShuffleRow = ARGBShuffleRow_RVV;
   }
 #endif
 
