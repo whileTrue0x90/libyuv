@@ -23,6 +23,8 @@
 #include <assert.h>
 #include <riscv_vector.h>
 
+#include "libyuv/cpu_id.h"
+
 #ifdef __cplusplus
 namespace libyuv {
 extern "C" {
@@ -784,6 +786,60 @@ void InterpolateRow_RVV(uint8_t* dst_ptr,
     dst_ptr += vl;
   } while (dst_w > 0);
 }
+#endif
+
+#ifdef HAS_ARGBSHUFFLEROW_RVV
+// Setup vl to multiple of 4 & vl = min(vlmax, vlmax_vrgather)
+// Load shuffler to v_shuffler
+#define ARGBSHUFFLE_SETUP(LMUL, iterations, w, vlmax_vrgather)               \
+  vuint8##LMUL##_t v_shuffler;                                               \
+  size_t vl = __riscv_vsetvlmax_e8##LMUL();                                  \
+  vl = (vlmax_vrgather < vl) ? __riscv_vsetvl_e8##LMUL(vlmax_vrgather) : vl; \
+  vl = vl & ~0x03u;                                                          \
+  v_shuffler = __riscv_vle8_v_u8##LMUL(shuffler, vl);                        \
+  iterations = w / vl;
+
+// Part 1: for-loop is used to process with vl length data
+// Part 2: if w still larger than 0, shuffling the tail part
+#define SHUFFLE_RUN(LMUL, iterations, w, src_argb, v_shuffler, dst_argb) \
+  for (; iterations > 0; iterations--) {                                 \
+    vuint8##LMUL##_t v_data = __riscv_vle8_v_u8##LMUL(src_argb, vl);     \
+    vuint8##LMUL##_t v_dst =                                             \
+        __riscv_vrgather_vv_u8##LMUL(v_data, v_shuffler, vl);            \
+    __riscv_vse8_v_u8##LMUL(dst_argb, v_dst, vl);                        \
+    w -= vl;                                                             \
+    src_argb += vl;                                                      \
+    dst_argb += vl;                                                      \
+  }                                                                      \
+  if (w > 0) {                                                           \
+    size_t vl = __riscv_vsetvl_e8##LMUL(w);                              \
+    vuint8##LMUL##_t v_data = __riscv_vle8_v_u8##LMUL(src_argb, vl);     \
+    vuint8##LMUL##_t v_dst =                                             \
+        __riscv_vrgather_vv_u8##LMUL(v_data, v_shuffler, vl);            \
+    __riscv_vse8_v_u8##LMUL(dst_argb, v_dst, vl);                        \
+  }
+
+void ARGBShuffleRow_RVV(const uint8_t* src_argb,
+                        uint8_t* dst_argb,
+                        const uint8_t* shuffler,
+                        int width) {
+  size_t iterations = 0;
+  size_t w = width << 2;
+  int vlmax_vrgather = GetRVVGatherMaxVL();
+  size_t vlen;
+  // Read Vector Byte Length
+  asm volatile("csrr %0, vlenb" : "=r"(vlen));
+  vlen = vlen * 8;
+  if (vlen >= 512) {
+    ARGBSHUFFLE_SETUP(mf2, iterations, w, vlmax_vrgather);
+    SHUFFLE_RUN(mf2, iterations, w, src_argb, v_shuffler, dst_argb);
+  } else {
+    ARGBSHUFFLE_SETUP(m1, iterations, w, vlmax_vrgather);
+    SHUFFLE_RUN(m1, iterations, w, src_argb, v_shuffler, dst_argb);
+  }
+}
+#undef ARGBSHUFFLE_SETUP
+#undef SHUFFLE_RUN
 #endif
 
 #ifdef HAS_SPLITRGBROW_RVV

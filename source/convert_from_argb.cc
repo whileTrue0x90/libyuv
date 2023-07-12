@@ -1527,10 +1527,17 @@ int ARGBToI400(const uint8_t* src_argb,
   return 0;
 }
 
+#if defined(__riscv_vector) && RVV_VRGATHER_MAX_VL == 32
+// Shuffle table for converting BGRA to ARGB.
+static const ulvec8 kShuffleMaskARGBToRGBA = {
+    3u,  0u,  1u,  2u,  7u,  4u,  5u,  6u,  11u, 8u,  9u,
+    10u, 15u, 12u, 13u, 14u, 19u, 16u, 17u, 18u, 23u, 20u,
+    21u, 22u, 27u, 24u, 25u, 26u, 31u, 28u, 29u, 30u};
+#else
 // Shuffle table for converting ARGB to RGBA.
 static const uvec8 kShuffleMaskARGBToRGBA = {
     3u, 0u, 1u, 2u, 7u, 4u, 5u, 6u, 11u, 8u, 9u, 10u, 15u, 12u, 13u, 14u};
-
+#endif
 // Convert ARGB to RGBA.
 LIBYUV_API
 int ARGBToRGBA(const uint8_t* src_argb,

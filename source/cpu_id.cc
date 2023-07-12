@@ -370,6 +370,12 @@ int InitCpuFlags(void) {
   return MaskCpuFlags(-1);
 }
 
+#if defined(__riscv_vector)
+int GetRVVGatherMaxVL() {
+  return RVV_VRGATHER_MAX_VL;
+}
+#endif
+
 #ifdef __cplusplus
 }  // extern "C"
 }  // namespace libyuv

@@ -801,6 +801,7 @@ extern "C" {
 #define HAS_ARGBBLENDROW_RVV
 #define HAS_ARGBCOPYYTOALPHAROW_RVV
 #define HAS_ARGBEXTRACTALPHAROW_RVV
+#define HAS_ARGBSHUFFLEROW_RVV
 #define HAS_ARGBTOAB64ROW_RVV
 #define HAS_ARGBTOAR64ROW_RVV
 #define HAS_ARGBTORAWROW_RVV
@@ -3188,6 +3189,10 @@ void ARGBShuffleRow_LASX(const uint8_t* src_argb,
                          uint8_t* dst_argb,
                          const uint8_t* shuffler,
                          int width);
+void ARGBShuffleRow_RVV(const uint8_t* src_argb,
+                        uint8_t* dst_argb,
+                        const uint8_t* shuffler,
+                        int width);
 void ARGBShuffleRow_Any_SSSE3(const uint8_t* src_ptr,
                               uint8_t* dst_ptr,
                               const uint8_t* param,
