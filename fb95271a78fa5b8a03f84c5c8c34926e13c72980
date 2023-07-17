@@ -16,6 +16,57 @@
       "message": "Hi, we provide this CL to enable ARGBBlendRow_RVV/BlendPlaneRow_RVV.\nPlease help to review.",
       "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2199c70c_7e8d9827",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-07-17T21:51:07Z",
+      "side": 1,
+      "message": "Frank should take a look at this.",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2567b5fb_2f54e82e",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-07-17T21:51:07Z",
+      "side": 1,
+      "message": "1. Nit: add \"been\" before \"pre-multiplied\"\n\n2. The word \"src_argb\" appears twice in this sentence. One of them seems redundant.",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6bc81b4_f75df533",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-07-17T21:51:07Z",
+      "side": 1,
+      "message": "Since `w` is an unsigned type (`size_t`), we need to guarantee that `w` becomes exactly 0, otherwise the `w \u003e 0` test at line 972 will stay true, resulting in an infinite loop.\n\nCan we guarantee that?",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
