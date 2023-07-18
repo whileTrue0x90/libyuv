@@ -67,6 +67,23 @@
       "message": "Since `w` is an unsigned type (`size_t`), we need to guarantee that `w` becomes exactly 0, otherwise the `w \u003e 0` test at line 972 will stay true, resulting in an infinite loop.\n\nCan we guarantee that?",
       "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3de80a7f_f9c078e9",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-18T07:47:09Z",
+      "side": 1,
+      "message": "seems wasteful to set this to 0 on the last loop.  I wonder if after w -\u003d v1 if it would be worth\nif (w \u003d\u003d 0) break;\nand change the loop to an infinite loop\nfor (;;)",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
