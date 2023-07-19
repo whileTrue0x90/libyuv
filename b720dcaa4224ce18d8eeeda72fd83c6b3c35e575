@@ -313,6 +313,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0e4b43e_eb0f98f5",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-19T17:11:06Z",
+      "side": 1,
+      "message": "Sorry for the late reply. I did some experiment with alternative 1:\n\nI can\u0027t find any similar `vext` or `palignr` in RVV, so I use 4 intrinsic to mimic it `vlmul_ext` + `vset_v` + `vslidedown` + `vlmul_trunc`, 3 of them are actually pseudo instructions, see the assembly there\u0027s only vslidedown (not counting vsetvli). I\u0027m aware that vslidedown might not be fast enough but using multiple (faster) instructions to assemble `vext` might not surpass single vslidedown here.\nBut the results show that there are no improvements. \n\n```\n        ...\n        vsetvli zero, a4, e8, m4, ta, ma\n        vle8.v  v12, (a7)\n        vsetvli zero, a4, e8, m8, ta, ma\n        vslidedown.vi   v16, v8, 1\n        vsetvli zero, a4, e8, m4, ta, ma\n        vwaddu.vx       v24, v8, a6\n        vwaddu.vx       v0, v16, a6\n        vwmaccu.vx      v24, t0, v16\n        vwmaccu.vx      v0, t0, v8\n        vnsrl.wi        v20, v24, 2\n        vnsrl.wi        v16, v0, 2\n        ...\n```\n\ncode:\n```\nvoid ScaleRowUp2_Linear_RVV(const uint8_t* src_ptr,\n                            uint8_t* dst_ptr,\n                            int dst_width) {\n  size_t work_width \u003d ((size_t)dst_width - 1u);\n  size_t src_width \u003d work_width \u003e\u003e 1u;\n  const uint8_t* work_src_ptr \u003d src_ptr;\n  uint8_t* work_dst_ptr \u003d dst_ptr + 1;\n  size_t vl \u003d __riscv_vsetvl_e8m4(src_width);\n  vuint8m4_t v_src0 \u003d __riscv_vle8_v_u8m4(work_src_ptr, vl);\n  dst_ptr[0] \u003d src_ptr[0];\n  work_src_ptr +\u003d vl;\n  while (src_width \u003e 0) {\n    vuint8m4_t v_src1, v_tmp, v_dst_odd, v_dst_even;\n    vuint8m8_t v_src0_ext, v_src1_tmp;\n    vuint16m8_t v_src0_u16, v_src1_u16, v_t0_u16, v_t1_u16;\n    v_tmp \u003d __riscv_vle8_v_u8m4(work_src_ptr, vl);\n    v_src0_ext \u003d __riscv_vlmul_ext_v_u8m4_u8m8 (v_src0);\n    v_src0_ext \u003d __riscv_vset_v_u8m4_u8m8 (v_src0_ext, 1, v_tmp);\n    v_src1_tmp \u003d __riscv_vslidedown_vx_u8m8 (v_src0_ext, 1, vl);\n    v_src1 \u003d __riscv_vlmul_trunc_v_u8m8_u8m4 (v_src1_tmp);\n\n    v_src0_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src0, 2, vl);\n    v_src1_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src1, 2, vl);\n    v_src0_u16 \u003d __riscv_vwmaccu_vx_u16m8(v_src0_u16, 3, v_src1, vl);\n    v_src1_u16 \u003d __riscv_vwmaccu_vx_u16m8(v_src1_u16, 3, v_src0, vl);\n\n    v_dst_odd \u003d __riscv_vnsrl_wx_u8m4(v_src0_u16, 2, vl);\n    v_dst_even \u003d __riscv_vnsrl_wx_u8m4(v_src1_u16, 2, vl);\n    __riscv_vsseg2e8_v_u8m4(work_dst_ptr, v_dst_even, v_dst_odd, vl);\n    v_src0 \u003d v_tmp;\n    src_width -\u003d vl;\n    work_src_ptr +\u003d vl;\n    work_dst_ptr +\u003d 2 * vl;\n    vl \u003d __riscv_vsetvl_e8m4(src_width);\n  }\n  dst_ptr[dst_width - 1] \u003d src_ptr[(dst_width - 1) / 2];\n}\n```\n\nI\u0027m planning to run some experiments to see if two vle with offset+1 will stall the pipeline.\n\nBesides addressing the load pattern in this case, I found that widening instructions are the bottleneck for this function(at least on the uarch I ran).\n\nI replaced it with few vaaddu and it got 30%+ improvement compared to the rvv implementation in patches3, though it can pass the I444Scale test with tolerance but NOT in convert_tests. Due to the rounding doing ahead in each aaddu.",
+      "parentUuid": "a52c783e_6e69d201",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "41da3204_d6b94703",
         "filename": "source/scale_rvv.cc",
         "patchSetId": 1
