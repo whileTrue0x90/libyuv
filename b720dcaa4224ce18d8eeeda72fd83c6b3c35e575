@@ -335,6 +335,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b67c6d_e683f622",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-19T18:15:16Z",
+      "side": 1,
+      "message": "aaddu is an averaging add i guess.  On intel pavgb is a rounding average that is fast and I\u0027ve sometimes used that multiple times, but it causes rounding error.\nARM can do half add hadd that is the same, but it rarely makes sense, since lengthening or widening and rounding shift is faster and more accurate.\nI\u0027m not seeing great solutions here, so we should probably stick with 2 loads\n\nThe unaligned load is a technique I\u0027ve used increasingly.. it is simple and fully uses the full vectors.\nFor this especially, but also all functions, it may be interesting to artifically use smaller __riscv_vsetvl_e8m4\ne.g.  __riscv_vsetvl_e8m4(min(width, MAX_WIDTH)\nWhere MAX_WIDTH is about a cache line in size, so the processor doesnt get stuck in 2 extremely large loads\nBut that can be followup, especially when there is different hardware",
+      "parentUuid": "a0e4b43e_eb0f98f5",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41da3204_d6b94703",
