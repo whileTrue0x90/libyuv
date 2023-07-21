@@ -359,6 +359,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeff75f5_f98a97e4",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-21T13:18:14Z",
+      "side": 1,
+      "message": "I don\u0027t know about other RISC-V vender arch-specs but for platforms I benchmarked it can be cracked into multiple micro-operations (uops). (Allow me to say a little vague here.)\nFor example, hardware see `vle8_v_u8m4` will crack into 4 uops, and then after the 1st uop puts the corresponding data into the VRF, which can then be forwarded to the `vwaddu_vx_u16m8` uop. so if hw didn\u0027t run out of resources(leading vload being stalled). This helps avoid stalling due to large loads.\nBesides the vload will run ahead to fetch data into the closer buffer before vload uop is executed, also there\u0027s hw prefetcher helps bring data to cache. So I think it\u0027s ok to use a larger load here in the OOO core.\n\nBut for x280, considering this case:\n```\n    size_t vl \u003d __riscv_vsetvl_e8m4(src_width);\n    vuint8m4_t v_src0 \u003d __riscv_vle8_v_u8m4(work_src_ptr, vl); // a\n    vuint8m4_t v_src1 \u003d __riscv_vle8_v_u8m4(work_src_ptr + 1, vl); // b\n\n    vuint16m8_t v_src0_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src0, 0, vl); //c\n    vuint16m8_t v_src1_u16 \u003d __riscv_vwaddu_vx_u16m8(v_src1, 0, vl); // d\n```\nThe vector command queue is a single issue queue, so after the `a` inst  \nbeing processing in load uint, the following `b`, `c`, `d` will be stuck cuz the load unit only can take one inst. So if we try to re-schedule the inst. to a c b d, if `a` put its data into VRF then it can be forwarded to c, cuz c is in the arithmetic unit(different unit from load unit). Here is the interesting part, we might think a c b d is better cuz it can be forwarded and run ahead. But after I benchmark for these kernels in libyuv, I found that most of the time it\u0027s better to put 2 loads ahead. I think it\u0027s because the following arithmetic got better pipelining if we put it this way.",
+      "parentUuid": "f7b67c6d_e683f622",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41da3204_d6b94703",
