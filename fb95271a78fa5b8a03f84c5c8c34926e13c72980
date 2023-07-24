@@ -52,6 +52,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "707ce26a_ccddf4ff",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-24T01:53:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2567b5fb_2f54e82e",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6bc81b4_f75df533",
@@ -65,6 +83,24 @@
       "writtenOn": "2023-07-17T21:51:07Z",
       "side": 1,
       "message": "Since `w` is an unsigned type (`size_t`), we need to guarantee that `w` becomes exactly 0, otherwise the `w \u003e 0` test at line 972 will stay true, resulting in an infinite loop.\n\nCan we guarantee that?",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7e80718_d92dee2c",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-24T01:53:51Z",
+      "side": 1,
+      "message": "\u003e Since `w` is an unsigned type (`size_t`), we need to guarantee that `w` becomes exactly 0, otherwise the `w \u003e 0` test at line 972 will stay true, resulting in an infinite loop.\n\u003e \n\u003e Can we guarantee that?\n\nvl is produced by `vsetvl(w)`. `vsetvl(w)` guarantees that `vl \u003c\u003d w`. Hence, w never overflows in the code.",
+      "parentUuid": "a6bc81b4_f75df533",
       "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
