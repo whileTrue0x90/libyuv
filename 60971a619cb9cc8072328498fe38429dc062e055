@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "892af632_a13c02c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-24T02:06:59Z",
+      "side": 1,
+      "message": "Hi all, we upload this CL to enable NV12/21-\u003eRGB24\u0026RGBA color conversion.\nPlease help to review.",
+      "revId": "60971a619cb9cc8072328498fe38429dc062e055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
