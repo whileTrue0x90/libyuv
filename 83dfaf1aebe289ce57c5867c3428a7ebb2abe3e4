@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5072bfa9_5a65a50f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-25T03:17:44Z",
+      "side": 1,
+      "message": "Hi, this CL provides scaledown3by8 rvv implementations.",
+      "revId": "83dfaf1aebe289ce57c5867c3428a7ebb2abe3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
