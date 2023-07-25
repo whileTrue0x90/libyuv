@@ -120,6 +120,24 @@
       "message": "seems wasteful to set this to 0 on the last loop.  I wonder if after w -\u003d v1 if it would be worth\nif (w \u003d\u003d 0) break;\nand change the loop to an infinite loop\nfor (;;)",
       "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ce4c932_1f83b6d6",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-25T02:45:48Z",
+      "side": 1,
+      "message": "I upload pathchset3 to solve two problems in `blendrow_rvv()`.\n1. redundant `vsetvl()`\n2. Use `vsetvlmax()` for `v_255` to increase portability. Because `vsetvl(K)` doesn\u0027t guarantee to provide vlmax when K \u003e vlmax.\n\nFrom spec: Detail: https://github.com/riscv/riscv-v-spec/blob/master/v-spec.adoc#63-constraints-on-setting-vl \n\u003e 1. vl \u003d AVL if AVL ≤ VLMAX\n\u003e 2. ceil(AVL / 2) ≤ vl ≤ VLMAX if AVL \u003c (2 * VLMAX)\n\u003e 3. vl \u003d VLMAX if AVL ≥ (2 * VLMAX)\n\nRules 2 \u0026 3 provide a room to return `vl \u003c vlmax` when `K \u003e vlmax`.\nSimilar portability problems are in other RVV kernels. I\u0027ll provide other CL to solve them.",
+      "parentUuid": "3de80a7f_f9c078e9",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
