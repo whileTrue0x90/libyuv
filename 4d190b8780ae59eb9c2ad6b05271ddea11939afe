@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e959c13_6be62a15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-25T05:17:20Z",
+      "side": 1,
+      "message": "Hi all, this CL expand current CMake build flow for risc-v to support passing custom compiling flags.",
+      "revId": "4d190b8780ae59eb9c2ad6b05271ddea11939afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
