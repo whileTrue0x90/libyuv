@@ -138,6 +138,24 @@
       "parentUuid": "3de80a7f_f9c078e9",
       "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8ee78f4_fffb12e1",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-25T02:46:36Z",
+      "side": 1,
+      "message": "Typo: I upload patchset 4 to solve two problems in blendrow_rvv().",
+      "parentUuid": "3ce4c932_1f83b6d6",
+      "revId": "fb95271a78fa5b8a03f84c5c8c34926e13c72980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
