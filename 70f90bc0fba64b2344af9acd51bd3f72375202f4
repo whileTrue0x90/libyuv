@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c5593bc_322514d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174609
+      },
+      "writtenOn": "2023-07-25T05:26:42Z",
+      "side": 1,
+      "message": "I was looking into why the roller was stuck and realized there\u0027s a small hiccup with the cq_over logic. If the roller truly isn\u0027t moving many commits forward, sometimes the branch never rolls, for over a month. This means it can get out of sync shortly after the last roll and then break the Skia autoroller for a long while.\n\nI\u0027m not sure how to do it cleanly, but maybe we need to adjust whatever runs the autoroller script to forcefully do it once a week at minimum, so that we\u0027re not down for weeks on end.",
+      "revId": "70f90bc0fba64b2344af9acd51bd3f72375202f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
