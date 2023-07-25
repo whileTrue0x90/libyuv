@@ -214,31 +214,31 @@ void AB64ToARGBRow_RVV(const uint16_t* src_ab64, uint8_t* dst_argb, int width) {
 
 void RAWToARGBRow_RVV(const uint8_t* src_raw, uint8_t* dst_argb, int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   vuint8m2_t v_a = __riscv_vmv_v_x_u8m2(255u, vl);
   do {
     vuint8m2_t v_b, v_g, v_r;
+    vl = __riscv_vsetvl_e8m2(w);
     __riscv_vlseg3e8_v_u8m2(&v_r, &v_g, &v_b, src_raw, vl);
     __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);
     w -= vl;
     src_raw += vl * 3;
     dst_argb += vl * 4;
-    vl = __riscv_vsetvl_e8m2(w);
   } while (w > 0);
 }
 
 void RAWToRGBARow_RVV(const uint8_t* src_raw, uint8_t* dst_rgba, int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   vuint8m2_t v_a = __riscv_vmv_v_x_u8m2(255u, vl);
   do {
     vuint8m2_t v_b, v_g, v_r;
+    vl = __riscv_vsetvl_e8m2(w);
     __riscv_vlseg3e8_v_u8m2(&v_r, &v_g, &v_b, src_raw, vl);
     __riscv_vsseg4e8_v_u8m2(dst_rgba, v_a, v_b, v_g, v_r, vl);
     w -= vl;
     src_raw += vl * 3;
     dst_rgba += vl * 4;
-    vl = __riscv_vsetvl_e8m2(w);
   } while (w > 0);
 }
 
@@ -287,16 +287,16 @@ void RGB24ToARGBRow_RVV(const uint8_t* src_rgb24,
                         uint8_t* dst_argb,
                         int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   vuint8m2_t v_a = __riscv_vmv_v_x_u8m2(255u, vl);
   do {
     vuint8m2_t v_b, v_g, v_r;
+    vl = __riscv_vsetvl_e8m2(w);
     __riscv_vlseg3e8_v_u8m2(&v_b, &v_g, &v_r, src_rgb24, vl);
     __riscv_vsseg4e8_v_u8m2(dst_argb, v_b, v_g, v_r, v_a, vl);
     w -= vl;
     src_rgb24 += vl * 3;
     dst_argb += vl * 4;
-    vl = __riscv_vsetvl_e8m2(w);
   } while (w > 0);
 }
 
@@ -307,7 +307,7 @@ void I444ToARGBRow_RVV(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -395,7 +395,7 @@ void I422ToARGBRow_RVV(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -455,7 +455,7 @@ void I422ToRGBARow_RVV(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -510,7 +510,7 @@ void I400ToARGBRow_RVV(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   const bool is_yb_positive = (yuvconstants->kRGBCoeffBias[4] >= 0);
   vuint8m2_t v_a = __riscv_vmv_v_x_u8m2(255u, vl);
   vuint16m4_t v_yb;
@@ -546,16 +546,16 @@ void I400ToARGBRow_RVV(const uint8_t* src_y,
 
 void J400ToARGBRow_RVV(const uint8_t* src_y, uint8_t* dst_argb, int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   vuint8m2_t v_a = __riscv_vmv_v_x_u8m2(255u, vl);
   do {
     vuint8m2_t v_y;
+    vl = __riscv_vsetvl_e8m2(w);
     v_y = __riscv_vle8_v_u8m2(src_y, vl);
     __riscv_vsseg4e8_v_u8m2(dst_argb, v_y, v_y, v_y, v_a, vl);
     w -= vl;
     src_y += vl;
     dst_argb += vl * 4;
-    vl = __riscv_vsetvl_e8m2(w);
   } while (w > 0);
 }
 
@@ -577,7 +577,7 @@ void NV12ToARGBRow_RVV(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -604,7 +604,7 @@ void NV12ToRGB24Row_RVV(const uint8_t* src_y,
                         const struct YuvConstants* yuvconstants,
                         int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl;
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -630,7 +630,7 @@ void NV21ToARGBRow_RVV(const uint8_t* src_y,
                        const struct YuvConstants* yuvconstants,
                        int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -657,7 +657,7 @@ void NV21ToRGB24Row_RVV(const uint8_t* src_y,
                         const struct YuvConstants* yuvconstants,
                         int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl;
   uint8_t ub, vr, ug, vg;
   int16_t yg, bb, bg, br;
   vuint8m2_t v_u, v_v;
@@ -850,10 +850,11 @@ void MergeXRGBRow_RVV(const uint8_t* src_r,
                       uint8_t* dst_argb,
                       int width) {
   size_t w = (size_t)width;
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   vuint8m2_t v_a = __riscv_vmv_v_x_u8m2(255u, vl);
   do {
     vuint8m2_t v_r, v_g, v_b;
+    vl = __riscv_vsetvl_e8m2(w);
     v_r = __riscv_vle8_v_u8m2(src_r, vl);
     v_g = __riscv_vle8_v_u8m2(src_g, vl);
     v_b = __riscv_vle8_v_u8m2(src_b, vl);
@@ -863,7 +864,6 @@ void MergeXRGBRow_RVV(const uint8_t* src_r,
     src_g += vl;
     src_b += vl;
     dst_argb += vl * 4;
-    vl = __riscv_vsetvl_e8m2(w);
   } while (w > 0);
 }
 
@@ -943,7 +943,7 @@ void ARGBToYMatrixRow_RVV(const uint8_t* src_argb,
   size_t w = (size_t)width;
   vuint8m2_t v_by, v_gy, v_ry;  // vectors are to store RGBToY constant
   vuint16m4_t v_addy;           // vector is to store kAddY
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   v_by = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[0], vl);
   v_gy = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[1], vl);
   v_ry = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[2], vl);
@@ -990,7 +990,7 @@ void RGBAToYMatrixRow_RVV(const uint8_t* src_rgba,
   size_t w = (size_t)width;
   vuint8m2_t v_by, v_gy, v_ry;  // vectors are to store RGBToY constant
   vuint16m4_t v_addy;           // vector is to store kAddY
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   v_by = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[0], vl);
   v_gy = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[1], vl);
   v_ry = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[2], vl);
@@ -1032,7 +1032,7 @@ void RGBToYMatrixRow_RVV(const uint8_t* src_rgb,
   size_t w = (size_t)width;
   vuint8m2_t v_by, v_gy, v_ry;  // vectors are to store RGBToY constant
   vuint16m4_t v_addy;           // vector is to store kAddY
-  size_t vl = __riscv_vsetvl_e8m2(w);
+  size_t vl = __riscv_vsetvlmax_e8m2();
   v_by = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[0], vl);
   v_gy = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[1], vl);
   v_ry = __riscv_vmv_v_x_u8m2(rgbconstants->kRGBToY[2], vl);
