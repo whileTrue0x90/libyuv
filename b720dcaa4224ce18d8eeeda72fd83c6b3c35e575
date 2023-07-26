@@ -383,6 +383,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cc0f17c_427b38f0",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-26T02:22:49Z",
+      "side": 1,
+      "message": "\u003e aaddu is an averaging add i guess. On intel pavgb is a rounding average that is fast and I\u0027ve sometimes used that multiple times, but it causes rounding error.\nARM can do half add hadd that is the same, but it rarely makes sense, since lengthening or widening and rounding shift is faster and more accurate.\nI\u0027m not seeing great solutions here, so we should probably stick with 2 loads\n\naaddu is averaging add. For the vector arch, there is no pair-add. \nFrom vector spec, I cannot find operations which are related to process pair elements in the same register. The reduction operations might be the one to reduce whole elements in a register to 1.",
+      "parentUuid": "eeff75f5_f98a97e4",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41da3204_d6b94703",
