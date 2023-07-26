@@ -407,6 +407,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db0170b6_609f9bb2",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1573667
+      },
+      "writtenOn": "2023-07-26T03:27:52Z",
+      "side": 1,
+      "message": "Hi Frank, as you mentioned earlier I think we can merge this patch and defer the optimization opportunity.",
+      "parentUuid": "1cc0f17c_427b38f0",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41da3204_d6b94703",
