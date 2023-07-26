@@ -431,6 +431,30 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7384d46c_827cb7ba",
+        "filename": "source/scale_rvv.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-26T17:52:10Z",
+      "side": 1,
+      "message": "Yes, this code is simple enough and theres no clearly better solution at this time.  We can revisit if something presents itself.\nIn practice these are used for I420ToARGB when upsampling with filtering, and we can profile in the future to see if this is a bottleneck.",
+      "parentUuid": "db0170b6_609f9bb2",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 66
+      },
+      "revId": "b720dcaa4224ce18d8eeeda72fd83c6b3c35e575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41da3204_d6b94703",
