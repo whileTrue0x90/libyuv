@@ -16,6 +16,24 @@
       "message": "note that you could use m2, since you only read 8 registers with vlseg8",
       "revId": "c60ac4025cd88ec9139cc01d6021fa81a8d2c085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c1fa1b_616a23b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-27T12:19:31Z",
+      "side": 1,
+      "message": "We cannot use m2 since the constraint of LMUL * number_of_segment(8) \u003c\u003d 8.",
+      "parentUuid": "401090a8_a4a52564",
+      "revId": "c60ac4025cd88ec9139cc01d6021fa81a8d2c085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
