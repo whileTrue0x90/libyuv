@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8c299a7_b02ef52a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-27T02:46:58Z",
+      "side": 1,
+      "message": "FYI These were used for scaling YUV camera formats down from 1280x720 to 3/4 scale 960x540 or 3/8 scale.  I\u0027m not sure that is a common use case anymore.\nIf general purpose bilinear to achieve similar speed this specialization could be deprecated.  The general purpose bilinear is 2 passes.  When scaling down, first InterpolateRow is used to combine 2 rows.  This is very fast code and should at least as fast as the 3/8 scaler.\nThen a column scale is used, which is very slow C code.  But it could be optimized for more specialized sizes.\nWhen we consider the variations of 10 bit, and UV and ARGB, it might be simplier to have 2 pass functions.  InterpolateRow that will always be fast, and Column functions that will be hit or miss, depending on the scale factor and CPU.\nIts also possible to have wrapper functions for ScaleRowDown38 that call 2 row functions.  Intel has some functions like this in row_common.cc that are about 90% as fast as assembly.",
+      "revId": "e3dac8c1f0d4b4c4f87a39ee80e6992b4292cbfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
