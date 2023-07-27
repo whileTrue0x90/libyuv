@@ -51,6 +51,24 @@
       "parentUuid": "9faaeb8d_779ed8c2",
       "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9030f7c_0bf5e450",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-27T13:56:15Z",
+      "side": 1,
+      "message": "My bad here.\nThe operation is ceil(avl/2), so the edge case for vsetvl(w) return 30 at first iterations. No problem in original implementations.",
+      "parentUuid": "a07dec15_29459bdd",
+      "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
