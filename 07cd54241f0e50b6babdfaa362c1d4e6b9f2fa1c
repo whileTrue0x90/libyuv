@@ -16,6 +16,23 @@
       "message": "Hi, this cl replaces vsetvl outside the loop with vsetvlmax to increase protablilty.",
       "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9faaeb8d_779ed8c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-27T13:12:28Z",
+      "side": 1,
+      "message": "I dont understand your terminology, and am concerned that this will be slower when the vector size is large.  But let me paraphrase\n\nThe old way\n  size_t vl \u003d __riscv_vsetvl_e8m2(w);\n  vuint8m2_t v_a \u003d __riscv_vmv_v_x_u8m2(255u, vl);\n\noutside the loop would set v_a for \u0027w\u0027 elements,\nbut the \n size_t vl \u003d __riscv_vsetvl_e8m2(w);\ninside the loop, where w is less than or equal to the original w, could actually set a vl that is larger than the vl outside the loop, leaving garbage in v_a\n\ne.g.\nif w is 100 the and vectors are 64 bytes, a vsetvl will do 2 loops.\nit could do 64 on the first loop and then 36 for the next.\nbut it may be more efficient to have them more equally balanced and do 50 and then 50.  But 50 is not a power of 2 friendly number, so a processor might choose to round to a multiple of 16.  It could do 48 on the first pass and 52 on the last pass?  Is that allowed and the case we are solving?\nsize_t vl \u003d __riscv_vsetvlmax_e8m2();\nis the full vector size.  I like to imagine it is 16384 bytes, but w is 1.  This seems really inefficient to fill in multiple huge vectors with 255, when w is often small.\nThey dont have a version of this function that takes a w and it sets the maximum size of all the iterations?",
+      "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
