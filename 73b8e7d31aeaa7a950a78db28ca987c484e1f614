@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d5711ef_b4fae78e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-07-28T08:30:14Z",
+      "side": 1,
+      "message": "Hi all, we provide this CL to enable ARGBShuffle.\nSince the suffle index array is one of input argument, we need to make sure VL isn\u0027t larger than array_size(typically 16).",
+      "revId": "73b8e7d31aeaa7a950a78db28ca987c484e1f614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
