@@ -69,6 +69,24 @@
       "parentUuid": "a07dec15_29459bdd",
       "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ede5cba_a6fdfbe5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-07-28T20:39:27Z",
+      "side": 1,
+      "message": "I can see many opportunities in the future where hardware may decide to make the vl smaller than max, but hopefully the first iteration is guaranteed to be the largest.  For example\niterations \u003d floor(width / maxvl)\nvl \u003d ceil(width / iterations).\nAnd in your example of 59, instead of 30, it would likely be more efficient to round up to a multiple of 16\ninstead of 30 and 29\nuse 32 and 27.\nso that loads are aligned and the registers used effectively.",
+      "parentUuid": "c9030f7c_0bf5e450",
+      "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
