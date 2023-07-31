@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a993950_32b773a3",
+        "filename": "source/row_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-07-31T20:02:23Z",
+      "side": 1,
+      "message": "Frank: I am not sure if `b8` is a good name for this local variable. I modeled it after the `b16` variable in the `CALC_RGB16` macro.",
+      "revId": "99df4b48956cd31adc858e0509490c91ff1f6686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
