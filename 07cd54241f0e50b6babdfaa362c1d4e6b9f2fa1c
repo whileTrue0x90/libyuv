@@ -87,6 +87,24 @@
       "parentUuid": "c9030f7c_0bf5e450",
       "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8c60a1f_bb0ae02a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-01T06:50:07Z",
+      "side": 1,
+      "message": "Yes, it provides an opportunity for HW to do optimizations as you mentioned.",
+      "parentUuid": "1ede5cba_a6fdfbe5",
+      "revId": "07cd54241f0e50b6babdfaa362c1d4e6b9f2fa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ],
   "submitRequirementResults": [
