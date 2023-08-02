@@ -120,6 +120,24 @@
       "message": "Don\u0027t use \u0027Commit-Queue\u0027, use \u0027Code-Review\u0027",
       "revId": "fa941bdf6768d78b419e74fa223313e1563f0b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "609ea8f6_a87a4787",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-02T08:16:44Z",
+      "side": 1,
+      "message": "I cannot find button in top right that says CODE-REVIEW+1. \n\n\u003e Or click Reply above the description and the CODE REVIEW +1 is a button there\n\nIt is also no `CODE REVIEW +1` there.\nI can only trigger vote for `Commit-Queue`.\n\n\u003e Submit requirements votes\nYou don\u0027t have permission to vote\nTrigger Votes\nCommit-Queue",
+      "parentUuid": "42f4950f_e92f9277",
+      "revId": "fa941bdf6768d78b419e74fa223313e1563f0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
