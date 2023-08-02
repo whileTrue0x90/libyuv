@@ -138,6 +138,24 @@
       "parentUuid": "42f4950f_e92f9277",
       "revId": "fa941bdf6768d78b419e74fa223313e1563f0b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b24cd004_5d292783",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-02T08:17:40Z",
+      "side": 1,
+      "message": "How about I create the same CL and you approve it?",
+      "parentUuid": "609ea8f6_a87a4787",
+      "revId": "fa941bdf6768d78b419e74fa223313e1563f0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
