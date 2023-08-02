@@ -68,6 +68,24 @@
       "message": "LGTM!",
       "revId": "fa941bdf6768d78b419e74fa223313e1563f0b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f4950f_e92f9277",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-02T08:01:46Z",
+      "side": 1,
+      "message": "The words LGTM dont work anymore.  You need to use the button in top right that says CODE-REVIEW+1. \nOr click Reply above the description and the CODE REVIEW +1 is a button there",
+      "parentUuid": "586c40bb_6b6e7fa3",
+      "revId": "fa941bdf6768d78b419e74fa223313e1563f0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
