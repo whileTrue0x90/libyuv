@@ -31,9 +31,9 @@ vars = {
 
 deps = {
   'src/build':
-    Var('chromium_git') + '/chromium/src/build' + '@' + '860dae780c100c2d001dc6ee16625b17bc84c10f',
+    Var('chromium_git') + '/chromium/src/build' + '@' + '5885d3c24833ad72845a52a1b913a2b8bc651b56',
   'src/buildtools':
-    Var('chromium_git') + '/chromium/src/buildtools' + '@' + 'ca163845c76db63454f99436f6cd2bf03739dc24',
+    Var('chromium_git') + '/chromium/src/buildtools' + '@' + '79ab87fa54614258c4c95891e873223371194525',
   'src/testing':
     Var('chromium_git') + '/chromium/src/testing' + '@' + '184b068a94f24ddf0b4299d48062779e1fc1950e',
   'src/third_party':
@@ -81,15 +81,6 @@ deps = {
     ],
     'dep_type': 'cipd',
   },
-
-  # TODO(chromium:1458042): Remove these paths, when chromium builds files
-  # have moved to third_party/lib*/src paths.
-  'src/buildtools/third_party/libc++/trunk':
-    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxx.git' + '@' + '84fb809dd6dae36d556dc0bb702c6cc2ce9d4b80',
-  'src/buildtools/third_party/libc++abi/trunk':
-    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libcxxabi.git' + '@' + 'd4760c0af99ccc9bce077960d5ddde4d66146c05',
-  'src/buildtools/third_party/libunwind/trunk':
-    Var('chromium_git') + '/external/github.com/llvm/llvm-project/libunwind.git' + '@' + '6c0013015be8a2be9de4b1e54cdc9d576b1d0729',
 
   'src/third_party/catapult':
     Var('chromium_git') + '/catapult.git' + '@' + 'fa05d995e152efdae488a2aeba397cd609fdbc9d',
