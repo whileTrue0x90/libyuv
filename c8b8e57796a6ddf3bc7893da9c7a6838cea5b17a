@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4793c96_915d863c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1237795
+      },
+      "writtenOn": "2023-08-03T14:02:16Z",
+      "side": 1,
+      "message": "are the two failing android build related to my CL somehow?",
+      "revId": "c8b8e57796a6ddf3bc7893da9c7a6838cea5b17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
