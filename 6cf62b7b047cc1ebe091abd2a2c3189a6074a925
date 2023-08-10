@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd0432c5_1798441b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-10T02:45:39Z",
+      "side": 1,
+      "message": "Hi all, this CL is to enable rvv intrinsic v0.12 in `row_rvv.cc`.",
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
