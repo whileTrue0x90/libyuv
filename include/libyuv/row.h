@@ -791,8 +791,16 @@ extern "C" {
 #endif
 
 #if !defined(LIBYUV_DISABLE_RVV) && defined(__riscv_vector)
+#if __riscv_v_intrinsic > 11000
+// Since v0.12, TUPLE_TYPE is introudced for segment load and store.
+#define LIBYUV_RVV_HAS_TUPLE_TYPE
+// Since v0.12, VXRM(fixed-point rounding mode) is included in arguments of
+// fixed-point intrinsics.
+#define LIBYUV_RVV_HAS_VXRM_ARG
+#endif
+
+#if __riscv_v_intrinsic == 11000 || __riscv_v_intrinsic == 12000
 #define HAS_COPYROW_RVV
-#if __riscv_v_intrinsic == 11000
 #define HAS_AB64TOARGBROW_RVV
 #define HAS_ABGRTOYJROW_RVV
 #define HAS_ABGRTOYROW_RVV
