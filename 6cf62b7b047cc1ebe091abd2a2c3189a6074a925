@@ -16,6 +16,46 @@
       "message": "Hi all, this CL is to enable rvv intrinsic v0.12 in `row_rvv.cc`.",
       "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "500399ad_de71795d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-10T20:19:40Z",
+      "side": 1,
+      "message": "wow... thats ugly.\n\nclip is okay, but does that generate 2 instructions in the loop now, hurting performance?\nWe rarely need to saturate, so mostly we need a rounding shift and narrow.  Rounding can be mimiced by adding 0x80, so we need a way to converting 16 bit to 8 bit.  ARM has a few ways to do this, so I suspect RVV does too.  So keep this in mind for future functions\n\nThe vlseg is ugly source but likely ends up being the same as before, and is the same as arm intrinsics.  Which is ugly, inflexible and often clang produces poor code for it, literally creating a new set of registers and copying them to/from the structure.\nIt makes me want to write RVV as inline.  Intrinics arent buying us much portability, and at the moment, are causing issues that inline would not.\nBut up to you.  If there are RVV variations coming where intrinsics help compile down to different ISA, or different compilers that are not clang based, intrinsics allow optimized code for more platforms.",
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aa60075_5db3fa45",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-10T20:19:40Z",
+      "side": 1,
+      "message": "typo: introduced",
+      "range": {
+        "startLine": 795,
+        "startChar": 30,
+        "endLine": 795,
+        "endChar": 40
+      },
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
