@@ -54,6 +54,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fa91be5_70ec0e49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-11T05:03:09Z",
+      "side": 1,
+      "message": "This warning is undesired for me...\nI\u0027ll ask the compiler guys for this...",
+      "parentUuid": "e8c3bcdd_2a64ae76",
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a89d6a7_d0c9e6e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-11T05:03:09Z",
+      "side": 1,
+      "message": "\u003e wow... thats ugly.\n\u003e \n\u003e clip is okay, but does that generate 2 instructions in the loop now, hurting performance?\n\nYes, compiler now generate two instructions:\n\n        `csrwi   vxrm, 0`\n        `vnclipu.wi      v12, v24, 6`\n        \nIt cannot help to reorder `csrwi` out for now...\n\n\u003e We rarely need to saturate, so mostly we need a rounding shift and narrow.  Rounding can be mimiced by adding 0x80, so we need a way to converting 16 bit to 8 bit.  ARM has a few ways to do this, so I suspect RVV does too.  So keep this in mind for future functions\n\nGot it.\n\n\u003e The vlseg is ugly source but likely ends up being the same as before, and is the same as arm intrinsics.  Which is ugly, inflexible and often clang produces poor code for it, literally creating a new set of registers and copying them to/from the structure.\n\nI agree with you `vlseg is ugly source`. \n\n`is the same as arm intrinsics`: \nCan you share more information to me? I only see ARM use tuple type for vld.\n\n\n\n\u003e It makes me want to write RVV as inline.  Intrinics arent buying us much portability, and at the moment, are causing issues that inline would not.\n\u003e But up to you.  If there are RVV variations coming where intrinsics help compile down to different ISA, or different compilers that are not clang based, intrinsics allow optimized code for more platforms.\n\nOriginally, we use intriniscs to allow compiler to optimize for different mirco-arch. I also consider what you think but it takes extra efforts.",
+      "parentUuid": "500399ad_de71795d",
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5aa60075_5db3fa45",
         "filename": "include/libyuv/row.h",
         "patchSetId": 1
@@ -65,6 +101,30 @@
       "writtenOn": "2023-08-10T20:19:40Z",
       "side": 1,
       "message": "typo: introduced",
+      "range": {
+        "startLine": 795,
+        "startChar": 30,
+        "endLine": 795,
+        "endChar": 40
+      },
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f09d514_74f5035c",
+        "filename": "include/libyuv/row.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-11T05:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa60075_5db3fa45",
       "range": {
         "startLine": 795,
         "startChar": 30,
