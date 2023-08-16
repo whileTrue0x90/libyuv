@@ -126,6 +126,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e65dbc05_54cfd436",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-16T02:12:26Z",
+      "side": 1,
+      "message": "\u003e I just had a similar warning on ARM, except I\u0027m using lanes\n\u003e va${M}${M+1}x${ABC[0:16]} \u003d vld2q_lane_u64((const void*) a${M}, va${M}${M+1}x${ABC[0:16]}, 0);\n\u003e va${M}${M+1}x${ABC[0:16]} \u003d vld2q_lane_u64((const void*) a${M}, va${M}${M+1}x${ABC[0:16]}, 0);\n\u003e which fills in both lanes of this vector, but I get a warning that is is uninitialized.\n\u003e So outside the loop I fill it in with zero\n\u003e va${M}${M+1}x${ABC[0:16]}.val[0] \u003d vdupq_n_u64(0);\n\u003e va${M}${M+1}x${ABC[0:16]}.val[1] \u003d vdupq_n_u64(0);\n\u003e which does not get optimized out, since the compiler thinks it is necessary.\n\u003e \n\u003e I think my warning (bug) is limited to when I use lanes, that fill in a portion of the register at a time, but fill in the full vector before it really is used.\n\nFor RVV intrinsic side, it was `vcreate` in intrinsic. It might back to solve the warning of using tuple type.",
+      "parentUuid": "af139124_af87b8fd",
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74b1a640_53828541",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-16T02:12:26Z",
+      "side": 1,
+      "message": "\u003e There are times I want to mix tuple types, and it really cant express everything we can do.\n\u003e A simple example is we want a tuple of 4 for ARGB and have 3 - RGB.  If we want to add an A before or after the RGB, we\u0027ll need to fill in a new tuple and hope the compiler optimized it.\n\nYes, now we need compiler to help to recognize and use registers as we desired.\n\n\u003e I have a complicated use case in XNNPack where I used ld4 lane, but after each load I copy the 4th vector just before the first and use that for the next tuple.  This achieves a shuffling along the diagonal.\n\u003e On 32 bit the same works, but it takes 2 vld with even and odd registers.\n\u003e I also have mixed types.  tuples dont lend themselves to reinterpret casts.  So you need to create a new one and copy the content across.\n\u003e e.g. ld4 lane as 32 bit and st2 as 16 bit, is similar to having 8 lanes of 16 bit.\n\u003e For clang and ARM, I see the compiler really does copy the vectors to temporaries, do the tuple, and then copy the result back.\n\u003e libyuv and XNNPack do assembly for ARM, so ultimately we can work around the compiler producing poor intrinsics code.\n\nDoes Clang-ARM gradually improve the codegen for this redundant copy?\nNow, I check some of the codegen in RVV. It doesn\u0027t look poor.\nARGBToRGB24Row_RVV can generate code as desired.",
+      "parentUuid": "902a296d_47afd890",
+      "revId": "6cf62b7b047cc1ebe091abd2a2c3189a6074a925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5aa60075_5db3fa45",
         "filename": "include/libyuv/row.h",
         "patchSetId": 1
