@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ebbf514_5d4dc5da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-16T02:35:51Z",
+      "side": 1,
+      "message": "\u003e We forgot to finish this review?\n\nYes, ( ´•̥̥̥ω•̥̥̥` )\n\n\n\u003e ARGBToBGRA etc using RVV specific row functions,  if there is a better way.\n\u003e vlseg4/vsseg4 would be the obvious way.\n\nThere\u0027s a tradeoff here:\n1. vlseg and vsseg: straightforward, but vmv is required.\n2. vle + vrgather: it need to get currently vlmax \u0026 initializied input array size(in ARGBShuffle). \u003d\u003e So I add helper function `GetRVVVrgatherMaxVL()` to get initializied input array size and avoid `vsetvl \u003e GetRVVVrgatherMaxVL()`.",
+      "parentUuid": "39786c97_445c139e",
+      "revId": "73b8e7d31aeaa7a950a78db28ca987c484e1f614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "506c6eac_208bd61d",
