@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47d777e2_385a161e",
+        "filename": "docs/getting_started.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-17T17:50:27Z",
+      "side": 1,
+      "message": "flags for libyuv should have LIBYUV_ prefix",
+      "revId": "4344f36d56a2c47fed1c69f59b623840431978a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be3e56b1_01ddb50c",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-17T17:50:27Z",
+      "side": 1,
+      "message": "shouldnt you do this before vsetvl?\nUsually I would round up, but you have a remainder handler, so it is okay to do less, but your vl doesnt agree setvl, so I think weird things could happen.",
+      "range": {
+        "startLine": 798,
+        "startChar": 19,
+        "endLine": 798,
+        "endChar": 77
+      },
+      "revId": "4344f36d56a2c47fed1c69f59b623840431978a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64a0cf37_5ed59371",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-17T17:50:27Z",
+      "side": 1,
+      "message": "So un-RISC-V like!  I\u0027ll leave it to you.\nIn the end, unless vrgather is an especially fast instruction, I think you may want to avoid using ARGBShuffle for simple functions.  e.g. ARGBToBGRA could be implemented in a number of ways.",
+      "revId": "4344f36d56a2c47fed1c69f59b623840431978a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
