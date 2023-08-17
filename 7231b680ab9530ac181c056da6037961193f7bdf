@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5662c55e_a20a4569",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2023-08-17T06:05:17Z",
+      "side": 1,
+      "message": "mbonadei@, could you run CQ+2? I don\u0027t have permission for that.",
+      "revId": "7231b680ab9530ac181c056da6037961193f7bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
