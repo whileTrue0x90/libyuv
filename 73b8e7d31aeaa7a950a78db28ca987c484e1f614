@@ -68,6 +68,24 @@
       "message": "Is this function necessary?  It would only be used from RVV code?\n\nNaming wise, I think it would be GetRVVVRGatherMaxVL.  Or GetRVVGatherMaxVL",
       "revId": "73b8e7d31aeaa7a950a78db28ca987c484e1f614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00b42ec0_6d281891",
+        "filename": "source/cpu_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-17T02:49:41Z",
+      "side": 1,
+      "message": "\u003e Is this function necessary?  It would only be used from RVV code?\n\nI think this is only necessary for RVV.\nDesign this to help runtime indicate how large is predefined array.\n\nFor RVV, we need to consider different VLEN:\n1. `VLEN is larger than predefined array size`:\nwe can only fill partial vector register. If we want to fully utilize it, we may need to introduce other code to detect and fill.\n2. `VLEN \u003c\u003d predefined array size`\nGood, we can direclty use it with LMUL \u003d 1.\n\nThe problem here is how do we tackle `1. VLEN is larger than predefined array size`. Here, I  add `GetRVVVrgatherMaxVL()` to provide opportunity for user to predefined longer array to use.",
+      "parentUuid": "506c6eac_208bd61d",
+      "revId": "73b8e7d31aeaa7a950a78db28ca987c484e1f614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
