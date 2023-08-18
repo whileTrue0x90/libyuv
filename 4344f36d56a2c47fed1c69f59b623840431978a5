@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca124fce_024cd9f8",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-18T01:41:39Z",
+      "side": 1,
+      "message": "\u003e shouldnt you do this before vsetvl?\n\u003e Usually I would round up, but you have a remainder handler, so it is okay to do less, but your vl doesnt agree setvl, so I think weird things could happen.\n\nThank you to catch this. You are right. Compiler\u0027ll help to generate extra vsetvl to handle.",
+      "parentUuid": "be3e56b1_01ddb50c",
+      "range": {
+        "startLine": 798,
+        "startChar": 19,
+        "endLine": 798,
+        "endChar": 77
+      },
+      "revId": "4344f36d56a2c47fed1c69f59b623840431978a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64a0cf37_5ed59371",
         "filename": "source/row_rvv.cc",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "writtenOn": "2023-08-17T17:50:27Z",
       "side": 1,
       "message": "So un-RISC-V like!  I\u0027ll leave it to you.\nIn the end, unless vrgather is an especially fast instruction, I think you may want to avoid using ARGBShuffle for simple functions.  e.g. ARGBToBGRA could be implemented in a number of ways.",
+      "revId": "4344f36d56a2c47fed1c69f59b623840431978a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d836dc4f_4b115985",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-18T01:41:39Z",
+      "side": 1,
+      "message": "\u003e So un-RISC-V like!  I\u0027ll leave it to you.\n\u003e In the end, unless vrgather is an especially fast instruction, I think you may want to avoid using ARGBShuffle for simple functions.  e.g. ARGBToBGRA could be implemented in a number of ways.\n\nAgree with you. I can prepare other CL to build a path and implement with segment load \u0026 stroe",
+      "parentUuid": "64a0cf37_5ed59371",
       "revId": "4344f36d56a2c47fed1c69f59b623840431978a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
