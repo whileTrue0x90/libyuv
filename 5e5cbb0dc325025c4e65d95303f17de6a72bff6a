@@ -16,6 +16,40 @@
       "message": "Hi all\nThis CL use RVV vlseg \u0026 vsseg to implement color conversion kernels which are originally implemented by ARGBShuffle.",
       "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f0d8da2_38ae37fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-21T19:12:30Z",
+      "side": 1,
+      "message": "Unconventional to have the convert aware of row functions, but thats okay.\nThe new row functions could be implemented with shuffle, so we could go towards the new API for all platforms, allowing more flexibility.",
+      "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "666900de_55b17965",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-21T19:12:30Z",
+      "side": 1,
+      "message": "This is RVV 0.11 ?  needs a port to 0.12?",
+      "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
