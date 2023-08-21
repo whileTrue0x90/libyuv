@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0405054_c7be9c0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-21T07:49:10Z",
+      "side": 1,
+      "message": "Hi all\nThis CL use RVV vlseg \u0026 vsseg to implement color conversion kernels which are originally implemented by ARGBShuffle.",
+      "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
