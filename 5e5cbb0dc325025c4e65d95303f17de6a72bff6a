@@ -35,6 +35,24 @@
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe90d622_6aa2c707",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-22T00:04:04Z",
+      "side": 1,
+      "message": "Do you think we need to move other platform\u0027s implementations to convert aware of row functions in this CL? \ne.g Put all platform independent code to ARGBToBGRA.",
+      "parentUuid": "7f0d8da2_38ae37fc",
+      "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "666900de_55b17965",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-08-21T19:12:30Z",
       "side": 1,
       "message": "This is RVV 0.11 ?  needs a port to 0.12?",
+      "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "859ebf22_e74cfd9f",
+        "filename": "source/row_rvv.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-08-22T00:04:04Z",
+      "side": 1,
+      "message": "\u003e This is RVV 0.11 ?  needs a port to 0.12?\n\nYes. Because we haven\u0027t merge CL which port to 0.12. I\u0027ll add 0.12 implementation for those functions in that CL.",
+      "parentUuid": "666900de_55b17965",
       "revId": "5e5cbb0dc325025c4e65d95303f17de6a72bff6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
