@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f63d1d4_a3d78742",
+        "filename": "include/libyuv/compare_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-08-31T17:25:01Z",
+      "side": 1,
+      "message": "Nit/optional: The `\u0026\u0026 !defined(LIBYUV_DISABLE_NEON)` and `\u0026\u0026 !defined(LIBYUV_DISABLE_X86)` checks could be omitted.\n\nAll the compilers I have used allow a macro to be redefined as long as it is redefined in exacly the same way as the previous definition. That is the case here.\n\nDid some compiler warn about such a macro redefinition?",
+      "revId": "ee4b6d2b64f918cab639e6fed1e87146ac42aaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
