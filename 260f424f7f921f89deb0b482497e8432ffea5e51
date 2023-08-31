@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c635d087_46c18bbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-31T17:36:35Z",
+      "side": 1,
+      "message": "btw \u0027Berkeley\u0027 team (RISCV) praised libyuv for having these disable flags, making it easy to quickly disable simd when a bug comes up.",
+      "revId": "260f424f7f921f89deb0b482497e8432ffea5e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}

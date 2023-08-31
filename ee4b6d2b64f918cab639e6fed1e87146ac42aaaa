@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "628012fe_e86b6046",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-31T17:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af61468_a99f3895",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "ee4b6d2b64f918cab639e6fed1e87146ac42aaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "da3b7b62_fb330d0f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "writtenOn": "2023-08-31T17:25:01Z",
       "side": 1,
       "message": "Nit/optional: The `\u0026\u0026 !defined(LIBYUV_DISABLE_NEON)` and `\u0026\u0026 !defined(LIBYUV_DISABLE_X86)` checks could be omitted.\n\nAll the compilers I have used allow a macro to be redefined as long as it is redefined in exacly the same way as the previous definition. That is the case here.\n\nDid some compiler warn about such a macro redefinition?",
+      "revId": "ee4b6d2b64f918cab639e6fed1e87146ac42aaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4401f79f_71040c70",
+        "filename": "include/libyuv/compare_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2023-08-31T17:36:35Z",
+      "side": 1,
+      "message": "Acknowledged.  I know thats the way they used to be.  Unclear where this came from\n\nStep _compile_ failed. Error logs are shown below:[403/519] CXX obj/libyuv_internal/rotate_any.oFAILED: obj/libyuv_internal/rotate_any.o../../buildtools/reclient/rewrapper -cfg\u003d../../buildtools/reclient_cfgs/chromium-browser-clang/rewra...(too long)In file included from ../../source/rotate_any.cc:12:../../include/libyuv/rotate_row.h:33:9: error: \u0027LIBYUV_DISABLE_NEON\u0027 macro redefined [-Werror,-Wmacro-redefined]33 | #define LIBYUV_DISABLE_NEON|         ^:24:9: note: previous definition is here24 | #define LIBYUV_DISABLE_NEON 1|         ^1 error generated.\n\nIt did not occur in Google 3 build so one of the GN build files or try bots I guess.",
+      "parentUuid": "2f63d1d4_a3d78742",
       "revId": "ee4b6d2b64f918cab639e6fed1e87146ac42aaaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
