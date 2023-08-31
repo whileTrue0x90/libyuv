@@ -98,6 +98,24 @@
       "parentUuid": "2f63d1d4_a3d78742",
       "revId": "ee4b6d2b64f918cab639e6fed1e87146ac42aaaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64024bf0_85e5857a",
+        "filename": "include/libyuv/compare_row.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-08-31T17:42:37Z",
+      "side": 1,
+      "message": "The compiler warns here because the previous definition is:\n\n```\n#define LIBYUV_DISABLE_NEON 1\n```\n\nI don\u0027t see that line in this file. I wonder if that comes from the command-line flag `-DLIBYUV_DISABLE_NEON`, which defines the macro as 1.",
+      "parentUuid": "4401f79f_71040c70",
+      "revId": "ee4b6d2b64f918cab639e6fed1e87146ac42aaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
