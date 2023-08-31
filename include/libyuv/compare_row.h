@@ -30,6 +30,7 @@ extern "C" {
 #if defined(__has_feature)
 #if __has_feature(memory_sanitizer)
 #define LIBYUV_DISABLE_X86
+#define LIBYUV_DISABLE_NEON
 #endif
 #endif
 // Visual C 2012 required for AVX2.

@@ -31,6 +31,7 @@ extern "C" {
 #if defined(__has_feature)
 #if __has_feature(memory_sanitizer)
 #define LIBYUV_DISABLE_X86
+#define LIBYUV_DISABLE_NEON
 #endif
 #endif
 // GCC >= 4.7.0 required for AVX2.
