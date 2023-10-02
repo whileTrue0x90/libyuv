@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d242defa_29a52a1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-10-02T21:31:23Z",
+      "side": 1,
+      "message": "Nit: The bug number should be sufficient. Could you try that?",
+      "revId": "7c682140e1df8af3fae8fe8b1000277cf201bb43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    }
+  ]
+}
