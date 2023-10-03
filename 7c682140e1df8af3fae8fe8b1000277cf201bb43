@@ -34,6 +34,24 @@
       "parentUuid": "d242defa_29a52a1d",
       "revId": "7c682140e1df8af3fae8fe8b1000277cf201bb43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a9ce9b1_df3dc776",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001562
+      },
+      "writtenOn": "2023-10-03T14:21:37Z",
+      "side": 1,
+      "message": "Please try adding `libyuv:` before the bug number. I found two examples in my email inbox:\n\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/3717054\nhttps://chromium-review.googlesource.com/c/libyuv/libyuv/+/4581867",
+      "parentUuid": "7298ef62_e950d26f",
+      "revId": "7c682140e1df8af3fae8fe8b1000277cf201bb43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
