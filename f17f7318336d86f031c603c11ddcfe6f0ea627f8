@@ -16,6 +16,23 @@
       "message": "Hi Frank,\nPlease help to reveiw.\nScaleARGBRowDownEven_RVV \u0026 ScaleARGBRowDownEvenBox_RVV aren\u0027t used because of it is control by HAS_SCALEARGBROWDOWNEVEN_RVV which it\u0027s defined.\n(1) Seperate the path for ScaleARGBRowDownEven_RVV \u0026 ScaleARGBRowDownEvenBox_RVV\n(2) Add HAS_SCALEARGBROWDOWNEVEN_RVV marco, but disable it by default because of performance issue.",
       "revId": "f17f7318336d86f031c603c11ddcfe6f0ea627f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8230e055_da81eb01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1575067
+      },
+      "writtenOn": "2023-10-04T07:58:49Z",
+      "side": 1,
+      "message": "Hi Frank,\nCan you help to review?",
+      "revId": "f17f7318336d86f031c603c11ddcfe6f0ea627f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba"
     }
   ]
 }
